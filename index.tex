@@ -1,0 +1,1081 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+% pacotes úteis
+\usepackage{amsmath}
+\usepackage{array}      % para o \begin{array} usado pelo \stackunder
+% \usepackage{stackengine} % (opcional) se quiser usar a versão do pacote \stackunder
+
+% suas macros
+\newcommand{\tn}{\mbox{\boldmath $\theta$} }
+\newcommand{\sn}{\mbox{\boldmath $\sigma$} }
+\newcommand{\On}{\mbox{\boldmath $\Omega$} }
+\newcommand{\Dn}{\mbox{\boldmath $\Delta$} }
+\newcommand{\In}{\mbox{\textbf{I}} }
+\newcommand{\yn}{\mbox{\textbf{y}} }
+\newcommand{\Vn}{\mbox{\textbf{V}} }
+\newcommand{\mn}{\mbox{\boldmath $\mu$} }
+\newcommand{\Fn}{\mbox{\boldmath $\Phi$} }
+\newcommand{\Pn}{\mbox{\boldmath $\Pi$} }
+
+\newenvironment{Dproof}[1][DProof]{\textbf{#1.} }{\ \rule{0.2cm}{0.2cm}} 
+\newcommand{\stackunder}[2]{ \renewcommand{\arraystretch}{0.2} 
+\displaystyle \begin{array}[t]{c}  {#1}\\_{#2}\end{array} 
+\renewcommand{\arraystretch}{1}} 
+\newcommand{\vect}[1]{\!\!\!\stackunder{#1}{\sim}\!\!\!}
+\renewcommand{\Re}{I \! \! R}
+\newcommand{\real}{\mbox{$I\!\!R$}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\va}{$X_1,\,X_2,\,\dots,\,X_n$}
+\newcommand{\vam}{$x_1,\,x_2\,\ldots,\,x_n$}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Índice}
+\else
+  \newcommand\contentsname{Índice}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Lista de Figuras}
+\else
+  \newcommand\listfigurename{Lista de Figuras}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Lista de Tabelas}
+\else
+  \newcommand\listtablename{Lista de Tabelas}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figura}
+\else
+  \newcommand\figurename{Figura}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tabela}
+\else
+  \newcommand\tablename{Tabela}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listagem}
+\newcommand*\listoflistings{\listof{codelisting}{Lista de Listagens}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{brazilian}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Análise Inferencial},
+  pdfauthor={Manoel Santos-Neto},
+  pdflang={pt-BR},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Análise Inferencial}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Departamento de Estatística e Matemática Aplicada}
+\author{Manoel Santos-Neto}
+\date{2026-02-08}
+
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Índice}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\bookmarksetup{startatroot}
+
+\chapter*{Prefácio}\label{prefuxe1cio}
+\addcontentsline{toc}{chapter}{Prefácio}
+
+\markboth{Prefácio}{Prefácio}
+
+\bookmarksetup{startatroot}
+
+\chapter{IDENTIFICAÇÃO DA
+DISCIPLINA}\label{identificauxe7uxe3o-da-disciplina}
+
+\begin{itemize}
+\item
+  Curso: Bacharelado em Ciência de Dados
+\item
+  Disciplina: Análise Inferencial
+\item
+  Carga Horária: 96 horas
+\item
+  Créditos: 6
+\item
+  Regime: Semestral
+\item
+  Pré-requisitos: Probabilidade e Estatística Descritiva (ou
+  equivalente)
+\item
+  Período Letivo: 2026.1
+\item
+  Professor(a): Dr.~Manoel Santos-Neto
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
+\chapter{EMENTA}\label{ementa}
+
+Conceitos de população e amostra; parâmetros, estatísticas, estimadores
+e suas propriedades; distribuições amostrais; métodos de estimação
+pontual: método dos momentos, máxima verossimilhança e mínimos
+quadrados; estimação intervalar; testes de hipóteses; testes de
+homogeneidade e independência.
+
+\bookmarksetup{startatroot}
+
+\chapter{OBJETIVO GERAL}\label{objetivo-geral}
+
+Apresentar os fundamentos da inferência estatística, capacitando o
+estudante a formular, analisar e interpretar problemas inferenciais em
+contextos de Ciência de Dados, com ênfase na quantificação da incerteza,
+validação de modelos e capacidade de generalização.
+
+\bookmarksetup{startatroot}
+
+\chapter{OBJETIVOS ESPECÍFICOS}\label{objetivos-especuxedficos}
+
+Ao final da disciplina, o estudante deverá ser capaz de:
+
+\begin{itemize}
+\item
+  compreender a diferença entre população, amostra, parâmetro e
+  estatística;
+\item
+  interpretar estatísticas como variáveis aleatórias;
+\item
+  compreender e utilizar distribuições amostrais;
+\item
+  aplicar métodos de estimação pontual e intervalar;
+\item
+  formular e testar hipóteses estatísticas de forma adequada;
+\item
+  interpretar corretamente p-valores, intervalos de confiança e decisões
+  inferenciais;
+\item
+  relacionar conceitos de inferência estatística com validação cruzada,
+  generalização e avaliação de modelos de Machine Learning;
+\item
+  analisar criticamente resultados estatísticos obtidos a partir de
+  dados reais.
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
+\chapter{CONTEÚDO PROGRAMÁTICO}\label{conteuxfado-programuxe1tico}
+
+\section*{Unidade I -- Fundamentos da Inferência
+Estatística}\label{unidade-i-fundamentos-da-inferuxeancia-estatuxedstica}
+\addcontentsline{toc}{section}{Unidade I -- Fundamentos da Inferência
+Estatística}
+
+\markright{Unidade I -- Fundamentos da Inferência Estatística}
+
+\begin{itemize}
+\item
+  População e amostra
+\item
+  Processo gerador de dados
+\item
+  Parâmetros e estatísticas
+\item
+  Variabilidade amostral
+\end{itemize}
+
+\section*{Unidade II -- Distribuições
+Amostrais}\label{unidade-ii-distribuiuxe7uxf5es-amostrais}
+\addcontentsline{toc}{section}{Unidade II -- Distribuições Amostrais}
+
+\markright{Unidade II -- Distribuições Amostrais}
+
+\begin{itemize}
+\item
+  Estatísticas como variáveis aleatórias
+\item
+  Distribuição amostral da média e da proporção
+\item
+  Lei dos Grandes Números
+\item
+  Teorema Central do Limite
+\end{itemize}
+
+\section*{Unidade III -- Estimação
+Pontual}\label{unidade-iii-estimauxe7uxe3o-pontual}
+\addcontentsline{toc}{section}{Unidade III -- Estimação Pontual}
+
+\markright{Unidade III -- Estimação Pontual}
+
+\begin{itemize}
+\item
+  Estimadores e estimativas
+\item
+  Propriedades dos estimadores (viés, variância, MSE, consistência)
+\item
+  Método dos momentos
+\item
+  Máxima verossimilhança
+\item
+  Mínimos quadrados
+\end{itemize}
+
+\section*{Unidade IV -- Estimação
+Intervalar}\label{unidade-iv-estimauxe7uxe3o-intervalar}
+\addcontentsline{toc}{section}{Unidade IV -- Estimação Intervalar}
+
+\markright{Unidade IV -- Estimação Intervalar}
+
+\begin{itemize}
+\item
+  Intervalos de confiança
+\item
+  Interpretação correta
+\item
+  Intervalos baseados em aproximações assintóticas
+\item
+  Bootstrap
+\end{itemize}
+
+\section*{Unidade V -- Testes de
+Hipóteses}\label{unidade-v-testes-de-hipuxf3teses}
+\addcontentsline{toc}{section}{Unidade V -- Testes de Hipóteses}
+
+\markright{Unidade V -- Testes de Hipóteses}
+
+\begin{itemize}
+\item
+  Formulação de hipóteses
+\item
+  Estatísticas de teste
+\item
+  p-valor
+\item
+  Erros tipo I e tipo II
+\item
+  Poder do teste
+\end{itemize}
+
+\section*{Unidade VI -- Testes de Homogeneidade e
+Independência}\label{unidade-vi-testes-de-homogeneidade-e-independuxeancia}
+\addcontentsline{toc}{section}{Unidade VI -- Testes de Homogeneidade e
+Independência}
+
+\markright{Unidade VI -- Testes de Homogeneidade e Independência}
+
+\begin{itemize}
+\item
+  Testes qui-quadrado
+\item
+  Tabelas de contingência
+\item
+  Associação entre variáveis categóricas
+\end{itemize}
+
+\section*{Unidade VII -- Inferência Estatística e Ciência de
+Dados}\label{unidade-vii-inferuxeancia-estatuxedstica-e-ciuxeancia-de-dados}
+\addcontentsline{toc}{section}{Unidade VII -- Inferência Estatística e
+Ciência de Dados}
+
+\markright{Unidade VII -- Inferência Estatística e Ciência de Dados}
+
+\begin{itemize}
+\item
+  Relação entre inferência estatística e Machine Learning
+\item
+  Validação cruzada
+\item
+  Generalização e overfitting
+\item
+  Interpretação inferencial de modelos preditivos
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
+\chapter{METODOLOGIA}\label{metodologia}
+
+A disciplina será desenvolvida por meio de aulas expositivo-dialogadas,
+articuladas com atividades práticas computacionais. O conteúdo teórico
+será constantemente ilustrado por simulações e análises de dados reais,
+utilizando ferramentas computacionais (R ou Python).
+
+Serão propostas listas semanais obrigatórias, com foco em
+experimentação, interpretação estatística e conexão com problemas de
+Machine Learning, validação de modelos e generalização. O uso de
+simulação, reamostragem e análise empírica será empregado como
+ferramenta pedagógica para construção da intuição inferencial.
+
+\bookmarksetup{startatroot}
+
+\chapter{AVALIAÇÃO}\label{avaliauxe7uxe3o}
+
+A avaliação será contínua e composta por:
+
+\begin{itemize}
+\item
+  Listas semanais obrigatórias (atividades computacionais com
+  interpretação estatística): 50\%
+\item
+  Projeto final inferencial aplicado a dados reais: 30\%
+\item
+  Avaliação conceitual individual (prova ou atividade equivalente): 20\%
+\end{itemize}
+
+A aprovação na disciplina seguirá os critérios estabelecidos pelas
+normas vigentes da UFC.
+
+\bookmarksetup{startatroot}
+
+\chapter{CRITÉRIOS DE AVALIAÇÃO}\label{crituxe9rios-de-avaliauxe7uxe3o}
+
+Serão considerados nos trabalhos e atividades:
+
+\begin{itemize}
+\item
+  correção conceitual;
+\item
+  adequação metodológica;
+\item
+  clareza na formulação do problema inferencial;
+\item
+  interpretação estatística correta dos resultados;
+\item
+  organização, clareza e reprodutibilidade das análises.
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
+\chapter{BIBLIOGRAFIA BÁSICA}\label{bibliografia-buxe1sica}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Bussab, W. O.; Morettin, P. A. Estatística Básica. 6ª ed.~São Paulo:
+  Saraiva, 2010.
+\item
+  Casella, G.; Berger, R. L. Statistical Inference. 2nd ed.~New York:
+  Duxbury Press, 2001.
+\item
+  Casella, G.; Berger, R. L. Inferência Estatística. Tradução da 2ª
+  edição. São Paulo: Cengage Learning, 2011.
+\end{enumerate}
+
+\bookmarksetup{startatroot}
+
+\chapter{BIBLIOGRAFIA COMPLEMENTAR}\label{bibliografia-complementar}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Devore, J. L. Probabilidade e Estatística para Engenharia e Ciências.
+  São Paulo: Thomson, 2006.
+\item
+  Mood, A. M.; Graybill, F.; Boes, D. C. Introduction to the Theory of
+  Statistics. 3rd ed.~New York: McGraw-Hill, 1974.
+\item
+  Bolfarine, H.; Sandoval, M. C. Introdução à Inferência Estatística.
+  Rio de Janeiro: SBM, 2001.
+\item
+  Bickel, P. J.; Doksum, K. A. Mathematical Statistics. Vol. I, 2nd
+  ed.~New Jersey: Prentice Hall, 2007.
+\item
+  Dudewicz, E. J.; Mishra, S. N. Modern Mathematical Statistics. New
+  York: John Wiley, 1988.
+\end{enumerate}
+
+\bookmarksetup{startatroot}
+
+\chapter{OBSERVAÇÕES FINAIS}\label{observauxe7uxf5es-finais}
+
+A disciplina enfatiza a inferência estatística como base conceitual da
+Ciência de Dados, destacando a importância da quantificação da
+incerteza, da validação de modelos e da interpretação crítica dos
+resultados em contextos reais.
+
+\bookmarksetup{startatroot}
+
+\chapter{Fundamentos da Inferência
+Estatística}\label{fundamentos-da-inferuxeancia-estatuxedstica}
+
+Neste capítulo, iniciamos a primeira parte sobre inferência estatística
+aprendendo um pouco sobre amostragem. Os conceitos por trás da amostram
+são a base para intervalos de confiança e testes de hipóteses, por
+exemplo. Além disso, veremos que ferramentas já aprendidas durante o
+curso de Ciência de Dados, em particular visualização de dados e
+manipulação (organização) de dados, são importantes no desenvolvimento
+do seu entendimento. Esperamos que os conceitos apresentados ao longo
+deste texto se articulam e se acumulam, culminando na capacidade de
+``contar sua história com dados''.
+
+\section{Pacote Necessários}\label{pacote-necessuxe1rios}
+
+Neste capítulo iremos utilizar os pacotes \texttt{R} \texttt{tidyverse}
+e \texttt{moderndive}. Por exemplo, para instalar o pacote basta usar
+\texttt{install.packages("tidyverse")} e podemos carregar o pacote por
+meio do comando \texttt{library(tidyverse)}. São carregados, de uma só
+vez, os seguinte pacotes amplamente utilizados em ciência de dados:
+
+\begin{itemize}
+\item
+  \texttt{ggplot2} para visualização de dados;
+\item
+  \texttt{dplyr} para manipulação de dados;
+\item
+  \texttt{tidyr} para converter dados para o formato ``tidy'';
+\item
+  \texttt{readr} para importar dados de planilhas para o \texttt{R},
+\end{itemize}
+
+além dos pacotes mais avançados \texttt{purrr}, \texttt{tibble},
+\texttt{stringr} e \texttt{forcats}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+-- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+v dplyr     1.1.4     v readr     2.1.5
+v forcats   1.0.0     v stringr   1.5.2
+v ggplot2   4.0.0     v tibble    3.3.0
+v lubridate 1.9.3     v tidyr     1.3.1
+v purrr     1.1.0     
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(moderndive)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Experimento em Sala de Aula}\label{experimento-em-sala-de-aula}
+
+Iremos realizar o seguinte experimento em sala de aula:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+\subsection*{Verificação de
+aprendizagem}\label{verificauxe7uxe3o-de-aprendizagem}
+\addcontentsline{toc}{subsection}{Verificação de aprendizagem}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Por que foi importante misturar a tigela antes de retirarmos as bolas?
+\item
+  Por que os 33 grupos de amigos não obtiveram todos o mesmo número de
+  bolas vermelhas entre as 50 retiradas e, consequentemente, proporções
+  diferentes de bolas vermelhas?
+\end{enumerate}
+
+\section{Experimento Virtual}\label{experimento-virtual}
+
+No pacote \texttt{moderndive} existe um \emph{data frame} chamado
+\texttt{bowl}. As linhas de \texttt{bowl} correspondem exatamente ao
+conteúdo da urna real apresentada em sala de aula.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowl}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2,400 x 2
+   ball_ID color
+     <int> <chr>
+ 1       1 white
+ 2       2 white
+ 3       3 white
+ 4       4 red  
+ 5       5 white
+ 6       6 white
+ 7       7 red  
+ 8       8 white
+ 9       9 red  
+10      10 white
+# i 2,390 more rows
+\end{verbatim}
+
+Observe que \texttt{bowl} possui 2400 linhas, o que nos indica que a
+urna contém 2400 bolas de mesmo tamanho. A primeira variável,
+\texttt{ball\_ID}, é usada como uma variável de identificação, conforme
+discutido em sala de aula, nenhuma das bolas da urna real possui números
+marcados. A segunda variável, \texttt{color}, indica se uma determinada
+bola virtual é \textbf{vermelha} ou \textbf{branca}. Visualize o
+conteúdo de \texttt{bowl} no \textbf{visualizador de dados do RStudio} e
+percorra as linhas para se convencer de que \texttt{bowl} é, de fato, um
+\textbf{análogo virtual} da urna real apresentada em sala.
+
+Agora precisamos de um \textbf{análogo virtual da pá} para gerar
+\textbf{amostras virtuais de 50 bolas}. Para isso, vamos utilizar a
+função \texttt{rep\_sample\_n()}, incluída no pacote
+\texttt{moderndive}. Essa função permite realizar \textbf{amostragens
+repetidas (ou replicadas)} de tamanho (n).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{pa\_virtual}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 50 x 3
+# Groups:   replicate [1]
+   replicate ball_ID color
+       <int>   <int> <chr>
+ 1         1    2025 red  
+ 2         1    1994 white
+ 3         1    1335 white
+ 4         1    2086 white
+ 5         1      91 white
+ 6         1    2018 white
+ 7         1    1603 white
+ 8         1     803 white
+ 9         1     381 white
+10         1      40 red  
+# i 40 more rows
+\end{verbatim}
+
+A variável \texttt{ball\_ID} identifica quais das 2400 bolas do objeto
+\texttt{bowl} foram incluídas na nossa amostra de 50 bolas, enquanto
+\texttt{color} indica a cor de cada bola. No entanto, o que indica a
+variável \texttt{replicate}?
+
+No caso de \texttt{pa\_virtual}, a variável \texttt{replicate} é igual a
+1 em todas as 50 linhas. Isso nos informa que essas 50 linhas
+correspondem à nossa primeira amostra. Veremos em breve que, quando
+realizarmos 33 amostragens virtuais, a variável \texttt{replicate}
+assumirá valores entre 1 e 33.
+
+Vamos agora calcular a \textbf{proporção de bolas vermelhas} em nossa
+amostra virtual utilizando os verbos de manipulação de dados do
+\texttt{dplyr}. Primeiro, para cada uma das 50 bolas amostradas, vamos
+identificar se ela é vermelha ou não, utilizando um teste de igualdade
+com \texttt{==}. Em seguida, criaremos uma nova variável booleana
+\texttt{is\_red} usando a função \texttt{mutate()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ (color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 50 x 4
+# Groups:   replicate [1]
+   replicate ball_ID color is_red
+       <int>   <int> <chr> <lgl> 
+ 1         1    2025 red   TRUE  
+ 2         1    1994 white FALSE 
+ 3         1    1335 white FALSE 
+ 4         1    2086 white FALSE 
+ 5         1      91 white FALSE 
+ 6         1    2018 white FALSE 
+ 7         1    1603 white FALSE 
+ 8         1     803 white FALSE 
+ 9         1     381 white FALSE 
+10         1      40 red   TRUE  
+# i 40 more rows
+\end{verbatim}
+
+Observe que, para cada linha em que \texttt{color\ ==\ "red"}, é
+retornado o valor lógico (booleano) \texttt{TRUE}, e para cada linha em
+que \texttt{color} não é igual a \texttt{"red"}, é retornado o valor
+lógico \texttt{FALSE}.
+
+Em seguida, vamos calcular o número de bolas vermelhas, dentre as 50,
+utilizando a função \texttt{summarize()}. Note que \texttt{summarize()}
+recebe um \emph{data frame} com várias linhas e retorna um \emph{data
+frame} com \textbf{uma única linha}, contendo estatísticas-resumo, como
+\texttt{mean()} ou \texttt{median()}. Neste caso, utilizaremos a função
+\texttt{sum()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ (color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(is\_red))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 2
+  replicate num_red
+      <int>   <int>
+1         1      15
+\end{verbatim}
+
+Por que isso funciona? Porque o \texttt{R} trata \texttt{TRUE} como o
+número 1 e \texttt{FALSE} como o número 0. Assim, somar valores
+\texttt{TRUE} e \texttt{FALSE} é equivalente a somar 1's e 0's. Ao
+final, essa operação conta o número de bolas para as quais a variável
+color é igual a ``red''. No nosso caso, XX das 50 bolas eram vermelhas.
+No entanto, você pode ter obtido um número diferente de bolas vermelhas
+devido ao caráter aleatório da amostragem virtual.
+
+Por fim, vamos calcular a proporção das 50 bolas amostradas que são
+vermelhas, dividindo num\_red por 50:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(is\_red)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  replicate num_red prop_red
+      <int>   <int>    <dbl>
+1         1      15      0.3
+\end{verbatim}
+
+Em outras palavras, XX das bolas dessa amostra virtual eram vermelhas.
+Vamos tornar esse código um pouco mais \textbf{compacto e conciso},
+combinando as etapas de \texttt{mutate()} e \texttt{summarize()} da
+seguinte forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  replicate num_red prop_red
+      <int>   <int>    <dbl>
+1         1      15      0.3
+\end{verbatim}
+
+Ótimo! XX das 50 bolas de virtual\_shovel eram vermelhas! Assim, com
+base nessa amostra específica de 50 bolas, nossa estimativa da proporção
+de bolas vermelhas na urna é XX. Porém, lembre-se da atividade de
+amostragem realizada em sala de auma: se repetirmos essa amostragem, não
+necessariamente obteremos novamente o valor de XX. É provável que haja
+alguma variação. De fato, nossos 33 grupos de amigos calcularam 33
+proporções desse tipo, cuja distribuição visualizamos em sala de aula, e
+vimos que essas estimativas variaram.
+
+Vamos agora realizar o \textbf{análogo virtual} de ter 33 grupos de
+estudantes usando a pá de amostragem!
+
+Lembre-se de que, no exercício de amostragem realizada em sala de aula,
+tivemos \textbf{33 grupos de estudantes}, cada um utilizando a pá, o que
+resultou em \textbf{33 amostras de tamanho 50}. Em seguida, usamos essas
+33 amostras para calcular \textbf{33 proporções}. Em outras palavras,
+\textbf{repetimos/replicamos o uso da pá 33 vezes}.
+
+Podemos realizar essa amostragem repetida/replicada de forma virtual
+utilizando novamente a função \texttt{rep\_sample\_n()}, mas agora
+adicionando o argumento \texttt{reps\ =\ 33}. Isso indica ao R que
+desejamos repetir a amostragem 33 vezes.
+
+Vamos salvar esses resultados em um \texttt{data\ frame} chamado
+\texttt{virtual\_samples}. Embora apresentemos a seguir uma prévia das
+primeiras 10 linhas de \texttt{virtual\_samples}, recomendamos
+fortemente que você explore todo o seu conteúdo utilizando o
+visualizador de planilhas do RStudio, executando o comando
+\texttt{View(virtual\_samples)}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{amostra\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{, }\AttributeTok{reps =} \DecValTok{33}\NormalTok{)}
+
+\NormalTok{amostra\_virtual}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1,650 x 3
+# Groups:   replicate [33]
+   replicate ball_ID color
+       <int>   <int> <chr>
+ 1         1    1321 white
+ 2         1    2063 white
+ 3         1     319 white
+ 4         1     970 white
+ 5         1    1355 white
+ 6         1    1160 white
+ 7         1     103 white
+ 8         1     528 white
+ 9         1    2089 white
+10         1    1986 red  
+# i 1,640 more rows
+\end{verbatim}
+
+Observe, no visualizador de planilhas, que as primeiras 50 linhas da
+variável \texttt{replicate} são iguais a 1, enquanto as 50 linhas
+seguintes de \texttt{replicate} são iguais a 2. Isso nos indica que as
+primeiras 50 linhas correspondem à primeira amostra de 50 bolas,
+enquanto as próximas 50 linhas correspondem à segunda amostra de 50
+bolas. Esse padrão se repete para todas as 33 replicações
+(\texttt{reps\ =\ 33}) e, portanto, o \texttt{data\ frame}
+\texttt{amostra\_virtual} possui (33 \cdot 50 = 1650) linhas.
+
+Vamos agora usar \texttt{amostra\_virtual} para calcular as 33
+proporções de bolas vermelhas resultantes. Utilizaremos os mesmos verbos
+do \texttt{dplyr} de antes, mas agora com um \texttt{group\_by()}
+adicional na variável \texttt{replicate}. Ao definir previamente a
+variável de agrupamento como \emph{metadado} antes de aplicar
+\texttt{summarize()}, obteremos 33 proporções diferentes de bolas
+vermelhas. A seguir, exibimos uma prévia das primeiras 10 das 33 linhas
+resultantes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{virtual\_prop\_red }\OtherTok{\textless{}{-}}\NormalTok{ amostra\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{group\_by}\NormalTok{(replicate) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{virtual\_prop\_red}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 33 x 3
+   replicate   red prop_red
+       <int> <int>    <dbl>
+ 1         1    13     0.26
+ 2         2    14     0.28
+ 3         3    21     0.42
+ 4         4    22     0.44
+ 5         5    22     0.44
+ 6         6    21     0.42
+ 7         7    21     0.42
+ 8         8    19     0.38
+ 9         9    13     0.26
+10        10    21     0.42
+# i 23 more rows
+\end{verbatim}
+
+Assim como ocorreu com as 33 amostras coletadas em sala de aula, há
+variação nas 33 proporções de bolas vermelhas obtidas virtualmente.
+Vamos visualizar essa variação por meio de um histograma. Note que
+também adicionamos os argumentos \texttt{binwidth\ =\ 0.05} e
+\texttt{boundary\ =\ 0.4}.
+
+Lembre-se de que definir \texttt{boundary\ =\ 0.4} garante um esquema de
+classes em que um dos limites dos intervalos esteja em 0,4. Como o
+\texttt{binwidth\ =\ 0.05} também foi especificado, isso criará
+intervalos com limites em \textbf{0,30, 0,35, 0,40, 0,45, 0,50}, entre
+outros.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(virtual\_prop\_red, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ prop\_red)) }\SpecialCharTok{+}
+\FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{boundary =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{color =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proportion of 50 balls that were red"}\NormalTok{,}
+\AttributeTok{title =} \StringTok{"Distribution of 33 proportions red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}
+
+Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas
+inferiores a 30\%. Por outro lado, em alguns casos, obtivemos proporções
+superiores a 45\%. No entanto, as proporções que ocorreram com maior
+frequência ficaram entre 35\% e 40\% (em \textbf{11 das 33 amostras}).
+Por que temos essas diferenças nas proporções de bolas vermelhas?
+\textbf{Por causa da variação amostral}.
+
+\subsection*{Verificação de
+aprendizagem}\label{verificauxe7uxe3o-de-aprendizagem-1}
+\addcontentsline{toc}{subsection}{Verificação de aprendizagem}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Por que não foi possível estudar os efeitos da variação amostral
+  quando utilizamos a pá virtual apenas uma vez? Por que foi necessário
+  coletar \textbf{mais de uma amostra virtual} (no nosso caso,
+  \textbf{33 amostras virtuais})?
+\end{enumerate}
+
+\subsection*{Lista Semanal
+Obrigatória}\label{lista-semanal-obrigatuxf3ria}
+\addcontentsline{toc}{subsection}{Lista Semanal Obrigatória}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Agora suponha que queiramos estudar os efeitos da variação amostral
+  não para 33 amostras, mas para um número maior, digamos 1000 amostras.
+  Vamos novamente utilizar a função \texttt{rep\_sample\_n()}, com o
+  tamanho da amostra definido como 50, mas agora com o número de
+  repetições \texttt{reps} definido como 1000.
+\item
+  Temos 1000 réplicas de \texttt{prop\_red}, a proporção de bolas
+  vermelhas em amostras de 50 bolas. Utilizando o mesmo código de antes,
+  vamos agora visualizar a distribuição dessas 1000 réplicas de
+  \texttt{prop\_red} por meio de um histograma.
+\item
+  Observando o histograma produzido no item 2), você diria que amostrar
+  50 bolas em que 30\% são vermelhas é provável ou improvável? E quanto
+  a amostrar 50 bolas em que 10\% são vermelhas?
+\end{enumerate}
+
+\section{Conceitos Importantes}\label{conceitos-importantes}
+
+A seguir, apresentamos uma lista de termos e notação matemática
+relacionados à amostragem.
+
+Primeiramente, uma \textbf{população} é um conjunto de indivíduos ou
+observações de interesse. Isso também é comumente denominado
+\textbf{população de estudo}. Denotamos matematicamente o tamanho da
+população utilizando a letra maiúscula \(N\). Na nossa atividade de
+amostragem, a \textbf{população (de estudo)} é o conjunto de
+\(N = 2400\) bolas vermelhas e brancas, todas de mesmo tamanho, contidas
+na urna.
+
+\bookmarksetup{startatroot}
+
+\chapter{Distribuições Amostrais}\label{distribuiuxe7uxf5es-amostrais}
+
+\bookmarksetup{startatroot}
+
+\chapter{Estimação Pontual}\label{estimauxe7uxe3o-pontual}
+
+\bookmarksetup{startatroot}
+
+\chapter{Estimação Intervalar}\label{estimauxe7uxe3o-intervalar}
+
+\bookmarksetup{startatroot}
+
+\chapter{Testes de Hipóteses}\label{testes-de-hipuxf3teses}
+
+\bookmarksetup{startatroot}
+
+\chapter{Testes de Homogeneidade e
+Independência}\label{testes-de-homogeneidade-e-independuxeancia}
+
+\bookmarksetup{startatroot}
+
+\chapter{Inferência Estatística e Ciência de
+Dados}\label{inferuxeancia-estatuxedstica-e-ciuxeancia-de-dados}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Referências}\label{referuxeancias}
+\addcontentsline{toc}{chapter}{Referências}
+
+\markboth{Referências}{Referências}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{1}
+\end{CSLReferences}
+
+
+
+\end{document}
