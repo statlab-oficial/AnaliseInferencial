@@ -651,7 +651,70 @@ Iremos realizar o seguinte experimento em sala de aula:
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
+  Organização
 \end{enumerate}
+
+\begin{itemize}
+\item
+  A turma é dividida em grupos independentes (por exemplo, 33 grupos).
+\item
+  Cada grupo realiza uma única amostragem.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Protocolo experimental (por grupo)
+\end{enumerate}
+
+\begin{itemize}
+\item
+  A urna é misturada cuidadosamente, garantindo aleatoriedade.
+\item
+  O grupo retira uma amostra de tamanho fixo \(n\) (por exemplo,
+  \(n=50\)) sem reposição durante a retirada.
+\item
+  As bolas retiradas são observadas e classificadas por cor.
+\item
+  O grupo registra:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(R:\) o número de bolas vermelhas na amostra;
+  \item
+    \(\hat{p} = R/n:\) proporção amostral de bolas vermelhas.
+  \end{itemize}
+\item
+  Todas as bolas são devolvidas à urna.
+\item
+  A urna é novamente misturada antes da próxima amostragem.
+\end{itemize}
+
+\textbf{Cada grupo deve atuar de forma independente, sem acesso aos
+resultados dos demais.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Coleta e organização dos dados
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Cada grupo fornece sua estimativa de \(\hat{p}\).
+\item
+  O conjunto de estimativas é reunido em uma tabela ou planilha.
+\item
+  A proporções são representadas graficamente por meio de um histograma.
+\end{itemize}
+
+\textbf{Esse histograma representa a distribuição amostral da proporção
+para uma tamanho de amostra fixo \(n\).}
 
 \subsection*{Verificação de
 aprendizagem}\label{verificauxe7uxe3o-de-aprendizagem}
@@ -726,16 +789,16 @@ repetidas (ou replicadas)} de tamanho (n).
 # Groups:   replicate [1]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1    2025 red  
- 2         1    1994 white
- 3         1    1335 white
- 4         1    2086 white
- 5         1      91 white
- 6         1    2018 white
- 7         1    1603 white
- 8         1     803 white
- 9         1     381 white
-10         1      40 red  
+ 1         1    1597 red  
+ 2         1     373 white
+ 3         1     439 white
+ 4         1    2377 red  
+ 5         1     281 white
+ 6         1    1805 white
+ 7         1     299 red  
+ 8         1    2161 red  
+ 9         1    2203 white
+10         1     390 red  
 # i 40 more rows
 \end{verbatim}
 
@@ -769,16 +832,16 @@ com \texttt{==}. Em seguida, criaremos uma nova variável booleana
 # Groups:   replicate [1]
    replicate ball_ID color is_red
        <int>   <int> <chr> <lgl> 
- 1         1    2025 red   TRUE  
- 2         1    1994 white FALSE 
- 3         1    1335 white FALSE 
- 4         1    2086 white FALSE 
- 5         1      91 white FALSE 
- 6         1    2018 white FALSE 
- 7         1    1603 white FALSE 
- 8         1     803 white FALSE 
- 9         1     381 white FALSE 
-10         1      40 red   TRUE  
+ 1         1    1597 red   TRUE  
+ 2         1     373 white FALSE 
+ 3         1     439 white FALSE 
+ 4         1    2377 red   TRUE  
+ 5         1     281 white FALSE 
+ 6         1    1805 white FALSE 
+ 7         1     299 red   TRUE  
+ 8         1    2161 red   TRUE  
+ 9         1    2203 white FALSE 
+10         1     390 red   TRUE  
 # i 40 more rows
 \end{verbatim}
 
@@ -806,7 +869,7 @@ frame} com \textbf{uma única linha}, contendo estatísticas-resumo, como
 # A tibble: 1 x 2
   replicate num_red
       <int>   <int>
-1         1      15
+1         1      25
 \end{verbatim}
 
 Por que isso funciona? Porque o \texttt{R} trata \texttt{TRUE} como o
@@ -833,7 +896,7 @@ vermelhas, dividindo num\_red por 50:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      15      0.3
+1         1      25      0.5
 \end{verbatim}
 
 Em outras palavras, XX das bolas dessa amostra virtual eram vermelhas.
@@ -853,7 +916,7 @@ seguinte forma:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      15      0.3
+1         1      25      0.5
 \end{verbatim}
 
 Ótimo! XX das 50 bolas de virtual\_shovel eram vermelhas! Assim, com
@@ -900,16 +963,16 @@ visualizador de planilhas do RStudio, executando o comando
 # Groups:   replicate [33]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1    1321 white
- 2         1    2063 white
- 3         1     319 white
- 4         1     970 white
- 5         1    1355 white
- 6         1    1160 white
- 7         1     103 white
- 8         1     528 white
- 9         1    2089 white
-10         1    1986 red  
+ 1         1      15 red  
+ 2         1     170 white
+ 3         1     510 white
+ 4         1    1058 red  
+ 5         1     392 red  
+ 6         1    2164 white
+ 7         1    1310 red  
+ 8         1     282 white
+ 9         1     777 white
+10         1    1543 white
 # i 1,640 more rows
 \end{verbatim}
 
@@ -946,16 +1009,16 @@ resultantes:
 # A tibble: 33 x 3
    replicate   red prop_red
        <int> <int>    <dbl>
- 1         1    13     0.26
- 2         2    14     0.28
- 3         3    21     0.42
+ 1         1    19     0.38
+ 2         2    18     0.36
+ 3         3    20     0.4 
  4         4    22     0.44
- 5         5    22     0.44
- 6         6    21     0.42
- 7         7    21     0.42
- 8         8    19     0.38
- 9         9    13     0.26
-10        10    21     0.42
+ 5         5    13     0.26
+ 6         6    19     0.38
+ 7         7    26     0.52
+ 8         8    20     0.4 
+ 9         9    18     0.36
+10        10    18     0.36
 # i 23 more rows
 \end{verbatim}
 
