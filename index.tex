@@ -789,16 +789,16 @@ repetidas (ou replicadas)} de tamanho (n).
 # Groups:   replicate [1]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1    1597 red  
- 2         1     373 white
- 3         1     439 white
- 4         1    2377 red  
- 5         1     281 white
- 6         1    1805 white
- 7         1     299 red  
- 8         1    2161 red  
- 9         1    2203 white
-10         1     390 red  
+ 1         1    2217 red  
+ 2         1    1625 red  
+ 3         1    1487 red  
+ 4         1     347 red  
+ 5         1     727 white
+ 6         1     999 red  
+ 7         1    1069 red  
+ 8         1     430 white
+ 9         1     283 red  
+10         1     990 white
 # i 40 more rows
 \end{verbatim}
 
@@ -832,16 +832,16 @@ com \texttt{==}. Em seguida, criaremos uma nova variável booleana
 # Groups:   replicate [1]
    replicate ball_ID color is_red
        <int>   <int> <chr> <lgl> 
- 1         1    1597 red   TRUE  
- 2         1     373 white FALSE 
- 3         1     439 white FALSE 
- 4         1    2377 red   TRUE  
- 5         1     281 white FALSE 
- 6         1    1805 white FALSE 
- 7         1     299 red   TRUE  
- 8         1    2161 red   TRUE  
- 9         1    2203 white FALSE 
-10         1     390 red   TRUE  
+ 1         1    2217 red   TRUE  
+ 2         1    1625 red   TRUE  
+ 3         1    1487 red   TRUE  
+ 4         1     347 red   TRUE  
+ 5         1     727 white FALSE 
+ 6         1     999 red   TRUE  
+ 7         1    1069 red   TRUE  
+ 8         1     430 white FALSE 
+ 9         1     283 red   TRUE  
+10         1     990 white FALSE 
 # i 40 more rows
 \end{verbatim}
 
@@ -869,7 +869,7 @@ frame} com \textbf{uma única linha}, contendo estatísticas-resumo, como
 # A tibble: 1 x 2
   replicate num_red
       <int>   <int>
-1         1      25
+1         1      21
 \end{verbatim}
 
 Por que isso funciona? Porque o \texttt{R} trata \texttt{TRUE} como o
@@ -896,7 +896,7 @@ vermelhas, dividindo num\_red por 50:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      25      0.5
+1         1      21     0.42
 \end{verbatim}
 
 Em outras palavras, XX das bolas dessa amostra virtual eram vermelhas.
@@ -916,7 +916,7 @@ seguinte forma:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      25      0.5
+1         1      21     0.42
 \end{verbatim}
 
 Ótimo! XX das 50 bolas de virtual\_shovel eram vermelhas! Assim, com
@@ -963,16 +963,16 @@ visualizador de planilhas do RStudio, executando o comando
 # Groups:   replicate [33]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1      15 red  
- 2         1     170 white
- 3         1     510 white
- 4         1    1058 red  
- 5         1     392 red  
- 6         1    2164 white
- 7         1    1310 red  
- 8         1     282 white
- 9         1     777 white
-10         1    1543 white
+ 1         1    1792 red  
+ 2         1     149 red  
+ 3         1    1063 red  
+ 4         1    1462 white
+ 5         1     870 white
+ 6         1    1796 white
+ 7         1    1113 white
+ 8         1    1976 white
+ 9         1     561 white
+10         1     924 red  
 # i 1,640 more rows
 \end{verbatim}
 
@@ -1009,16 +1009,16 @@ resultantes:
 # A tibble: 33 x 3
    replicate   red prop_red
        <int> <int>    <dbl>
- 1         1    19     0.38
- 2         2    18     0.36
- 3         3    20     0.4 
- 4         4    22     0.44
- 5         5    13     0.26
- 6         6    19     0.38
- 7         7    26     0.52
- 8         8    20     0.4 
- 9         9    18     0.36
-10        10    18     0.36
+ 1         1    16     0.32
+ 2         2    19     0.38
+ 3         3    16     0.32
+ 4         4    17     0.34
+ 5         5    23     0.46
+ 6         6    14     0.28
+ 7         7    16     0.32
+ 8         8    25     0.5 
+ 9         9    19     0.38
+10        10    26     0.52
 # i 23 more rows
 \end{verbatim}
 
@@ -1109,6 +1109,364 @@ na urna.
 \bookmarksetup{startatroot}
 
 \chapter{Estimação Pontual}\label{estimauxe7uxe3o-pontual}
+
+\section{Estimador de Momentos}\label{estimador-de-momentos}
+
+Este método de estimação é um dos métodos mais antigos de estimação. Ele
+é utilizado desde o século XVIII. A ideia é bem simples. Vamos
+inicialmente definir para o caso uniparamétrico:
+
+Seja \(X\) uma variável aleatória com a seguinte f.d.p. ou f.p. ,
+\(f(x\;|\theta)\), suporte \(A\) , espaço paramétrico \(\Theta\) e
+\(E_{\theta}(X^r)<\infty,\; r=1,2,\dots\).
+
+Seja a amostra aleatória \(X_1,X_2,\ldots,X_n\) de \(X\) . Vamos igualar
+o primeiro populacional ao primeiro momento amostral, isto é,
+
+\[E_{\theta}(X)= \bar{X}.\]
+
+Vamos fazer alguns exemplos para fixar o conceito calculando também sua
+variância amostral.
+
+\textbf{Exemplo 1:} Considere \(X \sim U( (0,\theta)\) com
+
+\[E_{\theta}(X)=\frac{\theta}{2}\quad \text{e} \quad V(X)=\frac{\theta^2}{12}.\]
+
+Assim,
+
+\[E_{\theta}(X)= \frac{\theta}{2}=\bar{X}.\]
+
+O valor de \(\theta\) é:
+
+\[\theta=2\bar{X}.\]
+
+Assim o estimador pelo m?todo dos momentos de \(\theta\) é dado por:
+
+\[\widehat{\theta}=T_1=2\bar{X}.\]
+
+Note que:
+
+\[E(\bar{X})= \mu = \frac{\theta}{2}.\]
+
+Assim
+
+\[E(T_1)=E(2\bar{X})=2\;E(\bar{X})=2\;\frac{\theta}{2}=\theta,\] \(T_1\)
+é um estimador não viciado de \(\theta\).
+
+Note que:
+
+\[Var(\bar{X})=\frac{ \frac{\theta^2}{12}}{n}=\frac{\theta^2}{12n}.\]
+
+Assim,
+
+\[Var(T_1)=Var(2\bar{X})=4\;Var(\bar{X})=4\;\frac{\theta^2}{12n}=\frac{\theta^2}{3n}.\]
+
+\textbf{Exemplo 2:} Considere
+\(X \sim U_d( A),\;\;A=\{1,2,\ldots,\theta\}\)
+
+O espaço paramétrico é dado por:
+
+\[\Theta=\{1,2,\ldots\}.\]
+
+Sabemos que:
+
+\[E_{\theta}(X)=\frac{1+\theta}{2}\;\;\;;\; V(X)=\frac{\theta^2 -1}{12}.\]
+
+Assim,
+
+\[E_{\theta}(X)= \frac{1+\theta}{2}=\bar{X}.\]
+
+O valor de \(\theta\) é:
+
+\[\theta=2\bar{X} -1.\]
+
+Assim o estimador pelo m?todo dos momentos de \(\theta\) é dado por:
+
+\[\widehat{\theta}=T_2=2\bar{X}- 1.\]
+
+Note que:
+
+\[E(\bar{X})=\mu=\frac{1+\theta}{2}.\]
+
+Assim
+
+\[E(T_2)=E(2\bar{X} -1)=2\;E(\bar{X})-1=2\;\frac{1+\theta}{2}-1=\theta,\]
+
+\(T_2\) é um estimador não viciado de \(\theta\).
+
+Note que:
+
+\[Var(\bar{X})=\frac{ \frac{\theta^2 -1}{12}}{n}=\frac{\theta^2 -1}{12n}.\]
+
+Assim
+
+\[Var(T_2)=Var(2\bar{X}-1)=4\;Var(\bar{X})=4\;\frac{\theta^2-1}{12n}=\frac{\theta^2-1}{3n}.\]
+
+\textbf{Exemplo 3:} Seja \(X \sim Normal (\mu, 9).\)
+
+Sabemos que:
+
+\[A=(-\infty,\infty)\;\;;\;\; \Theta= (-\infty,\infty).\]
+
+Além disso:
+
+\[E_{\mu}=\mu\;\;;\;\;V(X)=9.\]
+
+Logo,
+
+\[E_{\mu}=\mu=\bar{X}.\]
+
+Assim
+
+\[\widehat{\mu}=T_3=\bar{X}\]
+
+é o estimador pelo método dos momentos para \(\mu\).
+
+Note que
+
+\[E(T_3)= \mu\;\;\;\;Var(T_3)= \frac{9}{n}.\]
+
+\textbf{Exemplo 4:} Agora considere \(X \sim Exponencial (\lambda).\)
+
+Sabemos que:
+
+\[A=(0,\infty)\;\;;\;\; \Theta= (0,\infty).\]
+
+Além disso:
+
+\[E_{\lambda}=\frac{1}{\lambda}\;\;;\;\;V(X)=\frac{1}{\lambda^2}.\]
+
+O estimador pelo método dos momentos é dado por:
+
+\[E_{\lambda}=\frac{1}{\lambda}=\bar{X}.\]
+
+Logo,
+
+\[\widehat{\lambda}=T_4=\frac{1}{\bar{X}}.\]
+
+Sabemos que
+
+\[S \sim Gama(n,\lambda). \]
+
+Note que:
+
+\[M_S(t)=\left[ \frac{\lambda}{\lambda -t}\right]^n, \;t <\lambda.\]
+
+A função geradora de momentos de \(\bar{X}\) é dada por:
+
+\[M_{\bar{X}}(t)=M_S(t/n)=\left[ \frac{\lambda}{\lambda -t/n}\right]^n, \;t/n <\lambda.\]
+
+\[M_{\bar{X}}(t)=\left[ \frac{n\lambda}{n\lambda -t}\right]^n, \;t < n\lambda.\]
+
+Assim
+
+\[ V= \bar{X} \sim Gama(n,n\lambda).\]
+
+A densidade de \(V\) é dada por:
+
+\[f_V(v)=\frac{(n\lambda)^n}{\Gamma(n)} v^{n-1}\;e^{-n\lambda v}\;\;I_A(v),\;A=(0,\infty).\]
+
+Note que:
+
+\[T_4=\frac{1}{\bar{X}}=\frac{1}{V}.\]
+
+Logo
+
+\[E(T_4)=\displaystyle \int_{0}^{\infty} \;\frac{1}{v}\;\frac{(n\lambda)^n}{\Gamma(n)} v^{n-1}\;e^{-n\lambda v}\;dv \]
+
+\[E(T_4)= \frac{(n\lambda)^n}{\Gamma(n)}\;\displaystyle \int_{0}^{\infty}v^{(n-1)-1}\;e^{-n\lambda v}\;dv.\]
+
+\[E(T_4)= \frac{(n\lambda)^n}{\Gamma(n)}\;IGG(a=n-1,b=n\lambda,c=1) ,\]
+
+com \(a=n-1>0\) ou \(n>1\).
+
+\[E(T_4)= \frac{(n\lambda)^n}{\Gamma(n)}\; \frac{\Gamma(n-1)}{(n\lambda)^{n-1}}= \frac {n\lambda}{n-1}=\frac{n}{n-1}\;\lambda \neq \lambda\]
+
+Logo \(T_4\) é um estimador viciado de \(\lambda\). Mas ele é
+assintoticamente não viciado para \(\lambda\).
+
+Vamos calcular a variância de \(T_4\):
+
+\[E(T_4^2)=\displaystyle \int_{0}^{\infty} \;\frac{1}{v^2}\;\frac{(n\lambda)^n}{\Gamma(n)} v^{n-1}\;e^{-n\lambda v}\;dv \]
+
+\[E(T_4^2 )= \frac{(n\lambda)^n}{\Gamma(n)}\;\displaystyle \int_{0}^{\infty}v^{(n-2)-1}\;e^{-n\lambda v}\;dv.\]
+
+\[E(T_4^2)= \frac{(n\lambda)^n}{\Gamma(n)}\;IGG(a=n-2,b=n\lambda,c=1) ,\]
+
+com \(a=n-2>0\) ou \(n>2\).
+
+\[E(T_4^2 )= \frac{(n\lambda)^n}{\Gamma(n)}\; \frac{\Gamma(n-2)}{(n\lambda)^{n-2}}= \frac {n^2 \lambda^2}{(n-1)(n-2)}=\frac{n^2}{(n-1)(n-2)}\;\lambda^2\]
+
+A variância de \(T_4\) ? dada por:
+
+\[Var(T_4)= \frac{n^2}{(n-1)(n-2)}\;\lambda^2- \frac{n^2}{(n-1)^2 }\;\lambda^2\]
+
+\[Var(T_4)= \frac{n^2}{(n-1)^2(n-2)}\;\lambda^2 \]
+
+Note que
+
+\[\displaystyle \lim_{n\to \infty} V(T_4)=0,\]
+
+assim \(T_4\) é um estimador consistente para \(\lambda\).
+
+O próximo exemplo mostrará uma situação distinta das anteriores.
+
+\textbf{Exemplo 5:} Seja
+\(Y_i \sim Normal\left(\mu_i=\beta X_i, \sigma^2\right), i=1,2,\ldots,n,\);
+independentes com \(X_i,i=1,2,\ldots,n\) constantes conhecidas.
+
+Note que:
+
+\[E(Y_i)=\beta X_i, i=1,2,\ldots,n.\]
+
+Quando as variáveis não são identicamente distribuídas precisamos de uma
+definição alternativa para o estimador pelo método dos momentos:
+
+\[\frac{\displaystyle \sum_{i=1}^{n} E(Y_i)}{n}=\bar{Y}.\]
+
+Logo
+
+\[\frac{\displaystyle \sum_{i=1}^{n} \beta X_i}{n}=\bar{Y}.\]
+
+\[ \beta\; \;\frac{\displaystyle \sum_{i=1}^{n} X_i}{n}=\bar{Y}.\]
+
+\[\beta\bar{X}=\bar{Y}.\]
+
+\[\widehat{\beta}=\frac{\bar{Y}}{\bar{X}}= \frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n} Y_i.\]
+
+O estimador pelo método dos momentos é uma combinação linear de
+\(Y_1,Y_2,\ldots,Y_n\).
+
+Vamos mostrar que ele é não viciado.
+
+\[E\left(\widehat{\beta} \right)=\;\frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n} E(Y_i)=\;\frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n}\;\beta X_i.\]
+
+\[E\left(\widehat{\beta} \right)=\;\beta\;\;\frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n}\; X_i=\beta.\]
+
+Vamos calcular agora a variância:
+
+\[Var\left(\widehat{\beta} \right)=\;\frac{1}{n^2\;\bar{X}^2}\;\displaystyle \sum_{i=1}^{n} V(Y_i)=\;\frac{1}{n^2\;\bar{X}^2 }\;n\;\sigma^2=\frac{\sigma^2}{n\;\bar{X}^2 }.\]
+
+\textbf{Exemplo 6} Seja \(X \sim N(0,\sigma^2)\). Qual o estimador \(T\)
+pelo método dos momentos para \(\sigma^2\)?
+
+Note que:
+
+\[E(X)=0\;\;E(X^2)= \sigma^2.\]
+
+\[T= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n}.\]
+
+Note que:
+
+\[E(T)=\sigma^2.\]
+
+\[Var(T)=\frac{1}{n^2} \;\displaystyle \sum_{i=1}^{n}\; V(X_i^2)= \frac{n V(X^2)}{n^2}=\frac{V(X^2)}{n}. \]
+
+Mas
+
+\[Var(X^2)=E(X^4)-E^2(X^2).\]
+
+Sabemos que
+
+\[Z^4=\left[\frac{X-\mu}{\sigma} \right]^4= \frac{X^4}{\sigma^4}.\]
+
+A curtose da normal vale 3 logo:
+
+\[E(Z^4)=3.\]
+
+\[E(X^4)=3 \sigma^4.\]
+
+\[V(X^2)=3 \sigma^4- \sigma^4=2 \sigma^4.\]
+
+Logo,
+
+\[Var(T)= \frac{2 \sigma^4}{n}.\]
+
+Agora vamos estudar o caso biparamétrico:
+
+Seja \(X \sim N(\mu, \sigma^2)\). Calcule os estimadores pelo método dos
+momentos para \(\mu\) e \(\sigma^2\).
+
+Como
+
+\[E(X)=\mu\;\;\;\;\text{e}\;\;\;E(X^2)=\sigma^2 +\mu^2.\]
+
+Assim vamos igualar os dois primeiros momentos populacionais aos dois
+primeiros momentos amostrais:
+
+\[E(X)=\mu=\bar{X}.\]
+
+\[\widehat{\mu}=\bar{X}.\]
+
+\[E(X^2)=\sigma^2 +\mu^2= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n}.\]
+
+Logo,
+
+\[\widehat{\sigma^2} +\hat{\mu^2}= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n}.\]
+
+\[\widehat{\sigma^2}=\frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n} -\bar{X}^2 =\frac{\displaystyle \sum_{i=1}^{n}\; X_i^2- n\;\bar{X}^2}{n}\]
+
+\[\widehat{\sigma^2}=\frac{\displaystyle \sum_{i=1}^{n}\; \left(X_i-\bar{X}\right)^2}{n}=\frac{(n-1)S^2}{n}. \]
+
+Note que
+
+\[ E\left(\widehat{\sigma^2}\right)= \frac{n-1}{n} E(S^2)=\frac{n-1}{n}\;\sigma^2,\]
+
+que é viciado mas assintoticamente não viciado.
+
+Por outro lado temos:
+
+\[ Var\left(\widehat{\sigma^2}\right)= \frac{(n-1)^2}{n^2} Var(S^2)=\frac{(n-1)^2}{n^2}\; \frac{2\sigma^4}{n-1}= \frac{2(n-1)}{n^2} \sigma^4.\]
+
+Note que \(\widehat{\sigma^2}\) é um estimador consistente para
+\(\sigma^2\).
+
+\textbf{Exemplo 7:} Seja \(X \sim Gama(\alpha >0,\beta >0)\). A f.d.p.
+de \(X\) é dada por:
+
+\[f(x|\alpha,\beta)=\frac{\beta^{\alpha}}{\Gamma(\alpha)}\;x^{\alpha-1}\;e^{-\beta\;x}\;I_A(x),\;\;A=(0,\infty).\]
+
+Note que
+
+\[E(X)=\frac{\alpha}{\beta}\;\;\;,V(X)= \frac{\alpha}{\beta^2} \;\;\;\;\;\;;\;E(X^2)=\frac{\alpha}{\beta^2} +\frac{\alpha^2}{\beta^2}.\]
+
+Sejam \(\widehat{\alpha}\) e \(\widehat{\beta}\) os estimadores pelo
+método dos momentos:
+
+Assim
+
+\[\frac{\widehat{\alpha}}{\widehat{\beta}}=\bar{X} \]
+
+Assim,
+
+\[\widehat{\alpha}=\bar{X}\;\widehat{\beta}.\]
+
+\[\frac{\widehat{\alpha}}{\widehat{\beta}^2} +\frac{\widehat{\alpha}^2}{\widehat{\beta}^2}=\frac{1}{n}\;\displaystyle \sum_{i=1}^{n}\; X_i^2. \]
+
+Note que:
+
+\[ \frac{\hat{\alpha}}{\widehat{\beta}}\;\frac{1} {\widehat{\beta}} +\frac{\hat{\alpha}^2}{\hat{\beta}^2}=\frac{1}{n}\;\displaystyle \sum_{i=1}^{n}\; X_i^2. \]
+
+\[\bar{X}\;\frac{1} {\widehat{\beta}} +\bar{X}^2=\frac{1}{n}\;\displaystyle \sum_{i=1}^{n}\; X_i^2 \]
+
+\[\bar{X}\;\frac{1} {\hat{\beta}}= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2 -n \bar{X}^2}{n}= \hat{\sigma^2}\]
+
+logo,
+
+\[\hat{\beta}=\frac{\bar{X}}{ \hat{\sigma^2}}.\]
+
+\[\hat{\alpha}=\bar{X}\;\widehat{\beta}=\frac{\bar{X}^2}{ \widehat{\sigma^2}}.\]
+
+Uma maneira mais rápida de achar este estimadores é notar que:
+
+\[\frac{E(X)}{V(X)}= \beta\]
+
+logo
+
+\[ \hat{\beta}=\frac{\bar{X}}{\widehat{\sigma^2}}.\]
+
+Note que podemos usar tantos os momentos em relação é origem como os
+centrais.
 
 \bookmarksetup{startatroot}
 
