@@ -789,16 +789,16 @@ repetidas (ou replicadas)} de tamanho (n).
 # Groups:   replicate [1]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1    2217 red  
- 2         1    1625 red  
- 3         1    1487 red  
- 4         1     347 red  
- 5         1     727 white
- 6         1     999 red  
- 7         1    1069 red  
- 8         1     430 white
- 9         1     283 red  
-10         1     990 white
+ 1         1    1010 white
+ 2         1     644 white
+ 3         1    1828 white
+ 4         1     557 white
+ 5         1    1470 white
+ 6         1    1569 white
+ 7         1    1236 red  
+ 8         1    1935 white
+ 9         1    1985 white
+10         1    1520 white
 # i 40 more rows
 \end{verbatim}
 
@@ -832,16 +832,16 @@ com \texttt{==}. Em seguida, criaremos uma nova variável booleana
 # Groups:   replicate [1]
    replicate ball_ID color is_red
        <int>   <int> <chr> <lgl> 
- 1         1    2217 red   TRUE  
- 2         1    1625 red   TRUE  
- 3         1    1487 red   TRUE  
- 4         1     347 red   TRUE  
- 5         1     727 white FALSE 
- 6         1     999 red   TRUE  
- 7         1    1069 red   TRUE  
- 8         1     430 white FALSE 
- 9         1     283 red   TRUE  
-10         1     990 white FALSE 
+ 1         1    1010 white FALSE 
+ 2         1     644 white FALSE 
+ 3         1    1828 white FALSE 
+ 4         1     557 white FALSE 
+ 5         1    1470 white FALSE 
+ 6         1    1569 white FALSE 
+ 7         1    1236 red   TRUE  
+ 8         1    1935 white FALSE 
+ 9         1    1985 white FALSE 
+10         1    1520 white FALSE 
 # i 40 more rows
 \end{verbatim}
 
@@ -869,7 +869,7 @@ frame} com \textbf{uma única linha}, contendo estatísticas-resumo, como
 # A tibble: 1 x 2
   replicate num_red
       <int>   <int>
-1         1      21
+1         1      18
 \end{verbatim}
 
 Por que isso funciona? Porque o \texttt{R} trata \texttt{TRUE} como o
@@ -896,7 +896,7 @@ vermelhas, dividindo num\_red por 50:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      21     0.42
+1         1      18     0.36
 \end{verbatim}
 
 Em outras palavras, XX das bolas dessa amostra virtual eram vermelhas.
@@ -916,7 +916,7 @@ seguinte forma:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      21     0.42
+1         1      18     0.36
 \end{verbatim}
 
 Ótimo! XX das 50 bolas de virtual\_shovel eram vermelhas! Assim, com
@@ -963,16 +963,16 @@ visualizador de planilhas do RStudio, executando o comando
 # Groups:   replicate [33]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1    1792 red  
- 2         1     149 red  
- 3         1    1063 red  
- 4         1    1462 white
- 5         1     870 white
- 6         1    1796 white
- 7         1    1113 white
- 8         1    1976 white
- 9         1     561 white
-10         1     924 red  
+ 1         1    1949 white
+ 2         1    1296 red  
+ 3         1    1108 red  
+ 4         1      59 white
+ 5         1    2206 red  
+ 6         1     850 red  
+ 7         1    2219 white
+ 8         1    1762 red  
+ 9         1    2124 white
+10         1    1440 white
 # i 1,640 more rows
 \end{verbatim}
 
@@ -1009,16 +1009,16 @@ resultantes:
 # A tibble: 33 x 3
    replicate   red prop_red
        <int> <int>    <dbl>
- 1         1    16     0.32
- 2         2    19     0.38
- 3         3    16     0.32
+ 1         1    19     0.38
+ 2         2    14     0.28
+ 3         3    13     0.26
  4         4    17     0.34
- 5         5    23     0.46
- 6         6    14     0.28
- 7         7    16     0.32
- 8         8    25     0.5 
- 9         9    19     0.38
-10        10    26     0.52
+ 5         5    20     0.4 
+ 6         6    19     0.38
+ 7         7    21     0.42
+ 8         8    20     0.4 
+ 9         9    17     0.34
+10        10    24     0.48
 # i 23 more rows
 \end{verbatim}
 
@@ -1467,6 +1467,774 @@ logo
 
 Note que podemos usar tantos os momentos em relação é origem como os
 centrais.
+
+\section{Método de Mínimos
+Quadrados}\label{muxe9todo-de-muxednimos-quadrados}
+
+Vamos analisar a seção 11.4 do livro do Bussab e Morettin.
+
+Um dos procedimentos mais usados para obter estimadores é aquele que se
+baseia no princípio dos mínimos quadrados, introduzido por Gauss em
+1794, mas que primeiro apareceu com esse nome no apêndice do tratado de
+Legendre, Nouvelles Méthodes pour la Determination des Orbites des
+Comètes, publicado em Paris em 1806. Gauss somente viria a publicar seus
+resultados em 1809, em Hamburgo. Ambos utilizaram o princípio em conexão
+com problemas de Astronomia e Física.
+
+Vejamos o procedimento por meio de um exemplo simples.
+
+**Exemplo* Um engenheiro está estudando a resistência \(Y\) de uma fibra
+em função de seu diâmetro \(X\) e notou que as variáveis são
+aproximadamente proporcionais, isto é, elas obedecem à relação
+
+\[Y \approx  \theta X,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; (11.25).\] em que
+\(\theta\) é o coeficiente de proporcionalidade. Agora ele deseja
+estimar o parâmetro \(\theta\) , baseado numa amostra de cinco unidades,
+que, submetidas a mensuração e testes, produziram os resultados:
+
+\begin{longtable}[]{@{}lllllll@{}}
+\toprule\noalign{}
+& 1 & 2 & 3 & 4 & 5 & Média \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{X} & 1,2 & 1,5 & 1,7 & 2,0 & 2,6 & \(\bar{X}=1,8\) \\
+\textbf{Y} & 3,9 & 4,7 & 5,6 & 5,8 & 7,0 & \(\bar{Y}=5,4\) \\
+\end{longtable}
+
+Vamos fazer um diagrama de dispersão :
+
+Foi feito um pequeno programa no \textbf{R}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ X}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{26}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.2 1.5 1.7 2.0 2.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{39}\NormalTok{,}\DecValTok{47}\NormalTok{,}\DecValTok{56}\NormalTok{,}\DecValTok{58}\NormalTok{,}\DecValTok{70}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;Y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3.9 4.7 5.6 5.8 7.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{=}\FunctionTok{length}\NormalTok{(Y);n}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Xb}\OtherTok{=}\FunctionTok{mean}\NormalTok{(X);Xb}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Yb}\OtherTok{=}\FunctionTok{mean}\NormalTok{(Y);Yb}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 5.4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(X,Y,}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{3}\NormalTok{),}\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a=}\DecValTok{0}\NormalTok{,}\AttributeTok{b=}\DecValTok{3}\NormalTok{,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}
+
+O valor \(a\) é o coeficiente linear e o valor \(b\) o coeficiente
+angular da reta que passa pela origem.
+
+Inspecionando os resultados, conclui-se que \(\hat{\theta}= 3\) parece
+ser um valor razoável.
+
+Como verificar a qualidade dessa estimativa? Podemos utilizar o modelo
+
+\[\hat{Y}= 3X\] e ver como esse prevê os valores de \(Y\), para os dados
+valores de \(X\), e como são as discrepâncias entre os valores
+observados e os estimados pelo modelo.
+
+Essa análise está resumida na Tabela abaixo:
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+X & Y & \(\hat{Y}=3X\) & \(e=Y-\hat{Y}\) & \(e^2\) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1,2 & 3,9 & 3,6 & 0,3 & 0,09 \\
+1,5 & 4,7 & 4,5 & 0,2 & 0,04 \\
+1,7 & 5,6 & 5,1 & 0,5 & 0,25 \\
+2,0 & 5,8 & 6,0 & −0,2 & 0,04 \\
+2,6 & 7,0 & 7,8 & −0,8 & 0,64 \\
+& & \textbf{Total} & \textbf{0} & \textbf{1,06} \\
+\end{longtable}
+
+Os valores da coluna \((Y - 3X)=(Y-\bar{Y})\) medem a inadequação do
+modelo para cada observação da amostra, enquanto o valor é uma tentativa
+de medir o erro quadrático total da amostra?. Como em situações
+anteriores, elevou-se ao quadrado para evitar o problema do sinal.
+
+Quanto menor for o erro quadrático total, melhor será a estimativa.
+
+Isso nos sugere procurar a estimativa que torne mínima essa soma de
+quadrados. Matematicamente, o problema passa a ser o de encontrar o
+valor de \(\theta\) que minimize a função
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta X_i)^2.\]
+
+O mínimo da função é obtido derivando-a em relação a \(\theta\), e
+igualando o resultado a zero (ver Morettin et al., 2005), o que resulta
+
+\[S'(\theta)=2\;\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta X_i)(-X_i),\]
+
+\[S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;(X_i\;Y_i-\theta X_i^2)=0\]
+
+\[S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i+ 2\theta\; \displaystyle \sum_{i=1}^{5} X_i^2.\]
+
+A derivada segunda de \(S\) é dada por:
+
+\[S^{''}(\theta)=2 \displaystyle \sum_{i=1}^{5} X_i^2>0\]
+
+Igualando a derivada primeira a zero temos:
+
+\[ \displaystyle \sum_{i=1}^{5}\;X_i\;Y_i -\theta \displaystyle \sum_{i=1}^{5}\;X_i^2=0\]
+
+Assim
+
+\[\theta=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{5}\;X_i^2},\]
+
+que é ponto de mínimo relativo pois a derivada segunda é sempre
+positiva.
+
+O estimador de mínimos quadrados de \(\theta\) é dado por:
+
+\[\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{5}\;X_i^2}.\]
+
+Usando os dados acima encontramos \(\hat{\theta}_{MQ} = 2,94\) , que
+conduz a um valor mínimo para \(S(\theta)\) de \$ 0,94\$ . Observe que
+esse valor é realmente menor do que o observado para \(\theta = 3\), ou
+seja, \(1,06\).
+
+Vamos utilizar o \texttt{R} para calcular a estimativa de mínimos
+quadrados de \(\theta\) bem como os valores previstos pelo modelo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{26}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.2 1.5 1.7 2.0 2.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{39}\NormalTok{,}\DecValTok{47}\NormalTok{,}\DecValTok{56}\NormalTok{,}\DecValTok{58}\NormalTok{,}\DecValTok{70}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;Y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3.9 4.7 5.6 5.8 7.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{=}\FunctionTok{length}\NormalTok{(Y);n}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SX}\OtherTok{=}\FunctionTok{sum}\NormalTok{(X);SX}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X2}\OtherTok{=}\NormalTok{X}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{SX2}\OtherTok{=}\FunctionTok{sum}\NormalTok{(X2);SX2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 17.34
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{XY}\OtherTok{=}\NormalTok{X}\SpecialCharTok{*}\NormalTok{Y}
+\NormalTok{SXY}\OtherTok{=}\FunctionTok{sum}\NormalTok{(XY);SXY}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 51.05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{teta\_est}\OtherTok{=}\NormalTok{SXY}\SpecialCharTok{/}\NormalTok{SX2;teta\_est}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.94406
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(teta\_est,}\DecValTok{2}\NormalTok{)  }\DocumentationTok{\#\#Estimativa de mínimos quadrados.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.94
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y\_est}\OtherTok{=}\NormalTok{teta\_est}\SpecialCharTok{*}\NormalTok{X;Y\_est}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3.532872 4.416090 5.004902 5.888120 7.654556
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e}\OtherTok{=}\NormalTok{Y}\SpecialCharTok{{-}}\NormalTok{Y\_est}
+\NormalTok{e2}\OtherTok{=}\NormalTok{e}\SpecialCharTok{\^{}}\DecValTok{2}
+\FunctionTok{sum}\NormalTok{(e2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.005738
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tabela}\OtherTok{=}\FunctionTok{cbind}\NormalTok{(X,Y,X2,XY,Y\_est,e,e2);tabela}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       X   Y   X2    XY    Y_est           e          e2
+[1,] 1.2 3.9 1.44  4.68 3.532872  0.36712803 0.134782989
+[2,] 1.5 4.7 2.25  7.05 4.416090  0.28391003 0.080604908
+[3,] 1.7 5.6 2.89  9.52 5.004902  0.59509804 0.354141676
+[4,] 2.0 5.8 4.00 11.60 5.888120 -0.08811995 0.007765126
+[5,] 2.6 7.0 6.76 18.20 7.654556 -0.65455594 0.428443479
+\end{verbatim}
+
+Vamos fazer agora com uma função direta do \texttt{R}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod1}\OtherTok{=}\FunctionTok{lm}\NormalTok{(Y}\SpecialCharTok{\textasciitilde{}}\NormalTok{X }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{);mod1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Y ~ X - 1)
+
+Coefficients:
+    X  
+2.944  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       1        2        3        4        5 
+3.532872 4.416090 5.004902 5.888120 7.654556 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Y ~ X - 1)
+
+Residuals:
+       1        2        3        4        5 
+ 0.36713  0.28391  0.59510 -0.08812 -0.65456 
+
+Coefficients:
+  Estimate Std. Error t value Pr(>|t|)    
+X   2.9441     0.1204   24.45 1.66e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5014 on 4 degrees of freedom
+Multiple R-squared:  0.9934,    Adjusted R-squared:  0.9917 
+F-statistic: 597.7 on 1 and 4 DF,  p-value: 1.661e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: Y
+          Df  Sum Sq Mean Sq F value    Pr(>F)    
+X          1 150.294 150.294  597.75 1.661e-05 ***
+Residuals  4   1.006   0.251                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SY2}\OtherTok{=}\FunctionTok{sum}\NormalTok{(Y}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{);SY2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 151.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#Observe que:}
+\FloatTok{150.294} \SpecialCharTok{+} \FloatTok{1.006}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 151.3
+\end{verbatim}
+
+Como foi dito, não esperávamos uma relação perfeita entre as duas
+variáveis, já que o diâmetro da fibra não é o único responsável pela
+resistência; outros fatores não controlados afetam o resultado.
+
+Desse modo, duas amostras obtidas do mesmo diâmetro \(X\) não teriam
+obrigatoriamente que apresentar o mesmo resultado \(Y\), mas valores em
+torno de um valor esperado \(\theta X\).
+
+Em outras palavras, estamos supondo que, para um dado valor da variável
+explicativa \$ X\$, os valores da variável resposta \$ Y\$ seguem uma
+distribuição de probabilidade \$ f\_Y(y)\$, centrada em \(\theta X\).
+
+Isso equivale a afirmar que, para cada \(X\), o desvio
+
+\[\epsilon  = Y-\theta X\]
+
+segue uma distribuição centrada no zero.
+
+Para melhor entendimento dessa proposição, veja o Capítulo 16. Podemos,
+então, escrever
+
+\[E(Y | x) = \theta x, \;\;\mbox{para todo valor}\;\; x.\]
+
+É comum supor que \(\epsilon\) tem a mesma distribuição, para todo valor
+\$ x\$ da variável explicativa \(X\).
+
+Desse modo, é comum escrever
+
+\[Y = \theta\;x+ \epsilon,\]
+
+com \(\epsilon\) seguindo a distribuição \(f_{\epsilon}(.)\), com média
+zero. Como ilustração, poderíamos supor que
+
+\[\epsilon \sim N(0,\sigma^2),\;\;\;\mbox{para todo}\;\; x.\]
+
+Quanto menor for a variância \(\sigma^2\) , melhor será a previsão de
+\(Y\) como função de \$ x\$ . Assim, parece razoável escolher \$
+\theta\$ que torna mínima a soma dos quadrados do erros:
+
+O modelo acima pode ser generalizado, de modo a envolver outras funções
+do parâmetro, resultando no modelo
+
+\[Y = g(X;  \theta) + \epsilon,\;\;\;\;\;\;\;\;\;\; (11.27)\]
+
+Note que
+
+\[E(Y) = g(X;  \theta),\]
+
+e devemos procurar o valor de \(\theta\) que minimize a função
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{n}\;\epsilon_i^2=\displaystyle \sum_{i=1}^{n}\;(Y_i-E(Y_i))^2=\displaystyle \sum_{i=1}^{n}\;(Y_i- g(X_i;\theta))^2,\;\;\;\;\;\;\;(11.28)\]
+
+Para uma amostra \((X_1, Y_1),\ldots, (X_n, Y_n)\) das variáveis \(X\) e
+\(Y\). A solução MQ é chamada de estimador de mínimos quadrados (EMQ) de
+\(\theta\).
+
+Nos Capítulos 15 e 16, voltaremos a esse tópico e trataremos com mais
+detalhes os chamados modelos lineares.
+
+Suponha que
+
+\[Y_i | X_i = \theta X_i + \epsilon_i, \;\;\;i=1,2,\ldots,n\]
+
+com
+
+\[\epsilon_i \sim N(0,\sigma^2),\;\;\;i=1,2,\ldots,n\]
+
+Na prática usamos:
+
+\[Y_i  = \theta X_i + \epsilon_i, \;\;\;i=1,2,\ldots,n.\]
+
+Aplicando o operador esperança temos:
+
+\[E\left(Y_i \right) = \theta X_i + E(\epsilon_i)= \theta X_i+0= \theta X_i.\]
+
+Calculando a variância temos:
+
+\[Var\left( Y_i \right) = Var\left(\theta X_i + \epsilon_i\right)= Var(\epsilon_i)= \sigma^2.\]
+
+Considere o estimador de MQ de \(\theta\) dado por:
+
+\[\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{n}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{n}\;X_i^2}= \displaystyle \sum_{i=1}^{n}\;w_i \;Y_i,\]
+com
+
+\[w_i= \frac{X_i}{\sum_{i=1}^{n}\;X_i^2}.\]
+
+Inicialmente mostre que:
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i\;X_i =1.\]
+
+\textbf{Prova}
+
+Temos que :
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i\;X_i = \displaystyle \sum_{i=1}^{n}\; \;\frac{X_i}{\sum_{i=1}^{n}\;X_i^2} \times X_i.\]
+
+\[\displaystyle \sum_{i=1}^{n}\;  w_i\;X_i= \frac{1}{\sum_{i=1}^{n}\;X_i^2}\;\;\displaystyle \sum_{i=1}^{n}\;X_i^2=1.\]
+
+Agora mostre que \(\hat{\theta}_{MQ}\) é um estimador não viciado de
+\(\theta\).
+
+\[E\left(\hat{\theta}_{MQ}\right)=E\left(\displaystyle \sum_{i=1}^{n}\; w_i Y_i \right),\]
+
+\[E\left(\hat{\theta}_{MQ}\right)=\displaystyle \sum_{i=1}^{n}\;E(w_i\;Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i\;E(\;Y_i)\]
+
+\[E\left(\hat{\theta}_{MQ}\right)= \displaystyle \sum_{i=1}^{n}\;w_i\;\theta\;X_i=\theta\;\displaystyle \sum_{i=1}^{n}\;X_i w_i\]
+
+\[E\left(\hat{\theta}_{MQ}\right)=\theta \times 1=\theta.\]
+
+Agora mostre que:
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i^2\; =\frac{1}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.\]
+
+\textbf{Prova:}
+
+Seja \[A=\displaystyle \sum_{i=1}^{n}\;X_i^2\].
+
+Assim
+
+\[w_i= \frac{X_i}{A}\;\;\;\;\;,w_i^2= \frac{X_i^2}{A^2} \]
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i^2\;=\displaystyle \sum_{i=1}^{n}\;\frac{X_i^2}{A^2}=\frac{1}{A^2}\;\displaystyle \sum_{i=1}^{n}\;X_i^2\]
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i^2\;=\frac{1}{A^2}\;A=\frac{1}{A}=\;\frac{1}{\displaystyle \sum_{i=1}^{n}\;X_i^2}\]
+
+Agora mostre que a variância do estimador de mínimos quadrados de
+\(\theta\) é dada por:
+
+\[Var\left(\hat{\theta}_{MQ}\right)= \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.\]
+
+\textbf{Prova:}
+
+\[Var\left(\hat{\theta}_{MQ}\right)=Var\left(\displaystyle \sum_{i=1}^{n}\; w_i Y_i \right)=\displaystyle \sum_{i=1}^{n}\;Var( w_i Y_i),\]
+
+\[Var\left(\hat{\theta}_{MQ}\right)=\displaystyle \sum_{i=1}^{n}\;w_i^2\;V(Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i^2\;\sigma^2, \]
+
+\[Var\left(\hat{\theta}_{MQ}\right)=\sigma^2\;\displaystyle \sum_{i=1}^{n}\;w_i^2=
+\frac{\sigma^2}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.\]
+
+Qual a distribuição Amostral do estimador de mínimos quadrados
+\(V=\hat{\theta}_{MQ}\)?
+
+\textbf{Prova:} Sabemos que
+
+\[Y_i \sim N(\theta X_i, \sigma^2)\] e sua função geradora de momentos é
+dada por:
+
+\[M_{Y_i}(t)=\exp(\theta X_i\;t + \frac{1}{2} \sigma^2 \;t^2 )\]
+
+A função de momentos de \(V\) é dada por:
+
+\[M_V(t)=E\left(e^{tV}\right)=E\left(e^{t\;\displaystyle \sum_{i=1}^{n}\;w_iY_i }\right)\]
+
+\[M_V(t)=E\left(e^{\;\displaystyle \sum_{i=1}^{n}\;w_i\;t\;Y_i} \right)\]
+
+\[M_V(t)=\displaystyle \prod_{i=1}^{n}\;E\left( e^{wi\;t\;Y_i} \right),\]
+
+\[M_V(t)=\displaystyle \prod_{i=1}^{n}\;M_{Y_i}(w_i t)\]
+
+\[M_V(t)=\displaystyle \prod_{i=1}^{n}\;\exp(\theta X_i\;w_i\;t + \frac{1}{2} \sigma^2 \;w_i^2\;t^2)\]
+
+\[M_V(t)=\exp\left(\theta\;t\; \displaystyle \sum_{i=1}^{n}X_i\;w_i\; + \frac{1}{2} \sigma^2 \;\displaystyle \sum_{i=1}^{n} w_i^2\;t^2\right)\]
+
+\[M_V(t)=\exp\left(\theta\;t\;\times 1 +\frac{1}{2}\times  \sigma^2  \times \frac{1}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)\]
+
+\[M_V(t)=\exp\left(\theta\;t\; +\frac{1}{2}   \times \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)\]
+
+Assim
+
+\[V=\hat{\theta}_{MQ}  \sim N \left( \theta,\frac {\sigma^2}{\displaystyle \sum_{i=1}^{n} X_i^2}\right)\]
+
+Qual o estimador de mínimos quadrados baseado em uma amostra aleatória
+de tamanho \(n\), \(X_1,X_2,\ldots,X_n)\), de uma variável \(X\) com
+distribuição:
+
+\begin{itemize}
+\tightlist
+\item
+  \(X \sim Poisson(\theta)\).
+\item
+  \(X \sim N(\mu,1)\).
+\item
+  \(X \sim Ber(p).\)
+\end{itemize}
+
+\textbf{Solução:} Devemos minimizar
+
+\begin{verbatim}
+Sabemos que
+\end{verbatim}
+
+\[E(X_i)=\theta,\;\;i=1,2,\ldots,n.\]
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\theta)^2\]
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{n}\;X_i^2- 2\displaystyle \sum_{i=1}^{n}\;X_i\;\theta + n\theta^2=a\theta^2 +b \theta +c\]
+
+Como \(a>0\) temos
+
+\[\theta_{min}=\frac{-b}{2a}=\frac{2\displaystyle \sum_{i=1}^{n}\;X_i}{2n}=\bar{X}\]
+
+que é o nosso estimador de mínimos quadrados.
+
+No caso da normal temos:
+
+Sabemos que
+
+\[E(X_i)=\mu,\;\;i=1,2,\ldots,n.\]
+
+\[S(\mu)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\mu)^2\]
+
+\[\mu_{min}=\bar{X},\]
+
+que é o nosso estimador de mínimos quadrados.
+
+No caso da Bernouli temos
+
+\[E(X_i)=p,\;\;i=1,2,\ldots,n.\]
+
+\[S(p)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-p)^2\]
+
+\[S(p)=np^2 -2\displaystyle \sum_{i=1}^{n}\;X_i\;p  +\displaystyle \sum_{i=1}^{n}\;X_i^2\]
+
+\[S'(p)=2pn-2\displaystyle \sum_{i=1}^{n}\;X_i \]
+
+\[S^{''}(p)=2n >0\]
+
+De \(S'(p)=0\) temos
+
+\[p_{min}=\bar{X},\]
+
+que é o nosso estimador de mínimos quadrados.
+
+\textbf{Problemas}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Estamos estudando o modelo \$ y\_t= \mu  + \epsilon\_t\$, para o qual
+  uma amostra de cinco elementos produziu os seguintes valores para
+  \(y_t: 3,
+  5, 6, 8, 16.\)
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Calcule os valores de \[S(\mu)=\displaystyle  \sum_{t} \;(y_t-\mu)^2\]
+  para \(\mu = 6, 7, 8, 9, 10\), e faça o gráfico de \(S(\mu)\) em
+  relação a \(\mu\).
+\end{enumerate}
+
+Qual o valor que parece tornar mínimo \(S(\mu)\)?
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Derivando \(S(\mu)\) em relação a \(\mu\) , e igualando o resultado a
+  zero, você encontrará o EMQ de \(\mu\). Usando os dados acima,
+  encontre a estimativa para \(\mu\) e compare com o resultado do item
+  anterior.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Os dados abaixo referem-se ao índice de inflação (\(y_t\)) de 1967 a
+  1979.
+\end{enumerate}
+
+\begin{longtable}[]{@{}llllllll@{}}
+\toprule\noalign{}
+Ano (\(t\)) & 1967 & 1969 & 1971 & 1973 & 1975 & 1977 & 1979 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Inflação (\(y_t\)) & 128 & 192 & 277 & 373 & 613 & 1236 & 2639 \\
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Faça o gráfico de \(y_t\) contra \(t\).
+\item
+  Considere ajustar o modelo
+\end{enumerate}
+
+\[y_t= \alpha + \beta t + \epsilon_t \]
+
+aos dados. Encontre as estimativas de mínimos quadrados de \(\alpha\) e
+\(\beta\).
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\item
+  Qual seria a inflação em 1981?
+\item
+  Você teria alguma restrição em adotar o modelo linear nesse caso ?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  No Problema 7, determinamos os estimadores de mínimos quadrados para o
+  modelo \[y_t= f(t) + \epsilon_t,\] no qual
+\end{enumerate}
+
+\[f(t) = \alpha + \beta\;t\].
+
+Suponha agora que
+
+\[f(t) = \alpha + \beta\; x_t,\; t = 1,2,\ldots, n,\]
+
+ou seja, temos \(n\) valores fixos \(x_1,x_2,\ldots,x_n\) uma variável
+fixa (não aleatória) \(x\). Obtenha os EMQ de \(\alpha\) e \(\beta\)
+para esse modelo.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Aplique os resultados do Problema 3 para os dados a seguir:
+\end{enumerate}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1389}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1111}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\(t\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+7
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+8
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+9
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+10
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(x_t\) & 1,5 & 1,8 & 1,6 & 2,5 & 4,0 & 3,8 & 4,5 & 5,1 & 6,5 & 6,0 \\
+\(y_t\) & 66,8 & 67,0 & 66,9 & 67,6 & 68,9 & 68,7 & 69,3 & 69,8 & 71,0 &
+70,6 \\
+\end{longtable}
 
 \bookmarksetup{startatroot}
 
