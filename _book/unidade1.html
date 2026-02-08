@@ -387,16 +387,16 @@ window.Quarto = {
 # Groups:   replicate [1]
    replicate ball_ID color
        &lt;int&gt;   &lt;int&gt; &lt;chr&gt;
- 1         1    1711 white
- 2         1     604 white
- 3         1    1761 white
- 4         1    2048 red  
- 5         1    1475 white
- 6         1    1307 red  
- 7         1     905 white
- 8         1     770 white
- 9         1      20 white
-10         1     415 white
+ 1         1    2005 red  
+ 2         1    1234 white
+ 3         1     505 red  
+ 4         1    1709 red  
+ 5         1    2028 white
+ 6         1    2000 white
+ 7         1    1328 red  
+ 8         1    2317 white
+ 9         1    2084 white
+10         1    1556 red  
 # ℹ 40 more rows</code></pre>
 </div>
 </div>
@@ -411,16 +411,16 @@ window.Quarto = {
 # Groups:   replicate [1]
    replicate ball_ID color is_red
        &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; 
- 1         1    1711 white FALSE 
- 2         1     604 white FALSE 
- 3         1    1761 white FALSE 
- 4         1    2048 red   TRUE  
- 5         1    1475 white FALSE 
- 6         1    1307 red   TRUE  
- 7         1     905 white FALSE 
- 8         1     770 white FALSE 
- 9         1      20 white FALSE 
-10         1     415 white FALSE 
+ 1         1    2005 red   TRUE  
+ 2         1    1234 white FALSE 
+ 3         1     505 red   TRUE  
+ 4         1    1709 red   TRUE  
+ 5         1    2028 white FALSE 
+ 6         1    2000 white FALSE 
+ 7         1    1328 red   TRUE  
+ 8         1    2317 white FALSE 
+ 9         1    2084 white FALSE 
+10         1    1556 red   TRUE  
 # ℹ 40 more rows</code></pre>
 </div>
 </div>
@@ -434,7 +434,7 @@ window.Quarto = {
 <pre><code># A tibble: 1 × 2
   replicate num_red
       &lt;int&gt;   &lt;int&gt;
-1         1      21</code></pre>
+1         1      23</code></pre>
 </div>
 </div>
 <p>Por que isso funciona? Porque o <code>R</code> trata <code>TRUE</code> como o número 1 e <code>FALSE</code> como o número 0. Assim, somar valores <code>TRUE</code> e <code>FALSE</code> é equivalente a somar 1’s e 0’s. Ao final, essa operação conta o número de bolas para as quais a variável color é igual a “red”. No nosso caso, XX das 50 bolas eram vermelhas. No entanto, você pode ter obtido um número diferente de bolas vermelhas devido ao caráter aleatório da amostragem virtual.</p>
@@ -448,7 +448,7 @@ window.Quarto = {
 <pre><code># A tibble: 1 × 3
   replicate num_red prop_red
       &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;
-1         1      21     0.42</code></pre>
+1         1      23     0.46</code></pre>
 </div>
 </div>
 <p>Em outras palavras, XX das bolas dessa amostra virtual eram vermelhas. Vamos tornar esse código um pouco mais <strong>compacto e conciso</strong>, combinando as etapas de <code>mutate()</code> e <code>summarize()</code> da seguinte forma:</p>
@@ -460,7 +460,7 @@ window.Quarto = {
 <pre><code># A tibble: 1 × 3
   replicate num_red prop_red
       &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;
-1         1      21     0.42</code></pre>
+1         1      23     0.46</code></pre>
 </div>
 </div>
 <p>Ótimo! XX das 50 bolas de virtual_shovel eram vermelhas! Assim, com base nessa amostra específica de 50 bolas, nossa estimativa da proporção de bolas vermelhas na urna é XX. Porém, lembre-se da atividade de amostragem realizada em sala de auma: se repetirmos essa amostragem, não necessariamente obteremos novamente o valor de XX. É provável que haja alguma variação. De fato, nossos 33 grupos de amigos calcularam 33 proporções desse tipo, cuja distribuição visualizamos em sala de aula, e vimos que essas estimativas variaram.</p>
@@ -478,16 +478,16 @@ window.Quarto = {
 # Groups:   replicate [33]
    replicate ball_ID color
        &lt;int&gt;   &lt;int&gt; &lt;chr&gt;
- 1         1    2372 white
- 2         1    2071 red  
- 3         1    1974 red  
- 4         1    1312 red  
- 5         1    1415 red  
- 6         1    1309 red  
- 7         1    1733 white
- 8         1     987 white
- 9         1    1732 white
-10         1    1661 white
+ 1         1     742 white
+ 2         1     227 red  
+ 3         1    1358 white
+ 4         1    1041 red  
+ 5         1    2175 white
+ 6         1     248 white
+ 7         1     628 white
+ 8         1    1477 red  
+ 9         1    2154 white
+10         1    1920 white
 # ℹ 1,640 more rows</code></pre>
 </div>
 </div>
@@ -504,16 +504,16 @@ window.Quarto = {
 <pre><code># A tibble: 33 × 3
    replicate   red prop_red
        &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;
- 1         1    18     0.36
- 2         2    17     0.34
- 3         3    15     0.3 
- 4         4    25     0.5 
- 5         5    21     0.42
- 6         6    18     0.36
- 7         7    24     0.48
+ 1         1    21     0.42
+ 2         2    18     0.36
+ 3         3    21     0.42
+ 4         4    15     0.3 
+ 5         5    16     0.32
+ 6         6    25     0.5 
+ 7         7    21     0.42
  8         8    14     0.28
- 9         9    23     0.46
-10        10    17     0.34
+ 9         9    22     0.44
+10        10    24     0.48
 # ℹ 23 more rows</code></pre>
 </div>
 </div>
