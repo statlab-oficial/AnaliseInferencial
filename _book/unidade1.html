@@ -294,20 +294,8 @@ window.Quarto = {
 </ul>
 <p>além dos pacotes mais avançados <code>purrr</code>, <code>tibble</code>, <code>stringr</code> e <code>forcats</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.2
-✔ ggplot2   4.0.0     ✔ tibble    3.3.0
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-✔ purrr     1.1.0     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="experimento-em-sala-de-aula" class="level2" data-number="2.2">
@@ -317,7 +305,7 @@ window.Quarto = {
 <li>Organização</li>
 </ol>
 <ul>
-<li><p>A turma é dividida em grupos independentes (por exemplo, 33 grupos).</p></li>
+<li><p>A turma é dividida em grupos independentes (por exemplo, 20 grupos).</p></li>
 <li><p>Cada grupo realiza uma única amostragem.</p></li>
 </ul>
 <ol start="2" type="1">
@@ -357,7 +345,7 @@ window.Quarto = {
 <h2 data-number="2.3" class="anchored" data-anchor-id="experimento-virtual"><span class="header-section-number">2.3</span> Experimento Virtual</h2>
 <p>No pacote <code>moderndive</code> existe um <em>data frame</em> chamado <code>bowl</code>. As linhas de <code>bowl</code> correspondem exatamente ao conteúdo da urna real apresentada em sala de aula.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bowl</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bowl</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,400 × 2
    ball_ID color
@@ -378,152 +366,171 @@ window.Quarto = {
 <p>Observe que <code>bowl</code> possui 2400 linhas, o que nos indica que a urna contém 2400 bolas de mesmo tamanho. A primeira variável, <code>ball_ID</code>, é usada como uma variável de identificação, conforme discutido em sala de aula, nenhuma das bolas da urna real possui números marcados. A segunda variável, <code>color</code>, indica se uma determinada bola virtual é <strong>vermelha</strong> ou <strong>branca</strong>. Visualize o conteúdo de <code>bowl</code> no <strong>visualizador de dados do RStudio</strong> e percorra as linhas para se convencer de que <code>bowl</code> é, de fato, um <strong>análogo virtual</strong> da urna real apresentada em sala.</p>
 <p>Agora precisamos de um <strong>análogo virtual da pá</strong> para gerar <strong>amostras virtuais de 50 bolas</strong>. Para isso, vamos utilizar a função <code>rep_sample_n()</code>, incluída no pacote <code>moderndive</code>. Essa função permite realizar <strong>amostragens repetidas (ou replicadas)</strong> de tamanho (n).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="ot">&lt;-</span> bowl <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rep_sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pa_virtual</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>) <span class="co">#fixando semente</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="ot">&lt;-</span> bowl <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rep_sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pa_virtual</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 50 × 3
 # Groups:   replicate [1]
    replicate ball_ID color
        &lt;int&gt;   &lt;int&gt; &lt;chr&gt;
- 1         1    2005 red  
- 2         1    1234 white
- 3         1     505 red  
- 4         1    1709 red  
- 5         1    2028 white
- 6         1    2000 white
- 7         1    1328 red  
- 8         1    2317 white
- 9         1    2084 white
-10         1    1556 red  
+ 1         1     733 white
+ 2         1     993 red  
+ 3         1    2342 red  
+ 4         1    1647 white
+ 5         1    1883 red  
+ 6         1     164 red  
+ 7         1    1200 red  
+ 8         1     389 white
+ 9         1     287 white
+10         1    2362 red  
 # ℹ 40 more rows</code></pre>
 </div>
 </div>
 <p>A variável <code>ball_ID</code> identifica quais das 2400 bolas do objeto <code>bowl</code> foram incluídas na nossa amostra de 50 bolas, enquanto <code>color</code> indica a cor de cada bola. No entanto, o que indica a variável <code>replicate</code>?</p>
-<p>No caso de <code>pa_virtual</code>, a variável <code>replicate</code> é igual a 1 em todas as 50 linhas. Isso nos informa que essas 50 linhas correspondem à nossa primeira amostra. Veremos em breve que, quando realizarmos 33 amostragens virtuais, a variável <code>replicate</code> assumirá valores entre 1 e 33.</p>
+<p>No caso de <code>pa_virtual</code>, a variável <code>replicate</code> é igual a 1 em todas as 50 linhas. Isso nos informa que essas 50 linhas correspondem à nossa primeira amostra. Veremos em breve que, quando realizarmos 20 amostragens virtuais, a variável <code>replicate</code> assumirá valores entre 1 e 20.</p>
 <p>Vamos agora calcular a <strong>proporção de bolas vermelhas</strong> em nossa amostra virtual utilizando os verbos de manipulação de dados do <code>dplyr</code>. Primeiro, para cada uma das 50 bolas amostradas, vamos identificar se ela é vermelha ou não, utilizando um teste de igualdade com <code>==</code>. Em seguida, criaremos uma nova variável booleana <code>is_red</code> usando a função <code>mutate()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">is_red =</span> (color <span class="sc">==</span> <span class="st">"red"</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="ot">&lt;-</span> pa_virtual <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">is_red =</span> (color <span class="sc">==</span> <span class="st">"red"</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>pa_virtual</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 50 × 4
 # Groups:   replicate [1]
    replicate ball_ID color is_red
        &lt;int&gt;   &lt;int&gt; &lt;chr&gt; &lt;lgl&gt; 
- 1         1    2005 red   TRUE  
- 2         1    1234 white FALSE 
- 3         1     505 red   TRUE  
- 4         1    1709 red   TRUE  
- 5         1    2028 white FALSE 
- 6         1    2000 white FALSE 
- 7         1    1328 red   TRUE  
- 8         1    2317 white FALSE 
- 9         1    2084 white FALSE 
-10         1    1556 red   TRUE  
+ 1         1     733 white FALSE 
+ 2         1     993 red   TRUE  
+ 3         1    2342 red   TRUE  
+ 4         1    1647 white FALSE 
+ 5         1    1883 red   TRUE  
+ 6         1     164 red   TRUE  
+ 7         1    1200 red   TRUE  
+ 8         1     389 white FALSE 
+ 9         1     287 white FALSE 
+10         1    2362 red   TRUE  
 # ℹ 40 more rows</code></pre>
 </div>
 </div>
 <p>Observe que, para cada linha em que <code>color == "red"</code>, é retornado o valor lógico (booleano) <code>TRUE</code>, e para cada linha em que <code>color</code> não é igual a <code>"red"</code>, é retornado o valor lógico <code>FALSE</code>.</p>
 <p>Em seguida, vamos calcular o número de bolas vermelhas, dentre as 50, utilizando a função <code>summarize()</code>. Note que <code>summarize()</code> recebe um <em>data frame</em> com várias linhas e retorna um <em>data frame</em> com <strong>uma única linha</strong>, contendo estatísticas-resumo, como <code>mean()</code> ou <code>median()</code>. Neste caso, utilizaremos a função <code>sum()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">is_red =</span> (color <span class="sc">==</span> <span class="st">"red"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">num_red =</span> <span class="fu">sum</span>(is_red))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n_red <span class="ot">&lt;-</span> pa_virtual <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">is_red =</span> (color <span class="sc">==</span> <span class="st">"red"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">num_red =</span> <span class="fu">sum</span>(is_red))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>n_red</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   replicate num_red
       &lt;int&gt;   &lt;int&gt;
-1         1      23</code></pre>
+1         1      16</code></pre>
 </div>
 </div>
 <p>Por que isso funciona? Porque o <code>R</code> trata <code>TRUE</code> como o número 1 e <code>FALSE</code> como o número 0. Assim, somar valores <code>TRUE</code> e <code>FALSE</code> é equivalente a somar 1’s e 0’s. Ao final, essa operação conta o número de bolas para as quais a variável color é igual a “red”. No nosso caso, XX das 50 bolas eram vermelhas. No entanto, você pode ter obtido um número diferente de bolas vermelhas devido ao caráter aleatório da amostragem virtual.</p>
 <p>Por fim, vamos calcular a proporção das 50 bolas amostradas que são vermelhas, dividindo num_red por 50:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">is_red =</span> color <span class="sc">==</span> <span class="st">"red"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">num_red =</span> <span class="fu">sum</span>(is_red)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">prop_red =</span> num_red <span class="sc">/</span> <span class="dv">50</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n_prop_red <span class="ot">&lt;-</span> pa_virtual <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">is_red =</span> color <span class="sc">==</span> <span class="st">"red"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">num_red =</span> <span class="fu">sum</span>(is_red)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">prop_red =</span> num_red <span class="sc">/</span> <span class="dv">50</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>n_prop_red</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   replicate num_red prop_red
       &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;
-1         1      23     0.46</code></pre>
+1         1      16     0.32</code></pre>
 </div>
 </div>
-<p>Em outras palavras, XX das bolas dessa amostra virtual eram vermelhas. Vamos tornar esse código um pouco mais <strong>compacto e conciso</strong>, combinando as etapas de <code>mutate()</code> e <code>summarize()</code> da seguinte forma:</p>
+<p>Em outras palavras, 16 das bolas dessa amostra virtual eram vermelhas. Vamos tornar esse código um pouco mais <strong>compacto e conciso</strong>, combinando as etapas de <code>mutate()</code> e <code>summarize()</code> da seguinte forma:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">num_red =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">prop_red =</span> num_red <span class="sc">/</span> <span class="dv">50</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>n_prop_red <span class="ot">&lt;-</span> pa_virtual <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">num_red =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">prop_red =</span> num_red <span class="sc">/</span> <span class="dv">50</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>n_prop_red</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   replicate num_red prop_red
       &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;
-1         1      23     0.46</code></pre>
+1         1      16     0.32</code></pre>
 </div>
 </div>
-<p>Ótimo! XX das 50 bolas de virtual_shovel eram vermelhas! Assim, com base nessa amostra específica de 50 bolas, nossa estimativa da proporção de bolas vermelhas na urna é XX. Porém, lembre-se da atividade de amostragem realizada em sala de auma: se repetirmos essa amostragem, não necessariamente obteremos novamente o valor de XX. É provável que haja alguma variação. De fato, nossos 33 grupos de amigos calcularam 33 proporções desse tipo, cuja distribuição visualizamos em sala de aula, e vimos que essas estimativas variaram.</p>
-<p>Vamos agora realizar o <strong>análogo virtual</strong> de ter 33 grupos de estudantes usando a pá de amostragem!</p>
-<p>Lembre-se de que, no exercício de amostragem realizada em sala de aula, tivemos <strong>33 grupos de estudantes</strong>, cada um utilizando a pá, o que resultou em <strong>33 amostras de tamanho 50</strong>. Em seguida, usamos essas 33 amostras para calcular <strong>33 proporções</strong>. Em outras palavras, <strong>repetimos/replicamos o uso da pá 33 vezes</strong>.</p>
-<p>Podemos realizar essa amostragem repetida/replicada de forma virtual utilizando novamente a função <code>rep_sample_n()</code>, mas agora adicionando o argumento <code>reps = 33</code>. Isso indica ao R que desejamos repetir a amostragem 33 vezes.</p>
-<p>Vamos salvar esses resultados em um <code>data frame</code> chamado <code>virtual_samples</code>. Embora apresentemos a seguir uma prévia das primeiras 10 linhas de <code>virtual_samples</code>, recomendamos fortemente que você explore todo o seu conteúdo utilizando o visualizador de planilhas do RStudio, executando o comando <code>View(virtual_samples)</code>.</p>
+<p>Ótimo! 16 das 50 bolas da pá virtual eram vermelhas! Assim, com base nessa amostra específica de 50 bolas, nossa estimativa da proporção de bolas vermelhas na urna é 0.32. Porém, lembre-se da atividade de amostragem realizada em sala de aula: se repetirmos essa amostragem, não necessariamente obteremos novamente o valor de 0.32. É provável que haja alguma variação. De fato, nossos 20 grupos de amigos calcularam 20 proporções desse tipo, cuja distribuição visualizamos em sala de aula, e vimos que essas estimativas variaram.</p>
+<p>Vamos agora realizar o <strong>análogo virtual</strong> de ter 20 grupos de estudantes usando a pá de amostragem!</p>
+<p>Lembre-se de que, no exercício de amostragem realizada em sala de aula, tivemos <strong>20 grupos de estudantes</strong>, cada um utilizando a pá, o que resultou em <strong>20 amostras de tamanho 50</strong>. Em seguida, usamos essas 20 amostras para calcular <strong>20 proporções</strong>. Em outras palavras, <strong>repetimos/replicamos o uso da pá 20 vezes</strong>.</p>
+<p>Podemos realizar essa amostragem repetida/replicada de forma virtual utilizando novamente a função <code>rep_sample_n()</code>, mas agora adicionando o argumento <code>reps = 20</code>. Isso indica ao <code>R</code> que desejamos repetir a amostragem 20 vezes.</p>
+<p>Vamos salvar esses resultados em um <code>data frame</code> chamado <code>virtual_samples</code>. Embora apresentemos a seguir uma prévia das primeiras 10 linhas de <code>virtual_samples</code>, recomendamos fortemente que você explore todo o seu conteúdo utilizando o visualizador de planilhas do <code>RStudio</code>, executando o comando <code>View(virtual_samples)</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>amostra_virtual <span class="ot">&lt;-</span> bowl <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rep_sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>, <span class="at">reps =</span> <span class="dv">33</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>amostra_virtual</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>amostra_virtual <span class="ot">&lt;-</span> bowl <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rep_sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>, <span class="at">reps =</span> <span class="dv">20</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>amostra_virtual</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,650 × 3
-# Groups:   replicate [33]
+<pre><code># A tibble: 1,000 × 3
+# Groups:   replicate [20]
    replicate ball_ID color
        &lt;int&gt;   &lt;int&gt; &lt;chr&gt;
- 1         1     742 white
- 2         1     227 red  
- 3         1    1358 white
- 4         1    1041 red  
- 5         1    2175 white
- 6         1     248 white
- 7         1     628 white
- 8         1    1477 red  
- 9         1    2154 white
-10         1    1920 white
-# ℹ 1,640 more rows</code></pre>
+ 1         1     733 white
+ 2         1     993 red  
+ 3         1    2342 red  
+ 4         1    1647 white
+ 5         1    1883 red  
+ 6         1     164 red  
+ 7         1    1200 red  
+ 8         1     389 white
+ 9         1     287 white
+10         1    2362 red  
+# ℹ 990 more rows</code></pre>
 </div>
 </div>
-<p>Observe, no visualizador de planilhas, que as primeiras 50 linhas da variável <code>replicate</code> são iguais a 1, enquanto as 50 linhas seguintes de <code>replicate</code> são iguais a 2. Isso nos indica que as primeiras 50 linhas correspondem à primeira amostra de 50 bolas, enquanto as próximas 50 linhas correspondem à segunda amostra de 50 bolas. Esse padrão se repete para todas as 33 replicações (<code>reps = 33</code>) e, portanto, o <code>data frame</code> <code>amostra_virtual</code> possui (33 = 1650) linhas.</p>
-<p>Vamos agora usar <code>amostra_virtual</code> para calcular as 33 proporções de bolas vermelhas resultantes. Utilizaremos os mesmos verbos do <code>dplyr</code> de antes, mas agora com um <code>group_by()</code> adicional na variável <code>replicate</code>. Ao definir previamente a variável de agrupamento como <em>metadado</em> antes de aplicar <code>summarize()</code>, obteremos 33 proporções diferentes de bolas vermelhas. A seguir, exibimos uma prévia das primeiras 10 das 33 linhas resultantes:</p>
+<p>Observe, no visualizador de planilhas, que as primeiras 50 linhas da variável <code>replicate</code> são iguais a 1, enquanto as 50 linhas seguintes de <code>replicate</code> são iguais a 2. Isso nos indica que as primeiras 50 linhas correspondem à primeira amostra de 50 bolas, enquanto as próximas 50 linhas correspondem à segunda amostra de 50 bolas. Esse padrão se repete para todas as 20 replicações (<code>reps = 20</code>) e, portanto, o <code>data frame</code> <code>amostra_virtual</code> possui (20 <span class="math inline">\(\times\)</span> 50 = 1000) linhas.</p>
+<p>Vamos agora usar <code>amostra_virtual</code> para calcular as 20 proporções de bolas vermelhas resultantes. Utilizaremos os mesmos verbos do <code>dplyr</code> de antes, mas agora com um <code>group_by()</code> adicional na variável <code>replicate</code>. Ao definir previamente a variável de agrupamento como <em>metadado</em> antes de aplicar <code>summarize()</code>, obteremos 20 proporções diferentes de bolas vermelhas. A seguir, exibimos uma prévia das primeiras 10 das 20 linhas resultantes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>virtual_prop_red <span class="ot">&lt;-</span> amostra_virtual <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(replicate) <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">red =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">prop_red =</span> red <span class="sc">/</span> <span class="dv">50</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>virtual_prop_red</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>virtual_prop_red <span class="ot">&lt;-</span> amostra_virtual <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(replicate) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="at">red =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">prop_red =</span> red <span class="sc">/</span> <span class="dv">50</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>virtual_prop_red</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 33 × 3
+<pre><code># A tibble: 20 × 3
    replicate   red prop_red
        &lt;int&gt; &lt;int&gt;    &lt;dbl&gt;
- 1         1    21     0.42
- 2         2    18     0.36
- 3         3    21     0.42
- 4         4    15     0.3 
- 5         5    16     0.32
- 6         6    25     0.5 
- 7         7    21     0.42
- 8         8    14     0.28
- 9         9    22     0.44
-10        10    24     0.48
-# ℹ 23 more rows</code></pre>
+ 1         1    16     0.32
+ 2         2    22     0.44
+ 3         3    19     0.38
+ 4         4    27     0.54
+ 5         5    18     0.36
+ 6         6    19     0.38
+ 7         7    16     0.32
+ 8         8    17     0.34
+ 9         9    21     0.42
+10        10    20     0.4 
+11        11    23     0.46
+12        12    23     0.46
+13        13    15     0.3 
+14        14    23     0.46
+15        15    27     0.54
+16        16    23     0.46
+17        17    17     0.34
+18        18    21     0.42
+19        19    15     0.3 
+20        20    18     0.36</code></pre>
 </div>
 </div>
-<p>Assim como ocorreu com as 33 amostras coletadas em sala de aula, há variação nas 33 proporções de bolas vermelhas obtidas virtualmente. Vamos visualizar essa variação por meio de um histograma. Note que também adicionamos os argumentos <code>binwidth = 0.05</code> e <code>boundary = 0.4</code>.</p>
+<p>Assim como ocorreu com as 20 amostras coletadas em sala de aula, há variação nas 20 proporções de bolas vermelhas obtidas virtualmente. Vamos visualizar essa variação por meio de um histograma. Note que também adicionamos os argumentos <code>binwidth = 0.05</code> e <code>boundary = 0.4</code>.</p>
 <p>Lembre-se de que definir <code>boundary = 0.4</code> garante um esquema de classes em que um dos limites dos intervalos esteja em 0,4. Como o <code>binwidth = 0.05</code> também foi especificado, isso criará intervalos com limites em <strong>0,30, 0,35, 0,40, 0,45, 0,50</strong>, entre outros.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(virtual_prop_red, <span class="fu">aes</span>(<span class="at">x =</span> prop_red)) <span class="sc">+</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">boundary =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Proportion of 50 balls that were red"</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="at">title =</span> <span class="st">"Distribution of 33 proportions red"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(virtual_prop_red, <span class="fu">aes</span>(<span class="at">x =</span> prop_red)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">boundary =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Proporção das 50 bolas que são vermelhas"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="at">title =</span> <span class="st">"Disttribuição das proporções"</span>) </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -532,17 +539,17 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas inferiores a 30%. Por outro lado, em alguns casos, obtivemos proporções superiores a 45%. No entanto, as proporções que ocorreram com maior frequência ficaram entre 35% e 40% (em <strong>11 das 33 amostras</strong>). Por que temos essas diferenças nas proporções de bolas vermelhas? <strong>Por causa da variação amostral</strong>.</p>
+<p>Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas inferiores a 30%. Por outro lado, em alguns casos, obtivemos proporções superiores a 50%. No entanto, as proporções que ocorreram com maior frequência ficaram entre 35% e 40% (em <strong>5 das 20 amostras</strong>). Por que temos essas diferenças nas proporções de bolas vermelhas? <strong>Por causa da variação amostral</strong>.</p>
 <section id="verificação-de-aprendizagem-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="verificação-de-aprendizagem-1">Verificação de aprendizagem</h3>
 <ol type="1">
-<li>Por que não foi possível estudar os efeitos da variação amostral quando utilizamos a pá virtual apenas uma vez? Por que foi necessário coletar <strong>mais de uma amostra virtual</strong> (no nosso caso, <strong>33 amostras virtuais</strong>)?</li>
+<li>Por que não foi possível estudar os efeitos da variação amostral quando utilizamos a pá virtual apenas uma vez? Por que foi necessário coletar <strong>mais de uma amostra virtual</strong> (no nosso caso, <strong>20 amostras virtuais</strong>)?</li>
 </ol>
 </section>
 <section id="lista-semanal-obrigatória" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="lista-semanal-obrigatória">Lista Semanal Obrigatória</h3>
 <ol type="1">
-<li><p>Agora suponha que queiramos estudar os efeitos da variação amostral não para 33 amostras, mas para um número maior, digamos 1000 amostras. Vamos novamente utilizar a função <code>rep_sample_n()</code>, com o tamanho da amostra definido como 50, mas agora com o número de repetições <code>reps</code> definido como 1000.</p></li>
+<li><p>Agora suponha que queiramos estudar os efeitos da variação amostral não para 20 amostras, mas para um número maior, digamos 1000 amostras. Vamos novamente utilizar a função <code>rep_sample_n()</code>, com o tamanho da amostra definido como 50, mas agora com o número de repetições <code>reps</code> definido como 1000.</p></li>
 <li><p>Temos 1000 réplicas de <code>prop_red</code>, a proporção de bolas vermelhas em amostras de 50 bolas. Utilizando o mesmo código de antes, vamos agora visualizar a distribuição dessas 1000 réplicas de <code>prop_red</code> por meio de um histograma.</p></li>
 <li><p>Observando o histograma produzido no item 2), você diria que amostrar 50 bolas em que 30% são vermelhas é provável ou improvável? E quanto a amostrar 50 bolas em que 10% são vermelhas?</p></li>
 </ol>
@@ -550,8 +557,79 @@ window.Quarto = {
 </section>
 <section id="conceitos-importantes" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="conceitos-importantes"><span class="header-section-number">2.4</span> Conceitos Importantes</h2>
-<p>A seguir, apresentamos uma lista de termos e notação matemática relacionados à amostragem.</p>
-<p>Primeiramente, uma <strong>população</strong> é um conjunto de indivíduos ou observações de interesse. Isso também é comumente denominado <strong>população de estudo</strong>. Denotamos matematicamente o tamanho da população utilizando a letra maiúscula <span class="math inline">\(N\)</span>. Na nossa atividade de amostragem, a <strong>população (de estudo)</strong> é o conjunto de <span class="math inline">\(N = 2400\)</span> bolas vermelhas e brancas, todas de mesmo tamanho, contidas na urna.</p>
+<p>Primeiramente, uma <strong>população</strong> é um conjunto de indivíduos ou observações de interesse. Isso também é comumente denominado <strong>população de estudo</strong>. Denotamos matematicamente o tamanho da população utilizando a letra maiúscula <span class="math inline">\(N\)</span>.</p>
+<p>Um <strong>parâmetro populacional</strong> é algum resumo numérico sobre a população que é desconhecido, mas que você gostaria de saber. Por exemplo, quando essa quantidade é uma média, como a altura média de todos os canadenses, o parâmetro populacional de interesse é a média populacional.</p>
+<p>Um <strong>censo</strong> é uma enumeração exaustiva ou contagem de todos os <span class="math inline">\(N\)</span> indivíduos da população. Fazemos isso para calcular o valor exato do parâmetro populacional. Vale notar que, à medida que o número <span class="math inline">\(N\)</span> de indivíduos em nossa população aumenta, a realização de um censo se torna mais cara (em termos de tempo, energia e dinheiro).</p>
+<p>Na nossa atividade de amostragem, a <strong>população (de estudo)</strong> é o conjunto de <span class="math inline">\(N = 2400\)</span> bolas vermelhas e brancas, todas de mesmo tamanho, contidas na urna. Lembre-se de que também representamos a urna “virtualmente” no data frame <code>bowl</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bowl</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,400 × 2
+   ball_ID color
+     &lt;int&gt; &lt;chr&gt;
+ 1       1 white
+ 2       2 white
+ 3       3 white
+ 4       4 red  
+ 5       5 white
+ 6       6 white
+ 7       7 red  
+ 8       8 white
+ 9       9 red  
+10      10 white
+# ℹ 2,390 more rows</code></pre>
+</div>
+</div>
+<p>O <strong>parâmetro populacional</strong> aqui é a proporção de bolas na urna que são vermelhas. Sempre que estamos interessados em uma proporção de algum valor em uma população, o parâmetro populacional tem um nome específico: a proporção populacional. Comumente denotamos as proporções populacionais com a letra <span class="math inline">\(p\)</span>.</p>
+<p>Para calcular essa proporção populacional <span class="math inline">\(p\)</span> de forma exata, precisamos primeiro realizar um censo, analisando todos os <span class="math inline">\(N = 2400\)</span> e contando o número de bolas vermelhas. Em seguida, dividimos essa contagem por 2400 para obter a proporção de vermelhas.</p>
+<p>Você pode estar se perguntando agora: “Espere. Eu entendo que realizar um censo na urna real levaria muito tempo. Mas não podemos realizar um censo”virtual” usando a urna virtual?” Você está absolutamente correto! De fato, quando os autores do pacote <code>moderndive</code> criaram o data frame <code>bowl</code>, eles fizeram com que seu conteúdo correspondesse ao da urna real não fazendo um censo, mas lendo o conteúdo escrito na caixa em que a urna veio! Vamos realizar este censo “virtual” usando os mesmos códigos do pacote <code>dplyr</code> que você usou anteriormente para contar o número de bolas que são vermelhas:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bowl <span class="sc">%&gt;%</span>   </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">red =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>)) </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+    red
+  &lt;int&gt;
+1   900</code></pre>
+</div>
+</div>
+<p>Como 900 das 2400 são vermelhas, a proporção é 900/2400 = 0,375 = 37,5%. Portanto, sabemos o valor do parâmetro populacional: em nosso caso, a proporção populacional <span class="math inline">\(p\)</span> é igual a 0,375.</p>
+<p>Neste ponto, você pode estar se perguntando: <em>“Se tínhamos uma maneira de saber que a proporção de bolas vermelhas é de 37,5%, então por que fizemos alguma amostragem?”</em> Ótima pergunta! Normalmente, você não faria amostragem alguma! No entanto, as atividades de amostragem que fizemos neste capítulo são meras simulações de como a amostragem é feita na vida real! Realizamos essas simulações a fim de estudar:</p>
+<ol type="1">
+<li><p>O efeito da variação amostral (ou variabilidade de amostragem) em nossas estimativas.</p></li>
+<li><p>O efeito do tamanho da amostra na variação amostral.</p></li>
+</ol>
+<p>Como veremos adiante em pesquisas de opinião, na amostragem da vida real não apenas o tamanho da população <span class="math inline">\(N\)</span> será muito grande, tornando um censo caro, mas, às vezes, nem sequer saberemos qual é o tamanho da população! Por enquanto, no entanto, prosseguiremos com nosso próximo conjunto de termos e notação.</p>
+<p><strong>Amostragem</strong> é o ato de coletar uma amostra da população, o que geralmente fazemos apenas quando não podemos realizar um censo. Denotamos matematicamente o tamanho da amostra usando o <span class="math inline">\(n\)</span> minúsculo, em oposição ao <span class="math inline">\(N\)</span> maiúsculo, que denota o tamanho da população. Normalmente, o tamanho da amostra <span class="math inline">\(n\)</span> é muito menor que o tamanho da população <span class="math inline">\(N\)</span>. Assim, a amostragem é uma alternativa muito mais barata do que a realização de um censo.</p>
+<p>Uma <strong>estimativa pontual</strong>, também conhecida como estatística (ou estatística amostral), é uma estatística calculada a partir de uma amostra que estima o parâmetro populacional desconhecido.</p>
+<p>Então, em sala de aula, realizamos a amostragem usando uma pá com 50 espaços para extrair amostras de tamanho <span class="math inline">\(n = 50\)</span>. Para realizar o análogo virtual desta amostragem, lembre-se de que usamos a função <code>rep_sample_n()</code> da seguinte maneira:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="ot">&lt;-</span> bowl <span class="sc">%&gt;%</span>   </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rep_sample_n</span>(<span class="at">size =</span> <span class="dv">50</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Usando a amostra de 50 bolas contidas em <code>pa_virtual</code>, geramos uma estimativa da proporção de bolas na urna que são vermelhas, <code>prop_red</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="sc">%&gt;%</span>   </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num_red =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>)) <span class="sc">%&gt;%</span>   </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop_red =</span> num_red <span class="sc">/</span> <span class="dv">50</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  replicate num_red prop_red
+      &lt;int&gt;   &lt;int&gt;    &lt;dbl&gt;
+1         1      16     0.32</code></pre>
+</div>
+</div>
+<p>Então, em nosso caso, o valor de <code>prop_red</code> é a estimativa pontual da proporção populacional <span class="math inline">\(p\)</span>, pois ela estima o valor desta última. Além disso, essa estimativa pontual tem um nome específico quando se considera proporções: <strong>a proporção amostral</strong>. Ela é denotada usando <span class="math inline">\(\hat{p}\)</span>, porque é uma convenção comum em estatística usar um símbolo de “chapéu” para denotar estimativas pontuais.</p>
+<p>Iremos observa ao longo desta disciplina que a maneira como você coleta as amostras influencia diretamente a qualidade delas.</p>
+<ul>
+<li><p>Diz-se que uma amostra é <strong>representativa</strong> se ela “se parecer” aproximadamente com a população. Em outras palavras, se as características da amostra forem uma “boa” representação das características da população.</p></li>
+<li><p>Dizemos que uma amostra é <strong>generalizável</strong> se quaisquer resultados baseados na amostra puderem ser generalizados para a população. Em outras palavras, se pudermos fazer “bons” palpites sobre a população usando a amostra.</p></li>
+<li><p>Dizemos que um procedimento de amostragem é <strong>viesado</strong> (ou tendencioso) se certos indivíduos em uma população tiverem uma chance maior de serem incluídos em uma amostra do que outros. Dizemos que um procedimento de amostragem é <strong>não viesado</strong> (ou imparcial) se cada indivíduo em uma população tiver chances iguais de ser amostrado.</p></li>
+</ul>
+<p>Dizemos que uma amostra de <span class="math inline">\(n\)</span> bolas extraídas usando nossa pá é <strong>representativa</strong> da população se o seu conteúdo “se assemelhar aproximadamente” ao conteúdo da urna. Se sim, então a proporção de bolas vermelhas da pá pode ser <strong>generalizada</strong> para a proporção das <span class="math inline">\(N = 2400\)</span> bolas da urna que são vermelhas. Ou expresso de forma diferente, <span class="math inline">\(\hat{p}\)</span> é um “bom palpite” de <span class="math inline">\(p\)</span>. Agora digamos que trapaceamos ao usar a pá e removemos um número de bolas brancas em favor de bolas vermelhas. Então, essa amostra seria viesada em relação às bolas vermelhas e, portanto, a amostra não seria mais representativa da urna.</p>
+<p>Uma maneira de garantir que uma amostra seja não viesada e representativa da população é usar a <strong>amostragem aleatória</strong>. Temos que <strong>Inferência</strong> é o ato de “dar um palpite” sobre algo desconhecido. Portanto, <strong>Inferência estatística</strong> é o ato de fazer um palpite sobre uma população usando uma amostra.</p>
+<p>Em nosso caso, como a função <code>rep_sample_n()</code> usa o gerador de números aleatórios do seu computador, estávamos, de fato, realizando “amostragem aleatória”.</p>
 
 
 </section>

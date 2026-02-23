@@ -260,7 +260,7 @@
 \makeatother
 \subtitle{Departamento de Estatística e Matemática Aplicada}
 \author{Manoel Santos-Neto}
-\date{2026-02-08}
+\date{2026-02-23}
 
 \begin{document}
 \maketitle
@@ -621,24 +621,6 @@ além dos pacotes mais avançados \texttt{purrr}, \texttt{tibble},
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
--- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
-v dplyr     1.1.4     v readr     2.1.5
-v forcats   1.0.0     v stringr   1.5.2
-v ggplot2   4.0.0     v tibble    3.3.0
-v lubridate 1.9.3     v tidyr     1.3.1
-v purrr     1.1.0     
--- Conflicts ------------------------------------------ tidyverse_conflicts() --
-x dplyr::filter() masks stats::filter()
-x dplyr::lag()    masks stats::lag()
-i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(moderndive)}
 \end{Highlighting}
 \end{Shaded}
@@ -656,7 +638,7 @@ Iremos realizar o seguinte experimento em sala de aula:
 
 \begin{itemize}
 \item
-  A turma é dividida em grupos independentes (por exemplo, 33 grupos).
+  A turma é dividida em grupos independentes (por exemplo, 20 grupos).
 \item
   Cada grupo realiza uma única amostragem.
 \end{itemize}
@@ -777,6 +759,7 @@ repetidas (ou replicadas)} de tamanho (n).
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2026}\NormalTok{) }\CommentTok{\#fixando semente}
 \NormalTok{pa\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{)}
 
@@ -789,16 +772,16 @@ repetidas (ou replicadas)} de tamanho (n).
 # Groups:   replicate [1]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1     401 white
- 2         1     744 red  
- 3         1     174 red  
- 4         1     781 white
- 5         1    1745 red  
- 6         1     309 white
- 7         1    2281 white
- 8         1     396 red  
- 9         1    1322 white
-10         1    1967 white
+ 1         1     733 white
+ 2         1     993 red  
+ 3         1    2342 red  
+ 4         1    1647 white
+ 5         1    1883 red  
+ 6         1     164 red  
+ 7         1    1200 red  
+ 8         1     389 white
+ 9         1     287 white
+10         1    2362 red  
 # i 40 more rows
 \end{verbatim}
 
@@ -810,8 +793,8 @@ variável \texttt{replicate}?
 No caso de \texttt{pa\_virtual}, a variável \texttt{replicate} é igual a
 1 em todas as 50 linhas. Isso nos informa que essas 50 linhas
 correspondem à nossa primeira amostra. Veremos em breve que, quando
-realizarmos 33 amostragens virtuais, a variável \texttt{replicate}
-assumirá valores entre 1 e 33.
+realizarmos 20 amostragens virtuais, a variável \texttt{replicate}
+assumirá valores entre 1 e 20.
 
 Vamos agora calcular a \textbf{proporção de bolas vermelhas} em nossa
 amostra virtual utilizando os verbos de manipulação de dados do
@@ -822,8 +805,10 @@ com \texttt{==}. Em seguida, criaremos uma nova variável booleana
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{pa\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ (color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{))}
+
+\NormalTok{pa\_virtual}
 \end{Highlighting}
 \end{Shaded}
 
@@ -832,16 +817,16 @@ com \texttt{==}. Em seguida, criaremos uma nova variável booleana
 # Groups:   replicate [1]
    replicate ball_ID color is_red
        <int>   <int> <chr> <lgl> 
- 1         1     401 white FALSE 
- 2         1     744 red   TRUE  
- 3         1     174 red   TRUE  
- 4         1     781 white FALSE 
- 5         1    1745 red   TRUE  
- 6         1     309 white FALSE 
- 7         1    2281 white FALSE 
- 8         1     396 red   TRUE  
- 9         1    1322 white FALSE 
-10         1    1967 white FALSE 
+ 1         1     733 white FALSE 
+ 2         1     993 red   TRUE  
+ 3         1    2342 red   TRUE  
+ 4         1    1647 white FALSE 
+ 5         1    1883 red   TRUE  
+ 6         1     164 red   TRUE  
+ 7         1    1200 red   TRUE  
+ 8         1     389 white FALSE 
+ 9         1     287 white FALSE 
+10         1    2362 red   TRUE  
 # i 40 more rows
 \end{verbatim}
 
@@ -859,9 +844,11 @@ frame} com \textbf{uma única linha}, contendo estatísticas-resumo, como
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{n\_red }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ (color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(is\_red))}
+
+\NormalTok{n\_red}
 \end{Highlighting}
 \end{Shaded}
 
@@ -869,7 +856,7 @@ frame} com \textbf{uma única linha}, contendo estatísticas-resumo, como
 # A tibble: 1 x 2
   replicate num_red
       <int>   <int>
-1         1      17
+1         1      16
 \end{verbatim}
 
 Por que isso funciona? Porque o \texttt{R} trata \texttt{TRUE} como o
@@ -885,10 +872,12 @@ vermelhas, dividindo num\_red por 50:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{n\_prop\_red }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(is\_red)) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{n\_prop\_red}
 \end{Highlighting}
 \end{Shaded}
 
@@ -896,19 +885,21 @@ vermelhas, dividindo num\_red por 50:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      17     0.34
+1         1      16     0.32
 \end{verbatim}
 
-Em outras palavras, XX das bolas dessa amostra virtual eram vermelhas.
+Em outras palavras, 16 das bolas dessa amostra virtual eram vermelhas.
 Vamos tornar esse código um pouco mais \textbf{compacto e conciso},
 combinando as etapas de \texttt{mutate()} e \texttt{summarize()} da
 seguinte forma:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{n\_prop\_red }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
 \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{n\_prop\_red}
 \end{Highlighting}
 \end{Shaded}
 
@@ -916,64 +907,65 @@ seguinte forma:
 # A tibble: 1 x 3
   replicate num_red prop_red
       <int>   <int>    <dbl>
-1         1      17     0.34
+1         1      16     0.32
 \end{verbatim}
 
-Ótimo! XX das 50 bolas de virtual\_shovel eram vermelhas! Assim, com
-base nessa amostra específica de 50 bolas, nossa estimativa da proporção
-de bolas vermelhas na urna é XX. Porém, lembre-se da atividade de
-amostragem realizada em sala de auma: se repetirmos essa amostragem, não
-necessariamente obteremos novamente o valor de XX. É provável que haja
-alguma variação. De fato, nossos 33 grupos de amigos calcularam 33
+Ótimo! 16 das 50 bolas da pá virtual eram vermelhas! Assim, com base
+nessa amostra específica de 50 bolas, nossa estimativa da proporção de
+bolas vermelhas na urna é 0.32. Porém, lembre-se da atividade de
+amostragem realizada em sala de aula: se repetirmos essa amostragem, não
+necessariamente obteremos novamente o valor de 0.32. É provável que haja
+alguma variação. De fato, nossos 20 grupos de amigos calcularam 20
 proporções desse tipo, cuja distribuição visualizamos em sala de aula, e
 vimos que essas estimativas variaram.
 
-Vamos agora realizar o \textbf{análogo virtual} de ter 33 grupos de
+Vamos agora realizar o \textbf{análogo virtual} de ter 20 grupos de
 estudantes usando a pá de amostragem!
 
 Lembre-se de que, no exercício de amostragem realizada em sala de aula,
-tivemos \textbf{33 grupos de estudantes}, cada um utilizando a pá, o que
-resultou em \textbf{33 amostras de tamanho 50}. Em seguida, usamos essas
-33 amostras para calcular \textbf{33 proporções}. Em outras palavras,
-\textbf{repetimos/replicamos o uso da pá 33 vezes}.
+tivemos \textbf{20 grupos de estudantes}, cada um utilizando a pá, o que
+resultou em \textbf{20 amostras de tamanho 50}. Em seguida, usamos essas
+20 amostras para calcular \textbf{20 proporções}. Em outras palavras,
+\textbf{repetimos/replicamos o uso da pá 20 vezes}.
 
 Podemos realizar essa amostragem repetida/replicada de forma virtual
 utilizando novamente a função \texttt{rep\_sample\_n()}, mas agora
-adicionando o argumento \texttt{reps\ =\ 33}. Isso indica ao R que
-desejamos repetir a amostragem 33 vezes.
+adicionando o argumento \texttt{reps\ =\ 20}. Isso indica ao \texttt{R}
+que desejamos repetir a amostragem 20 vezes.
 
 Vamos salvar esses resultados em um \texttt{data\ frame} chamado
 \texttt{virtual\_samples}. Embora apresentemos a seguir uma prévia das
 primeiras 10 linhas de \texttt{virtual\_samples}, recomendamos
 fortemente que você explore todo o seu conteúdo utilizando o
-visualizador de planilhas do RStudio, executando o comando
+visualizador de planilhas do \texttt{RStudio}, executando o comando
 \texttt{View(virtual\_samples)}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2026}\NormalTok{)}
 \NormalTok{amostra\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}
-\FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{, }\AttributeTok{reps =} \DecValTok{33}\NormalTok{)}
+\FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{, }\AttributeTok{reps =} \DecValTok{20}\NormalTok{)}
 
 \NormalTok{amostra\_virtual}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-# A tibble: 1,650 x 3
-# Groups:   replicate [33]
+# A tibble: 1,000 x 3
+# Groups:   replicate [20]
    replicate ball_ID color
        <int>   <int> <chr>
- 1         1    1352 white
- 2         1    2269 red  
- 3         1    2059 white
- 4         1     173 white
- 5         1    1539 white
- 6         1      25 red  
- 7         1    1334 white
- 8         1    1392 white
- 9         1    1168 red  
-10         1    1145 red  
-# i 1,640 more rows
+ 1         1     733 white
+ 2         1     993 red  
+ 3         1    2342 red  
+ 4         1    1647 white
+ 5         1    1883 red  
+ 6         1     164 red  
+ 7         1    1200 red  
+ 8         1     389 white
+ 9         1     287 white
+10         1    2362 red  
+# i 990 more rows
 \end{verbatim}
 
 Observe, no visualizador de planilhas, que as primeiras 50 linhas da
@@ -981,17 +973,17 @@ variável \texttt{replicate} são iguais a 1, enquanto as 50 linhas
 seguintes de \texttt{replicate} são iguais a 2. Isso nos indica que as
 primeiras 50 linhas correspondem à primeira amostra de 50 bolas,
 enquanto as próximas 50 linhas correspondem à segunda amostra de 50
-bolas. Esse padrão se repete para todas as 33 replicações
-(\texttt{reps\ =\ 33}) e, portanto, o \texttt{data\ frame}
-\texttt{amostra\_virtual} possui (33 \cdot 50 = 1650) linhas.
+bolas. Esse padrão se repete para todas as 20 replicações
+(\texttt{reps\ =\ 20}) e, portanto, o \texttt{data\ frame}
+\texttt{amostra\_virtual} possui (20 \(\times\) 50 = 1000) linhas.
 
-Vamos agora usar \texttt{amostra\_virtual} para calcular as 33
+Vamos agora usar \texttt{amostra\_virtual} para calcular as 20
 proporções de bolas vermelhas resultantes. Utilizaremos os mesmos verbos
 do \texttt{dplyr} de antes, mas agora com um \texttt{group\_by()}
 adicional na variável \texttt{replicate}. Ao definir previamente a
 variável de agrupamento como \emph{metadado} antes de aplicar
-\texttt{summarize()}, obteremos 33 proporções diferentes de bolas
-vermelhas. A seguir, exibimos uma prévia das primeiras 10 das 33 linhas
+\texttt{summarize()}, obteremos 20 proporções diferentes de bolas
+vermelhas. A seguir, exibimos uma prévia das primeiras 10 das 20 linhas
 resultantes:
 
 \begin{Shaded}
@@ -1006,24 +998,33 @@ resultantes:
 \end{Shaded}
 
 \begin{verbatim}
-# A tibble: 33 x 3
+# A tibble: 20 x 3
    replicate   red prop_red
        <int> <int>    <dbl>
- 1         1    20     0.4 
- 2         2    17     0.34
- 3         3    14     0.28
- 4         4    22     0.44
+ 1         1    16     0.32
+ 2         2    22     0.44
+ 3         3    19     0.38
+ 4         4    27     0.54
  5         5    18     0.36
- 6         6    22     0.44
- 7         7    17     0.34
- 8         8    14     0.28
- 9         9    17     0.34
-10        10    14     0.28
-# i 23 more rows
+ 6         6    19     0.38
+ 7         7    16     0.32
+ 8         8    17     0.34
+ 9         9    21     0.42
+10        10    20     0.4 
+11        11    23     0.46
+12        12    23     0.46
+13        13    15     0.3 
+14        14    23     0.46
+15        15    27     0.54
+16        16    23     0.46
+17        17    17     0.34
+18        18    21     0.42
+19        19    15     0.3 
+20        20    18     0.36
 \end{verbatim}
 
-Assim como ocorreu com as 33 amostras coletadas em sala de aula, há
-variação nas 33 proporções de bolas vermelhas obtidas virtualmente.
+Assim como ocorreu com as 20 amostras coletadas em sala de aula, há
+variação nas 20 proporções de bolas vermelhas obtidas virtualmente.
 Vamos visualizar essa variação por meio de um histograma. Note que
 também adicionamos os argumentos \texttt{binwidth\ =\ 0.05} e
 \texttt{boundary\ =\ 0.4}.
@@ -1038,8 +1039,8 @@ outros.
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(virtual\_prop\_red, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ prop\_red)) }\SpecialCharTok{+}
 \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{boundary =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{color =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
-\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proportion of 50 balls that were red"}\NormalTok{,}
-\AttributeTok{title =} \StringTok{"Distribution of 33 proportions red"}\NormalTok{)}
+\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proporção das 50 bolas que são vermelhas"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Frequência"}\NormalTok{,}
+\AttributeTok{title =} \StringTok{"Disttribuição das proporções"}\NormalTok{) }
 \end{Highlighting}
 \end{Shaded}
 
@@ -1047,8 +1048,8 @@ outros.
 
 Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas
 inferiores a 30\%. Por outro lado, em alguns casos, obtivemos proporções
-superiores a 45\%. No entanto, as proporções que ocorreram com maior
-frequência ficaram entre 35\% e 40\% (em \textbf{11 das 33 amostras}).
+superiores a 50\%. No entanto, as proporções que ocorreram com maior
+frequência ficaram entre 35\% e 40\% (em \textbf{5 das 20 amostras}).
 Por que temos essas diferenças nas proporções de bolas vermelhas?
 \textbf{Por causa da variação amostral}.
 
@@ -1063,7 +1064,7 @@ aprendizagem}\label{verificauxe7uxe3o-de-aprendizagem-1}
   Por que não foi possível estudar os efeitos da variação amostral
   quando utilizamos a pá virtual apenas uma vez? Por que foi necessário
   coletar \textbf{mais de uma amostra virtual} (no nosso caso,
-  \textbf{33 amostras virtuais})?
+  \textbf{20 amostras virtuais})?
 \end{enumerate}
 
 \subsection*{Lista Semanal
@@ -1074,7 +1075,7 @@ Obrigatória}\label{lista-semanal-obrigatuxf3ria}
 \def\labelenumi{\arabic{enumi}.}
 \item
   Agora suponha que queiramos estudar os efeitos da variação amostral
-  não para 33 amostras, mas para um número maior, digamos 1000 amostras.
+  não para 20 amostras, mas para um número maior, digamos 1000 amostras.
   Vamos novamente utilizar a função \texttt{rep\_sample\_n()}, com o
   tamanho da amostra definido como 50, mas agora com o número de
   repetições \texttt{reps} definido como 1000.
@@ -1091,16 +1092,205 @@ Obrigatória}\label{lista-semanal-obrigatuxf3ria}
 
 \section{Conceitos Importantes}\label{conceitos-importantes}
 
-A seguir, apresentamos uma lista de termos e notação matemática
-relacionados à amostragem.
-
 Primeiramente, uma \textbf{população} é um conjunto de indivíduos ou
 observações de interesse. Isso também é comumente denominado
 \textbf{população de estudo}. Denotamos matematicamente o tamanho da
-população utilizando a letra maiúscula \(N\). Na nossa atividade de
-amostragem, a \textbf{população (de estudo)} é o conjunto de
-\(N = 2400\) bolas vermelhas e brancas, todas de mesmo tamanho, contidas
-na urna.
+população utilizando a letra maiúscula \(N\).
+
+Um \textbf{parâmetro populacional} é algum resumo numérico sobre a
+população que é desconhecido, mas que você gostaria de saber. Por
+exemplo, quando essa quantidade é uma média, como a altura média de
+todos os canadenses, o parâmetro populacional de interesse é a média
+populacional.
+
+Um \textbf{censo} é uma enumeração exaustiva ou contagem de todos os
+\(N\) indivíduos da população. Fazemos isso para calcular o valor exato
+do parâmetro populacional. Vale notar que, à medida que o número \(N\)
+de indivíduos em nossa população aumenta, a realização de um censo se
+torna mais cara (em termos de tempo, energia e dinheiro).
+
+Na nossa atividade de amostragem, a \textbf{população (de estudo)} é o
+conjunto de \(N = 2400\) bolas vermelhas e brancas, todas de mesmo
+tamanho, contidas na urna. Lembre-se de que também representamos a urna
+``virtualmente'' no data frame \texttt{bowl}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowl}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2,400 x 2
+   ball_ID color
+     <int> <chr>
+ 1       1 white
+ 2       2 white
+ 3       3 white
+ 4       4 red  
+ 5       5 white
+ 6       6 white
+ 7       7 red  
+ 8       8 white
+ 9       9 red  
+10      10 white
+# i 2,390 more rows
+\end{verbatim}
+
+O \textbf{parâmetro populacional} aqui é a proporção de bolas na urna
+que são vermelhas. Sempre que estamos interessados em uma proporção de
+algum valor em uma população, o parâmetro populacional tem um nome
+específico: a proporção populacional. Comumente denotamos as proporções
+populacionais com a letra \(p\).
+
+Para calcular essa proporção populacional \(p\) de forma exata,
+precisamos primeiro realizar um censo, analisando todos os \(N = 2400\)
+e contando o número de bolas vermelhas. Em seguida, dividimos essa
+contagem por 2400 para obter a proporção de vermelhas.
+
+Você pode estar se perguntando agora: ``Espere. Eu entendo que realizar
+um censo na urna real levaria muito tempo. Mas não podemos realizar um
+censo''virtual'' usando a urna virtual?'' Você está absolutamente
+correto! De fato, quando os autores do pacote \texttt{moderndive}
+criaram o data frame \texttt{bowl}, eles fizeram com que seu conteúdo
+correspondesse ao da urna real não fazendo um censo, mas lendo o
+conteúdo escrito na caixa em que a urna veio! Vamos realizar este censo
+``virtual'' usando os mesmos códigos do pacote \texttt{dplyr} que você
+usou anteriormente para contar o número de bolas que são vermelhas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowl }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 1
+    red
+  <int>
+1   900
+\end{verbatim}
+
+Como 900 das 2400 são vermelhas, a proporção é 900/2400 = 0,375 =
+37,5\%. Portanto, sabemos o valor do parâmetro populacional: em nosso
+caso, a proporção populacional \(p\) é igual a 0,375.
+
+Neste ponto, você pode estar se perguntando: \emph{``Se tínhamos uma
+maneira de saber que a proporção de bolas vermelhas é de 37,5\%, então
+por que fizemos alguma amostragem?''} Ótima pergunta! Normalmente, você
+não faria amostragem alguma! No entanto, as atividades de amostragem que
+fizemos neste capítulo são meras simulações de como a amostragem é feita
+na vida real! Realizamos essas simulações a fim de estudar:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  O efeito da variação amostral (ou variabilidade de amostragem) em
+  nossas estimativas.
+\item
+  O efeito do tamanho da amostra na variação amostral.
+\end{enumerate}
+
+Como veremos adiante em pesquisas de opinião, na amostragem da vida real
+não apenas o tamanho da população \(N\) será muito grande, tornando um
+censo caro, mas, às vezes, nem sequer saberemos qual é o tamanho da
+população! Por enquanto, no entanto, prosseguiremos com nosso próximo
+conjunto de termos e notação.
+
+\textbf{Amostragem} é o ato de coletar uma amostra da população, o que
+geralmente fazemos apenas quando não podemos realizar um censo.
+Denotamos matematicamente o tamanho da amostra usando o \(n\) minúsculo,
+em oposição ao \(N\) maiúsculo, que denota o tamanho da população.
+Normalmente, o tamanho da amostra \(n\) é muito menor que o tamanho da
+população \(N\). Assim, a amostragem é uma alternativa muito mais barata
+do que a realização de um censo.
+
+Uma \textbf{estimativa pontual}, também conhecida como estatística (ou
+estatística amostral), é uma estatística calculada a partir de uma
+amostra que estima o parâmetro populacional desconhecido.
+
+Então, em sala de aula, realizamos a amostragem usando uma pá com 50
+espaços para extrair amostras de tamanho \(n = 50\). Para realizar o
+análogo virtual desta amostragem, lembre-se de que usamos a função
+\texttt{rep\_sample\_n()} da seguinte maneira:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2026}\NormalTok{)}
+\NormalTok{pa\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Usando a amostra de 50 bolas contidas em \texttt{pa\_virtual}, geramos
+uma estimativa da proporção de bolas na urna que são vermelhas,
+\texttt{prop\_red}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  replicate num_red prop_red
+      <int>   <int>    <dbl>
+1         1      16     0.32
+\end{verbatim}
+
+Então, em nosso caso, o valor de \texttt{prop\_red} é a estimativa
+pontual da proporção populacional \(p\), pois ela estima o valor desta
+última. Além disso, essa estimativa pontual tem um nome específico
+quando se considera proporções: \textbf{a proporção amostral}. Ela é
+denotada usando \(\hat{p}\), porque é uma convenção comum em estatística
+usar um símbolo de ``chapéu'' para denotar estimativas pontuais.
+
+Iremos observa ao longo desta disciplina que a maneira como você coleta
+as amostras influencia diretamente a qualidade delas.
+
+\begin{itemize}
+\item
+  Diz-se que uma amostra é \textbf{representativa} se ela ``se parecer''
+  aproximadamente com a população. Em outras palavras, se as
+  características da amostra forem uma ``boa'' representação das
+  características da população.
+\item
+  Dizemos que uma amostra é \textbf{generalizável} se quaisquer
+  resultados baseados na amostra puderem ser generalizados para a
+  população. Em outras palavras, se pudermos fazer ``bons'' palpites
+  sobre a população usando a amostra.
+\item
+  Dizemos que um procedimento de amostragem é \textbf{viesado} (ou
+  tendencioso) se certos indivíduos em uma população tiverem uma chance
+  maior de serem incluídos em uma amostra do que outros. Dizemos que um
+  procedimento de amostragem é \textbf{não viesado} (ou imparcial) se
+  cada indivíduo em uma população tiver chances iguais de ser amostrado.
+\end{itemize}
+
+Dizemos que uma amostra de \(n\) bolas extraídas usando nossa pá é
+\textbf{representativa} da população se o seu conteúdo ``se assemelhar
+aproximadamente'' ao conteúdo da urna. Se sim, então a proporção de
+bolas vermelhas da pá pode ser \textbf{generalizada} para a proporção
+das \(N = 2400\) bolas da urna que são vermelhas. Ou expresso de forma
+diferente, \(\hat{p}\) é um ``bom palpite'' de \(p\). Agora digamos que
+trapaceamos ao usar a pá e removemos um número de bolas brancas em favor
+de bolas vermelhas. Então, essa amostra seria viesada em relação às
+bolas vermelhas e, portanto, a amostra não seria mais representativa da
+urna.
+
+Uma maneira de garantir que uma amostra seja não viesada e
+representativa da população é usar a \textbf{amostragem aleatória}.
+Temos que \textbf{Inferência} é o ato de ``dar um palpite'' sobre algo
+desconhecido. Portanto, \textbf{Inferência estatística} é o ato de fazer
+um palpite sobre uma população usando uma amostra.
+
+Em nosso caso, como a função \texttt{rep\_sample\_n()} usa o gerador de
+números aleatórios do seu computador, estávamos, de fato, realizando
+``amostragem aleatória''.
 
 \bookmarksetup{startatroot}
 
