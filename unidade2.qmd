@@ -1,1 +1,165 @@
 # Distribuições Amostrais
+
+## Introdução
+
+**O que é a estatística?** Consiste em três grandes áreas:
+
+* **Coleta de Dados:** planos amostrais e desenhos experimentais.
+
+* **Estatística Descritiva:** resumos numéricos e gráficos dos dados coletados a partir de uma amostra.
+
+* **Estatística Inferencial:** estimação, intervalos de confiança e testes de hipóteses sobre parâmetros de interesse.
+
+Os procedimentos estatísticos fazem parte (passos 2 a 5 abaixo) do Método Científico, inicialmente defendido por Sir Francis Bacon (1561-1626), que escreveu *"aprender os segredos da natureza envolve coletar dados e realizar experimentos"*.
+
+**A metodologia moderna:**
+
+1. Observar algum fenómeno.
+2. Formular uma hipótese que explique o fenómeno.
+3. Coletar dados.
+4. Testar: Os dados suportam a hipótese?
+5. Conclusão. Se o teste falhar, volte ao passo 2.
+
+
+> *"As estatísticas não mentem, mas os mentirosos usam estatísticas."* — Mark Twain.
+
+### O que é a Estatística Matemática?
+
+É o estudo dos fundamentos teóricos da estatística. 
+
+**O que é uma estatística?**
+
+Seja $X_{1},X_{2},...,X_{n}$ um conjunto de variáveis aleatórias observáveis (como, por exemplo, uma amostra aleatória de $n$ indivíduos de uma população de interesse). Uma estatística $T$ é uma função aplicada a essa amostra:
+$$T=\mathcal{T}(X_{1},X_{2},...,X_{n})$$
+
+::: {.callout-note title="População vs. Amostra"}
+
+* **População:** O grupo inteiro de indivíduos (sujeitos ou unidades), que pode ser existente ou conceptual, sobre o qual pretendemos obter informação.
+
+* **Amostra:** Uma parte da população a partir da qual os dados são recolhidos.
+:::
+
+
+::: {.callout-important title="Parâmetro vs. Estatística"}
+**Parâmetro:** Um valor numérico calculado a partir de *todos* os indivíduos na população.
+*(Discreta / Contínua)*
+
+* **Média populacional:** $\mu = \sum xP(x) \quad \text{ou} \quad \int xf(x)dx$.
+* **Variância populacional:** $\sigma^{2} = \sum (x-\mu)^{2}P(x) \quad \text{ou} \quad \int (x-\mu)^{2}f(x)dx$.
+* **Proporção populacional:** $p$ é a verdadeira proporção de 1s na população.
+* **Mediana populacional:** $\phi_{.5}$ é o valor tal que $P(X \le \phi_{.5}) \ge .5$ e $P(X \ge \phi_{.5}) \ge .5$.
+
+**Estatística:** Um valor numérico calculado a partir de uma *amostra* $X_{1},...,X_{n}$.
+
+* **Média amostral:** $\overline{X}=\frac{1}{n}\sum_{i=1}^{n}X_{i}$.
+* **Variância amostral:** $S^{2}=\frac{1}{n-1}\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}$.
+* **Proporção amostral:** $\hat{p} = \frac{\text{número de 1s}}{n}$.
+* **Mediana amostral:** $\hat{\phi}_{.5} = \text{valor central (ou média dos centrais)}$.
+:::
+
+
+## Distribuições Amostrais
+
+O valor de uma estatística varia de amostra para amostra. Por outras palavras, amostras diferentes resultarão em valores diferentes para uma estatística. Portanto, uma estatística é uma variável aleatória com uma distribuição!
+
+**Distribuição Amostral:** A distribuição dos valores da estatística provenientes de todas as amostras possíveis de tamanho $n$. 
+
+::: {.callout-tip title="O Método de 'Força Bruta' para construir uma Distribuição Amostral"}
+Para entender a origem de uma distribuição amostral, imagine o seguinte processo exato (ou de "força bruta"):
+
+1. **Retirar todas as amostras possíveis** de tamanho $n$ da população.
+2. **Calcular o valor da estatística** (por exemplo, a média $\overline{X}$) para cada uma dessas amostras.
+3. **Exibir a distribuição** dos valores dessa estatística na forma de uma tabela, de um gráfico (histograma) ou de uma equação.
+:::
+
+Na prática, como as populações costumam ser imensas (ou infinitas), é impossível calcular *todas* as amostras possíveis. É por isso que dependemos de teoremas matemáticos (como o Teorema Central do Limite) para deduzir o formato dessa distribuição sem precisarmos usar a força bruta!
+
+
+### Distribuição Amostral da Média ($\overline{X}$)
+
+Na estatística inferencial, é comum utilizar a estatística $\overline{X}$ para estimar $\mu$.
+
+**Média e Variância:**
+Para qualquer tamanho de amostra $n$ e uma Amostra Aleatória Simples (AAS) proveniente de qualquer distribuição com média $\mu_{x}$ e variância $\sigma_{x}^{2}$:
+$$E(\overline{X})=\mu_{x} \quad \text{e} \quad Var(\overline{X})=\frac{\sigma_{x}^{2}}{n}.$$
+
+**Quando os dados são normais (Teorema 7.1):**
+Para uma AAS proveniente de uma distribuição normal $N(\mu_{x},\sigma_{x}^{2})$:
+$$\overline{X} \sim N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).$$
+
+**Para amostras de grandes dimensões (Teorema do Limite Central - Teorema 7.4):**
+Para um grande tamanho de amostra $n$ e uma AAS proveniente de *qualquer* distribuição populacional com variância finita $\sigma_{x}^{2} < \infty$:
+$$\overline{X} \dot{\sim} N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).$$
+
+### Distribuição Amostral da Variância ($S^{2}$)
+
+Para estimar a variância populacional $\sigma^{2}$, utilizamos $S^{2}$.
+
+::: {.callout-note title="Distribuição Qui-quadrado ($\chi^2$)"}
+A soma dos quadrados de variáveis normais padronizadas independentes distribui-se como uma variável aleatória $\chi^{2}$ (Teorema 7.2):
+Se $Z_{1},...,Z_{\nu}$ forem $N(0,1)$ independentes, então $\sum Z_{i}^{2} \sim \chi^{2}(\nu)$.
+:::
+
+**Média e Variância de $S^{2}$:**
+$$E(S^{2})=\sigma_{x}^{2} \quad \text{e} \quad Var(S^{2})=\frac{2\sigma_{x}^{4}}{n-1}$$
+
+**Quando os dados são normais (Teorema 7.3):**
+$$\frac{(n-1)S^{2}}{\sigma_{x}^{2}} \sim \chi^{2}(n-1)$$
+
+### Distribuição Amostral de $\frac{\overline{X}-\mu}{S/\sqrt{n}}$
+
+Utilizada frequentemente para determinar a quantos erros padrão a média amostral se encontra de um valor hipotético $\mu$.
+
+::: {.callout-note title="Distribuição t de Student"}
+(Definição 7.2): Se $Z \sim N(0,1)$ e $W \sim \chi^{2}(\nu)$ são independentes, então:
+$$T=\frac{Z}{\sqrt{W/\nu}} \sim t(\nu)$$
+:::
+
+**Quando os dados são normais:**
+$\overline{X}$ e $S^{2}$ são independentes. Logo:
+$$T=\frac{\overline{X}-\mu}{S/\sqrt{n}} \sim t(n-1)$$
+
+*Nota:* À medida que $\nu \rightarrow \infty$, a distribuição $t(\nu)$ aproxima-se da normal padrão.
+
+### Distribuição Amostral do Razão de Variâncias
+
+Na estatística inferencial, é frequentemente do interesse comparar as variâncias $\sigma_{1}^{2}$ e $\sigma_{2}^{2}$ de duas populações.
+
+::: {.callout-note title="Distribuição F"}
+(Definição 7.3): Se $W_{1} \sim \chi^{2}(\nu_{1})$ e $W_{2} \sim \chi^{2}(\nu_{2})$ são independentes, então:
+$$F=\frac{W_{1}/\nu_{1}}{W_{2}/\nu_{2}} \sim F(\nu_{1},\nu_{2})$$
+:::
+
+**Quando os dados são normais:**
+Se temos duas amostras independentes de distribuições normais, então a razão das variâncias amostrais sobre as variâncias populacionais segue:
+$$F=\frac{S_{1}^{2}/\sigma_{1}^{2}}{S_{2}^{2}/\sigma_{2}^{2}} \sim F(n_{1}-1, n_{2}-1)$$
+
+---
+
+## Prova do Teorema do Limite Central
+
+::: {.callout-important title="Teorema do Limite Central"}
+Seja $X_{1},X_{2},...,X_{n}$ uma AAS de uma distribuição com média $\mu_{x}$ e variância $\sigma_{x}^{2}<\infty$. Então:
+$$\lim_{n\rightarrow\infty} \frac{\overline{X}-\mu_{x}}{\sigma_{x}/\sqrt{n}} = U \sim N(0,1)$$
+:::
+
+**Prova:**
+A prova baseia-se em funções geradoras de momentos (fgm). A fgm para uma variável aleatória contínua $Y$ é $M(t)=E(e^{tY})$.
+Sabemos que a fgm de uma variável normal padrão é $e^{t^{2}/2}$. Queremos provar que a fgm da nossa estatística converge para este valor.
+
+**Passo 1:** Seja $Z_{i}=\frac{X_{i}-\mu}{\sigma}$. 
+Mostra-se facilmente que $E(Z)=0$ e $Var(Z)=1$. Usando a expansão da Série de Taylor em torno de $t=0$:
+$$M_Z(t/\sqrt{n}) = 1 + \frac{(t/\sqrt{n})^2}{2!} + R(t/\sqrt{n})$$
+Onde o resto $n \lim_{n\rightarrow\infty} R(t/\sqrt{n}) = 0$.
+
+**Passo 2:** Definimos a variável padronizada $U_n$:
+$$U_{n} = \frac{\overline{X}-\mu_{x}}{\sigma_{x}/\sqrt{n}} = \frac{1}{\sqrt{n}}\sum_{i=1}^{n}Z_{i}$$
+A fgm de $U_n$ para uma amostra independente é o produto das fgms:
+$$M_{U_{n}}(t) = \left(M_Z(t/\sqrt{n})\right)^n$$
+
+**Passo 3:** Substituindo a aproximação de Taylor no limite:
+$$\lim_{n\rightarrow\infty} M_{U_{n}}(t) = \lim_{n\rightarrow\infty} \left( 1 + \frac{t^2}{2n} + R(t/\sqrt{n}) \right)^n = e^{t^2/2}$$
+
+**Passo 4:** Como $\lim_{n\rightarrow\infty} M_{U_{n}}(t) = e^{t^2/2}$ e esta é exatamente a fgm de uma variável Normal Padrão $N(0,1)$, o teorema está provado!
+
+## Lista Semanal Obrigatória
