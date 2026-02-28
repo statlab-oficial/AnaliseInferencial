@@ -151,6 +151,8 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
+\usepackage{graphicx}
+\usepackage{eso-pic}
 % pacotes úteis
 \usepackage{amsmath}
 \usepackage{array}      % para o \begin{array} usado pelo \stackunder
@@ -257,8 +259,6 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Análise Inferencial},
-  pdfauthor={Manoel Santos-Neto},
   pdflang={pt-BR},
   colorlinks=true,
   linkcolor={blue},
@@ -267,19 +267,37 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{Análise Inferencial}
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-\subtitle{Departamento de Estatística e Matemática Aplicada}
-\author{Manoel Santos-Neto}
-\date{2026-02-28}
+\author{}
+\date{}
 
 \begin{document}
-\maketitle
+
+% Capa sem número
+\pagenumbering{gobble}
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+% Imagem como fundo, ancorada no topo-esquerdo, sem distorção
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    % "desce" a origem para dentro da página
+    \raisebox{-\paperheight}{%
+      \includegraphics[width=\paperwidth,keepaspectratio]{capa.png}%
+    }%
+  }%
+}
+
+\null
+\vfill
+\end{titlepage}
+
+\ClearShipoutPictureBG
+
+% Reinicia numeração normal no conteúdo
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
 \renewcommand*\contentsname{Índice}
 {
@@ -289,15 +307,111 @@
 }
 \bookmarksetup{startatroot}
 
+\chapter*{Informações Legais e Declaração de Uso de Inteligência
+Artificial}\label{informauxe7uxf5es-legais-e-declarauxe7uxe3o-de-uso-de-inteliguxeancia-artificial}
+\addcontentsline{toc}{chapter}{Informações Legais e Declaração de Uso de
+Inteligência Artificial}
+
+\markboth{Informações Legais e Declaração de Uso de Inteligência
+Artificial}{Informações Legais e Declaração de Uso de Inteligência
+Artificial}
+
+\section*{Direitos Autorais e Uso da
+Obra}\label{direitos-autorais-e-uso-da-obra}
+\addcontentsline{toc}{section}{Direitos Autorais e Uso da Obra}
+
+\markright{Direitos Autorais e Uso da Obra}
+
+© 2026 --- Os autores.
+
+Todos os direitos reservados. Esta obra é protegida pela legislação
+brasileira de direitos autorais (Lei nº 9.610/1998). É vedada a
+reprodução, distribuição, armazenamento ou transmissão total ou parcial
+deste livro, por qualquer meio ou processo, eletrônico ou mecânico, sem
+autorização expressa e por escrito dos autores, salvo nos casos
+permitidos pela legislação vigente para fins exclusivamente acadêmicos e
+não comerciais, com a devida citação da fonte.
+
+A utilização do material em ambientes de ensino é permitida desde que
+preservada a integridade do conteúdo, mencionada a autoria e respeitados
+os princípios de uso responsável da informação científica. A reprodução
+para fins comerciais, bem como a modificação substancial do conteúdo sem
+autorização, constitui violação de direitos autorais.
+
+\section*{Declaração sobre o Uso de Ferramentas de Inteligência
+Artificial}\label{declarauxe7uxe3o-sobre-o-uso-de-ferramentas-de-inteliguxeancia-artificial}
+\addcontentsline{toc}{section}{Declaração sobre o Uso de Ferramentas de
+Inteligência Artificial}
+
+\markright{Declaração sobre o Uso de Ferramentas de Inteligência
+Artificial}
+
+Durante a elaboração deste livro foram utilizadas ferramentas de
+Inteligência Artificial, em especial sistemas de apoio à escrita e
+organização textual, como recurso complementar no processo de produção
+acadêmica.
+
+O uso de IA teve caráter \textbf{estritamente assistivo}, não
+substituindo o desenvolvimento conceitual, a formulação matemática, a
+interpretação estatística nem as decisões pedagógicas da obra. Todo
+conteúdo foi cuidadosamente revisado, validado e adaptado pelos autores,
+que assumem integral responsabilidade científica e intelectual pelo
+texto final.
+
+Não foram delegadas à IA decisões metodológicas, inferenciais ou
+conclusões analíticas. A elaboração teórica, a seleção de exemplos, a
+validação matemática e a coerência didática resultam da experiência
+acadêmica e da atuação dos autores na área de Modelos de Regressão.
+
+Reafirmamos que o uso responsável de tecnologias emergentes deve sempre
+preservar o rigor científico, a integridade acadêmica e o protagonismo
+intelectual humano.
+
+\bookmarksetup{startatroot}
+
 \chapter*{Prefácio}\label{prefuxe1cio}
 \addcontentsline{toc}{chapter}{Prefácio}
 
 \markboth{Prefácio}{Prefácio}
 
+Este livro resulta da experiência acumulada no ensino, na orientação de
+estudantes e no desenvolvimento de pesquisas em modelos de regressão.
+Somos docentes pesquisadores do Departamento de Estatística e Matemática
+Aplicada da Universidade Federal do Ceará (DEMA/UFC), com atuação
+contínua em regressão linear, modelagem estatística e inferência.
+Integramos o Laboratório de Inovação em Estatística --- StatLab/UFC
+(\url{https://statlab.quarto.pub/}) e o Grupo de Pesquisa \emph{Modelos
+de Regressão e Aplicações} do CNPq
+(\url{http://dgp.cnpq.br/dgp/espelhogrupo/6344659534806942}), espaços
+nos quais articulamos ensino, pesquisa e aplicação a problemas reais.
+
+O material tem como base as disciplinas Inferência Estatística I
+(CC0288) e Análise Inferencial (CC0448). Ao longo dos anos, consolidamos
+a convicção de que ensinar regressão exige equilíbrio entre rigor
+teórico e clareza interpretativa.
+
+O livro desenvolve os conceitos de Inferência Estatística de forma
+progressiva, enfatizando interpretação e propriedades. A implementação é
+realizada integralmente no \textbf{R}, utilizado como ambiente de
+experimentação conceitual e não apenas como ferramenta computacional.
+
+Os fundamentos matemáticos mais densos são apresentados em apêndices
+específicos, preservando o fluxo didático do texto principal e
+permitindo diferentes níveis de aprofundamento. Acreditamos que
+inferência deve ser ensinada como base para tomada de decisão, com
+atenção às suas suposições, limitações e implicações práticas.
+
+Esperamos que este livro contribua para a formação de profissionais
+capazes tomar decisões com rigor técnico, pensamento estatístico crítico
+e responsabilidade analítica.
+
 \bookmarksetup{startatroot}
 
-\chapter{IDENTIFICAÇÃO DA
-DISCIPLINA}\label{identificauxe7uxe3o-da-disciplina}
+\chapter*{Identificação da
+Disciplina}\label{identificauxe7uxe3o-da-disciplina}
+\addcontentsline{toc}{chapter}{Identificação da Disciplina}
+
+\markboth{Identificação da Disciplina}{Identificação da Disciplina}
 
 \begin{itemize}
 \item
@@ -311,8 +425,7 @@ DISCIPLINA}\label{identificauxe7uxe3o-da-disciplina}
 \item
   Regime: Semestral
 \item
-  Pré-requisitos: Probabilidade e Estatística Descritiva (ou
-  equivalente)
+  Pré-requisitos: Modelos Probabilísticos (CC0446)
 \item
   Período Letivo: 2026.1
 \item
@@ -321,7 +434,10 @@ DISCIPLINA}\label{identificauxe7uxe3o-da-disciplina}
 
 \bookmarksetup{startatroot}
 
-\chapter{EMENTA}\label{ementa}
+\chapter*{EMENTA}\label{ementa}
+\addcontentsline{toc}{chapter}{EMENTA}
+
+\markboth{EMENTA}{EMENTA}
 
 Conceitos de população e amostra; parâmetros, estatísticas, estimadores
 e suas propriedades; distribuições amostrais; métodos de estimação
@@ -331,7 +447,10 @@ homogeneidade e independência.
 
 \bookmarksetup{startatroot}
 
-\chapter{OBJETIVO GERAL}\label{objetivo-geral}
+\chapter*{OBJETIVO GERAL}\label{objetivo-geral}
+\addcontentsline{toc}{chapter}{OBJETIVO GERAL}
+
+\markboth{OBJETIVO GERAL}{OBJETIVO GERAL}
 
 Apresentar os fundamentos da inferência estatística, capacitando o
 estudante a formular, analisar e interpretar problemas inferenciais em
@@ -340,7 +459,10 @@ validação de modelos e capacidade de generalização.
 
 \bookmarksetup{startatroot}
 
-\chapter{OBJETIVOS ESPECÍFICOS}\label{objetivos-especuxedficos}
+\chapter*{OBJETIVOS ESPECÍFICOS}\label{objetivos-especuxedficos}
+\addcontentsline{toc}{chapter}{OBJETIVOS ESPECÍFICOS}
+
+\markboth{OBJETIVOS ESPECÍFICOS}{OBJETIVOS ESPECÍFICOS}
 
 Ao final da disciplina, o estudante deverá ser capaz de:
 
@@ -369,7 +491,10 @@ Ao final da disciplina, o estudante deverá ser capaz de:
 
 \bookmarksetup{startatroot}
 
-\chapter{CONTEÚDO PROGRAMÁTICO}\label{conteuxfado-programuxe1tico}
+\chapter*{CONTEÚDO PROGRAMÁTICO}\label{conteuxfado-programuxe1tico}
+\addcontentsline{toc}{chapter}{CONTEÚDO PROGRAMÁTICO}
+
+\markboth{CONTEÚDO PROGRAMÁTICO}{CONTEÚDO PROGRAMÁTICO}
 
 \section*{Unidade I -- Fundamentos da Inferência
 Estatística}\label{unidade-i-fundamentos-da-inferuxeancia-estatuxedstica}
@@ -497,7 +622,10 @@ Ciência de Dados}
 
 \bookmarksetup{startatroot}
 
-\chapter{METODOLOGIA}\label{metodologia}
+\chapter*{METODOLOGIA}\label{metodologia}
+\addcontentsline{toc}{chapter}{METODOLOGIA}
+
+\markboth{METODOLOGIA}{METODOLOGIA}
 
 A disciplina será desenvolvida por meio de aulas expositivo-dialogadas,
 articuladas com atividades práticas computacionais. O conteúdo teórico
@@ -512,7 +640,10 @@ ferramenta pedagógica para construção da intuição inferencial.
 
 \bookmarksetup{startatroot}
 
-\chapter{AVALIAÇÃO}\label{avaliauxe7uxe3o}
+\chapter*{AVALIAÇÃO}\label{avaliauxe7uxe3o}
+\addcontentsline{toc}{chapter}{AVALIAÇÃO}
+
+\markboth{AVALIAÇÃO}{AVALIAÇÃO}
 
 A avaliação será contínua e composta por:
 
@@ -531,7 +662,10 @@ normas vigentes da UFC.
 
 \bookmarksetup{startatroot}
 
-\chapter{CRITÉRIOS DE AVALIAÇÃO}\label{crituxe9rios-de-avaliauxe7uxe3o}
+\chapter*{CRITÉRIOS DE AVALIAÇÃO}\label{crituxe9rios-de-avaliauxe7uxe3o}
+\addcontentsline{toc}{chapter}{CRITÉRIOS DE AVALIAÇÃO}
+
+\markboth{CRITÉRIOS DE AVALIAÇÃO}{CRITÉRIOS DE AVALIAÇÃO}
 
 Serão considerados nos trabalhos e atividades:
 
@@ -550,7 +684,10 @@ Serão considerados nos trabalhos e atividades:
 
 \bookmarksetup{startatroot}
 
-\chapter{BIBLIOGRAFIA BÁSICA}\label{bibliografia-buxe1sica}
+\chapter*{BIBLIOGRAFIA BÁSICA}\label{bibliografia-buxe1sica}
+\addcontentsline{toc}{chapter}{BIBLIOGRAFIA BÁSICA}
+
+\markboth{BIBLIOGRAFIA BÁSICA}{BIBLIOGRAFIA BÁSICA}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -567,7 +704,10 @@ Serão considerados nos trabalhos e atividades:
 
 \bookmarksetup{startatroot}
 
-\chapter{BIBLIOGRAFIA COMPLEMENTAR}\label{bibliografia-complementar}
+\chapter*{BIBLIOGRAFIA COMPLEMENTAR}\label{bibliografia-complementar}
+\addcontentsline{toc}{chapter}{BIBLIOGRAFIA COMPLEMENTAR}
+
+\markboth{BIBLIOGRAFIA COMPLEMENTAR}{BIBLIOGRAFIA COMPLEMENTAR}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -590,7 +730,10 @@ Serão considerados nos trabalhos e atividades:
 
 \bookmarksetup{startatroot}
 
-\chapter{OBSERVAÇÕES FINAIS}\label{observauxe7uxf5es-finais}
+\chapter*{OBSERVAÇÕES FINAIS}\label{observauxe7uxf5es-finais}
+\addcontentsline{toc}{chapter}{OBSERVAÇÕES FINAIS}
+
+\markboth{OBSERVAÇÕES FINAIS}{OBSERVAÇÕES FINAIS}
 
 A disciplina enfatiza a inferência estatística como base conceitual da
 Ciência de Dados, destacando a importância da quantificação da
@@ -712,7 +855,7 @@ resultados dos demais.}
 \end{itemize}
 
 \textbf{Esse histograma representa a distribuição amostral da proporção
-para uma tamanho de amostra fixo \(n\).}
+para uma tamanho de amostra fixo} \(n\).
 
 \subsection*{Verificação de
 aprendizagem}\label{verificauxe7uxe3o-de-aprendizagem}
@@ -1338,9 +1481,9 @@ envolve coletar dados e realizar experimentos''}.
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Observar algum fenómeno.
+  Observar algum fenômeno.
 \item
-  Formular uma hipótese que explique o fenómeno.
+  Formular uma hipótese que explique o fenômeno.
 \item
   Coletar dados.
 \item
@@ -1366,12 +1509,12 @@ observáveis (como, por exemplo, uma amostra aleatória de \(n\)
 indivíduos de uma população de interesse). Uma estatística \(T\) é uma
 função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, toptitle=1mm, titlerule=0mm, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm, coltitle=black, colback=white, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, bottomtitle=1mm, leftrule=.75mm]
 
 \begin{itemize}
 \item
   \textbf{População:} O grupo inteiro de indivíduos (sujeitos ou
-  unidades), que pode ser existente ou conceptual, sobre o qual
+  unidades), que pode ser existente ou conceitual, sobre o qual
   pretendemos obter informação.
 \item
   \textbf{Amostra:} Uma parte da população a partir da qual os dados são
@@ -1380,7 +1523,7 @@ função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, toptitle=1mm, titlerule=0mm, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm, coltitle=black, colback=white, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, bottomtitle=1mm, leftrule=.75mm]
 
 \textbf{Parâmetro:} Um valor numérico calculado a partir de \emph{todos}
 os indivíduos na população. \emph{(Discreta / Contínua)}
@@ -1433,7 +1576,7 @@ distribuição!
 estatística provenientes de todas as amostras possíveis de tamanho
 \(n\).
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, toptitle=1mm, titlerule=0mm, arc=.35mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm, coltitle=black, colback=white, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, bottomtitle=1mm, leftrule=.75mm]
 
 Para entender a origem de uma distribuição amostral, imagine o seguinte
 processo exato (ou de ``força bruta''):
@@ -1467,19 +1610,134 @@ Na estatística inferencial, é comum utilizar a estatística
 \(\overline{X}\) para estimar \(\mu\).
 
 \textbf{Média e Variância:} Para qualquer tamanho de amostra \(n\) e uma
-Amostra Aleatória Simples (AAS) proveniente de qualquer distribuição com
-média \(\mu_{x}\) e variância \(\sigma_{x}^{2}\):
-\[E(\overline{X})=\mu_{x} \quad \text{e} \quad Var(\overline{X})=\frac{\sigma_{x}^{2}}{n}.\]
+Amostra Aleatória Simples (AAS) proveniente de qualquer distribuição
+populacional com média \(\mu_{x}\) e variância \(\sigma_{x}^{2}\):
 
-\textbf{Quando os dados são normais (Teorema 7.1):} Para uma AAS
-proveniente de uma distribuição normal \(N(\mu_{x},\sigma_{x}^{2})\):
+\[E(\overline{X})=\mu_{x}\left(E\left(\sum_{i=1}^n X_i\right) = n \mu_{x}\right) \quad \text{e} \quad Var(\overline{X})=\frac{\sigma_{x}^{2}}{n}\left(E\left(\sum_{i=1}^n X_i\right) = n \sigma^2_{x}\right).\]
+Para compreendermos como a média amostral se comporta, utilizamos as
+seguintes propriedades das combinações lineares:
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, bottomtitle=1mm, leftrule=.75mm]
+
+Sejam \(a_{i}\) para \(i=1,2,...,k\) constantes e sejam \(X_{i}\) para
+\(i=1,2,...,k\) variáveis aleatórias. Então:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Esperança:}
+  \(E\left(\sum_{i=1}^{k}a_{i}X_{i}\right) = \sum_{i=1}^{k}a_{i}E(X_{i})\)
+\item
+  \textbf{Variância:}
+  \(Var\left(\sum_{i=1}^{k}a_{i}X_{i}\right) = \sum_{i=1}^{k}a_{i}^{2}Var(X_{i})\)
+  (se \(X_{1},...,X_{k}\) forem mutuamente independentes).
+\end{enumerate}
+
+\end{tcolorbox}
+
+\textbf{Quando os dados são normais:} Para uma AAS proveniente de uma
+distribuição normal \(N(\mu_{x},\sigma_{x}^{2})\):
 \[\overline{X} \sim N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).\]
 
-\textbf{Para amostras de grandes dimensões (Teorema do Limite Central -
-Teorema 7.4):} Para um grande tamanho de amostra \(n\) e uma AAS
-proveniente de \emph{qualquer} distribuição populacional com variância
-finita \(\sigma_{x}^{2} < \infty\):
-\[\overline{X} \dot{\sim} N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).\]
+\textbf{Exemplo:} Suponha que os níveis de colesterol de homens adultos
+sigam uma distribuição \(N(210\,\text{mg/dL}, (37\,\text{mg/dL})^2)\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Indique um intervalo centrado na média \(\mu\) que capture os 95\%
+  centrais de todos os valores de colesterol.
+\item
+  Indique a distribuição amostral de \(\overline{X}\), a média amostral
+  dos valores de colesterol obtidos a partir de AAS (Amostras Aleatórias
+  Simples) de tamanho \(n = 10\).
+\item
+  Indique um intervalo centrado na média \(\mu\) que capture os 95\%
+  centrais de todos os valores de média amostral de colesterol obtidos a
+  partir de AAS de tamanho \(n = 10\).
+\end{enumerate}
+
+\textbf{Para amostras de grandes dimensões (Teorema Central do Limite):}
+
+Para um grande tamanho de amostra \(n\) e uma AAS proveniente de
+\emph{qualquer} distribuição populacional com variância finita
+\(\sigma_{x}^{2} < \infty\), as distribuições amostrais aproximadas são:
+
+\[\overline{X} \dot{\sim} N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right) \quad \text{e} \quad \sum\limits_{i=1}^n X_i \dot{\sim} N\left(n\mu_{x}, n\sigma_{x}^{2}\right).\]
+Este último resultado é consequência do famoso Teorema Central do
+Limite.
+
+Sejam \(X_{1},\dots,X_{n}\) uma AAS de uma distribuição com média
+\(\mu_x\) e variância \(\sigma^2_x < \infty\). Então a distribuição de
+
+\[U_n = \frac{\overline{X} - \mu_x}{\sigma_x/\sqrt{n}},\] converge para
+\(N(0,1)\) a medida que \(n \to \infty\). Provaremos esse teorema mais à
+frente.
+
+\textbf{Exemplo Importante (Ensaios de Bernoulli):} Seja \(X = 1\) com
+probabilidade \(p\) e \(X = 0\) com probabilidade \((1 - p)\). Então,
+dizemos que \(X\) segue uma distribuição de Bernoulli:
+\[X \sim \text{Bern}(p) = \text{Bin}(n = 1, p).\]
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Gráfico da f.d.p. (Função de Densidade de Probabilidade)
+\end{enumerate}
+
+Desenhe uma representação gráfica da função de massa de probabilidade de
+\(X\).
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Valor Esperado e Variância
+\end{enumerate}
+
+Encontre \(E(X)\) e \(Var(X)\).
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-tip-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Solução Teórica}, bottomtitle=1mm, leftrule=.75mm]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Esperança:}
+  \(E(X) = \sum xP(x) = (1 \cdot p) + (0 \cdot (1-p)) = p\)
+\item
+  \textbf{Variância:} \(Var(X) = E(X^2) - [E(X)]^2 = p - p^2 = p(1-p)\)
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Distribuição Amostral da Proporção
+\end{enumerate}
+
+Suponha que foi recolhida uma Amostra Aleatória Simples (AAS)
+\(X_1, X_2, \dots, X_{40}\). Indique a distribuição amostral aproximada
+de \(\overline{X}\) (geralmente denotada por \(\hat{p} = \overline{X}\),
+o que indica que \(\overline{X}\) é uma proporção amostral).
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Aplicação do Teorema do Limite Central}, bottomtitle=1mm, leftrule=.75mm]
+
+De acordo com o Teorema do Limite Central, para uma amostra
+suficientemente grande (neste caso \(n=40\)), a distribuição de
+\(\hat{p}\) aproxima-se de uma distribuição Normal:
+
+\[\hat{p} \dot{\sim} N\left(p, \frac{p(1-p)}{n}\right)\]
+
+Substituindo \(n=40\):
+\[\hat{p} \dot{\sim} N\left(p, \frac{p(1-p)}{40}\right)\]
+
+\end{tcolorbox}
 
 \subsection{\texorpdfstring{Distribuição Amostral da Variância
 (\(S^{2}\))}{Distribuição Amostral da Variância (S\^{}\{2\})}}\label{distribuiuxe7uxe3o-amostral-da-variuxe2ncia-s2}
@@ -1487,7 +1745,7 @@ finita \(\sigma_{x}^{2} < \infty\):
 Para estimar a variância populacional \(\sigma^{2}\), utilizamos
 \(S^{2}\).
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, toptitle=1mm, titlerule=0mm, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm, coltitle=black, colback=white, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, bottomtitle=1mm, leftrule=.75mm]
 
 A soma dos quadrados de variáveis normais padronizadas independentes
 distribui-se como uma variável aleatória \(\chi^{2}\) (Teorema 7.2): Se
@@ -1508,7 +1766,7 @@ distribui-se como uma variável aleatória \(\chi^{2}\) (Teorema 7.2): Se
 Utilizada frequentemente para determinar a quantos erros padrão a média
 amostral se encontra de um valor hipotético \(\mu\).
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, toptitle=1mm, titlerule=0mm, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm, coltitle=black, colback=white, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, bottomtitle=1mm, leftrule=.75mm]
 
 (Definição 7.2): Se \(Z \sim N(0,1)\) e \(W \sim \chi^{2}(\nu)\) são
 independentes, então: \[T=\frac{Z}{\sqrt{W/\nu}} \sim t(\nu)\]
@@ -1528,7 +1786,7 @@ Variâncias}\label{distribuiuxe7uxe3o-amostral-do-razuxe3o-de-variuxe2ncias}
 Na estatística inferencial, é frequentemente do interesse comparar as
 variâncias \(\sigma_{1}^{2}\) e \(\sigma_{2}^{2}\) de duas populações.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, toptitle=1mm, titlerule=0mm, arc=.35mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm, coltitle=black, colback=white, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, bottomtitle=1mm, leftrule=.75mm]
 
 (Definição 7.3): Se \(W_{1} \sim \chi^{2}(\nu_{1})\) e
 \(W_{2} \sim \chi^{2}(\nu_{2})\) são independentes, então:
@@ -1546,7 +1804,7 @@ amostrais sobre as variâncias populacionais segue:
 \section{Prova do Teorema do Limite
 Central}\label{prova-do-teorema-do-limite-central}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema do Limite Central}, toptitle=1mm, titlerule=0mm, arc=.35mm, colbacktitle=quarto-callout-important-color!10!white, breakable, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, rightrule=.15mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm, coltitle=black, colback=white, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, coltitle=black, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, left=2mm, titlerule=0mm, opacityback=0, colbacktitle=quarto-callout-important-color!10!white, toptitle=1mm, arc=.35mm, breakable, toprule=.15mm, bottomrule=.15mm, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema do Limite Central}, bottomtitle=1mm, leftrule=.75mm]
 
 Seja \(X_{1},X_{2},...,X_{n}\) uma AAS de uma distribuição com média
 \(\mu_{x}\) e variância \(\sigma_{x}^{2}<\infty\). Então:
