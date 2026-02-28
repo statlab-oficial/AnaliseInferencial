@@ -2,6 +2,34 @@
 
 Neste capítulo, iniciamos a primeira parte sobre inferência estatística aprendendo um pouco sobre amostragem. Os conceitos por trás da amostram são a base para intervalos de confiança e testes de hipóteses, por exemplo. Além disso, veremos que ferramentas já aprendidas durante o curso de Ciência de Dados, em particular visualização de dados e manipulação (organização) de dados, são importantes no desenvolvimento do seu entendimento. Esperamos que os conceitos apresentados ao longo deste texto se articulam e se acumulam, culminando na capacidade de "contar sua história com dados".
 
+
+## Processo Gerador de Dados (PGD)
+
+O PGD é o mecanismo teórico, físico ou biológico que produz os dados que observamos. Imagine que o mundo é uma "caixa preta" que segue certas regras (leis da física, comportamento humano, algoritmos de mercado), portanto o PGD são essas regras em funcionamento.
+
+1. A intuição: Realidade vs. Observação
+
+- O PGD (A causa): É a distribuição de probabilidade teórica e os parâmetros fixos (mas desconhecidos) que regem um fenômeno.
+
+- Os Dados (O Efeito): É a amostra específica que coletamos. É apenas uma realização de infinitas possibilidades que o PGD poderia ter gerado.
+
+
+::: {.callout-tip title="Representação Matemática"}
+
+O PGD pode ser definido pela distribuição de probabilidade conjunta desconhecida $P(X, Y)$ (ou simplemente $P(Z)$).
+
+Dizemos que nossa amostra $\mathcal{D} = \{z_1, z_2, \dots, z_n \}$ é composta por variáveis aleatórias independentes e identicamentes distribuídas (i.i.d) retiradas desse processo:
+
+$$z_i \sim P(Z).$$
+Nesta visão, o PGD é o "mecanismo" que dita:
+
+1. A Região de Suporte: Quais valores são possíveis de ocorrer?
+
+2. A Densidade: Com que frequência cada valor ocorre?
+
+3. As Dependências: Como o corrência de $X$ altera a probabilidade de $Y$?
+:::
+
 ## Pacote Necessários
 
 Neste capítulo iremos utilizar os pacotes `R` `tidyverse`[@tidyverse] e `moderndive` [@moderndive]. Por exemplo, para instalar o pacote basta usar `install.packages("tidyverse")` e podemos carregar o pacote por meio do comando `library(tidyverse)`. São carregados, de uma só vez, os seguinte pacotes amplamente utilizados em ciência de dados:
@@ -68,7 +96,7 @@ Iremos realizar o seguinte experimento em sala de aula:
 
 1.  Por que foi importante misturar a tigela antes de retirarmos as bolas?
 
-2.  Por que os 33 grupos de amigos não obtiveram todos o mesmo número de bolas vermelhas entre as 50 retiradas e, consequentemente, proporções diferentes de bolas vermelhas?
+2.  Por que os 20 grupos de amigos não obtiveram todos o mesmo número de bolas vermelhas entre as 50 retiradas e, consequentemente, proporções diferentes de bolas vermelhas?
 
 ## Experimento Virtual
 

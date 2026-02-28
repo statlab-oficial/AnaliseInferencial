@@ -260,17 +260,18 @@ window.Quarto = {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#pacote-necessários" id="toc-pacote-necessários" class="nav-link active" data-scroll-target="#pacote-necessários"><span class="header-section-number">1.1</span> Pacote Necessários</a></li>
-  <li><a href="#experimento-em-sala-de-aula" id="toc-experimento-em-sala-de-aula" class="nav-link" data-scroll-target="#experimento-em-sala-de-aula"><span class="header-section-number">1.2</span> Experimento em Sala de Aula</a>
+  <li><a href="#processo-gerador-de-dados-pgd" id="toc-processo-gerador-de-dados-pgd" class="nav-link active" data-scroll-target="#processo-gerador-de-dados-pgd"><span class="header-section-number">1.1</span> Processo Gerador de Dados (PGD)</a></li>
+  <li><a href="#pacote-necessários" id="toc-pacote-necessários" class="nav-link" data-scroll-target="#pacote-necessários"><span class="header-section-number">1.2</span> Pacote Necessários</a></li>
+  <li><a href="#experimento-em-sala-de-aula" id="toc-experimento-em-sala-de-aula" class="nav-link" data-scroll-target="#experimento-em-sala-de-aula"><span class="header-section-number">1.3</span> Experimento em Sala de Aula</a>
   <ul class="collapse">
   <li><a href="#verificação-de-aprendizagem" id="toc-verificação-de-aprendizagem" class="nav-link" data-scroll-target="#verificação-de-aprendizagem">Verificação de aprendizagem</a></li>
   </ul></li>
-  <li><a href="#experimento-virtual" id="toc-experimento-virtual" class="nav-link" data-scroll-target="#experimento-virtual"><span class="header-section-number">1.3</span> Experimento Virtual</a>
+  <li><a href="#experimento-virtual" id="toc-experimento-virtual" class="nav-link" data-scroll-target="#experimento-virtual"><span class="header-section-number">1.4</span> Experimento Virtual</a>
   <ul class="collapse">
   <li><a href="#verificação-de-aprendizagem-1" id="toc-verificação-de-aprendizagem-1" class="nav-link" data-scroll-target="#verificação-de-aprendizagem-1">Verificação de aprendizagem</a></li>
   <li><a href="#lista-semanal-obrigatória" id="toc-lista-semanal-obrigatória" class="nav-link" data-scroll-target="#lista-semanal-obrigatória">Lista Semanal Obrigatória</a></li>
   </ul></li>
-  <li><a href="#conceitos-importantes" id="toc-conceitos-importantes" class="nav-link" data-scroll-target="#conceitos-importantes"><span class="header-section-number">1.4</span> Conceitos Importantes</a></li>
+  <li><a href="#conceitos-importantes" id="toc-conceitos-importantes" class="nav-link" data-scroll-target="#conceitos-importantes"><span class="header-section-number">1.5</span> Conceitos Importantes</a></li>
   </ul>
 </nav>
     </div>
@@ -297,8 +298,39 @@ window.Quarto = {
 
 
 <p>Neste capítulo, iniciamos a primeira parte sobre inferência estatística aprendendo um pouco sobre amostragem. Os conceitos por trás da amostram são a base para intervalos de confiança e testes de hipóteses, por exemplo. Além disso, veremos que ferramentas já aprendidas durante o curso de Ciência de Dados, em particular visualização de dados e manipulação (organização) de dados, são importantes no desenvolvimento do seu entendimento. Esperamos que os conceitos apresentados ao longo deste texto se articulam e se acumulam, culminando na capacidade de “contar sua história com dados”.</p>
-<section id="pacote-necessários" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="pacote-necessários"><span class="header-section-number">1.1</span> Pacote Necessários</h2>
+<section id="processo-gerador-de-dados-pgd" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="processo-gerador-de-dados-pgd"><span class="header-section-number">1.1</span> Processo Gerador de Dados (PGD)</h2>
+<p>O PGD é o mecanismo teórico, físico ou biológico que produz os dados que observamos. Imagine que o mundo é uma “caixa preta” que segue certas regras (leis da física, comportamento humano, algoritmos de mercado), portanto o PGD são essas regras em funcionamento.</p>
+<ol type="1">
+<li>A intuição: Realidade vs.&nbsp;Observação</li>
+</ol>
+<ul>
+<li><p>O PGD (A causa): É a distribuição de probabilidade teórica e os parâmetros fixos (mas desconhecidos) que regem um fenômeno.</p></li>
+<li><p>Os Dados (O Efeito): É a amostra específica que coletamos. É apenas uma realização de infinitas possibilidades que o PGD poderia ter gerado.</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Representação Matemática">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Representação Matemática
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O PGD pode ser definido pela distribuição de probabilidade conjunta desconhecida <span class="math inline">\(P(X, Y)\)</span> (ou simplemente <span class="math inline">\(P(Z)\)</span>).</p>
+<p>Dizemos que nossa amostra <span class="math inline">\(\mathcal{D} = \{z_1, z_2, \dots, z_n \}\)</span> é composta por variáveis aleatórias independentes e identicamentes distribuídas (i.i.d) retiradas desse processo:</p>
+<p><span class="math display">\[z_i \sim P(Z).\]</span> Nesta visão, o PGD é o “mecanismo” que dita:</p>
+<ol type="1">
+<li><p>A Região de Suporte: Quais valores são possíveis de ocorrer?</p></li>
+<li><p>A Densidade: Com que frequência cada valor ocorre?</p></li>
+<li><p>As Dependências: Como o corrência de <span class="math inline">\(X\)</span> altera a probabilidade de <span class="math inline">\(Y\)</span>?</p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="pacote-necessários" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="pacote-necessários"><span class="header-section-number">1.2</span> Pacote Necessários</h2>
 <p>Neste capítulo iremos utilizar os pacotes <code>R</code> <code>tidyverse</code><span class="citation" data-cites="tidyverse">(<a href="references.html#ref-tidyverse" role="doc-biblioref">Wickham et al., 2019</a>)</span> e <code>moderndive</code> <span class="citation" data-cites="moderndive">(<a href="references.html#ref-moderndive" role="doc-biblioref">Kim; Ismay; Kuhn, 2021</a>)</span>. Por exemplo, para instalar o pacote basta usar <code>install.packages("tidyverse")</code> e podemos carregar o pacote por meio do comando <code>library(tidyverse)</code>. São carregados, de uma só vez, os seguinte pacotes amplamente utilizados em ciência de dados:</p>
 <ul>
 <li><p><code>ggplot2</code> para visualização de dados;</p></li>
@@ -312,8 +344,8 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="experimento-em-sala-de-aula" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="experimento-em-sala-de-aula"><span class="header-section-number">1.2</span> Experimento em Sala de Aula</h2>
+<section id="experimento-em-sala-de-aula" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="experimento-em-sala-de-aula"><span class="header-section-number">1.3</span> Experimento em Sala de Aula</h2>
 <p>Iremos realizar o seguinte experimento em sala de aula:</p>
 <ol type="1">
 <li>Organização</li>
@@ -351,12 +383,12 @@ window.Quarto = {
 <h3 class="unnumbered anchored" data-anchor-id="verificação-de-aprendizagem">Verificação de aprendizagem</h3>
 <ol type="1">
 <li><p>Por que foi importante misturar a tigela antes de retirarmos as bolas?</p></li>
-<li><p>Por que os 33 grupos de amigos não obtiveram todos o mesmo número de bolas vermelhas entre as 50 retiradas e, consequentemente, proporções diferentes de bolas vermelhas?</p></li>
+<li><p>Por que os 20 grupos de amigos não obtiveram todos o mesmo número de bolas vermelhas entre as 50 retiradas e, consequentemente, proporções diferentes de bolas vermelhas?</p></li>
 </ol>
 </section>
 </section>
-<section id="experimento-virtual" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="experimento-virtual"><span class="header-section-number">1.3</span> Experimento Virtual</h2>
+<section id="experimento-virtual" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="experimento-virtual"><span class="header-section-number">1.4</span> Experimento Virtual</h2>
 <p>No pacote <code>moderndive</code> existe um <em>data frame</em> chamado <code>bowl</code>. As linhas de <code>bowl</code> correspondem exatamente ao conteúdo da urna real apresentada em sala de aula.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bowl</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -569,8 +601,8 @@ window.Quarto = {
 </ol>
 </section>
 </section>
-<section id="conceitos-importantes" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="conceitos-importantes"><span class="header-section-number">1.4</span> Conceitos Importantes</h2>
+<section id="conceitos-importantes" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="conceitos-importantes"><span class="header-section-number">1.5</span> Conceitos Importantes</h2>
 <p>Primeiramente, uma <strong>população</strong> é um conjunto de indivíduos ou observações de interesse. Isso também é comumente denominado <strong>população de estudo</strong>. Denotamos matematicamente o tamanho da população utilizando a letra maiúscula <span class="math inline">\(N\)</span>.</p>
 <p>Um <strong>parâmetro populacional</strong> é algum resumo numérico sobre a população que é desconhecido, mas que você gostaria de saber. Por exemplo, quando essa quantidade é uma média, como a altura média de todos os canadenses, o parâmetro populacional de interesse é a média populacional.</p>
 <p>Um <strong>censo</strong> é uma enumeração exaustiva ou contagem de todos os <span class="math inline">\(N\)</span> indivíduos da população. Fazemos isso para calcular o valor exato do parâmetro populacional. Vale notar que, à medida que o número <span class="math inline">\(N\)</span> de indivíduos em nossa população aumenta, a realização de um censo se torna mais cara (em termos de tempo, energia e dinheiro).</p>
