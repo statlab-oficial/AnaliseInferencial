@@ -240,8 +240,18 @@ window.Quarto = {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#estimador-de-momentos" id="toc-estimador-de-momentos" class="nav-link active" data-scroll-target="#estimador-de-momentos"><span class="header-section-number">3.1</span> Estimador de Momentos</a></li>
+  <li><a href="#estimador-de-momentos" id="toc-estimador-de-momentos" class="nav-link active" data-scroll-target="#estimador-de-momentos"><span class="header-section-number">3.1</span> Estimador de Momentos</a>
+  <ul class="collapse">
+  <li><a href="#exemplo-1-uniforme-contínua" id="toc-exemplo-1-uniforme-contínua" class="nav-link" data-scroll-target="#exemplo-1-uniforme-contínua"><span class="header-section-number">3.1.1</span> Exemplo 1: Uniforme Contínua</a></li>
+  <li><a href="#exemplo-2-uniforme-discreta" id="toc-exemplo-2-uniforme-discreta" class="nav-link" data-scroll-target="#exemplo-2-uniforme-discreta"><span class="header-section-number">3.1.2</span> Exemplo 2: Uniforme Discreta</a></li>
+  <li><a href="#exemplo-3-normal-variância-conhecida" id="toc-exemplo-3-normal-variância-conhecida" class="nav-link" data-scroll-target="#exemplo-3-normal-variância-conhecida"><span class="header-section-number">3.1.3</span> Exemplo 3: Normal (Variância Conhecida)</a></li>
+  <li><a href="#exemplo-4-exponencial" id="toc-exemplo-4-exponencial" class="nav-link" data-scroll-target="#exemplo-4-exponencial"><span class="header-section-number">3.1.4</span> Exemplo 4: Exponencial</a></li>
+  <li><a href="#exemplo-5-variáveis-independentes-não-identicamente-distribuídas" id="toc-exemplo-5-variáveis-independentes-não-identicamente-distribuídas" class="nav-link" data-scroll-target="#exemplo-5-variáveis-independentes-não-identicamente-distribuídas"><span class="header-section-number">3.1.5</span> Exemplo 5: Variáveis Independentes Não Identicamente Distribuídas</a></li>
+  <li><a href="#exemplo-6-normal-média-zero" id="toc-exemplo-6-normal-média-zero" class="nav-link" data-scroll-target="#exemplo-6-normal-média-zero"><span class="header-section-number">3.1.6</span> Exemplo 6: Normal (Média Zero)</a></li>
+  <li><a href="#caso-biparamétrico" id="toc-caso-biparamétrico" class="nav-link" data-scroll-target="#caso-biparamétrico"><span class="header-section-number">3.1.7</span> Caso Biparamétrico</a></li>
+  </ul></li>
   <li><a href="#método-de-mínimos-quadrados" id="toc-método-de-mínimos-quadrados" class="nav-link" data-scroll-target="#método-de-mínimos-quadrados"><span class="header-section-number">3.2</span> Método de Mínimos Quadrados</a></li>
+  <li><a href="#lista" id="toc-lista" class="nav-link" data-scroll-target="#lista"><span class="header-section-number">3.3</span> Lista</a></li>
   </ul>
 </nav>
     </div>
@@ -269,174 +279,72 @@ window.Quarto = {
 
 <section id="estimador-de-momentos" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="estimador-de-momentos"><span class="header-section-number">3.1</span> Estimador de Momentos</h2>
-<p>Este método de estimação é um dos métodos mais antigos de estimação. Ele é utilizado desde o século XVIII. A ideia é bem simples. Vamos inicialmente definir para o caso uniparamétrico:</p>
-<p>Seja <span class="math inline">\(X\)</span> uma variável aleatória com a seguinte f.d.p. ou f.p. , <span class="math inline">\(f(x\;|\theta)\)</span>, suporte <span class="math inline">\(A\)</span> , espaço paramétrico <span class="math inline">\(\Theta\)</span> e <span class="math inline">\(E_{\theta}(X^r)&lt;\infty,\; r=1,2,\dots\)</span>.</p>
-<p>Seja a amostra aleatória <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span> de <span class="math inline">\(X\)</span> . Vamos igualar o primeiro populacional ao primeiro momento amostral, isto é,</p>
-<p><span class="math display">\[E_{\theta}(X)= \bar{X}.\]</span></p>
-<p>Vamos fazer alguns exemplos para fixar o conceito calculando também sua variância amostral.</p>
-<p><strong>Exemplo 1:</strong> Considere <span class="math inline">\(X \sim U( (0,\theta)\)</span> com</p>
-<p><span class="math display">\[E_{\theta}(X)=\frac{\theta}{2}\quad \text{e} \quad V(X)=\frac{\theta^2}{12}.\]</span></p>
-<p>Assim,</p>
-<p><span class="math display">\[E_{\theta}(X)= \frac{\theta}{2}=\bar{X}.\]</span></p>
-<p>O valor de <span class="math inline">\(\theta\)</span> é:</p>
-<p><span class="math display">\[\theta=2\bar{X}.\]</span></p>
-<p>Assim o estimador pelo m?todo dos momentos de <span class="math inline">\(\theta\)</span> é dado por:</p>
-<p><span class="math display">\[\widehat{\theta}=T_1=2\bar{X}.\]</span></p>
-<p>Note que:</p>
-<p><span class="math display">\[E(\bar{X})= \mu = \frac{\theta}{2}.\]</span></p>
-<p>Assim</p>
-<p><span class="math display">\[E(T_1)=E(2\bar{X})=2\;E(\bar{X})=2\;\frac{\theta}{2}=\theta,\]</span> <span class="math inline">\(T_1\)</span> é um estimador não viciado de <span class="math inline">\(\theta\)</span>.</p>
-<p>Note que:</p>
-<p><span class="math display">\[Var(\bar{X})=\frac{ \frac{\theta^2}{12}}{n}=\frac{\theta^2}{12n}.\]</span></p>
-<p>Assim,</p>
-<p><span class="math display">\[Var(T_1)=Var(2\bar{X})=4\;Var(\bar{X})=4\;\frac{\theta^2}{12n}=\frac{\theta^2}{3n}.\]</span></p>
-<p><strong>Exemplo 2:</strong> Considere <span class="math inline">\(X \sim U_d( A),\;\;A=\{1,2,\ldots,\theta\}\)</span></p>
-<p>O espaço paramétrico é dado por:</p>
-<p><span class="math display">\[\Theta=\{1,2,\ldots\}.\]</span></p>
-<p>Sabemos que:</p>
-<p><span class="math display">\[E_{\theta}(X)=\frac{1+\theta}{2}\;\;\;;\; V(X)=\frac{\theta^2 -1}{12}.\]</span></p>
-<p>Assim,</p>
-<p><span class="math display">\[E_{\theta}(X)= \frac{1+\theta}{2}=\bar{X}.\]</span></p>
-<p>O valor de <span class="math inline">\(\theta\)</span> é:</p>
-<p><span class="math display">\[\theta=2\bar{X} -1.\]</span></p>
-<p>Assim o estimador pelo m?todo dos momentos de <span class="math inline">\(\theta\)</span> é dado por:</p>
-<p><span class="math display">\[\widehat{\theta}=T_2=2\bar{X}- 1.\]</span></p>
-<p>Note que:</p>
-<p><span class="math display">\[E(\bar{X})=\mu=\frac{1+\theta}{2}.\]</span></p>
-<p>Assim</p>
-<p><span class="math display">\[E(T_2)=E(2\bar{X} -1)=2\;E(\bar{X})-1=2\;\frac{1+\theta}{2}-1=\theta,\]</span></p>
-<p><span class="math inline">\(T_2\)</span> é um estimador não viciado de <span class="math inline">\(\theta\)</span>.</p>
-<p>Note que:</p>
-<p><span class="math display">\[Var(\bar{X})=\frac{ \frac{\theta^2 -1}{12}}{n}=\frac{\theta^2 -1}{12n}.\]</span></p>
-<p>Assim</p>
-<p><span class="math display">\[Var(T_2)=Var(2\bar{X}-1)=4\;Var(\bar{X})=4\;\frac{\theta^2-1}{12n}=\frac{\theta^2-1}{3n}.\]</span></p>
-<p><strong>Exemplo 3:</strong> Seja <span class="math inline">\(X \sim Normal (\mu, 9).\)</span></p>
-<p>Sabemos que:</p>
-<p><span class="math display">\[A=(-\infty,\infty)\;\;;\;\; \Theta= (-\infty,\infty).\]</span></p>
-<p>Além disso:</p>
-<p><span class="math display">\[E_{\mu}=\mu\;\;;\;\;V(X)=9.\]</span></p>
-<p>Logo,</p>
-<p><span class="math display">\[E_{\mu}=\mu=\bar{X}.\]</span></p>
-<p>Assim</p>
-<p><span class="math display">\[\widehat{\mu}=T_3=\bar{X}\]</span></p>
-<p>é o estimador pelo método dos momentos para <span class="math inline">\(\mu\)</span>.</p>
-<p>Note que</p>
-<p><span class="math display">\[E(T_3)= \mu\;\;\;\;Var(T_3)= \frac{9}{n}.\]</span></p>
-<p><strong>Exemplo 4:</strong> Agora considere <span class="math inline">\(X \sim Exponencial (\lambda).\)</span></p>
-<p>Sabemos que:</p>
-<p><span class="math display">\[A=(0,\infty)\;\;;\;\; \Theta= (0,\infty).\]</span></p>
-<p>Além disso:</p>
-<p><span class="math display">\[E_{\lambda}=\frac{1}{\lambda}\;\;;\;\;V(X)=\frac{1}{\lambda^2}.\]</span></p>
-<p>O estimador pelo método dos momentos é dado por:</p>
-<p><span class="math display">\[E_{\lambda}=\frac{1}{\lambda}=\bar{X}.\]</span></p>
-<p>Logo,</p>
-<p><span class="math display">\[\widehat{\lambda}=T_4=\frac{1}{\bar{X}}.\]</span></p>
-<p>Sabemos que</p>
-<p><span class="math display">\[S \sim Gama(n,\lambda). \]</span></p>
-<p>Note que:</p>
-<p><span class="math display">\[M_S(t)=\left[ \frac{\lambda}{\lambda -t}\right]^n, \;t &lt;\lambda.\]</span></p>
-<p>A função geradora de momentos de <span class="math inline">\(\bar{X}\)</span> é dada por:</p>
-<p><span class="math display">\[M_{\bar{X}}(t)=M_S(t/n)=\left[ \frac{\lambda}{\lambda -t/n}\right]^n, \;t/n &lt;\lambda.\]</span></p>
-<p><span class="math display">\[M_{\bar{X}}(t)=\left[ \frac{n\lambda}{n\lambda -t}\right]^n, \;t &lt; n\lambda.\]</span></p>
-<p>Assim</p>
-<p><span class="math display">\[ V= \bar{X} \sim Gama(n,n\lambda).\]</span></p>
-<p>A densidade de <span class="math inline">\(V\)</span> é dada por:</p>
-<p><span class="math display">\[f_V(v)=\frac{(n\lambda)^n}{\Gamma(n)} v^{n-1}\;e^{-n\lambda v}\;\;I_A(v),\;A=(0,\infty).\]</span></p>
-<p>Note que:</p>
-<p><span class="math display">\[T_4=\frac{1}{\bar{X}}=\frac{1}{V}.\]</span></p>
-<p>Logo</p>
-<p><span class="math display">\[E(T_4)=\displaystyle \int_{0}^{\infty} \;\frac{1}{v}\;\frac{(n\lambda)^n}{\Gamma(n)} v^{n-1}\;e^{-n\lambda v}\;dv \]</span></p>
-<p><span class="math display">\[E(T_4)= \frac{(n\lambda)^n}{\Gamma(n)}\;\displaystyle \int_{0}^{\infty}v^{(n-1)-1}\;e^{-n\lambda v}\;dv.\]</span></p>
-<p><span class="math display">\[E(T_4)= \frac{(n\lambda)^n}{\Gamma(n)}\;IGG(a=n-1,b=n\lambda,c=1) ,\]</span></p>
-<p>com <span class="math inline">\(a=n-1&gt;0\)</span> ou <span class="math inline">\(n&gt;1\)</span>.</p>
-<p><span class="math display">\[E(T_4)= \frac{(n\lambda)^n}{\Gamma(n)}\; \frac{\Gamma(n-1)}{(n\lambda)^{n-1}}= \frac {n\lambda}{n-1}=\frac{n}{n-1}\;\lambda \neq \lambda\]</span></p>
-<p>Logo <span class="math inline">\(T_4\)</span> é um estimador viciado de <span class="math inline">\(\lambda\)</span>. Mas ele é assintoticamente não viciado para <span class="math inline">\(\lambda\)</span>.</p>
-<p>Vamos calcular a variância de <span class="math inline">\(T_4\)</span>:</p>
-<p><span class="math display">\[E(T_4^2)=\displaystyle \int_{0}^{\infty} \;\frac{1}{v^2}\;\frac{(n\lambda)^n}{\Gamma(n)} v^{n-1}\;e^{-n\lambda v}\;dv \]</span></p>
-<p><span class="math display">\[E(T_4^2 )= \frac{(n\lambda)^n}{\Gamma(n)}\;\displaystyle \int_{0}^{\infty}v^{(n-2)-1}\;e^{-n\lambda v}\;dv.\]</span></p>
-<p><span class="math display">\[E(T_4^2)= \frac{(n\lambda)^n}{\Gamma(n)}\;IGG(a=n-2,b=n\lambda,c=1) ,\]</span></p>
-<p>com <span class="math inline">\(a=n-2&gt;0\)</span> ou <span class="math inline">\(n&gt;2\)</span>.</p>
-<p><span class="math display">\[E(T_4^2 )= \frac{(n\lambda)^n}{\Gamma(n)}\; \frac{\Gamma(n-2)}{(n\lambda)^{n-2}}= \frac {n^2 \lambda^2}{(n-1)(n-2)}=\frac{n^2}{(n-1)(n-2)}\;\lambda^2\]</span></p>
-<p>A variância de <span class="math inline">\(T_4\)</span> ? dada por:</p>
-<p><span class="math display">\[Var(T_4)= \frac{n^2}{(n-1)(n-2)}\;\lambda^2- \frac{n^2}{(n-1)^2 }\;\lambda^2\]</span></p>
-<p><span class="math display">\[Var(T_4)= \frac{n^2}{(n-1)^2(n-2)}\;\lambda^2 \]</span></p>
-<p>Note que</p>
-<p><span class="math display">\[\displaystyle \lim_{n\to \infty} V(T_4)=0,\]</span></p>
-<p>assim <span class="math inline">\(T_4\)</span> é um estimador consistente para <span class="math inline">\(\lambda\)</span>.</p>
-<p>O próximo exemplo mostrará uma situação distinta das anteriores.</p>
-<p><strong>Exemplo 5:</strong> Seja <span class="math inline">\(Y_i \sim Normal\left(\mu_i=\beta X_i, \sigma^2\right), i=1,2,\ldots,n,\)</span>; independentes com <span class="math inline">\(X_i,i=1,2,\ldots,n\)</span> constantes conhecidas.</p>
-<p>Note que:</p>
-<p><span class="math display">\[E(Y_i)=\beta X_i, i=1,2,\ldots,n.\]</span></p>
-<p>Quando as variáveis não são identicamente distribuídas precisamos de uma definição alternativa para o estimador pelo método dos momentos:</p>
-<p><span class="math display">\[\frac{\displaystyle \sum_{i=1}^{n} E(Y_i)}{n}=\bar{Y}.\]</span></p>
-<p>Logo</p>
-<p><span class="math display">\[\frac{\displaystyle \sum_{i=1}^{n} \beta X_i}{n}=\bar{Y}.\]</span></p>
-<p><span class="math display">\[ \beta\; \;\frac{\displaystyle \sum_{i=1}^{n} X_i}{n}=\bar{Y}.\]</span></p>
-<p><span class="math display">\[\beta\bar{X}=\bar{Y}.\]</span></p>
-<p><span class="math display">\[\widehat{\beta}=\frac{\bar{Y}}{\bar{X}}= \frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n} Y_i.\]</span></p>
-<p>O estimador pelo método dos momentos é uma combinação linear de <span class="math inline">\(Y_1,Y_2,\ldots,Y_n\)</span>.</p>
-<p>Vamos mostrar que ele é não viciado.</p>
-<p><span class="math display">\[E\left(\widehat{\beta} \right)=\;\frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n} E(Y_i)=\;\frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n}\;\beta X_i.\]</span></p>
-<p><span class="math display">\[E\left(\widehat{\beta} \right)=\;\beta\;\;\frac{1}{n\bar{X}}\;\displaystyle \sum_{i=1}^{n}\; X_i=\beta.\]</span></p>
-<p>Vamos calcular agora a variância:</p>
-<p><span class="math display">\[Var\left(\widehat{\beta} \right)=\;\frac{1}{n^2\;\bar{X}^2}\;\displaystyle \sum_{i=1}^{n} V(Y_i)=\;\frac{1}{n^2\;\bar{X}^2 }\;n\;\sigma^2=\frac{\sigma^2}{n\;\bar{X}^2 }.\]</span></p>
-<p><strong>Exemplo 6</strong> Seja <span class="math inline">\(X \sim N(0,\sigma^2)\)</span>. Qual o estimador <span class="math inline">\(T\)</span> pelo método dos momentos para <span class="math inline">\(\sigma^2\)</span>?</p>
-<p>Note que:</p>
-<p><span class="math display">\[E(X)=0\;\;E(X^2)= \sigma^2.\]</span></p>
-<p><span class="math display">\[T= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n}.\]</span></p>
-<p>Note que:</p>
-<p><span class="math display">\[E(T)=\sigma^2.\]</span></p>
-<p><span class="math display">\[Var(T)=\frac{1}{n^2} \;\displaystyle \sum_{i=1}^{n}\; V(X_i^2)= \frac{n V(X^2)}{n^2}=\frac{V(X^2)}{n}. \]</span></p>
-<p>Mas</p>
-<p><span class="math display">\[Var(X^2)=E(X^4)-E^2(X^2).\]</span></p>
-<p>Sabemos que</p>
-<p><span class="math display">\[Z^4=\left[\frac{X-\mu}{\sigma} \right]^4= \frac{X^4}{\sigma^4}.\]</span></p>
-<p>A curtose da normal vale 3 logo:</p>
-<p><span class="math display">\[E(Z^4)=3.\]</span></p>
-<p><span class="math display">\[E(X^4)=3 \sigma^4.\]</span></p>
-<p><span class="math display">\[V(X^2)=3 \sigma^4- \sigma^4=2 \sigma^4.\]</span></p>
-<p>Logo,</p>
-<p><span class="math display">\[Var(T)= \frac{2 \sigma^4}{n}.\]</span></p>
-<p>Agora vamos estudar o caso biparamétrico:</p>
-<p>Seja <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>. Calcule os estimadores pelo método dos momentos para <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma^2\)</span>.</p>
-<p>Como</p>
-<p><span class="math display">\[E(X)=\mu\;\;\;\;\text{e}\;\;\;E(X^2)=\sigma^2 +\mu^2.\]</span></p>
-<p>Assim vamos igualar os dois primeiros momentos populacionais aos dois primeiros momentos amostrais:</p>
-<p><span class="math display">\[E(X)=\mu=\bar{X}.\]</span></p>
-<p><span class="math display">\[\widehat{\mu}=\bar{X}.\]</span></p>
-<p><span class="math display">\[E(X^2)=\sigma^2 +\mu^2= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n}.\]</span></p>
-<p>Logo,</p>
-<p><span class="math display">\[\widehat{\sigma^2} +\hat{\mu^2}= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n}.\]</span></p>
-<p><span class="math display">\[\widehat{\sigma^2}=\frac{\displaystyle \sum_{i=1}^{n}\; X_i^2}{n} -\bar{X}^2 =\frac{\displaystyle \sum_{i=1}^{n}\; X_i^2- n\;\bar{X}^2}{n}\]</span></p>
-<p><span class="math display">\[\widehat{\sigma^2}=\frac{\displaystyle \sum_{i=1}^{n}\; \left(X_i-\bar{X}\right)^2}{n}=\frac{(n-1)S^2}{n}. \]</span></p>
-<p>Note que</p>
-<p><span class="math display">\[ E\left(\widehat{\sigma^2}\right)= \frac{n-1}{n} E(S^2)=\frac{n-1}{n}\;\sigma^2,\]</span></p>
-<p>que é viciado mas assintoticamente não viciado.</p>
-<p>Por outro lado temos:</p>
-<p><span class="math display">\[ Var\left(\widehat{\sigma^2}\right)= \frac{(n-1)^2}{n^2} Var(S^2)=\frac{(n-1)^2}{n^2}\; \frac{2\sigma^4}{n-1}= \frac{2(n-1)}{n^2} \sigma^4.\]</span></p>
-<p>Note que <span class="math inline">\(\widehat{\sigma^2}\)</span> é um estimador consistente para <span class="math inline">\(\sigma^2\)</span>.</p>
-<p><strong>Exemplo 7:</strong> Seja <span class="math inline">\(X \sim Gama(\alpha &gt;0,\beta &gt;0)\)</span>. A f.d.p. de <span class="math inline">\(X\)</span> é dada por:</p>
-<p><span class="math display">\[f(x|\alpha,\beta)=\frac{\beta^{\alpha}}{\Gamma(\alpha)}\;x^{\alpha-1}\;e^{-\beta\;x}\;I_A(x),\;\;A=(0,\infty).\]</span></p>
-<p>Note que</p>
-<p><span class="math display">\[E(X)=\frac{\alpha}{\beta}\;\;\;,V(X)= \frac{\alpha}{\beta^2} \;\;\;\;\;\;;\;E(X^2)=\frac{\alpha}{\beta^2} +\frac{\alpha^2}{\beta^2}.\]</span></p>
-<p>Sejam <span class="math inline">\(\widehat{\alpha}\)</span> e <span class="math inline">\(\widehat{\beta}\)</span> os estimadores pelo método dos momentos:</p>
-<p>Assim</p>
-<p><span class="math display">\[\frac{\widehat{\alpha}}{\widehat{\beta}}=\bar{X} \]</span></p>
-<p>Assim,</p>
-<p><span class="math display">\[\widehat{\alpha}=\bar{X}\;\widehat{\beta}.\]</span></p>
-<p><span class="math display">\[\frac{\widehat{\alpha}}{\widehat{\beta}^2} +\frac{\widehat{\alpha}^2}{\widehat{\beta}^2}=\frac{1}{n}\;\displaystyle \sum_{i=1}^{n}\; X_i^2. \]</span></p>
-<p>Note que:</p>
-<p><span class="math display">\[ \frac{\hat{\alpha}}{\widehat{\beta}}\;\frac{1} {\widehat{\beta}} +\frac{\hat{\alpha}^2}{\hat{\beta}^2}=\frac{1}{n}\;\displaystyle \sum_{i=1}^{n}\; X_i^2. \]</span></p>
-<p><span class="math display">\[\bar{X}\;\frac{1} {\widehat{\beta}} +\bar{X}^2=\frac{1}{n}\;\displaystyle \sum_{i=1}^{n}\; X_i^2 \]</span></p>
-<p><span class="math display">\[\bar{X}\;\frac{1} {\hat{\beta}}= \frac{\displaystyle \sum_{i=1}^{n}\; X_i^2 -n \bar{X}^2}{n}= \hat{\sigma^2}\]</span></p>
-<p>logo,</p>
-<p><span class="math display">\[\hat{\beta}=\frac{\bar{X}}{ \hat{\sigma^2}}.\]</span></p>
-<p><span class="math display">\[\hat{\alpha}=\bar{X}\;\widehat{\beta}=\frac{\bar{X}^2}{ \widehat{\sigma^2}}.\]</span></p>
-<p>Uma maneira mais rápida de achar este estimadores é notar que:</p>
-<p><span class="math display">\[\frac{E(X)}{V(X)}= \beta\]</span></p>
-<p>logo</p>
-<p><span class="math display">\[ \hat{\beta}=\frac{\bar{X}}{\widehat{\sigma^2}}.\]</span></p>
+<p>Este método de estimação é um dos mais antigos, utilizado desde o século XVIII. A ideia é bem simples e intuitiva.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição (Caso Uniparamétrico)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definição (Caso Uniparamétrico)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Seja <span class="math inline">\(X\)</span> uma variável aleatória com função de densidade de probabilidade (f.d.p.) ou função de probabilidade (f.p.) <span class="math inline">\(f(x | \theta)\)</span>, suporte <span class="math inline">\(A\)</span>, espaço paramétrico <span class="math inline">\(\Theta\)</span> e <span class="math inline">\(E_{\theta}(X^r) &lt; \infty, \; r=1,2,\dots\)</span>.</p>
+<p>Dada uma amostra aleatória <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> de <span class="math inline">\(X\)</span>, igualamos o primeiro momento populacional ao primeiro momento amostral:</p>
+<p><span class="math display">\[E_{\theta}(X) = \bar{X}\]</span></p>
+</div>
+</div>
+<p>Abaixo, apresentamos alguns exemplos para fixar o conceito, calculando também suas propriedades.</p>
+<section id="exemplo-1-uniforme-contínua" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="exemplo-1-uniforme-contínua"><span class="header-section-number">3.1.1</span> Exemplo 1: Uniforme Contínua</h3>
+<p>Considere <span class="math inline">\(X \sim U(0, \theta)\)</span>. Sabemos que: <span class="math display">\[E_{\theta}(X) = \frac{\theta}{2} \quad \text{e} \quad V(X) = \frac{\theta^2}{12}.\]</span></p>
+<p>Igualando os momentos: <span class="math display">\[\frac{\theta}{2} = \bar{X} \implies \widehat{\theta} = T_1 = 2\bar{X}.\]</span></p>
+<ul>
+<li><strong>Esperança:</strong> <span class="math inline">\(E(T_1) = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta\)</span>. Logo, <span class="math inline">\(T_1\)</span> é não viciado.</li>
+<li><strong>Variância:</strong> <span class="math inline">\(Var(T_1) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}\)</span>.</li>
+</ul>
+</section>
+<section id="exemplo-2-uniforme-discreta" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="exemplo-2-uniforme-discreta"><span class="header-section-number">3.1.2</span> Exemplo 2: Uniforme Discreta</h3>
+<p>Considere <span class="math inline">\(X \sim U_d(A)\)</span> com <span class="math inline">\(A = \{1, 2, \ldots, \theta\}\)</span> e <span class="math inline">\(\Theta = \{1, 2, \ldots\}\)</span>. Temos que:</p>
+<p><span class="math display">\[E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad V(X) = \frac{\theta^2 - 1}{12}.\]</span></p>
+<p>Igualando os momentos: <span class="math display">\[\frac{1+\theta}{2} = \bar{X} \implies \widehat{\theta} = T_2 = 2\bar{X} - 1\]</span></p>
+<ul>
+<li><strong>Esperança:</strong> <span class="math inline">\(E(T_2) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta\)</span> (Não viciado).</li>
+<li><strong>Variância:</strong> <span class="math inline">\(Var(T_2) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}\)</span>.</li>
+</ul>
+</section>
+<section id="exemplo-3-normal-variância-conhecida" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="exemplo-3-normal-variância-conhecida"><span class="header-section-number">3.1.3</span> Exemplo 3: Normal (Variância Conhecida)</h3>
+<p>Seja <span class="math inline">\(X \sim N(\mu, 9)\)</span>. Temos <span class="math inline">\(E(X) = \mu\)</span> e <span class="math inline">\(V(X) = 9\)</span>. Igualando os momentos: <span class="math display">\[E_{\mu}(X) = \mu = \bar{X} \implies \widehat{\mu} = T_3 = \bar{X}\]</span> Propriedades: <span class="math inline">\(E(T_3) = \mu\)</span> e <span class="math inline">\(Var(T_3) = \frac{9}{n}\)</span>.</p>
+</section>
+<section id="exemplo-4-exponencial" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="exemplo-4-exponencial"><span class="header-section-number">3.1.4</span> Exemplo 4: Exponencial</h3>
+<p>Considere <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span> com <span class="math inline">\(E(X) = \frac{1}{\lambda}\)</span> e <span class="math inline">\(V(X) = \frac{1}{\lambda^2}\)</span>. <span class="math display">\[E_{\lambda}(X) = \frac{1}{\lambda} = \bar{X} \implies \widehat{\lambda} = T_4 = \frac{1}{\bar{X}}\]</span></p>
+<p><em>Nota sobre as propriedades:</em> Sabemos que <span class="math inline">\(S = \sum X_i \sim \text{Gama}(n, \lambda)\)</span>. Pode-se demonstrar que <span class="math inline">\(V = \bar{X} \sim \text{Gama}(n, n\lambda)\)</span>. Calculando a esperança da inversa: <span class="math display">\[E(T_4) = E\left(\frac{1}{V}\right) = \frac{n}{n-1}\lambda \neq \lambda \quad (\text{para } n &gt; 1)\]</span> Logo, <span class="math inline">\(T_4\)</span> é viciado, mas <strong>assintoticamente não viciado</strong>. A variância, após integração, resulta em: <span class="math display">\[Var(T_4) = \frac{n^2}{(n-1)^2(n-2)}\lambda^2\]</span> Como <span class="math inline">\(\lim_{n \to \infty} Var(T_4) = 0\)</span>, <span class="math inline">\(T_4\)</span> é um estimador consistente.</p>
+</section>
+<section id="exemplo-5-variáveis-independentes-não-identicamente-distribuídas" class="level3" data-number="3.1.5">
+<h3 data-number="3.1.5" class="anchored" data-anchor-id="exemplo-5-variáveis-independentes-não-identicamente-distribuídas"><span class="header-section-number">3.1.5</span> Exemplo 5: Variáveis Independentes Não Identicamente Distribuídas</h3>
+<p>Seja <span class="math inline">\(Y_i \sim N(\beta X_i, \sigma^2)\)</span> para <span class="math inline">\(i = 1, \dots, n\)</span>, com <span class="math inline">\(X_i\)</span> constantes conhecidas. Como <span class="math inline">\(E(Y_i) = \beta X_i\)</span>, usamos uma definição alternativa para o método dos momentos: <span class="math display">\[\frac{\sum_{i=1}^n E(Y_i)}{n} = \bar{Y} \implies \frac{\sum_{i=1}^n \beta X_i}{n} = \bar{Y} \implies \beta\bar{X} = \bar{Y}\]</span> <span class="math display">\[\widehat{\beta} = \frac{\bar{Y}}{\bar{X}} = \frac{1}{n\bar{X}} \sum_{i=1}^n Y_i\]</span> É fácil verificar que <span class="math inline">\(E(\widehat{\beta}) = \beta\)</span> e <span class="math inline">\(Var(\widehat{\beta}) = \frac{\sigma^2}{n\bar{X}^2}\)</span>.</p>
+</section>
+<section id="exemplo-6-normal-média-zero" class="level3" data-number="3.1.6">
+<h3 data-number="3.1.6" class="anchored" data-anchor-id="exemplo-6-normal-média-zero"><span class="header-section-number">3.1.6</span> Exemplo 6: Normal (Média Zero)</h3>
+<p>Seja <span class="math inline">\(X \sim N(0, \sigma^2)\)</span>. Queremos estimar <span class="math inline">\(\sigma^2\)</span>. Temos <span class="math inline">\(E(X) = 0\)</span> e <span class="math inline">\(E(X^2) = \sigma^2\)</span>. Usando o segundo momento: <span class="math display">\[E(X^2) = \frac{\sum_{i=1}^n X_i^2}{n} \implies \widehat{\sigma^2} = T = \frac{\sum_{i=1}^n X_i^2}{n}\]</span> Com a curtose da Normal (3), temos <span class="math inline">\(V(X^2) = 2\sigma^4\)</span>. Logo, <span class="math inline">\(Var(T) = \frac{2\sigma^4}{n}\)</span>.</p>
+</section>
+<section id="caso-biparamétrico" class="level3" data-number="3.1.7">
+<h3 data-number="3.1.7" class="anchored" data-anchor-id="caso-biparamétrico"><span class="header-section-number">3.1.7</span> Caso Biparamétrico</h3>
+<p>Seja <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>. Igualamos os dois primeiros momentos:</p>
+<ol type="1">
+<li><span class="math inline">\(E(X) = \mu = \bar{X} \implies \widehat{\mu} = \bar{X}\)</span></li>
+<li><span class="math inline">\(E(X^2) = \sigma^2 + \mu^2 = \frac{\sum X_i^2}{n} \implies \widehat{\sigma^2} = \frac{\sum X_i^2}{n} - \bar{X}^2 = \frac{n-1}{n}S^2\)</span></li>
+</ol>
+<ul>
+<li>Exemplo 7: <span class="math inline">\(X \sim \text{Gama}(\alpha, \beta)\)</span>. <span class="math inline">\(E(X) = \frac{\alpha}{\beta}\)</span> e <span class="math inline">\(V(X) = \frac{\alpha}{\beta^2}\)</span>. Usando <span class="math inline">\(\frac{E(X)}{V(X)} = \beta\)</span>, temos:</li>
+</ul>
+<p><span class="math display">\[\widehat{\beta} = \frac{\bar{X}}{\widehat{\sigma^2}} \quad \text{e} \quad \widehat{\alpha} = \bar{X}\widehat{\beta} = \frac{\bar{X}^2}{\widehat{\sigma^2}}.\]</span></p>
 <p>Note que podemos usar tantos os momentos em relação é origem como os centrais.</p>
+</section>
 </section>
 <section id="método-de-mínimos-quadrados" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="método-de-mínimos-quadrados"><span class="header-section-number">3.2</span> Método de Mínimos Quadrados</h2>
@@ -808,7 +716,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>De <span class="math inline">\(S'(p)=0\)</span> temos</p>
 <p><span class="math display">\[p_{min}=\bar{X},\]</span></p>
 <p>que é o nosso estimador de mínimos quadrados.</p>
-<p><strong>Problemas</strong></p>
+</section>
+<section id="lista" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="lista"><span class="header-section-number">3.3</span> Lista</h2>
 <ol type="1">
 <li>Estamos estudando o modelo <span class="math inline">\(y_t= \mu  + \epsilon_t\)</span>, para o qual uma amostra de cinco elementos produziu os seguintes valores para <span class="math inline">\(y_t: 3,
 5, 6, 8, 16.\)</span></li>
