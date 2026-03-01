@@ -123,108 +123,308 @@ $$U_n = \frac{\overline{X} - \mu_x}{\sigma_x/\sqrt{n}},$$
 converge para $N(0,1)$ a medida que $n \to \infty$. Provaremos esse teorema mais à frente.
 
 
-**Exemplo Importante (Ensaios de Bernoulli):** Seja $X = 1$ com probabilidade $p$ e $X = 0$ com probabilidade $(1 - p)$. 
+**Exemplo Importante (Ensaios de Bernoulli):** 
+
+Seja $X = \left\{
+    \begin{aligned}
+        1 & \quad\text{se}\; \underline{\hspace{2cm}}\; \text{com probabilidade}\; p: \underline{\hspace{2cm}}\\
+        0 & \quad\text{se}\; \underline{\hspace{2cm}}\; \text{com probabilidade}\; 1-p: \underline{\hspace{2cm}}
+    \end{aligned}
+\right.$ 
+
 Então, dizemos que $X$ segue uma distribuição de Bernoulli:
 $$X \sim \text{Bern}(p) = \text{Bin}(n = 1, p).$$
 
-(a) Gráfico da f.d.p. (Função de Densidade de Probabilidade)
+(a) Desenhe uma representação gráfica da função de massa de probabilidade de $X$.
 
-Desenhe uma representação gráfica da função de massa de probabilidade de $X$.
+(b) Encontre $E(X)$ e $Var(X)$.
 
+(c) Suponha que foi recolhida uma Amostra Aleatória Simples (AAS) $X_1, X_2, \dots, X_{40}$. Indique a distribuição amostral aproximada de $\overline{X}$ (geralmente denotada por $\hat{p} = \overline{X}$, o que indica que $\overline{X}$ é uma proporção amostral).
 
+#### Aproximação Normal da Binomial
 
-(b) Valor Esperado e Variância
+No exemplo anterior, consideramos a variável aleatória $X \sim \text{Bern}(p) = \text{Bin}(n = 1, p)$. Suponha que uma Amostra Aleatória Simples (AAS) $X_1, X_2, \dots, X_n$ foi coletada com $n > 1$.
 
-Encontre $E(X)$ e $Var(X)$.
+(a) Apresente a distribuição de $Y = \sum_{i=1}^{n} X_i$, de modo que $Y$ seja o número de sucessos em $n$ tentativas (que é uma distribuição discreta que você aprendeu em Métodos Probabilísticos).
 
-::: {.callout-tip title="Solução Teórica"}
-* **Esperança:** $E(X) = \sum xP(x) = (1 \cdot p) + (0 \cdot (1-p)) = p$
-* **Variância:** $Var(X) = E(X^2) - [E(X)]^2 = p - p^2 = p(1-p)$
-:::
+(b) Desenhe um gráfico da função de probabilidade (pdf) de $Y = \sum_{i=1}^{n} X_i$.
 
-(c) Distribuição Amostral da Proporção
+(c) Forneça o valor de $E(Y)$ e $Var(Y)$:
+$$
+\left\{
+    \begin{aligned}
+        E(Y) &= \underline{\hspace{3cm}} \\
+        Var(Y) &= \underline{\hspace{3cm}}
+    \end{aligned}
+\right.
+$$
+(d) No Exemplo #1c, o Teorema Central do Limite (TCL) mostrou que para qualquer tamanho de amostra $n$, quando $X \sim \text{Bern}(p)$, então:
+$$\hat{p} = \bar{X} \dot{\sim} N(\underline{\hspace{1cm}}, \underline{\hspace{1cm}}).$$
 
-Suponha que foi recolhida uma Amostra Aleatória Simples (AAS) $X_1, X_2, \dots, X_{40}$. Indique a distribuição amostral aproximada de $\overline{X}$ (geralmente denotada por $\hat{p} = \overline{X}$, o que indica que $\overline{X}$ é uma proporção amostral).
+(e) Além das médias $\bar{X}$, o Teorema Central do Limite também fornece a distribuição amostral aproximada de uma soma $\sum X_i$. Use o TCL para fornecer a distribuição amostral aproximada de $Y = \sum_{i=1}^{n} X_i$:
+$$Y \dot{\sim} N(\underline{\hspace{2cm}}, \underline{\hspace{2cm}}).$$
 
-::: {.callout-important title="Aplicação do Teorema do Limite Central"}
-De acordo com o Teorema do Limite Central, para uma amostra suficientemente grande (neste caso $n=40$), a distribuição de $\hat{p}$ aproxima-se de uma distribuição Normal:
-
-$$\hat{p} \dot{\sim} N\left(p, \frac{p(1-p)}{n}\right)$$
-
-Substituindo $n=40$:
-$$\hat{p} \dot{\sim} N\left(p, \frac{p(1-p)}{40}\right)$$
-:::
+(f) Se a proporção real de apoiadores da reforma da saúde na população de Fortaleza é $p = 0,53$, então, em uma AAS de cidadãos de Fortaleza de tamanho $n = 1000$, qual é a probabilidade de que menos de 500 prometam apoio?
 
 
 ### Distribuição Amostral da Variância ($S^{2}$)
 
-Para estimar a variância populacional $\sigma^{2}$, utilizamos $S^{2}$.
+Um parâmetro populacional de interesse comum é a variância populacional $\sigma^2$. Na estatística inferencial, é comum usar a estatística $S^2$ para estimar $\sigma^2$. Portanto, a distribuição amostral de $S^2$ é de grande interesse.
+
 
 ::: {.callout-note title="Distribuição Qui-quadrado ($\chi^2$)"}
-A soma dos quadrados de variáveis normais padronizadas independentes distribui-se como uma variável aleatória $\chi^{2}$ (Teorema 7.2):
-Se $Z_{1},...,Z_{\nu}$ forem $N(0,1)$ independentes, então $\sum Z_{i}^{2} \sim \chi^{2}(\nu)$.
+A soma dos quadrados de variáveis normais padrão independentes é distribuída como uma variável aleatória $\chi^2$. Mais formalmente:
+
+* Se $Z_1, \dots, Z_\nu$ são independentes e distribuídos como $N(0, 1)$, então:
+
+$$\sum_{i=1}^{\nu} Z_i^2 \sim \chi^2(\nu),$$
+
+em que $\chi^2(\nu)$ é chamada de **distribuição qui-quadrado com $\nu$ graus de liberdade**.
+
+
+* Para qualquer tamanho de amostra $n$ e uma AAS $X_1, X_2, \dots, X_n$ de uma distribuição normal $N(\mu_x, \sigma_x^2)$:
+$$\sum_{i=1}^{n} \left(\frac{X_i - \mu_x}{\sigma_x} \right)^2 \sim \chi^2(n)$$
+
 :::
 
-**Média e Variância de $S^{2}$:**
-$$E(S^{2})=\sigma_{x}^{2} \quad \text{e} \quad Var(S^{2})=\frac{2\sigma_{x}^{4}}{n-1}$$
+> **Nota:** Use a Tabela do SIGAA para cálculos de probabilidade.
 
-**Quando os dados são normais (Teorema 7.3):**
-$$\frac{(n-1)S^{2}}{\sigma_{x}^{2}} \sim \chi^{2}(n-1)$$
+
+#### Média e Variância
+
+Se $C \sim \chi^2(\nu)$, então:
+$$
+\left\{
+    \begin{aligned}
+        E(C) &= \nu; \\
+        Var(C) &= 2\nu.
+    \end{aligned}
+\right.
+$$
+
+Para qualquer tamanho de amostra $n > 1$ e uma AAS $X_1, X_2, \dots, X_n$ de qualquer distribuição populacional com média $\mu_x$ e variância $\sigma_x^2$:
+
+* $E(S^2) = \sigma_x^2.$
+* $Var(S^2) = \frac{2\sigma_x^4}{n-1}.$
+
+
+#### Distribuição Amostral quando os dados são Normais
+
+Para qualquer tamanho de amostra $n > 1$ e uma AAS $X_1, X_2, \dots, X_n$ originada de uma distribuição normal $N(\mu_x, \sigma_x^2)$:
+
+$$\frac{(n - 1)S^2}{\sigma_x^2} \sim \chi^2(n - 1).$$
+
+
+
 
 ### Distribuição Amostral de $\frac{\overline{X}-\mu}{S/\sqrt{n}}$
 
-Utilizada frequentemente para determinar a quantos erros padrão a média amostral se encontra de um valor hipotético $\mu$.
+
+Na estatística inferencial, a estatística de teste $\frac{\bar{X} - \mu}{S/\sqrt{n}}$ é frequentemente utilizada para determinar a quantos erros padrões ($S/\sqrt{n}$) a média amostral $\bar{X}$ está de um valor hipotético $\mu$. Portanto, a distribuição amostral desta razão é de extrema importância.
 
 ::: {.callout-note title="Distribuição t de Student"}
-(Definição 7.2): Se $Z \sim N(0,1)$ e $W \sim \chi^{2}(\nu)$ são independentes, então:
-$$T=\frac{Z}{\sqrt{W/\nu}} \sim t(\nu)$$
+
+**Definição 2.1:** Se $Z \sim N(0, 1)$, $W \sim \chi^2(\nu)$, e $Z$ e $W$ são independentes, então:
+
+$$T = \frac{Z}{\sqrt{W/\nu}} \sim t(\nu),$$
+
+em que $t(\nu)$ é chamada de **distribuição t com $\nu$ graus de liberdade**.
+
+Se $T \sim t(\nu)$, então:
+
+* $E(T) = 0$ para $\nu > 1$.
+* $Var(T) = \frac{\nu}{\nu - 2}$ para $\nu > 2$.
+
 :::
 
-**Quando os dados são normais:**
-$\overline{X}$ e $S^{2}$ são independentes. Logo:
-$$T=\frac{\overline{X}-\mu}{S/\sqrt{n}} \sim t(n-1)$$
+#### Distribuição Amostral quando os dados são Normais
 
-*Nota:* À medida que $\nu \rightarrow \infty$, a distribuição $t(\nu)$ aproxima-se da normal padrão.
+Para qualquer tamanho de amostra $n > 1$ e uma AAS $X_1, X_2, \dots, X_n$ de uma $N(\mu, \sigma^2)$:
+
+* $\bar{X}$ e $S^2$ são independentes.
+* Pelos Teoremas 2.1, 2.3 e Definição 2.1:
+
+$$\frac{\sqrt{n}(\bar{X} - \mu)/\sigma}{\sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}}} = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t(n - 1).$$
+
+#### Distribuição Amostral para Grandes Amostras
+
+
+Para um tamanho de amostra **GRANDE** $n$ e uma AAS $X_1, X_2, \dots, X_n$ de qualquer distribuição populacional com média $\mu_x$ e variância $\sigma_x^2 < \infty$:
+
+$$T = \frac{\bar{X} - \mu_x}{S/\sqrt{n}}\,  \dot{\sim} \, t(n - 1).$$
+
+
+
+::: {.callout-note title="Fatos Úteis"}
+
+
+* **PDF de T:** A função densidade de probabilidade é dada por:
+
+$$f(t) = \frac{\Gamma(\frac{\nu+1}{2})}{\Gamma(\frac{\nu}{2})\sqrt{\nu\pi}} \left( 1 + \frac{t^2}{\nu} \right)^{-\frac{\nu+1}{2}}.$$
+
+* A distribuição $t$ é simétrica em torno de 0 e possui formato de sino como a $N(0, 1)$, porém com **caudas mais pesadas** (mais grossas).
+
+* Conforme $\nu \to \infty$, a distribuição $t(\nu)$ aproxima-se da distribuição normal padrão.
+
+* Use a Tabela do SIGAA para cálculos de probabilidade.
+:::
+
+#### Exemplos
+
+Suponha que os níveis de colesterol em homens adultos sejam distribuídos como $N(210 \text{ mg/dL}, \sigma^2)$.
+
+1. Forneça a distribuição amostral de $\frac{\bar{X} - \mu}{S/\sqrt{n}}$, onde as estatísticas $\bar{X}$ e $S^2$ são calculadas a partir de uma AAS de tamanho $n = 10$.
+
+2. Se $S^2 = 36,5^2$, forneça um intervalo centrado na média $\mu$ que capture os 95% centrais de todos os valores de médias amostrais de colesterol obtidos de AAS de tamanho $n = 10$.
+
 
 ### Distribuição Amostral do Razão de Variâncias
 
-Na estatística inferencial, é frequentemente do interesse comparar as variâncias $\sigma_{1}^{2}$ e $\sigma_{2}^{2}$ de duas populações.
+
+Na estatística inferencial, frequentemente o interesse recai sobre a comparação das variâncias $\sigma_1^2$ e $\sigma_2^2$ de duas populações distintas para determinar se são diferentes. Com base em duas Amostras Aleatórias Simples (AAS), uma de tamanho $n_1$ com variância amostral $S_1^2$ e outra de tamanho $n_2$ com variância amostral $S_2^2$, a estatística $\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}$ é utilizada.
+
 
 ::: {.callout-note title="Distribuição F"}
-(Definição 7.3): Se $W_{1} \sim \chi^{2}(\nu_{1})$ e $W_{2} \sim \chi^{2}(\nu_{2})$ são independentes, então:
-$$F=\frac{W_{1}/\nu_{1}}{W_{2}/\nu_{2}} \sim F(\nu_{1},\nu_{2})$$
+
+
+**Definição 2.2:** Se $W_1 \sim \chi^2(\nu_1)$ e $W_2 \sim \chi^2(\nu_2)$ são independentes, então:
+
+$$F = \frac{W_1/\nu_1}{W_2/\nu_2} \sim F(\nu_1, \nu_2).$$
+
+A distribuição $F(\nu_1, \nu_2)$ possui $\nu_1$ **graus de liberdade no numerador** e $\nu_2$ **graus de liberdade no denominador**.
+
+Se $F \sim F(\nu_1, \nu_2)$, então:
+
+$$
+\left\{
+    \begin{aligned}
+        E(F) &= \frac{\nu_2}{\nu_2 - 2}, \quad \text{para}\; \nu_2 > 2; \\
+        Var(F) &= \frac{2\nu_2^2 (\nu_1 + \nu_2 - 2)}{\nu_1 (\nu_2 - 2)^2 (\nu_2 - 4)}, \quad \text{para}\; \nu_2 > 4.
+    \end{aligned}
+\right.
+$$
 :::
 
-**Quando os dados são normais:**
-Se temos duas amostras independentes de distribuições normais, então a razão das variâncias amostrais sobre as variâncias populacionais segue:
-$$F=\frac{S_{1}^{2}/\sigma_{1}^{2}}{S_{2}^{2}/\sigma_{2}^{2}} \sim F(n_{1}-1, n_{2}-1)$$
+#### Distribuição Amostral quando os dados são Normais
 
----
+Se $X_1, \dots, X_{n_1}$ é uma AAS de $N(\mu_1, \sigma_1^2)$ e $Y_1, \dots, Y_{n_2}$ é uma AAS independente de $N(\mu_2, \sigma_2^2)$, então as variáveis qui-quadrado são independentes:
 
-## Prova do Teorema do Limite Central
+$$W_1 = \frac{(n_1 - 1)S_1^2}{\sigma_1^2} \sim \chi^2(n_1 - 1) \quad \text{e} \quad W_2 = \frac{(n_2 - 1)S_2^2}{\sigma_2^2} \sim \chi^2(n_2 - 1).$$
+
+Portanto,
+
+$$F = \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1 - 1, n_2 - 1).$$
+
+
+### Exemplo
+
+A variância do tempo de reação de mulheres é diferente da variância do tempo de reação de homens? Jason Paulak (Universidade de Cincinnati) realizou um experimento *web* para responder a isso.
+
+* **Mulheres ($n_1 = 398$):** $\bar{X}_1 = 517$ ms, $S_1 = 899$ ms.
+* **Homens ($n_2 = 469$):** $\bar{X}_2 = 383,2$ ms, $S_2 = 335,7$ ms.
+
+1. Forneça a distribuição amostral de $F = \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}$:
+
+2. Se as duas variâncias populacionais forem de fato iguais ($\sigma_1^2 = \sigma_2^2$), qual é a probabilidade de observar uma razão de variâncias amostrais igual ou maior que a encontrada?
+
+
+
+
+## Prova do Teorema Central do Limite (TCL)
 
 ::: {.callout-important title="Teorema do Limite Central"}
 Seja $X_{1},X_{2},...,X_{n}$ uma AAS de uma distribuição com média $\mu_{x}$ e variância $\sigma_{x}^{2}<\infty$. Então:
-$$\lim_{n\rightarrow\infty} \frac{\overline{X}-\mu_{x}}{\sigma_{x}/\sqrt{n}} = U \sim N(0,1)$$
+
+$$\lim_{n\rightarrow\infty} U_n =  \lim_{n\rightarrow\infty}\frac{\overline{X}-\mu_{x}}{\sigma_{x}/\sqrt{n}} = U \sim N(0,1).$$
 :::
 
-**Prova:**
-A prova baseia-se em funções geradoras de momentos (fgm). A fgm para uma variável aleatória contínua $Y$ é $M(t)=E(e^{tY})$.
-Sabemos que a fgm de uma variável normal padrão é $e^{t^{2}/2}$. Queremos provar que a fgm da nossa estatística converge para este valor.
 
-**Passo 1:** Seja $Z_{i}=\frac{X_{i}-\mu}{\sigma}$. 
-Mostra-se facilmente que $E(Z)=0$ e $Var(Z)=1$. Usando a expansão da Série de Taylor em torno de $t=0$:
-$$M_Z(t/\sqrt{n}) = 1 + \frac{(t/\sqrt{n})^2}{2!} + R(t/\sqrt{n})$$
-Onde o resto $n \lim_{n\rightarrow\infty} R(t/\sqrt{n}) = 0$.
+#### A Prova do TCL
 
-**Passo 2:** Definimos a variável padronizada $U_n$:
-$$U_{n} = \frac{\overline{X}-\mu_{x}}{\sigma_{x}/\sqrt{n}} = \frac{1}{\sqrt{n}}\sum_{i=1}^{n}Z_{i}$$
-A fgm de $U_n$ para uma amostra independente é o produto das fgms:
-$$M_{U_{n}}(t) = \left(M_Z(t/\sqrt{n})\right)^n$$
+A demonstração baseia-se nas **Funções Geradoras de Momentos (FGM)**. O Teorema XX afirma que cada variável aleatória possui uma FGM única, $M(t)$, que a identifica. Para uma variável contínua $Y$ com densidade $f(y)$, a FGM é:
 
-**Passo 3:** Substituindo a aproximação de Taylor no limite:
-$$\lim_{n\rightarrow\infty} M_{U_{n}}(t) = \lim_{n\rightarrow\infty} \left( 1 + \frac{t^2}{2n} + R(t/\sqrt{n}) \right)^n = e^{t^2/2}$$
+$$M(t) = E(e^{tY}) = \int_{-\infty}^{\infty} e^{ty} f(y) dy.$$
 
-**Passo 4:** Como $\lim_{n\rightarrow\infty} M_{U_{n}}(t) = e^{t^2/2}$ e esta é exatamente a fgm de uma variável Normal Padrão $N(0,1)$, o teorema está provado!
+### Roteiro da Prova:
 
-## Lista Semanal Obrigatória
+1. Usar a série de Taylor para encontrar a FGM de $Z_i = \frac{X_i - \mu}{\sigma}$.
+
+2. Encontrar a FGM de $U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$.
+
+3. Mostrar que, conforme $n \to \infty$, a FGM de $U_n$ converge para $e^{t^2/2}$.
+
+4. Identificar $e^{t^2/2}$ como a FGM da Normal Padrão $N(0, 1)$.
+
+
+#### Passo 1: A variável padronizada $Z_i$ 
+
+Seja $Z_i = \frac{X_i - \mu}{\sigma}$. Aqui, a suposição de variância finita ($\sigma^2 < \infty$) é crucial.
+
+(a) **Propriedades:** Mostre que $E(Z) = 0$ e $Var(Z) = E(Z^2) = 1$. *(Dica: Z é uma função linear de X)*.
+
+(b) **Momentos na Origem:** Mostre que:
+
+* $M_Z(0) = 1$
+* $M_Z'(0) = E(Z) = 0$
+* $M_Z''(0) = E(Z^2) = 1$
+
+(c) **Expansão de Taylor:** Expandindo $M_Z(t)$ em torno de $t = 0$ e avaliando em $t/\sqrt{n}$:
+
+$$M_Z\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{(t/\sqrt{n})^2}{2!} + R\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right).$$
+em que $R\left(\frac{t}{\sqrt{n}}\right)$ representa o resto de termos cúbicos e de ordem superior.
+
+(d) **Resto:** Mostre que o resto $\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.$
+
+#### Passo 2: A FGM de $U_n$
+
+Podemos escrever $U_n$ como:
+
+$$U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} Z_i.$$
+
+Como os $X_i$ são uma AAS (independentes), a FGM da soma é o produto das FGMs:
+
+$$M_{U_n}(t) = \prod_{i=1}^{n} M_{Z_i}\left(\frac{t}{\sqrt{n}}\right) = \left[ M_Z\left(\frac{t}{\sqrt{n}}\right) \right]^n.$$
+
+
+#### Passo 3: O Limite
+
+Substituindo a expansão de Taylor:
+
+$$M_{U_n}(t) = \left[ 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right) \right]^n.$$
+
+Aplicando o limite $n \to \infty$ e usando o fato de que $\lim_{n \to \infty} (1 + \frac{a}{n})^n = e^a$, então:
+
+$$\lim_{n \to \infty} M_{U_n}(t) = e^{t^2/2}.$$
+*(Use o fato que $\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.$*.
+
+#### Passo 4: Reconhecimento da Distribuição
+
+Se $U \sim N(0, 1)$, então sua FGM é $M_U(t) = e^{t^2/2}$. 
+
+**Prova rápida:**
+
+$$E(e^{tU}) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{tu} e^{-u^2/2} du.$$
+
+Completando o quadrado no expoente: $tu - \frac{u^2}{2} = -\frac{1}{2}(u-t)^2 + \frac{t^2}{2}$.
+
+$$E(e^{tU}) = e^{t^2/2} \underbrace{\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{(u-t)^2}{2}} du}_{1 \text{ (integral de uma FDP Normal)}} = e^{t^2/2}.$$
+
+## Lista
+
+1. Considere que $Y \sim \text{Bin}(n = 5, p = 0,1)$.
+
+(a) Use a função `pbinom()` do R para calcular $P(Y < 1)$.
+
+(b) Qual distribuição normal aproxima esta distribuição binomial?
+
+(c) Use a função `pnorm()` do R para utilizar a aproximação normal da binomial e calcular $P(Y < 1)$.
+
+2. Suponha que $Y \sim \text{Bin}(n, p = 0,1)$. Encontre o menor tamanho de amostra $n$ para que a probabilidade binomial exata $P(Y < 1)$ e a aproximação normal difiram por menos de $0,01$. 
+
+3.  
+
+(a) Enuncie o Teorema Central do Limite.
+(b) Demonstre o Teorema Central do Limite.
+
+4. Enuncie a Lei Fraca dos Grandes Números. Certifique-se de declarar todas as suposições e apresentar uma conclusão adequada.
+
