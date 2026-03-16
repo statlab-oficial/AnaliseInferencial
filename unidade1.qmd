@@ -2,34 +2,28 @@
 
 Neste capítulo, iniciamos a primeira parte sobre inferência estatística aprendendo um pouco sobre amostragem. Os conceitos por trás da amostram são a base para intervalos de confiança e testes de hipóteses, por exemplo. Além disso, veremos que ferramentas já aprendidas durante o curso de Ciência de Dados, em particular visualização de dados e manipulação (organização) de dados, são importantes no desenvolvimento do seu entendimento. Esperamos que os conceitos apresentados ao longo deste texto se articulam e se acumulam, culminando na capacidade de "contar sua história com dados".
 
-
 ## Processo Gerador de Dados (PGD)
 
 O PGD é o mecanismo teórico, físico ou biológico que produz os dados que observamos. Imagine que o mundo é uma "caixa preta" que segue certas regras (leis da física, comportamento humano, algoritmos de mercado), portanto o PGD são essas regras em funcionamento.
 
-
-
 ::: {.callout-note title="Realidade vs. Observação"}
+-   O PGD (A causa): É a distribuição de probabilidade teórica e os parâmetros fixos (mas desconhecidos) que regem um fenômeno.
 
-- O PGD (A causa): É a distribuição de probabilidade teórica e os parâmetros fixos (mas desconhecidos) que regem um fenômeno.
-
-- Os Dados (O Efeito): É a amostra específica que coletamos. É apenas uma realização de infinitas possibilidades que o PGD poderia ter gerado.
+-   Os Dados (O Efeito): É a amostra específica que coletamos. É apenas uma realização de infinitas possibilidades que o PGD poderia ter gerado.
 :::
 
 ::: {.callout-tip title="Representação Matemática"}
-
 O PGD pode ser definido pela distribuição de probabilidade conjunta desconhecida $P(X, Y)$ (ou simplemente $P(Z)$).
 
 Dizemos que nossa amostra $\mathcal{D} = \{z_1, z_2, \dots, z_n \}$ é composta por variáveis aleatórias independentes e identicamentes distribuídas (i.i.d) retiradas desse processo:
 
-$$z_i \sim P(Z).$$
-Nesta visão, o PGD é o "mecanismo" que dita:
+$$z_i \sim P(Z).$$ Nesta visão, o PGD é o "mecanismo" que dita:
 
-1. A Região de Suporte: Quais valores são possíveis de ocorrer?
+1.  A Região de Suporte: Quais valores são possíveis de ocorrer?
 
-2. A Densidade: Com que frequência cada valor ocorre?
+2.  A Densidade: Com que frequência cada valor ocorre?
 
-3. As Dependências: Como o corrência de $X$ altera a probabilidade de $Y$?
+3.  As Dependências: Como o corrência de $X$ altera a probabilidade de $Y$?
 :::
 
 ## Pacote Necessários
@@ -207,8 +201,8 @@ Lembre-se de que definir `boundary = 0.4` garante um esquema de classes em que u
 ```{r}
 ggplot(virtual_prop_red, aes(x = prop_red)) +
 geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
-labs(x = "Proporção das 50 bolas que são vermelhas", y = "Frequência",
-title = "Disttribuição das proporções") 
+labs(x = "Proporção de bolas vermelhas", y = "Frequência",
+title = "Distribuição das proporções") 
 ```
 
 Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas inferiores a 30%. Por outro lado, em alguns casos, obtivemos proporções superiores a 50%. No entanto, as proporções que ocorreram com maior frequência ficaram entre 35% e 40% (em **5 das 20 amostras**). Por que temos essas diferenças nas proporções de bolas vermelhas? **Por causa da variação amostral**.

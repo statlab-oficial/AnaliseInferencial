@@ -52,6 +52,111 @@ Seja $X_{1},X_{2},...,X_{n}$ um conjunto de variáveis aleatórias observáveis 
 -   **Mediana amostral:** $\hat{\phi}_{.5} = \text{valor central (ou média dos centrais)}$.
 :::
 
+
+## Covariância, variância de somas e correlações
+
+O resultado a seguir mostra que a esperança de um produto de variáveis aleatórias independentes é igual ao produto de suas esperanças.
+
+::: {.callout-note title="Proposição 1:"}
+Se $X$ e $Y$ são independentes, então, para quaisquer funções $h$ e $g$,
+
+$$E[g(X)h(Y)] = E[g(X)]E[h(X)].$$
+:::
+
+
+*Demonstração:* Suponha que $X$ e $Y$ sejam variáveis aleatórias conjuntamente contínuas com função densidade conjunta $f(x,y)$. Então,
+
+$$\begin{align}
+E[g(X)h(Y)] =& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(x)h(y)f(x,y)dxdy\\
+=& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(x)h(y)f(x)f(y)dxdy\\
+=& \int\limits_{-\infty}^{+\infty}g(x)f(x)dx\int\limits_{-\infty}^{+\infty} h(y)f(y)dy\\
+=&  E[g(X)]E[h(Y)].
+\end{align}
+$$
+
+A demonstração para o caso discreto pode ser feita de maneira similar.
+
+
+::: {.callout-important title="Definição:"}
+A covariância entre $X$ e $Y$, representada como $Cov(X,Y)$, é definida como
+
+$$Cov(X,Y) = E[(X-E[X])(Y-E[Y])].$$
+:::
+
+
+Desenvolvendo o lado direito da definição acima, temos que
+
+$$\begin{align}
+Cov(X,Y) = & E[\underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{\hspace{2cm}} + \underline{\hspace{2cm}}]\\
+=& \underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{\hspace{2cm}} + \underline{\hspace{2cm}}\\
+=& E[XY] - E[X]E[Y].
+\end{align}$$
+
+
+Note que, se $X$ e $Y$ são independentes, então, pela Proposição 1, $Cov(X,Y) = 0$. No entanto, o inverso não é verdade. 
+
+::: {.callout-note title="Proposição 2:"}
+i) $Cov(X,Y) = Cov(Y,X)$;
+
+ii) $Cov(X,X) = Var(X)$;
+
+iii) $Cov(aX, Y) = a Cov(X,Y)$.
+
+iv) $Cov\left(\sum\limits_{i=1}^{n} X_i,\sum\limits_{j=1}^{m} Y_j\right) = \sum\limits_{i=1}^{n}\sum\limits_{j=1}^{m}Cov(X_i,Y_j)$.
+:::
+
+
+Fazendo $Y_j = X_j$ e considerando as propriedades (ii) e (iv) da Proposição 2, temos que
+
+$$\begin{align}Var\left(\sum\limits_{i=1}^{n} X_i\right) =& Cov\left(\sum\limits_{i=1}^{n} X_i,\sum\limits_{j=1}^{n} X_j\right)\\ =& \sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}Cov(X_i,X_j)\\
+=&\sum\limits_{i=1}^{n} Var(X_i) + \mathop{\sum\sum}\limits_{i\neq j}Cov(X_i,X_j)\\
+=&\sum\limits_{i=1}^{n} Var(X_i) + 2\mathop{\sum\sum}\limits_{i < j}Cov(X_i,X_j).
+\end{align}$$
+
+::: {.callout-warning title="Amostra Aleatória Indepedente:"}
+A variáveis aleatórias $X_1, X_2, \dots, X_n$ são chamadas de amostra aleatória independente de tamanho $n$ da população $f(x)$ se $X_1, X_2, \dots, X_n$ são variáveis aleatórias mutuamente independentes e a distribuição marginal de cada $X_i$ é a mesma função $f(x)$. Alternativamente, $X_1, X_2, \dots, X_n$ são chamadas de variáveis aleatórias independentes e identicamente distribuídas com função densidade (função de probabilidade) $f(x)$.    
+:::
+
+
+- Dito de outra forma, assumimos que cada $X_i$ é uma observação da mesma variável em que cada $X_i$ possui distribuição marginal dada por $f(x)$.
+
+- Além disso, assumimos independência mútua, o que significa que o valor de uma observação não tem efeito sobre qualquer outra observação.
+
+- Isso frequentemente equivale a realizar uma amostragem aleatória simples (AAS) com reposição a partir de uma população "infinita".
+
+- Em termos práticos, uma população infinita é aquela cujo tamanho é desconhecido ou tão grande que não é viável enumerar ou contar todos os seus membros.
+
+
+
+::: {.callout-warning title="Amostra Aleatória Simples Sem Reposição:"}
+A amostragem aleatória simples sem reposição de tamanho 
+$n$ é um plano de amostragem probabilístico no qual um número fixo de $n$ unidades é selecionado de uma população composta por $N$ unidades, sem reposição, de tal forma que toda possível amostra de $n$ unidades tenha a mesma probabilidade de ser selecionada.
+:::
+
+::: {.callout-warning title="Amostra Aleatória Simples Com Reposição:"}
+A amostragem aleatória simples com reposição é um método de selecionar $n$ unidades de uma população composta por $N$ unidades com reposição, de modo que, em cada etapa da seleção, cada unidade da população tenha a mesma probabilidade de ser escolhida, isto é, $1/N$.
+:::
+
+
+> **AAS** normalmente significa Amostragem Aleatória Simples e, por convenção, implica amostragem sem reposição.
+
+Do ponto de vista de levantamentos amostrais, naturalmente faz mais sentido realizar a amostragem sem reposição. Por exemplo, pode-se realizar uma pesquisa telefônica com 10.000 pessoas, uma vez que uma pessoa tenha sido chamada, ela não será chamada novamente. Quando se trabalha com populações muito grandes (ou infinitas), a diferença entre AAS com reposição e AAS sem reposição torna-se desprezível.
+
+
+Quando se realiza amostragem aleatória simples sem reposição a partir de uma população finita $\{x_1, x_2, \dots, x_N\}$ o valor $x_i$ não é reposto após ser selecionado e, portanto, é impossível selecionar $x_i$ novamente.
+
+Como consequência $X_i$ e $X_j$ não são independentes, pois 
+
+$$P(X_1 = x_1) = \frac{1}{N}, \quad P(X_2 = x_1| X_1 = x_1) = 0 \quad \text{e} \quad P(X_2 = x_9 | X_1 = x_1) = \frac{1}{N-1}.$$
+
+Além disso, temos que quando se realiza amostragem aleatória simples com reposição a partir de uma população finita $\{x_1, x_2, \dots, x_N\}$ o valor $x_i$ é reposto após ser selecionado e portanto,
+
+$$P(X_1 = x_1) = \frac{1}{N} \quad \text{e} \quad P(X_2 = x_1 | X_1 = x_1) = \frac{1}{N}.$$
+
+A amostragem aleatória simples com reposição a partir de uma população finita é um tipo de modelo de amostragem que serve de base para a técnica estatística de (re)amostragem conhecida como *bootstrap*. Além disso, a amostragem aleatória simples sem reposição a partir de uma população finita não satisfaz todas as condições de uma "amostra aleatória", isto é, $X_1$ e $X_2$ não são indepedentes.
+
+
+
 ## Distribuições Amostrais
 
 O valor de uma estatística varia de amostra para amostra. Por outras palavras, amostras diferentes resultarão em valores diferentes para uma estatística. Portanto, uma estatística é uma variável aleatória com uma distribuição!
@@ -68,11 +173,34 @@ Para entender a origem de uma distribuição amostral, imagine o seguinte proces
 
 Na prática, como as populações costumam ser imensas (ou infinitas), é impossível calcular *todas* as amostras possíveis. É por isso que dependemos de teoremas matemáticos (como o Teorema Central do Limite) para deduzir o formato dessa distribuição sem precisarmos usar a força bruta!
 
+
+
+
+
+
+#### Exercícios
+
+1. Considere um estudo sobre o consumo de combustível da população de quatro ônibus de uma pequena companhia de transporte urbano. O consumo dos ônibus (km/l), $X$, em condições padrões de teste, é: 3,8, 3,9, 4,0 e 4,1. Uma amostra de dois ônibus será sorteada, com reposição.
+
+a)Calcule a média e a variância da população.
+
+b)Construa a distribuição para o consumo médio da amostra.
+
+c)Calcule o valor esperado e a variância da distribuição amostral.
+
+d)Aplique as seguintes expressões nos resultados do item (a) e confira com os resultados do item (c):
+
+$$E(\overline{X}) = \mu \quad \text{e} \quad \text{Var}(\overline{X}) = \frac{\sigma^2}{n}.$$
+2. Refaça o Exercício 1 considerando amostragem sem reposição. A verificação da variância, item (d), deve ser com a expressão:
+
+$$\text{Var}(\overline{X}) = \frac{\sigma^2}{n}\frac{N-n}{N-1}.$$
+
+
 ### Distribuição Amostral da Média ($\overline{X}$)
 
 Na estatística inferencial, é comum utilizar a estatística $\overline{X}$ para estimar $\mu$.
 
-**Média e Variância:** Para qualquer tamanho de amostra $n$ e uma Amostra Aleatória Simples (AAS) proveniente de qualquer distribuição populacional com média $\mu_{x}$ e variância $\sigma_{x}^{2}$:
+**Média e Variância:** Para qualquer tamanho de amostra $n$ e uma amostra aleatória (AA) proveniente de qualquer distribuição populacional com média $\mu_{x}$ e variância $\sigma_{x}^{2}$:
 
 $$E(\overline{X})=\mu_{x}\left(E\left(\sum_{i=1}^n X_i\right) = n \mu_{x}\right) \quad \text{e} \quad Var(\overline{X})=\frac{\sigma_{x}^{2}}{n}\left(E\left(\sum_{i=1}^n X_i\right) = n \sigma^2_{x}\right).$$ Para compreendermos como a média amostral se comporta, utilizamos as seguintes propriedades das combinações lineares:
 
@@ -83,23 +211,23 @@ Sejam $a_{i}$ para $i=1,2,...,k$ constantes e sejam $X_{i}$ para $i=1,2,...,k$ v
 2.  **Variância:** $Var\left(\sum_{i=1}^{k}a_{i}X_{i}\right) = \sum_{i=1}^{k}a_{i}^{2}Var(X_{i})$ (se $X_{1},...,X_{k}$ forem mutuamente independentes).
 :::
 
-**Quando os dados são normais:** Para uma AAS proveniente de uma distribuição normal $N(\mu_{x},\sigma_{x}^{2})$: $$\overline{X} \sim N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).$$
+**Quando os dados são normais:** Para uma AA proveniente de uma distribuição normal $N(\mu_{x},\sigma_{x}^{2})$: $$\overline{X} \sim N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).$$
 
 **Exemplo:** Suponha que os níveis de colesterol de homens adultos sigam uma distribuição $N(210\,\text{mg/dL}, (37\,\text{mg/dL})^2)$.
 
 1.  Indique um intervalo centrado na média $\mu$ que capture os 95% centrais de todos os valores de colesterol.
 
-2.  Indique a distribuição amostral de $\overline{X}$, a média amostral dos valores de colesterol obtidos a partir de AAS (Amostras Aleatórias Simples) de tamanho $n = 10$.
+2.  Indique a distribuição amostral de $\overline{X}$, a média amostral dos valores de colesterol obtidos a partir de AA de tamanho $n = 10$.
 
 3.  Indique um intervalo centrado na média $\mu$ que capture os 95% centrais de todos os valores de média amostral de colesterol obtidos a partir de AAS de tamanho $n = 10$.
 
 **Para amostras de grandes dimensões (Teorema Central do Limite):**
 
-Para um grande tamanho de amostra $n$ e uma AAS proveniente de *qualquer* distribuição populacional com variância finita $\sigma_{x}^{2} < \infty$, as distribuições amostrais aproximadas são:
+Para um grande tamanho de amostra $n$ e uma AA proveniente de *qualquer* distribuição populacional com variância finita $\sigma_{x}^{2} < \infty$, as distribuições amostrais aproximadas são:
 
 $$\overline{X} \dot{\sim} N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right) \quad \text{e} \quad \sum\limits_{i=1}^n X_i \dot{\sim} N\left(n\mu_{x}, n\sigma_{x}^{2}\right).$$ Este último resultado é consequência do famoso Teorema Central do Limite.
 
-Sejam $X_{1},\dots,X_{n}$ uma AAS de uma distribuição com média $\mu_x$ e variância $\sigma^2_x < \infty$. Então a distribuição de
+Sejam $X_{1},\dots,X_{n}$ uma AA de uma distribuição com média $\mu_x$ e variância $\sigma^2_x < \infty$. Então a distribuição de
 
 $$U_n = \frac{\overline{X} - \mu_x}{\sigma_x/\sqrt{n}},$$ converge para $N(0,1)$ a medida que $n \to \infty$. Provaremos esse teorema mais à frente.
 
@@ -118,7 +246,7 @@ Então, dizemos que $X$ segue uma distribuição de Bernoulli: $$X \sim \text{Be
 
 (b) Encontre $E(X)$ e $Var(X)$.
 
-(c) Suponha que foi recolhida uma Amostra Aleatória Simples (AAS) $X_1, X_2, \dots, X_{40}$. Indique a distribuição amostral aproximada de $\overline{X}$ (geralmente denotada por $\hat{p} = \overline{X}$, o que indica que $\overline{X}$ é uma proporção amostral).
+(c) Suponha que foi recolhida uma AA $X_1, X_2, \dots, X_{40}$. Indique a distribuição amostral aproximada de $\overline{X}$ (geralmente denotada por $\hat{p} = \overline{X}$, o que indica que $\overline{X}$ é uma proporção amostral).
 
 #### Aproximação Normal da Binomial
 
@@ -156,7 +284,7 @@ $$\sum_{i=1}^{\nu} Z_i^2 \sim \chi^2(\nu),$$
 
 em que $\chi^2(\nu)$ é chamada de **distribuição qui-quadrado com** $\nu$ graus de liberdade.
 
--   Para qualquer tamanho de amostra $n$ e uma AAS $X_1, X_2, \dots, X_n$ de uma distribuição normal $N(\mu_x, \sigma_x^2)$: $$\sum_{i=1}^{n} \left(\frac{X_i - \mu_x}{\sigma_x} \right)^2 \sim \chi^2(n)$$
+-   Para qualquer tamanho de amostra $n$ e uma AA $X_1, X_2, \dots, X_n$ de uma distribuição normal $N(\mu_x, \sigma_x^2)$: $$\sum_{i=1}^{n} \left(\frac{X_i - \mu_x}{\sigma_x} \right)^2 \sim \chi^2(n)$$
 :::
 
 > **Nota:** Use a Tabela do SIGAA para cálculos de probabilidade.
@@ -172,14 +300,14 @@ Se $C \sim \chi^2(\nu)$, então: $$
 \right.
 $$
 
-Para qualquer tamanho de amostra $n > 1$ e uma AAS $X_1, X_2, \dots, X_n$ de qualquer distribuição populacional com média $\mu_x$ e variância $\sigma_x^2$:
+Para qualquer tamanho de amostra $n > 1$ e uma AA $X_1, X_2, \dots, X_n$ de qualquer distribuição populacional com média $\mu_x$ e variância $\sigma_x^2$:
 
 -   $E(S^2) = \sigma_x^2.$
 -   $Var(S^2) = \frac{2\sigma_x^4}{n-1}.$
 
 #### Distribuição Amostral quando os dados são Normais
 
-Para qualquer tamanho de amostra $n > 1$ e uma AAS $X_1, X_2, \dots, X_n$ originada de uma distribuição normal $N(\mu_x, \sigma_x^2)$:
+Para qualquer tamanho de amostra $n > 1$ e uma AA $X_1, X_2, \dots, X_n$ originada de uma distribuição normal $N(\mu_x, \sigma_x^2)$:
 
 $$\frac{(n - 1)S^2}{\sigma_x^2} \sim \chi^2(n - 1).$$
 
@@ -202,7 +330,7 @@ Se $T \sim t(\nu)$, então:
 
 #### Distribuição Amostral quando os dados são Normais
 
-Para qualquer tamanho de amostra $n > 1$ e uma AAS $X_1, X_2, \dots, X_n$ de uma $N(\mu, \sigma^2)$:
+Para qualquer tamanho de amostra $n > 1$ e uma AA $X_1, X_2, \dots, X_n$ de uma $N(\mu, \sigma^2)$:
 
 -   $\bar{X}$ e $S^2$ são independentes.
 -   Pelos Teoremas 2.1, 2.3 e Definição 2.1:
@@ -211,7 +339,7 @@ $$\frac{\sqrt{n}(\bar{X} - \mu)/\sigma}{\sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}}} = 
 
 #### Distribuição Amostral para Grandes Amostras
 
-Para um tamanho de amostra **GRANDE** $n$ e uma AAS $X_1, X_2, \dots, X_n$ de qualquer distribuição populacional com média $\mu_x$ e variância $\sigma_x^2 < \infty$:
+Para um tamanho de amostra **GRANDE** $n$ e uma AA $X_1, X_2, \dots, X_n$ de qualquer distribuição populacional com média $\mu_x$ e variância $\sigma_x^2 < \infty$:
 
 $$T = \frac{\bar{X} - \mu_x}{S/\sqrt{n}}\,  \dot{\sim} \, t(n - 1).$$
 
@@ -227,19 +355,17 @@ $$f(t) = \frac{\Gamma(\frac{\nu+1}{2})}{\Gamma(\frac{\nu}{2})\sqrt{\nu\pi}} \lef
 -   Use a Tabela do SIGAA para cálculos de probabilidade.
 :::
 
-
-
 #### Exemplos
 
 Suponha que os níveis de colesterol em homens adultos sejam distribuídos como $N(210 \text{ mg/dL}, \sigma^2)$.
 
-1.  Forneça a distribuição amostral de $\frac{\bar{X} - \mu}{S/\sqrt{n}}$, onde as estatísticas $\bar{X}$ e $S^2$ são calculadas a partir de uma AAS de tamanho $n = 10$.
+1.  Forneça a distribuição amostral de $\frac{\bar{X} - \mu}{S/\sqrt{n}}$, onde as estatísticas $\bar{X}$ e $S^2$ são calculadas a partir de uma AA de tamanho $n = 10$.
 
 2.  Se $S^2 = 36,5^2$, forneça um intervalo centrado na média $\mu$ que capture os 95% centrais de todos os valores de médias amostrais de colesterol obtidos de AAS de tamanho $n = 10$.
 
 ### Distribuição Amostral do Razão de Variâncias
 
-Na estatística inferencial, frequentemente o interesse recai sobre a comparação das variâncias $\sigma_1^2$ e $\sigma_2^2$ de duas populações distintas para determinar se são diferentes. Com base em duas Amostras Aleatórias Simples (AAS), uma de tamanho $n_1$ com variância amostral $S_1^2$ e outra de tamanho $n_2$ com variância amostral $S_2^2$, a estatística $\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}$ é utilizada.
+Na estatística inferencial, frequentemente o interesse recai sobre a comparação das variâncias $\sigma_1^2$ e $\sigma_2^2$ de duas populações distintas para determinar se são diferentes. Com base em duas AA, uma de tamanho $n_1$ com variância amostral $S_1^2$ e outra de tamanho $n_2$ com variância amostral $S_2^2$, a estatística $\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}$ é utilizada.
 
 ::: {.callout-note title="Distribuição F"}
 **Definição 2.2:** Se $W_1 \sim \chi^2(\nu_1)$ e $W_2 \sim \chi^2(\nu_2)$ são independentes, então:
@@ -262,7 +388,7 @@ $$
 
 #### Distribuição Amostral quando os dados são Normais
 
-Se $X_1, \dots, X_{n_1}$ é uma AAS de $N(\mu_1, \sigma_1^2)$ e $Y_1, \dots, Y_{n_2}$ é uma AAS independente de $N(\mu_2, \sigma_2^2)$, então as variáveis qui-quadrado são independentes:
+Se $X_1, \dots, X_{n_1}$ é uma AA de $N(\mu_1, \sigma_1^2)$ e $Y_1, \dots, Y_{n_2}$ é uma AA independente de $N(\mu_2, \sigma_2^2)$, então as variáveis qui-quadrado são independentes:
 
 $$W_1 = \frac{(n_1 - 1)S_1^2}{\sigma_1^2} \sim \chi^2(n_1 - 1) \quad \text{e} \quad W_2 = \frac{(n_2 - 1)S_2^2}{\sigma_2^2} \sim \chi^2(n_2 - 1).$$
 
@@ -292,16 +418,12 @@ A formalização axiomática de Kolmogorov em 1934, apresentada em Métodos Prob
 ::: {.callout-note title="Lei dos Grandes Números"}
 Sejam $X_1, X_2, \dots$ variáveis aleatórias com esperanças finitas e seja $S_n = X_1+ X_2 + \dots + X_n$. A sequência $\{X_n: n\geq 1\}$ satisfaz a *Lei Fraca dos Grandes Números* se:
 
-$$\frac{S_n}{n} - E\left(\frac{S_n}{n}\right) \xrightarrow{p} p;$$
-em que $\xrightarrow{p}$ representa convergência em probabilidade, e a *Lei Forte dos Grandes Números* se: 
+$$\frac{S_n}{n} - E\left(\frac{S_n}{n}\right) \xrightarrow{p} p;$$ em que $\xrightarrow{p}$ representa convergência em probabilidade, e a *Lei Forte dos Grandes Números* se:
 
-$$\frac{S_n}{n} - E\left(\frac{S_n}{n}\right) \xrightarrow{qc} p,$$
-em que $\xrightarrow{qc}$ indica convergência "quase certa".
+$$\frac{S_n}{n} - E\left(\frac{S_n}{n}\right) \xrightarrow{qc} p,$$ em que $\xrightarrow{qc}$ indica convergência "quase certa".
 :::
 
-
-A Lei Franca dos Grandes Números pode ser demonstrada de uma forma simples, por meio da simulação do experimento de uma moeda não viciada. O código (adaptado de @campos2017metodos) a seguir implementa a simulação de $n$ lançamentos da moeda, retornando a frequência relativa do evento $A$ que representa coroa como resultado [@campos2017metodos]. 
-
+A Lei Franca dos Grandes Números pode ser demonstrada de uma forma simples, por meio da simulação do experimento de uma moeda não viciada. O código (adaptado de @campos2017metodos) a seguir implementa a simulação de $n$ lançamentos da moeda, retornando a frequência relativa do evento $A$ que representa coroa como resultado [@campos2017metodos].
 
 ```{r}
 library(ggplot2)
@@ -342,12 +464,10 @@ lei_dos_grandes_numeros_faixa <- function(n) {
 lei_dos_grandes_numeros_faixa(2000)
 ```
 
-
-
 ## Teorema Central do Limite (TCL)
 
 ::: {.callout-important title="Teorema Central do Limite"}
-Seja $X_{1},X_{2},...,X_{n}$ uma AAS de uma distribuição com média $\mu_{x}$ e variância $\sigma_{x}^{2}<\infty$. Então para $S_n = X_1 + X_2 + \dots + X_n, t$ temos:
+Seja $X_{1},X_{2},...,X_{n}$ uma AA de uma distribuição com média $\mu_{x}$ e variância $\sigma_{x}^{2}<\infty$. Então para $S_n = X_1 + X_2 + \dots + X_n, t$ temos:
 
 $$\frac{S_n - n\mu}{\sigma \sqrt{n}}  \xrightarrow{D} N(0,1),$$
 
