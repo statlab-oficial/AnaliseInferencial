@@ -1,0 +1,3981 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\usepackage{graphicx}
+\usepackage{eso-pic}
+\usepackage{amsmath}
+\usepackage{array}      % para o \begin{array} usado pelo \stackunder
+% \usepackage{stackengine} % (opcional) se quiser usar a versão do pacote \stackunder
+
+% suas macros
+\newcommand{\tn}{\mbox{\boldmath $\theta$} }
+\newcommand{\sn}{\mbox{\boldmath $\sigma$} }
+\newcommand{\On}{\mbox{\boldmath $\Omega$} }
+\newcommand{\Dn}{\mbox{\boldmath $\Delta$} }
+\newcommand{\In}{\mbox{\textbf{I}} }
+\newcommand{\yn}{\mbox{\textbf{y}} }
+\newcommand{\Vn}{\mbox{\textbf{V}} }
+\newcommand{\mn}{\mbox{\boldmath $\mu$} }
+\newcommand{\Fn}{\mbox{\boldmath $\Phi$} }
+\newcommand{\Pn}{\mbox{\boldmath $\Pi$} }
+
+\newenvironment{Dproof}[1][DProof]{\textbf{#1.} }{\ \rule{0.2cm}{0.2cm}} 
+\newcommand{\stackunder}[2]{ \renewcommand{\arraystretch}{0.2} 
+\displaystyle \begin{array}[t]{c}  {#1}\\_{#2}\end{array} 
+\renewcommand{\arraystretch}{1}} 
+\newcommand{\vect}[1]{\!\!\!\stackunder{#1}{\sim}\!\!\!}
+\renewcommand{\Re}{I \! \! R}
+\newcommand{\real}{\mbox{$I\!\!R$}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\va}{$X_1,\,X_2,\,\dots,\,X_n$}
+\newcommand{\vam}{$x_1,\,x_2\,\ldots,\,x_n$}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Índice}
+\else
+  \newcommand\contentsname{Índice}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Lista de Figuras}
+\else
+  \newcommand\listfigurename{Lista de Figuras}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Lista de Tabelas}
+\else
+  \newcommand\listtablename{Lista de Tabelas}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figura}
+\else
+  \newcommand\figurename{Figura}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tabela}
+\else
+  \newcommand\tablename{Tabela}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listagem}
+\newcommand*\listoflistings{\listof{codelisting}{Lista de Listagens}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{brazilian}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdflang={pt-br},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+% Capa sem número
+\pagenumbering{gobble}
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+% Imagem como fundo, ancorada no topo-esquerdo, sem distorção
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    % "desce" a origem para dentro da página
+    \raisebox{-\paperheight}{%
+      \includegraphics[width=\paperwidth,keepaspectratio]{capa.png}%
+    }%
+  }%
+}
+
+\null
+\vfill
+\end{titlepage}
+
+\ClearShipoutPictureBG
+
+% Reinicia numeração normal no conteúdo
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\renewcommand*\contentsname{Índice}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\bookmarksetup{startatroot}
+
+\chapter*{Informações Legais e Declaração de Uso de Inteligência
+Artificial}\label{informauxe7uxf5es-legais-e-declarauxe7uxe3o-de-uso-de-inteliguxeancia-artificial}
+\addcontentsline{toc}{chapter}{Informações Legais e Declaração de Uso de
+Inteligência Artificial}
+
+\markboth{Informações Legais e Declaração de Uso de Inteligência
+Artificial}{Informações Legais e Declaração de Uso de Inteligência
+Artificial}
+
+\section*{Direitos Autorais e Uso da
+Obra}\label{direitos-autorais-e-uso-da-obra}
+\addcontentsline{toc}{section}{Direitos Autorais e Uso da Obra}
+
+\markright{Direitos Autorais e Uso da Obra}
+
+© 2026 --- Os autores.
+
+Todos os direitos reservados. Esta obra é protegida pela legislação
+brasileira de direitos autorais (Lei nº 9.610/1998). É vedada a
+reprodução, distribuição, armazenamento ou transmissão total ou parcial
+deste livro, por qualquer meio ou processo, eletrônico ou mecânico, sem
+autorização expressa e por escrito dos autores, salvo nos casos
+permitidos pela legislação vigente para fins exclusivamente acadêmicos e
+não comerciais, com a devida citação da fonte.
+
+A utilização do material em ambientes de ensino é permitida desde que
+preservada a integridade do conteúdo, mencionada a autoria e respeitados
+os princípios de uso responsável da informação científica. A reprodução
+para fins comerciais, bem como a modificação substancial do conteúdo sem
+autorização, constitui violação de direitos autorais.
+
+\section*{Declaração sobre o Uso de Ferramentas de Inteligência
+Artificial}\label{declarauxe7uxe3o-sobre-o-uso-de-ferramentas-de-inteliguxeancia-artificial}
+\addcontentsline{toc}{section}{Declaração sobre o Uso de Ferramentas de
+Inteligência Artificial}
+
+\markright{Declaração sobre o Uso de Ferramentas de Inteligência
+Artificial}
+
+Durante a elaboração deste livro foram utilizadas ferramentas de
+Inteligência Artificial, em especial sistemas de apoio à escrita e
+organização textual, como recurso complementar no processo de produção
+acadêmica.
+
+O uso de IA teve caráter \textbf{estritamente assistivo}, não
+substituindo o desenvolvimento conceitual, a formulação matemática, a
+interpretação estatística nem as decisões pedagógicas da obra. Todo
+conteúdo foi cuidadosamente revisado, validado e adaptado pelos autores,
+que assumem integral responsabilidade científica e intelectual pelo
+texto final.
+
+Não foram delegadas à IA decisões metodológicas, inferenciais ou
+conclusões analíticas. A elaboração teórica, a seleção de exemplos, a
+validação matemática e a coerência didática resultam da experiência
+acadêmica e da atuação dos autores na área de Modelos de Regressão.
+
+Reafirmamos que o uso responsável de tecnologias emergentes deve sempre
+preservar o rigor científico, a integridade acadêmica e o protagonismo
+intelectual humano.
+
+\bookmarksetup{startatroot}
+
+\chapter*{Prefácio}\label{prefuxe1cio}
+\addcontentsline{toc}{chapter}{Prefácio}
+
+\markboth{Prefácio}{Prefácio}
+
+Este livro resulta da experiência acumulada no ensino, na orientação de
+estudantes e no desenvolvimento de pesquisas em modelos de regressão.
+Somos docentes pesquisadores do Departamento de Estatística e Matemática
+Aplicada da Universidade Federal do Ceará (DEMA/UFC), com atuação
+contínua em regressão linear, modelagem estatística e inferência.
+Integramos o Laboratório de Inovação em Estatística --- StatLab/UFC
+(\url{https://statlab.quarto.pub/}) e o Grupo de Pesquisa \emph{Modelos
+de Sobrevivência e Aplicações} do CNPq
+(\url{http://dgp.cnpq.br/dgp/espelhogrupo/9639095385610769}), espaços
+nos quais articulamos ensino, pesquisa e aplicação a problemas reais.
+
+O material tem como base as disciplinas Inferência Estatística I
+(CC0288) e Análise Inferencial (CC0448). Ao longo dos anos, consolidamos
+a convicção de que ensinar regressão exige equilíbrio entre rigor
+teórico e clareza interpretativa.
+
+O livro desenvolve os conceitos de Inferência Estatística de forma
+progressiva, enfatizando interpretação e propriedades. A implementação é
+realizada integralmente no \textbf{R}, utilizado como ambiente de
+experimentação conceitual e não apenas como ferramenta computacional.
+
+Os fundamentos matemáticos mais densos são apresentados em apêndices
+específicos, preservando o fluxo didático do texto principal e
+permitindo diferentes níveis de aprofundamento. Acreditamos que
+inferência deve ser ensinada como base para tomada de decisão, com
+atenção às suas suposições, limitações e implicações práticas.
+
+Esperamos que este livro contribua para a formação de profissionais
+capazes tomar decisões com rigor técnico, pensamento estatístico crítico
+e responsabilidade analítica.
+
+\bookmarksetup{startatroot}
+
+\chapter*{Identificação da
+Disciplina}\label{identificauxe7uxe3o-da-disciplina}
+\addcontentsline{toc}{chapter}{Identificação da Disciplina}
+
+\markboth{Identificação da Disciplina}{Identificação da Disciplina}
+
+\begin{itemize}
+\item
+  Curso: Bacharelado em Ciência de Dados
+\item
+  Disciplina: Análise Inferencial
+\item
+  Carga Horária: 96 horas
+\item
+  Créditos: 6
+\item
+  Regime: Semestral
+\item
+  Pré-requisitos: Modelos Probabilísticos (CC0446)
+\item
+  Período Letivo: 2026.1
+\item
+  Professor(a): Dr.~Manoel Santos-Neto
+\end{itemize}
+
+\section*{EMENTA}\label{ementa}
+\addcontentsline{toc}{section}{EMENTA}
+
+\markright{EMENTA}
+
+Conceitos de população e amostra; parâmetros, estatísticas, estimadores
+e suas propriedades; distribuições amostrais; métodos de estimação
+pontual: método dos momentos, máxima verossimilhança e mínimos
+quadrados; estimação intervalar; testes de hipóteses; testes de
+homogeneidade e independência.
+
+\section*{OBJETIVO GERAL}\label{objetivo-geral}
+\addcontentsline{toc}{section}{OBJETIVO GERAL}
+
+\markright{OBJETIVO GERAL}
+
+Apresentar os fundamentos da inferência estatística, capacitando o
+estudante a formular, analisar e interpretar problemas inferenciais em
+contextos de Ciência de Dados, com ênfase na quantificação da incerteza,
+validação de modelos e capacidade de generalização.
+
+\section*{OBJETIVOS ESPECÍFICOS}\label{objetivos-especuxedficos}
+\addcontentsline{toc}{section}{OBJETIVOS ESPECÍFICOS}
+
+\markright{OBJETIVOS ESPECÍFICOS}
+
+Ao final da disciplina, o estudante deverá ser capaz de:
+
+\begin{itemize}
+\item
+  compreender a diferença entre população, amostra, parâmetro e
+  estatística;
+\item
+  interpretar estatísticas como variáveis aleatórias;
+\item
+  compreender e utilizar distribuições amostrais;
+\item
+  aplicar métodos de estimação pontual e intervalar;
+\item
+  formular e testar hipóteses estatísticas de forma adequada;
+\item
+  interpretar corretamente p-valores, intervalos de confiança e decisões
+  inferenciais;
+\item
+  relacionar conceitos de inferência estatística com validação cruzada,
+  generalização e avaliação de modelos de Machine Learning;
+\item
+  analisar criticamente resultados estatísticos obtidos a partir de
+  dados reais.
+\end{itemize}
+
+\section*{CONTEÚDO PROGRAMÁTICO}\label{conteuxfado-programuxe1tico}
+\addcontentsline{toc}{section}{CONTEÚDO PROGRAMÁTICO}
+
+\markright{CONTEÚDO PROGRAMÁTICO}
+
+\subsection*{Unidade I -- Fundamentos da Inferência
+Estatística}\label{unidade-i-fundamentos-da-inferuxeancia-estatuxedstica}
+\addcontentsline{toc}{subsection}{Unidade I -- Fundamentos da Inferência
+Estatística}
+
+\begin{itemize}
+\item
+  População e amostra
+\item
+  Processo gerador de dados
+\item
+  Parâmetros e estatísticas
+\item
+  Variabilidade amostral
+\end{itemize}
+
+\subsection*{Unidade II -- Distribuições
+Amostrais}\label{unidade-ii-distribuiuxe7uxf5es-amostrais}
+\addcontentsline{toc}{subsection}{Unidade II -- Distribuições Amostrais}
+
+\begin{itemize}
+\item
+  Estatísticas como variáveis aleatórias
+\item
+  Distribuição amostral da média e da proporção
+\item
+  Lei dos Grandes Números
+\item
+  Teorema Central do Limite
+\end{itemize}
+
+\subsection*{Unidade III -- Estimação
+Pontual}\label{unidade-iii-estimauxe7uxe3o-pontual}
+\addcontentsline{toc}{subsection}{Unidade III -- Estimação Pontual}
+
+\begin{itemize}
+\item
+  Estimadores e estimativas
+\item
+  Propriedades dos estimadores (viés, variância, erro quadrático médio,
+  consistência)
+\item
+  Método dos momentos
+\item
+  Máxima verossimilhança
+\item
+  Mínimos quadrados
+\end{itemize}
+
+\subsection*{Unidade IV -- Estimação
+Intervalar}\label{unidade-iv-estimauxe7uxe3o-intervalar}
+\addcontentsline{toc}{subsection}{Unidade IV -- Estimação Intervalar}
+
+\begin{itemize}
+\item
+  Intervalos de confiança
+\item
+  Interpretação correta
+\item
+  Intervalos baseados em aproximações assintóticas
+\item
+  Bootstrap
+\end{itemize}
+
+\section*{Unidade V -- Testes de
+Hipóteses}\label{unidade-v-testes-de-hipuxf3teses}
+\addcontentsline{toc}{section}{Unidade V -- Testes de Hipóteses}
+
+\markright{Unidade V -- Testes de Hipóteses}
+
+\begin{itemize}
+\item
+  Formulação de hipóteses
+\item
+  Estatísticas de teste
+\item
+  p-valor
+\item
+  Erros tipo I e tipo II
+\item
+  Poder do teste
+\end{itemize}
+
+\subsection*{Unidade VI -- Testes de Homogeneidade e
+Independência}\label{unidade-vi-testes-de-homogeneidade-e-independuxeancia}
+\addcontentsline{toc}{subsection}{Unidade VI -- Testes de Homogeneidade
+e Independência}
+
+\begin{itemize}
+\item
+  Testes qui-quadrado
+\item
+  Tabelas de contingência
+\item
+  Associação entre variáveis categóricas
+\end{itemize}
+
+\subsection*{Unidade VII -- Inferência Estatística e Ciência de
+Dados}\label{unidade-vii-inferuxeancia-estatuxedstica-e-ciuxeancia-de-dados}
+\addcontentsline{toc}{subsection}{Unidade VII -- Inferência Estatística
+e Ciência de Dados}
+
+\begin{itemize}
+\item
+  Relação entre inferência estatística e Machine Learning
+\item
+  Validação cruzada
+\item
+  Generalização e overfitting
+\item
+  Interpretação inferencial de modelos preditivos
+\end{itemize}
+
+\section*{METODOLOGIA}\label{metodologia}
+\addcontentsline{toc}{section}{METODOLOGIA}
+
+\markright{METODOLOGIA}
+
+A disciplina será desenvolvida por meio de aulas expositivo-dialogadas,
+articuladas com atividades práticas computacionais. O conteúdo teórico
+será constantemente ilustrado por simulações e análises de dados reais,
+utilizando ferramentas computacionais (R ou Python).
+
+Serão propostas listas semanais obrigatórias, com foco em
+experimentação, interpretação estatística e conexão com problemas de
+Machine Learning, validação de modelos e generalização. O uso de
+simulação, reamostragem e análise empírica será empregado como
+ferramenta pedagógica para construção da intuição inferencial.
+
+\section*{AVALIAÇÃO}\label{avaliauxe7uxe3o}
+\addcontentsline{toc}{section}{AVALIAÇÃO}
+
+\markright{AVALIAÇÃO}
+
+A avaliação será contínua e composta por:
+
+\begin{itemize}
+\item
+  Listas semanais obrigatórias (atividades computacionais com
+  interpretação estatística): 50\%
+\item
+  Projeto final inferencial aplicado a dados reais: 30\%
+\item
+  Avaliação conceitual individual (prova ou atividade equivalente): 20\%
+\end{itemize}
+
+A aprovação na disciplina seguirá os critérios estabelecidos pelas
+normas vigentes da UFC.
+
+\section*{CRITÉRIOS DE AVALIAÇÃO}\label{crituxe9rios-de-avaliauxe7uxe3o}
+\addcontentsline{toc}{section}{CRITÉRIOS DE AVALIAÇÃO}
+
+\markright{CRITÉRIOS DE AVALIAÇÃO}
+
+Serão considerados nos trabalhos e atividades:
+
+\begin{itemize}
+\item
+  correção conceitual;
+\item
+  adequação metodológica;
+\item
+  clareza na formulação do problema inferencial;
+\item
+  interpretação estatística correta dos resultados;
+\item
+  organização, clareza e reprodutibilidade das análises.
+\end{itemize}
+
+\section*{BIBLIOGRAFIA BÁSICA}\label{bibliografia-buxe1sica}
+\addcontentsline{toc}{section}{BIBLIOGRAFIA BÁSICA}
+
+\markright{BIBLIOGRAFIA BÁSICA}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Bussab, W. O.; Morettin, P. A. Estatística Básica. 6ª ed.~São Paulo:
+  Saraiva, 2010.
+\item
+  Casella, G.; Berger, R. L. Statistical Inference. 2nd ed.~New York:
+  Duxbury Press, 2001.
+\item
+  Casella, G.; Berger, R. L. Inferência Estatística. Tradução da 2ª
+  edição. São Paulo: Cengage Learning, 2011.
+\end{enumerate}
+
+\section*{BIBLIOGRAFIA COMPLEMENTAR}\label{bibliografia-complementar}
+\addcontentsline{toc}{section}{BIBLIOGRAFIA COMPLEMENTAR}
+
+\markright{BIBLIOGRAFIA COMPLEMENTAR}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Devore, J. L. Probabilidade e Estatística para Engenharia e Ciências.
+  São Paulo: Thomson, 2006.
+\item
+  Mood, A. M.; Graybill, F.; Boes, D. C. Introduction to the Theory of
+  Statistics. 3rd ed.~New York: McGraw-Hill, 1974.
+\item
+  Bolfarine, H.; Sandoval, M. C. Introdução à Inferência Estatística.
+  Rio de Janeiro: SBM, 2001.
+\item
+  Bickel, P. J.; Doksum, K. A. Mathematical Statistics. Vol. I, 2nd
+  ed.~New Jersey: Prentice Hall, 2007.
+\item
+  Dudewicz, E. J.; Mishra, S. N. Modern Mathematical Statistics. New
+  York: John Wiley, 1988.
+\end{enumerate}
+
+\section*{Observações Finais}\label{observauxe7uxf5es-finais}
+\addcontentsline{toc}{section}{Observações Finais}
+
+\markright{Observações Finais}
+
+A disciplina enfatiza a inferência estatística como base conceitual da
+Ciência de Dados, destacando a importância da quantificação da
+incerteza, da validação de modelos e da interpretação crítica dos
+resultados em contextos reais.
+
+\bookmarksetup{startatroot}
+
+\chapter{Preliminares}\label{preliminares}
+
+Neste capítulo iremos apresentar parte da base necessária para o bom
+desenvolvimento da disciplina.
+
+\section{Alguns resultados matemáticos
+importantes}\label{alguns-resultados-matemuxe1ticos-importantes}
+
+\subsection{Soma de Potências e a Fórmula de
+Faulhaber}\label{soma-de-potuxeancias-e-a-fuxf3rmula-de-faulhaber}
+
+O estudo de somatórios é fundamental em diversas áreas da matemática,
+especialmente em Estatística, Análise Numérica e Ciência de Dados. Neste
+e-book, exploramos uma ferramenta poderosa: a Fórmula de Faulhaber, que
+permite calcular somas de potências de forma exata e eficiente.
+
+Considere o seguinte problema:
+
+\[1  + 2 + \dots + 99 + 100.\]
+
+Somar termo a termo pode ser trabalhoso. No entanto, existe uma fórmula
+fechada:
+
+\[\sum \limits_{i=1}^{n} i = \frac{n(n+1)}{2}.\]
+
+Essa expressão mostra que podemos substituir uma soma por uma função
+simples.
+
+Algumas somas importantes:
+
+\[
+\sum_{k=1}^{n} k = \frac{n(n+1)}{2}
+\]
+
+\[
+\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}
+\]
+
+\[
+\sum_{k=1}^{n} k^3 = \left(\frac{n(n+1)}{2}\right)^2
+\]
+
+Observe que todas resultam em polinômios em \(n\). Podemos observar que:
+
+\begin{itemize}
+\tightlist
+\item
+  Soma de grau 1 → polinômio grau 2;
+\item
+  Soma de grau 2 → polinômio grau 3;
+\item
+  Soma de grau 3 → polinômio grau 4.
+\end{itemize}
+
+Isso sugere um padrão geral.
+
+A fórmula geral para a soma de potências é:
+
+\[
+\sum_{k=1}^{n} k^{p} = \frac{1}{p+1} \sum_{r=0}^{p} \binom{p+1}{r} B_r , n^{p+1-r},
+\]
+
+em que \(B_r\) são os números de
+\href{https://en.wikipedia.org/wiki/Bernoulli_number}{Bernoulli}.
+
+Essa fórmula mostra que qualquer soma desse tipo pode ser escrita como
+um polinômio.
+
+\subsection{Coeficiente Binomial}\label{coeficiente-binomial}
+
+O coeficiente binomial é um dos conceitos mais importantes da Matemática
+Discreta, com aplicações em Estatística, Probabilidade, Combinatória e
+Ciência de Dados.
+
+Ele responde a uma pergunta fundamental:
+
+\begin{quote}
+De quantas formas podemos escolher \(k\) elementos de um conjunto com
+\(n\) elementos?
+\end{quote}
+
+O coeficiente binomial é definido como o número de subconjuntos de
+tamanho \(k\) que podem ser formados a partir de um conjunto com \(n\)
+elementos:
+
+\[
+\binom{n}{k}.
+\]
+
+O coeficiente binomial pode ser calculado por:
+
+\[
+\binom{n}{k} = \frac{n!}{k!(n-k)!},
+\]
+
+em que \(n!\) é o fatorial de \(n\).
+
+Essa fórmula permite cálculo direto e eficiente. A ideia por trás da
+fórmula:
+
+\begin{itemize}
+\tightlist
+\item
+  \(n!\) → todas as permutações possíveis;\\
+\item
+  \(k!\) → remove a ordem dos elementos escolhidos;\\
+\item
+  \((n-k)!\) → remove a ordem dos elementos não escolhidos.
+\end{itemize}
+
+\begin{quote}
+Resultado: número de combinações (ordem não importa).
+\end{quote}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Escolher 2 elementos de um conjunto com 4:
+
+\[
+\binom{4}{2} = 6.
+\]
+
+\end{tcolorbox}
+
+\subsubsection{Propriedades Importantes}\label{propriedades-importantes}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Simetria
+\end{enumerate}
+
+\[
+\binom{n}{k} = \binom{n}{n-k}.
+\]
+
+Escolher \(k\) elementos é equivalente a excluir \(n-k\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Relação de Pascal
+\end{enumerate}
+
+\[
+\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}.
+\]
+
+Essa propriedade é a base do Triângulo de Pascal. Os coeficientes
+binomiais podem ser organizados em uma estrutura triangular:
+
+\[
+\begin{matrix}
+1 \\
+1 & 1 \\
+1 & 2 & 1 \\
+1 & 3 & 3 & 1 \\
+1 & 4 & 6 & 4 & 1
+\end{matrix}
+\]
+
+Cada número é a soma dos dois acima. Os coeficientes aparecem na
+expansão de:
+
+\[(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k.\]
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\[(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4.\]
+
+\end{tcolorbox}
+
+\subsection{Progressão Geométrica}\label{progressuxe3o-geomuxe9trica}
+
+A Progressão Geométrica (PG) é uma sequência numérica amplamente
+utilizada em Matemática, Estatística, Economia e Ciências Naturais. Ela
+descreve fenômenos que crescem ou decrescem de forma multiplicativa.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Uma PG é uma sequência em que cada termo, a partir do segundo, é obtido
+multiplicando o termo anterior por uma constante chamada razão.
+
+\[
+a_n = a_1 \cdot q^{n-1},
+\]
+
+em que \(a_1\) é o primeiro termo, \(q\) é a razão e \(n\) é a posição
+do termo.
+
+\end{tcolorbox}
+
+O termo geral de uma PG é dado por:
+
+\[
+a_n = a_1 \cdot q^{n-1}.
+\]
+
+Isso permite calcular qualquer termo diretamente.
+
+\subsubsection{\texorpdfstring{Soma dos \(n\) primeiros termos
+\((q \neq 1)\)}{Soma dos n primeiros termos (q \textbackslash neq 1)}}\label{soma-dos-n-primeiros-termos-q-neq-1}
+
+\[
+S_n = a_1 \cdot \frac{q^n - 1}{q - 1}.
+\]
+
+ou
+
+\[
+S_n = a_1 \cdot \frac{1 - q^n}{1 - q}.
+\]
+
+\subsubsection{\texorpdfstring{Soma infinita
+\((|q| < 1)\)}{Soma infinita (\textbar q\textbar{} \textless{} 1)}}\label{soma-infinita-q-1}
+
+Quando a PG é convergente:
+
+\[S = \frac{a_1}{1 - q}.\]
+
+\subsection{Série de Taylor}\label{suxe9rie-de-taylor}
+
+A Série de Taylor é uma ferramenta fundamental da Análise Matemática que
+permite representar funções como somas infinitas de potências.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+A expansão em série de Taylor de uma função \(f\) em torno de \(x = 0\)
+(Série de Maclaurin) é dada por:
+
+\[f(x) = \sum_{k=0}^{\infty} \frac{f^{(k)}(0)}{k!} x^k,\]
+
+em que \(f^{(k)}(0)\) representa a \(k\)-ésima derivada de \(f\)
+avaliada em 0.
+
+\end{tcolorbox}
+
+\subsubsection{Caso especial: Função
+exponencial}\label{caso-especial-funuxe7uxe3o-exponencial}
+
+Um dos casos mais importantes é a expansão da função exponencial:
+
+\[
+e^x = \sum_{k=0}^{\infty} \frac{x^k}{k!}.
+\]
+
+Essa igualdade é válida para todo \(x \in \mathbb{R}\).
+
+\section{Independência}\label{independuxeancia}
+
+\section{Valor Esperado}\label{valor-esperado}
+
+\section{Variância}\label{variuxe2ncia}
+
+\section{Covariância}\label{covariuxe2ncia}
+
+\section{Função Geradora de
+Momentos}\label{funuxe7uxe3o-geradora-de-momentos}
+
+\section{Tipos de Convergência}\label{tipos-de-converguxeancia}
+
+\section{Algumas das principais distribuições de
+probabilidade}\label{algumas-das-principais-distribuiuxe7uxf5es-de-probabilidade}
+
+\subsection{Distribuições
+discretas}\label{distribuiuxe7uxf5es-discretas}
+
+\subsection{Distribuições
+Contínuas}\label{distribuiuxe7uxf5es-contuxednuas}
+
+\bookmarksetup{startatroot}
+
+\chapter{Fundamentos da Inferência
+Estatística}\label{fundamentos-da-inferuxeancia-estatuxedstica}
+
+Neste capítulo, iniciamos a primeira parte sobre inferência estatística
+aprendendo um pouco sobre amostragem. Os conceitos por trás da amostram
+são a base para intervalos de confiança e testes de hipóteses, por
+exemplo. Além disso, veremos que ferramentas já aprendidas durante o
+curso de Ciência de Dados, em particular visualização de dados e
+manipulação (organização) de dados, são importantes no desenvolvimento
+do seu entendimento. Esperamos que os conceitos apresentados ao longo
+deste texto se articulam e se acumulam, culminando na capacidade de
+``contar sua história com dados''.
+
+\section{Processo Gerador de Dados
+(PGD)}\label{processo-gerador-de-dados-pgd}
+
+O PGD é o mecanismo teórico, físico ou biológico que produz os dados que
+observamos. Imagine que o mundo é uma ``caixa preta'' que segue certas
+regras (leis da física, comportamento humano, algoritmos de mercado),
+portanto o PGD são essas regras em funcionamento.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Realidade vs.~Observação}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\begin{itemize}
+\item
+  O PGD (A causa): É a distribuição de probabilidade teórica e os
+  parâmetros fixos (mas desconhecidos) que regem um fenômeno.
+\item
+  Os Dados (O Efeito): É a amostra específica que coletamos. É apenas
+  uma realização de infinitas possibilidades que o PGD poderia ter
+  gerado.
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Representação Matemática}, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+O PGD pode ser definido pela distribuição de probabilidade conjunta
+desconhecida \(P(X, Y)\) (ou simplemente \(P(Z)\)).
+
+Dizemos que nossa amostra \(\mathcal{D} = \{z_1, z_2, \dots, z_n \}\) é
+composta por variáveis aleatórias independentes e identicamentes
+distribuídas (i.i.d) retiradas desse processo:
+
+\[z_i \sim P(Z).\] Nesta visão, o PGD é o ``mecanismo'' que dita:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  A Região de Suporte: Quais valores são possíveis de ocorrer?
+\item
+  A Densidade: Com que frequência cada valor ocorre?
+\item
+  As Dependências: Como o corrência de \(X\) altera a probabilidade de
+  \(Y\)?
+\end{enumerate}
+
+\end{tcolorbox}
+
+\section{Pacote Necessários}\label{pacote-necessuxe1rios}
+
+Neste capítulo iremos utilizar os pacotes \texttt{R}
+\texttt{tidyverse}(Wickham et al., 2019) e \texttt{moderndive} (Kim;
+Ismay; Kuhn, 2021). Por exemplo, para instalar o pacote basta usar
+\texttt{install.packages("tidyverse")} e podemos carregar o pacote por
+meio do comando \texttt{library(tidyverse)}. São carregados, de uma só
+vez, os seguinte pacotes amplamente utilizados em ciência de dados:
+
+\begin{itemize}
+\item
+  \texttt{ggplot2} para visualização de dados;
+\item
+  \texttt{dplyr} para manipulação de dados;
+\item
+  \texttt{tidyr} para converter dados para o formato ``tidy'';
+\item
+  \texttt{readr} para importar dados de planilhas para o \texttt{R},
+\end{itemize}
+
+além dos pacotes mais avançados \texttt{purrr}, \texttt{tibble},
+\texttt{stringr} e \texttt{forcats}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(moderndive)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Experimento em Sala de Aula}\label{experimento-em-sala-de-aula}
+
+Iremos realizar o seguinte experimento em sala de aula:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Organização
+\end{enumerate}
+
+\begin{itemize}
+\item
+  A turma é dividida em grupos independentes (por exemplo, 20 grupos).
+\item
+  Cada grupo realiza uma única amostragem.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Protocolo experimental (por grupo)
+\end{enumerate}
+
+\begin{itemize}
+\item
+  A urna é misturada cuidadosamente, garantindo aleatoriedade.
+\item
+  O grupo retira uma amostra de tamanho fixo \(n\) (por exemplo,
+  \(n=50\)) sem reposição durante a retirada.
+\item
+  As bolas retiradas são observadas e classificadas por cor.
+\item
+  O grupo registra:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(R:\) o número de bolas vermelhas na amostra;
+  \item
+    \(\hat{p} = R/n:\) proporção amostral de bolas vermelhas.
+  \end{itemize}
+\item
+  Todas as bolas são devolvidas à urna.
+\item
+  A urna é novamente misturada antes da próxima amostragem.
+\end{itemize}
+
+\textbf{Cada grupo deve atuar de forma independente, sem acesso aos
+resultados dos demais.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Coleta e organização dos dados
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Cada grupo fornece sua estimativa de \(\hat{p}\).
+\item
+  O conjunto de estimativas é reunido em uma tabela ou planilha.
+\item
+  A proporções são representadas graficamente por meio de um histograma.
+\end{itemize}
+
+\textbf{Esse histograma representa a distribuição amostral da proporção
+para uma tamanho de amostra fixo} \(n\).
+
+\subsection*{Verificação de
+aprendizagem}\label{verificauxe7uxe3o-de-aprendizagem}
+\addcontentsline{toc}{subsection}{Verificação de aprendizagem}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Por que foi importante misturar a tigela antes de retirarmos as bolas?
+\item
+  Por que os 20 grupos de amigos não obtiveram todos o mesmo número de
+  bolas vermelhas entre as 50 retiradas e, consequentemente, proporções
+  diferentes de bolas vermelhas?
+\end{enumerate}
+
+\section{Experimento Virtual}\label{experimento-virtual}
+
+No pacote \texttt{moderndive} existe um \emph{data frame} chamado
+\texttt{bowl}. As linhas de \texttt{bowl} correspondem exatamente ao
+conteúdo da urna real apresentada em sala de aula.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowl}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2,400 x 2
+   ball_ID color
+     <int> <chr>
+ 1       1 white
+ 2       2 white
+ 3       3 white
+ 4       4 red  
+ 5       5 white
+ 6       6 white
+ 7       7 red  
+ 8       8 white
+ 9       9 red  
+10      10 white
+# i 2,390 more rows
+\end{verbatim}
+
+Observe que \texttt{bowl} possui 2400 linhas, o que nos indica que a
+urna contém 2400 bolas de mesmo tamanho. A primeira variável,
+\texttt{ball\_ID}, é usada como uma variável de identificação, conforme
+discutido em sala de aula, nenhuma das bolas da urna real possui números
+marcados. A segunda variável, \texttt{color}, indica se uma determinada
+bola virtual é \textbf{vermelha} ou \textbf{branca}. Visualize o
+conteúdo de \texttt{bowl} no \textbf{visualizador de dados do RStudio} e
+percorra as linhas para se convencer de que \texttt{bowl} é, de fato, um
+\textbf{análogo virtual} da urna real apresentada em sala.
+
+Agora precisamos de um \textbf{análogo virtual da pá} para gerar
+\textbf{amostras virtuais de 50 bolas}. Para isso, vamos utilizar a
+função \texttt{rep\_sample\_n()}, incluída no pacote
+\texttt{moderndive}. Essa função permite realizar \textbf{amostragens
+repetidas (ou replicadas)} de tamanho (n).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2026}\NormalTok{) }\CommentTok{\#fixando semente}
+\NormalTok{pa\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{pa\_virtual}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 50 x 3
+# Groups:   replicate [1]
+   replicate ball_ID color
+       <int>   <int> <chr>
+ 1         1     733 white
+ 2         1     993 red  
+ 3         1    2342 red  
+ 4         1    1647 white
+ 5         1    1883 red  
+ 6         1     164 red  
+ 7         1    1200 red  
+ 8         1     389 white
+ 9         1     287 white
+10         1    2362 red  
+# i 40 more rows
+\end{verbatim}
+
+A variável \texttt{ball\_ID} identifica quais das 2400 bolas do objeto
+\texttt{bowl} foram incluídas na nossa amostra de 50 bolas, enquanto
+\texttt{color} indica a cor de cada bola. No entanto, o que indica a
+variável \texttt{replicate}?
+
+No caso de \texttt{pa\_virtual}, a variável \texttt{replicate} é igual a
+1 em todas as 50 linhas. Isso nos informa que essas 50 linhas
+correspondem à nossa primeira amostra. Veremos em breve que, quando
+realizarmos 20 amostragens virtuais, a variável \texttt{replicate}
+assumirá valores entre 1 e 20.
+
+Vamos agora calcular a \textbf{proporção de bolas vermelhas} em nossa
+amostra virtual utilizando os verbos de manipulação de dados do
+\texttt{dplyr}. Primeiro, para cada uma das 50 bolas amostradas, vamos
+identificar se ela é vermelha ou não, utilizando um teste de igualdade
+com \texttt{==}. Em seguida, criaremos uma nova variável booleana
+\texttt{is\_red} usando a função \texttt{mutate()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ (color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{))}
+
+\NormalTok{pa\_virtual}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 50 x 4
+# Groups:   replicate [1]
+   replicate ball_ID color is_red
+       <int>   <int> <chr> <lgl> 
+ 1         1     733 white FALSE 
+ 2         1     993 red   TRUE  
+ 3         1    2342 red   TRUE  
+ 4         1    1647 white FALSE 
+ 5         1    1883 red   TRUE  
+ 6         1     164 red   TRUE  
+ 7         1    1200 red   TRUE  
+ 8         1     389 white FALSE 
+ 9         1     287 white FALSE 
+10         1    2362 red   TRUE  
+# i 40 more rows
+\end{verbatim}
+
+Observe que, para cada linha em que \texttt{color\ ==\ "red"}, é
+retornado o valor lógico (booleano) \texttt{TRUE}, e para cada linha em
+que \texttt{color} não é igual a \texttt{"red"}, é retornado o valor
+lógico \texttt{FALSE}.
+
+Em seguida, vamos calcular o número de bolas vermelhas, dentre as 50,
+utilizando a função \texttt{summarize()}. Note que \texttt{summarize()}
+recebe um \emph{data frame} com várias linhas e retorna um \emph{data
+frame} com \textbf{uma única linha}, contendo estatísticas-resumo, como
+\texttt{mean()} ou \texttt{median()}. Neste caso, utilizaremos a função
+\texttt{sum()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_red }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ (color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(is\_red))}
+
+\NormalTok{n\_red}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 2
+  replicate num_red
+      <int>   <int>
+1         1      16
+\end{verbatim}
+
+Por que isso funciona? Porque o \texttt{R} trata \texttt{TRUE} como o
+número 1 e \texttt{FALSE} como o número 0. Assim, somar valores
+\texttt{TRUE} e \texttt{FALSE} é equivalente a somar 1's e 0's. Ao
+final, essa operação conta o número de bolas para as quais a variável
+color é igual a ``red''. No nosso caso, XX das 50 bolas eram vermelhas.
+No entanto, você pode ter obtido um número diferente de bolas vermelhas
+devido ao caráter aleatório da amostragem virtual.
+
+Por fim, vamos calcular a proporção das 50 bolas amostradas que são
+vermelhas, dividindo num\_red por 50:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_prop\_red }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_red =}\NormalTok{ color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(is\_red)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{n\_prop\_red}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  replicate num_red prop_red
+      <int>   <int>    <dbl>
+1         1      16     0.32
+\end{verbatim}
+
+Em outras palavras, 16 das bolas dessa amostra virtual eram vermelhas.
+Vamos tornar esse código um pouco mais \textbf{compacto e conciso},
+combinando as etapas de \texttt{mutate()} e \texttt{summarize()} da
+seguinte forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_prop\_red }\OtherTok{\textless{}{-}}\NormalTok{ pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{n\_prop\_red}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  replicate num_red prop_red
+      <int>   <int>    <dbl>
+1         1      16     0.32
+\end{verbatim}
+
+Ótimo! 16 das 50 bolas da pá virtual eram vermelhas! Assim, com base
+nessa amostra específica de 50 bolas, nossa estimativa da proporção de
+bolas vermelhas na urna é 0.32. Porém, lembre-se da atividade de
+amostragem realizada em sala de aula: se repetirmos essa amostragem, não
+necessariamente obteremos novamente o valor de 0.32. É provável que haja
+alguma variação. De fato, nossos 20 grupos de amigos calcularam 20
+proporções desse tipo, cuja distribuição visualizamos em sala de aula, e
+vimos que essas estimativas variaram.
+
+Vamos agora realizar o \textbf{análogo virtual} de ter 20 grupos de
+estudantes usando a pá de amostragem!
+
+Lembre-se de que, no exercício de amostragem realizada em sala de aula,
+tivemos \textbf{20 grupos de estudantes}, cada um utilizando a pá, o que
+resultou em \textbf{20 amostras de tamanho 50}. Em seguida, usamos essas
+20 amostras para calcular \textbf{20 proporções}. Em outras palavras,
+\textbf{repetimos/replicamos o uso da pá 20 vezes}.
+
+Podemos realizar essa amostragem repetida/replicada de forma virtual
+utilizando novamente a função \texttt{rep\_sample\_n()}, mas agora
+adicionando o argumento \texttt{reps\ =\ 20}. Isso indica ao \texttt{R}
+que desejamos repetir a amostragem 20 vezes.
+
+Vamos salvar esses resultados em um \texttt{data\ frame} chamado
+\texttt{virtual\_samples}. Embora apresentemos a seguir uma prévia das
+primeiras 10 linhas de \texttt{virtual\_samples}, recomendamos
+fortemente que você explore todo o seu conteúdo utilizando o
+visualizador de planilhas do \texttt{RStudio}, executando o comando
+\texttt{View(virtual\_samples)}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2026}\NormalTok{)}
+\NormalTok{amostra\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{, }\AttributeTok{reps =} \DecValTok{20}\NormalTok{)}
+
+\NormalTok{amostra\_virtual}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1,000 x 3
+# Groups:   replicate [20]
+   replicate ball_ID color
+       <int>   <int> <chr>
+ 1         1     733 white
+ 2         1     993 red  
+ 3         1    2342 red  
+ 4         1    1647 white
+ 5         1    1883 red  
+ 6         1     164 red  
+ 7         1    1200 red  
+ 8         1     389 white
+ 9         1     287 white
+10         1    2362 red  
+# i 990 more rows
+\end{verbatim}
+
+Observe, no visualizador de planilhas, que as primeiras 50 linhas da
+variável \texttt{replicate} são iguais a 1, enquanto as 50 linhas
+seguintes de \texttt{replicate} são iguais a 2. Isso nos indica que as
+primeiras 50 linhas correspondem à primeira amostra de 50 bolas,
+enquanto as próximas 50 linhas correspondem à segunda amostra de 50
+bolas. Esse padrão se repete para todas as 20 replicações
+(\texttt{reps\ =\ 20}) e, portanto, o \texttt{data\ frame}
+\texttt{amostra\_virtual} possui (20 \(\times\) 50 = 1000) linhas.
+
+Vamos agora usar \texttt{amostra\_virtual} para calcular as 20
+proporções de bolas vermelhas resultantes. Utilizaremos os mesmos verbos
+do \texttt{dplyr} de antes, mas agora com um \texttt{group\_by()}
+adicional na variável \texttt{replicate}. Ao definir previamente a
+variável de agrupamento como \emph{metadado} antes de aplicar
+\texttt{summarize()}, obteremos 20 proporções diferentes de bolas
+vermelhas. A seguir, exibimos uma prévia das primeiras 10 das 20 linhas
+resultantes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{virtual\_prop\_red }\OtherTok{\textless{}{-}}\NormalTok{ amostra\_virtual }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{group\_by}\NormalTok{(replicate) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{summarize}\NormalTok{(}\AttributeTok{red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+
+\NormalTok{virtual\_prop\_red}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 20 x 3
+   replicate   red prop_red
+       <int> <int>    <dbl>
+ 1         1    16     0.32
+ 2         2    22     0.44
+ 3         3    19     0.38
+ 4         4    27     0.54
+ 5         5    18     0.36
+ 6         6    19     0.38
+ 7         7    16     0.32
+ 8         8    17     0.34
+ 9         9    21     0.42
+10        10    20     0.4 
+11        11    23     0.46
+12        12    23     0.46
+13        13    15     0.3 
+14        14    23     0.46
+15        15    27     0.54
+16        16    23     0.46
+17        17    17     0.34
+18        18    21     0.42
+19        19    15     0.3 
+20        20    18     0.36
+\end{verbatim}
+
+Assim como ocorreu com as 20 amostras coletadas em sala de aula, há
+variação nas 20 proporções de bolas vermelhas obtidas virtualmente.
+Vamos visualizar essa variação por meio de um histograma. Note que
+também adicionamos os argumentos \texttt{binwidth\ =\ 0.05} e
+\texttt{boundary\ =\ 0.4}.
+
+Lembre-se de que definir \texttt{boundary\ =\ 0.4} garante um esquema de
+classes em que um dos limites dos intervalos esteja em 0,4. Como o
+\texttt{binwidth\ =\ 0.05} também foi especificado, isso criará
+intervalos com limites em \textbf{0,30, 0,35, 0,40, 0,45, 0,50}, entre
+outros.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(virtual\_prop\_red, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ prop\_red)) }\SpecialCharTok{+}
+\FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{boundary =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{color =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Proporção de bolas vermelhas"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Frequência"}\NormalTok{,}
+\AttributeTok{title =} \StringTok{"Distribuição das proporções"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}
+
+Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas
+inferiores a 30\%. Por outro lado, em alguns casos, obtivemos proporções
+superiores a 50\%. No entanto, as proporções que ocorreram com maior
+frequência ficaram entre 35\% e 40\% (em \textbf{5 das 20 amostras}).
+Por que temos essas diferenças nas proporções de bolas vermelhas?
+\textbf{Por causa da variação amostral}.
+
+\subsection*{Verificação de
+aprendizagem}\label{verificauxe7uxe3o-de-aprendizagem-1}
+\addcontentsline{toc}{subsection}{Verificação de aprendizagem}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Por que não foi possível estudar os efeitos da variação amostral
+  quando utilizamos a pá virtual apenas uma vez? Por que foi necessário
+  coletar \textbf{mais de uma amostra virtual} (no nosso caso,
+  \textbf{20 amostras virtuais})?
+\end{enumerate}
+
+\subsection*{Lista Semanal
+Obrigatória}\label{lista-semanal-obrigatuxf3ria}
+\addcontentsline{toc}{subsection}{Lista Semanal Obrigatória}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Agora suponha que queiramos estudar os efeitos da variação amostral
+  não para 20 amostras, mas para um número maior, digamos 1000 amostras.
+  Vamos novamente utilizar a função \texttt{rep\_sample\_n()}, com o
+  tamanho da amostra definido como 50, mas agora com o número de
+  repetições \texttt{reps} definido como 1000.
+\item
+  Temos 1000 réplicas de \texttt{prop\_red}, a proporção de bolas
+  vermelhas em amostras de 50 bolas. Utilizando o mesmo código de antes,
+  vamos agora visualizar a distribuição dessas 1000 réplicas de
+  \texttt{prop\_red} por meio de um histograma.
+\item
+  Observando o histograma produzido no item 2), você diria que amostrar
+  50 bolas em que 30\% são vermelhas é provável ou improvável? E quanto
+  a amostrar 50 bolas em que 10\% são vermelhas?
+\end{enumerate}
+
+\section{Conceitos Importantes}\label{conceitos-importantes}
+
+Primeiramente, uma \textbf{população} é um conjunto de indivíduos ou
+observações de interesse. Isso também é comumente denominado
+\textbf{população de estudo}. Denotamos matematicamente o tamanho da
+população utilizando a letra maiúscula \(N\).
+
+Um \textbf{parâmetro populacional} é algum resumo numérico sobre a
+população que é desconhecido, mas que você gostaria de saber. Por
+exemplo, quando essa quantidade é uma média, como a altura média de
+todos os canadenses, o parâmetro populacional de interesse é a média
+populacional.
+
+Um \textbf{censo} é uma enumeração exaustiva ou contagem de todos os
+\(N\) indivíduos da população. Fazemos isso para calcular o valor exato
+do parâmetro populacional. Vale notar que, à medida que o número \(N\)
+de indivíduos em nossa população aumenta, a realização de um censo se
+torna mais cara (em termos de tempo, energia e dinheiro).
+
+Na nossa atividade de amostragem, a \textbf{população (de estudo)} é o
+conjunto de \(N = 2400\) bolas vermelhas e brancas, todas de mesmo
+tamanho, contidas na urna. Lembre-se de que também representamos a urna
+``virtualmente'' no data frame \texttt{bowl}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowl}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2,400 x 2
+   ball_ID color
+     <int> <chr>
+ 1       1 white
+ 2       2 white
+ 3       3 white
+ 4       4 red  
+ 5       5 white
+ 6       6 white
+ 7       7 red  
+ 8       8 white
+ 9       9 red  
+10      10 white
+# i 2,390 more rows
+\end{verbatim}
+
+O \textbf{parâmetro populacional} aqui é a proporção de bolas na urna
+que são vermelhas. Sempre que estamos interessados em uma proporção de
+algum valor em uma população, o parâmetro populacional tem um nome
+específico: a proporção populacional. Comumente denotamos as proporções
+populacionais com a letra \(p\).
+
+Para calcular essa proporção populacional \(p\) de forma exata,
+precisamos primeiro realizar um censo, analisando todos os \(N = 2400\)
+e contando o número de bolas vermelhas. Em seguida, dividimos essa
+contagem por 2400 para obter a proporção de vermelhas.
+
+Você pode estar se perguntando agora: ``Espere. Eu entendo que realizar
+um censo na urna real levaria muito tempo. Mas não podemos realizar um
+censo''virtual'' usando a urna virtual?'' Você está absolutamente
+correto! De fato, quando os autores do pacote \texttt{moderndive}
+criaram o data frame \texttt{bowl}, eles fizeram com que seu conteúdo
+correspondesse ao da urna real não fazendo um censo, mas lendo o
+conteúdo escrito na caixa em que a urna veio! Vamos realizar este censo
+``virtual'' usando os mesmos códigos do pacote \texttt{dplyr} que você
+usou anteriormente para contar o número de bolas que são vermelhas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bowl }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 1
+    red
+  <int>
+1   900
+\end{verbatim}
+
+Como 900 das 2400 são vermelhas, a proporção é 900/2400 = 0,375 =
+37,5\%. Portanto, sabemos o valor do parâmetro populacional: em nosso
+caso, a proporção populacional \(p\) é igual a 0,375.
+
+Neste ponto, você pode estar se perguntando: \emph{``Se tínhamos uma
+maneira de saber que a proporção de bolas vermelhas é de 37,5\%, então
+por que fizemos alguma amostragem?''} Ótima pergunta! Normalmente, você
+não faria amostragem alguma! No entanto, as atividades de amostragem que
+fizemos neste capítulo são meras simulações de como a amostragem é feita
+na vida real! Realizamos essas simulações a fim de estudar:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  O efeito da variação amostral (ou variabilidade de amostragem) em
+  nossas estimativas.
+\item
+  O efeito do tamanho da amostra na variação amostral.
+\end{enumerate}
+
+Como veremos adiante em pesquisas de opinião, na amostragem da vida real
+não apenas o tamanho da população \(N\) será muito grande, tornando um
+censo caro, mas, às vezes, nem sequer saberemos qual é o tamanho da
+população! Por enquanto, no entanto, prosseguiremos com nosso próximo
+conjunto de termos e notação.
+
+\textbf{Amostragem} é o ato de coletar uma amostra da população, o que
+geralmente fazemos apenas quando não podemos realizar um censo.
+Denotamos matematicamente o tamanho da amostra usando o \(n\) minúsculo,
+em oposição ao \(N\) maiúsculo, que denota o tamanho da população.
+Normalmente, o tamanho da amostra \(n\) é muito menor que o tamanho da
+população \(N\). Assim, a amostragem é uma alternativa muito mais barata
+do que a realização de um censo.
+
+Uma \textbf{estimativa pontual}, também conhecida como estatística (ou
+estatística amostral), é uma estatística calculada a partir de uma
+amostra que estima o parâmetro populacional desconhecido.
+
+Então, em sala de aula, realizamos a amostragem usando uma pá com 50
+espaços para extrair amostras de tamanho \(n = 50\). Para realizar o
+análogo virtual desta amostragem, lembre-se de que usamos a função
+\texttt{rep\_sample\_n()} da seguinte maneira:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2026}\NormalTok{)}
+\NormalTok{pa\_virtual }\OtherTok{\textless{}{-}}\NormalTok{ bowl }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{rep\_sample\_n}\NormalTok{(}\AttributeTok{size =} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Usando a amostra de 50 bolas contidas em \texttt{pa\_virtual}, geramos
+uma estimativa da proporção de bolas na urna que são vermelhas,
+\texttt{prop\_red}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pa\_virtual }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{num\_red =} \FunctionTok{sum}\NormalTok{(color }\SpecialCharTok{==} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}   
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prop\_red =}\NormalTok{ num\_red }\SpecialCharTok{/} \DecValTok{50}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 1 x 3
+  replicate num_red prop_red
+      <int>   <int>    <dbl>
+1         1      16     0.32
+\end{verbatim}
+
+Então, em nosso caso, o valor de \texttt{prop\_red} é a estimativa
+pontual da proporção populacional \(p\), pois ela estima o valor desta
+última. Além disso, essa estimativa pontual tem um nome específico
+quando se considera proporções: \textbf{a proporção amostral}. Ela é
+denotada usando \(\hat{p}\), porque é uma convenção comum em estatística
+usar um símbolo de ``chapéu'' para denotar estimativas pontuais.
+
+Iremos observa ao longo desta disciplina que a maneira como você coleta
+as amostras influencia diretamente a qualidade delas.
+
+\begin{itemize}
+\item
+  Diz-se que uma amostra é \textbf{representativa} se ela ``se parecer''
+  aproximadamente com a população. Em outras palavras, se as
+  características da amostra forem uma ``boa'' representação das
+  características da população.
+\item
+  Dizemos que uma amostra é \textbf{generalizável} se quaisquer
+  resultados baseados na amostra puderem ser generalizados para a
+  população. Em outras palavras, se pudermos fazer ``bons'' palpites
+  sobre a população usando a amostra.
+\item
+  Dizemos que um procedimento de amostragem é \textbf{viesado} (ou
+  tendencioso) se certos indivíduos em uma população tiverem uma chance
+  maior de serem incluídos em uma amostra do que outros. Dizemos que um
+  procedimento de amostragem é \textbf{não viesado} (ou imparcial) se
+  cada indivíduo em uma população tiver chances iguais de ser amostrado.
+\end{itemize}
+
+Dizemos que uma amostra de \(n\) bolas extraídas usando nossa pá é
+\textbf{representativa} da população se o seu conteúdo ``se assemelhar
+aproximadamente'' ao conteúdo da urna. Se sim, então a proporção de
+bolas vermelhas da pá pode ser \textbf{generalizada} para a proporção
+das \(N = 2400\) bolas da urna que são vermelhas. Ou expresso de forma
+diferente, \(\hat{p}\) é um ``bom palpite'' de \(p\). Agora digamos que
+trapaceamos ao usar a pá e removemos um número de bolas brancas em favor
+de bolas vermelhas. Então, essa amostra seria viesada em relação às
+bolas vermelhas e, portanto, a amostra não seria mais representativa da
+urna.
+
+Uma maneira de garantir que uma amostra seja não viesada e
+representativa da população é usar a \textbf{amostragem aleatória}.
+Temos que \textbf{Inferência} é o ato de ``dar um palpite'' sobre algo
+desconhecido. Portanto, \textbf{Inferência estatística} é o ato de fazer
+um palpite sobre uma população usando uma amostra.
+
+Em nosso caso, como a função \texttt{rep\_sample\_n()} usa o gerador de
+números aleatórios do seu computador, estávamos, de fato, realizando
+``amostragem aleatória''.
+
+\bookmarksetup{startatroot}
+
+\chapter{Distribuições Amostrais}\label{distribuiuxe7uxf5es-amostrais}
+
+\section{Introdução}\label{introduuxe7uxe3o}
+
+\textbf{O que é a estatística?} Consiste em três grandes áreas:
+
+\begin{itemize}
+\item
+  \textbf{Coleta de Dados:} planos amostrais e desenhos experimentais.
+\item
+  \textbf{Estatística Descritiva:} resumos numéricos e gráficos dos
+  dados coletados a partir de uma amostra.
+\item
+  \textbf{Estatística Inferencial:} estimação, intervalos de confiança e
+  testes de hipóteses sobre parâmetros de interesse.
+\end{itemize}
+
+Os procedimentos estatísticos fazem parte (passos 2 a 5 abaixo) do
+Método Científico, inicialmente defendido por Sir Francis Bacon
+(1561-1626), que escreveu \emph{``aprender os segredos da natureza
+envolve coletar dados e realizar experimentos''}.
+
+\textbf{A metodologia moderna:}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Observar algum fenômeno.
+\item
+  Formular uma hipótese que explique o fenômeno.
+\item
+  Coletar dados.
+\item
+  Testar: Os dados suportam a hipótese?
+\item
+  Conclusão. Se o teste falhar, volte ao passo 2.
+\end{enumerate}
+
+\begin{quote}
+\emph{``As estatísticas não mentem, mas os mentirosos usam
+estatísticas.''} --- Mark Twain.
+\end{quote}
+
+\subsection{O que é a Estatística
+Matemática?}\label{o-que-uxe9-a-estatuxedstica-matemuxe1tica}
+
+É o estudo dos fundamentos teóricos da estatística.
+
+\textbf{O que é uma estatística?}
+
+Seja \(X_{1},X_{2},...,X_{n}\) um conjunto de variáveis aleatórias
+observáveis (como, por exemplo, uma amostra aleatória de \(n\)
+indivíduos de uma população de interesse). Uma estatística \(T\) é uma
+função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\begin{itemize}
+\item
+  \textbf{População:} O grupo inteiro de indivíduos (sujeitos ou
+  unidades), que pode ser existente ou conceitual, sobre o qual
+  pretendemos obter informação.
+\item
+  \textbf{Amostra:} Uma parte da população a partir da qual os dados são
+  recolhidos.
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\textbf{Parâmetro:} Um valor numérico calculado a partir de \emph{todos}
+os indivíduos na população. \emph{(Discreta / Contínua)}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Média populacional:}
+  \(\mu = \sum xP(x) \quad \text{ou} \quad \int xf(x)dx\).
+\item
+  \textbf{Variância populacional:}
+  \(\sigma^{2} = \sum (x-\mu)^{2}P(x) \quad \text{ou} \quad \int (x-\mu)^{2}f(x)dx\).
+\item
+  \textbf{Proporção populacional:} \(p\) é a verdadeira proporção de 1s
+  na população.
+\item
+  \textbf{Mediana populacional:} \(\phi_{.5}\) é o valor tal que
+  \(P(X \le \phi_{.5}) \ge .5\) e \(P(X \ge \phi_{.5}) \ge .5\).
+\end{itemize}
+
+\textbf{Estatística:} Um valor numérico calculado a partir de uma
+\emph{amostra} \(X_{1},...,X_{n}\).
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Média amostral:}
+  \(\overline{X}=\frac{1}{n}\sum_{i=1}^{n}X_{i}\).
+\item
+  \textbf{Variância amostral:}
+  \(S^{2}=\frac{1}{n-1}\sum_{i=1}^{n}(X_{i}-\overline{X})^{2}\).
+\item
+  \textbf{Proporção amostral:}
+  \(\hat{p} = \frac{\text{número de 1s}}{n}\).
+\item
+  \textbf{Mediana amostral:}
+  \(\hat{\phi}_{.5} = \text{valor central (ou média dos centrais)}\).
+\end{itemize}
+
+\end{tcolorbox}
+
+\section{Covariância, variância de somas e
+correlações}\label{covariuxe2ncia-variuxe2ncia-de-somas-e-correlauxe7uxf5es}
+
+O resultado a seguir mostra que a esperança de um produto de variáveis
+aleatórias independentes é igual ao produto de suas esperanças.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 1:}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Se \(X\) e \(Y\) são independentes, então, para quaisquer funções \(h\)
+e \(g\),
+
+\[E[g(X)h(Y)] = E[g(X)]E[h(X)].\]
+
+\end{tcolorbox}
+
+\emph{Demonstração:} Suponha que \(X\) e \(Y\) sejam variáveis
+aleatórias conjuntamente contínuas com função densidade conjunta
+\(f(x,y)\). Então,
+
+\[\begin{align}
+E[g(X)h(Y)] =& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(x)h(y)f(x,y)dxdy\\
+=& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(x)h(y)f(x)f(y)dxdy\\
+=& \int\limits_{-\infty}^{+\infty}g(x)f(x)dx\int\limits_{-\infty}^{+\infty} h(y)f(y)dy\\
+=&  E[g(X)]E[h(Y)].
+\end{align}
+\]
+
+A demonstração para o caso discreto pode ser feita de maneira similar.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definição 1:}, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+A covariância entre \(X\) e \(Y\), representada como \(Cov(X,Y)\), é
+definida como
+
+\[Cov(X,Y) = E[(X-E[X])(Y-E[Y])].\]
+
+\end{tcolorbox}
+
+Desenvolvendo o lado direito da definição acima, temos que
+
+\[\begin{align}
+Cov(X,Y) = & E[\underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{\hspace{2cm}} + \underline{\hspace{2cm}}]\\
+=& \underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{\hspace{2cm}} + \underline{\hspace{2cm}}\\
+=& E[XY] - E[X]E[Y].
+\end{align}\]
+
+Note que, se \(X\) e \(Y\) são independentes, então, pela Proposição 1,
+\(Cov(X,Y) = 0\). No entanto, o inverso não é verdade.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 2:}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi})}
+\item
+  \(Cov(X,Y) = Cov(Y,X)\);
+\item
+  \(Cov(X,X) = Var(X)\);
+\item
+  \(Cov(aX, Y) = a Cov(X,Y)\).
+\item
+  \(Cov\left(\sum\limits_{i=1}^{n} X_i,\sum\limits_{j=1}^{m} Y_j\right) = \sum\limits_{i=1}^{n}\sum\limits_{j=1}^{m}Cov(X_i,Y_j)\).
+\end{enumerate}
+
+\end{tcolorbox}
+
+Fazendo \(Y_j = X_j\) e considerando as propriedades (ii) e (iv) da
+Proposição 2, temos que
+
+\[\begin{align}Var\left(\sum\limits_{i=1}^{n} X_i\right) =& Cov\left(\sum\limits_{i=1}^{n} X_i,\sum\limits_{j=1}^{n} X_j\right)\\ =& \sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}Cov(X_i,X_j)\\
+=&\sum\limits_{i=1}^{n} Var(X_i) + \mathop{\sum\sum}\limits_{i\neq j}Cov(X_i,X_j)\\
+=&\sum\limits_{i=1}^{n} Var(X_i) + 2\mathop{\sum\sum}\limits_{i < j}Cov(X_i,X_j).
+\end{align}\]
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição 2: Amostra Aleatória:}, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+A variáveis aleatórias \(X_1, X_2, \dots, X_n\) são chamadas de amostra
+aleatória e de tamanho \(n\) da população \(f(x)\) se
+\(X_1, X_2, \dots, X_n\) são variáveis aleatórias mutuamente
+independentes e a função densidade de probabilidade (FDP) (ou função de
+probabilidade (FP)) marginal de cada \(X_i\) é a mesma função \(f(x)\).
+Alternativamente, \(X_1, X_2, \dots, X_n\) são chamadas de variáveis
+aleatórias independentes e identicamente distribuídas com FDP (ou FP)
+\(f(x)\). Sendo comumente abreviado para variáveis aleatórias i.i.d
+(Casella; Berger, 2002).
+
+\end{tcolorbox}
+
+O \textbf{modelo de amostragem aleatória} descreve um tipo de situação
+experimental em que a variável de interesse possui uma distribuição de
+probabilidade descrita por \(f(x)\). Se apenas uma observação \(X\) é
+feita dessa variável, então as probabilidades relacionadas a \(X\) podem
+ser calculadas usando \(f(x)\).
+
+Na maioria dos experimentos existem \(n > 1\) (um inteiro positivo fixo)
+observações repetidas feitas sobre a variável. A primeira observação é
+\(X_1\), a segunda é \(X_2\), e assim por diante.
+
+Sob o modelo de amostragem aleatória, cada \(X_i\) é uma observação da
+mesma variável e cada \(X_i\) possui uma distribuição marginal dada por
+\(f(x)\).
+
+Além disso, as observações são obtidas de tal forma que o valor de uma
+observação não tem efeito nem relação com qualquer uma das outras
+observações; isto é, \(X_1, X_2, \ldots, X_n\) são \textbf{mutuamente
+independentes}.
+
+Temos que a FDP conjunta ou FP de \(X_1, \ldots, X_n\) é dada por
+
+\[f(x_1, x_2, \ldots, x_n) =
+f(x_1)f(x_2)\cdots f(x_n)
+=
+\prod_{i=1}^{n} f(x_i).\]
+
+Essa FDP ou FP conjunta pode ser usada para calcular probabilidades
+envolvendo a amostra. Como \(X_1, \ldots, X_n\) são
+\textbf{identicamente distribuídas}, todas as densidades marginais
+\(f(x)\) são a mesma função.
+
+Em particular, se a FDP ou FP da população pertence a uma
+\textbf{família paramétrica}, como aquelas introduzidas anteriormente,
+com pdf ou pmf dada por \(f(x \mid \theta)\), então a pdf ou pmf
+conjunta é
+
+\[f(x_1, x_2, \ldots, x_n \mid \theta)
+=
+\prod_{i=1}^{n} f(x_i \mid \theta),\]
+
+em que o mesmo valor do parâmetro \(\theta\) é utilizado em cada um dos
+termos do produto.
+
+\subsection*{Exemplo 1}\label{exemplo-1}
+\addcontentsline{toc}{subsection}{Exemplo 1}
+
+Sejam \(X_1,\ldots,X_n\) uma amostra aleatória de uma população
+exponencial\((\beta)\). Especificamente, \(X_1,\ldots,X_n\) podem
+corresponder aos tempos até a falha (medidos em anos) de \(n\) placas de
+circuito idênticas que são colocadas em teste e usadas até falharem.
+
+A função densidade conjunta da amostra é
+
+\[f(x_1,\ldots,x_n|\beta)
+=
+\prod_{i=1}^{n} f(x_i|\beta)
+=
+\prod_{i=1}^{n} \frac{1}{\beta}e^{-x_i/\beta}
+=
+\frac{1}{\beta^n}e^{-(x_1+\cdots+x_n)/\beta}.\]
+
+Essa FDP pode ser usada para responder perguntas sobre a amostra. Por
+exemplo, qual é a probabilidade de que todas as placas durem mais de 2
+anos?
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Resposta:}, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\end{tcolorbox}
+
+\subsection{Diferentes maneiras de coletar uma
+amostra}\label{diferentes-maneiras-de-coletar-uma-amostra}
+
+O modelo de amostragem aleatória da Definição 1 é algumas vezes chamado
+de \textbf{amostragem de uma população infinita}. Pense em obter os
+valores de \(X_1,\ldots,X_n\) sequencialmente. Primeiro, o experimento é
+realizado e \(X_1=x_1\) é observado. Em seguida, o experimento é
+repetido e \(X_2=x_2\) é observado.
+
+A suposição de independência na amostragem aleatória implica que a
+distribuição de probabilidade de \(X_2\) não é afetada pelo fato de que
+\(X_1=x_1\) foi observado primeiro. ``Remover'' \(x_1\) de uma população
+infinita não altera a população, de modo que \(X_2=x_2\) ainda é uma
+observação aleatória proveniente da mesma população.
+
+Quando a amostragem é feita a partir de uma \textbf{população finita}, a
+Definição 1 pode ou não ser relevante, dependendo de como os dados são
+coletados. Uma população finita é um conjunto finito de números,
+\(\{x_1,\ldots,x_N\}\). Uma amostra \(X_1,\ldots,X_n\) deve ser extraída
+dessa população. Essas amostras podem ser obtidas de quatro maneiras
+diferentes. Podemos resumir as quatro situações na Tabela 1 a seguir:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Tipo de seleção & Sem reposição & Com reposição \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Ordenado} & \(\frac{n!}{(n-r)!}\) & \(n^r\) \\
+\textbf{Não ordenado} & \(\binom{n}{r}\) & \(\binom{n+r-1}{r}\) \\
+\end{longtable}
+
+Tabela 1: Número de possíveis arranjos de tamanho \(r\) a partir de
+\(n\) objetos.
+
+Neste material iremos considera apenas dois casos: i) ordenado sem
+reposição e ii) Ordenado com reposição. Para maiores detalhes, ver
+Casella; Berger (2002).
+
+Suponha que um valor seja escolhido da população de tal forma que cada
+um dos \(N\) valores tenha a mesma probabilidade \((1/N)\) de ser
+selecionado (pense em retirar números de uma urna). Esse valor é
+registrado como \(X_1=x_1\). Em seguida, o processo é repetido.
+Novamente, cada um dos \(N\) valores tem a mesma probabilidade de ser
+escolhido. O segundo valor selecionado é registrado como \(X_2=x_2\) (Se
+o mesmo número for escolhido, então \(x_1=x_2\)).
+
+Esse processo de sorteio entre os \(N\) valores é repetido \(n\) vezes,
+produzindo a amostra \(X_1,\ldots,X_n\). Esse tipo de amostragem é
+chamado \textbf{com reposição}, porque o valor escolhido em qualquer
+etapa é ``reposto'' na população e fica disponível para ser escolhido
+novamente na etapa seguinte. Para esse tipo de amostragem, as condições
+da Definição 1 são satisfeitas.
+
+Cada \(X_i\) é uma variável aleatória discreta que assume cada um dos
+valores \(x_1,\ldots,x_N\) com probabilidade igual. As variáveis
+aleatórias \(X_1,\ldots,X_n\) são independentes porque o processo de
+escolha de qualquer \(X_i\) é o mesmo, independentemente dos valores
+escolhidos para as outras variáveis (este tipo de amostragem é utilizado
+no \textbf{bootstrap}).
+
+Um segundo método para extrair uma amostra aleatória de uma população
+finita é chamado de \textbf{amostragem sem reposição}. A amostragem sem
+reposição é feita da seguinte forma: um valor é escolhido de
+\(\{x_1, \dots, x_N\}\) de tal modo que cada um dos \(N\) valores tenha
+probabilidade \(1/N\) de ser escolhido. Este valor é registado como
+\(X_1 = x_1\). Agora, um segundo valor é escolhido dos \(N - 1\) valores
+restantes. Cada um dos \(N - 1\) valores tem probabilidade \(1/(N - 1)\)
+de ser escolhido. O segundo valor escolhido é registado como
+\(X_2 = x_2\). A escolha dos valores restantes continua desta forma,
+resultando na amostra \(X_1, \dots, X_n\). Contudo, uma vez que um valor
+é escolhido, ele torna-se indisponível para escolha em qualquer fase
+posterior.
+
+Uma amostra extraída de uma população finita sem reposição não satisfaz
+todas as condições da Definição 1. As variáveis aleatórias
+\(X_1, \dots, X_n\) não são mutuamente independentes. Para verificar
+isto, sejam \(x\) e \(y\) elementos distintos de
+\(\{x_1, \dots, x_N\}\). Então \(P(X_2 = y | X_1 = y) = 0\), visto que o
+valor \(y\) não pode ser escolhido na segunda fase se já tiver sido
+escolhido na primeira. No entanto, \(P(X_2 = y | X_1 = x) = 1/(N - 1)\).
+
+A distribuição de probabilidade para \(X_2\) depende do valor observado
+de \(X_1\) e, portanto, \(X_1\) e \(X_2\) não são independentes.
+Todavia, é interessante notar que \(X_1, \dots, X_n\) são
+\textbf{identicamente distribuídas}. Isto é, a distribuição marginal de
+\(X_i\) é a mesma para cada \(i = 1, \dots, n\). Para \(X_1\) é claro
+que a distribuição marginal é \(P(X_1 = x) = 1/N\) para cada
+\(x \in \{x_1, \dots, x_N\}\). Para calcular a distribuição marginal de
+\(X_2\), utiliza-se o conceitos de probabilidade condicional para
+escrever:
+
+\[P(X_2 = x) = \sum_{i=1}^{N} P(X_2 = x | X_1 = x_i) P(X_1 = x_i).\]
+
+Para um valor do índice, digamos \(k\), temos \(x = x_k\) e
+\(P(X_2 = x | X_1 = x_k) = 0\). Para todos os outros \(j \neq k\),
+\(P(X_2 = x | X_1 = x_j) = 1/(N - 1)\). Assim,
+
+\[P(X_2 = x) = (N - 1) \left( \frac{1}{N - 1} \frac{1}{N} \right) = \frac{1}{N}.\]
+
+Argumentos semelhantes podem ser usados para mostrar que cada um dos
+\(X_i\) tem a mesma distribuição marginal.
+
+A amostragem sem reposição de uma população finita é por vezes chamada
+de \textbf{amostragem aleatória simples}. É importante perceber que esta
+não é a mesma situação de amostragem descrita na Definição 1. No
+entanto, se o tamanho da população \(N\) for grande em comparação com o
+tamanho da amostra \(n\), \(X_1, \dots, X_n\) são quase independentes e
+alguns cálculos aproximados de probabilidade podem ser feitos assumindo
+que são independentes. Ao dizer que são ``quase independentes'',
+queremos simplesmente dizer que a distribuição condicional de \(X_i\)
+dado \(X_1, \dots, X_{i-1}\) não é muito diferente da distribuição
+marginal de \(X_i\). Por exemplo, a distribuição condicional de \(X_2\)
+dado \(X_1\) é
+
+\[P(X_2 = x_1 | X_1 = x_1) = 0 \quad \text{e} \quad P(X_2 = x | X_1 = x_1) = \frac{1}{N - 1} \quad \text{para } x \neq x_1.\]
+
+Isto não é muito diferente da distribuição marginal de \(X_2\), dada em
+anteriormente, se \(N\) for grande. As probabilidades não nulas na
+distribuição condicional de \(X_i\) dados \(X_1, \dots, X_{i-1}\) são
+\(1/(N - i + 1)\), que são próximas de \(1/N\) se \(i \le n\) for
+pequeno em comparação com \(N\).
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Arranjos ou combinação ao contar amostras?}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Ao contar o número de \textbf{amostras aleatórias simples} possíveis, o
+resultado depende de como definimos uma \emph{amostra}.
+
+\textbf{1. Quando a ordem importa}
+
+Se a amostra é vista como uma sequência de observações
+
+\[
+(X_1,X_2,\ldots,X_n),
+\]
+
+então a ordem das unidades selecionadas importa. Nesse caso,
+
+\[(a,b) \neq (b,a).\]
+
+A contagem utiliza \textbf{arranjos)}:
+
+\[
+A(N,n)=\frac{N!}{(N-n)!}.
+\]
+
+Isso corresponde ao processo de seleção \textbf{sequencial}, no qual
+registramos a ordem em que as unidades são sorteadas.
+
+\textbf{2. Quando a ordem não importa}
+
+Se a amostra é tratada apenas como o \textbf{conjunto de unidades
+selecionadas}, então
+
+\[
+\{a,b\}=\{b,a\}.
+\]
+
+Nesse caso utilizamos \textbf{combinações}:
+
+\[
+\binom{N}{n}.
+\]
+
+Aqui interessa apenas \textbf{quais unidades foram escolhidas}, e não a
+ordem em que foram selecionadas.
+
+\textbf{Resumo}
+
+\begin{itemize}
+\tightlist
+\item
+  sequência observada → \textbf{Arranjos}
+\item
+  subconjunto da população → \textbf{Combinações}
+\end{itemize}
+
+Na teoria de inferência estatística, muitas vezes modelamos a amostra
+como o vetor aleatório \((X_1,\ldots,X_n)\), enquanto na teoria de
+amostragem de populações finitas é comum tratar a amostra apenas como um
+subconjunto da população.
+
+\end{tcolorbox}
+
+\subsection*{Exemplo 2 (Modelo de população
+finita)}\label{exemplo-2-modelo-de-populauxe7uxe3o-finita}
+\addcontentsline{toc}{subsection}{Exemplo 2 (Modelo de população
+finita)}
+
+Como um exemplo de um cálculo aproximado usando independência, suponha
+que \(\{1, \dots, 1000\}\) é a população finita, logo \(N = 1000\). Uma
+amostra de tamanho \(n = 10\) é extraída sem reposição. Qual é a
+probabilidade de que todos os dez valores da amostra sejam maiores que
+200? Se \(X_1, \dots, X_{10}\) fossem mutuamente independentes,
+teríamos:
+
+\[\begin{aligned}
+P(X_1 > 200, \dots, X_{10} > 200) &= P(X_1 > 200) \cdots P(X_{10} > 200) \\
+ &= \left( \frac{800}{1000} \right)^{10} = 0,107374.
+\end{aligned}\]
+
+Para calcular esta probabilidade exatamente, seja \(Y\) uma variável
+aleatória que conta o número de itens na amostra que são maiores que
+200. Então \(Y\) tem uma distribuição hipergeométrica
+(\(N = 1000, M = 800, K = 10\)). Portanto,
+
+\[\begin{aligned}
+P(X_1 > 200, \dots, X_{10} > 200) &= P(Y = 10) \\
+&= \frac{\binom{800}{10} \binom{200}{0}}{\binom{1000}{10}} \\
+&= 0,106164.
+\end{aligned}\]
+
+Assim, o primeiro resultado é uma aproximação razoável para o valor
+real. Ao longo deste material, usaremos a Definição 1 como nossa
+definição de uma amostra aleatória de uma população.
+
+\subsection{Somas de Variáveis Aleatórias para uma Amostra
+Aleatória}\label{somas-de-variuxe1veis-aleatuxf3rias-para-uma-amostra-aleatuxf3ria}
+
+Primeiro, observamos algumas relações simples. Dado que
+\(\bar{X} = \frac{1}{n}(X_1 + \dots + X_n)\), se \(f(y)\) é a FDP de
+\(Y = (X_1 + \dots + X_n)\), então \(f_{\bar{X}}(x) = nf(nx)\) é a FDP
+de \(\bar{X}\). Assim, um resultado sobre a pdf de \(Y\) é facilmente
+transformado em um resultado sobre a FDP de \(\bar{X}\). Uma relação
+semelhante vale para as funções geradoras de momentos (FGM's):
+
+\[M_{\bar{X}}(t) = Ee^{t\bar{X}} = Ee^{t(X_1 + \dots + X_n)/n} = Ee^{(t/n)Y} = M_Y(t/n).\]
+
+Visto que \(X_1, \dots, X_n\) são identicamente distribuídas,
+\(M_{X_i}(t)\) é a mesma função para cada \(i\). Assim, temos o
+seguinte:
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 2}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Seja \(X_1, \dots, X_n\) uma amostra aleatória de uma população com FGM
+\(M_X(t)\). Então a FGM da média amostral é:
+
+\[M_{\bar{X}}(t) = [M_X(t/n)]^n.\]
+
+\end{tcolorbox}
+
+Certamente, o Teorema 2 é útil apenas se a expressão para
+\(M_{\bar{X}}(t)\) for uma FGM conhecida. Os casos em que isso é verdade
+são um tanto limitados, mas o exemplo seguinte ilustra que, quando este
+método funciona, ele fornece uma derivação muito elegante da
+distribuição amostral de \(\bar{X}\).
+
+\subsection*{Exemplo 3 (Distribuição da
+média)}\label{exemplo-3-distribuiuxe7uxe3o-da-muxe9dia}
+\addcontentsline{toc}{subsection}{Exemplo 3 (Distribuição da média)}
+
+Seja \(X_1, \dots, X_n\) uma amostra aleatória de uma população com
+distribuição \(N(\mu, \sigma^2)\). Então a FGM da média amostral é:
+
+\[
+\begin{aligned}
+M_{\bar{X}}(t) &= \left[ \exp \left( \mu \frac{t}{n} + \frac{\sigma^2 (t/n)^2}{2} \right) \right]^n \\
+&= \exp \left( n \left( \mu \frac{t}{n} + \frac{\sigma^2 (t/n)^2}{2} \right) \right) = \exp \left( \mu t + \frac{(\sigma^2/n)t^2}{2} \right).
+\end{aligned}
+\]
+
+Portanto, \(\bar{X}\) tem uma distribuição \(N(\mu, \sigma^2/n)\).
+
+Outro exemplo simples é dado por uma amostra aleatória de uma
+distribuição \(\text{Gama}(\alpha, \beta)\). Aqui, também podemos
+derivar facilmente a distribuição da média amostral. A FGM da média
+amostral é
+
+\[M_{\bar{X}}(t) = \left[ \left( \frac{1}{1 - \beta(t/n)} \right)^\alpha \right]^n = \left( \frac{1}{1 - (\beta/n)t} \right)^{n\alpha},\]
+
+a qual reconhecemos como a FGM de uma \(\text{Gama}(n\alpha, \beta/n)\),
+que é a distribuição de \(\bar{X}\).
+
+\section{Distribuições Amostrais}\label{distribuiuxe7uxf5es-amostrais-1}
+
+O valor de uma estatística varia de amostra para amostra. Por outras
+palavras, amostras diferentes resultarão em valores diferentes para uma
+estatística. Portanto, uma estatística é uma variável aleatória com uma
+distribuição!
+
+\textbf{Distribuição Amostral:} A distribuição dos valores da
+estatística provenientes de todas as amostras possíveis de tamanho
+\(n\).
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Para entender a origem de uma distribuição amostral, imagine o seguinte
+processo exato (ou de ``força bruta''):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Retirar todas as amostras possíveis} de tamanho \(n\) da
+  população.
+\item
+  \textbf{Calcular o valor da estatística} (por exemplo, a média
+  \(\overline{X}\)) para cada uma dessas amostras.
+\item
+  \textbf{Exibir a distribuição} dos valores dessa estatística na forma
+  de uma tabela, de um gráfico (histograma) ou de uma equação.
+\end{enumerate}
+
+\end{tcolorbox}
+
+Na prática, como as populações costumam ser imensas (ou infinitas), é
+impossível calcular \emph{todas} as amostras possíveis. É por isso que
+dependemos de teoremas matemáticos (como o Teorema Central do Limite)
+para deduzir o formato dessa distribuição sem precisarmos usar a força
+bruta!
+
+\subsubsection*{Exercícios}\label{exercuxedcios}
+\addcontentsline{toc}{subsubsection}{Exercícios}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Considere um estudo sobre o consumo de combustível da população de
+  quatro ônibus de uma pequena companhia de transporte urbano. O consumo
+  dos ônibus (km/l), \(X\), em condições padrões de teste, é: 3,8, 3,9,
+  4,0 e 4,1. Uma amostra de dois ônibus será sorteada, com reposição.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Calcule a média e a variância da população.
+\item
+  Construa a distribuição para o consumo médio da amostra.
+\item
+  Calcule o valor esperado e a variância da distribuição amostral.
+\item
+  Aplique as seguintes expressões nos resultados do item (a) e confira
+  com os resultados do item (c):
+\end{enumerate}
+
+\[E(\overline{X}) = \mu \quad \text{e} \quad \text{Var}(\overline{X}) = \frac{\sigma^2}{n}.\]
+2. Refaça o Exercício 1 considerando amostragem sem reposição. A
+verificação da variância, item (d), deve ser com a expressão:
+
+\[\text{Var}(\overline{X}) = \frac{\sigma^2}{n}\frac{N-n}{N-1}.\]
+
+\subsection{\texorpdfstring{Distribuição Amostral da Média
+(\(\overline{X}\))}{Distribuição Amostral da Média (\textbackslash overline\{X\})}}\label{distribuiuxe7uxe3o-amostral-da-muxe9dia-overlinex}
+
+Na estatística inferencial, é comum utilizar a estatística
+\(\overline{X}\) para estimar \(\mu\).
+
+\textbf{Média e Variância:} Para qualquer tamanho de amostra \(n\) e uma
+amostra aleatória (AA) proveniente de qualquer distribuição populacional
+com média \(\mu_{x}\) e variância \(\sigma_{x}^{2}\):
+
+\[E(\overline{X})=\mu_{x}\left(E\left(\sum_{i=1}^n X_i\right) = n \mu_{x}\right) \quad \text{e} \quad Var(\overline{X})=\frac{\sigma_{x}^{2}}{n}\left(E\left(\sum_{i=1}^n X_i\right) = n \sigma^2_{x}\right).\]
+Para compreendermos como a média amostral se comporta, utilizamos as
+seguintes propriedades das combinações lineares:
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Sejam \(a_{i}\) para \(i=1,2,...,k\) constantes e sejam \(X_{i}\) para
+\(i=1,2,...,k\) variáveis aleatórias. Então:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Esperança:}
+  \(E\left(\sum_{i=1}^{k}a_{i}X_{i}\right) = \sum_{i=1}^{k}a_{i}E(X_{i})\)
+\item
+  \textbf{Variância:}
+  \(Var\left(\sum_{i=1}^{k}a_{i}X_{i}\right) = \sum_{i=1}^{k}a_{i}^{2}Var(X_{i})\)
+  (se \(X_{1},...,X_{k}\) forem mutuamente independentes).
+\end{enumerate}
+
+\end{tcolorbox}
+
+\textbf{Quando os dados são normais:} Para uma AA proveniente de uma
+distribuição normal \(N(\mu_{x},\sigma_{x}^{2})\):
+\[\overline{X} \sim N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).\]
+
+\subsection*{Exemplo 2}\label{exemplo-2}
+\addcontentsline{toc}{subsection}{Exemplo 2}
+
+Suponha que os níveis de colesterol de homens adultos sigam uma
+distribuição \(N(210\,\text{mg/dL}, (37\,\text{mg/dL})^2)\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Indique um intervalo centrado na média \(\mu\) que capture os 95\%
+  centrais de todos os valores de colesterol.
+\item
+  Indique a distribuição amostral de \(\overline{X}\), a média amostral
+  dos valores de colesterol obtidos a partir de AA de tamanho
+  \(n = 10\).
+\item
+  Indique um intervalo centrado na média \(\mu\) que capture os 95\%
+  centrais de todos os valores de média amostral de colesterol obtidos a
+  partir de AA de tamanho \(n = 10\).
+\end{enumerate}
+
+\textbf{Para amostras de grandes dimensões (Teorema Central do Limite):}
+
+Para um grande tamanho de amostra \(n\) e uma AA proveniente de
+\emph{qualquer} distribuição populacional com variância finita
+\(\sigma_{x}^{2} < \infty\), as distribuições amostrais aproximadas são:
+
+\[\overline{X} \dot{\sim} N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right) \quad \text{e} \quad \sum\limits_{i=1}^n X_i \dot{\sim} N\left(n\mu_{x}, n\sigma_{x}^{2}\right).\]
+Este último resultado é consequência do famoso Teorema Central do
+Limite.
+
+Sejam \(X_{1},\dots,X_{n}\) uma AA de uma distribuição com média
+\(\mu_x\) e variância \(\sigma^2_x < \infty\). Então a distribuição de
+
+\[U_n = \frac{\overline{X} - \mu_x}{\sigma_x/\sqrt{n}},\] converge para
+\(N(0,1)\) a medida que \(n \to \infty\). Provaremos esse teorema mais à
+frente.
+
+\textbf{Exemplo Importante (Ensaios de Bernoulli):}
+
+Seja \(X = \left\{
+    \begin{aligned}
+        1 & \quad\text{se}\; \underline{\hspace{2cm}}\; \text{com probabilidade}\; p: \underline{\hspace{2cm}}\\
+        0 & \quad\text{se}\; \underline{\hspace{2cm}}\; \text{com probabilidade}\; 1-p: \underline{\hspace{2cm}}
+    \end{aligned}
+\right.\)
+
+Então, dizemos que \(X\) segue uma distribuição de Bernoulli:
+\[X \sim \text{Bern}(p) = \text{Bin}(n = 1, p).\]
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Desenhe uma representação gráfica da função de massa de probabilidade
+  de \(X\).
+\item
+  Encontre \(E(X)\) e \(Var(X)\).
+\item
+  Suponha que foi recolhida uma AA \(X_1, X_2, \dots, X_{40}\). Indique
+  a distribuição amostral aproximada de \(\overline{X}\) (geralmente
+  denotada por \(\hat{p} = \overline{X}\), o que indica que
+  \(\overline{X}\) é uma proporção amostral).
+\end{enumerate}
+
+\subsubsection{Aproximação Normal da
+Binomial}\label{aproximauxe7uxe3o-normal-da-binomial}
+
+No exemplo anterior, consideramos a variável aleatória
+\(X \sim \text{Bern}(p) = \text{Bin}(n = 1, p)\). Suponha que uma AA
+\(X_1, X_2, \dots, X_n\) foi coletada com \(n > 1\).
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Apresente a distribuição de \(Y = \sum_{i=1}^{n} X_i\), de modo que
+  \(Y\) seja o número de sucessos em \(n\) tentativas (que é uma
+  distribuição discreta que você aprendeu em Métodos Probabilísticos).
+\item
+  Desenhe um gráfico da função de probabilidade (pdf) de
+  \(Y = \sum_{i=1}^{n} X_i\).
+\item
+  Forneça o valor de \(E(Y)\) e \(Var(Y)\): \[
+  \left\{
+  \begin{aligned}
+      E(Y) &= \underline{\hspace{3cm}} \\
+      Var(Y) &= \underline{\hspace{3cm}}
+  \end{aligned}
+  \right.
+  \]
+\item
+  No Exemplo \#1c, o Teorema Central do Limite (TCL) mostrou que para
+  qualquer tamanho de amostra \(n\), quando \(X \sim \text{Bern}(p)\),
+  então:
+  \[\hat{p} = \bar{X} \dot{\sim} N(\underline{\hspace{1cm}}, \underline{\hspace{1cm}}).\]
+\item
+  Além das médias \(\bar{X}\), o Teorema Central do Limite também
+  fornece a distribuição amostral aproximada de uma soma \(\sum X_i\).
+  Use o TCL para fornecer a distribuição amostral aproximada de
+  \(Y = \sum_{i=1}^{n} X_i\):
+  \[Y \dot{\sim} N(\underline{\hspace{2cm}}, \underline{\hspace{2cm}}).\]
+\item
+  Se a proporção real de apoiadores da reforma da saúde na população de
+  Fortaleza é \(p = 0,53\), então, em uma AA de cidadãos de Fortaleza de
+  tamanho \(n = 1000\), qual é a probabilidade de que menos de 500
+  prometam apoio?
+\end{enumerate}
+
+\subsection{\texorpdfstring{Distribuição Amostral da Variância
+(\(S^{2}\))}{Distribuição Amostral da Variância (S\^{}\{2\})}}\label{distribuiuxe7uxe3o-amostral-da-variuxe2ncia-s2}
+
+Um parâmetro populacional de interesse comum é a variância populacional
+\(\sigma^2\). Na estatística inferencial, é comum usar a estatística
+\(S^2\) para estimar \(\sigma^2\). Portanto, a distribuição amostral de
+\(S^2\) é de grande interesse.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+A soma dos quadrados de variáveis normais padrão independentes é
+distribuída como uma variável aleatória \(\chi^2\). Mais formalmente:
+
+\begin{itemize}
+\tightlist
+\item
+  Se \(Z_1, \dots, Z_\nu\) são independentes e distribuídos como
+  \(N(0, 1)\), então:
+\end{itemize}
+
+\[\sum_{i=1}^{\nu} Z_i^2 \sim \chi^2(\nu),\]
+
+em que \(\chi^2(\nu)\) é chamada de \textbf{distribuição qui-quadrado
+com} \(\nu\) graus de liberdade.
+
+\begin{itemize}
+\tightlist
+\item
+  Para qualquer tamanho de amostra \(n\) e uma AA
+  \(X_1, X_2, \dots, X_n\) de uma distribuição normal
+  \(N(\mu_x, \sigma_x^2)\):
+  \[\sum_{i=1}^{n} \left(\frac{X_i - \mu_x}{\sigma_x} \right)^2 \sim \chi^2(n)\]
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{quote}
+\textbf{Nota:} Use a Tabela do SIGAA para cálculos de probabilidade.
+\end{quote}
+
+\subsubsection{Média e Variância}\label{muxe9dia-e-variuxe2ncia}
+
+Se \(C \sim \chi^2(\nu)\), então: \[
+\left\{
+    \begin{aligned}
+        E(C) &= \nu; \\
+        Var(C) &= 2\nu.
+    \end{aligned}
+\right.
+\]
+
+Para qualquer tamanho de amostra \(n > 1\) e uma AA
+\(X_1, X_2, \dots, X_n\) de qualquer distribuição populacional com média
+\(\mu_x\) e variância \(\sigma_x^2\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(E(S^2) = \sigma_x^2.\)
+\item
+  \(Var(S^2) = \frac{2\sigma_x^4}{n-1}.\)
+\end{itemize}
+
+\subsubsection{Distribuição Amostral quando os dados são
+Normais}\label{distribuiuxe7uxe3o-amostral-quando-os-dados-suxe3o-normais}
+
+Para qualquer tamanho de amostra \(n > 1\) e uma AA
+\(X_1, X_2, \dots, X_n\) originada de uma distribuição normal
+\(N(\mu_x, \sigma_x^2)\):
+
+\[\frac{(n - 1)S^2}{\sigma_x^2} \sim \chi^2(n - 1).\]
+
+\subsection{\texorpdfstring{Distribuição Amostral de
+\(\frac{\overline{X}-\mu}{S/\sqrt{n}}\)}{Distribuição Amostral de \textbackslash frac\{\textbackslash overline\{X\}-\textbackslash mu\}\{S/\textbackslash sqrt\{n\}\}}}\label{distribuiuxe7uxe3o-amostral-de-fracoverlinex-mussqrtn}
+
+Na estatística inferencial, a estatística de teste
+\(\frac{\bar{X} - \mu}{S/\sqrt{n}}\) é frequentemente utilizada para
+determinar a quantos erros padrões (\(S/\sqrt{n}\)) a média amostral
+\(\bar{X}\) está de um valor hipotético \(\mu\). Portanto, a
+distribuição amostral desta razão é de extrema importância.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\textbf{Definição 2.1:} Se \(Z \sim N(0, 1)\), \(W \sim \chi^2(\nu)\), e
+\(Z\) e \(W\) são independentes, então:
+
+\[T = \frac{Z}{\sqrt{W/\nu}} \sim t(\nu),\]
+
+em que \(t(\nu)\) é chamada de \textbf{distribuição t com} \(\nu\) graus
+de liberdade.
+
+Se \(T \sim t(\nu)\), então:
+
+\begin{itemize}
+\tightlist
+\item
+  \(E(T) = 0\) para \(\nu > 1\).
+\item
+  \(Var(T) = \frac{\nu}{\nu - 2}\) para \(\nu > 2\).
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsubsection{Distribuição Amostral quando os dados são
+Normais}\label{distribuiuxe7uxe3o-amostral-quando-os-dados-suxe3o-normais-1}
+
+Para qualquer tamanho de amostra \(n > 1\) e uma AA
+\(X_1, X_2, \dots, X_n\) de uma \(N(\mu, \sigma^2)\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(\bar{X}\) e \(S^2\) são independentes.
+\item
+  Pelos Teoremas 2.1, 2.3 e Definição 2.1:
+\end{itemize}
+
+\[\frac{\sqrt{n}(\bar{X} - \mu)/\sigma}{\sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}}} = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t(n - 1).\]
+
+\subsubsection{Distribuição Amostral para Grandes
+Amostras}\label{distribuiuxe7uxe3o-amostral-para-grandes-amostras}
+
+Para um tamanho de amostra \textbf{GRANDE} \(n\) e uma AA
+\(X_1, X_2, \dots, X_n\) de qualquer distribuição populacional com média
+\(\mu_x\) e variância \(\sigma_x^2 < \infty\):
+
+\[T = \frac{\bar{X} - \mu_x}{S/\sqrt{n}}\,  \dot{\sim} \, t(n - 1).\]
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Fatos Úteis}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{PDF de T:} A função densidade de probabilidade é dada por:
+\end{itemize}
+
+\[f(t) = \frac{\Gamma(\frac{\nu+1}{2})}{\Gamma(\frac{\nu}{2})\sqrt{\nu\pi}} \left( 1 + \frac{t^2}{\nu} \right)^{-\frac{\nu+1}{2}}.\]
+
+\begin{itemize}
+\item
+  A distribuição \(t\) é simétrica em torno de 0 e possui formato de
+  sino como a \(N(0, 1)\), porém com \textbf{caudas mais pesadas} (mais
+  grossas).
+\item
+  Conforme \(\nu \to \infty\), a distribuição \(t(\nu)\) aproxima-se da
+  distribuição normal padrão.
+\item
+  Use a Tabela do SIGAA para cálculos de probabilidade.
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsubsection{Exemplos}\label{exemplos}
+
+Suponha que os níveis de colesterol em homens adultos sejam distribuídos
+como \(N(210 \text{ mg/dL}, \sigma^2)\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Forneça a distribuição amostral de
+  \(\frac{\bar{X} - \mu}{S/\sqrt{n}}\), onde as estatísticas \(\bar{X}\)
+  e \(S^2\) são calculadas a partir de uma AA de tamanho \(n = 10\).
+\item
+  Se \(S^2 = 36,5^2\), forneça um intervalo centrado na média \(\mu\)
+  que capture os 95\% centrais de todos os valores de médias amostrais
+  de colesterol obtidos de AAS de tamanho \(n = 10\).
+\end{enumerate}
+
+\subsection{Distribuição Amostral do Razão de
+Variâncias}\label{distribuiuxe7uxe3o-amostral-do-razuxe3o-de-variuxe2ncias}
+
+Na estatística inferencial, frequentemente o interesse recai sobre a
+comparação das variâncias \(\sigma_1^2\) e \(\sigma_2^2\) de duas
+populações distintas para determinar se são diferentes. Com base em duas
+AA, uma de tamanho \(n_1\) com variância amostral \(S_1^2\) e outra de
+tamanho \(n_2\) com variância amostral \(S_2^2\), a estatística
+\(\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\) é utilizada.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+\textbf{Definição 2.2:} Se \(W_1 \sim \chi^2(\nu_1)\) e
+\(W_2 \sim \chi^2(\nu_2)\) são independentes, então:
+
+\[F = \frac{W_1/\nu_1}{W_2/\nu_2} \sim F(\nu_1, \nu_2).\]
+
+A distribuição \(F(\nu_1, \nu_2)\) possui \(\nu_1\) \textbf{graus de
+liberdade no numerador} e \(\nu_2\) \textbf{graus de liberdade no
+denominador}.
+
+Se \(F \sim F(\nu_1, \nu_2)\), então:
+
+\[
+\left\{
+    \begin{aligned}
+        E(F) &= \frac{\nu_2}{\nu_2 - 2}, \quad \text{para}\; \nu_2 > 2; \\
+        Var(F) &= \frac{2\nu_2^2 (\nu_1 + \nu_2 - 2)}{\nu_1 (\nu_2 - 2)^2 (\nu_2 - 4)}, \quad \text{para}\; \nu_2 > 4.
+    \end{aligned}
+\right.
+\]
+
+\end{tcolorbox}
+
+\subsubsection{Distribuição Amostral quando os dados são
+Normais}\label{distribuiuxe7uxe3o-amostral-quando-os-dados-suxe3o-normais-2}
+
+Se \(X_1, \dots, X_{n_1}\) é uma AA de \(N(\mu_1, \sigma_1^2)\) e
+\(Y_1, \dots, Y_{n_2}\) é uma AA independente de
+\(N(\mu_2, \sigma_2^2)\), então as variáveis qui-quadrado são
+independentes:
+
+\[W_1 = \frac{(n_1 - 1)S_1^2}{\sigma_1^2} \sim \chi^2(n_1 - 1) \quad \text{e} \quad W_2 = \frac{(n_2 - 1)S_2^2}{\sigma_2^2} \sim \chi^2(n_2 - 1).\]
+
+Portanto,
+
+\[F = \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1 - 1, n_2 - 1).\]
+
+\subsection{Exemplo}\label{exemplo}
+
+A variância do tempo de reação de mulheres é diferente da variância do
+tempo de reação de homens? Jason Paulak (Universidade de Cincinnati)
+realizou um experimento \emph{web} para responder a isso.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Mulheres (}\(n_1 = 398\)): \(\bar{X}_1 = 517\) ms,
+  \(S_1 = 899\) ms.
+\item
+  \textbf{Homens (}\(n_2 = 469\)): \(\bar{X}_2 = 383,2\) ms,
+  \(S_2 = 335,7\) ms.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Forneça a distribuição amostral de
+  \(F = \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\):
+\item
+  Se as duas variâncias populacionais forem de fato iguais
+  (\(\sigma_1^2 = \sigma_2^2\)), qual é a probabilidade de observar uma
+  razão de variâncias amostrais igual ou maior que a encontrada?
+\end{enumerate}
+
+\section{Lei dos Grandes Números}\label{lei-dos-grandes-nuxfameros}
+
+O problema de obter empiricamente valores numéricos de probabilidades é
+um dos interesses da estatística. Inúmeras técnicas foram desenvolvidas
+para que fossem obtidas estimativas da probabilidade de eventos. As Leis
+dos Grandes Número fornecem a fundamentação teórica para a maioria
+dessas técnicas (Magalhães, 2006).
+
+Em um certo espaço de probilidade , considere um experimento em que o
+evento \(A\) tem probabilidade \(P(A) = p\). A intuição, frequentemente
+aceita, indica que em um grande número de repetições do experimento, a
+frequência relativa de \(A\) se aproxima de \(p\). Isto é
+\(\frac{n_A}{n} \approx p\), em que \(n_A\) é a frequência de \(A\) e
+\(n\) o total de repetições. Essa concepção intuitiva, importante para o
+método científico, foi tomada como definição de probababilidade por
+muitos anos. De fato, essa definição pode ser considerada imprecisa, se
+o sentido do limite não é explicado (Magalhães, 2006).
+
+A formalização axiomática de Kolmogorov em 1934, apresentada em Métodos
+Probabilísticos, permitiu colocar em bases matemáticas sólidas vários
+dos conceitos intuitivamente aceitos. Para experimentos aleatórios, a
+noção intuitiva de probabilidade, como frequência relativa para um
+grande número de repetições, torna-se um resultado matemático rigoroso,
+através da aplicação de um caso especial da Lei dos Grandes Números
+(Magalhães, 2006).
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Lei dos Grandes Números}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Sejam \(X_1, X_2, \dots\) variáveis aleatórias com esperanças finitas e
+seja \(S_n = X_1+ X_2 + \dots + X_n\). A sequência \(\{X_n: n\geq 1\}\)
+satisfaz a \emph{Lei Fraca dos Grandes Números} se:
+
+\[\frac{S_n}{n} - E\left(\frac{S_n}{n}\right) \xrightarrow{p} p;\] em
+que \(\xrightarrow{p}\) representa convergência em probabilidade, e a
+\emph{Lei Forte dos Grandes Números} se:
+
+\[\frac{S_n}{n} - E\left(\frac{S_n}{n}\right) \xrightarrow{qc} p,\] em
+que \(\xrightarrow{qc}\) indica convergência ``quase certa''.
+
+\end{tcolorbox}
+
+A Lei Franca dos Grandes Números pode ser demonstrada de uma forma
+simples, por meio da simulação do experimento de uma moeda não viciada.
+O código (adaptado de Campos; Rêgo; Mendoça (2017)) a seguir implementa
+a simulação de \(n\) lançamentos da moeda, retornando a frequência
+relativa do evento \(A\) que representa coroa como resultado (Campos;
+Rêgo; Mendoça, 2017).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{lei\_dos\_grandes\_numeros\_faixa }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n) \{}
+  \FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{) }\CommentTok{\# Para garantir que o gráfico seja o mesmo toda vez}
+  
+  \CommentTok{\# Simulação}
+\NormalTok{  lancamentos }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(n) }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}
+\NormalTok{  df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{tentativa =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n,}
+    \AttributeTok{proporcao =} \FunctionTok{cumsum}\NormalTok{(lancamentos) }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n)}
+\NormalTok{  )}
+  
+  \CommentTok{\# Gráfico}
+  \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ tentativa, }\AttributeTok{y =}\NormalTok{ proporcao)) }\SpecialCharTok{+}
+    \CommentTok{\# Adiciona a faixa de destaque entre 0.45 e 0.55}
+    \FunctionTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{, }\AttributeTok{xmin =} \DecValTok{0}\NormalTok{, }\AttributeTok{xmax =}\NormalTok{ n, }\AttributeTok{ymin =} \FloatTok{0.45}\NormalTok{, }\AttributeTok{ymax =} \FloatTok{0.55}\NormalTok{, }
+             \AttributeTok{fill =} \StringTok{"gray80"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+    \CommentTok{\# Linha da proporção observada}
+    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"steelblue"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+    \CommentTok{\# Linha do valor esperado}
+    \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.5}\NormalTok{)  }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+} 
+    \CommentTok{\# Formatação visual}
+    \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{title =} \StringTok{"Lei dos Grandes Números: Convergência"}\NormalTok{,}
+      \AttributeTok{subtitle =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Destaque para a faixa de probabilidade [0.45, 0.55]"}\NormalTok{),}
+      \AttributeTok{x =} \StringTok{"Número de Lançamentos (n)"}\NormalTok{,}
+      \AttributeTok{y =} \StringTok{"Proporção Acumulada"}\NormalTok{,}
+      \AttributeTok{caption =} \StringTok{"Note como as oscilações \textquotesingle{}entram\textquotesingle{} na faixa cinza conforme n aumenta."}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{theme\_bw}\NormalTok{()}
+\NormalTok{\}}
+
+\CommentTok{\# Teste com 2000 lançamentos para ver a entrada na faixa}
+\FunctionTok{lei\_dos\_grandes\_numeros\_faixa}\NormalTok{(}\DecValTok{2000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{unidade2_files/figure-pdf/unnamed-chunk-1-1.pdf}
+
+\section{Teorema Central do Limite
+(TCL)}\label{teorema-central-do-limite-tcl}
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema Central do Limite}, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Seja \(X_{1},X_{2},...,X_{n}\) uma AA de uma distribuição com média
+\(\mu_{x}\) e variância \(\sigma_{x}^{2}<\infty\). Então para
+\(S_n = X_1 + X_2 + \dots + X_n, t\) temos:
+
+\[\frac{S_n - n\mu}{\sigma \sqrt{n}}  \xrightarrow{D} N(0,1),\]
+
+em que \(\xrightarrow{D}\) representa convergência em distribuição.
+
+\end{tcolorbox}
+
+\subsubsection{A Prova do TCL}\label{a-prova-do-tcl}
+
+A demonstração baseia-se nas \textbf{Funções Geradoras de Momentos
+(FGM)}. O Teorema XX afirma que cada variável aleatória possui uma FGM
+única, \(M(t)\), que a identifica. Para uma variável contínua \(Y\) com
+densidade \(f(y)\), a FGM é:
+
+\[M(t) = E(e^{tY}) = \int_{-\infty}^{\infty} e^{ty} f(y) dy.\]
+
+\subsection{Roteiro da Prova:}\label{roteiro-da-prova}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Usar a série de Taylor para encontrar a FGM de
+  \(Z_i = \frac{X_i - \mu}{\sigma}\).
+\item
+  Encontrar a FGM de \(U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\).
+\item
+  Mostrar que, conforme \(n \to \infty\), a FGM de \(U_n\) converge para
+  \(e^{t^2/2}\).
+\item
+  Identificar \(e^{t^2/2}\) como a FGM da Normal Padrão \(N(0, 1)\).
+\end{enumerate}
+
+\subsubsection{\texorpdfstring{Passo 1: A variável padronizada
+\(Z_i\)}{Passo 1: A variável padronizada Z\_i}}\label{passo-1-a-variuxe1vel-padronizada-z_i}
+
+Seja \(Z_i = \frac{X_i - \mu}{\sigma}\). Aqui, a suposição de variância
+finita (\(\sigma^2 < \infty\)) é crucial.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  \textbf{Propriedades:} Mostre que \(E(Z) = 0\) e
+  \(Var(Z) = E(Z^2) = 1\). \emph{(Dica: Z é uma função linear de X)}.
+\item
+  \textbf{Momentos na Origem:} Mostre que:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \(M_Z(0) = 1\)
+\item
+  \(M_Z'(0) = E(Z) = 0\)
+\item
+  \(M_Z''(0) = E(Z^2) = 1\)
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \textbf{Expansão de Taylor:} Expandindo \(M_Z(t)\) em torno de
+  \(t = 0\) e avaliando em \(t/\sqrt{n}\):
+\end{enumerate}
+
+\[M_Z\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{(t/\sqrt{n})^2}{2!} + R\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right).\]
+em que \(R\left(\frac{t}{\sqrt{n}}\right)\) representa o resto de termos
+cúbicos e de ordem superior.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \textbf{Resto:} Mostre que o resto
+  \(\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.\)
+\end{enumerate}
+
+\subsubsection{\texorpdfstring{Passo 2: A FGM de
+\(U_n\)}{Passo 2: A FGM de U\_n}}\label{passo-2-a-fgm-de-u_n}
+
+Podemos escrever \(U_n\) como:
+
+\[U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} Z_i.\]
+
+Como os \(X_i\) são uma AA (independentes), a FGM da soma é o produto
+das FGMs:
+
+\[M_{U_n}(t) = \prod_{i=1}^{n} M_{Z_i}\left(\frac{t}{\sqrt{n}}\right) = \left[ M_Z\left(\frac{t}{\sqrt{n}}\right) \right]^n.\]
+
+\subsubsection{Passo 3: O Limite}\label{passo-3-o-limite}
+
+Substituindo a expansão de Taylor:
+
+\[M_{U_n}(t) = \left[ 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right) \right]^n.\]
+
+Aplicando o limite \(n \to \infty\) e usando o fato de que
+\(\lim_{n \to \infty} (1 + \frac{a}{n})^n = e^a\), então:
+
+\[\lim_{n \to \infty} M_{U_n}(t) = e^{t^2/2}.\] \emph{(Use o fato que}
+\(\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.\).
+
+\subsubsection{Passo 4: Reconhecimento da
+Distribuição}\label{passo-4-reconhecimento-da-distribuiuxe7uxe3o}
+
+Se \(U \sim N(0, 1)\), então sua FGM é \(M_U(t) = e^{t^2/2}\).
+
+\textbf{Prova rápida:}
+
+\[E(e^{tU}) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{tu} e^{-u^2/2} du.\]
+
+Completando o quadrado no expoente:
+\(tu - \frac{u^2}{2} = -\frac{1}{2}(u-t)^2 + \frac{t^2}{2}\).
+
+\[E(e^{tU}) = e^{t^2/2} \underbrace{\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{(u-t)^2}{2}} du}_{1 \text{ (integral de uma FDP Normal)}} = e^{t^2/2}.\]
+
+\section*{Lista}\label{lista}
+\addcontentsline{toc}{section}{Lista}
+
+\markright{Lista}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Considere que \(Y \sim \text{Bin}(n = 5, p = 0,1)\).
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Use a função \texttt{pbinom()} do R para calcular \(P(Y < 1)\).
+\item
+  Qual distribuição normal aproxima esta distribuição binomial?
+\item
+  Use a função \texttt{pnorm()} do R para utilizar a aproximação normal
+  da binomial e calcular \(P(Y < 1)\).
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Suponha que \(Y \sim \text{Bin}(n, p = 0,1)\). Encontre o menor
+  tamanho de amostra \(n\) para que a probabilidade binomial exata
+  \(P(Y < 1)\) e a aproximação normal difiram por menos de \(0,01\).
+\item
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Enuncie o Teorema Central do Limite.
+\item
+  Demonstre o Teorema Central do Limite.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Enuncie a Lei Fraca dos Grandes Números. Certifique-se de declarar
+  todas as suposições e apresentar uma conclusão adequada.
+\end{enumerate}
+
+\bookmarksetup{startatroot}
+
+\chapter{Estimação Pontual}\label{estimauxe7uxe3o-pontual}
+
+\section{Propriedades de Estimadores}\label{propriedades-de-estimadores}
+
+\section{Estimador de Momentos}\label{estimador-de-momentos}
+
+Este método de estimação é um dos mais antigos, utilizado desde o século
+XVIII. A ideia é bem simples e intuitiva.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Definição (Caso Uniparamétrico)}, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, coltitle=black, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, breakable, rightrule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm, left=2mm, toprule=.15mm, opacityback=0]
+
+Seja \(X\) uma variável aleatória com função de densidade de
+probabilidade (f.d.p.) ou função de probabilidade (f.p.)
+\(f(x | \theta)\), suporte \(A\), espaço paramétrico \(\Theta\) e
+\(E_{\theta}(X^r) < \infty, \; r=1,2,\dots\).
+
+Dada uma amostra aleatória \(X_1, X_2, \ldots, X_n\) de \(X\), igualamos
+o primeiro momento populacional ao primeiro momento amostral:
+
+\[E_{\theta}(X) = \bar{X}\]
+
+\end{tcolorbox}
+
+Abaixo, apresentamos alguns exemplos para fixar o conceito, calculando
+também suas propriedades.
+
+\subsection{Exemplo 1: Uniforme
+Contínua}\label{exemplo-1-uniforme-contuxednua}
+
+Considere \(X \sim U(0, \theta)\). Sabemos que:
+\[E_{\theta}(X) = \frac{\theta}{2} \quad \text{e} \quad V(X) = \frac{\theta^2}{12}.\]
+
+Igualando os momentos:
+\[\frac{\theta}{2} = \bar{X} \implies \widehat{\theta} = T_1 = 2\bar{X}.\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Esperança:}
+  \(E(T_1) = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta\).
+  Logo, \(T_1\) é não viciado.
+\item
+  \textbf{Variância:}
+  \(Var(T_1) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}\).
+\end{itemize}
+
+\subsection{Exemplo 2: Uniforme
+Discreta}\label{exemplo-2-uniforme-discreta}
+
+Considere \(X \sim U_d(A)\) com \(A = \{1, 2, \ldots, \theta\}\) e
+\(\Theta = \{1, 2, \ldots\}\). Temos que:
+
+\[E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad V(X) = \frac{\theta^2 - 1}{12}.\]
+
+Igualando os momentos:
+\[\frac{1+\theta}{2} = \bar{X} \implies \widehat{\theta} = T_2 = 2\bar{X} - 1\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Esperança:}
+  \(E(T_2) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta\)
+  (Não viciado).
+\item
+  \textbf{Variância:}
+  \(Var(T_2) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}\).
+\end{itemize}
+
+\subsection{Exemplo 3: Normal (Variância
+Conhecida)}\label{exemplo-3-normal-variuxe2ncia-conhecida}
+
+Seja \(X \sim N(\mu, 9)\). Temos \(E(X) = \mu\) e \(V(X) = 9\).
+Igualando os momentos:
+\[E_{\mu}(X) = \mu = \bar{X} \implies \widehat{\mu} = T_3 = \bar{X}\]
+Propriedades: \(E(T_3) = \mu\) e \(Var(T_3) = \frac{9}{n}\).
+
+\subsection{Exemplo 4: Exponencial}\label{exemplo-4-exponencial}
+
+Considere \(X \sim \text{Exp}(\lambda)\) com
+\(E(X) = \frac{1}{\lambda}\) e \(V(X) = \frac{1}{\lambda^2}\).
+\[E_{\lambda}(X) = \frac{1}{\lambda} = \bar{X} \implies \widehat{\lambda} = T_4 = \frac{1}{\bar{X}}\]
+
+\emph{Nota sobre as propriedades:} Sabemos que
+\(S = \sum X_i \sim \text{Gama}(n, \lambda)\). Pode-se demonstrar que
+\(V = \bar{X} \sim \text{Gama}(n, n\lambda)\). Calculando a esperança da
+inversa:
+\[E(T_4) = E\left(\frac{1}{V}\right) = \frac{n}{n-1}\lambda \neq \lambda \quad (\text{para } n > 1)\]
+Logo, \(T_4\) é viciado, mas \textbf{assintoticamente não viciado}. A
+variância, após integração, resulta em:
+\[Var(T_4) = \frac{n^2}{(n-1)^2(n-2)}\lambda^2\] Como
+\(\lim_{n \to \infty} Var(T_4) = 0\), \(T_4\) é um estimador
+consistente.
+
+\subsection{Exemplo 5: Variáveis Independentes Não Identicamente
+Distribuídas}\label{exemplo-5-variuxe1veis-independentes-nuxe3o-identicamente-distribuuxeddas}
+
+Seja \(Y_i \sim N(\beta X_i, \sigma^2)\) para \(i = 1, \dots, n\), com
+\(X_i\) constantes conhecidas. Como \(E(Y_i) = \beta X_i\), usamos uma
+definição alternativa para o método dos momentos:
+\[\frac{\sum_{i=1}^n E(Y_i)}{n} = \bar{Y} \implies \frac{\sum_{i=1}^n \beta X_i}{n} = \bar{Y} \implies \beta\bar{X} = \bar{Y}\]
+\[\widehat{\beta} = \frac{\bar{Y}}{\bar{X}} = \frac{1}{n\bar{X}} \sum_{i=1}^n Y_i\]
+É fácil verificar que \(E(\widehat{\beta}) = \beta\) e
+\(Var(\widehat{\beta}) = \frac{\sigma^2}{n\bar{X}^2}\).
+
+\subsection{Exemplo 6: Normal (Média
+Zero)}\label{exemplo-6-normal-muxe9dia-zero}
+
+Seja \(X \sim N(0, \sigma^2)\). Queremos estimar \(\sigma^2\). Temos
+\(E(X) = 0\) e \(E(X^2) = \sigma^2\). Usando o segundo momento:
+\[E(X^2) = \frac{\sum_{i=1}^n X_i^2}{n} \implies \widehat{\sigma^2} = T = \frac{\sum_{i=1}^n X_i^2}{n}\]
+Com a curtose da Normal (3), temos \(V(X^2) = 2\sigma^4\). Logo,
+\(Var(T) = \frac{2\sigma^4}{n}\).
+
+\subsection{Caso Biparamétrico}\label{caso-biparamuxe9trico}
+
+Seja \(X \sim N(\mu, \sigma^2)\). Igualamos os dois primeiros momentos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(E(X) = \mu = \bar{X} \implies \widehat{\mu} = \bar{X}\)
+\item
+  \(E(X^2) = \sigma^2 + \mu^2 = \frac{\sum X_i^2}{n} \implies \widehat{\sigma^2} = \frac{\sum X_i^2}{n} - \bar{X}^2 = \frac{n-1}{n}S^2\)
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Exemplo 7: \(X \sim \text{Gama}(\alpha, \beta)\).
+  \(E(X) = \frac{\alpha}{\beta}\) e \(V(X) = \frac{\alpha}{\beta^2}\).
+  Usando \(\frac{E(X)}{V(X)} = \beta\), temos:
+\end{itemize}
+
+\[\widehat{\beta} = \frac{\bar{X}}{\widehat{\sigma^2}} \quad \text{e} \quad \widehat{\alpha} = \bar{X}\widehat{\beta} = \frac{\bar{X}^2}{\widehat{\sigma^2}}.\]
+
+Note que podemos usar tantos os momentos em relação é origem como os
+centrais.
+
+\section{Método de Mínimos
+Quadrados}\label{muxe9todo-de-muxednimos-quadrados}
+
+Vamos analisar a seção 11.4 do livro do Bussab e Morettin.
+
+Um dos procedimentos mais usados para obter estimadores é aquele que se
+baseia no princípio dos mínimos quadrados, introduzido por Gauss em
+1794, mas que primeiro apareceu com esse nome no apêndice do tratado de
+Legendre, Nouvelles Méthodes pour la Determination des Orbites des
+Comètes, publicado em Paris em 1806. Gauss somente viria a publicar seus
+resultados em 1809, em Hamburgo. Ambos utilizaram o princípio em conexão
+com problemas de Astronomia e Física.
+
+Vejamos o procedimento por meio de um exemplo simples.
+
+**Exemplo* Um engenheiro está estudando a resistência \(Y\) de uma fibra
+em função de seu diâmetro \(X\) e notou que as variáveis são
+aproximadamente proporcionais, isto é, elas obedecem à relação
+
+\[Y \approx  \theta X,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; (11.25).\] em que
+\(\theta\) é o coeficiente de proporcionalidade. Agora ele deseja
+estimar o parâmetro \(\theta\) , baseado numa amostra de cinco unidades,
+que, submetidas a mensuração e testes, produziram os resultados:
+
+\begin{longtable}[]{@{}lllllll@{}}
+\toprule\noalign{}
+& 1 & 2 & 3 & 4 & 5 & Média \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{X} & 1,2 & 1,5 & 1,7 & 2,0 & 2,6 & \(\bar{X}=1,8\) \\
+\textbf{Y} & 3,9 & 4,7 & 5,6 & 5,8 & 7,0 & \(\bar{Y}=5,4\) \\
+\end{longtable}
+
+Vamos fazer um diagrama de dispersão :
+
+Foi feito um pequeno programa no \textbf{R}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ X}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{26}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.2 1.5 1.7 2.0 2.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{39}\NormalTok{,}\DecValTok{47}\NormalTok{,}\DecValTok{56}\NormalTok{,}\DecValTok{58}\NormalTok{,}\DecValTok{70}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;Y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3.9 4.7 5.6 5.8 7.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{=}\FunctionTok{length}\NormalTok{(Y);n}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Xb}\OtherTok{=}\FunctionTok{mean}\NormalTok{(X);Xb}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Yb}\OtherTok{=}\FunctionTok{mean}\NormalTok{(Y);Yb}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 5.4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(X,Y,}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{3}\NormalTok{),}\AttributeTok{ylim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{8}\NormalTok{))}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a=}\DecValTok{0}\NormalTok{,}\AttributeTok{b=}\DecValTok{3}\NormalTok{,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}
+
+O valor \(a\) é o coeficiente linear e o valor \(b\) o coeficiente
+angular da reta que passa pela origem.
+
+Inspecionando os resultados, conclui-se que \(\hat{\theta}= 3\) parece
+ser um valor razoável.
+
+Como verificar a qualidade dessa estimativa? Podemos utilizar o modelo
+
+\[\hat{Y}= 3X\] e ver como esse prevê os valores de \(Y\), para os dados
+valores de \(X\), e como são as discrepâncias entre os valores
+observados e os estimados pelo modelo.
+
+Essa análise está resumida na Tabela abaixo:
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+X & Y & \(\hat{Y}=3X\) & \(e=Y-\hat{Y}\) & \(e^2\) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1,2 & 3,9 & 3,6 & 0,3 & 0,09 \\
+1,5 & 4,7 & 4,5 & 0,2 & 0,04 \\
+1,7 & 5,6 & 5,1 & 0,5 & 0,25 \\
+2,0 & 5,8 & 6,0 & −0,2 & 0,04 \\
+2,6 & 7,0 & 7,8 & −0,8 & 0,64 \\
+& & \textbf{Total} & \textbf{0} & \textbf{1,06} \\
+\end{longtable}
+
+Os valores da coluna \((Y - 3X)=(Y-\bar{Y})\) medem a inadequação do
+modelo para cada observação da amostra, enquanto o valor é uma tentativa
+de medir o erro quadrático total da amostra?. Como em situações
+anteriores, elevou-se ao quadrado para evitar o problema do sinal.
+
+Quanto menor for o erro quadrático total, melhor será a estimativa.
+
+Isso nos sugere procurar a estimativa que torne mínima essa soma de
+quadrados. Matematicamente, o problema passa a ser o de encontrar o
+valor de \(\theta\) que minimize a função
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta X_i)^2.\]
+
+O mínimo da função é obtido derivando-a em relação a \(\theta\), e
+igualando o resultado a zero (ver Morettin et al., 2005), o que resulta
+
+\[S'(\theta)=2\;\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta X_i)(-X_i),\]
+
+\[S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;(X_i\;Y_i-\theta X_i^2)=0\]
+
+\[S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i+ 2\theta\; \displaystyle \sum_{i=1}^{5} X_i^2.\]
+
+A derivada segunda de \(S\) é dada por:
+
+\[S^{''}(\theta)=2 \displaystyle \sum_{i=1}^{5} X_i^2>0\]
+
+Igualando a derivada primeira a zero temos:
+
+\[ \displaystyle \sum_{i=1}^{5}\;X_i\;Y_i -\theta \displaystyle \sum_{i=1}^{5}\;X_i^2=0\]
+
+Assim
+
+\[\theta=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{5}\;X_i^2},\]
+
+que é ponto de mínimo relativo pois a derivada segunda é sempre
+positiva.
+
+O estimador de mínimos quadrados de \(\theta\) é dado por:
+
+\[\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{5}\;X_i^2}.\]
+
+Usando os dados acima encontramos \(\hat{\theta}_{MQ} = 2,94\) , que
+conduz a um valor mínimo para \(S(\theta)\) de \$ 0,94\$ . Observe que
+esse valor é realmente menor do que o observado para \(\theta = 3\), ou
+seja, \(1,06\).
+
+Vamos utilizar o \texttt{R} para calcular a estimativa de mínimos
+quadrados de \(\theta\) bem como os valores previstos pelo modelo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{26}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.2 1.5 1.7 2.0 2.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{39}\NormalTok{,}\DecValTok{47}\NormalTok{,}\DecValTok{56}\NormalTok{,}\DecValTok{58}\NormalTok{,}\DecValTok{70}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{;Y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3.9 4.7 5.6 5.8 7.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{=}\FunctionTok{length}\NormalTok{(Y);n}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SX}\OtherTok{=}\FunctionTok{sum}\NormalTok{(X);SX}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X2}\OtherTok{=}\NormalTok{X}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{SX2}\OtherTok{=}\FunctionTok{sum}\NormalTok{(X2);SX2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 17.34
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{XY}\OtherTok{=}\NormalTok{X}\SpecialCharTok{*}\NormalTok{Y}
+\NormalTok{SXY}\OtherTok{=}\FunctionTok{sum}\NormalTok{(XY);SXY}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 51.05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{teta\_est}\OtherTok{=}\NormalTok{SXY}\SpecialCharTok{/}\NormalTok{SX2;teta\_est}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.94406
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(teta\_est,}\DecValTok{2}\NormalTok{)  }\DocumentationTok{\#\#Estimativa de mínimos quadrados.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.94
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Y\_est}\OtherTok{=}\NormalTok{teta\_est}\SpecialCharTok{*}\NormalTok{X;Y\_est}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 3.532872 4.416090 5.004902 5.888120 7.654556
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e}\OtherTok{=}\NormalTok{Y}\SpecialCharTok{{-}}\NormalTok{Y\_est}
+\NormalTok{e2}\OtherTok{=}\NormalTok{e}\SpecialCharTok{\^{}}\DecValTok{2}
+\FunctionTok{sum}\NormalTok{(e2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1.005738
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tabela}\OtherTok{=}\FunctionTok{cbind}\NormalTok{(X,Y,X2,XY,Y\_est,e,e2);tabela}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       X   Y   X2    XY    Y_est           e          e2
+[1,] 1.2 3.9 1.44  4.68 3.532872  0.36712803 0.134782989
+[2,] 1.5 4.7 2.25  7.05 4.416090  0.28391003 0.080604908
+[3,] 1.7 5.6 2.89  9.52 5.004902  0.59509804 0.354141676
+[4,] 2.0 5.8 4.00 11.60 5.888120 -0.08811995 0.007765126
+[5,] 2.6 7.0 6.76 18.20 7.654556 -0.65455594 0.428443479
+\end{verbatim}
+
+Vamos fazer agora com uma função direta do \texttt{R}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod1}\OtherTok{=}\FunctionTok{lm}\NormalTok{(Y}\SpecialCharTok{\textasciitilde{}}\NormalTok{X }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{);mod1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Y ~ X - 1)
+
+Coefficients:
+    X  
+2.944  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       1        2        3        4        5 
+3.532872 4.416090 5.004902 5.888120 7.654556 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Y ~ X - 1)
+
+Residuals:
+       1        2        3        4        5 
+ 0.36713  0.28391  0.59510 -0.08812 -0.65456 
+
+Coefficients:
+  Estimate Std. Error t value Pr(>|t|)    
+X   2.9441     0.1204   24.45 1.66e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5014 on 4 degrees of freedom
+Multiple R-squared:  0.9934,    Adjusted R-squared:  0.9917 
+F-statistic: 597.7 on 1 and 4 DF,  p-value: 1.661e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Analysis of Variance Table
+
+Response: Y
+          Df  Sum Sq Mean Sq F value    Pr(>F)    
+X          1 150.294 150.294  597.75 1.661e-05 ***
+Residuals  4   1.006   0.251                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SY2}\OtherTok{=}\FunctionTok{sum}\NormalTok{(Y}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{);SY2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 151.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#Observe que:}
+\FloatTok{150.294} \SpecialCharTok{+} \FloatTok{1.006}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 151.3
+\end{verbatim}
+
+Como foi dito, não esperávamos uma relação perfeita entre as duas
+variáveis, já que o diâmetro da fibra não é o único responsável pela
+resistência; outros fatores não controlados afetam o resultado.
+
+Desse modo, duas amostras obtidas do mesmo diâmetro \(X\) não teriam
+obrigatoriamente que apresentar o mesmo resultado \(Y\), mas valores em
+torno de um valor esperado \(\theta X\).
+
+Em outras palavras, estamos supondo que, para um dado valor da variável
+explicativa \$ X\$, os valores da variável resposta \$ Y\$ seguem uma
+distribuição de probabilidade \$ f\_Y(y)\$, centrada em \(\theta X\).
+
+Isso equivale a afirmar que, para cada \(X\), o desvio
+
+\[\epsilon  = Y-\theta X\]
+
+segue uma distribuição centrada no zero.
+
+Para melhor entendimento dessa proposição, veja o Capítulo 16. Podemos,
+então, escrever
+
+\[E(Y | x) = \theta x, \;\;\mbox{para todo valor}\;\; x.\]
+
+É comum supor que \(\epsilon\) tem a mesma distribuição, para todo valor
+\$ x\$ da variável explicativa \(X\).
+
+Desse modo, é comum escrever
+
+\[Y = \theta\;x+ \epsilon,\]
+
+com \(\epsilon\) seguindo a distribuição \(f_{\epsilon}(.)\), com média
+zero. Como ilustração, poderíamos supor que
+
+\[\epsilon \sim N(0,\sigma^2),\;\;\;\mbox{para todo}\;\; x.\]
+
+Quanto menor for a variância \(\sigma^2\) , melhor será a previsão de
+\(Y\) como função de \$ x\$ . Assim, parece razoável escolher \$
+\theta\$ que torna mínima a soma dos quadrados do erros:
+
+O modelo acima pode ser generalizado, de modo a envolver outras funções
+do parâmetro, resultando no modelo
+
+\[Y = g(X;  \theta) + \epsilon,\;\;\;\;\;\;\;\;\;\; (11.27)\]
+
+Note que
+
+\[E(Y) = g(X;  \theta),\]
+
+e devemos procurar o valor de \(\theta\) que minimize a função
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{n}\;\epsilon_i^2=\displaystyle \sum_{i=1}^{n}\;(Y_i-E(Y_i))^2=\displaystyle \sum_{i=1}^{n}\;(Y_i- g(X_i;\theta))^2,\;\;\;\;\;\;\;(11.28)\]
+
+Para uma amostra \((X_1, Y_1),\ldots, (X_n, Y_n)\) das variáveis \(X\) e
+\(Y\). A solução MQ é chamada de estimador de mínimos quadrados (EMQ) de
+\(\theta\).
+
+Nos Capítulos 15 e 16, voltaremos a esse tópico e trataremos com mais
+detalhes os chamados modelos lineares.
+
+Suponha que
+
+\[Y_i | X_i = \theta X_i + \epsilon_i, \;\;\;i=1,2,\ldots,n\]
+
+com
+
+\[\epsilon_i \sim N(0,\sigma^2),\;\;\;i=1,2,\ldots,n\]
+
+Na prática usamos:
+
+\[Y_i  = \theta X_i + \epsilon_i, \;\;\;i=1,2,\ldots,n.\]
+
+Aplicando o operador esperança temos:
+
+\[E\left(Y_i \right) = \theta X_i + E(\epsilon_i)= \theta X_i+0= \theta X_i.\]
+
+Calculando a variância temos:
+
+\[Var\left( Y_i \right) = Var\left(\theta X_i + \epsilon_i\right)= Var(\epsilon_i)= \sigma^2.\]
+
+Considere o estimador de MQ de \(\theta\) dado por:
+
+\[\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{n}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{n}\;X_i^2}= \displaystyle \sum_{i=1}^{n}\;w_i \;Y_i,\]
+com
+
+\[w_i= \frac{X_i}{\sum_{i=1}^{n}\;X_i^2}.\]
+
+Inicialmente mostre que:
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i\;X_i =1.\]
+
+\textbf{Prova}
+
+Temos que :
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i\;X_i = \displaystyle \sum_{i=1}^{n}\; \;\frac{X_i}{\sum_{i=1}^{n}\;X_i^2} \times X_i.\]
+
+\[\displaystyle \sum_{i=1}^{n}\;  w_i\;X_i= \frac{1}{\sum_{i=1}^{n}\;X_i^2}\;\;\displaystyle \sum_{i=1}^{n}\;X_i^2=1.\]
+
+Agora mostre que \(\hat{\theta}_{MQ}\) é um estimador não viciado de
+\(\theta\).
+
+\[E\left(\hat{\theta}_{MQ}\right)=E\left(\displaystyle \sum_{i=1}^{n}\; w_i Y_i \right),\]
+
+\[E\left(\hat{\theta}_{MQ}\right)=\displaystyle \sum_{i=1}^{n}\;E(w_i\;Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i\;E(\;Y_i)\]
+
+\[E\left(\hat{\theta}_{MQ}\right)= \displaystyle \sum_{i=1}^{n}\;w_i\;\theta\;X_i=\theta\;\displaystyle \sum_{i=1}^{n}\;X_i w_i\]
+
+\[E\left(\hat{\theta}_{MQ}\right)=\theta \times 1=\theta.\]
+
+Agora mostre que:
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i^2\; =\frac{1}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.\]
+
+\textbf{Prova:}
+
+Seja \[A=\displaystyle \sum_{i=1}^{n}\;X_i^2\].
+
+Assim
+
+\[w_i= \frac{X_i}{A}\;\;\;\;\;,w_i^2= \frac{X_i^2}{A^2} \]
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i^2\;=\displaystyle \sum_{i=1}^{n}\;\frac{X_i^2}{A^2}=\frac{1}{A^2}\;\displaystyle \sum_{i=1}^{n}\;X_i^2\]
+
+\[\displaystyle \sum_{i=1}^{n}\;w_i^2\;=\frac{1}{A^2}\;A=\frac{1}{A}=\;\frac{1}{\displaystyle \sum_{i=1}^{n}\;X_i^2}\]
+
+Agora mostre que a variância do estimador de mínimos quadrados de
+\(\theta\) é dada por:
+
+\[Var\left(\hat{\theta}_{MQ}\right)= \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.\]
+
+\textbf{Prova:}
+
+\[Var\left(\hat{\theta}_{MQ}\right)=Var\left(\displaystyle \sum_{i=1}^{n}\; w_i Y_i \right)=\displaystyle \sum_{i=1}^{n}\;Var( w_i Y_i),\]
+
+\[Var\left(\hat{\theta}_{MQ}\right)=\displaystyle \sum_{i=1}^{n}\;w_i^2\;V(Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i^2\;\sigma^2, \]
+
+\[Var\left(\hat{\theta}_{MQ}\right)=\sigma^2\;\displaystyle \sum_{i=1}^{n}\;w_i^2=
+\frac{\sigma^2}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.\]
+
+Qual a distribuição Amostral do estimador de mínimos quadrados
+\(V=\hat{\theta}_{MQ}\)?
+
+\textbf{Prova:} Sabemos que
+
+\[Y_i \sim N(\theta X_i, \sigma^2)\] e sua função geradora de momentos é
+dada por:
+
+\[M_{Y_i}(t)=\exp(\theta X_i\;t + \frac{1}{2} \sigma^2 \;t^2 )\]
+
+A função de momentos de \(V\) é dada por:
+
+\[M_V(t)=E\left(e^{tV}\right)=E\left(e^{t\;\displaystyle \sum_{i=1}^{n}\;w_iY_i }\right)\]
+
+\[M_V(t)=E\left(e^{\;\displaystyle \sum_{i=1}^{n}\;w_i\;t\;Y_i} \right)\]
+
+\[M_V(t)=\displaystyle \prod_{i=1}^{n}\;E\left( e^{wi\;t\;Y_i} \right),\]
+
+\[M_V(t)=\displaystyle \prod_{i=1}^{n}\;M_{Y_i}(w_i t)\]
+
+\[M_V(t)=\displaystyle \prod_{i=1}^{n}\;\exp(\theta X_i\;w_i\;t + \frac{1}{2} \sigma^2 \;w_i^2\;t^2)\]
+
+\[M_V(t)=\exp\left(\theta\;t\; \displaystyle \sum_{i=1}^{n}X_i\;w_i\; + \frac{1}{2} \sigma^2 \;\displaystyle \sum_{i=1}^{n} w_i^2\;t^2\right)\]
+
+\[M_V(t)=\exp\left(\theta\;t\;\times 1 +\frac{1}{2}\times  \sigma^2  \times \frac{1}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)\]
+
+\[M_V(t)=\exp\left(\theta\;t\; +\frac{1}{2}   \times \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)\]
+
+Assim
+
+\[V=\hat{\theta}_{MQ}  \sim N \left( \theta,\frac {\sigma^2}{\displaystyle \sum_{i=1}^{n} X_i^2}\right)\]
+
+Qual o estimador de mínimos quadrados baseado em uma amostra aleatória
+de tamanho \(n\), \(X_1,X_2,\ldots,X_n)\), de uma variável \(X\) com
+distribuição:
+
+\begin{itemize}
+\tightlist
+\item
+  \(X \sim Poisson(\theta)\).
+\item
+  \(X \sim N(\mu,1)\).
+\item
+  \(X \sim Ber(p).\)
+\end{itemize}
+
+\textbf{Solução:} Devemos minimizar
+
+\begin{verbatim}
+Sabemos que
+\end{verbatim}
+
+\[E(X_i)=\theta,\;\;i=1,2,\ldots,n.\]
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\theta)^2\]
+
+\[S(\theta)=\displaystyle \sum_{i=1}^{n}\;X_i^2- 2\displaystyle \sum_{i=1}^{n}\;X_i\;\theta + n\theta^2=a\theta^2 +b \theta +c\]
+
+Como \(a>0\) temos
+
+\[\theta_{min}=\frac{-b}{2a}=\frac{2\displaystyle \sum_{i=1}^{n}\;X_i}{2n}=\bar{X}\]
+
+que é o nosso estimador de mínimos quadrados.
+
+No caso da normal temos:
+
+Sabemos que
+
+\[E(X_i)=\mu,\;\;i=1,2,\ldots,n.\]
+
+\[S(\mu)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\mu)^2\]
+
+\[\mu_{min}=\bar{X},\]
+
+que é o nosso estimador de mínimos quadrados.
+
+No caso da Bernouli temos
+
+\[E(X_i)=p,\;\;i=1,2,\ldots,n.\]
+
+\[S(p)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-p)^2\]
+
+\[S(p)=np^2 -2\displaystyle \sum_{i=1}^{n}\;X_i\;p  +\displaystyle \sum_{i=1}^{n}\;X_i^2\]
+
+\[S'(p)=2pn-2\displaystyle \sum_{i=1}^{n}\;X_i \]
+
+\[S^{''}(p)=2n >0\]
+
+De \(S'(p)=0\) temos
+
+\[p_{min}=\bar{X},\]
+
+que é o nosso estimador de mínimos quadrados.
+
+\section{Lista}\label{lista-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Estamos estudando o modelo \(y_t= \mu  + \epsilon_t\), para o qual uma
+  amostra de cinco elementos produziu os seguintes valores para
+  \(y_t: 3,
+  5, 6, 8, 16.\)
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Calcule os valores de \[S(\mu)=\displaystyle  \sum_{t} \;(y_t-\mu)^2\]
+  para \(\mu = 6, 7, 8, 9, 10\), e faça o gráfico de \(S(\mu)\) em
+  relação a \(\mu\).
+\end{enumerate}
+
+Qual o valor que parece tornar mínimo \(S(\mu)\)?
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Derivando \(S(\mu)\) em relação a \(\mu\) , e igualando o resultado a
+  zero, você encontrará o EMQ de \(\mu\). Usando os dados acima,
+  encontre a estimativa para \(\mu\) e compare com o resultado do item
+  anterior.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Os dados abaixo referem-se ao índice de inflação (\(y_t\)) de 1967 a
+  1979.
+\end{enumerate}
+
+\begin{longtable}[]{@{}llllllll@{}}
+\toprule\noalign{}
+Ano (\(t\)) & 1967 & 1969 & 1971 & 1973 & 1975 & 1977 & 1979 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Inflação (\(y_t\)) & 128 & 192 & 277 & 373 & 613 & 1236 & 2639 \\
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Faça o gráfico de \(y_t\) contra \(t\).
+\item
+  Considere ajustar o modelo
+\end{enumerate}
+
+\[y_t= \alpha + \beta t + \epsilon_t \]
+
+aos dados. Encontre as estimativas de mínimos quadrados de \(\alpha\) e
+\(\beta\).
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\item
+  Qual seria a inflação em 1981?
+\item
+  Você teria alguma restrição em adotar o modelo linear nesse caso ?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  No Problema 7, determinamos os estimadores de mínimos quadrados para o
+  modelo \[y_t= f(t) + \epsilon_t,\] no qual
+\end{enumerate}
+
+\[f(t) = \alpha + \beta\;t\].
+
+Suponha agora que
+
+\[f(t) = \alpha + \beta\; x_t,\; t = 1,2,\ldots, n,\]
+
+ou seja, temos \(n\) valores fixos \(x_1,x_2,\ldots,x_n\) uma variável
+fixa (não aleatória) \(x\). Obtenha os EMQ de \(\alpha\) e \(\beta\)
+para esse modelo.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Aplique os resultados do Problema 3 para os dados a seguir:
+\end{enumerate}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1045}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\(t\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+7
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+8
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+9
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+10
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(x_t\) & 1,5 & 1,8 & 1,6 & 2,5 & 4,0 & 3,8 & 4,5 & 5,1 & 6,5 & 6,0 \\
+\(y_t\) & 66,8 & 67,0 & 66,9 & 67,6 & 68,9 & 68,7 & 69,3 & 69,8 & 71,0 &
+70,6 \\
+\end{longtable}
+
+\section{Método de Máxima
+Verossimilhança}\label{muxe9todo-de-muxe1xima-verossimilhanuxe7a}
+
+\bookmarksetup{startatroot}
+
+\chapter{Estimação Intervalar}\label{estimauxe7uxe3o-intervalar}
+
+\bookmarksetup{startatroot}
+
+\chapter{Testes de Hipóteses}\label{testes-de-hipuxf3teses}
+
+\bookmarksetup{startatroot}
+
+\chapter{Testes de Homogeneidade e
+Independência}\label{testes-de-homogeneidade-e-independuxeancia}
+
+\bookmarksetup{startatroot}
+
+\chapter{Inferência Estatística e Ciência de
+Dados}\label{inferuxeancia-estatuxedstica-e-ciuxeancia-de-dados}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Referências}\label{referuxeancias}
+\addcontentsline{toc}{chapter}{Referências}
+
+\markboth{Referências}{Referências}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{1}
+\bibitem[\citeproctext]{ref-campos2017metodos}
+CAMPOS, Marcilia Andrade; RÊGO, Leandro Chaves; MENDOÇA, André Feitoza
+de. \textbf{M{é}todos Probabil{í}sticos e Estat{í}sticos com
+Aplica{ç}{õ}es em Engenharias e Ci{ê}ncias Exatas}. Rio de Janeiro: LTC,
+2017.
+
+\bibitem[\citeproctext]{ref-casella2002statistical}
+CASELLA, George; BERGER, Roger L. \textbf{Statistical Inference}. 2. ed.
+Pacific Grove, CA: Duxbury Press, 2002.
+
+\bibitem[\citeproctext]{ref-moderndive}
+KIM, Albert Y.; ISMAY, Chester; KUHN, Max.
+\href{https://doi.org/10.21105/jose.00115}{Take a moderndive into
+introductory linear regression with R}. \textbf{The Journal of Open
+Source Education}, v. 4, n. 41, 115, 2021.
+
+\bibitem[\citeproctext]{ref-magalhaes2006probabilidade}
+MAGALHÃES, Marcos Nascimento. \textbf{Probabilidade e Vari{á}veis
+Aleat{ó}rias}. 2. ed. S{ã}o Paulo: EDUSP, 2006.
+
+\bibitem[\citeproctext]{ref-tidyverse}
+WICKHAM, Hadley \emph{et al.}
+\href{https://doi.org/10.21105/joss.01686}{Welcome to the {tidyverse}}.
+\textbf{Journal of Open Source Software}, v. 4, n. 43, p. 1686, 2019.
+
+\end{CSLReferences}
+
+
+
+\end{document}

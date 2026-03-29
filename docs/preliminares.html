@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Estimação Intervalar</title>
+<title>1&nbsp; Preliminares</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./unidade5.html" rel="next">
-<link href="./unidade3.html" rel="prev">
+<link href="./unidade1.html" rel="next">
+<link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade4.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./preliminares.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preliminares</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -121,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preliminares.html" class="sidebar-item-text sidebar-link">
+  <a href="./preliminares.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preliminares</span></span></a>
   </div>
 </li>
@@ -145,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./unidade4.html" class="sidebar-item-text sidebar-link active">
+  <a href="./unidade4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></span></a>
   </div>
 </li>
@@ -179,14 +208,37 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#alguns-resultados-matemáticos-importantes" id="toc-alguns-resultados-matemáticos-importantes" class="nav-link active" data-scroll-target="#alguns-resultados-matemáticos-importantes"><span class="header-section-number">1.1</span> Alguns resultados matemáticos importantes</a>
+  <ul class="collapse">
+  <li><a href="#soma-de-potências-e-a-fórmula-de-faulhaber" id="toc-soma-de-potências-e-a-fórmula-de-faulhaber" class="nav-link" data-scroll-target="#soma-de-potências-e-a-fórmula-de-faulhaber"><span class="header-section-number">1.1.1</span> Soma de Potências e a Fórmula de Faulhaber</a></li>
+  <li><a href="#coeficiente-binomial" id="toc-coeficiente-binomial" class="nav-link" data-scroll-target="#coeficiente-binomial"><span class="header-section-number">1.1.2</span> Coeficiente Binomial</a></li>
+  <li><a href="#progressão-geométrica" id="toc-progressão-geométrica" class="nav-link" data-scroll-target="#progressão-geométrica"><span class="header-section-number">1.1.3</span> Progressão Geométrica</a></li>
+  <li><a href="#série-de-taylor" id="toc-série-de-taylor" class="nav-link" data-scroll-target="#série-de-taylor"><span class="header-section-number">1.1.4</span> Série de Taylor</a></li>
+  </ul></li>
+  <li><a href="#independência" id="toc-independência" class="nav-link" data-scroll-target="#independência"><span class="header-section-number">1.2</span> Independência</a></li>
+  <li><a href="#valor-esperado" id="toc-valor-esperado" class="nav-link" data-scroll-target="#valor-esperado"><span class="header-section-number">1.3</span> Valor Esperado</a></li>
+  <li><a href="#variância" id="toc-variância" class="nav-link" data-scroll-target="#variância"><span class="header-section-number">1.4</span> Variância</a></li>
+  <li><a href="#covariância" id="toc-covariância" class="nav-link" data-scroll-target="#covariância"><span class="header-section-number">1.5</span> Covariância</a></li>
+  <li><a href="#função-geradora-de-momentos" id="toc-função-geradora-de-momentos" class="nav-link" data-scroll-target="#função-geradora-de-momentos"><span class="header-section-number">1.6</span> Função Geradora de Momentos</a></li>
+  <li><a href="#tipos-de-convergência" id="toc-tipos-de-convergência" class="nav-link" data-scroll-target="#tipos-de-convergência"><span class="header-section-number">1.7</span> Tipos de Convergência</a></li>
+  <li><a href="#algumas-das-principais-distribuições-de-probabilidade" id="toc-algumas-das-principais-distribuições-de-probabilidade" class="nav-link" data-scroll-target="#algumas-das-principais-distribuições-de-probabilidade"><span class="header-section-number">1.8</span> Algumas das principais distribuições de probabilidade</a>
+  <ul class="collapse">
+  <li><a href="#distribuições-discretas" id="toc-distribuições-discretas" class="nav-link" data-scroll-target="#distribuições-discretas"><span class="header-section-number">1.8.1</span> Distribuições discretas</a></li>
+  <li><a href="#distribuições-contínuas" id="toc-distribuições-contínuas" class="nav-link" data-scroll-target="#distribuições-contínuas"><span class="header-section-number">1.8.2</span> Distribuições Contínuas</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preliminares</span></h1>
 </div>
 
 
@@ -203,8 +255,224 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Neste capítulo iremos apresentar parte da base necessária para o bom desenvolvimento da disciplina.</p>
+<section id="alguns-resultados-matemáticos-importantes" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="alguns-resultados-matemáticos-importantes"><span class="header-section-number">1.1</span> Alguns resultados matemáticos importantes</h2>
+<section id="soma-de-potências-e-a-fórmula-de-faulhaber" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="soma-de-potências-e-a-fórmula-de-faulhaber"><span class="header-section-number">1.1.1</span> Soma de Potências e a Fórmula de Faulhaber</h3>
+<p>O estudo de somatórios é fundamental em diversas áreas da matemática, especialmente em Estatística, Análise Numérica e Ciência de Dados. Neste e-book, exploramos uma ferramenta poderosa: a Fórmula de Faulhaber, que permite calcular somas de potências de forma exata e eficiente.</p>
+<p>Considere o seguinte problema:</p>
+<p><span class="math display">\[1  + 2 + \dots + 99 + 100.\]</span></p>
+<p>Somar termo a termo pode ser trabalhoso. No entanto, existe uma fórmula fechada:</p>
+<p><span class="math display">\[\sum \limits_{i=1}^{n} i = \frac{n(n+1)}{2}.\]</span></p>
+<p>Essa expressão mostra que podemos substituir uma soma por uma função simples.</p>
+<p>Algumas somas importantes:</p>
+<p><span class="math display">\[
+\sum_{k=1}^{n} k = \frac{n(n+1)}{2}
+\]</span></p>
+<p><span class="math display">\[
+\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}
+\]</span></p>
+<p><span class="math display">\[
+\sum_{k=1}^{n} k^3 = \left(\frac{n(n+1)}{2}\right)^2
+\]</span></p>
+<p>Observe que todas resultam em polinômios em <span class="math inline">\(n\)</span>. Podemos observar que:</p>
+<ul>
+<li>Soma de grau 1 → polinômio grau 2;</li>
+<li>Soma de grau 2 → polinômio grau 3;</li>
+<li>Soma de grau 3 → polinômio grau 4.</li>
+</ul>
+<p>Isso sugere um padrão geral.</p>
+<p>A fórmula geral para a soma de potências é:</p>
+<p><span class="math display">\[
+\sum_{k=1}^{n} k^{p} = \frac{1}{p+1} \sum_{r=0}^{p} \binom{p+1}{r} B_r , n^{p+1-r},
+\]</span></p>
+<p>em que <span class="math inline">\(B_r\)</span> são os números de <a href="https://en.wikipedia.org/wiki/Bernoulli_number">Bernoulli</a>.</p>
+<p>Essa fórmula mostra que qualquer soma desse tipo pode ser escrita como um polinômio.</p>
+</section>
+<section id="coeficiente-binomial" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="coeficiente-binomial"><span class="header-section-number">1.1.2</span> Coeficiente Binomial</h3>
+<p>O coeficiente binomial é um dos conceitos mais importantes da Matemática Discreta, com aplicações em Estatística, Probabilidade, Combinatória e Ciência de Dados.</p>
+<p>Ele responde a uma pergunta fundamental:</p>
+<blockquote class="blockquote">
+<p>De quantas formas podemos escolher <span class="math inline">\(k\)</span> elementos de um conjunto com <span class="math inline">\(n\)</span> elementos?</p>
+</blockquote>
+<p>O coeficiente binomial é definido como o número de subconjuntos de tamanho <span class="math inline">\(k\)</span> que podem ser formados a partir de um conjunto com <span class="math inline">\(n\)</span> elementos:</p>
+<p><span class="math display">\[
+\binom{n}{k}.
+\]</span></p>
+<p>O coeficiente binomial pode ser calculado por:</p>
+<p><span class="math display">\[
+\binom{n}{k} = \frac{n!}{k!(n-k)!},
+\]</span></p>
+<p>em que <span class="math inline">\(n!\)</span> é o fatorial de <span class="math inline">\(n\)</span>.</p>
+<p>Essa fórmula permite cálculo direto e eficiente. A ideia por trás da fórmula:</p>
+<ul>
+<li><span class="math inline">\(n!\)</span> → todas as permutações possíveis;<br>
+</li>
+<li><span class="math inline">\(k!\)</span> → remove a ordem dos elementos escolhidos;<br>
+</li>
+<li><span class="math inline">\((n-k)!\)</span> → remove a ordem dos elementos não escolhidos.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Resultado: número de combinações (ordem não importa).</p>
+</blockquote>
+<div class="callout callout-style-default callout-important callout-titled" title="Exemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Escolher 2 elementos de um conjunto com 4:</p>
+<p><span class="math display">\[
+\binom{4}{2} = 6.
+\]</span></p>
+</div>
+</div>
+<section id="propriedades-importantes" class="level4" data-number="1.1.2.1">
+<h4 data-number="1.1.2.1" class="anchored" data-anchor-id="propriedades-importantes"><span class="header-section-number">1.1.2.1</span> Propriedades Importantes</h4>
+<ol type="1">
+<li>Simetria</li>
+</ol>
+<p><span class="math display">\[
+\binom{n}{k} = \binom{n}{n-k}.
+\]</span></p>
+<p>Escolher <span class="math inline">\(k\)</span> elementos é equivalente a excluir <span class="math inline">\(n-k\)</span>.</p>
+<ol start="2" type="1">
+<li>Relação de Pascal</li>
+</ol>
+<p><span class="math display">\[
+\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}.
+\]</span></p>
+<p>Essa propriedade é a base do Triângulo de Pascal. Os coeficientes binomiais podem ser organizados em uma estrutura triangular:</p>
+<p><span class="math display">\[
+\begin{matrix}
+1 \\
+1 &amp; 1 \\
+1 &amp; 2 &amp; 1 \\
+1 &amp; 3 &amp; 3 &amp; 1 \\
+1 &amp; 4 &amp; 6 &amp; 4 &amp; 1
+\end{matrix}
+\]</span></p>
+<p>Cada número é a soma dos dois acima. Os coeficientes aparecem na expansão de:</p>
+<p><span class="math display">\[(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k.\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Exemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4.\]</span></p>
+</div>
+</div>
+</section>
+</section>
+<section id="progressão-geométrica" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="progressão-geométrica"><span class="header-section-number">1.1.3</span> Progressão Geométrica</h3>
+<p>A Progressão Geométrica (PG) é uma sequência numérica amplamente utilizada em Matemática, Estatística, Economia e Ciências Naturais. Ela descreve fenômenos que crescem ou decrescem de forma multiplicativa.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Definição:">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definição:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma PG é uma sequência em que cada termo, a partir do segundo, é obtido multiplicando o termo anterior por uma constante chamada razão.</p>
+<p><span class="math display">\[
+a_n = a_1 \cdot q^{n-1},
+\]</span></p>
+<p>em que <span class="math inline">\(a_1\)</span> é o primeiro termo, <span class="math inline">\(q\)</span> é a razão e <span class="math inline">\(n\)</span> é a posição do termo.</p>
+</div>
+</div>
+<p>O termo geral de uma PG é dado por:</p>
+<p><span class="math display">\[
+a_n = a_1 \cdot q^{n-1}.
+\]</span></p>
+<p>Isso permite calcular qualquer termo diretamente.</p>
+<section id="soma-dos-n-primeiros-termos-q-neq-1" class="level4" data-number="1.1.3.1">
+<h4 data-number="1.1.3.1" class="anchored" data-anchor-id="soma-dos-n-primeiros-termos-q-neq-1"><span class="header-section-number">1.1.3.1</span> Soma dos <span class="math inline">\(n\)</span> primeiros termos <span class="math inline">\((q \neq 1)\)</span></h4>
+<p><span class="math display">\[
+S_n = a_1 \cdot \frac{q^n - 1}{q - 1}.
+\]</span></p>
+<p>ou</p>
+<p><span class="math display">\[
+S_n = a_1 \cdot \frac{1 - q^n}{1 - q}.
+\]</span></p>
+</section>
+<section id="soma-infinita-q-1" class="level4" data-number="1.1.3.2">
+<h4 data-number="1.1.3.2" class="anchored" data-anchor-id="soma-infinita-q-1"><span class="header-section-number">1.1.3.2</span> Soma infinita <span class="math inline">\((|q| &lt; 1)\)</span></h4>
+<p>Quando a PG é convergente:</p>
+<p><span class="math display">\[S = \frac{a_1}{1 - q}.\]</span></p>
+</section>
+</section>
+<section id="série-de-taylor" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="série-de-taylor"><span class="header-section-number">1.1.4</span> Série de Taylor</h3>
+<p>A Série de Taylor é uma ferramenta fundamental da Análise Matemática que permite representar funções como somas infinitas de potências.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Definição:">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definição:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A expansão em série de Taylor de uma função <span class="math inline">\(f\)</span> em torno de <span class="math inline">\(x = 0\)</span> (Série de Maclaurin) é dada por:</p>
+<p><span class="math display">\[f(x) = \sum_{k=0}^{\infty} \frac{f^{(k)}(0)}{k!} x^k,\]</span></p>
+<p>em que <span class="math inline">\(f^{(k)}(0)\)</span> representa a <span class="math inline">\(k\)</span>-ésima derivada de <span class="math inline">\(f\)</span> avaliada em 0.</p>
+</div>
+</div>
+<section id="caso-especial-função-exponencial" class="level4" data-number="1.1.4.1">
+<h4 data-number="1.1.4.1" class="anchored" data-anchor-id="caso-especial-função-exponencial"><span class="header-section-number">1.1.4.1</span> Caso especial: Função exponencial</h4>
+<p>Um dos casos mais importantes é a expansão da função exponencial:</p>
+<p><span class="math display">\[
+e^x = \sum_{k=0}^{\infty} \frac{x^k}{k!}.
+\]</span></p>
+<p>Essa igualdade é válida para todo <span class="math inline">\(x \in \mathbb{R}\)</span>.</p>
+</section>
+</section>
+</section>
+<section id="independência" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="independência"><span class="header-section-number">1.2</span> Independência</h2>
+</section>
+<section id="valor-esperado" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="valor-esperado"><span class="header-section-number">1.3</span> Valor Esperado</h2>
+</section>
+<section id="variância" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="variância"><span class="header-section-number">1.4</span> Variância</h2>
+</section>
+<section id="covariância" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="covariância"><span class="header-section-number">1.5</span> Covariância</h2>
+</section>
+<section id="função-geradora-de-momentos" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="função-geradora-de-momentos"><span class="header-section-number">1.6</span> Função Geradora de Momentos</h2>
+</section>
+<section id="tipos-de-convergência" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="tipos-de-convergência"><span class="header-section-number">1.7</span> Tipos de Convergência</h2>
+</section>
+<section id="algumas-das-principais-distribuições-de-probabilidade" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="algumas-das-principais-distribuições-de-probabilidade"><span class="header-section-number">1.8</span> Algumas das principais distribuições de probabilidade</h2>
+<section id="distribuições-discretas" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="distribuições-discretas"><span class="header-section-number">1.8.1</span> Distribuições discretas</h3>
+</section>
+<section id="distribuições-contínuas" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="distribuições-contínuas"><span class="header-section-number">1.8.2</span> Distribuições Contínuas</h3>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -762,13 +1030,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./unidade3.html" class="pagination-link" aria-label="Estimação Pontual">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimação Pontual</span></span>
+      <a href="./intro.html" class="pagination-link" aria-label="Identificação da Disciplina">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Identificação da Disciplina</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./unidade5.html" class="pagination-link" aria-label="Testes de Hipóteses">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testes de Hipóteses</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./unidade1.html" class="pagination-link" aria-label="Fundamentos da Inferência Estatística">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fundamentos da Inferência Estatística</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
