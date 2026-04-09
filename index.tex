@@ -1,27 +1,30 @@
 % Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
+  brazilian,
   letterpaper,
   DIV=11,
   numbers=noendperiod]{scrreprt}
-
+\usepackage{xcolor}
 \usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
 \usepackage{lmodern}
-\ifPDFTeX\else  
-    % xetex/luatex font selection
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -39,18 +42,29 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -70,7 +84,7 @@
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
@@ -80,7 +94,7 @@
 \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
 \newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
@@ -93,8 +107,7 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -106,17 +119,21 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
+
+
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -150,6 +167,26 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
 
 \usepackage{graphicx}
 \usepackage{eso-pic}
@@ -241,22 +278,9 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-\ifLuaTeX
-\usepackage[bidi=basic]{babel}
-\else
-\usepackage[bidi=default]{babel}
-\fi
-\babelprovide[main,import]{brazilian}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
-
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdflang={pt-br},
   colorlinks=true,
@@ -266,9 +290,9 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
+
 \author{}
 \date{}
-
 \begin{document}
 
 % Capa sem número
@@ -304,6 +328,7 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+
 \bookmarksetup{startatroot}
 
 \chapter*{Informações Legais e Declaração de Uso de Inteligência
@@ -824,7 +849,7 @@ fórmula:
 Resultado: número de combinações (ordem não importa).
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, colframe=quarto-callout-important-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Escolher 2 elementos de um conjunto com 4:
 
@@ -879,7 +904,7 @@ expansão de:
 
 \[(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k.\]
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, colframe=quarto-callout-important-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \[(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4.\]
 
@@ -891,7 +916,7 @@ A Progressão Geométrica (PG) é uma sequência numérica amplamente
 utilizada em Matemática, Estatística, Economia e Ciências Naturais. Ela
 descreve fenômenos que crescem ou decrescem de forma multiplicativa.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Uma PG é uma sequência em que cada termo, a partir do segundo, é obtido
 multiplicando o termo anterior por uma constante chamada razão.
@@ -938,7 +963,7 @@ Quando a PG é convergente:
 A Série de Taylor é uma ferramenta fundamental da Análise Matemática que
 permite representar funções como somas infinitas de potências.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 A expansão em série de Taylor de uma função \(f\) em torno de \(x = 0\)
 (Série de Maclaurin) é dada por:
@@ -960,6 +985,71 @@ e^x = \sum_{k=0}^{\infty} \frac{x^k}{k!}.
 \]
 
 Essa igualdade é válida para todo \(x \in \mathbb{R}\).
+
+\section{Função de
+Distribuição}\label{funuxe7uxe3o-de-distribuiuxe7uxe3o}
+
+Sendo \(X\) uma variável aleatória em
+\((\Omega, \mathcal{F}, \mathcal{P})\), sua função de distribuição é
+difinida por:
+
+\[F_X(x) = \Pr(X \leq x),\] com \(x\) percorrendo todos os reais.
+
+O conhecimento da função de distribuição permite obter qualquer
+informação sobre a variável. Importante destacar que, mesmo que a
+variável só assuma valores num subconjunto dos reais, a função de
+distribuição é definida em toda reta.
+
+Uma função de distribuição de uma variável aleatória \(X\) em
+\((\Omega, \mathcal{F}, \mathcal{P})\) obedece às seguintes
+propriedades:
+
+P1) \(\lim \limits_{x \to -\infty} F_X(x) = 0\) e
+\(\lim \limits_{x \to +\infty}F_X(x) = 1\).
+
+P2) \(F\) é contínua à direita.
+
+P3) \(F\) é não descrescente, isto é, \(F_X(x) \leq F_X(y)\) sempre que
+\(x \leq y, \forall x,y \in \mathbb{R}\).
+
+\section{Variável Aleatória Discreta e função de
+Probabilidade}\label{variuxe1vel-aleatuxf3ria-discreta-e-funuxe7uxe3o-de-probabilidade}
+
+Uma variável aleatória é classificada como \emph{discreta}, se assume
+somente um número enumerável de valores (finito ou infinito). A função
+de probabilidade de uma variável aleatória discreta é a função que
+atribue probabilidade a cada um dos possíveis valores assumidos pela
+variável. Isto é, sendo \(X\) uma variável com valores
+\(x_1, x_2, \dots, x_n, \dots\) temos para \(i = 1, 2, \dots\).
+
+\[p(x_i) = \Pr(X = x_i) = \Pr(\{\omega \in \Omega: X(\omega) = x_i\}).\]
+A função de probabilidade de \(X\) em
+\((\Omega, \mathcal{F}, \mathcal{P})\) satisfaz:
+
+P1) \(0 \leq p(x_i) \leq 1, \forall i = 1, 2, \dots\),
+
+P2) \(\sum \limits_{i} p(x_i) = 1,\)
+
+com a soma percorrendo todos os possíveis valores (eventualmente
+infinitos).
+
+\section{Variável Aleatória Contínua e função
+Densidade}\label{variuxe1vel-aleatuxf3ria-contuxednua-e-funuxe7uxe3o-densidade}
+
+Uma variável aleatória \(X\) em \((\Omega, \mathcal{F}, \mathcal{P})\),
+com função de distribuição \(F\), sará classificada como contínua, se
+existir uma função \(f\) tal que:
+
+\[F_X(x) = \int_{-\infty}^x f_X(\omega) d\omega, \quad\text{para todo} \quad x \in \mathbb{R}.\]
+
+A função \(f\) é denominada \emph{função densidade}.
+
+A função densidade de \(X\) em \((\Omega, \mathcal{F}, \mathcal{P})\)
+satisfaz:
+
+P1) \(f(x) \geq 0, \forall \in \mathbb{R}\).
+
+P2) \(\int_{-\infty}^{+\infty} f_X(\omega) d\omega = 1\).
 
 \section{Independência}\label{independuxeancia}
 
@@ -985,6 +1075,69 @@ Contínuas}\label{distribuiuxe7uxf5es-contuxednuas}
 
 \bookmarksetup{startatroot}
 
+\chapter*{Exercícios}\label{exercuxedcios}
+\addcontentsline{toc}{chapter}{Exercícios}
+
+\markboth{Exercícios}{Exercícios}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Use o resultado que diz que, para uma variável aleatória não negativa
+  \(Y\),
+\end{enumerate}
+
+\[E(Y) = \int\limits_{0}^{\infty} \Pr(Y > t) dt,\] para mostrar, que
+para uma variável aleatória não negativa \(X\),
+
+\[E(X^n) = \int\limits_{0}^{\infty} n x^{n-1} \Pr(X > x) dx.\]
+
+\textbf{Dica:} Comece com
+
+\[E(X^n) = \int\limits_{0}^{\infty}  \Pr(X^n > t) dt,\] e faça a mudança
+de variável \(t = x^n\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Mostre que \(\Gamma(1/2) = \sqrt{\pi}\).
+\item
+  Seja \(X\) uma variável aleatória contínua com função de distribuição
+  \(F\). Defina a variável aleatória \(Y\) como \(Y = F_X(x)\). Mostre
+  que \(Y\) é uniformente distribuída no intervalo \((0,1)\).
+\item
+  Suponha que tentativas independentes com mesma probabilidade de
+  sucesso \(p\). \(0 < p < 1\), sejam realizadas até que se acumule um
+  total de \(r\) sucessos. Se \(X\) for igual ao número de tentativas
+  necessárias, então
+\end{enumerate}
+
+\[\Pr(X = x) = \binom{n-1}{r-1} p^r (1-p)^{n-r}, \quad x = r, r+1, \dots.\]
+Encontre \(E(X)\) e \(Var(X)\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Seja \(X\) uma variável aleatória tal que
+\end{enumerate}
+
+\[
+E(X^n) = \left\{ 
+\begin{array}{cc}
+\frac{n!}{(n/2)!}, & \text{se $n$ for par};\\
+0 & \text{caso contrário}.
+\end{array}\right.
+\]
+
+Determine a função geradora de momentos de \(X\) e identifique sua
+distribuição.
+
+\bookmarksetup{startatroot}
+
 \chapter{Fundamentos da Inferência
 Estatística}\label{fundamentos-da-inferuxeancia-estatuxedstica}
 
@@ -1006,7 +1159,7 @@ observamos. Imagine que o mundo é uma ``caixa preta'' que segue certas
 regras (leis da física, comportamento humano, algoritmos de mercado),
 portanto o PGD são essas regras em funcionamento.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Realidade vs.~Observação}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Realidade vs.~Observação}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \begin{itemize}
 \item
@@ -1020,7 +1173,7 @@ portanto o PGD são essas regras em funcionamento.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, colback=white, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Representação Matemática}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Representação Matemática}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 O PGD pode ser definido pela distribuição de probabilidade conjunta
 desconhecida \(P(X, Y)\) (ou simplemente \(P(Z)\)).
@@ -1493,7 +1646,7 @@ outros.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
 Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas
 inferiores a 30\%. Por outro lado, em alguns casos, obtivemos proporções
@@ -1799,7 +1952,7 @@ observáveis (como, por exemplo, uma amostra aleatória de \(n\)
 indivíduos de uma população de interesse). Uma estatística \(T\) é uma
 função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \begin{itemize}
 \item
@@ -1813,7 +1966,7 @@ função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, colframe=quarto-callout-important-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \textbf{Parâmetro:} Um valor numérico calculado a partir de \emph{todos}
 os indivíduos na população. \emph{(Discreta / Contínua)}
@@ -1861,7 +2014,7 @@ correlações}\label{covariuxe2ncia-variuxe2ncia-de-somas-e-correlauxe7uxf5es}
 O resultado a seguir mostra que a esperança de um produto de variáveis
 aleatórias independentes é igual ao produto de suas esperanças.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 1:}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 1:}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Se \(X\) e \(Y\) são independentes, então, para quaisquer funções \(h\)
 e \(g\),
@@ -1884,7 +2037,7 @@ E[g(X)h(Y)] =& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(
 
 A demonstração para o caso discreto pode ser feita de maneira similar.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definição 1:}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, colframe=quarto-callout-important-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definição 1:}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 A covariância entre \(X\) e \(Y\), representada como \(Cov(X,Y)\), é
 definida como
@@ -1904,7 +2057,7 @@ Cov(X,Y) = & E[\underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{
 Note que, se \(X\) e \(Y\) são independentes, então, pela Proposição 1,
 \(Cov(X,Y) = 0\). No entanto, o inverso não é verdade.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 2:}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 2:}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \begin{enumerate}
 \def\labelenumi{\roman{enumi})}
@@ -1928,7 +2081,7 @@ Proposição 2, temos que
 =&\sum\limits_{i=1}^{n} Var(X_i) + 2\mathop{\sum\sum}\limits_{i < j}Cov(X_i,X_j).
 \end{align}\]
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição 2: Amostra Aleatória:}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição 2: Amostra Aleatória:}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 A variáveis aleatórias \(X_1, X_2, \dots, X_n\) são chamadas de amostra
 aleatória e de tamanho \(n\) da população \(f(x)\) se
@@ -2007,7 +2160,7 @@ Essa FDP pode ser usada para responder perguntas sobre a amostra. Por
 exemplo, qual é a probabilidade de que todas as placas durem mais de 2
 anos?
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Resposta:}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm, colframe=quarto-callout-warning-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Resposta:}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \end{tcolorbox}
 
@@ -2135,7 +2288,7 @@ distribuição condicional de \(X_i\) dados \(X_1, \dots, X_{i-1}\) são
 \(1/(N - i + 1)\), que são próximas de \(1/N\) se \(i \le n\) for
 pequeno em comparação com \(N\).
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Arranjos ou combinação ao contar amostras?}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Arranjos ou combinação ao contar amostras?}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Ao contar o número de \textbf{amostras aleatórias simples} possíveis, o
 resultado depende de como definimos uma \emph{amostra}.
@@ -2244,7 +2397,7 @@ Visto que \(X_1, \dots, X_n\) são identicamente distribuídas,
 \(M_{X_i}(t)\) é a mesma função para cada \(i\). Assim, temos o
 seguinte:
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 2}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 2}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Seja \(X_1, \dots, X_n\) uma amostra aleatória de uma população com FGM
 \(M_X(t)\). Então a FGM da média amostral é:
@@ -2296,7 +2449,7 @@ distribuição!
 estatística provenientes de todas as amostras possíveis de tamanho
 \(n\).
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-tip-color-frame, colback=white, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm, colframe=quarto-callout-tip-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Para entender a origem de uma distribuição amostral, imagine o seguinte
 processo exato (ou de ``força bruta''):
@@ -2323,7 +2476,7 @@ dependemos de teoremas matemáticos (como o Teorema Central do Limite)
 para deduzir o formato dessa distribuição sem precisarmos usar a força
 bruta!
 
-\subsubsection*{Exercícios}\label{exercuxedcios}
+\subsubsection*{Exercícios}\label{exercuxedcios-1}
 \addcontentsline{toc}{subsubsection}{Exercícios}
 
 \begin{enumerate}
@@ -2369,7 +2522,7 @@ com média \(\mu_{x}\) e variância \(\sigma_{x}^{2}\):
 Para compreendermos como a média amostral se comporta, utilizamos as
 seguintes propriedades das combinações lineares:
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Sejam \(a_{i}\) para \(i=1,2,...,k\) constantes e sejam \(X_{i}\) para
 \(i=1,2,...,k\) variáveis aleatórias. Então:
@@ -2507,7 +2660,7 @@ Um parâmetro populacional de interesse comum é a variância populacional
 \(S^2\) para estimar \(\sigma^2\). Portanto, a distribuição amostral de
 \(S^2\) é de grande interesse.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 A soma dos quadrados de variáveis normais padrão independentes é
 distribuída como uma variável aleatória \(\chi^2\). Mais formalmente:
@@ -2580,7 +2733,7 @@ determinar a quantos erros padrões (\(S/\sqrt{n}\)) a média amostral
 \(\bar{X}\) está de um valor hipotético \(\mu\). Portanto, a
 distribuição amostral desta razão é de extrema importância.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \textbf{Definição 2.1:} Se \(Z \sim N(0, 1)\), \(W \sim \chi^2(\nu)\), e
 \(Z\) e \(W\) são independentes, então:
@@ -2627,7 +2780,7 @@ Para um tamanho de amostra \textbf{GRANDE} \(n\) e uma AA
 
 \[T = \frac{\bar{X} - \mu_x}{S/\sqrt{n}}\,  \dot{\sim} \, t(n - 1).\]
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Fatos Úteis}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Fatos Úteis}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \begin{itemize}
 \tightlist
@@ -2678,7 +2831,7 @@ AA, uma de tamanho \(n_1\) com variância amostral \(S_1^2\) e outra de
 tamanho \(n_2\) com variância amostral \(S_2^2\), a estatística
 \(\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\) é utilizada.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 \textbf{Definição 2.2:} Se \(W_1 \sim \chi^2(\nu_1)\) e
 \(W_2 \sim \chi^2(\nu_2)\) são independentes, então:
@@ -2769,7 +2922,7 @@ grande número de repetições, torna-se um resultado matemático rigoroso,
 através da aplicação de um caso especial da Lei dos Grandes Números
 (Magalhães, 2006).
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Lei dos Grandes Números}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Lei dos Grandes Números}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Sejam \(X_1, X_2, \dots\) variáveis aleatórias com esperanças finitas e
 seja \(S_n = X_1+ X_2 + \dots + X_n\). A sequência \(\{X_n: n\geq 1\}\)
@@ -2832,12 +2985,12 @@ Rêgo; Mendoça, 2017).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{unidade2_files/figure-pdf/unnamed-chunk-1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{unidade2_files/figure-pdf/unnamed-chunk-1-1.pdf}}
 
 \section{Teorema Central do Limite
 (TCL)}\label{teorema-central-do-limite-tcl}
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-important-color-frame, colback=white, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema Central do Limite}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm, colframe=quarto-callout-important-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema Central do Limite}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Seja \(X_{1},X_{2},...,X_{n}\) uma AA de uma distribuição com média
 \(\mu_{x}\) e variância \(\sigma_{x}^{2}<\infty\). Então para
@@ -3026,7 +3179,7 @@ Completando o quadrado no expoente:
 Este método de estimação é um dos mais antigos, utilizado desde o século
 XVIII. A ideia é bem simples e intuitiva.
 
-\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, breakable, toprule=.15mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Definição (Caso Uniparamétrico)}, arc=.35mm, rightrule=.15mm, opacityback=0, bottomrule=.15mm, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, colback=white, toprule=.15mm, rightrule=.15mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, colframe=quarto-callout-note-color-frame, arc=.35mm, breakable, toptitle=1mm, titlerule=0mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Definição (Caso Uniparamétrico)}, bottomrule=.15mm, opacityback=0, left=2mm, coltitle=black]
 
 Seja \(X\) uma variável aleatória com função de densidade de
 probabilidade (f.d.p.) ou função de probabilidade (f.p.)
@@ -3252,7 +3405,7 @@ Foi feito um pequeno programa no \textbf{R}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}}
 
 O valor \(a\) é o coeficiente linear e o valor \(b\) o coeficiente
 angular da reta que passa pela origem.
@@ -3880,17 +4033,17 @@ para esse modelo.
 \end{enumerate}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1045}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0896}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1045}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0896}}@{}}
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 \(t\)
@@ -3980,6 +4133,7 @@ WICKHAM, Hadley \emph{et al.}
 \textbf{Journal of Open Source Software}, v. 4, n. 43, p. 1686, 2019.
 
 \end{CSLReferences}
+
 
 
 
