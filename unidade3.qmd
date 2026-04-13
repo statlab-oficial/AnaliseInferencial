@@ -2,448 +2,1055 @@
 
 ## Propriedades de Estimadores
 
+Ao obter um estimador para um parâmetro desconhecido, é fundamental avaliar sua qualidade. Para isso, utilizamos algumas propriedades que permitem comparar estimadores e analisar seu comportamento, tanto em amostras finitas quanto assintoticamente. Seja $\hat{\theta}$ um estimador para o parâmetro $\theta$.
+
+### Não Viesado {.unnumbered}
+
+Um estimador $\hat{\theta}$ é dito não viesado se:
+
+$$E(\hat{\theta}) = \theta.$$
+Caso contrário, o estimador é viesado, e o viés é definido por:
+
+$$B(\hat{\theta}) = E(\hat{\theta}) - \theta.$$
 
 
-## Estimador de Momentos
+> Um estimador não viesado, em média, acerta o valor do parâmetro.
 
-Este método de estimação é um dos mais antigos, utilizado desde o século XVIII. A ideia é bem simples e intuitiva.
+### Consistência {.unnumbered}
 
-::: {.callout-note title="Definição (Caso Uniparamétrico)"}
-Seja $X$ uma variável aleatória com função de densidade de probabilidade (f.d.p.) ou função de probabilidade (f.p.) $f(x | \theta)$, suporte $A$, espaço paramétrico $\Theta$ e $E_{\theta}(X^r) < \infty, \; r=1,2,\dots$.
+Um estimador $\hat{\theta}$ é consistente se converge em probabilidade para o verdadeiro valor do parâmetro:
 
-Dada uma amostra aleatória $X_1, X_2, \ldots, X_n$ de $X$, igualamos o primeiro momento populacional ao primeiro momento amostral:
+$$\hat{\theta} \xrightarrow{p} \theta \quad \text{quando} \quad n \to \infty.$$
 
-$$E_{\theta}(X) = \bar{X}$$
+
+Em geral, isso ocorre quando:
+
+- $E(\hat{\theta}) \to \theta$ (assintoticamente não viesado),
+
+- $Var(\hat{\theta}) \to 0$.
+
+
+### Eficiência {.unnumbered}
+
+Entre dois estimadores não viesados, dizemos que $\hat{\theta}_1$ é mais eficiente que $\hat{\theta}_2$ se:
+
+$$Var(\hat{\theta}_1) < Var(\hat{\theta}_2).$$
+A eficiência está relacionada à ideia de obter estimativas mais precisas com menor variabilidade.
+
+### Suficiência {.unnumbered}
+
+Um estimador é baseado em uma estatística suficiente quando essa estatística contém toda a informação da amostra sobre o parâmetro $\theta$.
+
+Formalmente, uma estatística $T(X)$ é suficiente para $\theta$ se a distribuição condicional de $X$ dado $T(X)$ não depende de $\theta$.
+
+### Completude {.unnumbered}
+
+Uma estatística $T(X)$ é dita completa para uma família de distribuições parametrizada por $\theta$ se:
+
+$$E_\theta(g(T)) = 0 \quad \text{para todo} \quad \theta \to g(T) = 0 \;\text{(quase certamente)}.$$
+Em outras palavras, a única função de $T$ que tem esperança zero para todo valor do parâmetro é a função trivial.
+
+#### Interpretação {.unnumbered}
+
+A completude garante que não existem funções não triviais de $T$ com esperança nula para todos os valores de $\theta$. Isso implica que não há “informação redundante” em $T$ que possa gerar estimadores com a mesma média.
+
+#### Importância {.unnumbered}
+
+A completude é especialmente importante quando combinada com a suficiência. De fato, vale o seguinte resultado fundamental:
+
+> Se $T(X)$ é uma estatística suficiente e completa para $\theta$, então qualquer estimador não viesado que seja função de $T$ é o único estimador não viesado com variância uniformente mínima (ENVVUM).
+
+Esse resultado é conhecido como Teorema de Lehmann-Scheffé.
+
+### Consistência Assintótica e Viés {.unnumbered}
+
+É importante destacar que:
+
+- Um estimador pode ser viesado, mas ainda assim consistente;
+
+- Um estimador pode ser não viesado, mas com grande variância;
+
+- O melhor estimador depende do equilíbrio entre viés e variância.
+
+### Observação Final {.unnumbered}
+
+Na prática, a escolha de um estimador envolve considerar:
+
+- facilidade de cálculo (forma fechada ou numérica),
+
+- propriedades em amostras finitas,
+
+- comportamento assintótico.
+
+Essas propriedades serão fundamentais para comparar métodos de estimação, como o método dos momentos e a máxima verossimilhança, discutidos ao longo deste capítulo.
+
+## Método dos Momentos
+
+A estimação por máxima verossimilhança (MV), como veremos nesse capítulo, possui uma intuição bastante elegante, mas pode ser matematicamente trabalhosa de resolver. Vamos aprender inicialmente uma técnica para estimar parâmetros, chamada método dos momentos (MoM).
+
+As definições iniciais e a estratégia podem parecer confusas à primeira vista, mas apresentaremos vários exemplos que devem ajudar a tornar tudo mais claro.
+
+::: {.callout-note title="Momentos (Revisão)"}
+Seja $X$ uma variável aleatória e $c \in \mathbb{R}$ um escalar. Então, o $k$-ésimo momento de $X$ é:
+
+$$
+E[X^k],
+$$ e o $k$-ésimo momento de $X$ em torno de $c$ é:
+
+$$
+E[(X - c)^k].
+$$ Em geral, temos interesse especial no **primeiro momento** (média) de $X$: $\mu = E[X]$, e no **segundo momento em torno da média** (variância): $\text{Var}(X) = E[(X - \mu)^2]$.
 :::
 
-Abaixo, apresentamos alguns exemplos para fixar o conceito, calculando também suas propriedades.
+::: {.callout-important title="Momentos Amostrais"}
+Seja $X$ uma variável aleatória e $x_1, \ldots, x_n$ uma amostra i.i.d. de $X$. O $k$-ésimo momento amostral é: $$
+\frac{1}{n} \sum_{i=1}^{n} x_i^k.
+$$ O $k$-ésimo momento amostral em torno de $c$ é: $$
+\frac{1}{n} \sum_{i=1}^{n} (x_i - c)^k.
+$$
 
-### Exemplo 1: Uniforme Contínua
+Casos particulares importantes:
 
-Considere $X \sim U(0, \theta)$. Sabemos que: $$E_{\theta}(X) = \frac{\theta}{2} \quad \text{e} \quad V(X) = \frac{\theta^2}{12}.$$
+-   O primeiro momento amostral é a **média amostral**;
+-   O segundo momento amostral em torno da média é a **variância amostral**.
+:::
 
-Igualando os momentos: $$\frac{\theta}{2} = \bar{X} \implies \widehat{\theta} = T_1 = 2\bar{X}.$$
+## Ideia por trás do método
 
--   **Esperança:** $E(T_1) = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta$. Logo, $T_1$ é não viciado.
--   **Variância:** $Var(T_1) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}$.
+A estimação pelo método dos momentos baseia-se exclusivamente na **Lei dos Grandes Números**, que relembramos a seguir:
 
-### Exemplo 2: Uniforme Discreta
+Sejam $Y_1, Y_2, \ldots$ variáveis aleatórias independentes com uma distribuição comum que possui média $\mu_{Y}$. Então, as médias amostrais convergem para a média da distribuição à medida que o número de observações aumenta:
 
-Considere $X \sim U_d(A)$ com $A = \{1, 2, \ldots, \theta\}$ e $\Theta = \{1, 2, \ldots\}$. Temos que:
+$$
+\bar{Y}_{n} = \frac{1}{n} \sum_{i=1}^{n} Y_i \to \mu_{Y} \quad \text{quando } n \to \infty.
+$$
 
-$$E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad V(X) = \frac{\theta^2 - 1}{12}.$$
+Para mostrar como o método dos momentos determina um estimador, consideramos inicialmente o caso de **um único parâmetro**.
 
-Igualando os momentos: $$\frac{1+\theta}{2} = \bar{X} \implies \widehat{\theta} = T_2 = 2\bar{X} - 1$$
+Começamos com variáveis aleatórias independentes $X_1, X_2, \ldots$, geradas segundo a função densidade de probabilidade $f_X(x \mid \theta)$, associada a um parâmetro desconhecido $\theta$. A média comum das variáveis $X_i$, denotada por $\mu_X$, é uma função $k(\theta)$ de $\theta$. Por exemplo, se as $X_i$ são variáveis aleatórias contínuas, então:
 
--   **Esperança:** $E(T_2) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta$ (Não viciado).
--   **Variância:** $Var(T_2) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}$.
+$$
+\mu_X = \int_{-\infty}^{\infty} x f_X(x \mid \theta)\, dx = k(\theta).
+$$
 
-### Exemplo 3: Normal (Variância Conhecida)
+A Lei dos Grandes Números afirma que:
 
-Seja $X \sim N(\mu, 9)$. Temos $E(X) = \mu$ e $V(X) = 9$. Igualando os momentos: $$E_{\mu}(X) = \mu = \bar{X} \implies \widehat{\mu} = T_3 = \bar{X}$$ Propriedades: $E(T_3) = \mu$ e $Var(T_3) = \frac{9}{n}$.
+$$
+\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i \to \mu_X \quad \text{quando } n \to \infty.
+$$
 
-### Exemplo 4: Exponencial
+Assim, quando o número de observações $n$ é grande, a média da distribuição $\mu = k(\theta)$ pode ser bem aproximada pela média amostral, isto é:
 
-Considere $X \sim \text{Exp}(\lambda)$ com $E(X) = \frac{1}{\lambda}$ e $V(X) = \frac{1}{\lambda^2}$. $$E_{\lambda}(X) = \frac{1}{\lambda} = \bar{X} \implies \widehat{\lambda} = T_4 = \frac{1}{\bar{X}}$$
+$$
+\bar{X} \approx k(\theta).
+$$
 
-*Nota sobre as propriedades:* Sabemos que $S = \sum X_i \sim \text{Gama}(n, \lambda)$. Pode-se demonstrar que $V = \bar{X} \sim \text{Gama}(n, n\lambda)$. Calculando a esperança da inversa: $$E(T_4) = E\left(\frac{1}{V}\right) = \frac{n}{n-1}\lambda \neq \lambda \quad (\text{para } n > 1)$$ Logo, $T_4$ é viciado, mas **assintoticamente não viciado**. A variância, após integração, resulta em: $$Var(T_4) = \frac{n^2}{(n-1)^2(n-2)}\lambda^2$$ Como $\lim_{n \to \infty} Var(T_4) = 0$, $T_4$ é um estimador consistente.
+Essa relação pode ser transformada em um estimador $\hat{\theta}$, definindo:
 
-### Exemplo 5: Variáveis Independentes Não Identicamente Distribuídas
+$$
+\bar{X} = k(\hat{\theta}),
+$$
 
-Seja $Y_i \sim N(\beta X_i, \sigma^2)$ para $i = 1, \dots, n$, com $X_i$ constantes conhecidas. Como $E(Y_i) = \beta X_i$, usamos uma definição alternativa para o método dos momentos: $$\frac{\sum_{i=1}^n E(Y_i)}{n} = \bar{Y} \implies \frac{\sum_{i=1}^n \beta X_i}{n} = \bar{Y} \implies \beta\bar{X} = \bar{Y}$$ $$\widehat{\beta} = \frac{\bar{Y}}{\bar{X}} = \frac{1}{n\bar{X}} \sum_{i=1}^n Y_i$$ É fácil verificar que $E(\widehat{\beta}) = \beta$ e $Var(\widehat{\beta}) = \frac{\sigma^2}{n\bar{X}^2}$.
+e resolvendo essa equação em relação a $\hat{\theta}$.
 
-### Exemplo 6: Normal (Média Zero)
+Na sequência, descreveremos o procedimento no caso de um **vetor de parâmetros** e apresentaremos diversos exemplos. Veremos também que o **método delta** pode ser utilizado para estimar a variância dos estimadores obtidos pelo método dos momentos.
 
-Seja $X \sim N(0, \sigma^2)$. Queremos estimar $\sigma^2$. Temos $E(X) = 0$ e $E(X^2) = \sigma^2$. Usando o segundo momento: $$E(X^2) = \frac{\sum_{i=1}^n X_i^2}{n} \implies \widehat{\sigma^2} = T = \frac{\sum_{i=1}^n X_i^2}{n}$$ Com a curtose da Normal (3), temos $V(X^2) = 2\sigma^4$. Logo, $Var(T) = \frac{2\sigma^4}{n}$.
+## Procedimento Geral do Método dos Momentos
 
-### Caso Biparamétrico
+De forma mais geral, para variáveis aleatórias independentes $X_1, X_2, \ldots$, geradas segundo uma distribuição associada ao parâmetro $\theta$, e sendo $m$ uma função real, se $k(\theta) =E_{\theta}[m(X_1)],$ então
 
-Seja $X \sim N(\mu, \sigma^2)$. Igualamos os dois primeiros momentos:
+$$
+\frac{1}{n} \sum_{i=1}^{n} m(X_i) \to k(\theta) \quad \text{quando } n \to \infty.
+$$
 
-1.  $E(X) = \mu = \bar{X} \implies \widehat{\mu} = \bar{X}$
-2.  $E(X^2) = \sigma^2 + \mu^2 = \frac{\sum X_i^2}{n} \implies \widehat{\sigma^2} = \frac{\sum X_i^2}{n} - \bar{X}^2 = \frac{n-1}{n}S^2$
+O método dos momentos resulta das escolhas $m(x) = x^m$. Denotamos
 
--   Exemplo 7: $X \sim \text{Gama}(\alpha, \beta)$. $E(X) = \frac{\alpha}{\beta}$ e $V(X) = \frac{\alpha}{\beta^2}$. Usando $\frac{E(X)}{V(X)} = \beta$, temos:
+$$
+\mu_m = E[X^m] = k_m(\theta). \tag{1}
+$$
 
-$$\widehat{\beta} = \frac{\bar{X}}{\widehat{\sigma^2}} \quad \text{e} \quad \widehat{\alpha} = \bar{X}\widehat{\beta} = \frac{\bar{X}^2}{\widehat{\sigma^2}}.$$
+para o $m$-ésimo momento.
 
-Note que podemos usar tantos os momentos em relação é origem como os centrais.
+Nosso procedimento de estimação segue os **4 passos** abaixo, que conectam os momentos amostrais aos parâmetros do modelo:
 
-## Método de Mínimos Quadrados
+### Passo 1 {.unnumbered}
 
-Vamos analisar a seção 11.4 do livro do Bussab e Morettin.
+Se o modelo possui $d$ parâmetros, calculamos as funções $k_m$ na equação (1) para os primeiros $d$ momentos:
 
-Um dos procedimentos mais usados para obter estimadores é aquele que se baseia no princípio dos mínimos quadrados, introduzido por Gauss em 1794, mas que primeiro apareceu com esse nome no apêndice do tratado de Legendre, Nouvelles Méthodes pour la Determination des Orbites des Comètes, publicado em Paris em 1806. Gauss somente viria a publicar seus resultados em 1809, em Hamburgo. Ambos utilizaram o princípio em conexão com problemas de Astronomia e Física.
+$$
+\mu_1 = k_1(\theta_1, \theta_2, \ldots, \theta_d), \quad
+\mu_2 = k_2(\theta_1, \theta_2, \ldots, \theta_d), \quad \ldots \quad
+\mu_d = k_d(\theta_1, \theta_2, \ldots, \theta_d),
+$$
 
-Vejamos o procedimento por meio de um exemplo simples.
+obtendo assim $d$ equações em $d$ incógnitas.
 
-\*\*Exemplo\* Um engenheiro está estudando a resistência $Y$ de uma fibra em função de seu diâmetro $X$ e notou que as variáveis são aproximadamente proporcionais, isto é, elas obedecem à relação
+### Passo 2 {.unnumbered}
 
-$$Y \approx  \theta X,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; (11.25).$$ em que $\theta$ é o coeficiente de proporcionalidade. Agora ele deseja estimar o parâmetro $\theta$ , baseado numa amostra de cinco unidades, que, submetidas a mensuração e testes, produziram os resultados:
+Resolvemos esse sistema para os $d$ parâmetros como funções dos momentos:
 
-|       | 1   | 2   | 3   | 4   | 5   | Média         |
-|-------|-----|-----|-----|-----|-----|---------------|
-| **X** | 1,2 | 1,5 | 1,7 | 2,0 | 2,6 | $\bar{X}=1,8$ |
-| **Y** | 3,9 | 4,7 | 5,6 | 5,8 | 7,0 | $\bar{Y}=5,4$ |
+$$
+\theta_1 = g_1(\mu_1, \mu_2, \dots, \mu_d), \quad
+\theta_2 = g_2(\mu_1, \mu_2, \dots, \mu_d), \quad \dots \quad
+\theta_d = g_d(\mu_1, \mu_2, \dots, \mu_d). \tag{2}
+$$
 
-Vamos fazer um diagrama de dispersão :
+### Passo 3 {.unnumbered}
 
-Foi feito um pequeno programa no \textbf{R}:
+Com base nos dados $\mathbf{x} = (x_1, x_2, \ldots, x_n)$, calculamos os primeiros $d$ momentos amostrais:
+
+$$
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad
+\overline{x^2} = \frac{1}{n} \sum_{i=1}^{n} x_i^2, \quad \ldots \quad
+\overline{x^d} = \frac{1}{n} \sum_{i=1}^{n} x_i^d.
+$$
+
+Pela Lei dos Grandes Números, para cada momento $m = 1, \ldots, d$, temos: $\mu_m \approx \overline{x^m}.$
+
+### Passo 4 {.unnumbered}
+
+Substituímos os momentos populacionais $\mu_m$ pelos momentos amostrais $\overline{x^m}$. Assim, as soluções em (2) fornecem as fórmulas dos estimadores de momentos $(\hat{\theta}_1, \hat{\theta}_2, \ldots, \hat{\theta}_d)$. Para os dados $\mathbf{x}$, esses estimadores são dados por:
+
+$$
+\hat{\theta}_1(\mathbf{x}) = g_1(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad
+\hat{\theta}_2(\mathbf{x}) = g_2(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad \ldots \quad
+\hat{\theta}_d(\mathbf{x}) = g_d(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}).
+$$
+
+A forma como essa descrição abstrata funciona na prática é melhor compreendida por meio de exemplos.
+
+## Exemplo: Distribuição de Pareto {.unnumbered}
+
+Sejam $X_1, X_2, \dots, X_n$ uma amostra aleatória simples de variáveis aleatórias com distribuição de Pareto, cuja densidade é dada por:
+
+$$
+f_X(x \mid \theta) = \theta x^{-(\theta+1)}, \quad x > 1.
+$$
+
+A função de distribuição acumulada é:
+
+$$
+F_X(x) = 1 - x^{-\theta}, \quad x > 1.
+$$
+
+A média e a variância são, respectivamente:
+
+$$
+\mu = \frac{\theta}{\theta - 1}, \quad \sigma^2 = \frac{\theta}{(\theta - 1)^2(\theta - 2)}.
+$$
+
+Neste caso, temos apenas **um parâmetro**, $\theta$. Assim, no **Passo 1**, precisamos apenas do primeiro momento:
+
+$$
+\mu_1 = \mu = k_1(\theta) = \frac{\theta}{\theta - 1}.
+$$
+
+### Passo 2 {.unnumbered}
+
+Resolvendo para $\theta$ em função da média $\mu$:
+
+$$
+\theta = g_1(\mu) = \frac{\mu}{\mu - 1}.
+$$
+
+### Passos 3 e 4 {.unnumbered}
+
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
+
+$$
+\hat{\theta} = \frac{\bar{X}}{\bar{X} - 1}.$$
+
+### Variância via Método Delta {.unnumbered}
+
+Um bom estimador deve ter variância pequena. Para estimar a variância de $\hat{\theta}$, utilizamos o **método delta**:
+
+$$
+\sigma^2_{\hat{\theta}} \approx \left[g_1'(\mu)\right]^2 \frac{\sigma^2}{n}.
+$$
+
+Calculamos a derivada:
+
+$$
+g_1'(\mu) = -\frac{1}{(\mu - 1)^2}.
+$$
+
+Substituindo $\mu = \frac{\theta}{\theta - 1}$, obtemos:
+
+$$
+g_1'(\mu) = -(\theta - 1)^2.$$
+
+Assim, a variância aproximada é:
+
+$$
+\sigma^2_{\hat{\theta}} \approx \frac{(\theta - 1)^4}{n} \cdot \frac{\theta}{(\theta - 1)^2(\theta - 2)} = \frac{\theta(\theta - 1)^2}{n(\theta - 2)}.$$
+
+### Exemplo Numérico {.unnumbered}
+
+Considere $\theta = 3$ e $n = 100$:
+
+$$
+\sigma^2_{\hat{\theta}} \approx \frac{3(3 - 1)^2}{100(3 - 2)} = \frac{12}{100} = \frac{3}{25}.$$
+
+Logo, o desvio padrão aproximado é:
+
+$$
+\sigma_{\hat{\theta}} \approx \sqrt{\frac{3}{25}} = 0{,}346.
+$$
+
+### Simulação em R {.unnumbered}
+
+Para simular uma variável aleatória com distribuição de Pareto, usamos o método da transformação inversa. Se $U \sim \text{Uniforme}(0,1)$, então:
+
+$$X = (1 - U)^{-1/\theta}.$$
+
+Código em `R`:
+
 
 ```{r}
- X=c(12,15,17,20,26)/10;X
-Y=c(39,47,56,58,70)/10;Y
-n=length(Y);n
-Xb=mean(X);Xb
-Yb=mean(Y);Yb
-plot(X,Y,xlim=c(0,3),ylim=c(0,8))
-abline(a=0,b=3,col="red")
+paretobar <- rep(0, 1000)
+
+
+set.seed(14)
+for (i in 1:1000){
+  v <- runif(100)
+  pareto <- 1 / v^(1/3)
+  paretobar[i] <- mean(pareto)
+}
+
+hist(paretobar, xlab = expression(bar(X)), probability = TRUE, main = "")
+
+betahat <- paretobar / (paretobar - 1)
+hist(betahat, xlab = expression(hat(beta)), probability = TRUE, main = "")
+
+mean(betahat)
+sd(betahat)
+
 ```
 
-O valor $a$ é o coeficiente linear e o valor $b$ o coeficiente angular da reta que passa pela origem.
 
-Inspecionando os resultados, conclui-se que $\hat{\theta}= 3$ parece ser um valor razoável.
 
-Como verificar a qualidade dessa estimativa? Podemos utilizar o modelo
+A média amostral do estimador de $\theta$, igual a `r round(mean(betahat),4)`, está próxima do valor verdadeiro do parâmetro considerado na simulação que foi $3$. Neste exemplo, o estimador $\hat{\theta}$ apresenta **viés positivo**. Em outras palavras, em média, a estimativa é maior que o verdadeiro valor do parâmetro, isto é: $E[\hat{\theta}] > \theta$. O desvio padrão amostral, igual a `r round(sd(betahat),4)`, é próximo do valor **0.346** estimado pelo método delta. Quando estudarmos **estimadores não viesados**, veremos que esse viés já poderia ter sido antecipado.
 
-$$\hat{Y}= 3X$$ e ver como esse prevê os valores de $Y$, para os dados valores de $X$, e como são as discrepâncias entre os valores observados e os estimados pelo modelo.
+## Exemplo: Distribuição Uniforme Contínua {.unnumbered}
 
-Essa análise está resumida na Tabela abaixo:
 
-| X   | Y   | $\hat{Y}=3X$ | $e=Y-\hat{Y}$ | $e^2$    |
-|-----|-----|--------------|---------------|----------|
-| 1,2 | 3,9 | 3,6          | 0,3           | 0,09     |
-| 1,5 | 4,7 | 4,5          | 0,2           | 0,04     |
-| 1,7 | 5,6 | 5,1          | 0,5           | 0,25     |
-| 2,0 | 5,8 | 6,0          | −0,2          | 0,04     |
-| 2,6 | 7,0 | 7,8          | −0,8          | 0,64     |
-|     |     | **Total**    | **0**         | **1,06** |
+Considere $X \sim U(0, \theta)$. Sabemos que: 
 
-Os valores da coluna $(Y - 3X)=(Y-\bar{Y})$ medem a inadequação do modelo para cada observação da amostra, enquanto o valor é uma tentativa de medir o erro quadrático total da amostra?. Como em situações anteriores, elevou-se ao quadrado para evitar o problema do sinal.
+$$\mu = \frac{\theta}{2} \quad \text{e} \quad \sigma^2 = \frac{\theta^2}{12}.$$
 
-Quanto menor for o erro quadrático total, melhor será a estimativa.
+### Passo 1  {.unnumbered}
 
-Isso nos sugere procurar a estimativa que torne mínima essa soma de quadrados. Matematicamente, o problema passa a ser o de encontrar o valor de $\theta$ que minimize a função
+Neste caso, também temos apenas **um parâmetro**, $\theta$. Assim, no **Passo 1**, precisamos apenas do primeiro momento:
 
-$$S(\theta)=\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta X_i)^2.$$
+$$
+\mu_1 = \mu = k_1(\theta) = \frac{\theta}{2}.
+$$
 
-O mínimo da função é obtido derivando-a em relação a $\theta$, e igualando o resultado a zero (ver Morettin et al., 2005), o que resulta
+### Passo 2 {.unnumbered}
 
-$$S'(\theta)=2\;\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta X_i)(-X_i),$$
 
-$$S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;(X_i\;Y_i-\theta X_i^2)=0$$
+Resolvendo para $\theta$ em função da média $\mu$:
 
-$$S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i+ 2\theta\; \displaystyle \sum_{i=1}^{5} X_i^2.$$
+$$
+\theta = g_1(\mu) = 2\mu.
+$$
 
-A derivada segunda de $S$ é dada por:
+### Passos 3 e 4 {.unnumbered}
 
-$$S^{''}(\theta)=2 \displaystyle \sum_{i=1}^{5} X_i^2>0$$
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
 
-Igualando a derivada primeira a zero temos:
+$$\hat{\theta} = 2\bar{X}.$$
 
-$$ \displaystyle \sum_{i=1}^{5}\;X_i\;Y_i -\theta \displaystyle \sum_{i=1}^{5}\;X_i^2=0$$
+### Esperança e Variância {.unnumbered}
 
-Assim
+Como o estimador obtido pelo MoM é função linear da média amostral, então é fácil obter seu valor esperado, basta usar propriedades de valores esperado e o fato de $E(\bar{X}) = \mu$. Assim, temos que
 
-$$\theta=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{5}\;X_i^2},$$
+ $$E(\hat{\theta})  = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta.$$
+ 
+portanto, $\hat{\theta}$ é um estimador não viciado. De maneira similar, podemos obter a expressão da variância de $\hat{\theta}$, usando propriedades de variância e o fato de $Var(\bar{X}) = \sigma^2/n$. Desta forma, temos que:
 
-que é ponto de mínimo relativo pois a derivada segunda é sempre positiva.
+$$Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.$$
+Além disso,pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Logo, 
 
-O estimador de mínimos quadrados de $\theta$ é dado por:
+$$\hat{\theta} = 2\bar{X} \xrightarrow{p} \theta,$$
 
-$$\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{5}\;X_i^2}.$$
+mostrando que o estimador também é **consistente**.
 
-Usando os dados acima encontramos $\hat{\theta}_{MQ} = 2,94$ , que conduz a um valor mínimo para $S(\theta)$ de \$ 0,94\$ . Observe que esse valor é realmente menor do que o observado para $\theta = 3$, ou seja, $1,06$.
+> **Observação:** Neste caso específico, o estimador de momentos coincide com um estimador simples baseado na média. No entanto, para a distribuição uniforme, o estimador de máxima verossimilhança é $\hat{\theta}_{MV} = \max(X_1, \dots, X_n)$, o que levanta uma interessante comparação entre métodos de estimação.
 
-Vamos utilizar o `R` para calcular a estimativa de mínimos quadrados de $\theta$ bem como os valores previstos pelo modelo.
 
-```{r}
-X=c(12,15,17,20,26)/10;X
-Y=c(39,47,56,58,70)/10;Y
-n=length(Y);n
-SX=sum(X);SX
-X2=X^2
-SX2=sum(X2);SX2
-XY=X*Y
-SXY=sum(XY);SXY
-teta_est=SXY/SX2;teta_est
-round(teta_est,2)  ##Estimativa de mínimos quadrados.
-Y_est=teta_est*X;Y_est
-e=Y-Y_est
-e2=e^2
-sum(e2)
-tabela=cbind(X,Y,X2,XY,Y_est,e,e2);tabela
-```
+## Exemplo: Distribuição Uniforme Discreta {.unnumbered}
 
-Vamos fazer agora com uma função direta do `R`:
+Considere $X \sim U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\Theta = {1, 2, \ldots}$. Sabemos que:
 
-```{r}
-mod1=lm(Y~X -1);mod1
-predict(mod1)
-summary(mod1)
-anova(mod1)
-SY2=sum(Y^2);SY2
-###Observe que:
-150.294 + 1.006
-```
 
-Como foi dito, não esperávamos uma relação perfeita entre as duas variáveis, já que o diâmetro da fibra não é o único responsável pela resistência; outros fatores não controlados afetam o resultado.
+$$\mu = E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad \sigma^2 = V(X) = \frac{\theta^2 - 1}{12}.$$
 
-Desse modo, duas amostras obtidas do mesmo diâmetro $X$ não teriam obrigatoriamente que apresentar o mesmo resultado $Y$, mas valores em torno de um valor esperado $\theta X$.
+### Passo 1 {.unnumbered}
 
-Em outras palavras, estamos supondo que, para um dado valor da variável explicativa \$ X\$, os valores da variável resposta \$ Y\$ seguem uma distribuição de probabilidade \$ f_Y(y)\$, centrada em $\theta X$.
 
-Isso equivale a afirmar que, para cada $X$, o desvio
+Neste caso, temos apenas um parâmetro, $\theta$. Assim, utilizamos o primeiro momento:
 
-$$\epsilon  = Y-\theta X$$
+$$\mu_1 = \mu = k_1(\theta) = \frac{1+\theta}{2}.$$
 
-segue uma distribuição centrada no zero.
 
-Para melhor entendimento dessa proposição, veja o Capítulo 16. Podemos, então, escrever
+### Passo 2 {.unnumbered}
 
-$$E(Y | x) = \theta x, \;\;\mbox{para todo valor}\;\; x.$$
 
-É comum supor que $\epsilon$ tem a mesma distribuição, para todo valor \$ x\$ da variável explicativa $X$.
+Resolvendo para $\theta$ em função da média $\mu$:
 
-Desse modo, é comum escrever
+$$\theta = g_1(\mu) = 2\mu -1.$$
 
-$$Y = \theta\;x+ \epsilon,$$
+### Passos 3 e 4 {.unnumbered}
 
-com $\epsilon$ seguindo a distribuição $f_{\epsilon}(.)$, com média zero. Como ilustração, poderíamos supor que
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
 
-$$\epsilon \sim N(0,\sigma^2),\;\;\;\mbox{para todo}\;\; x.$$
+$$\hat{\theta} = 2\bar{X} - 1.$$
 
-Quanto menor for a variância $\sigma^2$ , melhor será a previsão de $Y$ como função de \$ x\$ . Assim, parece razoável escolher \$ \theta\$ que torna mínima a soma dos quadrados do erros:
+### Esperança e Variância {.unnumbered}
 
-O modelo acima pode ser generalizado, de modo a envolver outras funções do parâmetro, resultando no modelo
+Como o estimador obtido pelo método dos momentos é uma função linear da média amostral, podemos utilizar propriedades do valor esperado. Sabendo que $E(\bar{X}) = \mu$, temos:
 
-$$Y = g(X;  \theta) + \epsilon,\;\;\;\;\;\;\;\;\;\; (11.27)$$
+$$E(\hat{\theta}) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta.$$ 
+Portanto, $\hat{\theta}$ é um estimador não viesado.
 
-Note que
+De maneira similar, utilizando o fato de que $Var(\bar{X}) = \sigma^2/n$, obtemos:
 
-$$E(Y) = g(X;  \theta),$$
+$$Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.$$
+Além disso, pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Logo,
 
-e devemos procurar o valor de $\theta$ que minimize a função
+$$\hat{\theta} = 2\bar{X} - 1 \xrightarrow{p} \theta,$$
 
-$$S(\theta)=\displaystyle \sum_{i=1}^{n}\;\epsilon_i^2=\displaystyle \sum_{i=1}^{n}\;(Y_i-E(Y_i))^2=\displaystyle \sum_{i=1}^{n}\;(Y_i- g(X_i;\theta))^2,\;\;\;\;\;\;\;(11.28)$$
+mostrando que o estimador também é consistente.
 
-Para uma amostra $(X_1, Y_1),\ldots, (X_n, Y_n)$ das variáveis $X$ e $Y$. A solução MQ é chamada de estimador de mínimos quadrados (EMQ) de $\theta$.
+### Comparação com o Estimador de Máxima Verossimilhança {.unnumbered}
 
-Nos Capítulos 15 e 16, voltaremos a esse tópico e trataremos com mais detalhes os chamados modelos lineares.
+Para a distribuição uniforme discreta, o estimador de máxima verossimilhança é dado por:
 
-Suponha que
+$$\hat{\theta}_{MV} = \max(X_1, X_2, \dots, X_n).$$
+Esse resultado decorre do fato de que a função de verossimilhança é constante para $\theta \geq \max(X_i)$ e nula caso contrário, sendo maximizada no menor valor possível de $\theta$ que ainda torna a amostra observável.
 
-$$Y_i | X_i = \theta X_i + \epsilon_i, \;\;\;i=1,2,\ldots,n$$
 
-com
+**Comparação entre os estimadores**
 
-$$\epsilon_i \sim N(0,\sigma^2),\;\;\;i=1,2,\ldots,n$$
+- O estimador de momentos, $\hat{\theta}_{\text{MoM}} = 2\bar{X} - 1$, utiliza toda a informação da amostra, mas pode assumir valores não inteiros.
 
-Na prática usamos:
+- O estimador de máxima verossimilhança, $\hat{\theta}_{\text{MV}} = \max(X_i)$, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.
 
-$$Y_i  = \theta X_i + \epsilon_i, \;\;\;i=1,2,\ldots,n.$$
+Além disso:
 
-Aplicando o operador esperança temos:
+- $\hat{\theta}_{\text{MoM}}$ é não viesado.
 
-$$E\left(Y_i \right) = \theta X_i + E(\epsilon_i)= \theta X_i+0= \theta X_i.$$
+- $\hat{\theta}_{\text{MV}}$ é viesado (subestima o valor verdadeiro), pois $E(\max(X_i)) < \theta$, embora seja consistente.
 
-Calculando a variância temos:
+Essa comparação ilustra uma diferença fundamental entre métodos de estimação: enquanto o método dos momentos busca reproduzir características médias da distribuição, o método de máxima verossimilhança está diretamente ligado à plausibilidade dos dados observados.
 
-$$Var\left( Y_i \right) = Var\left(\theta X_i + \epsilon_i\right)= Var(\epsilon_i)= \sigma^2.$$
 
-Considere o estimador de MQ de $\theta$ dado por:
+## Exemplo: Distribuição Exponencial {.unnumbered}
 
-$$\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{n}\;X_i\;Y_i}{\displaystyle \sum_{i=1}^{n}\;X_i^2}= \displaystyle \sum_{i=1}^{n}\;w_i \;Y_i,$$ com
 
-$$w_i= \frac{X_i}{\sum_{i=1}^{n}\;X_i^2}.$$
+Considere $X \sim \text{Exp}(\theta)$. Sabemos que:
 
-Inicialmente mostre que:
+$$\mu = E(X) = \frac{1}{\theta}\quad \text{e} \quad \sigma^2 = V(X) = \frac{1}{\theta^2}.$$
 
-$$\displaystyle \sum_{i=1}^{n}\;w_i\;X_i =1.$$
 
-**Prova**
+### Passo 1 {.unnumbered}
 
-Temos que :
+Neste caso, temos apenas um parâmetro, $\lambda$. Assim, utilizamos o primeiro momento:
 
-$$\displaystyle \sum_{i=1}^{n}\;w_i\;X_i = \displaystyle \sum_{i=1}^{n}\; \;\frac{X_i}{\sum_{i=1}^{n}\;X_i^2} \times X_i.$$
+$$\mu_1 = \mu = k_1(\theta) = \frac{1}{\theta}.$$
 
-$$\displaystyle \sum_{i=1}^{n}\;  w_i\;X_i= \frac{1}{\sum_{i=1}^{n}\;X_i^2}\;\;\displaystyle \sum_{i=1}^{n}\;X_i^2=1.$$
 
-Agora mostre que $\hat{\theta}_{MQ}$ é um estimador não viciado de $\theta$.
+### Passo 2 {.unnumbered}
 
-$$E\left(\hat{\theta}_{MQ}\right)=E\left(\displaystyle \sum_{i=1}^{n}\; w_i Y_i \right),$$
+Resolvendo para $\theta$ em função da média $\mu$:
 
-$$E\left(\hat{\theta}_{MQ}\right)=\displaystyle \sum_{i=1}^{n}\;E(w_i\;Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i\;E(\;Y_i)$$
+$$\theta = g_1(\mu) = \frac{1}{\mu}.$$
 
-$$E\left(\hat{\theta}_{MQ}\right)= \displaystyle \sum_{i=1}^{n}\;w_i\;\theta\;X_i=\theta\;\displaystyle \sum_{i=1}^{n}\;X_i w_i$$
+### Passos 3 e 4 {.unnumbered}
 
-$$E\left(\hat{\theta}_{MQ}\right)=\theta \times 1=\theta.$$
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
 
-Agora mostre que:
+$$\hat{\theta} = \frac{1}{\bar{X}}.$$
 
-$$\displaystyle \sum_{i=1}^{n}\;w_i^2\; =\frac{1}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.$$
+### Esperança e Variância {.unnumbered}
 
-**Prova:**
+Note que o estimador $\hat{\theta}$ não é uma função linear da média amostral, o que torna a análise de suas propriedades um pouco mais envolvida. Sabemos que $S = \sum_{i=1}^n X_i \sim \text{Gama}(n, \lambda)$, o que implica que:
 
-Seja $$A=\displaystyle \sum_{i=1}^{n}\;X_i^2$$.
+$$\bar{X} \sim \text{Gama}(n, n\theta).$$
+Além disso, é possível mostrar que $\hat{\theta} = 1/\bar{X}$ segue uma distribuição gama inversa (GI) de parâmetros $n$ e $n\theta$, ou seja
 
-Assim
+$$\frac{1}{\bar{X}} \sim \text{GI}(n, n\theta).$$
+Consequentemente, a média e a variância são:
 
-$$w_i= \frac{X_i}{A}\;\;\;\;\;,w_i^2= \frac{X_i^2}{A^2} $$
+$$E(\hat{\theta}) = \frac{n\theta}{n-1}\; (n>1) \quad \text{e} \quad Var(\hat{\theta}) = \frac{n^2\theta^2}{(n-1)^2(n-2)}\; (n>2).$$
 
-$$\displaystyle \sum_{i=1}^{n}\;w_i^2\;=\displaystyle \sum_{i=1}^{n}\;\frac{X_i^2}{A^2}=\frac{1}{A^2}\;\displaystyle \sum_{i=1}^{n}\;X_i^2$$
+Além disso, como $\bar{X} \xrightarrow{p} \mu = \frac{1}{\theta}$ quando $n \to \infty$, segue que:
 
-$$\displaystyle \sum_{i=1}^{n}\;w_i^2\;=\frac{1}{A^2}\;A=\frac{1}{A}=\;\frac{1}{\displaystyle \sum_{i=1}^{n}\;X_i^2}$$
+$$\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,$$
+mostrando que o estimador é consistente.
 
-Agora mostre que a variância do estimador de mínimos quadrados de $\theta$ é dada por:
 
-$$Var\left(\hat{\theta}_{MQ}\right)= \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.$$
 
-**Prova:**
+## Exemplo: Distribuição Gama {.unnumbered}
 
-$$Var\left(\hat{\theta}_{MQ}\right)=Var\left(\displaystyle \sum_{i=1}^{n}\; w_i Y_i \right)=\displaystyle \sum_{i=1}^{n}\;Var( w_i Y_i),$$
 
-$$Var\left(\hat{\theta}_{MQ}\right)=\displaystyle \sum_{i=1}^{n}\;w_i^2\;V(Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i^2\;\sigma^2, $$
+Considere $X \sim \text{Gama}(\theta_1, \theta_2)$, em que:
 
-$$Var\left(\hat{\theta}_{MQ}\right)=\sigma^2\;\displaystyle \sum_{i=1}^{n}\;w_i^2=
-\frac{\sigma^2}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.$$
+$$
+\mu = E[X] = \frac{\theta_1}{\theta_2}, \quad \text{e}\quad \sigma^2 = Var(X) = \frac{\theta_1}{\theta_2^2}.
+$$
 
-Qual a distribuição Amostral do estimador de mínimos quadrados $V=\hat{\theta}_{MQ}$?
+### Passo 1 {.unnumbered}
 
-**Prova:** Sabemos que
+Neste caso, temos dois parâmetros, $\alpha$ e $\beta$. Assim, utilizamos o primeiro e o segundo momento:
 
-$$Y_i \sim N(\theta X_i, \sigma^2)$$ e sua função geradora de momentos é dada por:
+$$\mu_1 = k_1(\theta_1, \theta_2) = \frac{\theta_1}{\theta_2} \quad \text{e}\quad \mu_2 = k_2(\theta_1, \theta_2) = \frac{\theta_1(1 + \theta_1)}{\theta_2^2}.$$
 
-$$M_{Y_i}(t)=\exp(\theta X_i\;t + \frac{1}{2} \sigma^2 \;t^2 )$$
+### Passo 2 {.unnumbered}
 
-A função de momentos de $V$ é dada por:
+Resolvendo para $\theta_1$ e $\theta_2$ em função de $\mu_1$ e $\mu_2$:
 
-$$M_V(t)=E\left(e^{tV}\right)=E\left(e^{t\;\displaystyle \sum_{i=1}^{n}\;w_iY_i }\right)$$
+$$\theta_1 = g(\mu_1, \mu_2) = \frac{\mu_1^2}{\mu_2 - \mu_1^2} \quad \text{e} \quad \theta_2 = g(\mu_1, \mu_2) = \frac{\mu_1}{\mu_2 - \mu_1^2}.$$
 
-$$M_V(t)=E\left(e^{\;\displaystyle \sum_{i=1}^{n}\;w_i\;t\;Y_i} \right)$$
+### Passos 3 e 4 {.unnumbered}
 
-$$M_V(t)=\displaystyle \prod_{i=1}^{n}\;E\left( e^{wi\;t\;Y_i} \right),$$
+Substituindo a média populacional pela média amostral $\bar{X}$ e segundo momento populacional pelo segundo momento amostral, obtemos os seguintes estimadores de momentos:
 
-$$M_V(t)=\displaystyle \prod_{i=1}^{n}\;M_{Y_i}(w_i t)$$
 
-$$M_V(t)=\displaystyle \prod_{i=1}^{n}\;\exp(\theta X_i\;w_i\;t + \frac{1}{2} \sigma^2 \;w_i^2\;t^2)$$
+$$
+\widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2} 
+$$
 
-$$M_V(t)=\exp\left(\theta\;t\; \displaystyle \sum_{i=1}^{n}X_i\;w_i\; + \frac{1}{2} \sigma^2 \;\displaystyle \sum_{i=1}^{n} w_i^2\;t^2\right)$$
+em que:
 
-$$M_V(t)=\exp\left(\theta\;t\;\times 1 +\frac{1}{2}\times  \sigma^2  \times \frac{1}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)$$
+$$
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.
+$$
 
-$$M_V(t)=\exp\left(\theta\;t\; +\frac{1}{2}   \times \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)$$
+### Propriedades {.unnumbered}
 
-Assim
 
-$$V=\hat{\theta}_{MQ}  \sim N \left( \theta,\frac {\sigma^2}{\displaystyle \sum_{i=1}^{n} X_i^2}\right)$$
+Os estimadores obtidos são funções de $\bar{X}$ e $\widehat{\sigma}^2$, o que dificulta a obtenção de expressões exatas para esperança e variância em forma fechada.
 
-Qual o estimador de mínimos quadrados baseado em uma amostra aleatória de tamanho $n$, $X_1,X_2,\ldots,X_n)$, de uma variável $X$ com distribuição:
+No entanto, pela Lei dos Grandes Números:
 
--   $X \sim Poisson(\theta)$.
--   $X \sim N(\mu,1)$.
--   $X \sim Ber(p).$
+$$\bar{X} \xrightarrow{p} \mu \quad \text{e} \quad \hat{\sigma}^2  \xrightarrow{p} \sigma^2,$$
+quando $n \to \infty$. Logo,
 
-**Solução:** Devemos minimizar
+$$\hat{\theta}_1 \xrightarrow{p} \theta_1 \quad \text{e} \quad \hat{\theta}_2 \xrightarrow{p} \theta_2,$$
+mostrando que ambos os estimadores são consistentes.
 
-```         
-Sabemos que
-```
 
-$$E(X_i)=\theta,\;\;i=1,2,\ldots,n.$$
+## Exercícios {.unnumbered}
 
-$$S(\theta)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\theta)^2$$
+1.  O **múon** é uma partícula elementar com carga elétrica $-1$ e spin (momento angular intrínseco) igual a $\frac{1}{2}$. Trata-se de uma partícula subatômica instável com tempo de vida médio de $2{,}2 \, \mu s$.
 
-$$S(\theta)=\displaystyle \sum_{i=1}^{n}\;X_i^2- 2\displaystyle \sum_{i=1}^{n}\;X_i\;\theta + n\theta^2=a\theta^2 +b \theta +c$$
+Os múons possuem massa aproximadamente **200 vezes maior** que a massa do elétron. Como o múon tem a mesma carga e spin que o elétron, ele pode ser visto como uma versão muito mais pesada do elétron.
 
-Como $a>0$ temos
+A colisão de um feixe de prótons ($p$) acelerados, com energia de $600 \, \text{MeV}$ (milhões de elétron-volts), com os núcleos de um alvo de produção gera píons positivos ($\pi^+$) por meio de uma das seguintes reações:
 
-$$\theta_{min}=\frac{-b}{2a}=\frac{2\displaystyle \sum_{i=1}^{n}\;X_i}{2n}=\bar{X}$$
+$$p + p \rightarrow p + n + \pi^+ \quad \text{ou} \quad p + n \rightarrow n + n + \pi^+.$$
 
-que é o nosso estimador de mínimos quadrados.
+A partir do decaimento subsequente dos píons (tempo de vida médio de $26{,}03 \, \text{ns}$), múons positivos ($\mu^+$) são formados via o decaimento de dois corpos:
 
-No caso da normal temos:
+$$
+\pi^+ \rightarrow \mu^+ + \nu_\mu,
+$$
 
-Sabemos que
+em que $\nu_\mu$ representa o **neutrino do múon**.
 
-$$E(X_i)=\mu,\;\;i=1,2,\ldots,n.$$
+O decaimento do múon em um pósitron ($e^+$), um neutrino do elétron ($\nu_e$) e um antineutrino do múon ($\bar{\nu}_\mu$):
 
-$$S(\mu)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\mu)^2$$
+$$
+\mu^+ \rightarrow e^+ + \nu_e + \bar{\nu}_\mu,
+$$
 
-$$\mu_{min}=\bar{X},$$
+possui uma distribuição angular $t$ com densidade dada por:
 
-que é o nosso estimador de mínimos quadrados.
+$$
+f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
+$$
 
-No caso da Bernouli temos
+em que $t$ é o ângulo entre a trajetória do pósitron e o spin do $\mu^+$, e o parâmetro de anisotropia $\alpha \in [-1/3, 1/3]$ depende da polarização do feixe de múons e da energia do pósitron. Com base nas observações $t_1, \ldots, t_n$, obtenha o estimador de momentos $\hat{\alpha}$ para $\alpha$.
 
-$$E(X_i)=p,\;\;i=1,2,\ldots,n.$$
+**Observação:** Neste caso, a média é igual a zero para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador.
 
-$$S(p)=\displaystyle \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-p)^2$$
 
-$$S(p)=np^2 -2\displaystyle \sum_{i=1}^{n}\;X_i\;p  +\displaystyle \sum_{i=1}^{n}\;X_i^2$$
+2.  Sejam $x_1, x_2, \ldots, x_n$ uma amostra i.i.d. de $X \sim N(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Queremos obter o estimador de momentos para o vetor de parâmetros: $\theta = (\theta_1, \theta_2)$. Verifique se o estimador é viesado e obtenha sua variância.
 
-$$S'(p)=2pn-2\displaystyle \sum_{i=1}^{n}\;X_i $$
+<!-- ## Método de Mínimos Quadrados Vamos analisar a seção 11.4 do livro do Bussab e -->
 
-$$S^{''}(p)=2n >0$$
+<!-- Morettin. Um dos procedimentos mais usados para obter estimadores é aquele que -->
 
-De $S'(p)=0$ temos
+<!-- se baseia no princípio dos mínimos quadrados, introduzido por Gauss em 1794, mas -->
 
-$$p_{min}=\bar{X},$$
+<!-- que primeiro apareceu com esse nome no apêndice do tratado de Legendre, -->
 
-que é o nosso estimador de mínimos quadrados.
+<!-- Nouvelles Méthodes pour la Determination des Orbites des Comètes, publicado em -->
 
-## Lista
+<!-- Paris em 1806. Gauss somente viria a publicar seus resultados em 1809, em -->
 
-1.  Estamos estudando o modelo $y_t= \mu  + \epsilon_t$, para o qual uma amostra de cinco elementos produziu os seguintes valores para $y_t: 3,
-    5, 6, 8, 16.$
+<!-- Hamburgo. Ambos utilizaram o princípio em conexão com problemas de Astronomia e -->
 
-<!-- -->
+<!-- Física. Vejamos o procedimento por meio de um exemplo simples. \*\*Exemplo\* Um -->
 
-(a) Calcule os valores de $$S(\mu)=\displaystyle  \sum_{t} \;(y_t-\mu)^2$$ para $\mu = 6, 7, 8, 9, 10$, e faça o gráfico de $S(\mu)$ em relação a $\mu$.
+<!-- engenheiro está estudando a resistência $Y$ de uma fibra em função de seu -->
 
-Qual o valor que parece tornar mínimo $S(\mu)$?
+<!-- diâmetro $X$ e notou que as variáveis são aproximadamente proporcionais, isto é, -->
 
-(b) Derivando $S(\mu)$ em relação a $\mu$ , e igualando o resultado a zero, você encontrará o EMQ de $\mu$. Usando os dados acima, encontre a estimativa para $\mu$ e compare com o resultado do item anterior.
+<!-- elas obedecem à relação $$Y \approx  \theta X,\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; -->
 
-<!-- -->
+<!-- (11.25).$$ em que $\theta$ é o coeficiente de proporcionalidade. Agora ele -->
 
-2.  Os dados abaixo referem-se ao índice de inflação ($y_t$) de 1967 a 1979.
+<!-- deseja estimar o parâmetro $\theta$ , baseado numa amostra de cinco unidades, -->
 
-| Ano ($t$)        | 1967 | 1969 | 1971 | 1973 | 1975 | 1977 | 1979 |
-|------------------|------|------|------|------|------|------|------|
-| Inflação ($y_t$) | 128  | 192  | 277  | 373  | 613  | 1236 | 2639 |
+<!-- que, submetidas a mensuração e testes, produziram os resultados: |       | 1   | -->
 
-(a) Faça o gráfico de $y_t$ contra $t$.
+<!-- 2   | 3   | 4   | 5   | Média         | -->
 
-(b) Considere ajustar o modelo
+<!-- |-------|-----|-----|-----|-----|-----|---------------| | **X** | 1,2 | 1,5 | -->
 
-$$y_t= \alpha + \beta t + \epsilon_t $$
+<!-- 1,7 | 2,0 | 2,6 | $\bar{X}=1,8$ | | **Y** | 3,9 | 4,7 | 5,6 | 5,8 | 7,0 | -->
 
-aos dados. Encontre as estimativas de mínimos quadrados de $\alpha$ e $\beta$.
+<!-- $\bar{Y}=5,4$ | Vamos fazer um diagrama de dispersão : Foi feito um pequeno -->
 
-(c) Qual seria a inflação em 1981?
+<!-- programa no \textbf{R}: -->
 
-(d) Você teria alguma restrição em adotar o modelo linear nesse caso ?
+<!-- ```{r} -->
 
-<!-- -->
+<!--  X=c(12,15,17,20,26)/10;X -->
 
-3.  No Problema 7, determinamos os estimadores de mínimos quadrados para o modelo $$y_t= f(t) + \epsilon_t,$$ no qual
+<!-- Y=c(39,47,56,58,70)/10;Y -->
 
-$$f(t) = \alpha + \beta\;t$$.
+<!-- n=length(Y);n -->
 
-Suponha agora que
+<!-- Xb=mean(X);Xb -->
 
-$$f(t) = \alpha + \beta\; x_t,\; t = 1,2,\ldots, n,$$
+<!-- Yb=mean(Y);Yb -->
 
-ou seja, temos $n$ valores fixos $x_1,x_2,\ldots,x_n$ uma variável fixa (não aleatória) $x$. Obtenha os EMQ de $\alpha$ e $\beta$ para esse modelo.
+<!-- plot(X,Y,xlim=c(0,3),ylim=c(0,8)) -->
 
-4.  Aplique os resultados do Problema 3 para os dados a seguir:
+<!-- abline(a=0,b=3,col="red") -->
 
-| $t$   | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   |
-|-------|------|------|------|------|------|------|------|------|------|------|
-| $x_t$ | 1,5  | 1,8  | 1,6  | 2,5  | 4,0  | 3,8  | 4,5  | 5,1  | 6,5  | 6,0  |
-| $y_t$ | 66,8 | 67,0 | 66,9 | 67,6 | 68,9 | 68,7 | 69,3 | 69,8 | 71,0 | 70,6 |
+<!-- ``` -->
 
+<!-- O valor $a$ é o coeficiente linear e o valor $b$ o coeficiente angular da reta -->
 
-## Método de Máxima Verossimilhança
+<!-- que passa pela origem. Inspecionando os resultados, conclui-se que -->
 
+<!-- $\hat{\theta}= 3$ parece ser um valor razoável. Como verificar a qualidade dessa -->
+
+<!-- estimativa? Podemos utilizar o modelo $$\hat{Y}= 3X$$ e ver como esse prevê os -->
+
+<!-- valores de $Y$, para os dados valores de $X$, e como são as discrepâncias entre -->
+
+<!-- os valores observados e os estimados pelo modelo. Essa análise está resumida na -->
+
+<!-- Tabela abaixo: | X   | Y   | $\hat{Y}=3X$ | $e=Y-\hat{Y}$ | $e^2$    | -->
+
+<!-- |-----|-----|--------------|---------------|----------| | 1,2 | 3,9 | 3,6 | 0,3 -->
+
+<!-- | 0,09     | | 1,5 | 4,7 | 4,5          | 0,2           | 0,04 | | 1,7 | 5,6 | -->
+
+<!-- 5,1          | 0,5           | 0,25     | | 2,0 | 5,8 | 6,0 | −0,2          | -->
+
+<!-- 0,04     | | 2,6 | 7,0 | 7,8          | −0,8          | 0,64 | |     |     | -->
+
+<!-- **Total**    | **0**         | **1,06** | Os valores da coluna $(Y - -->
+
+<!-- 3X)=(Y-\bar{Y})$ medem a inadequação do modelo para cada observação da amostra, -->
+
+<!-- enquanto o valor é uma tentativa de medir o erro quadrático total da amostra?. -->
+
+<!-- Como em situações anteriores, elevou-se ao quadrado para evitar o problema do -->
+
+<!-- sinal. Quanto menor for o erro quadrático total, melhor será a estimativa. Isso -->
+
+<!-- nos sugere procurar a estimativa que torne mínima essa soma de quadrados. -->
+
+<!-- Matematicamente, o problema passa a ser o de encontrar o valor de $\theta$ que -->
+
+<!-- minimize a função $$S(\theta)=\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta -->
+
+<!-- X_i)^2.$$ O mínimo da função é obtido derivando-a em relação a $\theta$, e -->
+
+<!-- igualando o resultado a zero (ver Morettin et al., 2005), o que resulta -->
+
+<!-- $$S'(\theta)=2\;\displaystyle \sum_{i=1}^{5}\;(Y_i-\theta X_i)(-X_i),$$ -->
+
+<!-- $$S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;(X_i\;Y_i-\theta X_i^2)=0$$ -->
+
+<!-- $$S'(\theta)=-2\;\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i+ 2\theta\; \displaystyle -->
+
+<!-- \sum_{i=1}^{5} X_i^2.$$ A derivada segunda de $S$ é dada por: $$S^{''}(\theta)=2 -->
+
+<!-- \displaystyle \sum_{i=1}^{5} X_i^2>0$$ Igualando a derivada primeira a zero -->
+
+<!-- temos: $$ \displaystyle \sum_{i=1}^{5}\;X_i\;Y_i -\theta \displaystyle -->
+
+<!-- \sum_{i=1}^{5}\;X_i^2=0$$ Assim -->
+
+<!-- $$\theta=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle -->
+
+<!-- \sum_{i=1}^{5}\;X_i^2},$$ -->
+
+<!-- que é ponto de mínimo relativo pois a derivada segunda é sempre positiva. O -->
+
+<!-- estimador de mínimos quadrados de $\theta$ é dado por: -->
+
+<!-- $$\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{5}\;X_i\;Y_i}{\displaystyle -->
+
+<!-- \sum_{i=1}^{5}\;X_i^2}.$$ -->
+
+<!-- Usando os dados acima encontramos $\hat{\theta}_{MQ} = 2,94$ , que conduz a um -->
+
+<!-- valor mínimo para $S(\theta)$ de \$ 0,94\$ . Observe que esse valor é realmente -->
+
+<!-- menor do que o observado para $\theta = 3$, ou seja, $1,06$. Vamos utilizar o -->
+
+<!-- `R` para calcular a estimativa de mínimos quadrados de $\theta$ bem como os -->
+
+<!-- valores previstos pelo modelo. -->
+
+<!-- ```{r} -->
+
+<!-- X=c(12,15,17,20,26)/10;X -->
+
+<!-- Y=c(39,47,56,58,70)/10;Y -->
+
+<!-- n=length(Y);n -->
+
+<!-- SX=sum(X);SX -->
+
+<!-- X2=X^2 -->
+
+<!-- SX2=sum(X2);SX2 -->
+
+<!-- XY=X*Y -->
+
+<!-- SXY=sum(XY);SXY -->
+
+<!-- teta_est=SXY/SX2;teta_est -->
+
+<!-- round(teta_est,2)  ##Estimativa de mínimos quadrados. -->
+
+<!-- Y_est=teta_est*X;Y_est -->
+
+<!-- e=Y-Y_est -->
+
+<!-- e2=e^2 -->
+
+<!-- sum(e2) -->
+
+<!-- tabela=cbind(X,Y,X2,XY,Y_est,e,e2);tabela -->
+
+<!-- ``` -->
+
+<!-- Vamos fazer agora com uma função direta do `R`: -->
+
+<!-- ```{r} -->
+
+<!-- mod1=lm(Y~X -1);mod1 -->
+
+<!-- predict(mod1) -->
+
+<!-- summary(mod1) -->
+
+<!-- anova(mod1) -->
+
+<!-- SY2=sum(Y^2);SY2 -->
+
+<!-- ###Observe que: -->
+
+<!-- 150.294 + 1.006 -->
+
+<!-- ``` -->
+
+<!-- Como foi dito, não esperávamos uma relação perfeita entre as duas variáveis, já -->
+
+<!-- que o diâmetro da fibra não é o único responsável pela resistência; outros -->
+
+<!-- fatores não controlados afetam o resultado. Desse modo, duas amostras obtidas do -->
+
+<!-- mesmo diâmetro $X$ não teriam obrigatoriamente que apresentar o mesmo resultado -->
+
+<!-- $Y$, mas valores em torno de um valor esperado $\theta X$. Em outras palavras, -->
+
+<!-- estamos supondo que, para um dado valor da variável explicativa \$ X\$, os -->
+
+<!-- valores da variável resposta \$ Y\$ seguem uma distribuição de probabilidade \$ -->
+
+<!-- f_Y(y)\$, centrada em $\theta X$. Isso equivale a afirmar que, para cada $X$, o -->
+
+<!-- desvio $$\epsilon  = Y-\theta X$$ segue uma distribuição centrada no zero. Para -->
+
+<!-- melhor entendimento dessa proposição, veja o Capítulo 16. Podemos, então, -->
+
+<!-- escrever $$E(Y | x) = \theta x, \;\;\mbox{para todo valor}\;\; x.$$ É comum -->
+
+<!-- supor que $\epsilon$ tem a mesma distribuição, para todo valor \$ x\$ da -->
+
+<!-- variável explicativa $X$. Desse modo, é comum escrever $$Y = \theta\;x+ -->
+
+<!-- \epsilon,$$ com $\epsilon$ seguindo a distribuição $f_{\epsilon}(.)$, com média -->
+
+<!-- zero. Como ilustração, poderíamos supor que $$\epsilon \sim -->
+
+<!-- N(0,\sigma^2),\;\;\;\mbox{para todo}\;\; x.$$ Quanto menor for a variância -->
+
+<!-- $\sigma^2$ , melhor será a previsão de $Y$ como função de \$ x\$ . Assim, parece -->
+
+<!-- razoável escolher \$ \theta\$ que torna mínima a soma dos quadrados do erros: O -->
+
+<!-- modelo acima pode ser generalizado, de modo a envolver outras funções do -->
+
+<!-- parâmetro, resultando no modelo $$Y = g(X;  \theta) + -->
+
+<!-- \epsilon,\;\;\;\;\;\;\;\;\;\; (11.27)$$ Note que $$E(Y) = g(X;  \theta),$$ e -->
+
+<!-- devemos procurar o valor de $\theta$ que minimize a função -->
+
+<!-- $$S(\theta)=\displaystyle \sum_{i=1}^{n}\;\epsilon_i^2=\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;(Y_i-E(Y_i))^2=\displaystyle \sum_{i=1}^{n}\;(Y_i- -->
+
+<!-- g(X_i;\theta))^2,\;\;\;\;\;\;\;(11.28)$$ Para uma amostra $(X_1, Y_1),\ldots, -->
+
+<!-- (X_n, Y_n)$ das variáveis $X$ e $Y$. A solução MQ é chamada de estimador de -->
+
+<!-- mínimos quadrados (EMQ) de $\theta$. Nos Capítulos 15 e 16, voltaremos a esse -->
+
+<!-- tópico e trataremos com mais detalhes os chamados modelos lineares. Suponha que -->
+
+<!-- $$Y_i | X_i = \theta X_i + \epsilon_i, \;\;\;i=1,2,\ldots,n$$ com $$\epsilon_i -->
+
+<!-- \sim N(0,\sigma^2),\;\;\;i=1,2,\ldots,n$$ Na prática usamos: $$Y_i  = \theta X_i -->
+
+<!-- + \epsilon_i, \;\;\;i=1,2,\ldots,n.$$ Aplicando o operador esperança temos: -->
+
+<!-- $$E\left(Y_i \right) = \theta X_i + E(\epsilon_i)= \theta X_i+0= \theta X_i.$$ -->
+
+<!-- Calculando a variância temos: $$Var\left( Y_i \right) = Var\left(\theta X_i + -->
+
+<!-- \epsilon_i\right)= Var(\epsilon_i)= \sigma^2.$$ Considere o estimador de MQ de -->
+
+<!-- $\theta$ dado por: -->
+
+<!-- $$\hat{\theta}_{MQ}=\frac{\displaystyle \sum_{i=1}^{n}\;X_i\;Y_i}{\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i^2}= \displaystyle \sum_{i=1}^{n}\;w_i \;Y_i,$$ com -->
+
+<!-- $$w_i= \frac{X_i}{\sum_{i=1}^{n}\;X_i^2}.$$ Inicialmente mostre que: -->
+
+<!-- $$\displaystyle \sum_{i=1}^{n}\;w_i\;X_i =1.$$ -->
+
+<!-- **Prova** -->
+
+<!-- Temos que : $$\displaystyle \sum_{i=1}^{n}\;w_i\;X_i = \displaystyle -->
+
+<!-- \sum_{i=1}^{n}\; \;\frac{X_i}{\sum_{i=1}^{n}\;X_i^2} \times X_i.$$ -->
+
+<!-- $$\displaystyle \sum_{i=1}^{n}\;  w_i\;X_i= -->
+
+<!-- \frac{1}{\sum_{i=1}^{n}\;X_i^2}\;\;\displaystyle \sum_{i=1}^{n}\;X_i^2=1.$$ -->
+
+<!-- Agora mostre que $\hat{\theta}_{MQ}$ é um estimador não viciado de $\theta$. -->
+
+<!-- $$E\left(\hat{\theta}_{MQ}\right)=E\left(\displaystyle \sum_{i=1}^{n}\; w_i Y_i -->
+
+<!-- \right),$$ $$E\left(\hat{\theta}_{MQ}\right)=\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;E(w_i\;Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i\;E(\;Y_i)$$ -->
+
+<!-- $$E\left(\hat{\theta}_{MQ}\right)= \displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;w_i\;\theta\;X_i=\theta\;\displaystyle \sum_{i=1}^{n}\;X_i w_i$$ -->
+
+<!-- $$E\left(\hat{\theta}_{MQ}\right)=\theta \times 1=\theta.$$ Agora mostre que: -->
+
+<!-- $$\displaystyle \sum_{i=1}^{n}\;w_i^2\; =\frac{1}{\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i^2}.$$ -->
+
+<!-- **Prova:** -->
+
+<!-- Seja $$A=\displaystyle \sum_{i=1}^{n}\;X_i^2$$. Assim $$w_i= -->
+
+<!-- \frac{X_i}{A}\;\;\;\;\;,w_i^2= \frac{X_i^2}{A^2} $$ $$\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;w_i^2\;=\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;\frac{X_i^2}{A^2}=\frac{1}{A^2}\;\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i^2$$ $$\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;w_i^2\;=\frac{1}{A^2}\;A=\frac{1}{A}=\;\frac{1}{\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i^2}$$ -->
+
+<!-- Agora mostre que a variância do estimador de mínimos quadrados de $\theta$ é -->
+
+<!-- dada por: -->
+
+<!-- $$Var\left(\hat{\theta}_{MQ}\right)= \frac{\sigma^2}{\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i^2}.$$ -->
+
+<!-- **Prova:** -->
+
+<!-- $$Var\left(\hat{\theta}_{MQ}\right)=Var\left(\displaystyle \sum_{i=1}^{n}\; w_i -->
+
+<!-- Y_i \right)=\displaystyle \sum_{i=1}^{n}\;Var( w_i Y_i),$$ -->
+
+<!-- $$Var\left(\hat{\theta}_{MQ}\right)=\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;w_i^2\;V(Y_i)=\displaystyle \sum_{i=1}^{n}\;w_i^2\;\sigma^2, $$ -->
+
+<!-- $$Var\left(\hat{\theta}_{MQ}\right)=\sigma^2\;\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;w_i^2= \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n}\;X_i^2}.$$ -->
+
+<!-- Qual a distribuição Amostral do estimador de mínimos quadrados -->
+
+<!-- $V=\hat{\theta}_{MQ}$? -->
+
+<!-- **Prova:** Sabemos que -->
+
+<!-- $$Y_i \sim N(\theta X_i, \sigma^2)$$ e sua função geradora de momentos é dada -->
+
+<!-- por: $$M_{Y_i}(t)=\exp(\theta X_i\;t + \frac{1}{2} \sigma^2 \;t^2 )$$ A função -->
+
+<!-- de momentos de $V$ é dada por: -->
+
+<!-- $$M_V(t)=E\left(e^{tV}\right)=E\left(e^{t\;\displaystyle \sum_{i=1}^{n}\;w_iY_i -->
+
+<!-- }\right)$$ -->
+
+<!-- $$M_V(t)=E\left(e^{\;\displaystyle \sum_{i=1}^{n}\;w_i\;t\;Y_i} \right)$$ -->
+
+<!-- $$M_V(t)=\displaystyle \prod_{i=1}^{n}\;E\left( e^{wi\;t\;Y_i} \right),$$ -->
+
+<!-- $$M_V(t)=\displaystyle \prod_{i=1}^{n}\;M_{Y_i}(w_i t)$$ $$M_V(t)=\displaystyle -->
+
+<!-- \prod_{i=1}^{n}\;\exp(\theta X_i\;w_i\;t + \frac{1}{2} \sigma^2 \;w_i^2\;t^2)$$ -->
+
+<!-- $$M_V(t)=\exp\left(\theta\;t\; \displaystyle \sum_{i=1}^{n}X_i\;w_i\; + -->
+
+<!-- \frac{1}{2} \sigma^2 \;\displaystyle \sum_{i=1}^{n} w_i^2\;t^2\right)$$ -->
+
+<!-- $$M_V(t)=\exp\left(\theta\;t\;\times 1 +\frac{1}{2}\times  \sigma^2  \times -->
+
+<!-- \frac{1}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)$$ -->
+
+<!-- $$M_V(t)=\exp\left(\theta\;t\; +\frac{1}{2}   \times -->
+
+<!-- \frac{\sigma^2}{\displaystyle \sum_{i=1}^{n} X_i^2}\;t^2\right)$$ Assim -->
+
+<!-- $$V=\hat{\theta}_{MQ}  \sim N \left( \theta,\frac {\sigma^2}{\displaystyle -->
+
+<!-- \sum_{i=1}^{n} X_i^2}\right)$$ -->
+
+<!-- Qual o estimador de mínimos quadrados baseado em uma amostra aleatória de -->
+
+<!-- tamanho $n$, $X_1,X_2,\ldots,X_n)$, de uma variável $X$ com distribuição: -->
+
+<!-- -   $X \sim Poisson(\theta)$. -->
+
+<!-- -   $X \sim N(\mu,1)$. -->
+
+<!-- -   $X \sim Ber(p).$ -->
+
+<!-- **Solução:** Devemos minimizar -->
+
+<!-- ``` -->
+
+<!-- Sabemos que -->
+
+<!-- ``` -->
+
+<!-- $$E(X_i)=\theta,\;\;i=1,2,\ldots,n.$$ $$S(\theta)=\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\theta)^2$$ -->
+
+<!-- $$S(\theta)=\displaystyle \sum_{i=1}^{n}\;X_i^2- 2\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i\;\theta + n\theta^2=a\theta^2 +b \theta +c$$ Como $a>0$ -->
+
+<!-- temos -->
+
+<!-- $$\theta_{min}=\frac{-b}{2a}=\frac{2\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i}{2n}=\bar{X}$$ -->
+
+<!-- que é o nosso estimador de mínimos quadrados. No caso da normal temos: Sabemos -->
+
+<!-- que $$E(X_i)=\mu,\;\;i=1,2,\ldots,n.$$ $$S(\mu)=\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-\mu)^2$$ -->
+
+<!-- $$\mu_{min}=\bar{X},$$ que é o nosso estimador de mínimos quadrados. No caso da -->
+
+<!-- Bernouli temos $$E(X_i)=p,\;\;i=1,2,\ldots,n.$$ $$S(p)=\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;(X_i-E(X_i))^2=\displaystyle \sum_{i=1}^{n}\;(X_i-p)^2$$ -->
+
+<!-- $$S(p)=np^2 -2\displaystyle \sum_{i=1}^{n}\;X_i\;p  +\displaystyle -->
+
+<!-- \sum_{i=1}^{n}\;X_i^2$$ $$S'(p)=2pn-2\displaystyle \sum_{i=1}^{n}\;X_i $$ -->
+
+<!-- $$S^{''}(p)=2n >0$$ De $S'(p)=0$ temos $$p_{min}=\bar{X},$$ que é o nosso -->
+
+<!-- estimador de mínimos quadrados. ## Lista 1.  Estamos estudando o modelo $y_t= -->
+
+<!-- \mu  + \epsilon_t$, para o qual uma amostra de cinco elementos produziu os -->
+
+<!-- seguintes valores para $y_t: 3, 5, 6, 8, 16.$ <!--  (a) Calcule os valores de -->
+
+<!-- $$S(\mu)=\displaystyle  \sum_{t} \;(y_t-\mu)^2$$ para $\mu = 6, 7, 8, 9, 10$, e -->
+
+<!-- faça o gráfico de $S(\mu)$ em relação a $\mu$. Qual o valor que parece tornar -->
+
+<!-- mínimo $S(\mu)$? (b) Derivando $S(\mu)$ em relação a $\mu$ , e igualando o -->
+
+<!-- resultado a zero, você encontrará o EMQ de $\mu$. Usando os dados acima, -->
+
+<!-- encontre a estimativa para $\mu$ e compare com o resultado do item anterior. -->
+
+<!-- <!--  2.  Os dados abaixo referem-se ao índice de inflação ($y_t$) de 1967 a -->
+
+<!-- 1979. | Ano ($t$)        | 1967 | 1969 | 1971 | 1973 | 1975 | 1977 | 1979 | -->
+
+<!-- |------------------|------|------|------|------|------|------|------| | Inflação -->
+
+<!-- ($y_t$) | 128  | 192  | 277  | 373  | 613  | 1236 | 2639 | (a) Faça o gráfico de -->
+
+<!-- $y_t$ contra $t$. (b) Considere ajustar o modelo $$y_t= \alpha + \beta t + -->
+
+<!-- \epsilon_t $$ aos dados. Encontre as estimativas de mínimos quadrados de -->
+
+<!-- $\alpha$ e $\beta$. (c) Qual seria a inflação em 1981? (d) Você teria alguma -->
+
+<!-- restrição em adotar o modelo linear nesse caso ? <!--  No Problema 7, -->
+
+<!-- determinamos os estimadores de mínimos quadrados para o modelo $$y_t= f(t) + -->
+
+<!-- \epsilon_t,$$ no qual $$f(t) = \alpha + \beta\;t$$. Suponha agora que $$f(t) = -->
+
+<!-- \alpha + \beta\; x_t,\; t = 1,2,\ldots, n,$$ ou seja, temos $n$ valores fixos -->
+
+<!-- $x_1,x_2,\ldots,x_n$ uma variável fixa (não aleatória) $x$. Obtenha os EMQ de -->
+
+<!-- $\alpha$ e $\beta$ para esse modelo. 4.  Aplique os resultados do Problema 3 -->
+
+<!-- para os dados a seguir: | $t$   | 1    | 2    | 3    | 4    | 5    | 6    | 7 -->
+
+<!-- | 8    | 9    | 10   | -->
+
+<!-- |-------|------|------|------|------|------|------|------|------|------|------| -->
+
+<!-- | $x_t$ | 1,5  | 1,8  | 1,6  | 2,5  | 4,0  | 3,8  | 4,5  | 5,1  | 6,5  | 6,0  | -->
+
+<!-- | $y_t$ | 66,8 | 67,0 | 66,9 | 67,6 | 68,9 | 68,7 | 69,3 | 69,8 | 71,0 | 70,6 | -->
+
+<!-- ## Método de Máxima Verossimilhança -->
