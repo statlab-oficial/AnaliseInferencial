@@ -563,7 +563,7 @@ Como o estimador obtido pelo MoM é função linear da média amostral, então �
 portanto, $\hat{\theta}$ é um estimador não viciado. De maneira similar, podemos obter a expressão da variância de $\hat{\theta}$, usando propriedades de variância e o fato de $Var(\bar{X}) = \sigma^2/n$. Desta forma, temos que:
 
 $$Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.$$
-Além disso,pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Logo, 
+Além disso, pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Agora, usamos o fato de que a convergência em probabilidade é preservada por funções contínuas (no caso, multiplicar por 2):
 
 $$\hat{\theta} = 2\bar{X} \xrightarrow{p} \theta,$$
 
@@ -610,11 +610,8 @@ Portanto, $\hat{\theta}$ é um estimador não viesado.
 De maneira similar, utilizando o fato de que $Var(\bar{X}) = \sigma^2/n$, obtemos:
 
 $$Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.$$
-Além disso, pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Logo,
+Além disso, como $\hat{\theta}$ é um estimador não viesado e sua variância é igual a zero, quando $n \to \infty$, logo $\hat{\theta}$ é um estimador consistente.
 
-$$\hat{\theta} = 2\bar{X} - 1 \xrightarrow{p} \theta,$$
-
-mostrando que o estimador também é consistente.
 
 ### Comparação com o Estimador de Máxima Verossimilhança {.unnumbered}
 
@@ -628,13 +625,13 @@ Esse resultado decorre do fato de que a função de verossimilhança é constant
 
 - O estimador de momentos, $\hat{\theta}_{\text{MoM}} = 2\bar{X} - 1$, utiliza toda a informação da amostra, mas pode assumir valores não inteiros.
 
-- O estimador de máxima verossimilhança, $\hat{\theta}_{\text{MV}} = \max(X_i)$, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.
+- O estimador de máxima verossimilhança, $\hat{\theta}_{\text{MV}} = \max(X_1, X_2, \dots, X_n)$, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.
 
 Além disso:
 
 - $\hat{\theta}_{\text{MoM}}$ é não viesado.
 
-- $\hat{\theta}_{\text{MV}}$ é viesado (subestima o valor verdadeiro), pois $E(\max(X_i)) < \theta$, embora seja consistente.
+- $\hat{\theta}_{\text{MV}}$ é viesado (subestima o valor verdadeiro), pois $E(\max(X_1, X_2, \dots, X_n)) < \theta$, embora seja consistente.
 
 Essa comparação ilustra uma diferença fundamental entre métodos de estimação: enquanto o método dos momentos busca reproduzir características médias da distribuição, o método de máxima verossimilhança está diretamente ligado à plausibilidade dos dados observados.
 
@@ -681,7 +678,7 @@ $$E(\hat{\theta}) = \frac{n\theta}{n-1}\; (n>1) \quad \text{e} \quad Var(\hat{\t
 Além disso, como $\bar{X} \xrightarrow{p} \mu = \frac{1}{\theta}$ quando $n \to \infty$, segue que:
 
 $$\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,$$
-mostrando que o estimador é consistente.
+pois a função $g(x)=1/x$ é quase-certamente contínua, i.e., é contínua no suporte considerado, mostrando que o estimador é consistente.
 
 
 

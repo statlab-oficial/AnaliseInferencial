@@ -835,7 +835,7 @@ g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <p>Como o estimador obtido pelo MoM é função linear da média amostral, então é fácil obter seu valor esperado, basta usar propriedades de valores esperado e o fato de <span class="math inline">\(E(\bar{X}) = \mu\)</span>. Assim, temos que</p>
 <p><span class="math display">\[E(\hat{\theta})  = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta.\]</span></p>
 <p>portanto, <span class="math inline">\(\hat{\theta}\)</span> é um estimador não viciado. De maneira similar, podemos obter a expressão da variância de <span class="math inline">\(\hat{\theta}\)</span>, usando propriedades de variância e o fato de <span class="math inline">\(Var(\bar{X}) = \sigma^2/n\)</span>. Desta forma, temos que:</p>
-<p><span class="math display">\[Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.\]</span> Além disso,pela Lei dos Grandes Números, temos que <span class="math inline">\(\bar{X} \xrightarrow{p} \mu\)</span> quando <span class="math inline">\(n \to \infty\)</span>. Logo,</p>
+<p><span class="math display">\[Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.\]</span> Além disso, pela Lei dos Grandes Números, temos que <span class="math inline">\(\bar{X} \xrightarrow{p} \mu\)</span> quando <span class="math inline">\(n \to \infty\)</span>. Agora, usamos o fato de que a convergência em probabilidade é preservada por funções contínuas (no caso, multiplicar por 2):</p>
 <p><span class="math display">\[\hat{\theta} = 2\bar{X} \xrightarrow{p} \theta,\]</span></p>
 <p>mostrando que o estimador também é <strong>consistente</strong>.</p>
 <blockquote class="blockquote">
@@ -867,9 +867,7 @@ g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <p>Como o estimador obtido pelo método dos momentos é uma função linear da média amostral, podemos utilizar propriedades do valor esperado. Sabendo que <span class="math inline">\(E(\bar{X}) = \mu\)</span>, temos:</p>
 <p><span class="math display">\[E(\hat{\theta}) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta.\]</span> Portanto, <span class="math inline">\(\hat{\theta}\)</span> é um estimador não viesado.</p>
 <p>De maneira similar, utilizando o fato de que <span class="math inline">\(Var(\bar{X}) = \sigma^2/n\)</span>, obtemos:</p>
-<p><span class="math display">\[Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.\]</span> Além disso, pela Lei dos Grandes Números, temos que <span class="math inline">\(\bar{X} \xrightarrow{p} \mu\)</span> quando <span class="math inline">\(n \to \infty\)</span>. Logo,</p>
-<p><span class="math display">\[\hat{\theta} = 2\bar{X} - 1 \xrightarrow{p} \theta,\]</span></p>
-<p>mostrando que o estimador também é consistente.</p>
+<p><span class="math display">\[Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.\]</span> Além disso, como <span class="math inline">\(\hat{\theta}\)</span> é um estimador não viesado e sua variância é igual a zero, quando <span class="math inline">\(n \to \infty\)</span>, logo <span class="math inline">\(\hat{\theta}\)</span> é um estimador consistente.</p>
 </section>
 <section id="comparação-com-o-estimador-de-máxima-verossimilhança" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="comparação-com-o-estimador-de-máxima-verossimilhança">Comparação com o Estimador de Máxima Verossimilhança</h3>
@@ -878,12 +876,12 @@ g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <p><strong>Comparação entre os estimadores</strong></p>
 <ul>
 <li><p>O estimador de momentos, <span class="math inline">\(\hat{\theta}_{\text{MoM}} = 2\bar{X} - 1\)</span>, utiliza toda a informação da amostra, mas pode assumir valores não inteiros.</p></li>
-<li><p>O estimador de máxima verossimilhança, <span class="math inline">\(\hat{\theta}_{\text{MV}} = \max(X_i)\)</span>, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.</p></li>
+<li><p>O estimador de máxima verossimilhança, <span class="math inline">\(\hat{\theta}_{\text{MV}} = \max(X_1, X_2, \dots, X_n)\)</span>, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.</p></li>
 </ul>
 <p>Além disso:</p>
 <ul>
 <li><p><span class="math inline">\(\hat{\theta}_{\text{MoM}}\)</span> é não viesado.</p></li>
-<li><p><span class="math inline">\(\hat{\theta}_{\text{MV}}\)</span> é viesado (subestima o valor verdadeiro), pois <span class="math inline">\(E(\max(X_i)) &lt; \theta\)</span>, embora seja consistente.</p></li>
+<li><p><span class="math inline">\(\hat{\theta}_{\text{MV}}\)</span> é viesado (subestima o valor verdadeiro), pois <span class="math inline">\(E(\max(X_1, X_2, \dots, X_n)) &lt; \theta\)</span>, embora seja consistente.</p></li>
 </ul>
 <p>Essa comparação ilustra uma diferença fundamental entre métodos de estimação: enquanto o método dos momentos busca reproduzir características médias da distribuição, o método de máxima verossimilhança está diretamente ligado à plausibilidade dos dados observados.</p>
 </section>
@@ -914,7 +912,7 @@ g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <p><span class="math display">\[\frac{1}{\bar{X}} \sim \text{GI}(n, n\theta).\]</span> Consequentemente, a média e a variância são:</p>
 <p><span class="math display">\[E(\hat{\theta}) = \frac{n\theta}{n-1}\; (n&gt;1) \quad \text{e} \quad Var(\hat{\theta}) = \frac{n^2\theta^2}{(n-1)^2(n-2)}\; (n&gt;2).\]</span></p>
 <p>Além disso, como <span class="math inline">\(\bar{X} \xrightarrow{p} \mu = \frac{1}{\theta}\)</span> quando <span class="math inline">\(n \to \infty\)</span>, segue que:</p>
-<p><span class="math display">\[\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,\]</span> mostrando que o estimador é consistente.</p>
+<p><span class="math display">\[\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,\]</span> pois a função <span class="math inline">\(g(x)=1/x\)</span> é quase-certamente contínua, i.e., é contínua no suporte considerado, mostrando que o estimador é consistente.</p>
 </section>
 </section>
 <section id="exemplo-distribuição-gama" class="level2 unnumbered">
