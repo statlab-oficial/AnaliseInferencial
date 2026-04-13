@@ -186,6 +186,52 @@ $$
 
 Essa igualdade é válida para todo $x \in \mathbb{R}$.
 
+## Função de Distribuição
+
+Sendo $X$ uma variável aleatória em $(\Omega, \mathcal{F}, \mathcal{P})$, sua função de distribuição é difinida por:
+
+$$F_X(x) = \Pr(X \leq x),$$
+com $x$ percorrendo todos os reais. 
+
+O conhecimento da função de distribuição permite obter qualquer informação sobre a variável. Importante destacar que, mesmo que a variável só assuma valores num subconjunto dos reais, a função de distribuição é definida em toda reta. 
+
+Uma função de distribuição de uma variável aleatória $X$ em $(\Omega, \mathcal{F}, \mathcal{P})$ obedece às seguintes propriedades:
+
+P1) $\lim \limits_{x \to -\infty} F_X(x) = 0$ e $\lim \limits_{x \to +\infty}F_X(x) = 1$.
+
+P2) $F$ é contínua à direita.
+
+P3) $F$ é não descrescente, isto é, $F_X(x) \leq F_X(y)$ sempre que $x \leq y, \forall x,y \in \mathbb{R}$.
+
+## Variável Aleatória Discreta e função de Probabilidade
+
+Uma variável aleatória é classificada como *discreta*, se assume somente um número enumerável de valores (finito ou infinito). A função de probabilidade de uma variável aleatória discreta é a função que atribue probabilidade a cada um dos possíveis valores assumidos pela variável. Isto é, sendo $X$ uma variável com valores $x_1, x_2, \dots, x_n, \dots$ temos para $i = 1, 2, \dots$.
+
+$$p(x_i) = \Pr(X = x_i) = \Pr(\{\omega \in \Omega: X(\omega) = x_i\}).$$
+A função de probabilidade de $X$ em $(\Omega, \mathcal{F}, \mathcal{P})$ satisfaz:
+
+P1) $0 \leq p(x_i) \leq 1, \forall i = 1, 2, \dots$,
+
+P2) $\sum \limits_{i} p(x_i) = 1,$
+
+com a soma percorrendo todos os possíveis valores  (eventualmente infinitos).
+
+
+## Variável Aleatória Contínua e função Densidade
+
+Uma variável aleatória $X$ em $(\Omega, \mathcal{F}, \mathcal{P})$, com função de distribuição $F$, sará classificada como contínua, se existir uma função $f$ tal que:
+
+$$F_X(x) = \int_{-\infty}^x f_X(\omega) d\omega, \quad\text{para todo} \quad x \in \mathbb{R}.$$
+
+A função $f$ é denominada *função densidade*.
+
+A função densidade de $X$ em $(\Omega, \mathcal{F}, \mathcal{P})$ satisfaz:
+
+P1) $f(x) \geq 0, \forall \in \mathbb{R}$.
+
+P2) $\int_{-\infty}^{+\infty} f_X(\omega) d\omega = 1$.
+
+
 ## Independência
 
 ## Valor Esperado
@@ -203,3 +249,40 @@ Essa igualdade é válida para todo $x \in \mathbb{R}$.
 ### Distribuições discretas
 
 ### Distribuições Contínuas
+
+
+# Exercícios {.unnumbered}
+
+
+1) Use o resultado que diz que, para uma variável aleatória não negativa $Y$, 
+
+$$E(Y) = \int\limits_{0}^{\infty} \Pr(Y > t) dt,$$
+para mostrar, que para uma variável aleatória não negativa $X$,
+
+$$E(X^n) = \int\limits_{0}^{\infty} n x^{n-1} \Pr(X > x) dx.$$
+
+**Dica:** Comece com
+
+$$E(X^n) = \int\limits_{0}^{\infty}  \Pr(X^n > t) dt,$$
+e faça a mudança de variável $t = x^n$.
+
+2. Mostre que $\Gamma(1/2) = \sqrt{\pi}$.
+
+3. Seja $X$ uma variável aleatória contínua com função de distribuição $F$. Defina a variável aleatória $Y$ como $Y = F_X(x)$. Mostre que $Y$ é uniformente distribuída no intervalo $(0,1)$.
+
+4. Suponha que tentativas independentes com mesma probabilidade de sucesso $p$. $0 < p < 1$, sejam realizadas até que se acumule um total de $r$ sucessos. Se $X$ for igual ao número de tentativas necessárias, então
+
+$$\Pr(X = x) = \binom{n-1}{r-1} p^r (1-p)^{n-r}, \quad x = r, r+1, \dots.$$
+Encontre $E(X)$ e $Var(X)$.
+
+5. Seja $X$ uma variável aleatória tal que
+
+$$
+E(X^n) = \left\{ 
+\begin{array}{cc}
+\frac{n!}{(n/2)!}, & \text{se $n$ for par};\\
+0 & \text{caso contrário}.
+\end{array}\right.
+$$
+
+Determine a função geradora de momentos de $X$ e identifique sua distribuição.
