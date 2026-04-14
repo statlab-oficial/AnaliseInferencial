@@ -316,7 +316,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unidade4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -348,8 +348,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#motivação-contexto" id="toc-motivação-contexto" class="nav-link active" data-scroll-target="#motivação-contexto"><span class="header-section-number">6.1</span> Motivação / Contexto</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -374,8 +380,208 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="motivação-contexto" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="motivação-contexto"><span class="header-section-number">6.1</span> Motivação / Contexto</h2>
+<ul>
+<li><p>Estimação pontual, intervalos de confiança e testes de hipóteses têm o mesmo objetivo: <strong>extrair informação de um conjunto de dados observado</strong>.</p>
+<ul>
+<li><strong>Estimação pontual</strong>: fornece um único valor para descrever o parâmetro (por exemplo, a média).</li>
+<li><strong>Intervalo de confiança</strong>: fornece um intervalo de valores plausíveis para o parâmetro desconhecido.</li>
+<li><strong>Teste de hipóteses</strong>: avalia quão compatíveis os dados são com uma determinada hipótese.</li>
+</ul></li>
+</ul>
+<!-- --- -->
+<!-- ### 11.1 Hipótese Nula e Alternativa -->
+<!-- - Imagine um cenário de investigação criminal: -->
+<!--   Você é um detetive, coleta evidências (dados) e seu objetivo é provar que alguém é culpado (hipótese alternativa). -->
+<!-- - Por padrão, assumimos: -->
+<!--   > “Inocente até que se prove o contrário” -->
+<!-- - Matematicamente, escrevemos: -->
+<!--   $$ -->
+<!--   H_0: \text{hipótese nula (status quo)} -->
+<!--   $$ -->
+<!--   $$ -->
+<!--   H_A: \text{hipótese alternativa} -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Interpretação Estatística -->
+<!-- - Dado um conjunto de dados observados $y$, perguntamos: -->
+<!--   > Quanta evidência os dados fornecem contra $H_0$? -->
+<!-- - Isso está no contexto da teoria de testes de hipóteses de Neyman-Pearson. -->
+<!-- - A pergunta central é: -->
+<!--   $$ -->
+<!--   P(y \mid H_0) -->
+<!--   $$ -->
+<!-- - Quanto menor esse valor, maior a evidência contra a hipótese nula. -->
+<!-- --- -->
+<!-- ### Interpretação Intuitiva (Analogia do Detetive) -->
+<!-- | Hipótese | Interpretação | Probabilidade | -->
+<!-- |----------|--------------|---------------| -->
+<!-- | $H_0$ | Ele é inocente | $P(y \mid H_0)$ | -->
+<!-- | $H_A$ | Ele é culpado | $P(y \mid H_A)$ | -->
+<!-- - O objetivo do teste de hipóteses é avaliar: -->
+<!--   $$ -->
+<!--   P(y \mid H_0), -->
+<!--   $$ -->
+<!--   conhecido como **p-valor**. -->
+<!-- --- -->
+<!-- ### Interpretação do p-valor -->
+<!-- - Se o p-valor é pequeno: -->
+<!--   - $y$ é improvável sob $H_0$ -->
+<!--   - Forte evidência contra $H_0$ -->
+<!--   - Evidência a favor de $H_A$ -->
+<!-- - Se o p-valor é grande: -->
+<!--   - $y$ é plausível sob $H_0$ -->
+<!--   - Pouca evidência contra $H_0$ -->
+<!-- ⚠️ **Importante:** -->
+<!-- - “Pouca evidência contra $H_0$” **não significa que $H_0$ é verdadeira**. -->
+<!-- - Significa apenas que o resultado é **inconclusivo**. -->
+<!-- --- -->
+<!-- ### Observação Lógica Importante -->
+<!-- - A implicação: -->
+<!--   $$ -->
+<!--   A \Leftarrow B -->
+<!--   $$ -->
+<!--   significa: “se $B$, então $A$”. -->
+<!-- - No contexto de testes: -->
+<!--   - Observamos $y$ improvável sob $H_0$ $\Rightarrow$ evidência contra $H_0$ -->
+<!--   - Mas o contrário não é garantido. -->
+<!-- --- -->
+<!-- ### Conclusão -->
+<!-- - p-valor pequeno → forte evidência contra $H_0$ -->
+<!-- - p-valor grande → evidência fraca contra $H_0$ -->
+<!-- - Em muitos casos, resultados inconclusivos podem ocorrer devido a: -->
+<!--   - tamanho de amostra pequeno, -->
+<!--   - alta variabilidade dos dados. -->
+<!--   ## p-valor para Teste da Média Normal (Variância Conhecida) — Teste Bicaudal -->
+<!-- - Suponha que temos um conjunto de dados: -->
+<!--   $$ -->
+<!--   \mathbf{y} = (y_1, \dots, y_n). -->
+<!--   $$ -->
+<!-- - Assumimos que os dados são provenientes de: -->
+<!--   $$ -->
+<!--   Y \sim \mathcal{N}(\mu, \sigma^2), -->
+<!--   $$ -->
+<!--   onde $\sigma^2$ é conhecida e $\mu$ é desconhecida. -->
+<!-- - Queremos testar: -->
+<!--   $$ -->
+<!--   H_0: \mu = \mu_{\text{guess}}, \quad -->
+<!--   H_A: \mu \neq \mu_{\text{guess}}. -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Ideia do Teste -->
+<!-- - A ideia é perguntar: -->
+<!-- > Quão improvável é o valor observado do estimador $\hat{\mu}$, assumindo que $\mu = \mu_{\text{guess}}$? -->
+<!-- - Ou seja, queremos avaliar: -->
+<!--   $$ -->
+<!--   P(\hat{\mu} \mid \mu = \mu_{\text{guess}}). -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Estatística do Teste -->
+<!-- - Utilizamos o estimador de máxima verossimilhança: -->
+<!--   $$ -->
+<!--   \hat{\mu} = \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i. -->
+<!--   $$ -->
+<!-- - Sabemos que: -->
+<!--   $$ -->
+<!--   \bar{Y} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right). -->
+<!--   $$ -->
+<!-- - Sob $H_0$: -->
+<!--   $$ -->
+<!--   \bar{Y} \sim \mathcal{N}\left(\mu_{\text{guess}}, \frac{\sigma^2}{n}\right). -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Padronização -->
+<!-- - Usando o fato de que: -->
+<!--   $$ -->
+<!--   X \sim \mathcal{N}(\mu, \sigma^2) -->
+<!--   \;\Longleftrightarrow\; -->
+<!--   \frac{X - \mu}{\sigma} \sim \mathcal{N}(0,1), -->
+<!--   $$ -->
+<!-- - Obtemos: -->
+<!--   $$ -->
+<!--   Z = -->
+<!--   \frac{\bar{Y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}} -->
+<!--   \sim \mathcal{N}(0,1). -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Interpretação -->
+<!-- - O problema agora se reduz a calcular o **p-valor bicaudal**: -->
+<!--   $$ -->
+<!--   p\text{-valor} = 2P\left(|Z| \geq |z_{\text{obs}}|\right). -->
+<!--   $$ -->
+<!-- - Onde: -->
+<!--   $$ -->
+<!--   z_{\text{obs}} = -->
+<!--   \frac{\bar{y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}}. -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Conclusão -->
+<!-- - p-valor pequeno → forte evidência contra $H_0$ -->
+<!-- - p-valor grande → evidência fraca contra $H_0$ -->
+<!-- - Defina a estatística padronizada: -->
+<!--   $$ -->
+<!--   z_y = \frac{\bar{y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}}. -->
+<!--   $$ -->
+<!-- - Como buscamos evidência contra $H_0$, queremos a probabilidade de observar um valor **incompatível** com a hipótese nula: -->
+<!--   $$ -->
+<!--   P\left(\text{não}\left(\bar{Y} \sim \mathcal{N}\left(\mu_{\text{guess}}, \frac{\sigma^2}{n}\right)\right)\right). -->
+<!--   $$ -->
+<!-- - Equivalente a: -->
+<!--   $$ -->
+<!--   P\left(\text{não}\left(Z \sim \mathcal{N}(0,1)\right)\right), -->
+<!--   $$ -->
+<!--   onde $Z = z_y$. -->
+<!-- --- -->
+<!-- ### Regra do Complemento -->
+<!-- - Pela regra do complemento: -->
+<!--   $$ -->
+<!--   P(\text{não } E) = 1 - P(E), -->
+<!--   $$ -->
+<!-- - Logo: -->
+<!--   $$ -->
+<!--   P\left(\text{não}\left(Z \in [-|z_y|, |z_y|]\right)\right) -->
+<!--   = -->
+<!--   1 - P(-|z_y| \leq Z \leq |z_y|). -->
+<!--   $$ -->
+<!-- - Portanto: -->
+<!--   $$ -->
+<!--   = P(Z \leq -|z_y|) + P(Z \geq |z_y|). -->
+<!--   $$ -->
+<!-- - Como a normal padrão é simétrica: -->
+<!--   $$ -->
+<!--   = 2P(Z \leq -|z_y|). -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Definição do p-valor -->
+<!-- - O p-valor é: -->
+<!--   $$ -->
+<!--   p = 2P(Z \leq -|z_y|). -->
+<!--   $$ -->
+<!-- --- -->
+<!-- ### Interpretação -->
+<!-- - Estamos medindo o quão distante $\bar{y}$ está de $\mu_{\text{guess}}$, através de: -->
+<!--   $$ -->
+<!--   |\bar{y} - \mu_{\text{guess}}|. -->
+<!--   $$ -->
+<!-- - Como usamos valor absoluto: -->
+<!--   - Não importa se $\bar{y} > \mu_{\text{guess}}$ ou $\bar{y} < \mu_{\text{guess}}$ (teste bicaudal). -->
+<!-- - Regra prática: -->
+<!--   - Se $p < 0{,}01$: forte evidência contra $H_0$; -->
+<!--   - Caso contrário: resultado **inconclusivo**. -->
+<!-- --- -->
+<!-- ### Interpretação Gráfica -->
+<!-- - Sob $H_0$, temos: -->
+<!--   $$ -->
+<!--   Z \sim \mathcal{N}(0,1). -->
+<!--   $$ -->
+<!-- - O p-valor corresponde à probabilidade de observar valores **tão extremos ou mais extremos** que $z_y$. -->
+<!-- - Graficamente: -->
+<!--   - Representa a **área nas duas caudas** da distribuição normal padrão; -->
+<!--   - Essas áreas medem o quão improvável é observar $z_y$ sob $H_0$. -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -793,8 +999,8 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./unidade4.html" class="pagination-link" aria-label="Estimação Intervalar">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></span>
+      <a href="./unidade4.html" class="pagination-link" aria-label="Estimação por Intervalos: Intervalo de Confiança">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

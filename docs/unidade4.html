@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Estimação Intervalar</title>
+<title>5&nbsp; Estimação por Intervalos: Intervalo de Confiança</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -75,6 +75,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -250,7 +279,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade4.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade4.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -316,7 +345,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unidade4.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -348,8 +377,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#intervalo-de-confiança-frequentista-de-95" id="toc-intervalo-de-confiança-frequentista-de-95" class="nav-link active" data-scroll-target="#intervalo-de-confiança-frequentista-de-95"><span class="header-section-number">5.1</span> Intervalo de Confiança Frequentista de 95%</a>
+  <ul class="collapse">
+  <li><a href="#interpretação-ponto-importante" id="toc-interpretação-ponto-importante" class="nav-link" data-scroll-target="#interpretação-ponto-importante"><span class="header-section-number">5.1.1</span> ⚠️ Interpretação (Ponto Importante)</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -357,7 +395,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação Intervalar</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></h1>
 </div>
 
 
@@ -374,8 +412,100 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<ul>
+<li><p>Motivação: suponha que observamos dados <span class="math inline">\(\mathbf{y} = (y_1, y_2, \dots, y_n)\)</span>. Agora gostaríamos de modelá-los usando uma distribuição com parâmetro populacional <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>Na estimação pontual, estimamos o parâmetro populacional <span class="math inline">\(\theta\)</span> usando um estimador <span class="math inline">\(\hat{\theta}\)</span>.</p></li>
+<li><p>Na estimação por intervalos, quantificamos o quão incertos estamos em relação ao parâmetro populacional <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>Na estimação pontual (por exemplo, estimador de máxima verossimilhança), obtemos um único valor a partir de um conjunto de dados <span class="math inline">\(\mathbf{y}\)</span>. Ou seja, obtemos um único valor <span class="math inline">\(\hat{\theta}\)</span>.</p></li>
+<li><p>Na estimação por intervalos (por exemplo, intervalo de confiança), obtemos um intervalo de valores a partir de um conjunto de dados <span class="math inline">\(\mathbf{y}\)</span>: <span class="math display">\[
+T(\mathbf{y}) = (\theta^-, \theta^+) \subset \mathbb{R},
+\]</span> o que indica que o parâmetro populacional <span class="math inline">\(\theta\)</span> está em algum lugar entre <span class="math inline">\(\theta^-\)</span> e <span class="math inline">\(\theta^+\)</span>.</p>
+<ul>
+<li><span class="math inline">\(\theta^-\)</span>: limite inferior do intervalo<br>
+</li>
+<li><span class="math inline">\(\theta^+\)</span>: limite superior do intervalo<br>
+</li>
+<li><span class="math inline">\(\theta^- \leq \theta^+\)</span> e possível <span class="math inline">\(\theta^- = \theta^+\)</span></li>
+</ul></li>
+<li><p>Intervalo estreito: baixa incerteza</p>
+<ul>
+<li>intervalo nulo: <span class="math inline">\(\theta^- = \theta^+\)</span>, nesse caso não há incerteza</li>
+</ul></li>
+<li><p>Intervalo amplo: alta incerteza</p></li>
+<li><p><strong>Exemplo do dia a dia</strong>: você quer estimar a altura (em cm) de um amigo.</p>
+<ul>
+<li>Suponha que a altura verdadeira do seu amigo seja 173 cm.</li>
+<li>Estimação pontual: “estima-se como 170 cm”.</li>
+<li>Estimação por intervalo: “está entre 160 e 180 cm”.</li>
+</ul></li>
+<li><p><strong>Como obter um intervalo</strong>: utilizamos o <strong>intervalo de confiança</strong> na estatística frequentista.</p></li>
+</ul>
+<section id="intervalo-de-confiança-frequentista-de-95" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="intervalo-de-confiança-frequentista-de-95"><span class="header-section-number">5.1</span> Intervalo de Confiança Frequentista de 95%</h2>
+<ul>
+<li><p><span class="math inline">\(T_\alpha(y)\)</span> é um intervalo de confiança de <span class="math inline">\(100(1 - \alpha)\%\)</span> para <span class="math inline">\(\alpha \in (0,1)\)</span> se: <span class="math display">\[
+P(\theta \in T_\alpha(y)) = 1 - \alpha
+\quad \Longleftrightarrow \quad
+P(\theta^- \leq \theta \leq \theta^+) = 1 - \alpha.
+\]</span></p></li>
+<li><p>A probabilidade é considerada <strong>em relação à distribuição populacional sobre todas as possíveis amostras</strong>.</p></li>
+</ul>
+<hr>
+<ul>
+<li><span class="math inline">\(\alpha \in [0,1]\)</span> é um número que indica o grau de incerteza:</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\alpha\)</span></th>
+<th><span class="math inline">\(1 - \alpha\)</span></th>
+<th><span class="math inline">\(100(1-\alpha)\%\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.01</td>
+<td>0.99</td>
+<td>99%</td>
+</tr>
+<tr class="even">
+<td>0.025</td>
+<td>0.975</td>
+<td>97.5%</td>
+</tr>
+<tr class="odd">
+<td>0.05</td>
+<td>0.95</td>
+<td>95%</td>
+</tr>
+<tr class="even">
+<td>0.1</td>
+<td>0.9</td>
+<td>90%</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li><p>Se <span class="math inline">\(\alpha = 0.05\)</span>, chamamos <span class="math inline">\(T_{0.05}\)</span> de <strong>intervalo de confiança de 95%</strong>.</p>
+<!-- - Isso significa: a probabilidade de $\theta \in T_{0.05}(y)$ é 95%. -->
+<!-- - Dizemos: “estamos 95% confiantes de que $\theta$ está em algum lugar dentro de $T_{0.05}(y)$”. --></li>
+</ul>
+<hr>
+<section id="interpretação-ponto-importante" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="interpretação-ponto-importante"><span class="header-section-number">5.1.1</span> ⚠️ Interpretação (Ponto Importante)</h3>
+<ul>
+<li><p>O conceito de intervalo de confiança pode ser <strong>confuso</strong>:</p>
+<ul>
+<li><p>Antes de observar a amostra <span class="math inline">\(y\)</span>, sabemos que há 95% de chance de obter um conjunto de dados que gere um intervalo que contenha o valor verdadeiro de <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>O intervalo de confiança <strong>não significa</strong> que, após observar os dados, o parâmetro verdadeiro <span class="math inline">\(\theta\)</span> tem 95% de probabilidade de estar dentro do intervalo obtido.</p></li>
+<li><p>O parâmetro populacional <span class="math inline">\(\theta\)</span> <strong>não é aleatório</strong>, ele é fixo.</p></li>
+</ul></li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

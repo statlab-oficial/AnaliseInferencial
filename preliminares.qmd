@@ -312,323 +312,261 @@ $$
 
 ### Distribuições discretas
 
-#### Distribuição de Bernoulli  {.unnumbered}
+#### Distribuição de Bernoulli {.unnumbered}
 
+-   Seja $X = \{0,1\}$, onde $x \in X$ representa sucesso ou fracasso, isto é, um experimento binário.
 
-- Seja $X = \{0,1\}$, onde $x \in X$ representa sucesso ou fracasso, isto é, um experimento binário.
+    Exemplos:
 
-  Exemplos:
-  - Lançamento de moeda (cara = 0, coroa = 1)
-  - Manufatura: defeituoso / não defeituoso
-  - Medicina: doença / ausência de doença
-  - Esporte: vitória / derrota (assumindo que não há empate)
+    -   Lançamento de moeda (cara = 0, coroa = 1)
+    -   Manufatura: defeituoso / não defeituoso
+    -   Medicina: doença / ausência de doença
+    -   Esporte: vitória / derrota (assumindo que não há empate)
 
-- Dizemos que:
-  $$
-  X \sim \text{Ber}(\theta),
-  $$
-  quando $X$ segue uma distribuição de Bernoulli com probabilidade de sucesso $\theta$.
+-   Dizemos que: $$
+    X \sim \text{Ber}(\theta),
+    $$ quando $X$ segue uma distribuição de Bernoulli com probabilidade de sucesso $\theta$.
 
-- O parâmetro $\theta \in [0,1]$ representa a probabilidade de sucesso:
-  - No lançamento de moeda, a moeda é justa se $\theta = 0{,}5$;
-  - Em medicina, deseja-se que $\theta$ seja o menor possível (baixa probabilidade de doença).
+-   O parâmetro $\theta \in [0,1]$ representa a probabilidade de sucesso:
 
-- A função de probabilidade é dada por:
-  $$
-  P(X = x \mid \theta) = p(x \mid \theta) = \theta^x (1 - \theta)^{1-x}.
-  $$
+    -   No lançamento de moeda, a moeda é justa se $\theta = 0{,}5$;
+    -   Em medicina, deseja-se que $\theta$ seja o menor possível (baixa probabilidade de doença).
 
-  - Pode parecer estranho multiplicar $\theta$ por $(1 - \theta)$, mas note que apenas um dos termos será diferente de 1:
-    - Se $x = 1$, então $p(1) = \theta$;
-    - Se $x = 0$, então $p(0) = 1 - \theta$.
+-   A função de probabilidade é dada por: $$
+    P(X = x \mid \theta) = p(x \mid \theta) = \theta^x (1 - \theta)^{1-x}.
+    $$
 
-- Momentos:
-  $$
-  E[X] = \theta, \quad \text{Var}(X) = \theta(1 - \theta).
-  $$
- - Se $X \sim \text{Ber}(0{,}5)$, então a variável aleatória
-$$
-Y = 2X - 1,
-$$
-segue a **distribuição de Rademacher**. Nesse caso, $Y$ assume valores em: $Y \in \{-1, +1\}.$
+    -   Pode parecer estranho multiplicar $\theta$ por $(1 - \theta)$, mas note que apenas um dos termos será diferente de 1:
+        -   Se $x = 1$, então $p(1) = \theta$;
+        -   Se $x = 0$, então $p(0) = 1 - \theta$.
 
-- Essa distribuição é bastante útil para modelar **caminhadas aleatórias (random walks)**, nas quais:
-  - $Y = +1$ representa um passo para frente;
-  - $Y = -1$ representa um passo para trás.
+-   Momentos: $$
+    E[X] = \theta, \quad \text{Var}(X) = \theta(1 - \theta).
+    $$
 
-- Observe que não é permitido permanecer parado ($Y = 0$ não é possível).
+-   Se $X \sim \text{Ber}(0{,}5)$, então a variável aleatória $$
+    Y = 2X - 1,
+    $$ segue a **distribuição de Rademacher**. Nesse caso, $Y$ assume valores em: $Y \in \{-1, +1\}.$
 
+-   Essa distribuição é bastante útil para modelar **caminhadas aleatórias (random walks)**, nas quais:
+
+    -   $Y = +1$ representa um passo para frente;
+    -   $Y = -1$ representa um passo para trás.
+
+-   Observe que não é permitido permanecer parado ($Y = 0$ não é possível).
 
 #### Distribuição Binomial {.unnumbered}
 
-- Considere $n$ variáveis aleatórias binárias independentes:
-  $$
-  X = (X_1, X_2, \dots, X_n), \quad \text{com } X_i \overset{iid}{\sim} \text{Ber}(\theta).
-  $$
+-   Considere $n$ variáveis aleatórias binárias independentes: $$
+    X = (X_1, X_2, \dots, X_n), \quad \text{com } X_i \overset{iid}{\sim} \text{Ber}(\theta).
+    $$
 
-- Definimos o número de sucessos como:
-  $$
-  M = \sum_{i=1}^n X_i.
-  $$
+-   Definimos o número de sucessos como: $$
+    M = \sum_{i=1}^n X_i.
+    $$
 
-- O espaço amostral de $M$ é:
-  $$
-  \mathcal{M} = \{0,1,2,\dots,n\}.
-  $$
+-   O espaço amostral de $M$ é: $$
+    \mathcal{M} = \{0,1,2,\dots,n\}.
+    $$
 
-- Dizemos que:
-  $$
-  M \sim \text{Bin}(n, \theta).
-  $$
+-   Dizemos que: $$
+    M \sim \text{Bin}(n, \theta).
+    $$
 
-- A função de probabilidade é:
-  $$
-  P(M = m \mid \theta) = \binom{n}{m} \theta^m (1 - \theta)^{n-m},
-  $$
-  que representa a probabilidade de obter $m$ sucessos em $n$ ensaios.
+-   A função de probabilidade é: $$
+    P(M = m \mid \theta) = \binom{n}{m} \theta^m (1 - \theta)^{n-m},
+    $$ que representa a probabilidade de obter $m$ sucessos em $n$ ensaios.
 
-- Momentos:
-  $$
-  E[M] = n\theta, \quad \text{Var}(M) = n\theta(1 - \theta).
-  $$
+-   Momentos: $$
+    E[M] = n\theta, \quad \text{Var}(M) = n\theta(1 - \theta).
+    $$
 
-- **Propriedade da soma de binomiais:**
+-   **Propriedade da soma de binomiais:**
 
-  Se $M_1 \sim \text{Bin}(n_1, \theta)$ e $M_2 \sim \text{Bin}(n_2, \theta)$ são independentes, então:
-  $$
-  M_1 + M_2 \sim \text{Bin}(n_1 + n_2, \theta).
-  $$
+    Se $M_1 \sim \text{Bin}(n_1, \theta)$ e $M_2 \sim \text{Bin}(n_2, \theta)$ são independentes, então: $$
+    M_1 + M_2 \sim \text{Bin}(n_1 + n_2, \theta).
+    $$
 
 #### Distribuição Multinomial {.unnumbered}
 
-- A **distribuição multinomial** é uma generalização da distribuição binomial para experimentos independentes com mais de dois resultados possíveis.
+-   A **distribuição multinomial** é uma generalização da distribuição binomial para experimentos independentes com mais de dois resultados possíveis.
 
-- Seja $\mathbf{X} = (X_1, \dots, X_m)$ um vetor aleatório, e $\boldsymbol{\theta} = (\theta_1, \theta_2, \dots, \theta_m)$ o vetor de probabilidades, com:
-  $$
-  \sum_{i=1}^m \theta_i = 1, \quad \theta_i \geq 0.
-  $$
+-   Seja $\mathbf{X} = (X_1, \dots, X_m)$ um vetor aleatório, e $\boldsymbol{\theta} = (\theta_1, \theta_2, \dots, \theta_m)$ o vetor de probabilidades, com: $$
+    \sum_{i=1}^m \theta_i = 1, \quad \theta_i \geq 0.
+    $$
 
-- Considere $n$ repetições independentes do experimento, e seja $k_i$ o número de ocorrências da categoria $i$, para $i = 1, \dots, m$. Então:
-  $$
-  k_1 + k_2 + \cdots + k_m = n.
-  $$
+-   Considere $n$ repetições independentes do experimento, e seja $k_i$ o número de ocorrências da categoria $i$, para $i = 1, \dots, m$. Então: $$
+    k_1 + k_2 + \cdots + k_m = n.
+    $$
 
-- Dizemos que:
-  $$
-  \mathbf{X} \sim \text{Mult}(n, \boldsymbol{\theta}).
-  $$
+-   Dizemos que: $$
+    \mathbf{X} \sim \text{Mult}(n, \boldsymbol{\theta}).
+    $$
 
-- A função de probabilidade é:
-  $$
-  P(\mathbf{X} = (k_1, k_2, \dots, k_m))
-  =
-  \binom{n}{k_1, k_2, \dots, k_m}
-  \prod_{i=1}^m \theta_i^{k_i},
-  $$
-  onde
-  $$
-  \binom{n}{k_1, k_2, \dots, k_m}
-  =
-  \frac{n!}{k_1!k_2!\cdots k_m!}.
-  $$
+-   A função de probabilidade é: $$
+    P(\mathbf{X} = (k_1, k_2, \dots, k_m))
+    =
+    \binom{n}{k_1, k_2, \dots, k_m}
+    \prod_{i=1}^m \theta_i^{k_i},
+    $$ onde $$
+    \binom{n}{k_1, k_2, \dots, k_m}
+    =
+    \frac{n!}{k_1!k_2!\cdots k_m!}.
+    $$
 
-- Interpretação: representa a probabilidade de observar $k_1$ ocorrências da categoria 1, $k_2$ da categoria 2, ..., e $k_m$ da categoria $m$, em $n$ experimentos independentes.
+-   Interpretação: representa a probabilidade de observar $k_1$ ocorrências da categoria 1, $k_2$ da categoria 2, ..., e $k_m$ da categoria $m$, em $n$ experimentos independentes.
 
+#### Distribuição Uniforme Discreta {.unnumbered}
 
-#### Distribuição Uniforme Discreta  {.unnumbered}
+-   Seja $X = \{a, a+1, \dots, b\}$, onde o espaço amostral é um intervalo de inteiros de $a$ até $b$.
 
-- Seja $X = \{a, a+1, \dots, b\}$, onde o espaço amostral é um intervalo de inteiros de $a$ até $b$.
+-   Dizemos que: $$
+    X \sim \text{U}(a, b),
+    $$ quando $X$ segue uma distribuição uniforme discreta.
 
-- Dizemos que:
-  $$
-  X \sim \text{U}(a, b),
-  $$
-  quando $X$ segue uma distribuição uniforme discreta.
+-   A função de probabilidade é: $$
+    P(X = k \mid a, b) = \frac{1}{b - a + 1}, \quad k \in \{a, \dots, b\}.
+    $$
 
-- A função de probabilidade é:
-  $$
-  P(X = k \mid a, b) = \frac{1}{b - a + 1}, \quad k \in \{a, \dots, b\}.
-  $$
+-   Momentos: $$
+    E[X] = \frac{a + b}{2},
+    $$ que pode não ser um número inteiro,
 
-- Momentos:
-  $$
-  E[X] = \frac{a + b}{2},
-  $$
-  que pode não ser um número inteiro,
+    $$
+    \text{Var}(X) = \frac{(b - a + 1)^2 - 1}{12},
+    $$ que também pode não ser um número inteiro.
 
-  $$
-  \text{Var}(X) = \frac{(b - a + 1)^2 - 1}{12},
-  $$
-  que também pode não ser um número inteiro.
+#### Distribuição de Poisson {.unnumbered}
 
-#### Distribuição de Poisson  {.unnumbered}
+-   Seja $\mathbb{Z}_+ = \{0, 1, 2, \dots\}$, o conjunto dos inteiros não negativos (de $0$ até $\infty$).
 
-- Seja $\mathbb{Z}_+ = \{0, 1, 2, \dots\}$, o conjunto dos inteiros não negativos (de $0$ até $\infty$).
+-   Dizemos que: $$
+    X \sim \text{Poi}(\lambda),
+    $$ quando $X$ segue uma distribuição de Poisson com taxa $\lambda > 0$.
 
-- Dizemos que:
-  $$
-  X \sim \text{Poi}(\lambda),
-  $$
-  quando $X$ segue uma distribuição de Poisson com taxa $\lambda > 0$.
+-   A função de probabilidade é: $$
+    P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k \in \mathbb{Z}_+,
+    $$ que representa a probabilidade de ocorrência de $k$ eventos em um intervalo, dado uma taxa média $\lambda$.
 
-- A função de probabilidade é:
-  $$
-  P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k \in \mathbb{Z}_+,
-  $$
-  que representa a probabilidade de ocorrência de $k$ eventos em um intervalo, dado uma taxa média $\lambda$.
+-   Momentos: $$
+    E[X] = \lambda, \quad \text{Var}(X) = \lambda.
+    $$
 
-- Momentos:
-  $$
-  E[X] = \lambda, \quad \text{Var}(X) = \lambda.
-  $$
+-   **Propriedade da soma de Poisson:**
 
-- **Propriedade da soma de Poisson:**
-
-  Se $X_1 \sim \text{Poi}(\lambda_1)$ e $X_2 \sim \text{Poi}(\lambda_2)$ são independentes, então:
-  $$
-  X_1 + X_2 \sim \text{Poi}(\lambda_1 + \lambda_2).
-  $$
+    Se $X_1 \sim \text{Poi}(\lambda_1)$ e $X_2 \sim \text{Poi}(\lambda_2)$ são independentes, então: $$
+    X_1 + X_2 \sim \text{Poi}(\lambda_1 + \lambda_2).
+    $$
 
 #### Distribuição Binomial Negativa {.unnumbered}
 
-- Na distribuição binomial $\text{Bin}(n, \theta)$, a probabilidade $P(M = m \mid \theta)$ representa o número de sucessos em $n$ ensaios.
+-   Na distribuição binomial $\text{Bin}(n, \theta)$, a probabilidade $P(M = m \mid \theta)$ representa o número de sucessos em $n$ ensaios.
 
-- Já a **distribuição binomial negativa** modela o número de fracassos antes de ocorrer o $r$-ésimo sucesso.
+-   Já a **distribuição binomial negativa** modela o número de fracassos antes de ocorrer o $r$-ésimo sucesso.
 
-- Dizemos que:
-  $$
-  X \sim \text{BN}(r, \theta),
-  $$
-  em que $r$ é o número fixo de sucessos e $\theta$ é a probabilidade de sucesso em cada ensaio.
+-   Dizemos que: $$
+    X \sim \text{BN}(r, \theta),
+    $$ em que $r$ é o número fixo de sucessos e $\theta$ é a probabilidade de sucesso em cada ensaio.
 
-- A função de probabilidade é:
-  $$
-  P(X = n \mid r, \theta)
-  =
-  \binom{n + r - 1}{n}
-  (1 - \theta)^n \theta^r,
-  $$
-  em que $n = 0, 1, 2, \dots$ representa o número de fracassos antes do $r$-ésimo sucesso.
-  
+-   A função de probabilidade é: $$
+    P(X = n \mid r, \theta)
+    =
+    \binom{n + r - 1}{n}
+    (1 - \theta)^n \theta^r,
+    $$ em que $n = 0, 1, 2, \dots$ representa o número de fracassos antes do $r$-ésimo sucesso.
 
 #### Distribuição Geométrica {.unnumbered}
 
-- Quando $r = 1$, a distribuição binomial negativa se reduz à **distribuição geométrica**:
-  $$
-  X \sim \text{Geom}(\theta),
-  $$
-  com função de probabilidade:
-  $$
-  P(X = n) = (1 - \theta)^n \theta.
-  $$
+-   Quando $r = 1$, a distribuição binomial negativa se reduz à **distribuição geométrica**: $$
+    X \sim \text{Geom}(\theta),
+    $$ com função de probabilidade: $$
+    P(X = n) = (1 - \theta)^n \theta.
+    $$
 
-- Nesse caso, $X$ representa o número de fracassos antes do primeiro sucesso.
-
+-   Nesse caso, $X$ representa o número de fracassos antes do primeiro sucesso.
 
 ## Propriedade das Distribuições Contínuas: Probabilidade Pontual Nula
 
-- Se uma variável aleatória $X$ segue uma distribuição contínua, então a probabilidade de assumir um valor específico é sempre zero:
-  $$
-  P(X = x \mid \theta) = 0, \quad \forall x.
-  $$
+-   Se uma variável aleatória $X$ segue uma distribuição contínua, então a probabilidade de assumir um valor específico é sempre zero: $$
+    P(X = x \mid \theta) = 0, \quad \forall x.
+    $$
 
-- Exemplos:
-  $$
-  P(X = 1) = P(X = 0) = P(X = -2) = P(X = e) = P(X = \pi) = 0.
-  $$
+-   Exemplos: $$
+    P(X = 1) = P(X = 0) = P(X = -2) = P(X = e) = P(X = \pi) = 0.
+    $$
 
-- Isso ocorre porque o espaço amostral de uma variável contínua possui infinitos valores possíveis. Assim, a probabilidade de observar exatamente um único ponto é nula.
+-   Isso ocorre porque o espaço amostral de uma variável contínua possui infinitos valores possíveis. Assim, a probabilidade de observar exatamente um único ponto é nula.
 
 ### Consequência Importante {.unnumbered}
 
-- Em distribuições contínuas, desigualdades estritas e não estritas são equivalentes:
-  $$
-  P(X \leq a) = P(X < a).
-  $$
+-   Em distribuições contínuas, desigualdades estritas e não estritas são equivalentes: $$
+    P(X \leq a) = P(X < a).
+    $$
 
-- De fato:
-  $$
-  P(X \leq a) = P(X < a \ \text{ou} \ X = a)
-  $$
-  $$
-  = P(X < a) + P(X = a) \tag{pela aditividade da probabilidade}
-  $$
-  $$
-  = P(X < a) + 0 = P(X < a).
-  $$
-
+-   De fato: $$
+    P(X \leq a) = P(X < a \ \text{ou} \ X = a)
+    $$ $$
+    = P(X < a) + P(X = a) \tag{pela aditividade da probabilidade}
+    $$ $$
+    = P(X < a) + 0 = P(X < a).
+    $$
 
 ### Observação Importante {.unnumbered}
 
-- Um fato que pode parecer contraintuitivo:
-  
-  Embora
-  $$
-  P(X = a) = 0,
-  $$
-  isso **não significa** que o evento $X = a$ seja impossível.
+-   Um fato que pode parecer contraintuitivo:
 
-- Significa apenas que ele tem probabilidade nula; o que é uma característica natural de distribuições contínuas.
+    Embora $$
+    P(X = a) = 0,
+    $$ isso **não significa** que o evento $X = a$ seja impossível.
 
-
+-   Significa apenas que ele tem probabilidade nula; o que é uma característica natural de distribuições contínuas.
 
 ### Distribuições Contínuas
 
 #### Distribuição Uniforme Contínua {.unnumbered}
 
-- Seja $X \in [a, b]$, onde o espaço amostral é um intervalo de números reais de $a$ até $b$.
+-   Seja $X \in [a, b]$, onde o espaço amostral é um intervalo de números reais de $a$ até $b$.
 
-- Dizemos que:
-  $$
-  X \sim \text{U}(a, b),
-  $$
-  quando $X$ segue uma distribuição uniforme contínua.
+-   Dizemos que: $$
+    X \sim \text{U}(a, b),
+    $$ quando $X$ segue uma distribuição uniforme contínua.
 
-- A função densidade de probabilidade é:
-  $$
-  f(x; a, b) =
-  \begin{cases}
-  0, & x < a, \\
-  \frac{1}{b - a}, & a \leq x \leq b, \\
-  0, & x > b.
-  \end{cases}
-  $$
+-   A função densidade de probabilidade é: $$
+    f(x; a, b) =
+    \begin{cases}
+    0, & x < a, \\
+    \frac{1}{b - a}, & a \leq x \leq b, \\
+    0, & x > b.
+    \end{cases}
+    $$
 
-- Interpretação: todos os valores no intervalo $[a, b]$ são igualmente prováveis (em termos de densidade).
+-   Interpretação: todos os valores no intervalo $[a, b]$ são igualmente prováveis (em termos de densidade).
 
-- Momentos:
-  $$
-  E[X] = \frac{a + b}{2},
-  $$
-  $$
-  \text{Var}(X) = \frac{(b - a)^2}{12}.
-  $$
+-   Momentos: $$
+    E[X] = \frac{a + b}{2},
+    $$ $$
+    \text{Var}(X) = \frac{(b - a)^2}{12}.
+    $$
 
 #### Distribuição Exponencial {.unnumbered}
 
-- Seja $X \in [0, \infty)$, onde o espaço amostral é o conjunto dos números reais não negativos.
+-   Seja $X \in [0, \infty)$, onde o espaço amostral é o conjunto dos números reais não negativos.
 
-- Dizemos que:
-  $$
-  X \sim \text{Exp}(\lambda),
-  $$
-  quando $X$ segue uma distribuição exponencial com taxa $\lambda > 0$.
+-   Dizemos que: $$
+    X \sim \text{Exp}(\lambda),
+    $$ quando $X$ segue uma distribuição exponencial com taxa $\lambda > 0$.
 
-- A função densidade de probabilidade pode ser escrita como:
-  $$
-  f(x \mid \lambda) = \lambda e^{-\lambda x} \, \mathbf{1}_{\{x \geq 0\}}, \quad x \in \mathbb{R},
-  $$
+-   A função densidade de probabilidade pode ser escrita como: $$
+    f(x \mid \lambda) = \lambda e^{-\lambda x} \, \mathbf{1}_{\{x \geq 0\}}, \quad x \in \mathbb{R},
+    $$
 
-  em que $\mathbf{1}_{\{x \geq 0\}}$ é a função indicadora do suporte.
+    em que $\mathbf{1}_{\{x \geq 0\}}$ é a função indicadora do suporte.
 
-- Momentos:
-  $$
-  E[X] = \frac{1}{\lambda}, \quad \text{Var}(X) = \frac{1}{\lambda^2}.
-  $$
+-   Momentos: $$
+    E[X] = \frac{1}{\lambda}, \quad \text{Var}(X) = \frac{1}{\lambda^2}.
+    $$
 
 ::: {.callout-caution title="Exercícios"}
-
-
 1)  Use o resultado que diz que, para uma variável aleatória não negativa $Y$,
 
 $$E(Y) = \int\limits_{0}^{\infty} \Pr(Y > t) dt,$$ para mostrar, que para uma variável aleatória não negativa $X$,
@@ -657,6 +595,5 @@ E(X^n) = \left\{
 \end{array}\right.
 $$
 
-  Determine a função geradora de momentos de $X$ e identifique sua distribuição.
-
+Determine a função geradora de momentos de $X$ e identifique sua distribuição.
 :::

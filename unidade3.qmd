@@ -9,37 +9,30 @@ Ao obter um estimador para um parâmetro desconhecido, é fundamental avaliar su
 A primeira propriedade de estimadores que abordaremos é o viés. O viés de um estimador mede se, em termos de valor esperado, o estimador é igual ao verdadeiro parâmetro.
 
 ::: {.callout-tip title="Definição"}
-
 Seja $\hat{\theta}$ um estimador para $\theta$. O viés de $\hat{\theta}$ como estimador para $\theta$ é
 
 $$B(\hat{\theta}, \theta) = E(\hat{\theta}) - \theta.$$
 
 Se
 
-- $B(\hat{\theta}, \theta) = 0$, ou equivalentemente $E(\hat{\theta}) = \theta$, então dizemos que $\hat{\theta}$ é um estimador não viesado de $\theta$;
+-   $B(\hat{\theta}, \theta) = 0$, ou equivalentemente $E(\hat{\theta}) = \theta$, então dizemos que $\hat{\theta}$ é um estimador não viesado de $\theta$;
 
+-   $B(\hat{\theta}, \theta) > 0$, então $\hat{\theta}$ superestima $\theta$;
 
-- $B(\hat{\theta}, \theta) > 0$, então $\hat{\theta}$ superestima $\theta$;
-
-
-- $B(\hat{\theta}, \theta) < 0$, então $\hat{\theta}$ subestima $\theta$.
-
+-   $B(\hat{\theta}, \theta) < 0$, então $\hat{\theta}$ subestima $\theta$.
 :::
-
 
 > Um estimador não viesado, em média, acerta o valor do parâmetro.
 
 ### Variância e Erro Quadrático Médio {.unnumbered}
 
-
 Frequentemente, também estamos interessados em quanto um estimador varia (gostaríamos que ele fosse não viesado e tivesse pequena variância, para que seja mais preciso). Uma medida que captura essa propriedade dos estimadores é a variância do estimador.
-
 
 A variância de um estimador $\hat{\theta}$ é dada por:
 
 $$Var(\hat{\theta}) = E\left(\left[\hat{\theta} - E(\hat{\theta})\right]^2\right).$$
 
-Essa é simplesmente a definição usual de variância aplicada à variável aleatória $\hat{\theta}$, não sendo uma nova definição. 
+Essa é simplesmente a definição usual de variância aplicada à variável aleatória $\hat{\theta}$, não sendo uma nova definição.
 
 No entanto, em vez de considerar apenas a variância, podemos querer uma medida que avalie diretamente o erro em relação ao verdadeiro parâmetro $\theta$. Nesse caso, consideramos:
 
@@ -55,22 +48,18 @@ O EQM de um estimador $\hat{\theta}$ de $\theta$ é
 $$EQM(\hat{\theta}, \theta) = E\left[(\hat{\theta} - \theta)^2\right].$$
 
 Se $\hat{\theta}$ é um estimador não viesado de $\theta$ (i.e $E(\hat{\theta} = \theta)$), então podemos notar que $EQM(\hat{\theta}, \theta) = Var(\hat{\theta})$. De fato, em geral $EQM(\hat{\theta}, \theta) = Var(\hat{\theta}) + B(\hat{\theta}, \theta)^2$.
-
 :::
 
 Isso leva ao que é conhecido como o “trade-off viés-variância” em aprendizado de máquina e estatística. Em geral, queremos minimizar o EQM, e essas duas quantidades costumam ser inversamente relacionadas. Ou seja, diminuir uma tende a aumentar a outra, e encontrar o equilíbrio entre elas é o que minimiza o EQM.
 
 Pode ser difícil perceber por que isso acontece neste momento, já que ainda não estamos trabalhando com estimadores tão complexos (estamos apenas vendo os conceitos básicos!).
 
-
 ### Consistência {.unnumbered}
 
 ::: {.callout-tip title="Definição"}
-
 Um estimador $\hat{\theta}_n$ (dependendo de $n$ amostras iid) de $\theta$ é dito (fracamente) **consistente** se este converge (em probabilidade) para $\theta$. Isto é, para qualquer $\epsilon > 0$,
 
 $$\lim_{n \to \infty} P\left(|\hat{\theta}_n - \theta| > \epsilon\right) = 0.$$
- 
 
 Basicamente, quando $n \to \infty$, a probabilidade de $\hat{\theta}_n$ diferir de $\theta$ por mais de $\epsilon$ unidades é arbritariamente pequena.
 
@@ -80,127 +69,90 @@ $$\lim_{n \to \infty} EQM(\hat{\theta}, \theta) = 0.$$
 
 Ambas essas noções referem-se ao comportamento assintótico de $\hat{\theta}$ e expressam que, à medida que os dados se acumulam, $\hat{\theta}$ se aproxima cada vez mais do verdadeiro valor de $\theta$.
 
-A consistência assintótica é uma propriedade desejável. No entanto, em um caso específico, para 
-$n$ fixo, ela pode ter relevância limitada.
-
+A consistência assintótica é uma propriedade desejável. No entanto, em um caso específico, para $n$ fixo, ela pode ter relevância limitada.
 :::
-
-
 
 Você pode estar se perguntando: qual é a diferença entre consistência e não-viés? De fato, existe uma diferença sutil, que podemos entender comparando estimadores para $\theta$ na distribuição contínua $\text{Unif}(0, \theta)$.
 
+1.  **Estimador não viesado e consistente (MoM)**
 
-1. **Estimador não viesado e consistente (MoM)**
+    Um exemplo é o estimador de momentos: $$
+    \hat{\theta}_{n,\text{MoM}} = 2\bar{X}.
+    $$ Ele é não viesado, isto é, $$
+    E[\hat{\theta}_{n,\text{MoM}}] = \theta,
+    $$ e também consistente, pois sua variância tende a zero quando $n \to \infty$.
 
-   Um exemplo é o estimador de momentos:
-   $$
-   \hat{\theta}_{n,\text{MoM}} = 2\bar{X}.
-   $$
-   Ele é não viesado, isto é,
-   $$
-   E[\hat{\theta}_{n,\text{MoM}}] = \theta,
-   $$
-   e também consistente, pois sua variância tende a zero quando $n \to \infty$.
+2.  **Não viesado, mas não consistente**
 
-2. **Não viesado, mas não consistente**
+    Considere o estimador que utiliza apenas a primeira observação: $$
+    \hat{\theta} = 2X_1.
+    $$ Ele é não viesado, pois $$
+    E[\hat{\theta}] = \theta.
+    $$ No entanto, não é consistente, já que não melhora com o aumento de $n$, pois ignora as demais observações. A consistência exige que o estimador se aproxime de $\theta$ à medida que $n$ cresce.
 
-   Considere o estimador que utiliza apenas a primeira observação:
-   $$
-   \hat{\theta} = 2X_1.
-   $$
-   Ele é não viesado, pois
-   $$
-   E[\hat{\theta}] = \theta.
-   $$
-   No entanto, não é consistente, já que não melhora com o aumento de $n$, pois ignora as demais observações. A consistência exige que o estimador se aproxime de $\theta$ à medida que $n$ cresce.
+3.  **Viesado, mas consistente (EMV)**
 
-3. **Viesado, mas consistente (EMV)**
+    O estimador de máxima verossimilhança é: $$
+    \hat{\theta}_{n,\text{EMV}} = \max(X_1, \dots, X_n).
+    $$ Sua esperança é dada por: $$
+    E[\hat{\theta}_{n,\text{EMV}}] = \frac{n}{n+1}\theta,
+    $$ o que mostra que ele é viesado. No entanto, $$
+    \frac{n}{n+1}\theta \to \theta \quad \text{quando } n \to \infty,
+    $$ ou seja, ele é assintoticamente não viesado e consistente.
 
-   O estimador de máxima verossimilhança é:
-   $$
-   \hat{\theta}_{n,\text{EMV}} = \max(X_1, \dots, X_n).
-   $$
-   Sua esperança é dada por:
-   $$
-   E[\hat{\theta}_{n,\text{EMV}}] = \frac{n}{n+1}\theta,
-   $$
-   o que mostra que ele é viesado. No entanto,
-   $$
-   \frac{n}{n+1}\theta \to \theta \quad \text{quando } n \to \infty,
-   $$
-   ou seja, ele é assintoticamente não viesado e consistente.
+4.  **Nem não viesado nem consistente**
 
-4. **Nem não viesado nem consistente**
-
-   Um exemplo simples seria:
-   $$
-   \hat{\theta} = \frac{1}{2}X_1,
-   $$
-   que não é nem não viesado nem consistente.
-
-
+    Um exemplo simples seria: $$
+    \hat{\theta} = \frac{1}{2}X_1,
+    $$ que não é nem não viesado nem consistente.
 
 ### Eficiência {.unnumbered}
 
-Para tratar do nosso último tópico, **eficiência**, precisamos primeiro definir a **Informação de Fisher**. 
+Para tratar do nosso último tópico, **eficiência**, precisamos primeiro definir a **Informação de Fisher**.
 
 A eficiência está relacionada à ideia de que nosso estimador possui a menor variância possível. Quando essa propriedade é combinada com consistência e não-viés, temos um estimador que:
 
-- está centrado no valor correto (*não viesado*);
-- converge para o verdadeiro parâmetro (*consistente*);
-- e faz isso da maneira mais rápida possível (*eficiente*).
-
+-   está centrado no valor correto (*não viesado*);
+-   converge para o verdadeiro parâmetro (*consistente*);
+-   e faz isso da maneira mais rápida possível (*eficiente*).
 
 ::: {.callout-tip title="Informação de Fisher"}
-
-
 Seja $\mathbf{x} = (x_1, \dots, x_n)$ uma amostra iid proveniente de uma distribuição discreta com função de massa de probabilidade $p_X(t \mid \theta)$, ou de uma distribuição contínua com função densidade $f_X(t \mid \theta)$, em que $\theta$ é um parâmetro (ou vetor de parâmetros).
 
-A **Informação de Fisher** do parâmetro $\theta$ é definida por:
-$$
+A **Informação de Fisher** do parâmetro $\theta$ é definida por: $$
 I(\theta) = n \cdot E\left[\left(\frac{\partial}{\partial \theta} \ln L(\mathbf{x} \mid \theta)\right)^2\right]
 = -E\left[\frac{\partial^2}{\partial \theta^2} \ln L(\mathbf{x} \mid \theta)\right],
-$$
-em que $L(\mathbf{x} \mid \theta)$ denota a função de verossimilhança dos dados dado o parâmetro $\theta$ (definida na Seção 4.3).
+$$ em que $L(\mathbf{x} \mid \theta)$ denota a função de verossimilhança dos dados dado o parâmetro $\theta$ (definida na Seção 4.3).
 
 De acordo com a literatura, a Informação de Fisher “é uma forma de medir a quantidade de informação que uma variável aleatória observável carrega sobre um parâmetro desconhecido $\theta$ do qual depende a distribuição de probabilidade”.
-
 :::
 
 A definição apresentada pode parecer bastante complicada à primeira vista, mas, se você analisá-la com calma, verá que não é tão difícil de trabalhar. De fato, ao verificar se o estimador de máxima verossimilhança é um ponto de máximo, já calculamos a segunda derivada da log-verossimilhança. Portanto, para obter a Informação de Fisher, basta dar um passo adicional: calcular a esperança dessa quantidade. No entanto, interpretar diretamente o valor esperado negativo da segunda derivada da log-verossimilhança não é nada intuitivo; trata-se de uma expressão pouco amigável e difícil de visualizar.
-
 
 #### Limite Inferior de Cramér-Rao (CRLB) e Eficiência {.unnumbered}
 
 Por que definimos essa “complicada” Informação de Fisher? (Na verdade, a situação fica ainda mais complexa quando $\theta$ é um vetor, pois a segunda derivada se torna uma matriz de derivadas parciais de segunda ordem.)
 
-Seria ideal que o erro quadrático médio de um estimador $\hat{\theta}$ fosse o menor possível. O **Limite Inferior de Cramér-Rao (LICR)** fornece justamente um limite inferior para a variância de qualquer estimador não viesado de $\theta$. Ou seja, se $\hat{\theta}$ é um estimador não viesado de $\theta$, então existe uma variância mínima possível (lembrando que, para estimadores não viesados, variância = EQM).  Se um estimador atinge essa menor variância possível, dizemos que ele é **eficiente**; uma propriedade altamente desejável em inferência estatística. Esse limite mínimo é conhecido como **Limite Inferior de Cramér-Rao**.
+Seria ideal que o erro quadrático médio de um estimador $\hat{\theta}$ fosse o menor possível. O **Limite Inferior de Cramér-Rao (LICR)** fornece justamente um limite inferior para a variância de qualquer estimador não viesado de $\theta$. Ou seja, se $\hat{\theta}$ é um estimador não viesado de $\theta$, então existe uma variância mínima possível (lembrando que, para estimadores não viesados, variância = EQM). Se um estimador atinge essa menor variância possível, dizemos que ele é **eficiente**; uma propriedade altamente desejável em inferência estatística. Esse limite mínimo é conhecido como **Limite Inferior de Cramér-Rao**.
 
 ::: {.callout-tip title="Limite Inferior de Cramér-Rao"}
 Seja $\mathbf{x} = (x_1, \dots, x_n)$ uma amostra iid proveniente de uma distribuição discreta com função de massa de probabilidade $p_X(t \mid \theta)$, ou de uma distribuição contínua com função densidade $f_X(t \mid \theta)$, em que $\theta$ é um parâmetro (ou vetor de parâmetros).
 
-Se $\hat{\theta}$ é um estimador não viesado de $\theta$, então:
-$$
+Se $\hat{\theta}$ é um estimador não viesado de $\theta$, então: $$
 \text{MSE}(\hat{\theta}, \theta) = \text{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)},
-$$
-em que $I(\theta)$ é a Informação de Fisher definida anteriormente.
+$$ em que $I(\theta)$ é a Informação de Fisher definida anteriormente.
 
 O que esse resultado nos diz é que, para qualquer estimador não viesado $\hat{\theta}$ de $\theta$, a variância (que, nesse caso, coincide com o EQM) é, no mínimo, $\frac{1}{I(\theta)}$.
 
-Se atingimos esse limite inferior, isto é, se:
-$$
+Se atingimos esse limite inferior, isto é, se: $$
 \text{Var}(\hat{\theta}) = \frac{1}{I(\theta)},
-$$
-então temos a menor variância possível para o estimador. Nesse caso, dizemos que $\hat{\theta}$ é um **estimador não viesado de variância uniformemente mínima (ENVVUM)** para $\theta$.
-
+$$ então temos a menor variância possível para o estimador. Nesse caso, dizemos que $\hat{\theta}$ é um **estimador não viesado de variância uniformemente mínima (ENVVUM)** para $\theta$.
 :::
-
 
 Como queremos encontrar a menor variância possível, podemos analisar esse problema sob a perspectiva da **eficiência do estimador**.
 
 ::: {.callout-tip title="Eficiência"}
-Seja $\hat{\theta}$ um estimador não viesado de $\theta$. A eficiência de $\hat{\theta}$ é definida por:
-$$
+Seja $\hat{\theta}$ um estimador não viesado de $\theta$. A eficiência de $\hat{\theta}$ é definida por: $$
 e(\hat{\theta}, \theta) = \frac{I(\theta)^{-1}}{\text{Var}(\hat{\theta})} \leq 1.
 $$
 
@@ -208,36 +160,29 @@ Esse valor estará sempre entre 0 e 1, pois, se a variância do estimador for ig
 
 Assim, quanto maior a variância, menor a eficiência; e desejamos que a eficiência seja a maior possível (isto é, igual a 1).
 
-Um estimador não viesado é dito **eficiente** se atinge o LICR, ou seja, quando:
-$$
+Um estimador não viesado é dito **eficiente** se atinge o LICR, ou seja, quando: $$
 e(\hat{\theta}, \theta) = 1.
-$$
-Nesse caso, ele possui a menor variância possível entre todos os estimadores não viesados.
+$$ Nesse caso, ele possui a menor variância possível entre todos os estimadores não viesados.
 
 Vale ressaltar que o LICR não é, em geral, garantido para estimadores viesados.
 :::
-
 
 ### Estatística Suficiente {.unnumbered}
 
 Suponha que temos uma amostra iid $\mathbf{x} = (x_1, \dots, x_n)$ proveniente de uma distribuição conhecida com parâmetro desconhecido $\theta$. Imagine que temos duas pessoas:
 
-- **Estatístico A**: conhece toda a amostra, ou seja, dispõe de $n$ observações: $\mathbf{x} = (x_1, \dots, x_n)$.
+-   **Estatístico A**: conhece toda a amostra, ou seja, dispõe de $n$ observações: $\mathbf{x} = (x_1, \dots, x_n)$.
 
-- **Estatístico B**: conhece apenas $T(x_1, \dots, x_n) = t$, um único número que é função da amostra (por exemplo, a soma ou o máximo das observações).
+-   **Estatístico B**: conhece apenas $T(x_1, \dots, x_n) = t$, um único número que é função da amostra (por exemplo, a soma ou o máximo das observações).
 
-Heuristicamente, $T(x_1, \dots, x_n)$ é uma **estatística suficiente** se o Estatístico B consegue fazer um trabalho tão bom quanto o Estatístico A, mesmo tendo “menos informação”. Por exemplo, se as observações seguem uma distribuição Bernoulli, conhecer
-$$
+Heuristicamente, $T(x_1, \dots, x_n)$ é uma **estatística suficiente** se o Estatístico B consegue fazer um trabalho tão bom quanto o Estatístico A, mesmo tendo “menos informação”. Por exemplo, se as observações seguem uma distribuição Bernoulli, conhecer $$
 T(x_1, \dots, x_n) = \sum_{i=1}^n x_i,
-$$
-(o número de sucessos) é tão informativo quanto conhecer todos os resultados individuais. Isso ocorre porque uma boa estimativa seria a proporção de sucessos, isto é, o número de sucessos dividido pelo número total de ensaios.
+$$ (o número de sucessos) é tão informativo quanto conhecer todos os resultados individuais. Isso ocorre porque uma boa estimativa seria a proporção de sucessos, isto é, o número de sucessos dividido pelo número total de ensaios.
 
 Assim, não nos importa a **ordem** dos resultados, mas apenas quantos sucessos ocorreram. A palavra “suficiente” sugere exatamente isso: uma quantidade de informação que é “suficiente” para inferência sobre o parâmetro.
 
-
 ::: {.callout-tip title="Estatística Suficiente"}
-Uma estatística $T = T(X_1, \dots, X_n)$ é dita **suficiente** para o parâmetro $\theta$ se a distribuição condicional de $X_1, \dots, X_n$, dado $T = t$ e $\theta$, não depende de $\theta$. Isto é,
-$$
+Uma estatística $T = T(X_1, \dots, X_n)$ é dita **suficiente** para o parâmetro $\theta$ se a distribuição condicional de $X_1, \dots, X_n$, dado $T = t$ e $\theta$, não depende de $\theta$. Isto é, $$
 P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)
 =
 P(X_1 = x_1, \dots, X_n = x_n \mid T = t).
@@ -246,22 +191,18 @@ $$
 No caso em que $X_1, \dots, X_n$ são variáveis contínuas, substituímos a probabilidade por uma função densidade.
 :::
 
-
 Para motivar a definição, retornamos ao exemplo anterior. Novamente, o Estatístico A possui toda a amostra $x_1, \dots, x_n$, enquanto o Estatístico B conhece apenas o número $t = T(x_1, \dots, x_n)$. A ideia é que o Estatístico B conhece apenas $T = t$, mas, como $T$ é suficiente, ele não precisa conhecer $\theta$ para gerar novas amostras $X_1', \dots, X_n'$ da distribuição.
 
-Isso ocorre porque:
-$$
+Isso ocorre porque: $$
 P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta) =
-P(X_1 = x_1, \dots, X_n = x_n \mid T = t),$$
-ou seja, a distribuição condicional não depende de $\theta$. Como o Estatístico B conhece $T = t$, ele conhece essa distribuição condicional e pode gerar novas amostras.
+P(X_1 = x_1, \dots, X_n = x_n \mid T = t),$$ ou seja, a distribuição condicional não depende de $\theta$. Como o Estatístico B conhece $T = t$, ele conhece essa distribuição condicional e pode gerar novas amostras.
 
 Assim, o Estatístico B passa a ter $n$ observações iid $X_1', \dots, X_n'$ provenientes da mesma estrutura probabilística. Com essas novas observações, ele pode realizar inferência tão bem quanto o Estatístico A, que possui os dados originais $X_1, \dots, X_n$ (em média). Portanto, nenhum dos dois está em desvantagem. :)
 
 Embora essa definição seja difícil de verificar diretamente, existe um critério que facilita a identificação de estatísticas suficientes:
 
 ::: {.callout-important title="Critério da Fatoração de Neyman-Fisher"}
-Sejam $x_1, \dots, x_n$ uma amostra iid com função de verossimilhança $L(x_1, \dots, x_n \mid \theta)$. Uma estatística $T = T(x_1, \dots, x_n)$ é suficiente para $\theta$ se, e somente se, existirem funções não negativas $g$ e $h$ tais que:
-$$
+Sejam $x_1, \dots, x_n$ uma amostra iid com função de verossimilhança $L(x_1, \dots, x_n \mid \theta)$. Uma estatística $T = T(x_1, \dots, x_n)$ é suficiente para $\theta$ se, e somente se, existirem funções não negativas $g$ e $h$ tais que: $$
 L(x_1, \dots, x_n \mid \theta)
 =
 g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).
@@ -269,8 +210,8 @@ $$
 
 Ou seja, a verossimilhança dos dados pode ser fatorada como o produto de dois termos:
 
-- o primeiro termo $g$ pode depender de todos os dados, mas **não depende de $\theta$**;
-- o segundo termo $h$ pode depender de $\theta$, mas depende dos dados **apenas por meio da estatística suficiente $T$**.
+-   o primeiro termo $g$ pode depender de todos os dados, mas **não depende de** $\theta$;
+-   o segundo termo $h$ pode depender de $\theta$, mas depende dos dados **apenas por meio da estatística suficiente** $T$.
 
 Em outras palavras, $T$ é o único elemento que permite a interação entre os dados $x_1, \dots, x_n$ e o parâmetro $\theta$. Assim, não precisamos acessar diretamente as $n$ observações individuais, basta conhecer o valor de $T$.
 :::
@@ -498,7 +439,6 @@ $$X = (1 - U)^{-1/\theta}.$$
 
 Código em `R`:
 
-
 ```{r}
 paretobar <- rep(0, 1000)
 
@@ -520,18 +460,15 @@ sd(betahat)
 
 ```
 
-
-
 A média amostral do estimador de $\theta$, igual a `r round(mean(betahat),4)`, está próxima do valor verdadeiro do parâmetro considerado na simulação que foi $3$. Neste exemplo, o estimador $\hat{\theta}$ apresenta **viés positivo**. Em outras palavras, em média, a estimativa é maior que o verdadeiro valor do parâmetro, isto é: $E[\hat{\theta}] > \theta$. O desvio padrão amostral, igual a `r round(sd(betahat),4)`, é próximo do valor **0.346** estimado pelo método delta. Quando estudarmos **estimadores não viesados**, veremos que esse viés já poderia ter sido antecipado.
 
 ## Exemplo: Distribuição Uniforme Contínua {.unnumbered}
 
-
-Considere $X \sim U(0, \theta)$. Sabemos que: 
+Considere $X \sim U(0, \theta)$. Sabemos que:
 
 $$\mu = \frac{\theta}{2} \quad \text{e} \quad \sigma^2 = \frac{\theta^2}{12}.$$
 
-### Passo 1  {.unnumbered}
+### Passo 1 {.unnumbered}
 
 Neste caso, também temos apenas **um parâmetro**, $\theta$. Assim, no **Passo 1**, precisamos apenas do primeiro momento:
 
@@ -540,7 +477,6 @@ $$
 $$
 
 ### Passo 2 {.unnumbered}
-
 
 Resolvendo para $\theta$ em função da média $\mu$:
 
@@ -558,12 +494,11 @@ $$\hat{\theta} = 2\bar{X}.$$
 
 Como o estimador obtido pelo MoM é função linear da média amostral, então é fácil obter seu valor esperado, basta usar propriedades de valores esperado e o fato de $E(\bar{X}) = \mu$. Assim, temos que
 
- $$E(\hat{\theta})  = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta.$$
- 
+$$E(\hat{\theta})  = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta.$$
+
 portanto, $\hat{\theta}$ é um estimador não viciado. De maneira similar, podemos obter a expressão da variância de $\hat{\theta}$, usando propriedades de variância e o fato de $Var(\bar{X}) = \sigma^2/n$. Desta forma, temos que:
 
-$$Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.$$
-Além disso, pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Agora, usamos o fato de que a convergência em probabilidade é preservada por funções contínuas (no caso, multiplicar por 2):
+$$Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.$$ Além disso, pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Agora, usamos o fato de que a convergência em probabilidade é preservada por funções contínuas (no caso, multiplicar por 2):
 
 $$\hat{\theta} = 2\bar{X} \xrightarrow{p} \theta,$$
 
@@ -571,24 +506,19 @@ mostrando que o estimador também é **consistente**.
 
 > **Observação:** Neste caso específico, o estimador de momentos coincide com um estimador simples baseado na média. No entanto, para a distribuição uniforme, o estimador de máxima verossimilhança é $\hat{\theta}_{MV} = \max(X_1, \dots, X_n)$, o que levanta uma interessante comparação entre métodos de estimação.
 
-
 ## Exemplo: Distribuição Uniforme Discreta {.unnumbered}
 
 Considere $X \sim U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\theta \in \Theta = \{1, 2, \ldots\}$. Sabemos que:
-
 
 $$\mu = E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad \sigma^2 = V(X) = \frac{\theta^2 - 1}{12}.$$
 
 ### Passo 1 {.unnumbered}
 
-
 Neste caso, temos apenas um parâmetro, $\theta$. Assim, utilizamos o primeiro momento:
 
 $$\mu_1 = \mu = k_1(\theta) = \frac{1+\theta}{2}.$$
 
-
 ### Passo 2 {.unnumbered}
-
 
 Resolvendo para $\theta$ em função da média $\mu$:
 
@@ -604,52 +534,43 @@ $$\hat{\theta} = 2\bar{X} - 1.$$
 
 Como o estimador obtido pelo método dos momentos é uma função linear da média amostral, podemos utilizar propriedades do valor esperado. Sabendo que $E(\bar{X}) = \mu$, temos:
 
-$$E(\hat{\theta}) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta.$$ 
-Portanto, $\hat{\theta}$ é um estimador não viesado.
+$$E(\hat{\theta}) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta.$$ Portanto, $\hat{\theta}$ é um estimador não viesado.
 
 De maneira similar, utilizando o fato de que $Var(\bar{X}) = \sigma^2/n$, obtemos:
 
-$$Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.$$
-Além disso, como $\hat{\theta}$ é um estimador não viesado e sua variância é igual a zero, quando $n \to \infty$, logo $\hat{\theta}$ é um estimador consistente.
-
+$$Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.$$ Além disso, como $\hat{\theta}$ é um estimador não viesado e sua variância é igual a zero, quando $n \to \infty$, logo $\hat{\theta}$ é um estimador consistente.
 
 ### Comparação com o Estimador de Máxima Verossimilhança {.unnumbered}
 
 Para a distribuição uniforme discreta, o estimador de máxima verossimilhança é dado por:
 
-$$\hat{\theta}_{MV} = \max(X_1, X_2, \dots, X_n).$$
-Esse resultado decorre do fato de que a função de verossimilhança é constante para $\theta \geq \max(X_i)$ e nula caso contrário, sendo maximizada no menor valor possível de $\theta$ que ainda torna a amostra observável.
-
+$$\hat{\theta}_{MV} = \max(X_1, X_2, \dots, X_n).$$ Esse resultado decorre do fato de que a função de verossimilhança é constante para $\theta \geq \max(X_i)$ e nula caso contrário, sendo maximizada no menor valor possível de $\theta$ que ainda torna a amostra observável.
 
 **Comparação entre os estimadores**
 
-- O estimador de momentos, $\hat{\theta}_{\text{MoM}} = 2\bar{X} - 1$, utiliza toda a informação da amostra, mas pode assumir valores não inteiros.
+-   O estimador de momentos, $\hat{\theta}_{\text{MoM}} = 2\bar{X} - 1$, utiliza toda a informação da amostra, mas pode assumir valores não inteiros.
 
-- O estimador de máxima verossimilhança, $\hat{\theta}_{\text{MV}} = \max(X_1, X_2, \dots, X_n)$, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.
+-   O estimador de máxima verossimilhança, $\hat{\theta}_{\text{MV}} = \max(X_1, X_2, \dots, X_n)$, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.
 
 Além disso:
 
-- $\hat{\theta}_{\text{MoM}}$ é não viesado.
+-   $\hat{\theta}_{\text{MoM}}$ é não viesado.
 
-- $\hat{\theta}_{\text{MV}}$ é viesado (subestima o valor verdadeiro), pois $E(\max(X_1, X_2, \dots, X_n)) < \theta$, embora seja consistente.
+-   $\hat{\theta}_{\text{MV}}$ é viesado (subestima o valor verdadeiro), pois $E(\max(X_1, X_2, \dots, X_n)) < \theta$, embora seja consistente.
 
 Essa comparação ilustra uma diferença fundamental entre métodos de estimação: enquanto o método dos momentos busca reproduzir características médias da distribuição, o método de máxima verossimilhança está diretamente ligado à plausibilidade dos dados observados.
 
-
 ## Exemplo: Distribuição Exponencial {.unnumbered}
-
 
 Considere $X \sim \text{Exp}(\theta)$. Sabemos que:
 
 $$\mu = E(X) = \frac{1}{\theta}\quad \text{e} \quad \sigma^2 = V(X) = \frac{1}{\theta^2}.$$
-
 
 ### Passo 1 {.unnumbered}
 
 Neste caso, temos apenas um parâmetro, $\lambda$. Assim, utilizamos o primeiro momento:
 
 $$\mu_1 = \mu = k_1(\theta) = \frac{1}{\theta}.$$
-
 
 ### Passo 2 {.unnumbered}
 
@@ -667,23 +588,17 @@ $$\hat{\theta} = \frac{1}{\bar{X}}.$$
 
 Note que o estimador $\hat{\theta}$ não é uma função linear da média amostral, o que torna a análise de suas propriedades um pouco mais envolvida. Sabemos que $S = \sum_{i=1}^n X_i \sim \text{Gama}(n, \theta)$, o que implica que:
 
-$$\bar{X} \sim \text{Gama}(n, n\theta).$$
-Além disso, é possível mostrar que $\hat{\theta} = 1/\bar{X}$ segue uma distribuição gama inversa (GI) de parâmetros $n$ e $n\theta$, ou seja
+$$\bar{X} \sim \text{Gama}(n, n\theta).$$ Além disso, é possível mostrar que $\hat{\theta} = 1/\bar{X}$ segue uma distribuição gama inversa (GI) de parâmetros $n$ e $n\theta$, ou seja
 
-$$\frac{1}{\bar{X}} \sim \text{GI}(n, n\theta).$$
-Consequentemente, a média e a variância são:
+$$\frac{1}{\bar{X}} \sim \text{GI}(n, n\theta).$$ Consequentemente, a média e a variância são:
 
 $$E(\hat{\theta}) = \frac{n\theta}{n-1}\; (n>1) \quad \text{e} \quad Var(\hat{\theta}) = \frac{n^2\theta^2}{(n-1)^2(n-2)}\; (n>2).$$
 
 Além disso, como $\bar{X} \xrightarrow{p} \mu = \frac{1}{\theta}$ quando $n \to \infty$, segue que:
 
-$$\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,$$
-pois a função $g(x)=1/x$ é quase-certamente contínua, i.e., é contínua no suporte considerado, mostrando que o estimador é consistente.
-
-
+$$\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,$$ pois a função $g(x)=1/x$ é quase-certamente contínua, i.e., é contínua no suporte considerado, mostrando que o estimador é consistente.
 
 ## Exemplo: Distribuição Gama {.unnumbered}
-
 
 Considere $X \sim \text{Gama}(\theta_1, \theta_2)$, em que:
 
@@ -707,7 +622,6 @@ $$\theta_1 = g(\mu_1, \mu_2) = \frac{\mu_1^2}{\mu_2 - \mu_1^2} \quad \text{e} \q
 
 Substituindo a média populacional pela média amostral $\bar{X}$ e segundo momento populacional pelo segundo momento amostral, obtemos os seguintes estimadores de momentos:
 
-
 $$
 \widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2} 
 $$
@@ -718,15 +632,11 @@ $$
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.
 $$
 
-
-
-
 ## Exercícios {.unnumbered}
 
 1.  O **múon** é uma partícula elementar com carga elétrica $-1$ e spin (momento angular intrínseco) igual a $\frac{1}{2}$. Trata-se de uma partícula subatômica instável com tempo de vida médio de $2{,}2 \, \mu s$.
 
-
-  Os múons possuem massa aproximadamente **200 vezes maior** que a massa do elétron.   Como o múon tem a mesma carga e spin que o elétron, ele pode ser visto como uma      versão muito mais pesada do elétron.
+Os múons possuem massa aproximadamente **200 vezes maior** que a massa do elétron. Como o múon tem a mesma carga e spin que o elétron, ele pode ser visto como uma versão muito mais pesada do elétron.
 
 A colisão de um feixe de prótons ($p$) acelerados, com energia de $600 \, \text{MeV}$ (milhões de elétron-volts), com os núcleos de um alvo de produção gera píons positivos ($\pi^+$) por meio de uma das seguintes reações:
 
@@ -754,20 +664,17 @@ $$
 
 em que $t$ é o ângulo entre a trajetória do pósitron e o spin do $\mu^+$, e o parâmetro de anisotropia $\alpha \in [-1/3, 1/3]$ depende da polarização do feixe de múons e da energia do pósitron. Com base nas observações $t_1, \ldots, t_n$, obtenha o estimador de momentos $\hat{\alpha}$ para $\alpha$.
 
-**Observação:** Neste caso, a média é igual a zero para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador.
-:::
+**Observação:** Neste caso, a média é igual a zero para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador. :::
 
 2.  Sejam $x_1, x_2, \ldots, x_n$ uma amostra i.i.d. de $X \sim N(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Queremos obter o estimador de momentos para o vetor de parâmetros: $\theta = (\theta_1, \theta_2)$. Verifique se o estimador é viesado e obtenha sua variância.
 
-3. Verifique se os estimadores de momentos dos parâmetros que indexam a distribuição gama são consistentes.
+3.  Verifique se os estimadores de momentos dos parâmetros que indexam a distribuição gama são consistentes.
 
 ## Método de Máxima Verossimilhança
-
 
 Nesta seção, apresentamos exemplos de estimação por máxima verossimilhança (MV). A ideia central é simples:
 
 > Encontrar o valor de $\theta$ que maximiza a verossimilhança dos dados observados.
-
 
 Na Estimação por MV, utilizamos uma amostra iid $X_1, X_2, \dots, X_n$ de alguma distribuição com parâmetro(s) desconhecido(s) $\theta$, com o objetivo de estimar $\theta$.
 
@@ -791,20 +698,16 @@ $$\ln(ab) = \ln(a) + \ln(b),\quad \ln(a/b) = \ln(a) - \ln(b), \quad \text{e} \qu
 
 Na maioria dos casos, queremos otimizar a log-verossimilhança em vez da verossimilhança (pois não queremos utilizar a regra do produto do cálculo)!
 
-
-$$\begin{align}
-\ln(L(\theta \mid x)) &=  \ln\left(\prod_{i=1}^n \frac{e^{-\theta} \theta^{x_i}}{x_i!}\right) \tag{Definição de Verossimilhança}\\
-&=  \sum_{i=1}^n \ln\left(\frac{e^{-\theta} \theta^{x_i}}{x_i!}\right) \tag{ln do produto é igual a soma dos ln's}\\
-&= \sum_{i=1}^n\left[\ln(e^{-\theta}) + \ln(\theta^{x_i}) - \ln(x_i!)\right] \tag{ln do produto é igual a soma dos ln's}\\
-&= \sum_{i=1}^n \left(-\theta + x_i \ln \theta - \ln(x_i!)\right). \tag{Que propriedades foram usadas?}
-\end{align}$$
-
-
+$$\begin{aligned}
+\ln(L(\theta \mid x)) &=  \ln\left(\prod_{i=1}^n \frac{e^{-\theta} \theta^{x_i}}{x_i!}\right) \\
+&=  \sum_{i=1}^n \ln\left(\frac{e^{-\theta} \theta^{x_i}}{x_i!}\right) \\
+&= \sum_{i=1}^n\left[\ln(e^{-\theta}) + \ln(\theta^{x_i}) - \ln(x_i!)\right] \\
+&= \sum_{i=1}^n \left(-\theta + x_i \ln \theta - \ln(x_i!)\right). 
+\end{aligned}$$
 
 ### Passo 2: Calcule a(s) derivada(s) parcial(is) em relação a $\theta$ e iguale a zero. Resolva a(s) equação(ões). {.unnumbered}
 
 Agora queremos calcular a derivada da log-verossimilhança em relação a $\theta$. A derivada de $-\theta$ é simplesmente $-1$, e a derivada de $x_i \ln(\theta)$ é $\frac{x_i}{\theta}$, pois lembre-se de que $x_i$ é constante em relação a $\theta$.
-
 
 $$\frac{\partial \ln(L(\theta \mid x))}{\partial \theta} = \sum_{i=1}^n \left(-1 + \frac{x_i}{\theta}\right).$$
 
@@ -818,7 +721,6 @@ $$\hat{\theta} = \frac{1}{n}\sum_{i=1}^n x_i.$$
 
 Ou seja, o estimador de máxima verossimilhança é simplesmente a média amostral, $\bar{X}$.
 
-
 ### Passo 3: Opcionalmente, verifique se $\hat{\theta}$ é de fato um máximo (local), checando se a segunda derivada em $\hat{\theta}$ é negativa (quando $\theta$ é um único parâmetro), ou se a Hessiana (matriz das segundas derivadas parciais) é negativa semidefinida (quando $\theta$ é um vetor de parâmetros) {.unnumbered}
 
 Também queremos calcular a segunda derivada, pois, caso contrário, não sabemos se o ponto encontrado é um máximo ou um mínimo. Derivamos novamente a primeira derivada $\sum_{i=1}^n \left(-1 + \frac{x_i}{\theta}\right)$ em relação a $\theta$, e observamos que, como $\theta^2$ é sempre positivo, o seu negativo é sempre negativo. Assim, a segunda derivada é sempre menor que zero, o que implica que a função é côncava para baixo em todo o domínio.
@@ -829,10 +731,9 @@ $$
 \frac{\partial^2 \ln(L(\theta \mid x))}{\partial \theta^2} = \sum_{i=1}^n \left(-\frac{x_i}{\theta^2}\right) < 0. \tag{côncava para baixo em todo o domínio}
 $$
 
-
 ## Exemplo EMV (Exponencial) {.unnumbered}
 
-Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \text{Exp}(\theta)$, em que $\theta > 0$ é a taxa. Encontre o EMV de $\theta$. 
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \text{Exp}(\theta)$, em que $\theta > 0$ é a taxa. Encontre o EMV de $\theta$.
 
 ## Exemplo EMV (Uniforme Discreta) {.unnumbered}
 
@@ -846,7 +747,6 @@ Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \text{Unif}(0, \theta)$, e
 
 Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{NI}(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é o parâmetro de forma. Encontre os EMV de $\theta_1$ e $\theta_2$.
 
-
 ## Exemplo EMV (Birnbaum-Saunders) {.unnumbered}
 
 Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{BS}(\theta_1, \theta_2)$, em que $\theta_1$ é o parâmetro de forma e $\theta_2$ é o parâmetro de escala. Encontre os EMV de $\theta_1$ e $\theta_2$.
@@ -855,10 +755,6 @@ Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{BS}(\theta_1, \th
 
 Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{N}(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Encontre os EMV de $\theta_1$ e $\theta_2$.
 
-
-## Método de Mínimos Quadrados 
+## Método de Mínimos Quadrados
 
 Ver [Link](https://statlab-oficial.github.io/ModelosdeRegressao/demo.html#demonstra%C3%A7%C3%A3o-de-que-hat-beta_0-e-hat-beta_1-s%C3%A3o-os-estimadores-de-mqo-em-mrls)!
-
-
-

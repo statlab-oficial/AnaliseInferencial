@@ -52,7 +52,6 @@ Seja $X_{1},X_{2},...,X_{n}$ um conjunto de variáveis aleatórias observáveis 
 -   **Mediana amostral:** $\hat{\phi}_{.5} = \text{valor central (ou média dos centrais)}$.
 :::
 
-
 ## Covariância, variância de somas e correlações
 
 O resultado a seguir mostra que a esperança de um produto de variáveis aleatórias independentes é igual ao produto de suas esperanças.
@@ -63,19 +62,17 @@ Se $X$ e $Y$ são independentes, então, para quaisquer funções $h$ e $g$,
 $$E[g(X)h(Y)] = E[g(X)]E[h(X)].$$
 :::
 
-
 *Demonstração:* Suponha que $X$ e $Y$ sejam variáveis aleatórias conjuntamente contínuas com função densidade conjunta $f(x,y)$. Então,
 
-$$\begin{align}
+$$\begin{aligned}
 E[g(X)h(Y)] =& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(x)h(y)f(x,y)dxdy\\
 =& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(x)h(y)f(x)f(y)dxdy\\
 =& \int\limits_{-\infty}^{+\infty}g(x)f(x)dx\int\limits_{-\infty}^{+\infty} h(y)f(y)dy\\
 =&  E[g(X)]E[h(Y)].
-\end{align}
+\end{aligned}
 $$
 
 A demonstração para o caso discreto pode ser feita de maneira similar.
-
 
 ::: {.callout-important title="Definição 1:"}
 A covariância entre $X$ e $Y$, representada como $Cov(X,Y)$, é definida como
@@ -83,20 +80,18 @@ A covariância entre $X$ e $Y$, representada como $Cov(X,Y)$, é definida como
 $$Cov(X,Y) = E[(X-E[X])(Y-E[Y])].$$
 :::
 
-
 Desenvolvendo o lado direito da definição acima, temos que
 
-$$\begin{align}
+$$\begin{aligned}
 Cov(X,Y) = & E[\underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{\hspace{2cm}} + \underline{\hspace{2cm}}]\\
 =& \underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{\hspace{2cm}} + \underline{\hspace{2cm}}\\
 =& E[XY] - E[X]E[Y].
-\end{align}$$
+\end{aligned}$$
 
-
-Note que, se $X$ e $Y$ são independentes, então, pela Proposição 1, $Cov(X,Y) = 0$. No entanto, o inverso não é verdade. 
+Note que, se $X$ e $Y$ são independentes, então, pela Proposição 1, $Cov(X,Y) = 0$. No entanto, o inverso não é verdade.
 
 ::: {.callout-note title="Proposição 2:"}
-i) $Cov(X,Y) = Cov(Y,X)$;
+i)  $Cov(X,Y) = Cov(Y,X)$;
 
 ii) $Cov(X,X) = Var(X)$;
 
@@ -105,18 +100,16 @@ iii) $Cov(aX, Y) = a Cov(X,Y)$.
 iv) $Cov\left(\sum\limits_{i=1}^{n} X_i,\sum\limits_{j=1}^{m} Y_j\right) = \sum\limits_{i=1}^{n}\sum\limits_{j=1}^{m}Cov(X_i,Y_j)$.
 :::
 
-
 Fazendo $Y_j = X_j$ e considerando as propriedades (ii) e (iv) da Proposição 2, temos que
 
-$$\begin{align}Var\left(\sum\limits_{i=1}^{n} X_i\right) =& Cov\left(\sum\limits_{i=1}^{n} X_i,\sum\limits_{j=1}^{n} X_j\right)\\ =& \sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}Cov(X_i,X_j)\\
+$$\begin{aligned}Var\left(\sum\limits_{i=1}^{n} X_i\right) =& Cov\left(\sum\limits_{i=1}^{n} X_i,\sum\limits_{j=1}^{n} X_j\right)\\ =& \sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}Cov(X_i,X_j)\\
 =&\sum\limits_{i=1}^{n} Var(X_i) + \mathop{\sum\sum}\limits_{i\neq j}Cov(X_i,X_j)\\
 =&\sum\limits_{i=1}^{n} Var(X_i) + 2\mathop{\sum\sum}\limits_{i < j}Cov(X_i,X_j).
-\end{align}$$
+\end{aligned}$$
 
 ::: {.callout-warning title="Definição 2: Amostra Aleatória:"}
-A variáveis aleatórias $X_1, X_2, \dots, X_n$ são chamadas de amostra aleatória e de tamanho $n$ da população $f(x)$ se $X_1, X_2, \dots, X_n$ são variáveis aleatórias mutuamente independentes e a função densidade de probabilidade (FDP) (ou função de probabilidade (FP)) marginal de cada $X_i$ é a mesma função $f(x)$. Alternativamente, $X_1, X_2, \dots, X_n$ são chamadas de variáveis aleatórias independentes e identicamente distribuídas com FDP (ou FP) $f(x)$. Sendo comumente abreviado para variáveis aleatórias i.i.d [@casella2002statistical].   
+A variáveis aleatórias $X_1, X_2, \dots, X_n$ são chamadas de amostra aleatória e de tamanho $n$ da população $f(x)$ se $X_1, X_2, \dots, X_n$ são variáveis aleatórias mutuamente independentes e a função densidade de probabilidade (FDP) (ou função de probabilidade (FP)) marginal de cada $X_i$ é a mesma função $f(x)$. Alternativamente, $X_1, X_2, \dots, X_n$ são chamadas de variáveis aleatórias independentes e identicamente distribuídas com FDP (ou FP) $f(x)$. Sendo comumente abreviado para variáveis aleatórias i.i.d [@casella2002statistical].
 :::
-
 
 O **modelo de amostragem aleatória** descreve um tipo de situação experimental em que a variável de interesse possui uma distribuição de probabilidade descrita por $f(x)$. Se apenas uma observação $X$ é feita dessa variável, então as probabilidades relacionadas a $X$ podem ser calculadas usando $f(x)$.
 
@@ -143,14 +136,9 @@ $$f(x_1, x_2, \ldots, x_n \mid \theta)
 
 em que o mesmo valor do parâmetro $\theta$ é utilizado em cada um dos termos do produto.
 
-
 ### Exemplo 1 {.unnumbered}
 
-Sejam $X_1,\ldots,X_n$ uma amostra aleatória de uma população exponencial$(\beta)$. 
-Especificamente, $X_1,\ldots,X_n$ podem corresponder aos tempos até a falha 
-(medidos em anos) de $n$ placas de circuito idênticas que são colocadas em teste 
-e usadas até falharem.
-
+Sejam $X_1,\ldots,X_n$ uma amostra aleatória de uma população exponencial$(\beta)$. Especificamente, $X_1,\ldots,X_n$ podem corresponder aos tempos até a falha (medidos em anos) de $n$ placas de circuito idênticas que são colocadas em teste e usadas até falharem.
 
 A função densidade conjunta da amostra é
 
@@ -162,61 +150,33 @@ $$f(x_1,\ldots,x_n|\beta)
 =
 \frac{1}{\beta^n}e^{-(x_1+\cdots+x_n)/\beta}.$$
 
-Essa FDP pode ser usada para responder perguntas sobre a amostra. 
-Por exemplo, qual é a probabilidade de que todas as placas durem mais de 2 anos?
+Essa FDP pode ser usada para responder perguntas sobre a amostra. Por exemplo, qual é a probabilidade de que todas as placas durem mais de 2 anos?
 
 ::: {.callout-warning title="Resposta:"}
-
 :::
-
 
 ### Diferentes maneiras de coletar uma amostra
 
-O modelo de amostragem aleatória da Definição 1 é algumas vezes chamado 
-de **amostragem de uma população infinita**. Pense em obter os valores de 
-$X_1,\ldots,X_n$ sequencialmente. Primeiro, o experimento é realizado e 
-$X_1=x_1$ é observado. Em seguida, o experimento é repetido e $X_2=x_2$ 
-é observado. 
+O modelo de amostragem aleatória da Definição 1 é algumas vezes chamado de **amostragem de uma população infinita**. Pense em obter os valores de $X_1,\ldots,X_n$ sequencialmente. Primeiro, o experimento é realizado e $X_1=x_1$ é observado. Em seguida, o experimento é repetido e $X_2=x_2$ é observado.
 
-A suposição de independência na amostragem aleatória implica que a 
-distribuição de probabilidade de $X_2$ não é afetada pelo fato de que 
-$X_1=x_1$ foi observado primeiro. “Remover” $x_1$ de uma população infinita 
-não altera a população, de modo que $X_2=x_2$ ainda é uma observação 
-aleatória proveniente da mesma população.
+A suposição de independência na amostragem aleatória implica que a distribuição de probabilidade de $X_2$ não é afetada pelo fato de que $X_1=x_1$ foi observado primeiro. “Remover” $x_1$ de uma população infinita não altera a população, de modo que $X_2=x_2$ ainda é uma observação aleatória proveniente da mesma população.
 
-Quando a amostragem é feita a partir de uma **população finita**, a 
-Definição 1 pode ou não ser relevante, dependendo de como os dados 
-são coletados. Uma população finita é um conjunto finito de números,
-$\{x_1,\ldots,x_N\}$. Uma amostra $X_1,\ldots,X_n$ deve ser extraída 
-dessa população. Essas amostras podem ser obtidas de quatro maneiras diferentes.
-Podemos resumir as quatro situações na Tabela 1 a seguir:
+Quando a amostragem é feita a partir de uma **população finita**, a Definição 1 pode ou não ser relevante, dependendo de como os dados são coletados. Uma população finita é um conjunto finito de números, $\{x_1,\ldots,x_N\}$. Uma amostra $X_1,\ldots,X_n$ deve ser extraída dessa população. Essas amostras podem ser obtidas de quatro maneiras diferentes. Podemos resumir as quatro situações na Tabela 1 a seguir:
 
-| Tipo de seleção | Sem reposição | Com reposição |
-|---|---|---|
-| **Ordenado** | $\frac{n!}{(n-r)!}$ | $n^r$ |
-| **Não ordenado** | $\binom{n}{r}$ | $\binom{n+r-1}{r}$ |
+| Tipo de seleção  | Sem reposição       | Com reposição      |
+|------------------|---------------------|--------------------|
+| **Ordenado**     | $\frac{n!}{(n-r)!}$ | $n^r$              |
+| **Não ordenado** | $\binom{n}{r}$      | $\binom{n+r-1}{r}$ |
 
 Tabela 1: Número de possíveis arranjos de tamanho $r$ a partir de $n$ objetos.
 
 Neste material iremos considera apenas dois casos: i) ordenado sem reposição e ii) Ordenado com reposição. Para maiores detalhes, ver @casella2002statistical.
 
-Suponha que um valor seja escolhido da população de tal forma que cada 
-um dos $N$ valores tenha a mesma probabilidade $(1/N)$ de ser selecionado 
-(pense em retirar números de uma urna). Esse valor é registrado como 
-$X_1=x_1$. Em seguida, o processo é repetido. Novamente, cada um dos 
-$N$ valores tem a mesma probabilidade de ser escolhido. O segundo valor 
-selecionado é registrado como $X_2=x_2$ (Se o mesmo número for escolhido, 
-então $x_1=x_2$).
+Suponha que um valor seja escolhido da população de tal forma que cada um dos $N$ valores tenha a mesma probabilidade $(1/N)$ de ser selecionado (pense em retirar números de uma urna). Esse valor é registrado como $X_1=x_1$. Em seguida, o processo é repetido. Novamente, cada um dos $N$ valores tem a mesma probabilidade de ser escolhido. O segundo valor selecionado é registrado como $X_2=x_2$ (Se o mesmo número for escolhido, então $x_1=x_2$).
 
-Esse processo de sorteio entre os $N$ valores é repetido $n$ vezes, 
-produzindo a amostra $X_1,\ldots,X_n$. Esse tipo de amostragem é chamado **com reposição**, porque o valor  escolhido em qualquer etapa é “reposto” na população e fica disponível  para ser escolhido novamente na etapa seguinte. Para esse tipo de amostragem, as condições da Definição 1 são satisfeitas. 
+Esse processo de sorteio entre os $N$ valores é repetido $n$ vezes, produzindo a amostra $X_1,\ldots,X_n$. Esse tipo de amostragem é chamado **com reposição**, porque o valor escolhido em qualquer etapa é “reposto” na população e fica disponível para ser escolhido novamente na etapa seguinte. Para esse tipo de amostragem, as condições da Definição 1 são satisfeitas.
 
-Cada $X_i$ é uma variável aleatória discreta que assume cada um dos 
-valores $x_1,\ldots,x_N$ com probabilidade igual. As variáveis aleatórias 
-$X_1,\ldots,X_n$ são independentes porque o processo de escolha de 
-qualquer $X_i$ é o mesmo, independentemente dos valores escolhidos 
-para as outras variáveis (este tipo de amostragem é utilizado no **bootstrap**).
-
+Cada $X_i$ é uma variável aleatória discreta que assume cada um dos valores $x_1,\ldots,x_N$ com probabilidade igual. As variáveis aleatórias $X_1,\ldots,X_n$ são independentes porque o processo de escolha de qualquer $X_i$ é o mesmo, independentemente dos valores escolhidos para as outras variáveis (este tipo de amostragem é utilizado no **bootstrap**).
 
 Um segundo método para extrair uma amostra aleatória de uma população finita é chamado de **amostragem sem reposição**. A amostragem sem reposição é feita da seguinte forma: um valor é escolhido de $\{x_1, \dots, x_N\}$ de tal modo que cada um dos $N$ valores tenha probabilidade $1/N$ de ser escolhido. Este valor é registado como $X_1 = x_1$. Agora, um segundo valor é escolhido dos $N - 1$ valores restantes. Cada um dos $N - 1$ valores tem probabilidade $1/(N - 1)$ de ser escolhido. O segundo valor escolhido é registado como $X_2 = x_2$. A escolha dos valores restantes continua desta forma, resultando na amostra $X_1, \dots, X_n$. Contudo, uma vez que um valor é escolhido, ele torna-se indisponível para escolha em qualquer fase posterior.
 
@@ -236,11 +196,9 @@ A amostragem sem reposição de uma população finita é por vezes chamada de *
 
 $$P(X_2 = x_1 | X_1 = x_1) = 0 \quad \text{e} \quad P(X_2 = x | X_1 = x_1) = \frac{1}{N - 1} \quad \text{para } x \neq x_1.$$
 
-Isto não é muito diferente da distribuição marginal  de $X_2$, dada em anteriormente, se $N$ for grande. As probabilidades não nulas na distribuição condicional de $X_i$ dados $X_1, \dots, X_{i-1}$ são $1/(N - i + 1)$, que são próximas de $1/N$ se $i \le n$ for pequeno em comparação com $N$.
-
+Isto não é muito diferente da distribuição marginal de $X_2$, dada em anteriormente, se $N$ for grande. As probabilidades não nulas na distribuição condicional de $X_i$ dados $X_1, \dots, X_{i-1}$ são $1/(N - i + 1)$, que são próximas de $1/N$ se $i \le n$ for pequeno em comparação com $N$.
 
 ::: {.callout-note title="Arranjos ou combinação ao contar amostras?"}
-
 Ao contar o número de **amostras aleatórias simples** possíveis, o resultado depende de como definimos uma *amostra*.
 
 **1. Quando a ordem importa**
@@ -281,13 +239,13 @@ Aqui interessa apenas **quais unidades foram escolhidas**, e não a ordem em que
 
 **Resumo**
 
-- sequência observada → **Arranjos**
-- subconjunto da população → **Combinações**
+-   sequência observada → **Arranjos**
+-   subconjunto da população → **Combinações**
 
 Na teoria de inferência estatística, muitas vezes modelamos a amostra como o vetor aleatório $(X_1,\ldots,X_n)$, enquanto na teoria de amostragem de populações finitas é comum tratar a amostra apenas como um subconjunto da população.
 :::
 
-### Exemplo 2 (Modelo de população finita) {.unnumbered}   
+### Exemplo 2 (Modelo de população finita) {.unnumbered}
 
 Como um exemplo de um cálculo aproximado usando independência, suponha que $\{1, \dots, 1000\}$ é a população finita, logo $N = 1000$. Uma amostra de tamanho $n = 10$ é extraída sem reposição. Qual é a probabilidade de que todos os dez valores da amostra sejam maiores que 200? Se $X_1, \dots, X_{10}$ fossem mutuamente independentes, teríamos:
 
@@ -314,19 +272,15 @@ $$M_{\bar{X}}(t) = Ee^{t\bar{X}} = Ee^{t(X_1 + \dots + X_n)/n} = Ee^{(t/n)Y} = M
 
 Visto que $X_1, \dots, X_n$ são identicamente distribuídas, $M_{X_i}(t)$ é a mesma função para cada $i$. Assim, temos o seguinte:
 
-
 ::: {.callout-note title="Teorema 2"}
-
 Seja $X_1, \dots, X_n$ uma amostra aleatória de uma população com FGM $M_X(t)$. Então a FGM da média amostral é:
 
 $$M_{\bar{X}}(t) = [M_X(t/n)]^n.$$
-
 :::
 
 Certamente, o Teorema 2 é útil apenas se a expressão para $M_{\bar{X}}(t)$ for uma FGM conhecida. Os casos em que isso é verdade são um tanto limitados, mas o exemplo seguinte ilustra que, quando este método funciona, ele fornece uma derivação muito elegante da distribuição amostral de $\bar{X}$.
 
-
-### Exemplo 3 (Distribuição da média) {.unnumbered} 
+### Exemplo 3 (Distribuição da média) {.unnumbered}
 
 Seja $X_1, \dots, X_n$ uma amostra aleatória de uma população com distribuição $N(\mu, \sigma^2)$. Então a FGM da média amostral é:
 
@@ -338,7 +292,6 @@ M_{\bar{X}}(t) &= \left[ \exp \left( \mu \frac{t}{n} + \frac{\sigma^2 (t/n)^2}{2
 $$
 
 Portanto, $\bar{X}$ tem uma distribuição $N(\mu, \sigma^2/n)$.
-
 
 Outro exemplo simples é dado por uma amostra aleatória de uma distribuição $\text{Gama}(\alpha, \beta)$. Aqui, também podemos derivar facilmente a distribuição da média amostral. A FGM da média amostral é
 
@@ -362,28 +315,23 @@ Para entender a origem de uma distribuição amostral, imagine o seguinte proces
 
 Na prática, como as populações costumam ser imensas (ou infinitas), é impossível calcular *todas* as amostras possíveis. É por isso que dependemos de teoremas matemáticos (como o Teorema Central do Limite) para deduzir o formato dessa distribuição sem precisarmos usar a força bruta!
 
+#### Exercícios {.unnumbered}
 
+1.  Considere um estudo sobre o consumo de combustível da população de quatro ônibus de uma pequena companhia de transporte urbano. O consumo dos ônibus (km/l), $X$, em condições padrões de teste, é: 3,8, 3,9, 4,0 e 4,1. Uma amostra de dois ônibus será sorteada, com reposição.
 
+<!-- -->
 
+a)  Calcule a média e a variância da população.
 
+b)  Construa a distribuição para o consumo médio da amostra.
 
-#### Exercícios {.unnumbered}  
+c)  Calcule o valor esperado e a variância da distribuição amostral.
 
-1. Considere um estudo sobre o consumo de combustível da população de quatro ônibus de uma pequena companhia de transporte urbano. O consumo dos ônibus (km/l), $X$, em condições padrões de teste, é: 3,8, 3,9, 4,0 e 4,1. Uma amostra de dois ônibus será sorteada, com reposição.
+d)  Aplique as seguintes expressões nos resultados do item (a) e confira com os resultados do item (c):
 
-a) Calcule a média e a variância da população.
-
-b) Construa a distribuição para o consumo médio da amostra.
-
-c) Calcule o valor esperado e a variância da distribuição amostral.
-
-d) Aplique as seguintes expressões nos resultados do item (a) e confira com os resultados do item (c):
-
-$$E(\overline{X}) = \mu \quad \text{e} \quad \text{Var}(\overline{X}) = \frac{\sigma^2}{n}.$$
-2. Refaça o Exercício 1 considerando amostragem sem reposição. A verificação da variância, item (d), deve ser com a expressão:
+$$E(\overline{X}) = \mu \quad \text{e} \quad \text{Var}(\overline{X}) = \frac{\sigma^2}{n}.$$ 2. Refaça o Exercício 1 considerando amostragem sem reposição. A verificação da variância, item (d), deve ser com a expressão:
 
 $$\text{Var}(\overline{X}) = \frac{\sigma^2}{n}\frac{N-n}{N-1}.$$
-
 
 ### Distribuição Amostral da Média ($\overline{X}$)
 
@@ -402,7 +350,8 @@ Sejam $a_{i}$ para $i=1,2,...,k$ constantes e sejam $X_{i}$ para $i=1,2,...,k$ v
 
 **Quando os dados são normais:** Para uma AA proveniente de uma distribuição normal $N(\mu_{x},\sigma_{x}^{2})$: $$\overline{X} \sim N\left(\mu_{x}, \frac{\sigma_{x}^{2}}{n}\right).$$
 
-### Exemplo 2 {.unnumbered}  
+### Exemplo 2 {.unnumbered}
+
 Suponha que os níveis de colesterol de homens adultos sigam uma distribuição $N(210\,\text{mg/dL}, (37\,\text{mg/dL})^2)$.
 
 1.  Indique um intervalo centrado na média $\mu$ que capture os 95% centrais de todos os valores de colesterol.
@@ -460,7 +409,6 @@ No exemplo anterior, consideramos a variável aleatória $X \sim \text{Bern}(p) 
 (e) Além das médias $\bar{X}$, o Teorema Central do Limite também fornece a distribuição amostral aproximada de uma soma $\sum X_i$. Use o TCL para fornecer a distribuição amostral aproximada de $Y = \sum_{i=1}^{n} X_i$: $$Y \dot{\sim} N(\underline{\hspace{2cm}}, \underline{\hspace{2cm}}).$$
 
 (f) Se a proporção real de apoiadores da reforma da saúde na população de Fortaleza é $p = 0,53$, então, em uma AA de cidadãos de Fortaleza de tamanho $n = 1000$, qual é a probabilidade de que menos de 500 prometam apoio?
-
 
 ### Distribuição Amostral da Variância ($S^{2}$)
 
