@@ -190,10 +190,9 @@ Essa igualdade é válida para todo $x \in \mathbb{R}$.
 
 Sendo $X$ uma variável aleatória em $(\Omega, \mathcal{F}, \mathcal{P})$, sua função de distribuição é difinida por:
 
-$$F_X(x) = \Pr(X \leq x),$$
-com $x$ percorrendo todos os reais. 
+$$F_X(x) = \Pr(X \leq x),$$ com $x$ percorrendo todos os reais.
 
-O conhecimento da função de distribuição permite obter qualquer informação sobre a variável. Importante destacar que, mesmo que a variável só assuma valores num subconjunto dos reais, a função de distribuição é definida em toda reta. 
+O conhecimento da função de distribuição permite obter qualquer informação sobre a variável. Importante destacar que, mesmo que a variável só assuma valores num subconjunto dos reais, a função de distribuição é definida em toda reta.
 
 Uma função de distribuição de uma variável aleatória $X$ em $(\Omega, \mathcal{F}, \mathcal{P})$ obedece às seguintes propriedades:
 
@@ -207,15 +206,13 @@ P3) $F$ é não descrescente, isto é, $F_X(x) \leq F_X(y)$ sempre que $x \leq y
 
 Uma variável aleatória é classificada como *discreta*, se assume somente um número enumerável de valores (finito ou infinito). A função de probabilidade de uma variável aleatória discreta é a função que atribue probabilidade a cada um dos possíveis valores assumidos pela variável. Isto é, sendo $X$ uma variável com valores $x_1, x_2, \dots, x_n, \dots$ temos para $i = 1, 2, \dots$.
 
-$$p(x_i) = \Pr(X = x_i) = \Pr(\{\omega \in \Omega: X(\omega) = x_i\}).$$
-A função de probabilidade de $X$ em $(\Omega, \mathcal{F}, \mathcal{P})$ satisfaz:
+$$p(x_i) = \Pr(X = x_i) = \Pr(\{\omega \in \Omega: X(\omega) = x_i\}).$$ A função de probabilidade de $X$ em $(\Omega, \mathcal{F}, \mathcal{P})$ satisfaz:
 
 P1) $0 \leq p(x_i) \leq 1, \forall i = 1, 2, \dots$,
 
 P2) $\sum \limits_{i} p(x_i) = 1,$
 
-com a soma percorrendo todos os possíveis valores  (eventualmente infinitos).
-
+com a soma percorrendo todos os possíveis valores (eventualmente infinitos).
 
 ## Variável Aleatória Contínua e função Densidade
 
@@ -231,51 +228,426 @@ P1) $f(x) \geq 0, \forall \in \mathbb{R}$.
 
 P2) $\int_{-\infty}^{+\infty} f_X(\omega) d\omega = 1$.
 
-
 ## Independência
+
+Ver [Link](https://www.ime.usp.br/~leorolla/probabilidade/Ch2.S2.html)!
 
 ## Valor Esperado
 
+Ver [Link](https://www.ime.usp.br/~leorolla/probabilidade/Ch5.S2.html)!
+
 ## Variância
+
+Ver [Link](https://www.ime.usp.br/~leorolla/probabilidade/Ch6.S1.html)!
 
 ## Covariância
 
+Ver [Link](https://www.ime.usp.br/~leorolla/probabilidade/Ch6.S1.html)!
+
 ## Função Geradora de Momentos
 
+Ver [Link](https://www.ime.usp.br/~leorolla/probabilidade/Ch10.S1.html)!
+
 ## Tipos de Convergência
+
+Ver [Link](https://www.ime.usp.br/~leorolla/probabilidade/Ch7.S1.html)!
+
+## Método Delta
+
+Uma questão natural que surge frequentemente é a seguinte: suponha que temos uma sequência de variáveis aleatórias $X_n$ que converge em distribuição para uma distribuição Normal. Podemos então caracterizar a distribuição limite de $g(X_n)$, em que $g$ é uma função suave (é uma função que possui derivadas de todas as ordens em todo o seu domínio)?
+
+Podemos resolver isso utilizando o Teorema do Mapeamento Contínuo (ou teorema de Mann-Wald) (de fato, essa é a base da demonstração que apresentaremos).
+
+::: {.callout-tip title="Método Delta"}
+Suponha que $$
+\frac{\sqrt{n}(X_n - \mu)}{\sigma} \xrightarrow{d} N(0,1),
+$$ e que $g$ é uma função continuamente diferenciável tal que $g'(\mu) \neq 0$. Então, $$
+\frac{\sqrt{n}(g(X_n) - g(\mu))}{\sigma} \xrightarrow{d} N\left(0, [g'(\mu)]^2\right).
+$$
+:::
+
+### Demonstração {.unnumbered}
+
+A ideia básica é usar a aproximação de Taylor. Sabemos que $$
+g(X_n) \approx g(\mu) + g'(\mu)(X_n - \mu),
+$$ logo, $$
+\frac{\sqrt{n}(g(X_n) - g(\mu))}{\sigma}
+\approx
+g'(\mu)\frac{\sqrt{n}(X_n - \mu)}{\sigma}
+\xrightarrow{d} N\left(0, [g'(\mu)]^2\right).
+$$
+
+Para sermos rigorosos, precisamos considerar os termos de resto. Aplicando o Teorema de Taylor de forma rigorosa, obtemos: $$
+\frac{\sqrt{n}(g(X_n) - g(\mu))}{\sigma}
+=
+g'(\tilde{\mu})\frac{\sqrt{n}(X_n - \mu)}{\sigma},
+$$ em que $\tilde{\mu}$ está entre $\mu$ e $\bar{X}_n$.
+
+Sabemos, pela Lei Fraca dos Grandes Números (LGN), que $\bar{X}_n \xrightarrow{p} \mu$, e portanto $\tilde{\mu} \xrightarrow{p} \mu$. Como $g$ é continuamente diferenciável, pelo Teorema do Mapeamento Contínuo, $$
+g'(\tilde{\mu}) \xrightarrow{p} g'(\mu).
+$$
+
+Agora, aplicando o Teorema de Slutsky, temos: $$
+g'(\tilde{\mu})\frac{\sqrt{n}(X_n - \mu)}{\sigma}
+\xrightarrow{d}
+g'(\mu)N(0,1)
+\overset{d}{=} N\left(0, [g'(\mu)]^2\right).
+$$
+
+### Exemplo {.unnumbered}
+
+Suponha que $X_1, \dots, X_n \sim P$, com $E[X] = \mu$ e $\mathrm{Var}(X) = \sigma^2 < \infty$.
+
+Suponha que estamos interessados na distribuição de $$
+Y_n = \exp(\bar{X}_n).
+$$
+
+Como $g'(\mu) = \exp(\mu)$, aplicando o Método Delta, obtemos: $$
+\sqrt{n}\left(\frac{\exp(\bar{X}_n) - \exp(\mu)}{\sigma}\right)
+\xrightarrow{d}
+N\left(0, \exp(2\mu)\right).
+$$
 
 ## Algumas das principais distribuições de probabilidade
 
 ### Distribuições discretas
 
+#### Distribuição de Bernoulli  {.unnumbered}
+
+
+- Seja $X = \{0,1\}$, onde $x \in X$ representa sucesso ou fracasso, isto é, um experimento binário.
+
+  Exemplos:
+  - Lançamento de moeda (cara = 0, coroa = 1)
+  - Manufatura: defeituoso / não defeituoso
+  - Medicina: doença / ausência de doença
+  - Esporte: vitória / derrota (assumindo que não há empate)
+
+- Dizemos que:
+  $$
+  X \sim \text{Ber}(\theta),
+  $$
+  quando $X$ segue uma distribuição de Bernoulli com probabilidade de sucesso $\theta$.
+
+- O parâmetro $\theta \in [0,1]$ representa a probabilidade de sucesso:
+  - No lançamento de moeda, a moeda é justa se $\theta = 0{,}5$;
+  - Em medicina, deseja-se que $\theta$ seja o menor possível (baixa probabilidade de doença).
+
+- A função de probabilidade é dada por:
+  $$
+  P(X = x \mid \theta) = p(x \mid \theta) = \theta^x (1 - \theta)^{1-x}.
+  $$
+
+  - Pode parecer estranho multiplicar $\theta$ por $(1 - \theta)$, mas note que apenas um dos termos será diferente de 1:
+    - Se $x = 1$, então $p(1) = \theta$;
+    - Se $x = 0$, então $p(0) = 1 - \theta$.
+
+- Momentos:
+  $$
+  E[X] = \theta, \quad \text{Var}(X) = \theta(1 - \theta).
+  $$
+ - Se $X \sim \text{Ber}(0{,}5)$, então a variável aleatória
+$$
+Y = 2X - 1,
+$$
+segue a **distribuição de Rademacher**. Nesse caso, $Y$ assume valores em: $Y \in \{-1, +1\}.$
+
+- Essa distribuição é bastante útil para modelar **caminhadas aleatórias (random walks)**, nas quais:
+  - $Y = +1$ representa um passo para frente;
+  - $Y = -1$ representa um passo para trás.
+
+- Observe que não é permitido permanecer parado ($Y = 0$ não é possível).
+
+
+#### Distribuição Binomial {.unnumbered}
+
+- Considere $n$ variáveis aleatórias binárias independentes:
+  $$
+  X = (X_1, X_2, \dots, X_n), \quad \text{com } X_i \overset{iid}{\sim} \text{Ber}(\theta).
+  $$
+
+- Definimos o número de sucessos como:
+  $$
+  M = \sum_{i=1}^n X_i.
+  $$
+
+- O espaço amostral de $M$ é:
+  $$
+  \mathcal{M} = \{0,1,2,\dots,n\}.
+  $$
+
+- Dizemos que:
+  $$
+  M \sim \text{Bin}(n, \theta).
+  $$
+
+- A função de probabilidade é:
+  $$
+  P(M = m \mid \theta) = \binom{n}{m} \theta^m (1 - \theta)^{n-m},
+  $$
+  que representa a probabilidade de obter $m$ sucessos em $n$ ensaios.
+
+- Momentos:
+  $$
+  E[M] = n\theta, \quad \text{Var}(M) = n\theta(1 - \theta).
+  $$
+
+- **Propriedade da soma de binomiais:**
+
+  Se $M_1 \sim \text{Bin}(n_1, \theta)$ e $M_2 \sim \text{Bin}(n_2, \theta)$ são independentes, então:
+  $$
+  M_1 + M_2 \sim \text{Bin}(n_1 + n_2, \theta).
+  $$
+
+#### Distribuição Multinomial {.unnumbered}
+
+- A **distribuição multinomial** é uma generalização da distribuição binomial para experimentos independentes com mais de dois resultados possíveis.
+
+- Seja $\mathbf{X} = (X_1, \dots, X_m)$ um vetor aleatório, e $\boldsymbol{\theta} = (\theta_1, \theta_2, \dots, \theta_m)$ o vetor de probabilidades, com:
+  $$
+  \sum_{i=1}^m \theta_i = 1, \quad \theta_i \geq 0.
+  $$
+
+- Considere $n$ repetições independentes do experimento, e seja $k_i$ o número de ocorrências da categoria $i$, para $i = 1, \dots, m$. Então:
+  $$
+  k_1 + k_2 + \cdots + k_m = n.
+  $$
+
+- Dizemos que:
+  $$
+  \mathbf{X} \sim \text{Mult}(n, \boldsymbol{\theta}).
+  $$
+
+- A função de probabilidade é:
+  $$
+  P(\mathbf{X} = (k_1, k_2, \dots, k_m))
+  =
+  \binom{n}{k_1, k_2, \dots, k_m}
+  \prod_{i=1}^m \theta_i^{k_i},
+  $$
+  onde
+  $$
+  \binom{n}{k_1, k_2, \dots, k_m}
+  =
+  \frac{n!}{k_1!k_2!\cdots k_m!}.
+  $$
+
+- Interpretação: representa a probabilidade de observar $k_1$ ocorrências da categoria 1, $k_2$ da categoria 2, ..., e $k_m$ da categoria $m$, em $n$ experimentos independentes.
+
+
+#### Distribuição Uniforme Discreta  {.unnumbered}
+
+- Seja $X = \{a, a+1, \dots, b\}$, onde o espaço amostral é um intervalo de inteiros de $a$ até $b$.
+
+- Dizemos que:
+  $$
+  X \sim \text{U}(a, b),
+  $$
+  quando $X$ segue uma distribuição uniforme discreta.
+
+- A função de probabilidade é:
+  $$
+  P(X = k \mid a, b) = \frac{1}{b - a + 1}, \quad k \in \{a, \dots, b\}.
+  $$
+
+- Momentos:
+  $$
+  E[X] = \frac{a + b}{2},
+  $$
+  que pode não ser um número inteiro,
+
+  $$
+  \text{Var}(X) = \frac{(b - a + 1)^2 - 1}{12},
+  $$
+  que também pode não ser um número inteiro.
+
+#### Distribuição de Poisson  {.unnumbered}
+
+- Seja $\mathbb{Z}_+ = \{0, 1, 2, \dots\}$, o conjunto dos inteiros não negativos (de $0$ até $\infty$).
+
+- Dizemos que:
+  $$
+  X \sim \text{Poi}(\lambda),
+  $$
+  quando $X$ segue uma distribuição de Poisson com taxa $\lambda > 0$.
+
+- A função de probabilidade é:
+  $$
+  P(X = k \mid \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k \in \mathbb{Z}_+,
+  $$
+  que representa a probabilidade de ocorrência de $k$ eventos em um intervalo, dado uma taxa média $\lambda$.
+
+- Momentos:
+  $$
+  E[X] = \lambda, \quad \text{Var}(X) = \lambda.
+  $$
+
+- **Propriedade da soma de Poisson:**
+
+  Se $X_1 \sim \text{Poi}(\lambda_1)$ e $X_2 \sim \text{Poi}(\lambda_2)$ são independentes, então:
+  $$
+  X_1 + X_2 \sim \text{Poi}(\lambda_1 + \lambda_2).
+  $$
+
+#### Distribuição Binomial Negativa {.unnumbered}
+
+- Na distribuição binomial $\text{Bin}(n, \theta)$, a probabilidade $P(M = m \mid \theta)$ representa o número de sucessos em $n$ ensaios.
+
+- Já a **distribuição binomial negativa** modela o número de fracassos antes de ocorrer o $r$-ésimo sucesso.
+
+- Dizemos que:
+  $$
+  X \sim \text{BN}(r, \theta),
+  $$
+  em que $r$ é o número fixo de sucessos e $\theta$ é a probabilidade de sucesso em cada ensaio.
+
+- A função de probabilidade é:
+  $$
+  P(X = n \mid r, \theta)
+  =
+  \binom{n + r - 1}{n}
+  (1 - \theta)^n \theta^r,
+  $$
+  em que $n = 0, 1, 2, \dots$ representa o número de fracassos antes do $r$-ésimo sucesso.
+  
+
+#### Distribuição Geométrica {.unnumbered}
+
+- Quando $r = 1$, a distribuição binomial negativa se reduz à **distribuição geométrica**:
+  $$
+  X \sim \text{Geom}(\theta),
+  $$
+  com função de probabilidade:
+  $$
+  P(X = n) = (1 - \theta)^n \theta.
+  $$
+
+- Nesse caso, $X$ representa o número de fracassos antes do primeiro sucesso.
+
+
+## Propriedade das Distribuições Contínuas: Probabilidade Pontual Nula
+
+- Se uma variável aleatória $X$ segue uma distribuição contínua, então a probabilidade de assumir um valor específico é sempre zero:
+  $$
+  P(X = x \mid \theta) = 0, \quad \forall x.
+  $$
+
+- Exemplos:
+  $$
+  P(X = 1) = P(X = 0) = P(X = -2) = P(X = e) = P(X = \pi) = 0.
+  $$
+
+- Isso ocorre porque o espaço amostral de uma variável contínua possui infinitos valores possíveis. Assim, a probabilidade de observar exatamente um único ponto é nula.
+
+### Consequência Importante {.unnumbered}
+
+- Em distribuições contínuas, desigualdades estritas e não estritas são equivalentes:
+  $$
+  P(X \leq a) = P(X < a).
+  $$
+
+- De fato:
+  $$
+  P(X \leq a) = P(X < a \ \text{ou} \ X = a)
+  $$
+  $$
+  = P(X < a) + P(X = a) \tag{pela aditividade da probabilidade}
+  $$
+  $$
+  = P(X < a) + 0 = P(X < a).
+  $$
+
+
+### Observação Importante {.unnumbered}
+
+- Um fato que pode parecer contraintuitivo:
+  
+  Embora
+  $$
+  P(X = a) = 0,
+  $$
+  isso **não significa** que o evento $X = a$ seja impossível.
+
+- Significa apenas que ele tem probabilidade nula; o que é uma característica natural de distribuições contínuas.
+
+
+
 ### Distribuições Contínuas
 
+#### Distribuição Uniforme Contínua {.unnumbered}
 
-# Exercícios {.unnumbered}
+- Seja $X \in [a, b]$, onde o espaço amostral é um intervalo de números reais de $a$ até $b$.
+
+- Dizemos que:
+  $$
+  X \sim \text{U}(a, b),
+  $$
+  quando $X$ segue uma distribuição uniforme contínua.
+
+- A função densidade de probabilidade é:
+  $$
+  f(x; a, b) =
+  \begin{cases}
+  0, & x < a, \\
+  \frac{1}{b - a}, & a \leq x \leq b, \\
+  0, & x > b.
+  \end{cases}
+  $$
+
+- Interpretação: todos os valores no intervalo $[a, b]$ são igualmente prováveis (em termos de densidade).
+
+- Momentos:
+  $$
+  E[X] = \frac{a + b}{2},
+  $$
+  $$
+  \text{Var}(X) = \frac{(b - a)^2}{12}.
+  $$
+
+#### Distribuição Exponencial {.unnumbered}
+
+- Seja $X \in [0, \infty)$, onde o espaço amostral é o conjunto dos números reais não negativos.
+
+- Dizemos que:
+  $$
+  X \sim \text{Exp}(\lambda),
+  $$
+  quando $X$ segue uma distribuição exponencial com taxa $\lambda > 0$.
+
+- A função densidade de probabilidade pode ser escrita como:
+  $$
+  f(x \mid \lambda) = \lambda e^{-\lambda x} \, \mathbf{1}_{\{x \geq 0\}}, \quad x \in \mathbb{R},
+  $$
+
+  em que $\mathbf{1}_{\{x \geq 0\}}$ é a função indicadora do suporte.
+
+- Momentos:
+  $$
+  E[X] = \frac{1}{\lambda}, \quad \text{Var}(X) = \frac{1}{\lambda^2}.
+  $$
+
+::: {.callout-caution title="Exercícios"}
 
 
-1) Use o resultado que diz que, para uma variável aleatória não negativa $Y$, 
+1)  Use o resultado que diz que, para uma variável aleatória não negativa $Y$,
 
-$$E(Y) = \int\limits_{0}^{\infty} \Pr(Y > t) dt,$$
-para mostrar, que para uma variável aleatória não negativa $X$,
+$$E(Y) = \int\limits_{0}^{\infty} \Pr(Y > t) dt,$$ para mostrar, que para uma variável aleatória não negativa $X$,
 
 $$E(X^n) = \int\limits_{0}^{\infty} n x^{n-1} \Pr(X > x) dx.$$
 
 **Dica:** Comece com
 
-$$E(X^n) = \int\limits_{0}^{\infty}  \Pr(X^n > t) dt,$$
-e faça a mudança de variável $t = x^n$.
+$$E(X^n) = \int\limits_{0}^{\infty}  \Pr(X^n > t) dt,$$ e faça a mudança de variável $t = x^n$.
 
-2. Mostre que $\Gamma(1/2) = \sqrt{\pi}$.
+2.  Mostre que $\Gamma(1/2) = \sqrt{\pi}$.
 
-3. Seja $X$ uma variável aleatória contínua com função de distribuição $F$. Defina a variável aleatória $Y$ como $Y = F_X(x)$. Mostre que $Y$ é uniformente distribuída no intervalo $(0,1)$.
+3.  Seja $X$ uma variável aleatória contínua com função de distribuição $F$. Defina a variável aleatória $Y$ como $Y = F_X(x)$. Mostre que $Y$ é uniformente distribuída no intervalo $(0,1)$.
 
-4. Suponha que tentativas independentes com mesma probabilidade de sucesso $p$. $0 < p < 1$, sejam realizadas até que se acumule um total de $r$ sucessos. Se $X$ for igual ao número de tentativas necessárias, então
+4.  Suponha que tentativas independentes com mesma probabilidade de sucesso $p$. $0 < p < 1$, sejam realizadas até que se acumule um total de $r$ sucessos. Se $X$ for igual ao número de tentativas necessárias, então
 
-$$\Pr(X = x) = \binom{n-1}{r-1} p^r (1-p)^{n-r}, \quad x = r, r+1, \dots.$$
-Encontre $E(X)$ e $Var(X)$.
+$$\Pr(X = x) = \binom{n-1}{r-1} p^r (1-p)^{n-r}, \quad x = r, r+1, \dots.$$ Encontre $E(X)$ e $Var(X)$.
 
-5. Seja $X$ uma variável aleatória tal que
+5.  Seja $X$ uma variável aleatória tal que
 
 $$
 E(X^n) = \left\{ 
@@ -285,4 +657,6 @@ E(X^n) = \left\{
 \end{array}\right.
 $$
 
-Determine a função geradora de momentos de $X$ e identifique sua distribuição.
+  Determine a função geradora de momentos de $X$ e identifique sua distribuição.
+
+:::

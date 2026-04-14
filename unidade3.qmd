@@ -574,7 +574,7 @@ mostrando que o estimador também é **consistente**.
 
 ## Exemplo: Distribuição Uniforme Discreta {.unnumbered}
 
-Considere $X \sim U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\Theta = {1, 2, \ldots}$. Sabemos que:
+Considere $X \sim U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\theta \in \Theta = \{1, 2, \ldots\}$. Sabemos que:
 
 
 $$\mu = E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad \sigma^2 = V(X) = \frac{\theta^2 - 1}{12}.$$
@@ -665,7 +665,7 @@ $$\hat{\theta} = \frac{1}{\bar{X}}.$$
 
 ### Esperança e Variância {.unnumbered}
 
-Note que o estimador $\hat{\theta}$ não é uma função linear da média amostral, o que torna a análise de suas propriedades um pouco mais envolvida. Sabemos que $S = \sum_{i=1}^n X_i \sim \text{Gama}(n, \lambda)$, o que implica que:
+Note que o estimador $\hat{\theta}$ não é uma função linear da média amostral, o que torna a análise de suas propriedades um pouco mais envolvida. Sabemos que $S = \sum_{i=1}^n X_i \sim \text{Gama}(n, \theta)$, o que implica que:
 
 $$\bar{X} \sim \text{Gama}(n, n\theta).$$
 Além disso, é possível mostrar que $\hat{\theta} = 1/\bar{X}$ segue uma distribuição gama inversa (GI) de parâmetros $n$ e $n\theta$, ou seja
@@ -718,25 +718,15 @@ $$
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.
 $$
 
-### Propriedades {.unnumbered}
 
-
-Os estimadores obtidos são funções de $\bar{X}$ e $\widehat{\sigma}^2$, o que dificulta a obtenção de expressões exatas para esperança e variância em forma fechada.
-
-No entanto, pela Lei dos Grandes Números:
-
-$$\bar{X} \xrightarrow{p} \mu \quad \text{e} \quad \hat{\sigma}^2  \xrightarrow{p} \sigma^2,$$
-quando $n \to \infty$. Logo,
-
-$$\hat{\theta}_1 \xrightarrow{p} \theta_1 \quad \text{e} \quad \hat{\theta}_2 \xrightarrow{p} \theta_2,$$
-mostrando que ambos os estimadores são consistentes.
 
 
 ## Exercícios {.unnumbered}
 
 1.  O **múon** é uma partícula elementar com carga elétrica $-1$ e spin (momento angular intrínseco) igual a $\frac{1}{2}$. Trata-se de uma partícula subatômica instável com tempo de vida médio de $2{,}2 \, \mu s$.
 
-Os múons possuem massa aproximadamente **200 vezes maior** que a massa do elétron. Como o múon tem a mesma carga e spin que o elétron, ele pode ser visto como uma versão muito mais pesada do elétron.
+
+  Os múons possuem massa aproximadamente **200 vezes maior** que a massa do elétron.   Como o múon tem a mesma carga e spin que o elétron, ele pode ser visto como uma      versão muito mais pesada do elétron.
 
 A colisão de um feixe de prótons ($p$) acelerados, com energia de $600 \, \text{MeV}$ (milhões de elétron-volts), com os núcleos de um alvo de produção gera píons positivos ($\pi^+$) por meio de uma das seguintes reações:
 
@@ -765,9 +755,11 @@ $$
 em que $t$ é o ângulo entre a trajetória do pósitron e o spin do $\mu^+$, e o parâmetro de anisotropia $\alpha \in [-1/3, 1/3]$ depende da polarização do feixe de múons e da energia do pósitron. Com base nas observações $t_1, \ldots, t_n$, obtenha o estimador de momentos $\hat{\alpha}$ para $\alpha$.
 
 **Observação:** Neste caso, a média é igual a zero para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador.
-
+:::
 
 2.  Sejam $x_1, x_2, \ldots, x_n$ uma amostra i.i.d. de $X \sim N(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Queremos obter o estimador de momentos para o vetor de parâmetros: $\theta = (\theta_1, \theta_2)$. Verifique se o estimador é viesado e obtenha sua variância.
+
+3. Verifique se os estimadores de momentos dos parâmetros que indexam a distribuição gama são consistentes.
 
 ## Método de Máxima Verossimilhança
 
@@ -836,6 +828,37 @@ Isso significa que qualquer ponto onde a derivada seja zero corresponde a um má
 $$
 \frac{\partial^2 \ln(L(\theta \mid x))}{\partial \theta^2} = \sum_{i=1}^n \left(-\frac{x_i}{\theta^2}\right) < 0. \tag{côncava para baixo em todo o domínio}
 $$
+
+
+## Exemplo EMV (Exponencial) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \text{Exp}(\theta)$, em que $\theta > 0$ é a taxa. Encontre o EMV de $\theta$. 
+
+## Exemplo EMV (Uniforme Discreta) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\theta \in \Theta = \{1, 2, \ldots\}$. Encontre o EMV de $\theta$.
+
+## Exemplo EMV (Uniforme Continua) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \text{Unif}(0, \theta)$, em que $\theta > 0$. Encontre o EMV de $\theta$.
+
+## Exemplo EMV (Normal Inversa) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{NI}(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é o parâmetro de forma. Encontre os EMV de $\theta_1$ e $\theta_2$.
+
+
+## Exemplo EMV (Birnbaum-Saunders) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{BS}(\theta_1, \theta_2)$, em que $\theta_1$ é o parâmetro de forma e $\theta_2$ é o parâmetro de escala. Encontre os EMV de $\theta_1$ e $\theta_2$.
+
+## Exemplo EMV (Normal) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{N}(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Encontre os EMV de $\theta_1$ e $\theta_2$.
+
+
+## Método de Mínimos Quadrados 
+
+Ver [Link](https://statlab-oficial.github.io/ModelosdeRegressao/demo.html#demonstra%C3%A7%C3%A3o-de-que-hat-beta_0-e-hat-beta_1-s%C3%A3o-os-estimadores-de-mqo-em-mrls)!
 
 
 
