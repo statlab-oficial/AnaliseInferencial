@@ -1,50 +1,48 @@
 # Estimação por Intervalos: Intervalo de Confiança
 
-- Motivação: suponha que observamos dados $\mathbf{y} = (y_1, y_2, \dots, y_n)$. Agora gostaríamos de modelá-los usando uma distribuição com parâmetro populacional $\theta$.
+-   Motivação: suponha que observamos dados $\mathbf{y} = (y_1, y_2, \dots, y_n)$. Agora gostaríamos de modelá-los usando uma distribuição com parâmetro populacional $\theta$.
 
-- Na estimação pontual, estimamos o parâmetro populacional $\theta$ usando um estimador $\hat{\theta}$.
+-   Na estimação pontual, estimamos o parâmetro populacional $\theta$ usando um estimador $\hat{\theta}$.
 
-- Na estimação por intervalos, quantificamos o quão incertos estamos em relação ao parâmetro populacional $\theta$.
+-   Na estimação por intervalos, quantificamos o quão incertos estamos em relação ao parâmetro populacional $\theta$.
 
-- Na estimação pontual (por exemplo, estimador de máxima verossimilhança), obtemos um único valor a partir de um conjunto de dados $\mathbf{y}$. Ou seja, obtemos um único valor $\hat{\theta}$.
+-   Na estimação pontual (por exemplo, estimador de máxima verossimilhança), obtemos um único valor a partir de um conjunto de dados $\mathbf{y}$. Ou seja, obtemos um único valor $\hat{\theta}$.
 
-- Na estimação por intervalos (por exemplo, intervalo de confiança), obtemos um intervalo de valores a partir de um conjunto de dados $\mathbf{y}$:
-  $$
-  T(\mathbf{y}) = (\theta^-, \theta^+) \subset \mathbb{R},
-  $$
-  o que indica que o parâmetro populacional $\theta$ está em algum lugar entre $\theta^-$ e $\theta^+$.
+-   Na estimação por intervalos (por exemplo, intervalo de confiança), obtemos um intervalo de valores a partir de um conjunto de dados $\mathbf{y}$: $$
+    T(\mathbf{y}) = (\theta^{-}, \theta^{+}) \subset \mathbb{R},
+    $$ o que indica que o parâmetro populacional $\theta$ está em algum lugar entre $\theta^{-}$ e $\theta^{+}$.
 
-  - $\theta^-$: limite inferior do intervalo  
-  - $\theta^+$: limite superior do intervalo  
-  - $\theta^- \leq \theta^+$ e possível $\theta^- = \theta^+$  
+    -   $\theta^{-}$: limite inferior do intervalo\
+    -   $\theta^{+}$: limite superior do intervalo\
+    -   $\theta^{-} \leq \theta^{+}$ e possível $\theta^{-} = \theta^{+}$
 
-- Intervalo estreito: baixa incerteza  
-  - intervalo nulo: $\theta^- = \theta^+$, nesse caso não há incerteza  
+-   Intervalo estreito: baixa incerteza
 
-- Intervalo amplo: alta incerteza
+    -   intervalo nulo: $\theta^{-} = \theta^{+}$, nesse caso não há incerteza
 
-- **Exemplo do dia a dia**: você quer estimar a altura (em cm) de um amigo.
+-   Intervalo amplo: alta incerteza
 
-  - Suponha que a altura verdadeira do seu amigo seja 173 cm.
-  - Estimação pontual: “estima-se como 170 cm”.
-  - Estimação por intervalo: “está entre 160 e 180 cm”.
+-   **Exemplo do dia a dia**: você quer estimar a altura (em cm) de um amigo.
 
-- **Como obter um intervalo**: utilizamos o **intervalo de confiança** na estatística frequentista.
+    -   Suponha que a altura verdadeira do seu amigo seja 173 cm.
+    -   Estimação pontual: “estima-se como 170 cm”.
+    -   Estimação por intervalo: “está entre 160 e 180 cm”.
 
-##  Intervalo de Confiança Frequentista de 95%
+-   **Como obter um intervalo**: utilizamos o **intervalo de confiança** na estatística frequentista.
 
-- $T_\alpha(y)$ é um intervalo de confiança de $100(1 - \alpha)\%$ para $\alpha \in (0,1)$ se:
-  $$
-  P(\theta \in T_\alpha(y)) = 1 - \alpha
-  \quad \Longleftrightarrow \quad
-  P(\theta^- \leq \theta \leq \theta^+) = 1 - \alpha.
-  $$
+## Intervalo de Confiança Frequentista de 95%
 
-- A probabilidade é considerada **em relação à distribuição populacional sobre todas as possíveis amostras**.
+-   $T_\alpha(y)$ é um intervalo de confiança de $100(1 - \alpha)\%$ para $\alpha \in (0,1)$ se: $$
+    P(\theta \in T_\alpha(y)) = 1 - \alpha
+    \quad \Longleftrightarrow \quad
+    P(\theta^- \leq \theta \leq \theta^+) = 1 - \alpha.
+    $$
 
----
+-   A probabilidade é considerada **em relação à distribuição populacional sobre todas as possíveis amostras**.
 
-- $\alpha \in [0,1]$ é um número que indica o grau de incerteza:
+------------------------------------------------------------------------
+
+-   $\alpha \in [0,1]$ é um número que indica o grau de incerteza:
 
 | $\alpha$ | $1 - \alpha$ | $100(1-\alpha)\%$ |
 |----------|--------------|-------------------|
@@ -53,21 +51,18 @@
 | 0.05     | 0.95         | 95%               |
 | 0.1      | 0.9          | 90%               |
 
----
+-   Se $\alpha = 0.05$, chamamos $T_{0.05}$ de **intervalo de confiança de 95%**.
 
-- Se $\alpha = 0.05$, chamamos $T_{0.05}$ de **intervalo de confiança de 95%**.
+    <!-- - Isso significa: a probabilidade de $\theta \in T_{0.05}(y)$ é 95%. -->
 
-  <!-- - Isso significa: a probabilidade de $\theta \in T_{0.05}(y)$ é 95%. -->
-  <!-- - Dizemos: “estamos 95% confiantes de que $\theta$ está em algum lugar dentro de $T_{0.05}(y)$”. -->
-
----
+    <!-- - Dizemos: “estamos 95% confiantes de que $\theta$ está em algum lugar dentro de $T_{0.05}(y)$”. -->
 
 ### ⚠️ Interpretação (Ponto Importante)
 
-- O conceito de intervalo de confiança pode ser **confuso**:
+-   O conceito de intervalo de confiança pode ser **confuso**:
 
-  - Antes de observar a amostra $y$, sabemos que há 95% de chance de obter um conjunto de dados que gere um intervalo que contenha o valor verdadeiro de $\theta$.
+    -   Antes de observar a amostra $y$, sabemos que há 95% de chance de obter um conjunto de dados que gere um intervalo que contenha o valor verdadeiro de $\theta$.
 
-  - O intervalo de confiança **não significa** que, após observar os dados, o parâmetro verdadeiro $\theta$ tem 95% de probabilidade de estar dentro do intervalo obtido.
+    -   O intervalo de confiança **não significa** que, após observar os dados, o parâmetro verdadeiro $\theta$ tem 95% de probabilidade de estar dentro do intervalo obtido.
 
-  - O parâmetro populacional $\theta$ **não é aleatório**, ele é fixo.
+    -   O parâmetro populacional $\theta$ **não é aleatório**, ele é fixo.
