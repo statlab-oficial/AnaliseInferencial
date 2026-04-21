@@ -61,7 +61,7 @@ Um estimador $\hat{\theta}_n$ (dependendo de $n$ amostras iid) de $\theta$ é di
 
 $$\lim_{n \to \infty} P\left(|\hat{\theta}_n - \theta| > \epsilon\right) = 0.$$
 
-Basicamente, quando $n \to \infty$, a probabilidade de $\hat{\theta}_n$ diferir de $\theta$ por mais de $\epsilon$ unidades é arbritariamente pequena.
+Basicamente, quando $n \to \infty$, a probabilidade de $\hat{\theta}_n$ diferir de $\theta$ por mais de $\epsilon$ unidades é arbritariamente pequena. A definição é um pouco abstrata, então analisamos o que ela significa no contexto de um exemplo. Lançamos uma moeda $n$ vezes e seja $\hat{p}_n$ a proporção de caras obtidas, isto é, o número de caras dividido por $n$. Essa é uma proporção amostral que estima $p$, a probabilidade de a moeda resultar em cara. Suponha que $p = \frac{1}{2}$. Se $\hat{p}_n$ converge em probabilidade para $\frac{1}{2}$, então: i) $P(0{,}49 \leq \hat{p}_n \leq 0{,}51) \to 1$ quando $n \to \infty$; ii) $P(0{,}499 \leq \hat{p}_n \leq 0{,}501) \to 1$ quando $n \to \infty$; e assim por diante.
 
 Dizemos que é consistente em erro quadrático médio (se um estimador é consistente em erro quadrático médio, então ele é fracamente consistente) se
 
@@ -105,6 +105,18 @@ Você pode estar se perguntando: qual é a diferença entre consistência e não
     Um exemplo simples seria: $$
     \hat{\theta} = \frac{1}{2}X_1,
     $$ que não é nem não viesado nem consistente.
+
+
+::: {.callout-caution title="Teorema"}
+1. Se $\hat{\theta}_n$ é um estimador não viesado para $\theta$ e $\sigma^2_{\hat{\theta}_n} \to 0$ quando $n \to \infty$, então $\hat{\theta}_n$ é consistente.
+
+2. Suponha que o estimador $\hat{\theta}_n$ converge em probabilidade para $\theta$ e o estimador $\hat{\beta}_n$ converge em probabilidade para o parâmetro $\beta$. Então:
+  - $\hat{\theta}_n + \hat{\beta}_n$ converge em probabilidade para $\theta + \beta$;
+  - $\hat{\theta}_n \times \hat{\beta}_n$ converge em probabilidade para $\theta \times \beta$;
+  - Se $\beta \neq 0$, $\hat{\theta}_n/\hat{\beta}_n$ converge em probabilidade para $\theta/\beta$;
+  - Se $g(x)$ é uma função contínua, então $g(\hat{\theta}_n)$ converge em probabilidade para $g(\theta)$.
+:::
+
 
 ### Eficiência {.unnumbered}
 
@@ -665,7 +677,7 @@ $$
 
 em que $t$ é o ângulo entre a trajetória do pósitron e o spin do $\mu^+$, e o parâmetro de anisotropia $\alpha \in [-1/3, 1/3]$ depende da polarização do feixe de múons e da energia do pósitron. Com base nas observações $t_1, \ldots, t_n$, obtenha o estimador de momentos $\hat{\alpha}$ para $\alpha$.
 
-**Observação:** Neste caso, a média é igual a zero para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador. 
+**Observação:** Neste caso, a média é igual a $\pi$ para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador. 
 
 2.  Sejam $x_1, x_2, \ldots, x_n$ uma amostra i.i.d. de $X \sim N(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Queremos obter o estimador de momentos para o vetor de parâmetros: $\theta = (\theta_1, \theta_2)$. Verifique se o estimador é viesado e obtenha sua variância.
 
