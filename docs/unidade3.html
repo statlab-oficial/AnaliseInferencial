@@ -313,6 +313,7 @@ window.Quarto = {
   <li><a href="#exemplo-emv-birnbaum-saunders" id="toc-exemplo-emv-birnbaum-saunders" class="nav-link" data-scroll-target="#exemplo-emv-birnbaum-saunders">Exemplo EMV (Birnbaum-Saunders)</a></li>
   <li><a href="#exemplo-emv-normal" id="toc-exemplo-emv-normal" class="nav-link" data-scroll-target="#exemplo-emv-normal">Exemplo EMV (Normal)</a></li>
   <li><a href="#método-de-mínimos-quadrados" id="toc-método-de-mínimos-quadrados" class="nav-link" data-scroll-target="#método-de-mínimos-quadrados"><span class="header-section-number">4.4</span> Método de Mínimos Quadrados</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
   </ul>
 </nav>
     </div>
@@ -1083,6 +1084,63 @@ f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
 <section id="método-de-mínimos-quadrados" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="método-de-mínimos-quadrados"><span class="header-section-number">4.4</span> Método de Mínimos Quadrados</h2>
 <p>Ver <a href="https://statlab-oficial.github.io/ModelosdeRegressao/demo.html#demonstra%C3%A7%C3%A3o-de-que-hat-beta_0-e-hat-beta_1-s%C3%A3o-os-estimadores-de-mqo-em-mrls">Link</a>!</p>
+</section>
+<section id="exercícios" class="level1 unnumbered">
+<h1 class="unnumbered">Exercícios</h1>
+<ol type="1">
+<li>Considere <span class="math inline">\(X_1, \ldots, X_n \overset{iid}{\sim} \text{Exp}(\mu^{-1})\)</span>. Defina <span class="math inline">\(T = X_{(1)} = \min\{X_1, \ldots, X_n\}\)</span>.</li>
+</ol>
+<ol type="a">
+<li><p>Determine o viés <span class="math inline">\(B(\hat{\mu},\mu)\)</span> e o erro quadrático médio <span class="math inline">\(\text{EQM}(T)\)</span>.</p></li>
+<li><p>Verifique se <span class="math inline">\(T\)</span> é um estimador consistente para <span class="math inline">\(\mu\)</span>.</p></li>
+<li><p>No caso de amostras grandes, você sugere a utilização de <span class="math inline">\(T\)</span> como estimador de <span class="math inline">\(\mu\)</span>?<br>
+Caso contrário, proponha um estimador melhor e justifique.</p></li>
+</ol>
+<ol start="2" type="1">
+<li>Seja <span class="math inline">\(X_1, \ldots, X_n\)</span> uma amostra aleatória de tamanho <span class="math inline">\(n\)</span> de uma distribuição de Bernoulli com parâmetro <span class="math inline">\(\theta \in (0,1)\)</span>. Seja <span class="math inline">\(T(X) = \bar{X}_n^2\)</span> o estimador de máxima verossimilhança de <span class="math inline">\(\theta^2\)</span>. Considere o estimador Jackknife de <span class="math inline">\(\theta^2\)</span> dado por:</li>
+</ol>
+<p><span class="math display">\[
+T_J(X) = nT - \frac{n-1}{n} \sum_{i=1}^{n} T_{(i)},
+\]</span></p>
+<p>em que <span class="math inline">\(T_{(i)}\)</span> representa o estimador <span class="math inline">\(T\)</span> calculado com a amostra original excluindo a <span class="math inline">\(i\)</span>-ésima observação.</p>
+<ol type="a">
+<li><p>Mostre que o EMV de <span class="math inline">\(\theta^2\)</span> é viesado.</p></li>
+<li><p>Mostre que <span class="math inline">\(T_J(X)\)</span> é não viesado.</p></li>
+</ol>
+<ol start="3" type="1">
+<li>Sejam <span class="math inline">\(Y_1, \ldots, Y_n\)</span> variáveis aleatórias independentes tais que <span class="math inline">\(Y_i \sim \mathcal{N}(\alpha + \beta x_i, \sigma^2),\)</span> em que os valores <span class="math inline">\(x_i\)</span> são não estocásticos e satisfazem <span class="math inline">\(\sum_{i=1}^{n} (x_i - \bar{x}_n)^2 &gt; 0.\)</span> Mostre que</li>
+</ol>
+<p><span class="math display">\[
+\hat{\beta} = \frac{\sum_{i=1}^{n} (x_i - \bar{x}_n) Y_i}{\sum_{i=1}^{n} (x_i - \bar{x}_n)^2}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\hat{\alpha} = \bar{Y}_n - \hat{\beta} \bar{x}_n
+\]</span></p>
+<p>são estimadores não viesados de <span class="math inline">\(\beta\)</span> e <span class="math inline">\(\alpha\)</span>, respectivamente.</p>
+<ol start="4" type="1">
+<li>Sejam <span class="math inline">\(X_1, \ldots, X_n\)</span> uma amostra aleatória de uma variável com distribuição Rayleigh, cuja densidade é dada por:</li>
+</ol>
+<p><span class="math display">\[
+f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\infty)}(x), \quad \theta &gt; 0.
+\]</span></p>
+<ol type="a">
+<li><p>Determine um estimador não viesado e consistente para <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>Estime <span class="math inline">\(\theta\)</span> a partir da seguinte amostra (força vibratória de uma palheta de turbina):</p></li>
+</ol>
+<p><span class="math display">\[
+16.88,\ 10.23,\ 4.59,\ 6.66,\ 13.68,\ 14.23,\ 19.87,\ 9.40,\ 6.51,\ 9.24,\ 12.20,\ 10.95.
+\]</span></p>
+<ol start="5" type="1">
+<li>Considere <span class="math inline">\(X_1, \ldots, X_n\)</span> uma amostra aleatória de uma variável <span class="math inline">\(X\)</span> com função densidade de probabilidade dada por:</li>
+</ol>
+<p><span class="math display">\[
+f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).
+\]</span></p>
+<ol type="a">
+<li><p>Determine um estimador não viesado de <span class="math inline">\(\theta\)</span> que seja função de <span class="math inline">\(X_{(1)} = \min\{X_1, \ldots, X_n\}\)</span>.</p></li>
+<li><p>Mostre que <span class="math inline">\(X_{(1)}\)</span> é um estimador consistente de <span class="math inline">\(\theta\)</span>.</p></li>
+</ol>
 
 
 </section>
