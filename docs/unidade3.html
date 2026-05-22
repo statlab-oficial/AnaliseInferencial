@@ -253,6 +253,9 @@ window.Quarto = {
   <li><a href="#consistência" id="toc-consistência" class="nav-link" data-scroll-target="#consistência">Consistência</a></li>
   <li><a href="#eficiência" id="toc-eficiência" class="nav-link" data-scroll-target="#eficiência">Eficiência</a></li>
   <li><a href="#estatística-suficiente" id="toc-estatística-suficiente" class="nav-link" data-scroll-target="#estatística-suficiente">Estatística Suficiente</a></li>
+  <li><a href="#exemplo---usando-a-definição" id="toc-exemplo---usando-a-definição" class="nav-link" data-scroll-target="#exemplo---usando-a-definição">Exemplo - Usando a Definição</a></li>
+  <li><a href="#exemplo---usando-o-critério-de-fatoração-de-neymanfisher" id="toc-exemplo---usando-o-critério-de-fatoração-de-neymanfisher" class="nav-link" data-scroll-target="#exemplo---usando-o-critério-de-fatoração-de-neymanfisher">Exemplo - Usando o Critério de Fatoração de Neyman–Fisher</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
   </ul></li>
   <li><a href="#método-dos-momentos" id="toc-método-dos-momentos" class="nav-link" data-scroll-target="#método-dos-momentos"><span class="header-section-number">4.2</span> Método dos Momentos</a>
   <ul class="collapse">
@@ -313,7 +316,7 @@ window.Quarto = {
   <li><a href="#exemplo-emv-birnbaum-saunders" id="toc-exemplo-emv-birnbaum-saunders" class="nav-link" data-scroll-target="#exemplo-emv-birnbaum-saunders">Exemplo EMV (Birnbaum-Saunders)</a></li>
   <li><a href="#exemplo-emv-normal" id="toc-exemplo-emv-normal" class="nav-link" data-scroll-target="#exemplo-emv-normal">Exemplo EMV (Normal)</a></li>
   <li><a href="#método-de-mínimos-quadrados" id="toc-método-de-mínimos-quadrados" class="nav-link" data-scroll-target="#método-de-mínimos-quadrados"><span class="header-section-number">4.4</span> Método de Mínimos Quadrados</a></li>
-  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
+  <li><a href="#exercícios-1" id="toc-exercícios-1" class="nav-link" data-scroll-target="#exercícios-1">Exercícios</a></li>
   </ul>
 </nav>
     </div>
@@ -608,6 +611,77 @@ g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).
 <blockquote class="blockquote">
 <p>Essas propriedades serão fundamentais para comparar métodos de estimação, como o método dos momentos e a máxima verossimilhança, discutidos ao longo deste capítulo.</p>
 </blockquote>
+</section>
+<section id="exemplo---usando-a-definição" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exemplo---usando-a-definição">Exemplo - Usando a Definição</h3>
+<p>Vamos analisar mais uma vez o exemplo do lançamento de moeda. Assim, <span class="math inline">\(P(X_1 = 1) = \theta\)</span>, <span class="math inline">\(P(X_1 = 0) = 1 - \theta\)</span>, e vamos considerar</p>
+<p><span class="math display">\[
+T = n\bar{X} = X_1 + \cdots + X_n.
+\]</span></p>
+<p>Afirmo que <span class="math inline">\(T\)</span> é suficiente. Para verificar isso, recorde que</p>
+<p><span class="math display">\[
+T \sim B(n,\theta),
+\]</span></p>
+<p>de modo que</p>
+<p><span class="math display">\[
+P(T=t)=\binom{n}{t}\theta^t(1-\theta)^{n-t}.
+\]</span></p>
+<p>Podemos focar no caso em que</p>
+<p><span class="math display">\[
+x_1+\cdots+x_n=t,
+\]</span></p>
+<p>caso contrário, a probabilidade condicional <span class="math inline">\(P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)\)</span> será simplesmente igual a zero para todo <span class="math inline">\(\theta\)</span>. Sob essa hipótese adicional, a condição <span class="math inline">\(T=t\)</span> decorre de <span class="math inline">\(X_1=x_1,\ldots,X_n=x_n\)</span>, de forma que a probabilidade de ambos os eventos ocorrerem é</p>
+<p><span class="math display">\[
+P(X_1=x_1,\ldots,X_n=x_n)=\theta^{x_1+\cdots+x_n}(1-\theta)^{n-x_1-\cdots-x_n},
+\]</span></p>
+<p>e, como <span class="math inline">\(x_1+\cdots+x_n=t\)</span>,</p>
+<p><span class="math display">\[
+=
+\theta^t(1-\theta)^{n-t}.
+\]</span></p>
+<p>Juntando tudo, obtemos</p>
+<p><span class="math display">\[
+P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
+=
+\frac{P(X_1=x_1,\ldots,X_n=x_n)}{P(T=t)}
+\]</span></p>
+<p><span class="math display">\[
+=
+\frac{1}{\binom{n}{t}},
+\]</span></p>
+<p>o que é independente de <span class="math inline">\(\theta\)</span>, como afirmado.</p>
+<p>Esse resultado final poderia ter sido escrito imediatamente, sem qualquer cálculo: cada uma das <span class="math inline">\(\binom{n}{t}\)</span> sequências <span class="math inline">\(x_1,\ldots,x_n\)</span> que contêm exatamente <span class="math inline">\(t\)</span> uns é igualmente provável, dado que <span class="math inline">\(T=t\)</span>.</p>
+</section>
+<section id="exemplo---usando-o-critério-de-fatoração-de-neymanfisher" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exemplo---usando-o-critério-de-fatoração-de-neymanfisher">Exemplo - Usando o Critério de Fatoração de Neyman–Fisher</h3>
+<p>Considere a distribuição Bernoulli de parâmetro <span class="math inline">\(\theta\)</span>. Então, temos que</p>
+<p><span class="math display">\[L(x_1,x_2, \dots, x_n|\theta) = \prod\limits_{i=1}^{n}\theta^{x_i}(1-\theta)^{1-x_i} = \left(\prod\limits_{i=1}^{n}\theta^{x_i}\right)\left(\prod\limits_{i=1}^{n}(1-\theta)^{1-x_i}\right)\]</span></p>
+<p><span class="math display">\[= \theta^{\sum\limits_{i=1}^{n}x_i}(1-\theta)^{n-\sum\limits_{i=1}^{n}x_i} = \theta^{T(x_1,\dots,x_n)}(1-\theta)^{n-T(x_1,\dots,x_n)},\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[g(x_1,\dots,x_n) = 1,\]</span> e</p>
+<p><span class="math display">\[h(T(x_1,\dots, x_n), \theta) = \theta^{T(x_1,\dots,x_n)}(1-\theta)^{n-T(x_1,\dots,x_n)}.\]</span></p>
+<p>Pelo critério de Neyman-Fisher, <span class="math inline">\(T(x_1,\dots,x_n) = \sum\limits_{i=1}^{n}x_i\)</span> é suficiente. A média</p>
+<p><span class="math display">\[
+\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},
+\]</span></p>
+<p>também é, pois conhecer o número total de caras e a proporção amostral de caras é equivalente (já que conhecemos <span class="math inline">\(n\)</span>!).</p>
+</section>
+<section id="exercícios" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercícios">Exercícios</h3>
+<ol type="1">
+<li><p>Considere a distribuição <span class="math inline">\(N(0,\sigma)\)</span> e seja <span class="math inline">\(\theta=\sigma^2\)</span>. Encontre uma estatística suficiente.</p></li>
+<li><p>Considere a distribuição <span class="math inline">\(N(\theta,1)\)</span>. Encontre uma estatística suficiente.</p></li>
+<li><p>Considere a distribuição exponencial</p></li>
+</ol>
+<p><span class="math display">\[
+f(x;\theta)=\theta e^{-\theta x},
+\qquad (x&gt;0).
+\]</span></p>
+<p>Encontre uma estatística suficiente.</p>
+<ol start="4" type="1">
+<li><p>Considere a distribuição <span class="math inline">\(U(0, \theta)\)</span>. Encontre uma estatística suficiente.</p></li>
+<li><p>Considere a distribuição gama como ambos os parâmetros desconhecidos. Mostre que a soma e o produto formam uma estatistica suficiente.</p></li>
+</ol>
 </section>
 </section>
 <section id="método-dos-momentos" class="level2" data-number="4.2">
@@ -1085,7 +1159,7 @@ f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
 <h2 data-number="4.4" class="anchored" data-anchor-id="método-de-mínimos-quadrados"><span class="header-section-number">4.4</span> Método de Mínimos Quadrados</h2>
 <p>Ver <a href="https://statlab-oficial.github.io/ModelosdeRegressao/demo.html#demonstra%C3%A7%C3%A3o-de-que-hat-beta_0-e-hat-beta_1-s%C3%A3o-os-estimadores-de-mqo-em-mrls">Link</a>!</p>
 </section>
-<section id="exercícios" class="level1 unnumbered">
+<section id="exercícios-1" class="level1 unnumbered">
 <h1 class="unnumbered">Exercícios</h1>
 <ol type="1">
 <li>Considere <span class="math inline">\(X_1, \ldots, X_n \overset{iid}{\sim} \text{Exp}(\mu^{-1})\)</span>. Defina <span class="math inline">\(T = X_{(1)} = \min\{X_1, \ldots, X_n\}\)</span>.</li>

@@ -237,6 +237,105 @@ Em outras palavras, $T$ é o único elemento que permite a interação entre os 
 
 > Essas propriedades serão fundamentais para comparar métodos de estimação, como o método dos momentos e a máxima verossimilhança, discutidos ao longo deste capítulo.
 
+### Exemplo - Usando a Definição {.unnumbered}
+
+Vamos analisar mais uma vez o exemplo do lançamento de moeda. Assim, $P(X_1 = 1) = \theta$, $P(X_1 = 0) = 1 - \theta$, e vamos considerar
+
+$$
+T = n\bar{X} = X_1 + \cdots + X_n.
+$$
+
+Afirmo que $T$ é suficiente. Para verificar isso, recorde que
+
+$$
+T \sim B(n,\theta),
+$$
+
+de modo que
+
+$$
+P(T=t)=\binom{n}{t}\theta^t(1-\theta)^{n-t}.
+$$
+
+Podemos focar no caso em que
+
+$$
+x_1+\cdots+x_n=t,
+$$
+
+caso contrário, a probabilidade condicional $P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)$ será simplesmente igual a zero para todo $\theta$. Sob essa hipótese adicional, a condição $T=t$ decorre de $X_1=x_1,\ldots,X_n=x_n$, de forma que a probabilidade de ambos os eventos ocorrerem é
+
+$$
+P(X_1=x_1,\ldots,X_n=x_n)=\theta^{x_1+\cdots+x_n}(1-\theta)^{n-x_1-\cdots-x_n},
+$$
+
+e, como $x_1+\cdots+x_n=t$,
+
+$$
+=
+\theta^t(1-\theta)^{n-t}.
+$$
+
+Juntando tudo, obtemos
+
+$$
+P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
+=
+\frac{P(X_1=x_1,\ldots,X_n=x_n)}{P(T=t)}
+$$
+
+$$
+=
+\frac{1}{\binom{n}{t}},
+$$
+
+o que é independente de $\theta$, como afirmado.
+
+Esse resultado final poderia ter sido escrito imediatamente, sem qualquer cálculo: cada uma das $\binom{n}{t}$ sequências $x_1,\ldots,x_n$ que contêm exatamente $t$ uns é igualmente provável, dado que $T=t$.
+
+### Exemplo - Usando o Critério de Fatoração de Neyman–Fisher {.unnumbered}
+
+Considere a distribuição Bernoulli de parâmetro $\theta$. Então, temos que
+
+$$L(x_1,x_2, \dots, x_n|\theta) = \prod\limits_{i=1}^{n}\theta^{x_i}(1-\theta)^{1-x_i} = \left(\prod\limits_{i=1}^{n}\theta^{x_i}\right)\left(\prod\limits_{i=1}^{n}(1-\theta)^{1-x_i}\right)$$
+
+$$= \theta^{\sum\limits_{i=1}^{n}x_i}(1-\theta)^{n-\sum\limits_{i=1}^{n}x_i} = \theta^{T(x_1,\dots,x_n)}(1-\theta)^{n-T(x_1,\dots,x_n)},$$
+
+Portanto,
+
+$$g(x_1,\dots,x_n) = 1,$$
+e 
+
+$$h(T(x_1,\dots, x_n), \theta) = \theta^{T(x_1,\dots,x_n)}(1-\theta)^{n-T(x_1,\dots,x_n)}.$$
+
+Pelo critério de Neyman-Fisher, $T(x_1,\dots,x_n) = \sum\limits_{i=1}^{n}x_i$ é suficiente. A média
+
+$$
+\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},
+$$
+
+também é, pois conhecer o número total de caras e a proporção amostral de caras é equivalente (já que conhecemos $n$!).
+
+### Exercícios {.unnumbered}
+
+1. Considere a distribuição $N(0,\sigma)$ e seja $\theta=\sigma^2$. Encontre uma estatística suficiente.
+
+2. Considere a distribuição $N(\theta,1)$. Encontre uma estatística suficiente.
+
+3. Considere a distribuição exponencial
+
+$$
+f(x;\theta)=\theta e^{-\theta x},
+\qquad (x>0).
+$$
+
+Encontre uma estatística suficiente.
+
+4. Considere a distribuição $U(0, \theta)$. Encontre uma estatística suficiente.
+
+5. Considere a distribuição gama como ambos os parâmetros desconhecidos. Mostre que a soma e o produto formam uma estatistica suficiente.
+
+
 ## Método dos Momentos
 
 A estimação por máxima verossimilhança (MV), como veremos nesse capítulo, possui uma intuição bastante elegante, mas pode ser matematicamente trabalhosa de resolver. Vamos aprender inicialmente uma técnica para estimar parâmetros, chamada método dos momentos (MoM).
