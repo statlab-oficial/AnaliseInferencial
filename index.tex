@@ -1,27 +1,30 @@
 % Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
+  brazilian,
   letterpaper,
   DIV=11,
   numbers=noendperiod]{scrreprt}
-
+\usepackage{xcolor}
 \usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
 \usepackage{lmodern}
-\ifPDFTeX\else  
-    % xetex/luatex font selection
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -39,18 +42,29 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
+\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -70,7 +84,7 @@
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
@@ -80,7 +94,7 @@
 \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
 \newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
@@ -93,8 +107,8 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -106,17 +120,21 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
+
+
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -150,6 +168,26 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
 
 \usepackage{graphicx}
 \usepackage{eso-pic}
@@ -241,22 +279,9 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-\ifLuaTeX
-\usepackage[bidi=basic]{babel}
-\else
-\usepackage[bidi=default]{babel}
-\fi
-\babelprovide[main,import]{brazilian}
-% get rid of language-specific shorthands (see #6817):
-\let\LanguageShortHands\languageshorthands
-\def\languageshorthands#1{}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
-
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdflang={pt-br},
   colorlinks=true,
@@ -266,9 +291,9 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
+
 \author{}
 \date{}
-
 \begin{document}
 
 % Capa sem número
@@ -300,10 +325,10 @@
 
 \renewcommand*\contentsname{Índice}
 {
-\hypersetup{linkcolor=}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
+
 \bookmarksetup{startatroot}
 
 \chapter*{Informações Legais e Declaração de Uso de Inteligência
@@ -824,7 +849,7 @@ fórmula:
 Resultado: número de combinações (ordem não importa).
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Escolher 2 elementos de um conjunto com 4:
 
@@ -879,7 +904,7 @@ expansão de:
 
 \[(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k.\]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \[(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4.\]
 
@@ -891,7 +916,7 @@ A Progressão Geométrica (PG) é uma sequência numérica amplamente
 utilizada em Matemática, Estatística, Economia e Ciências Naturais. Ela
 descreve fenômenos que crescem ou decrescem de forma multiplicativa.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Uma PG é uma sequência em que cada termo, a partir do segundo, é obtido
 multiplicando o termo anterior por uma constante chamada razão.
@@ -938,7 +963,7 @@ Quando a PG é convergente:
 A Série de Taylor é uma ferramenta fundamental da Análise Matemática que
 permite representar funções como somas infinitas de potências.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 A expansão em série de Taylor de uma função \(f\) em torno de \(x = 0\)
 (Série de Maclaurin) é dada por:
@@ -1070,7 +1095,7 @@ Podemos resolver isso utilizando o Teorema do Mapeamento Contínuo (ou
 teorema de Mann-Wald) (de fato, essa é a base da demonstração que
 apresentaremos).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Método Delta}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Método Delta}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Suponha que \[
 \frac{\sqrt{n}(X_n - \mu)}{\sigma} \xrightarrow{d} N(0,1),
@@ -1514,7 +1539,7 @@ Exponencial}\label{distribuiuxe7uxe3o-exponencial}
   \]
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -1597,7 +1622,7 @@ observamos. Imagine que o mundo é uma ``caixa preta'' que segue certas
 regras (leis da física, comportamento humano, algoritmos de mercado),
 portanto o PGD são essas regras em funcionamento.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Realidade vs.~Observação}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Realidade vs.~Observação}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{itemize}
 \item
@@ -1611,7 +1636,7 @@ portanto o PGD são essas regras em funcionamento.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Representação Matemática}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Representação Matemática}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 O PGD pode ser definido pela distribuição de probabilidade conjunta
 desconhecida \(P(X, Y)\) (ou simplemente \(P(Z)\)).
@@ -2084,7 +2109,7 @@ outros.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
 Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas
 inferiores a 30\%. Por outro lado, em alguns casos, obtivemos proporções
@@ -2390,7 +2415,7 @@ observáveis (como, por exemplo, uma amostra aleatória de \(n\)
 indivíduos de uma população de interesse). Uma estatística \(T\) é uma
 função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{itemize}
 \item
@@ -2404,7 +2429,7 @@ função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \textbf{Parâmetro:} Um valor numérico calculado a partir de \emph{todos}
 os indivíduos na população. \emph{(Discreta / Contínua)}
@@ -2452,7 +2477,7 @@ correlações}\label{covariuxe2ncia-variuxe2ncia-de-somas-e-correlauxe7uxf5es}
 O resultado a seguir mostra que a esperança de um produto de variáveis
 aleatórias independentes é igual ao produto de suas esperanças.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 1:}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 1:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Se \(X\) e \(Y\) são independentes, então, para quaisquer funções \(h\)
 e \(g\),
@@ -2475,7 +2500,7 @@ E[g(X)h(Y)] =& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(
 
 A demonstração para o caso discreto pode ser feita de maneira similar.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definição 1:}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definição 1:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 A covariância entre \(X\) e \(Y\), representada como \(Cov(X,Y)\), é
 definida como
@@ -2495,7 +2520,7 @@ Cov(X,Y) = & E[\underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{
 Note que, se \(X\) e \(Y\) são independentes, então, pela Proposição 1,
 \(Cov(X,Y) = 0\). No entanto, o inverso não é verdade.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 2:}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 2:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{enumerate}
 \def\labelenumi{\roman{enumi})}
@@ -2519,7 +2544,7 @@ Proposição 2, temos que
 =&\sum\limits_{i=1}^{n} Var(X_i) + 2\mathop{\sum\sum}\limits_{i < j}Cov(X_i,X_j).
 \end{aligned}\]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição 2: Amostra Aleatória:}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição 2: Amostra Aleatória:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 A variáveis aleatórias \(X_1, X_2, \dots, X_n\) são chamadas de amostra
 aleatória e de tamanho \(n\) da população \(f(x)\) se
@@ -2598,7 +2623,7 @@ Essa FDP pode ser usada para responder perguntas sobre a amostra. Por
 exemplo, qual é a probabilidade de que todas as placas durem mais de 2
 anos?
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Resposta:}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Resposta:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \end{tcolorbox}
 
@@ -2624,6 +2649,7 @@ coletados. Uma população finita é um conjunto finito de números,
 dessa população. Essas amostras podem ser obtidas de quatro maneiras
 diferentes. Podemos resumir as quatro situações na Tabela 1 a seguir:
 
+{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}lll@{}}
 \toprule\noalign{}
 Tipo de seleção & Sem reposição & Com reposição \\
@@ -2634,6 +2660,7 @@ Tipo de seleção & Sem reposição & Com reposição \\
 \textbf{Ordenado} & \(\frac{n!}{(n-r)!}\) & \(n^r\) \\
 \textbf{Não ordenado} & \(\binom{n}{r}\) & \(\binom{n+r-1}{r}\) \\
 \end{longtable}
+}
 
 Tabela 1: Número de possíveis arranjos de tamanho \(r\) a partir de
 \(n\) objetos.
@@ -2726,7 +2753,7 @@ distribuição condicional de \(X_i\) dados \(X_1, \dots, X_{i-1}\) são
 \(1/(N - i + 1)\), que são próximas de \(1/N\) se \(i \le n\) for
 pequeno em comparação com \(N\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Arranjos ou combinação ao contar amostras?}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Arranjos ou combinação ao contar amostras?}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Ao contar o número de \textbf{amostras aleatórias simples} possíveis, o
 resultado depende de como definimos uma \emph{amostra}.
@@ -2835,7 +2862,7 @@ Visto que \(X_1, \dots, X_n\) são identicamente distribuídas,
 \(M_{X_i}(t)\) é a mesma função para cada \(i\). Assim, temos o
 seguinte:
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 2}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 2}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(X_1, \dots, X_n\) uma amostra aleatória de uma população com FGM
 \(M_X(t)\). Então a FGM da média amostral é:
@@ -2887,7 +2914,7 @@ distribuição!
 estatística provenientes de todas as amostras possíveis de tamanho
 \(n\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Para entender a origem de uma distribuição amostral, imagine o seguinte
 processo exato (ou de ``força bruta''):
@@ -2960,7 +2987,7 @@ com média \(\mu_{x}\) e variância \(\sigma_{x}^{2}\):
 Para compreendermos como a média amostral se comporta, utilizamos as
 seguintes propriedades das combinações lineares:
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Sejam \(a_{i}\) para \(i=1,2,...,k\) constantes e sejam \(X_{i}\) para
 \(i=1,2,...,k\) variáveis aleatórias. Então:
@@ -3098,7 +3125,7 @@ Um parâmetro populacional de interesse comum é a variância populacional
 \(S^2\) para estimar \(\sigma^2\). Portanto, a distribuição amostral de
 \(S^2\) é de grande interesse.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 A soma dos quadrados de variáveis normais padrão independentes é
 distribuída como uma variável aleatória \(\chi^2\). Mais formalmente:
@@ -3171,7 +3198,7 @@ determinar a quantos erros padrões (\(S/\sqrt{n}\)) a média amostral
 \(\bar{X}\) está de um valor hipotético \(\mu\). Portanto, a
 distribuição amostral desta razão é de extrema importância.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \textbf{Definição 2.1:} Se \(Z \sim N(0, 1)\), \(W \sim \chi^2(\nu)\), e
 \(Z\) e \(W\) são independentes, então:
@@ -3218,7 +3245,7 @@ Para um tamanho de amostra \textbf{GRANDE} \(n\) e uma AA
 
 \[T = \frac{\bar{X} - \mu_x}{S/\sqrt{n}}\,  \dot{\sim} \, t(n - 1).\]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Fatos Úteis}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Fatos Úteis}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{itemize}
 \tightlist
@@ -3269,7 +3296,7 @@ AA, uma de tamanho \(n_1\) com variância amostral \(S_1^2\) e outra de
 tamanho \(n_2\) com variância amostral \(S_2^2\), a estatística
 \(\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\) é utilizada.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \textbf{Definição 2.2:} Se \(W_1 \sim \chi^2(\nu_1)\) e
 \(W_2 \sim \chi^2(\nu_2)\) são independentes, então:
@@ -3360,7 +3387,7 @@ grande número de repetições, torna-se um resultado matemático rigoroso,
 através da aplicação de um caso especial da Lei dos Grandes Números
 (Magalhães, 2006).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Lei dos Grandes Números}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Lei dos Grandes Números}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Sejam \(X_1, X_2, \dots\) variáveis aleatórias com esperanças finitas e
 seja \(S_n = X_1+ X_2 + \dots + X_n\). A sequência \(\{X_n: n\geq 1\}\)
@@ -3423,12 +3450,12 @@ Rêgo; Mendoça, 2017).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{unidade2_files/figure-pdf/unnamed-chunk-1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{unidade2_files/figure-pdf/unnamed-chunk-1-1.pdf}}
 
 \section{Teorema Central do Limite
 (TCL)}\label{teorema-central-do-limite-tcl}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema Central do Limite}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema Central do Limite}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(X_{1},X_{2},...,X_{n}\) uma AA de uma distribuição com média
 \(\mu_{x}\) e variância \(\sigma_{x}^{2}<\infty\). Então para
@@ -3625,7 +3652,7 @@ A primeira propriedade de estimadores que abordaremos é o viés. O viés
 de um estimador mede se, em termos de valor esperado, o estimador é
 igual ao verdadeiro parâmetro.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(\hat{\theta}\) um estimador para \(\theta\). O viés de
 \(\hat{\theta}\) como estimador para \(\theta\) é
@@ -3682,7 +3709,7 @@ Observe que, se \(\hat{\theta}\) for não viesado, então
 \(E(\hat{\theta}) = \theta\), e, nesse caso, o EQM coincide com a
 variância.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Definição}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Definição}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 O EQM de um estimador \(\hat{\theta}\) de \(\theta\) é
 
@@ -3708,7 +3735,7 @@ apenas vendo os conceitos básicos!).
 \subsection*{Consistência}\label{consistuxeancia}
 \addcontentsline{toc}{subsection}{Consistência}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Um estimador \(\hat{\theta}_n\) (dependendo de \(n\) amostras iid) de
 \(\theta\) é dito (fracamente) \textbf{consistente} se este converge (em
@@ -3792,7 +3819,7 @@ comparando estimadores para \(\theta\) na distribuição contínua
   \] que não é nem não viesado nem consistente.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Teorema (Resultados auxiliares para provar a consistência)}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Teorema (Resultados auxiliares para provar a consistência)}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3848,7 +3875,7 @@ consistência e não-viés, temos um estimador que:
   e faz isso da maneira mais rápida possível (\emph{eficiente}).
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Informação de Fisher}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Informação de Fisher}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(\mathbf{x} = (x_1, \dots, x_n)\) uma amostra iid proveniente de
 uma distribuição discreta com função de massa de probabilidade
@@ -3902,7 +3929,7 @@ ele é \textbf{eficiente}; uma propriedade altamente desejável em
 inferência estatística. Esse limite mínimo é conhecido como
 \textbf{Limite Inferior de Cramér-Rao}.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Limite Inferior de Cramér-Rao}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Limite Inferior de Cramér-Rao}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(\mathbf{x} = (x_1, \dots, x_n)\) uma amostra iid proveniente de
 uma distribuição discreta com função de massa de probabilidade
@@ -3929,7 +3956,7 @@ variância uniformemente mínima (ENVVUM)} para \(\theta\).
 Como queremos encontrar a menor variância possível, podemos analisar
 esse problema sob a perspectiva da \textbf{eficiência do estimador}.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Eficiência}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Eficiência}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(\hat{\theta}\) um estimador não viesado de \(\theta\). A
 eficiência de \(\hat{\theta}\) é definida por: \[
@@ -3986,7 +4013,7 @@ quantos sucessos ocorreram. A palavra ``suficiente'' sugere exatamente
 isso: uma quantidade de informação que é ``suficiente'' para inferência
 sobre o parâmetro.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-tip-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Estatística Suficiente}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Estatística Suficiente}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Uma estatística \(T = T(X_1, \dots, X_n)\) é dita \textbf{suficiente}
 para o parâmetro \(\theta\) se a distribuição condicional de
@@ -4025,7 +4052,7 @@ média). Portanto, nenhum dos dois está em desvantagem. :)
 Embora essa definição seja difícil de verificar diretamente, existe um
 critério que facilita a identificação de estatísticas suficientes:
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Critério da Fatoração de Neyman-Fisher}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Critério da Fatoração de Neyman-Fisher}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Sejam \(x_1, \dots, x_n\) uma amostra iid com função de verossimilhança
 \(L(x_1, \dots, x_n \mid \theta)\). Uma estatística
@@ -4200,7 +4227,7 @@ As definições iniciais e a estratégia podem parecer confusas à primeira
 vista, mas apresentaremos vários exemplos que devem ajudar a tornar tudo
 mais claro.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Momentos (Revisão)}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-note-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Momentos (Revisão)}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(X\) uma variável aleatória e \(c \in \mathbb{R}\) um escalar.
 Então, o \(k\)-ésimo momento de \(X\) é:
@@ -4217,7 +4244,7 @@ da média} (variância): \(\text{Var}(X) = E[(X - \mu)^2]\).
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-important-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Momentos Amostrais}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-important-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Momentos Amostrais}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Seja \(X\) uma variável aleatória e \(x_1, \ldots, x_n\) uma amostra
 i.i.d. de \(X\). O \(k\)-ésimo momento amostral é: \[
@@ -4497,7 +4524,7 @@ Código em \texttt{R}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4506,7 +4533,7 @@ Código em \texttt{R}:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{unidade3_files/figure-pdf/unnamed-chunk-1-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{unidade3_files/figure-pdf/unnamed-chunk-1-2.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4805,7 +4832,7 @@ em que:
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-caution-color-frame, bottomrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, opacitybacktitle=0.6, titlerule=0mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, rightrule=.15mm, opacityback=0, bottomtitle=1mm, left=2mm, colback=white, toptitle=1mm, toprule=.15mm, arc=.35mm, leftrule=.75mm, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5287,6 +5314,7 @@ Confiança}\label{estimauxe7uxe3o-por-intervalos-intervalo-de-confianuxe7a}
   \(\alpha \in [0,1]\) é um número que indica o grau de incerteza:
 \end{itemize}
 
+{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}lll@{}}
 \toprule\noalign{}
 \(\alpha\) & \(1 - \alpha\) & \(100(1-\alpha)\%\) \\
@@ -5299,6 +5327,7 @@ Confiança}\label{estimauxe7uxe3o-por-intervalos-intervalo-de-confianuxe7a}
 0.05 & 0.95 & 95\% \\
 0.1 & 0.9 & 90\% \\
 \end{longtable}
+}
 
 \begin{itemize}
 \item
@@ -5364,6 +5393,516 @@ Independência}\label{testes-de-homogeneidade-e-independuxeancia}
 \chapter{Inferência Estatística e Ciência de
 Dados}\label{inferuxeancia-estatuxedstica-e-ciuxeancia-de-dados}
 
+\section{Trabalho Aplicado}\label{trabalho-aplicado}
+
+\subsection{Objetivo}\label{objetivo}
+
+O objetivo deste trabalho é aplicar os principais conceitos estudados na
+disciplina de Análise Inferencial em um problema real. Os estudantes
+deverão planejar uma pesquisa, definir um tamanho amostral adequado
+(usando as fórmulas dadas em sala de aula), coletar dados e realizar
+procedimentos de estimação (pontual e intervalar) e testes de hipóteses,
+apresentando e interpretando os resultados obtidos.
+
+\subsection{Descrição Geral}\label{descriuxe7uxe3o-geral}
+
+O trabalho deverá ser desenvolvido em grupos de até \textbf{3
+integrantes}.
+
+Cada grupo deverá escolher um tema de interesse e definir uma
+população-alvo para investigação. A variável de interesse poderá ser
+quantitativa ou qualitativa, desde que permita a aplicação dos métodos
+inferenciais estudados ao longo da disciplina.
+
+\subsubsection{Exemplos de Temas e Variáveis de
+Interesse}\label{exemplos-de-temas-e-variuxe1veis-de-interesse}
+
+A seguir são apresentados alguns exemplos de temas e possíveis variáveis
+que podem ser investigadas. Os grupos não precisam se limitar às
+sugestões apresentadas.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Hábitos de Estudo dos Estudantes da UFC
+\end{enumerate}
+
+Possíveis variáveis:
+
+\begin{itemize}
+\tightlist
+\item
+  Número de horas de estudo por semana;
+\item
+  Número de disciplinas cursadas no semestre;
+\item
+  Frequência às aulas (\%);
+\item
+  Tempo médio dedicado à resolução de exercícios;
+\item
+  Número de reprovações acumuladas;
+\item
+  Utilização de ferramentas de inteligência artificial para estudos
+  (sim/não);
+\item
+  Grau de satisfação com o próprio desempenho acadêmico (escala de 1 a
+  10);
+\item
+  Coeficiente de rendimento acadêmico (IRA).
+\end{itemize}
+
+Exemplos de perguntas inferenciais:
+
+\begin{itemize}
+\tightlist
+\item
+  Qual é o número médio de horas de estudo dos estudantes?
+\item
+  A média de horas de estudo é superior a 10 horas semanais?
+\item
+  Mais de 50\% dos estudantes utilizam ferramentas de inteligência
+  artificial nos estudos?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Tempo de Deslocamento até a Universidade
+\end{enumerate}
+
+Possíveis variáveis:
+
+\begin{itemize}
+\tightlist
+\item
+  Tempo diário de deslocamento (em minutos);
+\item
+  Distância entre residência e universidade (em quilômetros);
+\item
+  Número de meios de transporte utilizados;
+\item
+  Gasto mensal com transporte;
+\item
+  Frequência de atrasos devido ao deslocamento;
+\item
+  Meio de transporte principal (ônibus, carro, bicicleta, moto,
+  caminhada etc.).
+\end{itemize}
+
+Exemplos de perguntas inferenciais:
+
+\begin{itemize}
+\tightlist
+\item
+  Qual é o tempo médio de deslocamento dos estudantes?
+\item
+  O tempo médio de deslocamento é superior a 40 minutos?
+\item
+  Qual a proporção de estudantes que utilizam transporte público?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Consumo de Redes Sociais
+\end{enumerate}
+
+Possíveis variáveis:
+
+\begin{itemize}
+\tightlist
+\item
+  Tempo diário gasto em redes sociais (horas);
+\item
+  Número de redes sociais utilizadas regularmente;
+\item
+  Rede social mais utilizada;
+\item
+  Frequência de acesso às redes sociais;
+\item
+  Tempo de uso durante atividades acadêmicas;
+\item
+  Percepção sobre impacto das redes sociais no rendimento acadêmico.
+\end{itemize}
+
+Exemplos de perguntas inferenciais:
+
+\begin{itemize}
+\tightlist
+\item
+  Qual é o tempo médio diário de uso das redes sociais?
+\item
+  Mais de 70\% dos estudantes utilizam redes sociais por mais de 2 horas
+  por dia?
+\item
+  Existe evidência de que o tempo médio de uso seja superior a 3 horas
+  diárias?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Prática de Atividades Físicas
+\end{enumerate}
+
+Possíveis variáveis:
+
+\begin{itemize}
+\tightlist
+\item
+  Número de dias por semana em que pratica atividade física;
+\item
+  Tempo semanal dedicado à atividade física;
+\item
+  Tipo de atividade praticada;
+\item
+  Frequência de participação em academias;
+\item
+  Índice de Massa Corporal (IMC);
+\item
+  Percepção do próprio condicionamento físico.
+\end{itemize}
+
+Exemplos de perguntas inferenciais:
+
+\begin{itemize}
+\tightlist
+\item
+  Qual é o tempo médio semanal dedicado à atividade física?
+\item
+  Menos da metade dos estudantes pratica atividade física regularmente?
+\item
+  Qual a proporção de estudantes que realizam exercícios pelo menos três
+  vezes por semana?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Hábitos Alimentares
+\end{enumerate}
+
+Possíveis variáveis:
+
+\begin{itemize}
+\tightlist
+\item
+  Número de refeições diárias;
+\item
+  Consumo semanal de frutas;
+\item
+  Consumo semanal de refrigerantes;
+\item
+  Frequência de refeições no Restaurante Universitário; Gasto mensal com
+  alimentação;
+\item
+  Consumo diário de água (litros).
+\end{itemize}
+
+Exemplos de perguntas inferenciais:
+
+\begin{itemize}
+\tightlist
+\item
+  Qual é o consumo médio diário de água?
+\item
+  Qual a proporção de estudantes que consomem frutas diariamente?
+\item
+  O número médio de refeições por dia é igual a três?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Outros Temas
+\end{enumerate}
+
+Os grupos poderão propor outros temas relacionados à realidade
+universitária ou a problemas de interesse social, desde que a proposta
+permita a aplicação dos métodos de inferência estatística estudados na
+disciplina.
+
+Exemplos:
+
+\begin{itemize}
+\tightlist
+\item
+  Qualidade do sono;
+\item
+  Uso de aplicativos de transporte;
+\item
+  Educação financeira;
+\item
+  Hábitos de leitura;
+\item
+  Uso de plataformas de streaming;
+\item
+  Saúde mental e bem-estar;
+\item
+  Sustentabilidade e reciclagem;
+\item
+  Consumo de café ou bebidas energéticas.
+\end{itemize}
+
+\begin{quote}
+A escolha final deverá ser aprovada.
+\end{quote}
+
+\subsection{Etapas do Trabalho}\label{etapas-do-trabalho}
+
+\subsubsection{Definição do Problema}\label{definiuxe7uxe3o-do-problema}
+
+O grupo deverá apresentar:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Tema escolhido;
+\item
+  Justificativa da pesquisa;
+\item
+  Objetivos do estudo;
+\item
+  População de interesse;
+\item
+  Variável ou variáveis analisadas.
+\end{enumerate}
+
+\subsubsection{Planejamento Amostral}\label{planejamento-amostral}
+
+O grupo deverá definir:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Nível de confiança adotado;
+\item
+  Margem de erro desejada;
+\item
+  Método de amostragem utilizado;
+\item
+  Justificativa dos parâmetros empregados no cálculo.
+\end{enumerate}
+
+Em seguida, deverá ser realizado o cálculo do tamanho amostral adequado
+ao estudo. Quando necessário, valores preliminares poderão ser obtidos
+por meio de:
+
+\begin{itemize}
+\tightlist
+\item
+  Estudos anteriores;
+\item
+  Literatura especializada;
+\item
+  Estudo piloto
+\end{itemize}
+
+\subsubsection{Coleta de Dados}\label{coleta-de-dados}
+
+O grupo deverá coletar uma amostra com tamanho igual ou superior ao
+valor calculado na etapa anterior. Devem ser descritos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Procedimento de coleta;
+\item
+  Instrumento utilizado (questionário/formulário, medição etc.);
+\item
+  Período de coleta;
+\item
+  Possíveis limitações do processo.
+\end{enumerate}
+
+\subsubsection{Análise Descritiva dos
+Dados}\label{anuxe1lise-descritiva-dos-dados}
+
+Apresentar:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Tabelas de frequências (quando apropriado);
+\item
+  Gráficos adequados ao tipo de variável;
+\item
+  Medidas descritivas relevantes;
+\item
+  Comentários sobre os resultados observados.
+\end{enumerate}
+
+\subsubsection{Estimação Pontual}\label{estimauxe7uxe3o-pontual-1}
+
+Identificar o parâmetro populacional de interesse e calcular sua
+estimativa pontual. Exemplos:
+
+\begin{itemize}
+\tightlist
+\item
+  Média populacional;
+\item
+  Proporção populacional;
+\item
+  Variância populacional.
+\end{itemize}
+
+\begin{quote}
+O grupo deverá interpretar o significado da estimativa obtida no
+contexto do estudo.
+\end{quote}
+
+\subsubsection{Estimação Intervalar}\label{estimauxe7uxe3o-intervalar}
+
+Construir um intervalo de confiança para o parâmetro de interesse. A
+apresentação deverá conter:
+
+\begin{itemize}
+\tightlist
+\item
+  Nível de confiança utilizado;
+\item
+  Fórmula empregada;
+\item
+  Cálculos realizados;
+\item
+  Interpretação do intervalo obtido.
+\end{itemize}
+
+\subsubsection{Teste de Hipóteses}\label{teste-de-hipuxf3teses}
+
+Formular um problema de decisão estatística relacionado ao estudo
+realizado. O relatório deverá conter:
+
+\begin{itemize}
+\tightlist
+\item
+  Hipótese nula (\(H_0\));
+\item
+  Hipótese alternativa (\(H_1\));
+\item
+  Nível de significância;
+\item
+  Estatística de teste;
+\item
+  Valor-p;
+\item
+  Decisão final;
+\item
+  Interpretação prática dos resultados.
+\end{itemize}
+
+\subsubsection{Verificação das Condições de
+Aplicação}\label{verificauxe7uxe3o-das-condiuxe7uxf5es-de-aplicauxe7uxe3o}
+
+Os estudantes deverão discutir as condições necessárias para aplicação
+dos métodos utilizados. Quando pertinente, comentar aspectos como:
+
+\begin{itemize}
+\tightlist
+\item
+  Independência das observações;
+\item
+  Normalidade;
+\item
+  Tamanho amostral;
+\item
+  Aproximações assintóticas;
+\item
+  Possíveis fontes de viés.
+\end{itemize}
+
+\subsubsection{Conclusões}\label{conclusuxf5es}
+
+Apresentar uma síntese dos principais resultados obtidos e responder aos
+objetivos definidos inicialmente. Também deverão ser discutidas
+possíveis limitações do estudo e sugestões para trabalhos futuros.
+
+\subsubsection{Estrutura do Relatório}\label{estrutura-do-relatuxf3rio}
+
+O relatório final deverá conter:
+
+\begin{itemize}
+\tightlist
+\item
+  Introdução;
+\item
+  Metodologia;
+\item
+  Resultados;
+\item
+  Discussão;
+\item
+  Conclusões;
+\item
+  Referências.
+\end{itemize}
+
+\subsubsection{Entrega}\label{entrega}
+
+A entrega deverá ser realizada em formato PDF por meio do SIGAA. Além do
+relatório, deverá ser entregue:
+
+\begin{itemize}
+\tightlist
+\item
+  Base de dados utilizada;
+\item
+  Código utilizado nas análises (R, Python ou outro software
+  estatístico).
+\end{itemize}
+
+\subsection{Critérios de
+Avaliação}\label{crituxe9rios-de-avaliauxe7uxe3o-1}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Critério & Pontuação \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Definição do problema e planejamento amostral & 2,0 \\
+Coleta e organização dos dados & 1,0 \\
+Análise descritiva & 1,5 \\
+Estimação pontual e intervalar & 2,0 \\
+Teste de hipóteses & 2,0 \\
+Qualidade do relatório e interpretação dos resultados & 1,5 \\
+\textbf{Total} & \textbf{10,0} \\
+\end{longtable}
+}
+
+\subsection{Observações}\label{observauxe7uxf5es}
+
+\begin{itemize}
+\tightlist
+\item
+  A simples apresentação de resultados computacionais não será
+  suficiente para obtenção da pontuação máxima.
+\item
+  As interpretações devem ser realizadas no contexto do problema
+  estudado.
+\item
+  Dúvidas poderão ser discutidas durante as aulas ou nos horários de
+  atendimento do professor.
+\end{itemize}
+
 \bookmarksetup{startatroot}
 
 \chapter*{Referências}\label{referuxeancias-1}
@@ -5371,7 +5910,7 @@ Dados}\label{inferuxeancia-estatuxedstica-e-ciuxeancia-de-dados}
 
 \markboth{Referências}{Referências}
 
-\phantomsection\label{refs}
+\protect\phantomsection\label{refs}
 \begin{CSLReferences}{0}{1}
 \bibitem[\citeproctext]{ref-campos2017metodos}
 CAMPOS, Marcilia Andrade; RÊGO, Leandro Chaves; MENDOÇA, André Feitoza
@@ -5399,6 +5938,7 @@ WICKHAM, Hadley \emph{et al.}
 \textbf{Journal of Open Source Software}, v. 4, n. 43, p. 1686, 2019.
 
 \end{CSLReferences}
+
 
 
 
