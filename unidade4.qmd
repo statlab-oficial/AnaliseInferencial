@@ -1,20 +1,16 @@
 # Estimação por Intervalos: Intervalo de Confiança
 
-
 ## Motivação para Intervalos de Confiança
 
 Os intervalos de confiança são utilizados no contexto frequentista, no qual os parâmetros populacionais são assumidos como desconhecidos, porém fixos, e não variáveis aleatórias. Enquanto isso, os intervalos de credibilidade (Paradigma Bayesiano) constituem a versão bayesiana dos intervalos de confiança frequentistas em que os parâmetros são tratados como variáveis aleatórias.
 
 Quando realizamos estimação pontual (como Máxima Verossimilhança ou Método dos Momentos), a probabilidade de nossa resposta estar exatamente correta (considerando a aleatoriedade das amostras iid) é
 
-$$P(\hat{\theta} = \theta) = 0,$$
-porque $\theta$ é um número real e pode assumir uma quantidade incontável de valores. Portanto, a probabilidade de estarmos exatamente corretos é zero, embora possamos estar muito próximos do valor verdadeiro.
-
+$$P(\hat{\theta} = \theta) = 0,$$ porque $\theta$ é um número real e pode assumir uma quantidade incontável de valores. Portanto, a probabilidade de estarmos exatamente corretos é zero, embora possamos estar muito próximos do valor verdadeiro.
 
 Em vez disso, podemos fornecer um intervalo (frequentemente, mas não necessariamente, centrado na estimativa pontual $\hat{\theta}$) tal que $\theta$ pertença a esse intervalo com alta probabilidade, por exemplo 95%:
 
-$$P(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]) = 0{,}95.$$
-O valor $\Delta$ é denominado **margem de erro** e determina a amplitude do intervalo de confiança. A expressão anterior pode ser escrita de maneiras equivalentes:
+$$P(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]) = 0{,}95.$$ O valor $\Delta$ é denominado **margem de erro** e determina a amplitude do intervalo de confiança. A expressão anterior pode ser escrita de maneiras equivalentes:
 
 $$P\left(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]\right) = P\left(|\hat{\theta}-\theta| \leq \Delta\right) = P\left(
 \hat{\theta}
@@ -32,21 +28,15 @@ O intervalo de confiança para $\theta$ pode ser representado como a Figura abai
 
 Grande parte da teoria dos intervalos de confiança baseia-se na distribuição normal padrão
 
-$$
-Z \sim N(0,1).
-$$
+$$Z \sim N(0,1).$$
 
 Sua função distribuição acumulada é denotada por
 
-$$
-\Phi(z)=P(Z\leq z).
-$$
+$$\Phi(z)=P(Z\leq z).$$
 
 Uma propriedade importante da distribuição normal é sua simetria:
 
-$$
-\Phi(z)=1-\Phi(-z).
-$$
+$$\Phi(z)=1-\Phi(-z).$$
 
 ![](normal1.png)
 
@@ -60,18 +50,13 @@ Consequentemente, a probabilidade de um valor ser menor que o limite superior de
 
 ![](Normal2.png)
 
-
 Para construir um intervalo central de 95%, precisamos encontrar um valor $z$ tal que 95% da área esteja entre $-z$ e $z$. O valor de $z$ pode ser encontrar usando o `R` ou usando alguma tabela da normal padrão (existem várias configurações). Daí, temos que:
 
-$$
-z=\Phi^{-1}(0.975)=1{,}96.
-$$
+$$z=\Phi^{-1}(0.975)=1{,}96.$$
 
 Assim,
 
-$$
-P(-1{,}96 \leq Z \leq 1{,}96)=0{,}95.
-$$
+$$P(-1{,}96 \leq Z \leq 1{,}96)=0{,}95.$$
 
 O valor 1,96 é conhecido como o valor crítico associado a um nível de confiança de 95%.
 
@@ -81,65 +66,49 @@ O valor 1,96 é conhecido como o valor crítico associado a um nível de confian
 
 Suponha que
 
-$$
-X_1,\ldots,X_n \stackrel{iid}{\sim} \text{Poi}(\theta),
-$$
+$$X_1,\ldots,X_n \stackrel{iid}{\sim} \text{Poi}(\theta),$$
 
 em que $\theta$ é desconhecido.
 
 Sabemos que tanto o estimador de máxima verossimilhança quanto o estimador pelo método dos momentos são dados pela média amostral
 
-$$
-\frac{1}{n}
-\sum_{i=1}^{n}X_i.
-$$
+$$\frac{1}{n}
+\sum_{i=1}^{n}X_i.$$
 
 Como
 
-$$
-E(X_i)=\theta
+$$E(X_i)=\theta
 \quad\text{e}\quad
-Var(X_i)=\theta,
-$$
+Var(X_i)=\theta,$$
 
 segue que
 
-$$
-E(\hat{\theta})=\theta
-$$
+$$E(\hat{\theta})=\theta$$
 
 e
 
-$$
-Var(\hat{\theta}) = \frac{\theta}{n}.
-$$
+$$Var(\hat{\theta}) = \frac{\theta}{n}.$$
 
 Pelo Teorema Central do Limite,
 
-$$
-\hat{\theta}
+$$\hat{\theta}
 \approx
 N\left(
 \theta,
 \frac{\theta}{n}
-\right).
-$$
+\right).$$
 
 Padronizando,
 
-$$
-\frac{\hat{\theta}-\theta}
+$$\frac{\hat{\theta}-\theta}
 {\sqrt{\theta/n}}
 \approx
-N(0,1).
-$$
+N(0,1).$$
 
 Desejamos construir um intervalo de confiança de 95%, ou seja, $0{,}95$. Utilizando o valor crítico $z_{0{,}975}=1{,}96$, obtemos
 
-$$
-\Delta = 1{,}96
-\sqrt{\frac{\theta}{n}}.
-$$
+$$\Delta = 1{,}96
+\sqrt{\frac{\theta}{n}}.$$
 
 Como $\theta$ é desconhecido, substituímos pelo estimador $\hat{\theta}$:
 
@@ -152,29 +121,20 @@ $$\left[\hat{\theta} - 1{,}96
 \sqrt{\frac{\hat{\theta}}{n}}
 \right].$$
 
-
-:::{.callout-note title='Definição: Intervalo de Confiança'}
-
+::: {.callout-note title="Definição: Intervalo de Confiança"}
 Suponha que você possua uma amostra aleatória $X_1,\ldots,X_n$ de uma distribuição com parâmetro desconhecido $\theta$, e que disponha de um estimador $\hat{\theta}$ para esse parâmetro.
 
-Um intervalo de confiança de nível $100(1-\alpha)\%$ para $\theta$ é um intervalo (tipicamente, mas nem sempre, centrado em $\hat{\theta}$), $[\hat{\theta}-\Delta,\hat{\theta}+\Delta],$
-tal que a probabilidade (considerando a aleatoriedade das amostras $X_1,\ldots,X_n$) de o parâmetro $\theta$ pertencer a esse intervalo seja igual a $1-\alpha$:
+Um intervalo de confiança de nível $100(1-\alpha)\%$ para $\theta$ é um intervalo (tipicamente, mas nem sempre, centrado em $\hat{\theta}$), $[\hat{\theta}-\Delta,\hat{\theta}+\Delta],$ tal que a probabilidade (considerando a aleatoriedade das amostras $X_1,\ldots,X_n$) de o parâmetro $\theta$ pertencer a esse intervalo seja igual a $1-\alpha$:
 
-
-$$P\left(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]\right) = 1-\alpha.$$
-Quando $\hat{\theta} = \frac{1}{n}\sum_{i=1}^{n}X_i$
-é a média amostral, o Teorema Central do Limite garante que $\hat{\theta}$ possui distribuição aproximadamente normal para amostras suficientemente grandes. Nesse caso, um intervalo de confiança de nível $100(1-\alpha)\%$ é dado por
+$$P\left(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]\right) = 1-\alpha.$$ Quando $\hat{\theta} = \frac{1}{n}\sum_{i=1}^{n}X_i$ é a média amostral, o Teorema Central do Limite garante que $\hat{\theta}$ possui distribuição aproximadamente normal para amostras suficientemente grandes. Nesse caso, um intervalo de confiança de nível $100(1-\alpha)\%$ é dado por
 
 $$\left[\hat{\theta} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
 ;
 \hat{\theta}
 +
 z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right],$$
-em que $z_{1-\alpha/2}$ é o quantil da distribuição Normal padrão e $\sigma$ representa o verdadeiro desvio-padrão de uma observação da população, o qual pode precisar ser estimado a partir dos dados.
+\right],$$ em que $z_{1-\alpha/2}$ é o quantil da distribuição Normal padrão e $\sigma$ representa o verdadeiro desvio-padrão de uma observação da população, o qual pode precisar ser estimado a partir dos dados.
 :::
-
-
 
 É importante observar que a fórmula apresentada anteriormente funciona apenas quando $\hat{\theta}$ é a média amostral. Nesse caso, podemos utilizar o Teorema Central do Limite para concluir que a distribuição de $\hat{\theta}$ é aproximadamente normal. Quando o estimador não é a média amostral, essa aproximação pode não ser válida, sendo necessário recorrer a outras estratégias para construir intervalos de confiança.
 
@@ -182,12 +142,9 @@ Se desejarmos um intervalo de confiança de 95%, então $100(1-\alpha)= 95$, o q
 
 De maneira análoga, se desejarmos um intervalo de confiança de 98%, teremos $100(1-\alpha)=98,$ e, portanto, $\alpha=0.02$. Logo, $1-\frac{0.02}{2} = 0,99$, assim, devemos calcular $\Phi^{-1}(0.99)$. A razão para isso é simples: se desejamos que 98% da área da distribuição esteja concentrada na região central, os 2% restantes devem ser distribuídos igualmente entre as duas caudas da distribuição. Consequentemente, teremos 1% da área à esquerda e 1% da área à direita.
 
-
 **Exemplo:** Intervalo de Confiança para uma Proporção
 
-Considere uma amostra de tamanho $n=400$
-de uma distribuição Bernoulli com parâmetro $\theta$.
-Suponha que foram observados 136 sucessos.
+Considere uma amostra de tamanho $n=400$ de uma distribuição Bernoulli com parâmetro $\theta$. Suponha que foram observados 136 sucessos.
 
 A estimativa pontual é
 
@@ -195,15 +152,11 @@ $$\hat{\theta} =  \frac{136}{400} = 0.34.$$
 
 Desejamos construir um intervalo de confiança de 99%. Temos
 
-$$
-\alpha = 1- \frac{99}{100} = 0.01
-$$
+$$\alpha = 1- \frac{99}{100} = 0.01$$
 
 e, portanto, $z_{0.995} = 2.576$. Como
 
-$$
-Var(X)=\theta(1-\theta),
-$$
+$$Var(X)=\theta(1-\theta),$$
 
 estimamos o desvio-padrão por
 
@@ -212,31 +165,19 @@ $$\sigma = \sqrt{\hat{\theta}(1-\hat{\theta})} =
 
 Logo,
 
-$$
-\left[0.34 - 2.576\frac{0.474}{\sqrt{400}}
+$$\left[0.34 - 2.576\frac{0.474}{\sqrt{400}}
 ;
 0.34
 +
 2.576\frac{0.474}{\sqrt{400}}
-\right].
-$$
+\right].$$
 
-Após os cálculos, temos 
+Após os cálculos, temos
 
-$$
-IC(\theta,0{,}99) = [0.279;0.401].
-$$
-<!-- **Exemplo:** Intervalo de Confiança para média da distribuição exponencial -->
-<!-- Sejam $X_1, \dots, X_n$ iid exponencial $Exp(\lambda) = Gama(1, 1/\lambda)$. -->
-<!-- Então, -->
-<!-- $$\sum\limits{i=1}^n X_i \sim Gama(n, 1/\lambda) 2\lambda \sum\limits{i=1}^n X_i -->
-<!-- \sim Gama(n,2) = \chi^2_{2n}.$$ Considere $\alpha = 0{,}05$. Sejam $A$ e $B$ -->
-<!-- (ambos positivos) tal que -->
-<!-- $$P(A \leq 2\lambda \sum\limits{i=1}^n X_i \leq B ) = 0{,}95$$ -->
-
+$$IC(\theta,0{,}99) = [0.279;0.401].$$
+<!-- **Exemplo:** Intervalo de Confiança para média da distribuição exponencial --> <!-- Sejam $X_1, \dots, X_n$ iid exponencial $Exp(\lambda) = Gama(1, 1/\lambda)$. --> <!-- Então, --> <!-- $$\sum\limits{i=1}^n X_i \sim Gama(n, 1/\lambda) 2\lambda \sum\limits{i=1}^n X_i --> <!-- \sim Gama(n,2) = \chi^2_{2n}.$$ Considere $\alpha = 0{,}05$. Sejam $A$ e $B$ --> <!-- (ambos positivos) tal que --> <!-- $$P(A \leq 2\lambda \sum\limits{i=1}^n X_i \leq B ) = 0{,}95$$ -->
 
 ## Interpretação de um Intervalo de Confiança
-
 
 Uma interpretação muito comum, mas incorreta, é afirmar:
 
@@ -250,81 +191,104 @@ A interpretação correta é:
 
 Portanto, o nível de confiança refere-se ao método de construção do intervalo e não à probabilidade de o parâmetro pertencer ao intervalo específico obtido.
 
-
 ## Exercícios
 
-1. (CESPE / CEBRASPE - 2026 - Telebras - Especialista em Gestão de Telecomunicações - Analista Superior - Subatividade: Estatística) Para avaliação da audiência do telejornal de certa emissora de televisão em determinado mês de 2025, mediram-se os pontos de audiência do programa em 25 dias desse mês, tendo sido obtido um valor médio de 34,7 pontos. Pesquisas anteriores apontaram um desvio padrão populacional de 3,50 pontos de audiência desse telejornal. 
+1.  (CESPE / CEBRASPE - 2026 - Telebras - Especialista em Gestão de Telecomunicações - Analista Superior - Subatividade: Estatística) Para avaliação da audiência do telejornal de certa emissora de televisão em determinado mês de 2025, mediram-se os pontos de audiência do programa em 25 dias desse mês, tendo sido obtido um valor médio de 34,7 pontos. Pesquisas anteriores apontaram um desvio padrão populacional de 3,50 pontos de audiência desse telejornal.
 
-A partir dessa situação hipotética, e supondo que a audiência do telejornal siga uma distribuição normal, julgue o item subsecutivo, assumindo um nível de confiança de 94% ($z_{1−\alpha/2} = 1{,}88$). 
+A partir dessa situação hipotética, e supondo que a audiência do telejornal siga uma distribuição normal, julgue o item subsecutivo, assumindo um nível de confiança de 94% ($z_{1−\alpha/2} = 1{,}88$).
 
-Infere-se das informações apresentadas que o intervalo de confiança para a média dos pontos de audiência em todo o mês é dado por $\text{IC}(\mu, 0,94) = [33,38; 36,02]$. 
+Infere-se das informações apresentadas que o intervalo de confiança para a média dos pontos de audiência em todo o mês é dado por $\text{IC}(\mu, 0,94) = [33,38; 36,02]$.
 
 ( ) Certo
 
 ( ) Errado
 
+2.  (FCC - 2025 - Prefeitura de São Paulo - SP - Auditor Municipal de Controle Interno - AMCI Área de Especialização: Geral) A população formada pelos tempos de durações de atendimento a uma pessoa em um quichê de um órgão público é considerada normalmente distribuída com uma variância populacional igual a 2,56 (minutos)$^2$. Uma amostra aleatória de tamanho 64 foi extraída, com reposição, dessa população, obtendo-se uma média amostral igual a 15 minutos. Com base na amostra, um intervalo de confiança de 95% foi construído para a média populacional, considerando que na curva normal padrão (Z) as probabilidades $P(Z < 1,64)= 95\%$ e $P(Z < 1,96) = 97,5\%$. O limite superior do intervalo encontrado apresenta um valor igual a
 
-2. (FCC - 2025 - Prefeitura de São Paulo - SP - Auditor Municipal de Controle Interno - AMCI Área de Especialização: Geral) A população formada pelos tempos de durações de atendimento a uma pessoa em um quichê de um órgão público é considerada normalmente distribuída com uma variância populacional igual a 2,56 (minutos)$^2$. Uma amostra aleatória de tamanho 64 foi extraída, com reposição, dessa população, obtendo-se uma média amostral igual a 15 minutos. Com base na amostra, um intervalo de confiança de 95% foi construído para a média populacional, considerando que na curva normal padrão (Z) as probabilidades $P(Z < 1,64)= 95\%$ e $P(Z < 1,96) = 97,5\%$. O limite superior do intervalo encontrado apresenta um valor igual a 
+<!-- -->
 
-(a) 15,6272 
+(a) 15,6272
 
-(b) 15,3920 
+(b) 15,3920
 
 (c) 15,5248
 
-(d) 15,4018 
+(d) 15,4018
 
 (e) 15,5160
 
+<!-- -->
 
-3. (FCC - 2025 - Prefeitura de São Paulo - SP - Analista de Planejamento e Desenvolvimento Organizacional Tecnologia da Informação e Comunicação) A população formada pelos salários, em salários mínimos (SM), dos empregados de uma prefeitura é normalmente distribuída com uma variância populacional igual a 2,25 SM$^2$. Extraindo uma amostra aleatória desta população, com reposição, de tamanho 100, encontrou-se uma média amostral igual a 4,8 SM. Utilizando as informações da curva normal padrão (Z) que as probabilidades $P(Z < 1,64)= 0,95$ e $P(Z < 1,96) = 0,975$, então o intervalo de confiança de 95% para a média populacional, com base na amostra, é igual a 
+3.  (FCC - 2025 - Prefeitura de São Paulo - SP - Analista de Planejamento e Desenvolvimento Organizacional Tecnologia da Informação e Comunicação) A população formada pelos salários, em salários mínimos (SM), dos empregados de uma prefeitura é normalmente distribuída com uma variância populacional igual a 2,25 SM$^2$. Extraindo uma amostra aleatória desta população, com reposição, de tamanho 100, encontrou-se uma média amostral igual a 4,8 SM. Utilizando as informações da curva normal padrão (Z) que as probabilidades $P(Z < 1,64)= 0,95$ e $P(Z < 1,96) = 0,975$, então o intervalo de confiança de 95% para a média populacional, com base na amostra, é igual a
 
-a) [4,554 ; 5,046] 
+<!-- -->
 
-b) [4,359 ; 5,241] 
+a)  \[4,554 ; 5,046\]
 
-c) [4,604 ; 4,956]
+b)  \[4,359 ; 5,241\]
 
-d) [4,636 ; 4,964] 
+c)  \[4,604 ; 4,956\]
 
-e) [4,506 ; 5,094] 
+d)  \[4,636 ; 4,964\]
 
+e)  \[4,506 ; 5,094\]
 
-4. (IDESG - 2025 - Prefeitura de Cariacica - ES - Analista do Executivo Municipal - Estatística) Sobre o conceito de intervalos de confiança, é correto afirmar que: 
+<!-- -->
 
-a) O aumento do nível de confiança reduz a amplitude do intervalo. 
+4.  (IDESG - 2025 - Prefeitura de Cariacica - ES - Analista do Executivo Municipal - Estatística) Sobre o conceito de intervalos de confiança, é correto afirmar que:
 
-b) Um intervalo de confiança de 95% significa que há 95% de probabilidade de o parâmetro estar no intervalo calculado.
+<!-- -->
 
-c) Intervalos de confiança sempre contêm o parâmetro populacional.
+a)  O aumento do nível de confiança reduz a amplitude do intervalo.
 
-d) A amplitude do intervalo de confiança aumenta com a redução do tamanho da amostra.
+b)  Um intervalo de confiança de 95% significa que há 95% de probabilidade de o parâmetro estar no intervalo calculado.
 
-5. (UECE-CEV - 2025 - PGE-CE - Técnico de Representação Judicial - Engenharia de Produção) A Procuradoria Geral do Estado do Ceará deseja estimar o indicador de tempo médio de tramitação de processos administrativos em sua sede. Para isso, foi coletada uma amostra aleatória de 36 processos, obtendo-se um tempo médio de 50 dias, com um desvio padrão populacional de 9 dias. Considerando um nível de confiança de 95%, assinale a opção que corresponde ao correto intervalo de confiança para o tempo médio de tramitação de processos. Considere $z_{1-\alpha/2} = 2$.
+c)  Intervalos de confiança sempre contêm o parâmetro populacional.
 
-a) (49,0 ; 51,0)
+d)  A amplitude do intervalo de confiança aumenta com a redução do tamanho da amostra.
 
-b) (47,0 ; 53,0)
+<!-- -->
 
-c) (46,0 ; 54,0)
+5.  (UECE-CEV - 2025 - PGE-CE - Técnico de Representação Judicial - Engenharia de Produção) A Procuradoria Geral do Estado do Ceará deseja estimar o indicador de tempo médio de tramitação de processos administrativos em sua sede. Para isso, foi coletada uma amostra aleatória de 36 processos, obtendo-se um tempo médio de 50 dias, com um desvio padrão populacional de 9 dias. Considerando um nível de confiança de 95%, assinale a opção que corresponde ao correto intervalo de confiança para o tempo médio de tramitação de processos. Considere $z_{1-\alpha/2} = 2$.
 
-d) (48,5 ; 51,5)
+<!-- -->
 
-e) (47,6 ; 52,9)
+a)  (49,0 ; 51,0)
 
+b)  (47,0 ; 53,0)
 
-6. (FGV - 2024 - Prefeitura de Vitória - ES - Analista em Gestão Pública - Economista) Uma amostra aleatória simples de tamanho 25 de uma variável populacional com média desconhecida μ e variância suposta igual a 4 foi obtida e resultou numa média amostral igual a 5,48. Lembre-se de que, se Z tem distribuição normal padrão, então $P[-1,96 < Z < 1,96] = 0,95$. 
+c)  (46,0 ; 54,0)
+
+d)  (48,5 ; 51,5)
+
+e)  (47,6 ; 52,9)
+
+<!-- -->
+
+6.  (FGV - 2024 - Prefeitura de Vitória - ES - Analista em Gestão Pública - Economista) Uma amostra aleatória simples de tamanho 25 de uma variável populacional com média desconhecida μ e variância suposta igual a 4 foi obtida e resultou numa média amostral igual a 5,48. Lembre-se de que, se Z tem distribuição normal padrão, então $P[-1,96 < Z < 1,96] = 0,95$.
 
 Um intervalo de 95% de confiança para $\mu$ será então dado aproximadamente por:
 
-a) (4,70; 6,26)
+a)  (4,70; 6,26)
 
-b) (4,50; 6,46)
+b)  (4,50; 6,46)
 
-c) (4,30; 6,66)
+c)  (4,30; 6,66)
 
-d) (4,10; 6,86)
+d)  (4,10; 6,86)
 
-e) (3,90; 7,06)
-  
+e)  (3,90; 7,06)
 
+7. (FGV - 2006 - SERC-MS - Fiscal de Rendas - prova 1) Uma amostra aleatória simples de tamanho 25 foi selecionada para estimar a média desconhecida de uma população normal. A média amostral encontrada foi 4,2, e a variância amostral foi 1,44. O intervalo de 95% de confiança para a média populacional é:
+
+a) $4,2 \pm 0,49$
+
+b) $4,2 \pm 0,64$
+
+c) $4,2 \pm 0,71$
+
+d) $4,2 \pm 0,75$
+
+e) $4,2 \pm 0,81$
+
+8. Considere uma amostra aleatória de uma população Normal. O caso em que a variância populacional $\sigma^2$ é conhecida pode ser visto como um caso particular do problema em que $\sigma^2$ é desconhecida. Assim, o intervalo de confiança para a média $\mu$ baseado na distribuição t de Student continua válido mesmo quando $\sigma^2$ é conhecida. Nesse contexto, explique por que não é recomendável utilizar esse intervalo quando a variância populacional é conhecida.
