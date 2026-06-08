@@ -2,277 +2,272 @@
 
 ## Motivação / Contexto
 
-- Estimação pontual, intervalos de confiança e testes de hipóteses têm o mesmo objetivo: **extrair informação de um conjunto de dados observado**.
+Estimação pontual, intervalos de confiança e testes de hipóteses têm o mesmo objetivo: **extrair informação de um conjunto de dados observado**.
 
   - **Estimação pontual**: fornece um único valor para descrever o parâmetro (por exemplo, a média).
   - **Intervalo de confiança**: fornece um intervalo de valores plausíveis para o parâmetro desconhecido.
   - **Teste de hipóteses**: avalia quão compatíveis os dados são com uma determinada hipótese.
 
-<!-- --- -->
+Os testes de hipóteses permitem que avaliemos estatisticamente afirmações sobre parâmetros populacionais. Por exemplo, se uma empresa farmacêutica deseja afirmar que um novo medicamento reduz o risco de câncer, ela pode realizar um teste de hipóteses. Da mesma forma, se uma empresa quiser argumentar que seu programa preparatório acadêmico resulta em notas mais altas no ENEM, poderá utilizar essa mesma metodologia.
 
-<!-- ### 11.1 Hipótese Nula e Alternativa -->
+Muitas decisões importantes em áreas como negócios, medicina, educação e políticas públicas dependem dos resultados de testes de hipóteses. Nas próximas seções, veremos como esses testes podem ser conduzidos de maneira adequada e como interpretar corretamente seus resultados.
 
-<!-- - Imagine um cenário de investigação criminal: -->
 
-<!--   Você é um detetive, coleta evidências (dados) e seu objetivo é provar que alguém é culpado (hipótese alternativa). -->
+## Teste de Hipóteses (Ideia)
 
-<!-- - Por padrão, assumimos: -->
 
-<!--   > “Inocente até que se prove o contrário” -->
+Suponha que exista um mágico chamado Jardel, que faz a seguinte afirmação:
 
-<!-- - Matematicamente, escrevemos: -->
-<!--   $$ -->
-<!--   H_0: \text{hipótese nula (status quo)} -->
-<!--   $$ -->
-<!--   $$ -->
-<!--   H_A: \text{hipótese alternativa} -->
-<!--   $$ -->
+> **Mágico Jardel:** Tenho aqui uma moeda honesta.
 
-<!-- --- -->
+Uma pessoa da plateia, uma Cientista de Dados cética chamada Nikelly, inicia a seguinte conversa:
 
-<!-- ### Interpretação Estatística -->
+> **Cientista de Dados Cética Nikelly:** Eu não acredito em você. Podemos examinar a moeda?
 
-<!-- - Dado um conjunto de dados observados $y$, perguntamos: -->
+> **Mágico Jardel:** Claro, fique à vontade.
 
-<!--   > Quanta evidência os dados fornecem contra $H_0$? -->
+> **Cientista de Dados Cética Nikelly:** Vou lançar sua moeda 100 vezes e verificar quantas caras obtenho.
 
-<!-- - Isso está no contexto da teoria de testes de hipóteses de Neyman-Pearson. -->
+Após realizar os 100 lançamentos, Nikelly observa 99 caras.
 
-<!-- - A pergunta central é: -->
-<!--   $$ -->
-<!--   P(y \mid H_0) -->
-<!--   $$ -->
+> **Cientista de Dados Cética Nikelly:** Você não pode estar dizendo a verdade! Não há como essa moeda ser honesta!
 
-<!-- - Quanto menor esse valor, maior a evidência contra a hipótese nula. -->
+> **Mágico Jardel:** Espere! Eu apenas tive azar. Juro que não estou mentindo!
 
-<!-- --- -->
+Vamos dar a Jardel o benefício da dúvida e calcular a probabilidade de observarmos um resultado pelo menos tão extremo quanto esse, supondo que ele esteja dizendo a verdade.
 
-<!-- ### Interpretação Intuitiva (Analogia do Detetive) -->
+Se Jardel não estiver mentindo, então a moeda é honesta. Nesse caso, o número de caras observadas segue uma distribuição Binomial:
 
-<!-- | Hipótese | Interpretação | Probabilidade | -->
-<!-- |----------|--------------|---------------| -->
-<!-- | $H_0$ | Ele é inocente | $P(y \mid H_0)$ | -->
-<!-- | $H_A$ | Ele é culpado | $P(y \mid H_A)$ | -->
+$$
+X \sim \text{Bin}(100,0.5),
+$$
 
-<!-- - O objetivo do teste de hipóteses é avaliar: -->
-<!--   $$ -->
-<!--   P(y \mid H_0), -->
-<!--   $$ -->
-<!--   conhecido como **p-valor**. -->
+pois realizamos 100 lançamentos independentes e a probabilidade de cara em cada lançamento é igual a 0,5.
 
-<!-- --- -->
+Queremos calcular a probabilidade de observarmos pelo menos 99 caras, já que estamos interessados em resultados tão extremos quanto o observado. Assim,
 
-<!-- ### Interpretação do p-valor -->
+$$
+P(X \geq 99)= P(X=99) + P(X=100).
+$$
 
-<!-- - Se o p-valor é pequeno: -->
-<!--   - $y$ é improvável sob $H_0$ -->
-<!--   - Forte evidência contra $H_0$ -->
-<!--   - Evidência a favor de $H_A$ -->
+Utilizando a função de probabilidade da distribuição Binomial, obtemos
 
-<!-- - Se o p-valor é grande: -->
-<!--   - $y$ é plausível sob $H_0$ -->
-<!--   - Pouca evidência contra $H_0$ -->
+$$
+P(X \geq 99)= \binom{100}{99}(0.5)^{99}(0.5)^1
++ \binom{100}{100}(0.5)^{100}. $$
 
-<!-- ⚠️ **Importante:** -->
-<!-- - “Pouca evidência contra $H_0$” **não significa que $H_0$ é verdadeira**. -->
-<!-- - Significa apenas que o resultado é **inconclusivo**. -->
+Simplificando,
 
-<!-- --- -->
+$$P(X \geq 99) = \frac{101}{2^{100}} \approx 7.96\times 10^{-29}.$$
 
-<!-- ### Observação Lógica Importante -->
+Esse valor é praticamente zero. Em outras palavras, se a moeda fosse realmente honesta, a probabilidade de observarmos 99 ou mais caras em 100 lançamentos seria praticamente nula.
 
-<!-- - A implicação: -->
-<!--   $$ -->
-<!--   A \Leftarrow B -->
-<!--   $$ -->
-<!--   significa: “se $B$, então $A$”. -->
+Portanto, os dados fornecem evidências estatísticas extremamente fortes de que a moeda não é honesta. Nossa hipótese inicial era que a moeda fosse justa, mas, sob essa hipótese, o resultado observado seria extraordinariamente improvável. Consequentemente, há fortes razões para acreditar que nossa suposição inicial está incorreta.
 
-<!-- - No contexto de testes: -->
-<!--   - Observamos $y$ improvável sob $H_0$ $\Rightarrow$ evidência contra $H_0$ -->
-<!--   - Mas o contrário não é garantido. -->
+Essa lógica é muito semelhante a uma **prova por contradição probabilística**:
 
-<!-- --- -->
+1. Assumimos que uma afirmação é verdadeira;
+2. Calculamos a probabilidade do resultado observado sob essa suposição;
+3. Se essa probabilidade for extremamente pequena, passamos a duvidar da suposição inicial;
+4. Concluímos que os dados fornecem evidências contra a hipótese assumida.
 
-<!-- ### Conclusão -->
+Essa é precisamente a ideia fundamental por trás dos testes de hipóteses estatísticos.
 
-<!-- - p-valor pequeno → forte evidência contra $H_0$ -->
-<!-- - p-valor grande → evidência fraca contra $H_0$ -->
+## Exemplo
 
-<!-- - Em muitos casos, resultados inconclusivos podem ocorrer devido a: -->
-<!--   - tamanho de amostra pequeno, -->
-<!--   - alta variabilidade dos dados. -->
+Existe um procedimento formal para a realização de um teste de hipóteses, que será ilustrado por meio de um exemplo. Há diversos tipos de testes de hipóteses, cada um apropriado para situações específicas, mas discutiremos essas variações mais adiante. Como veremos, o Teorema Central do Limite (TCL) desempenha um papel fundamental em muitos dos testes mais utilizados na prática.
 
 
-<!--   ## p-valor para Teste da Média Normal (Variância Conhecida) — Teste Bicaudal -->
+### Passo 1: Formular uma afirmação
 
-<!-- - Suponha que temos um conjunto de dados: -->
-<!--   $$ -->
-<!--   \mathbf{y} = (y_1, \dots, y_n). -->
-<!--   $$ -->
 
-<!-- - Assumimos que os dados são provenientes de: -->
-<!--   $$ -->
-<!--   Y \sim \mathcal{N}(\mu, \sigma^2), -->
-<!--   $$ -->
-<!--   onde $\sigma^2$ é conhecida e $\mu$ é desconhecida. -->
+O primeiro passo consiste em identificar a afirmação que se deseja investigar.
 
-<!-- - Queremos testar: -->
-<!--   $$ -->
-<!--   H_0: \mu = \mu_{\text{guess}}, \quad -->
-<!--   H_A: \mu \neq \mu_{\text{guess}}. -->
-<!--   $$ -->
+Alguns exemplos seriam:
 
-<!-- --- -->
+- "A comida servida nos aviões é boa."
+- "Abacaxi combina com pizza."
+- "Um determinado programa educacional melhora o desempenho dos estudantes."
 
-<!-- ### Ideia do Teste -->
+Em nosso exemplo, consideraremos a empresa SuperENEM Preparação, que afirma que seu programa de preparação melhora o desempenho dos estudantes no ENEM.
 
-<!-- - A ideia é perguntar: -->
+Suponha que, em 2025, a pontuação média nacional no ENEM fosse 662 pontos (em uma escala de 0 a 1000), com desvio-padrão igual a 131 pontos.
 
-<!-- > Quão improvável é o valor observado do estimador $\hat{\mu}$, assumindo que $\mu = \mu_{\text{guess}}$? -->
+### Passo 2: Definir as hipóteses
 
-<!-- - Ou seja, queremos avaliar: -->
-<!--   $$ -->
-<!--   P(\hat{\mu} \mid \mu = \mu_{\text{guess}}). -->
-<!--   $$ -->
+Seja $\mu$ a verdadeira média das pontuações obtidas pelos alunos que participaram do curso SuperENEM Preparação. A hipótese nula representa a situação de referência, isto é, a ausência de efeito:
 
-<!-- --- -->
+$$H_0:\mu=662.$$
+Em outras palavras, assumimos inicialmente que os participantes do cursinho apresentam a mesma média observada na população geral. A hipótese alternativa representa aquilo que desejamos demonstrar. Como a empresa afirma que o programa melhora o desempenho dos estudantes, definimos
 
-<!-- ### Estatística do Teste -->
+$$H_A: \mu > 662.$$
+Essa hipótese afirma que os participantes do programa possuem uma média superior à média nacional. A hipótese alternativa apresentada acima é denominada unilateral à direita, pois procura evidências de que a média seja maior que 662. Outras possibilidades incluem:
 
-<!-- - Utilizamos o estimador de máxima verossimilhança: -->
-<!--   $$ -->
-<!--   \hat{\mu} = \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i. -->
-<!--   $$ -->
+- Hipótese unilateral à esquerda:
 
-<!-- - Sabemos que: -->
-<!--   $$ -->
-<!--   \bar{Y} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right). -->
-<!--   $$ -->
+$$H_A:\mu<662,$$
+caso desejássemos investigar se o programa prejudica os estudantes.
 
-<!-- - Sob $H_0$: -->
-<!--   $$ -->
-<!--   \bar{Y} \sim \mathcal{N}\left(\mu_{\text{guess}}, \frac{\sigma^2}{n}\right). -->
-<!--   $$ -->
 
-<!-- --- -->
+- Hipótese bilateral:
 
-<!-- ### Padronização -->
+$$H_A:\mu\neq 662,$$
 
-<!-- - Usando o fato de que: -->
-<!--   $$ -->
-<!--   X \sim \mathcal{N}(\mu, \sigma^2) -->
-<!--   \;\Longleftrightarrow\; -->
-<!--   \frac{X - \mu}{\sigma} \sim \mathcal{N}(0,1), -->
-<!--   $$ -->
+caso estivéssemos interessados em verificar apenas se o programa produz alguma diferença, seja positiva ou negativa.
 
-<!-- - Obtemos: -->
-<!--   $$ -->
-<!--   Z = -->
-<!--   \frac{\bar{Y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}} -->
-<!--   \sim \mathcal{N}(0,1). -->
-<!--   $$ -->
+### Passo 3: Escolher o nível de significância
 
-<!-- --- -->
+Escolhemos um nível de significância $\alpha$, que representa a **probabilidade máxima de rejeitarmos incorretamente a hipótese nula**. Os valores mais utilizados são 0,05 ou 0,01. Em nosso exemplo, adotaremos $\alpha = 0{,}05$.
 
-<!-- ### Interpretação -->
+### Passo 4: Coletar os dados
 
-<!-- - O problema agora se reduz a calcular o **p-valor bicaudal**: -->
-<!--   $$ -->
-<!--   p\text{-valor} = 2P\left(|Z| \geq |z_{\text{obs}}|\right). -->
-<!--   $$ -->
+Suponha que observemos as pontuações de 100 estudantes participantes do programa, $X_1,\ldots,X_{100}$. Após a coleta dos dados, verificamos que a média amostral foi $\bar{x}=696$ pontos. 
 
-<!-- - Onde: -->
-<!--   $$ -->
-<!--   z_{\text{obs}} = -->
-<!--   \frac{\bar{y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}}. -->
-<!--   $$ -->
 
-<!-- --- -->
+### Passo 5: Calcular o nível descritivo ($p$-valor)
 
-<!-- ### Conclusão -->
+O $p$-valor é definido como a probabilidade de observarmos um resultado tão extremo quanto o obtido, ou ainda mais extremo, supondo que a hipótese nula seja verdadeira. Como estamos assumindo temporariamente que $H_0:\mu=662$, o Teorema Central do Limite implica que a distribuição da média amostral é aproximadamente normal:
 
-<!-- - p-valor pequeno → forte evidência contra $H_0$ -->
-<!-- - p-valor grande → evidência fraca contra $H_0$ -->
+$$\bar{X}
+\approx
+N\left(
+662,
+\frac{131^2}{100}
+\right).$$
 
+Desejamos calcular a probabilidade de observar uma média amostral pelo menos tão grande quanto a observada, $\bar{x}=696$. Padronizando a variável, obtemos
 
-<!-- - Defina a estatística padronizada: -->
-<!--   $$ -->
-<!--   z_y = \frac{\bar{y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}}. -->
-<!--   $$ -->
+$$P(\bar{X} \geq 696) = P\left(
+\frac{\bar{X}-\mu}
+{\sigma/\sqrt{n}}
+\geq
+\frac{696-662}
+{131/\sqrt{100}}
+\right) = P(Z\geq 2{,}60)$$
 
-<!-- - Como buscamos evidência contra $H_0$, queremos a probabilidade de observar um valor **incompatível** com a hipótese nula: -->
-<!--   $$ -->
-<!--   P\left(\text{não}\left(\bar{Y} \sim \mathcal{N}\left(\mu_{\text{guess}}, \frac{\sigma^2}{n}\right)\right)\right). -->
-<!--   $$ -->
 
-<!-- - Equivalente a: -->
-<!--   $$ -->
-<!--   P\left(\text{não}\left(Z \sim \mathcal{N}(0,1)\right)\right), -->
-<!--   $$ -->
-<!--   onde $Z = z_y$. -->
+Consultando a tabela da distribuição Normal padrão, obtemos aproximadamente
 
-<!-- --- -->
+$$
+p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.
+$$
+Assim, a probabilidade de observarmos uma média tão elevada quanto a obtida, caso o curso não tivesse qualquer efeito, é de apenas cerca de 0,47%.
 
-<!-- ### Regra do Complemento -->
+### Passo 6: Apresentar a conclusão
 
-<!-- - Pela regra do complemento: -->
-<!--   $$ -->
-<!--   P(\text{não } E) = 1 - P(E), -->
-<!--   $$ -->
+Após calcular o $p$-valor, devemos compará-lo com o nível de significância previamente escolhido, $\alpha$. As regras de decisão são as seguintes:
 
-<!-- - Logo: -->
-<!--   $$ -->
-<!--   P\left(\text{não}\left(Z \in [-|z_y|, |z_y|]\right)\right) -->
-<!--   = -->
-<!--   1 - P(-|z_y| \leq Z \leq |z_y|). -->
-<!--   $$ -->
+1. Se ($p_{\text{valor}} < \alpha$), rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$).
 
-<!-- - Portanto: -->
-<!--   $$ -->
-<!--   = P(Z \leq -|z_y|) + P(Z \geq |z_y|). -->
-<!--   $$ -->
+A justificativa é que, supondo que a hipótese nula seja verdadeira, a probabilidade de observarmos um resultado tão extremo quanto o obtido (ou ainda mais extremo) é igual ao $p$-valor. Se essa probabilidade for menor do que o nível de significância estabelecido, consideramos que os dados observados são incompatíveis com a hipótese nula.
 
-<!-- - Como a normal padrão é simétrica: -->
-<!--   $$ -->
-<!--   = 2P(Z \leq -|z_y|). -->
-<!--   $$ -->
+2. Se ($p_{\text{valor}} \geq \alpha$), não rejeitamos a hipótese nula ($H_0$).
 
-<!-- --- -->
 
-<!-- ### Definição do p-valor -->
+Como $p_{\text{valor}} = 0{,}0047 \quad\text{e}\quad \alpha = 0{,}05,$ temos
+$0{,}0047 < 0.05$. Portanto, rejeitamos a hipótese nula ao nível de significância de 5%. Podemos concluir que existem evidências estatísticas significativas para sugerir que o curso SuperENEM Preparação ajuda os estudantes a obter melhores resultados no ENEM. 
 
-<!-- - O p-valor é: -->
-<!--   $$ -->
-<!--   p = 2P(Z \leq -|z_y|). -->
-<!--   $$ -->
 
-<!-- --- -->
+> Em testes de hipóteses, nunca dizemos que aceitamos a hipótese nula. A única conclusão possível é: rejeitar ($H_0$); ou não rejeitar ($H_0$).
 
-<!-- ### Interpretação -->
+A razão para isso pode ser compreendida retomando o exemplo da moeda. Suponha que, em vez de observarmos 99 caras em 100 lançamentos, tivéssemos observado apenas 55 caras. Esse resultado não seria particularmente improvável para uma moeda honesta. Portanto, não teríamos motivos para acusar o mágico de estar mentindo. Entretanto, isso não significa que tenhamos provado que a probabilidade de cara seja exatamente
 
-<!-- - Estamos medindo o quão distante $\bar{y}$ está de $\mu_{\text{guess}}$, através de: -->
-<!--   $$ -->
-<!--   |\bar{y} - \mu_{\text{guess}}|. -->
-<!--   $$ -->
+$$
+p=0{,}5.
+$$
 
-<!-- - Como usamos valor absoluto: -->
-<!--   - Não importa se $\bar{y} > \mu_{\text{guess}}$ ou $\bar{y} < \mu_{\text{guess}}$ (teste bicaudal). -->
+A verdadeira probabilidade poderia ser, por exemplo,
 
-<!-- - Regra prática: -->
-<!--   - Se $p < 0{,}01$: forte evidência contra $H_0$; -->
-<!--   - Caso contrário: resultado **inconclusivo**. -->
+$$
+p=0{,}54
+\quad\text{ou}\quad
+p=0{,}58.
+$$
 
-<!-- --- -->
+Os dados simplesmente não forneceram evidências suficientemente fortes para rejeitar a hipótese de que a moeda é justa. Em resumo, a ausência de evidências contra uma hipótese não constitui evidência de que ela seja verdadeira. Por essa razão, em Estatística, preferimos dizer que não rejeitamos a hipótese nula em vez de afirmar que a aceitamos.
 
-<!-- ### Interpretação Gráfica -->
+### Passo 7: Interpretação
 
-<!-- - Sob $H_0$, temos: -->
-<!--   $$ -->
-<!--   Z \sim \mathcal{N}(0,1). -->
-<!--   $$ -->
+Os dados fornecem evidências estatisticamente significativas de que os estudantes participantes do curso SuperENEM Preparação apresentam, em média, pontuações superiores à média nacional de 662 pontos.
 
-<!-- - O p-valor corresponde à probabilidade de observar valores **tão extremos ou mais extremos** que $z_y$. -->
+Em outras palavras, os resultados observados são incompatíveis com a hipótese de que o programa não produz qualquer efeito, sugerindo que ele pode contribuir para melhorar o desempenho dos estudantes no ENEM.
 
-<!-- - Graficamente: -->
-<!--   - Representa a **área nas duas caudas** da distribuição normal padrão; -->
-<!--   - Essas áreas medem o quão improvável é observar $z_y$ sob $H_0$. -->
+
+## Teste de Hipóteses (Procedimento)
+
+
+O procedimento formal para a realização de um teste de hipóteses pode ser resumido nas seguintes etapas:
+
+### 1. Formular uma afirmação {.unnumbered}
+
+O primeiro passo consiste em identificar a afirmação ou hipótese que se deseja investigar. Exemplos:
+
+* "A comida servida em aviões é boa."
+* "Abacaxi combina com pizza."
+* "Um novo medicamento reduz o risco de uma determinada doença."
+* "Um programa educacional melhora o desempenho dos estudantes."
+
+### 2. Definir as hipóteses {.unnumbered}
+
+Devemos estabelecer uma hipótese nula, denotada por ($H_0$), e uma hipótese alternativa, denotada por ($H_A$).
+
+a) A hipótese alternativa pode ser unilateral ou bilateral. Exemplos:
+
+* Unilateral à direita:
+
+$$
+H_A:\theta>\theta_0
+$$
+
+* Unilateral à esquerda:
+
+$$
+H_A:\theta<\theta_0
+$$
+
+* Bilateral:
+
+$$
+H_A:\theta\neq\theta_0
+$$
+
+b) A hipótese nula
+
+A hipótese nula geralmente representa uma situação de referência, ausência de efeito ou o chamado *benefício da dúvida*. Em muitos problemas, ela expressa a ideia de que não existe diferença ou efeito relevante.
+
+c) A hipótese alternativa
+
+A hipótese alternativa corresponde à afirmação para a qual buscamos evidências nos dados. Em geral, ela representa a negação da hipótese nula.
+
+### 3. Escolher o nível de significância {.unnumbered}
+
+Seleciona-se um nível de significância (\alpha), que representa a probabilidade máxima tolerada de cometer um erro do tipo I. Os valores mais utilizados são $\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.$
+
+### 4. Coletar os dados {.unnumbered}
+
+Obtém-se uma amostra da população de interesse e calcula-se a estatística necessária para o teste.
+
+### 5. Calcular o nível descritivo {.unnumbered}
+
+O $p_{\text{valor}}$ é definido como
+
+$$p_{\text{valor}} = P(\text{observar um resultado tão extremo quanto o obtido, ou mais extremo, supondo } H_0 \text{ verdadeira}).$$
+
+Em outras palavras, o $p_{\text{valor}}$ mede quão compatíveis os dados observados são com a hipótese nula.
+
+### 6. Apresentar a conclusão {.unnumbered}
+
+A decisão é tomada comparando o $p_{\text{valor}}$ com o nível de significância ($\alpha$).
+
+a) Se ($p_{\text{valor}} < \alpha$): Rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$). Nesse caso, dizemos que o resultado é **estatisticamente significativo** ao nível de significância adotado.
+
+b) Se ($p_{\text{valor}} \geq \alpha$): Não rejeitamos a hipótese nula ($H_0$). Nesse caso, concluímos que os dados não fornecem evidências suficientes para apoiar a hipótese alternativa.
+
+### Observação Importante {.unnumbered}
+
+Em testes de hipóteses, nunca afirmamos que a hipótese nula foi "aceita". A única conclusão possível é:
+
+* rejeitar ($H_0$); ou
+* não rejeitar ($H_0$).
+
+A ausência de evidências contra a hipótese nula não implica que ela seja verdadeira, apenas indica que os dados observados não foram suficientemente incompatíveis com ela.

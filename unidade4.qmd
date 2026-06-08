@@ -26,7 +26,7 @@ Todas essas expressões representam a probabilidade de que a distância entre o 
 
 O intervalo de confiança para $\theta$ pode ser representado como a Figura abaixo. Mais adiante, discutiremos como deve ser interpretado um intervalo de confiança associado a um nível de confiança específico.
 
-![](figuraIC.jpeg)
+![](ICplot.png)
 
 ## Revisão: Distribuição Normal Padrão
 
@@ -48,18 +48,20 @@ $$
 \Phi(z)=1-\Phi(-z).
 $$
 
-Para construir um intervalo central de 95%, precisamos encontrar um valor $z$ tal que 95% da área esteja entre $-z$ e $z$. O valor de $z$ pode ser encontrar usando o `R` ou usando alguma tabela da normal padrão (existem várias configurações). Como restam 5% fora do intervalo, temos:
+![](normal1.png)
 
-- 2,5% à esquerda;
-- 2,5% à direita.
+Suponha que desejemos construir um intervalo centrado tal que a probabilidade de um valor pertencer a esse intervalo seja de 95%. Note que (observe a Figura abaixo):
 
-Portanto,
+- **Limite inferior:** a probabilidade de um valor ser menor que o limite inferior é de 2,5%.
 
-$$
-\Phi(z)= 0.975.
-$$
+- **Limite superior:** a probabilidade de um valor ser maior que o limite superior é de 2,5%.
 
-Consultando uma tabela da normal padrão ou utilizando software estatístico, obtemos
+Consequentemente, a probabilidade de um valor ser menor que o limite superior deve ser de 97,5%.
+
+![](Normal2.png)
+
+
+Para construir um intervalo central de 95%, precisamos encontrar um valor $z$ tal que 95% da área esteja entre $-z$ e $z$. O valor de $z$ pode ser encontrar usando o `R` ou usando alguma tabela da normal padrão (existem várias configurações). Daí, temos que:
 
 $$
 z=\Phi^{-1}(0.975)=1{,}96.

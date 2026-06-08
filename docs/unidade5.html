@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -184,6 +213,27 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#motivação-contexto" id="toc-motivação-contexto" class="nav-link active" data-scroll-target="#motivação-contexto"><span class="header-section-number">6.1</span> Motivação / Contexto</a></li>
+  <li><a href="#teste-de-hipóteses-ideia" id="toc-teste-de-hipóteses-ideia" class="nav-link" data-scroll-target="#teste-de-hipóteses-ideia"><span class="header-section-number">6.2</span> Teste de Hipóteses (Ideia)</a></li>
+  <li><a href="#exemplo" id="toc-exemplo" class="nav-link" data-scroll-target="#exemplo"><span class="header-section-number">6.3</span> Exemplo</a>
+  <ul class="collapse">
+  <li><a href="#passo-1-formular-uma-afirmação" id="toc-passo-1-formular-uma-afirmação" class="nav-link" data-scroll-target="#passo-1-formular-uma-afirmação"><span class="header-section-number">6.3.1</span> Passo 1: Formular uma afirmação</a></li>
+  <li><a href="#passo-2-definir-as-hipóteses" id="toc-passo-2-definir-as-hipóteses" class="nav-link" data-scroll-target="#passo-2-definir-as-hipóteses"><span class="header-section-number">6.3.2</span> Passo 2: Definir as hipóteses</a></li>
+  <li><a href="#passo-3-escolher-o-nível-de-significância" id="toc-passo-3-escolher-o-nível-de-significância" class="nav-link" data-scroll-target="#passo-3-escolher-o-nível-de-significância"><span class="header-section-number">6.3.3</span> Passo 3: Escolher o nível de significância</a></li>
+  <li><a href="#passo-4-coletar-os-dados" id="toc-passo-4-coletar-os-dados" class="nav-link" data-scroll-target="#passo-4-coletar-os-dados"><span class="header-section-number">6.3.4</span> Passo 4: Coletar os dados</a></li>
+  <li><a href="#passo-5-calcular-o-nível-descritivo-p-valor" id="toc-passo-5-calcular-o-nível-descritivo-p-valor" class="nav-link" data-scroll-target="#passo-5-calcular-o-nível-descritivo-p-valor"><span class="header-section-number">6.3.5</span> Passo 5: Calcular o nível descritivo (<span class="math inline">\(p\)</span>-valor)</a></li>
+  <li><a href="#passo-6-apresentar-a-conclusão" id="toc-passo-6-apresentar-a-conclusão" class="nav-link" data-scroll-target="#passo-6-apresentar-a-conclusão"><span class="header-section-number">6.3.6</span> Passo 6: Apresentar a conclusão</a></li>
+  <li><a href="#passo-7-interpretação" id="toc-passo-7-interpretação" class="nav-link" data-scroll-target="#passo-7-interpretação"><span class="header-section-number">6.3.7</span> Passo 7: Interpretação</a></li>
+  </ul></li>
+  <li><a href="#teste-de-hipóteses-procedimento" id="toc-teste-de-hipóteses-procedimento" class="nav-link" data-scroll-target="#teste-de-hipóteses-procedimento"><span class="header-section-number">6.4</span> Teste de Hipóteses (Procedimento)</a>
+  <ul class="collapse">
+  <li><a href="#formular-uma-afirmação" id="toc-formular-uma-afirmação" class="nav-link" data-scroll-target="#formular-uma-afirmação">1. Formular uma afirmação</a></li>
+  <li><a href="#definir-as-hipóteses" id="toc-definir-as-hipóteses" class="nav-link" data-scroll-target="#definir-as-hipóteses">2. Definir as hipóteses</a></li>
+  <li><a href="#escolher-o-nível-de-significância" id="toc-escolher-o-nível-de-significância" class="nav-link" data-scroll-target="#escolher-o-nível-de-significância">3. Escolher o nível de significância</a></li>
+  <li><a href="#coletar-os-dados" id="toc-coletar-os-dados" class="nav-link" data-scroll-target="#coletar-os-dados">4. Coletar os dados</a></li>
+  <li><a href="#calcular-o-nível-descritivo" id="toc-calcular-o-nível-descritivo" class="nav-link" data-scroll-target="#calcular-o-nível-descritivo">5. Calcular o nível descritivo</a></li>
+  <li><a href="#apresentar-a-conclusão" id="toc-apresentar-a-conclusão" class="nav-link" data-scroll-target="#apresentar-a-conclusão">6. Apresentar a conclusão</a></li>
+  <li><a href="#observação-importante" id="toc-observação-importante" class="nav-link" data-scroll-target="#observação-importante">Observação Importante</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -211,205 +261,236 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="motivação-contexto" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="motivação-contexto"><span class="header-section-number">6.1</span> Motivação / Contexto</h2>
-<ul>
-<li><p>Estimação pontual, intervalos de confiança e testes de hipóteses têm o mesmo objetivo: <strong>extrair informação de um conjunto de dados observado</strong>.</p>
+<p>Estimação pontual, intervalos de confiança e testes de hipóteses têm o mesmo objetivo: <strong>extrair informação de um conjunto de dados observado</strong>.</p>
 <ul>
 <li><strong>Estimação pontual</strong>: fornece um único valor para descrever o parâmetro (por exemplo, a média).</li>
 <li><strong>Intervalo de confiança</strong>: fornece um intervalo de valores plausíveis para o parâmetro desconhecido.</li>
 <li><strong>Teste de hipóteses</strong>: avalia quão compatíveis os dados são com uma determinada hipótese.</li>
-</ul></li>
 </ul>
-<!-- --- -->
-<!-- ### 11.1 Hipótese Nula e Alternativa -->
-<!-- - Imagine um cenário de investigação criminal: -->
-<!--   Você é um detetive, coleta evidências (dados) e seu objetivo é provar que alguém é culpado (hipótese alternativa). -->
-<!-- - Por padrão, assumimos: -->
-<!--   > “Inocente até que se prove o contrário” -->
-<!-- - Matematicamente, escrevemos: -->
-<!--   $$ -->
-<!--   H_0: \text{hipótese nula (status quo)} -->
-<!--   $$ -->
-<!--   $$ -->
-<!--   H_A: \text{hipótese alternativa} -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Interpretação Estatística -->
-<!-- - Dado um conjunto de dados observados $y$, perguntamos: -->
-<!--   > Quanta evidência os dados fornecem contra $H_0$? -->
-<!-- - Isso está no contexto da teoria de testes de hipóteses de Neyman-Pearson. -->
-<!-- - A pergunta central é: -->
-<!--   $$ -->
-<!--   P(y \mid H_0) -->
-<!--   $$ -->
-<!-- - Quanto menor esse valor, maior a evidência contra a hipótese nula. -->
-<!-- --- -->
-<!-- ### Interpretação Intuitiva (Analogia do Detetive) -->
-<!-- | Hipótese | Interpretação | Probabilidade | -->
-<!-- |----------|--------------|---------------| -->
-<!-- | $H_0$ | Ele é inocente | $P(y \mid H_0)$ | -->
-<!-- | $H_A$ | Ele é culpado | $P(y \mid H_A)$ | -->
-<!-- - O objetivo do teste de hipóteses é avaliar: -->
-<!--   $$ -->
-<!--   P(y \mid H_0), -->
-<!--   $$ -->
-<!--   conhecido como **p-valor**. -->
-<!-- --- -->
-<!-- ### Interpretação do p-valor -->
-<!-- - Se o p-valor é pequeno: -->
-<!--   - $y$ é improvável sob $H_0$ -->
-<!--   - Forte evidência contra $H_0$ -->
-<!--   - Evidência a favor de $H_A$ -->
-<!-- - Se o p-valor é grande: -->
-<!--   - $y$ é plausível sob $H_0$ -->
-<!--   - Pouca evidência contra $H_0$ -->
-<!-- ⚠️ **Importante:** -->
-<!-- - “Pouca evidência contra $H_0$” **não significa que $H_0$ é verdadeira**. -->
-<!-- - Significa apenas que o resultado é **inconclusivo**. -->
-<!-- --- -->
-<!-- ### Observação Lógica Importante -->
-<!-- - A implicação: -->
-<!--   $$ -->
-<!--   A \Leftarrow B -->
-<!--   $$ -->
-<!--   significa: “se $B$, então $A$”. -->
-<!-- - No contexto de testes: -->
-<!--   - Observamos $y$ improvável sob $H_0$ $\Rightarrow$ evidência contra $H_0$ -->
-<!--   - Mas o contrário não é garantido. -->
-<!-- --- -->
-<!-- ### Conclusão -->
-<!-- - p-valor pequeno → forte evidência contra $H_0$ -->
-<!-- - p-valor grande → evidência fraca contra $H_0$ -->
-<!-- - Em muitos casos, resultados inconclusivos podem ocorrer devido a: -->
-<!--   - tamanho de amostra pequeno, -->
-<!--   - alta variabilidade dos dados. -->
-<!--   ## p-valor para Teste da Média Normal (Variância Conhecida) — Teste Bicaudal -->
-<!-- - Suponha que temos um conjunto de dados: -->
-<!--   $$ -->
-<!--   \mathbf{y} = (y_1, \dots, y_n). -->
-<!--   $$ -->
-<!-- - Assumimos que os dados são provenientes de: -->
-<!--   $$ -->
-<!--   Y \sim \mathcal{N}(\mu, \sigma^2), -->
-<!--   $$ -->
-<!--   onde $\sigma^2$ é conhecida e $\mu$ é desconhecida. -->
-<!-- - Queremos testar: -->
-<!--   $$ -->
-<!--   H_0: \mu = \mu_{\text{guess}}, \quad -->
-<!--   H_A: \mu \neq \mu_{\text{guess}}. -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Ideia do Teste -->
-<!-- - A ideia é perguntar: -->
-<!-- > Quão improvável é o valor observado do estimador $\hat{\mu}$, assumindo que $\mu = \mu_{\text{guess}}$? -->
-<!-- - Ou seja, queremos avaliar: -->
-<!--   $$ -->
-<!--   P(\hat{\mu} \mid \mu = \mu_{\text{guess}}). -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Estatística do Teste -->
-<!-- - Utilizamos o estimador de máxima verossimilhança: -->
-<!--   $$ -->
-<!--   \hat{\mu} = \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i. -->
-<!--   $$ -->
-<!-- - Sabemos que: -->
-<!--   $$ -->
-<!--   \bar{Y} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right). -->
-<!--   $$ -->
-<!-- - Sob $H_0$: -->
-<!--   $$ -->
-<!--   \bar{Y} \sim \mathcal{N}\left(\mu_{\text{guess}}, \frac{\sigma^2}{n}\right). -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Padronização -->
-<!-- - Usando o fato de que: -->
-<!--   $$ -->
-<!--   X \sim \mathcal{N}(\mu, \sigma^2) -->
-<!--   \;\Longleftrightarrow\; -->
-<!--   \frac{X - \mu}{\sigma} \sim \mathcal{N}(0,1), -->
-<!--   $$ -->
-<!-- - Obtemos: -->
-<!--   $$ -->
-<!--   Z = -->
-<!--   \frac{\bar{Y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}} -->
-<!--   \sim \mathcal{N}(0,1). -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Interpretação -->
-<!-- - O problema agora se reduz a calcular o **p-valor bicaudal**: -->
-<!--   $$ -->
-<!--   p\text{-valor} = 2P\left(|Z| \geq |z_{\text{obs}}|\right). -->
-<!--   $$ -->
-<!-- - Onde: -->
-<!--   $$ -->
-<!--   z_{\text{obs}} = -->
-<!--   \frac{\bar{y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}}. -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Conclusão -->
-<!-- - p-valor pequeno → forte evidência contra $H_0$ -->
-<!-- - p-valor grande → evidência fraca contra $H_0$ -->
-<!-- - Defina a estatística padronizada: -->
-<!--   $$ -->
-<!--   z_y = \frac{\bar{y} - \mu_{\text{guess}}}{\sigma/\sqrt{n}}. -->
-<!--   $$ -->
-<!-- - Como buscamos evidência contra $H_0$, queremos a probabilidade de observar um valor **incompatível** com a hipótese nula: -->
-<!--   $$ -->
-<!--   P\left(\text{não}\left(\bar{Y} \sim \mathcal{N}\left(\mu_{\text{guess}}, \frac{\sigma^2}{n}\right)\right)\right). -->
-<!--   $$ -->
-<!-- - Equivalente a: -->
-<!--   $$ -->
-<!--   P\left(\text{não}\left(Z \sim \mathcal{N}(0,1)\right)\right), -->
-<!--   $$ -->
-<!--   onde $Z = z_y$. -->
-<!-- --- -->
-<!-- ### Regra do Complemento -->
-<!-- - Pela regra do complemento: -->
-<!--   $$ -->
-<!--   P(\text{não } E) = 1 - P(E), -->
-<!--   $$ -->
-<!-- - Logo: -->
-<!--   $$ -->
-<!--   P\left(\text{não}\left(Z \in [-|z_y|, |z_y|]\right)\right) -->
-<!--   = -->
-<!--   1 - P(-|z_y| \leq Z \leq |z_y|). -->
-<!--   $$ -->
-<!-- - Portanto: -->
-<!--   $$ -->
-<!--   = P(Z \leq -|z_y|) + P(Z \geq |z_y|). -->
-<!--   $$ -->
-<!-- - Como a normal padrão é simétrica: -->
-<!--   $$ -->
-<!--   = 2P(Z \leq -|z_y|). -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Definição do p-valor -->
-<!-- - O p-valor é: -->
-<!--   $$ -->
-<!--   p = 2P(Z \leq -|z_y|). -->
-<!--   $$ -->
-<!-- --- -->
-<!-- ### Interpretação -->
-<!-- - Estamos medindo o quão distante $\bar{y}$ está de $\mu_{\text{guess}}$, através de: -->
-<!--   $$ -->
-<!--   |\bar{y} - \mu_{\text{guess}}|. -->
-<!--   $$ -->
-<!-- - Como usamos valor absoluto: -->
-<!--   - Não importa se $\bar{y} > \mu_{\text{guess}}$ ou $\bar{y} < \mu_{\text{guess}}$ (teste bicaudal). -->
-<!-- - Regra prática: -->
-<!--   - Se $p < 0{,}01$: forte evidência contra $H_0$; -->
-<!--   - Caso contrário: resultado **inconclusivo**. -->
-<!-- --- -->
-<!-- ### Interpretação Gráfica -->
-<!-- - Sob $H_0$, temos: -->
-<!--   $$ -->
-<!--   Z \sim \mathcal{N}(0,1). -->
-<!--   $$ -->
-<!-- - O p-valor corresponde à probabilidade de observar valores **tão extremos ou mais extremos** que $z_y$. -->
-<!-- - Graficamente: -->
-<!--   - Representa a **área nas duas caudas** da distribuição normal padrão; -->
-<!--   - Essas áreas medem o quão improvável é observar $z_y$ sob $H_0$. -->
+<p>Os testes de hipóteses permitem que avaliemos estatisticamente afirmações sobre parâmetros populacionais. Por exemplo, se uma empresa farmacêutica deseja afirmar que um novo medicamento reduz o risco de câncer, ela pode realizar um teste de hipóteses. Da mesma forma, se uma empresa quiser argumentar que seu programa preparatório acadêmico resulta em notas mais altas no ENEM, poderá utilizar essa mesma metodologia.</p>
+<p>Muitas decisões importantes em áreas como negócios, medicina, educação e políticas públicas dependem dos resultados de testes de hipóteses. Nas próximas seções, veremos como esses testes podem ser conduzidos de maneira adequada e como interpretar corretamente seus resultados.</p>
+</section>
+<section id="teste-de-hipóteses-ideia" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="teste-de-hipóteses-ideia"><span class="header-section-number">6.2</span> Teste de Hipóteses (Ideia)</h2>
+<p>Suponha que exista um mágico chamado Jardel, que faz a seguinte afirmação:</p>
+<blockquote class="blockquote">
+<p><strong>Mágico Jardel:</strong> Tenho aqui uma moeda honesta.</p>
+</blockquote>
+<p>Uma pessoa da plateia, uma Cientista de Dados cética chamada Nikelly, inicia a seguinte conversa:</p>
+<blockquote class="blockquote">
+<p><strong>Cientista de Dados Cética Nikelly:</strong> Eu não acredito em você. Podemos examinar a moeda?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Mágico Jardel:</strong> Claro, fique à vontade.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Cientista de Dados Cética Nikelly:</strong> Vou lançar sua moeda 100 vezes e verificar quantas caras obtenho.</p>
+</blockquote>
+<p>Após realizar os 100 lançamentos, Nikelly observa 99 caras.</p>
+<blockquote class="blockquote">
+<p><strong>Cientista de Dados Cética Nikelly:</strong> Você não pode estar dizendo a verdade! Não há como essa moeda ser honesta!</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Mágico Jardel:</strong> Espere! Eu apenas tive azar. Juro que não estou mentindo!</p>
+</blockquote>
+<p>Vamos dar a Jardel o benefício da dúvida e calcular a probabilidade de observarmos um resultado pelo menos tão extremo quanto esse, supondo que ele esteja dizendo a verdade.</p>
+<p>Se Jardel não estiver mentindo, então a moeda é honesta. Nesse caso, o número de caras observadas segue uma distribuição Binomial:</p>
+<p><span class="math display">\[
+X \sim \text{Bin}(100,0.5),
+\]</span></p>
+<p>pois realizamos 100 lançamentos independentes e a probabilidade de cara em cada lançamento é igual a 0,5.</p>
+<p>Queremos calcular a probabilidade de observarmos pelo menos 99 caras, já que estamos interessados em resultados tão extremos quanto o observado. Assim,</p>
+<p><span class="math display">\[
+P(X \geq 99)= P(X=99) + P(X=100).
+\]</span></p>
+<p>Utilizando a função de probabilidade da distribuição Binomial, obtemos</p>
+<p><span class="math display">\[
+P(X \geq 99)= \binom{100}{99}(0.5)^{99}(0.5)^1
++ \binom{100}{100}(0.5)^{100}. \]</span></p>
+<p>Simplificando,</p>
+<p><span class="math display">\[P(X \geq 99) = \frac{101}{2^{100}} \approx 7.96\times 10^{-29}.\]</span></p>
+<p>Esse valor é praticamente zero. Em outras palavras, se a moeda fosse realmente honesta, a probabilidade de observarmos 99 ou mais caras em 100 lançamentos seria praticamente nula.</p>
+<p>Portanto, os dados fornecem evidências estatísticas extremamente fortes de que a moeda não é honesta. Nossa hipótese inicial era que a moeda fosse justa, mas, sob essa hipótese, o resultado observado seria extraordinariamente improvável. Consequentemente, há fortes razões para acreditar que nossa suposição inicial está incorreta.</p>
+<p>Essa lógica é muito semelhante a uma <strong>prova por contradição probabilística</strong>:</p>
+<ol type="1">
+<li>Assumimos que uma afirmação é verdadeira;</li>
+<li>Calculamos a probabilidade do resultado observado sob essa suposição;</li>
+<li>Se essa probabilidade for extremamente pequena, passamos a duvidar da suposição inicial;</li>
+<li>Concluímos que os dados fornecem evidências contra a hipótese assumida.</li>
+</ol>
+<p>Essa é precisamente a ideia fundamental por trás dos testes de hipóteses estatísticos.</p>
+</section>
+<section id="exemplo" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="exemplo"><span class="header-section-number">6.3</span> Exemplo</h2>
+<p>Existe um procedimento formal para a realização de um teste de hipóteses, que será ilustrado por meio de um exemplo. Há diversos tipos de testes de hipóteses, cada um apropriado para situações específicas, mas discutiremos essas variações mais adiante. Como veremos, o Teorema Central do Limite (TCL) desempenha um papel fundamental em muitos dos testes mais utilizados na prática.</p>
+<section id="passo-1-formular-uma-afirmação" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="passo-1-formular-uma-afirmação"><span class="header-section-number">6.3.1</span> Passo 1: Formular uma afirmação</h3>
+<p>O primeiro passo consiste em identificar a afirmação que se deseja investigar.</p>
+<p>Alguns exemplos seriam:</p>
+<ul>
+<li>“A comida servida nos aviões é boa.”</li>
+<li>“Abacaxi combina com pizza.”</li>
+<li>“Um determinado programa educacional melhora o desempenho dos estudantes.”</li>
+</ul>
+<p>Em nosso exemplo, consideraremos a empresa SuperENEM Preparação, que afirma que seu programa de preparação melhora o desempenho dos estudantes no ENEM.</p>
+<p>Suponha que, em 2025, a pontuação média nacional no ENEM fosse 662 pontos (em uma escala de 0 a 1000), com desvio-padrão igual a 131 pontos.</p>
+</section>
+<section id="passo-2-definir-as-hipóteses" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="passo-2-definir-as-hipóteses"><span class="header-section-number">6.3.2</span> Passo 2: Definir as hipóteses</h3>
+<p>Seja <span class="math inline">\(\mu\)</span> a verdadeira média das pontuações obtidas pelos alunos que participaram do curso SuperENEM Preparação. A hipótese nula representa a situação de referência, isto é, a ausência de efeito:</p>
+<p><span class="math display">\[H_0:\mu=662.\]</span> Em outras palavras, assumimos inicialmente que os participantes do cursinho apresentam a mesma média observada na população geral. A hipótese alternativa representa aquilo que desejamos demonstrar. Como a empresa afirma que o programa melhora o desempenho dos estudantes, definimos</p>
+<p><span class="math display">\[H_A: \mu &gt; 662.\]</span> Essa hipótese afirma que os participantes do programa possuem uma média superior à média nacional. A hipótese alternativa apresentada acima é denominada unilateral à direita, pois procura evidências de que a média seja maior que 662. Outras possibilidades incluem:</p>
+<ul>
+<li>Hipótese unilateral à esquerda:</li>
+</ul>
+<p><span class="math display">\[H_A:\mu&lt;662,\]</span> caso desejássemos investigar se o programa prejudica os estudantes.</p>
+<ul>
+<li>Hipótese bilateral:</li>
+</ul>
+<p><span class="math display">\[H_A:\mu\neq 662,\]</span></p>
+<p>caso estivéssemos interessados em verificar apenas se o programa produz alguma diferença, seja positiva ou negativa.</p>
+</section>
+<section id="passo-3-escolher-o-nível-de-significância" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="passo-3-escolher-o-nível-de-significância"><span class="header-section-number">6.3.3</span> Passo 3: Escolher o nível de significância</h3>
+<p>Escolhemos um nível de significância <span class="math inline">\(\alpha\)</span>, que representa a <strong>probabilidade máxima de rejeitarmos incorretamente a hipótese nula</strong>. Os valores mais utilizados são 0,05 ou 0,01. Em nosso exemplo, adotaremos <span class="math inline">\(\alpha = 0{,}05\)</span>.</p>
+</section>
+<section id="passo-4-coletar-os-dados" class="level3" data-number="6.3.4">
+<h3 data-number="6.3.4" class="anchored" data-anchor-id="passo-4-coletar-os-dados"><span class="header-section-number">6.3.4</span> Passo 4: Coletar os dados</h3>
+<p>Suponha que observemos as pontuações de 100 estudantes participantes do programa, <span class="math inline">\(X_1,\ldots,X_{100}\)</span>. Após a coleta dos dados, verificamos que a média amostral foi <span class="math inline">\(\bar{x}=696\)</span> pontos.</p>
+</section>
+<section id="passo-5-calcular-o-nível-descritivo-p-valor" class="level3" data-number="6.3.5">
+<h3 data-number="6.3.5" class="anchored" data-anchor-id="passo-5-calcular-o-nível-descritivo-p-valor"><span class="header-section-number">6.3.5</span> Passo 5: Calcular o nível descritivo (<span class="math inline">\(p\)</span>-valor)</h3>
+<p>O <span class="math inline">\(p\)</span>-valor é definido como a probabilidade de observarmos um resultado tão extremo quanto o obtido, ou ainda mais extremo, supondo que a hipótese nula seja verdadeira. Como estamos assumindo temporariamente que <span class="math inline">\(H_0:\mu=662\)</span>, o Teorema Central do Limite implica que a distribuição da média amostral é aproximadamente normal:</p>
+<p><span class="math display">\[\bar{X}
+\approx
+N\left(
+662,
+\frac{131^2}{100}
+\right).\]</span></p>
+<p>Desejamos calcular a probabilidade de observar uma média amostral pelo menos tão grande quanto a observada, <span class="math inline">\(\bar{x}=696\)</span>. Padronizando a variável, obtemos</p>
+<p><span class="math display">\[P(\bar{X} \geq 696) = P\left(
+\frac{\bar{X}-\mu}
+{\sigma/\sqrt{n}}
+\geq
+\frac{696-662}
+{131/\sqrt{100}}
+\right) = P(Z\geq 2{,}60)\]</span></p>
+<p>Consultando a tabela da distribuição Normal padrão, obtemos aproximadamente</p>
+<p><span class="math display">\[
+p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.
+\]</span> Assim, a probabilidade de observarmos uma média tão elevada quanto a obtida, caso o curso não tivesse qualquer efeito, é de apenas cerca de 0,47%.</p>
+</section>
+<section id="passo-6-apresentar-a-conclusão" class="level3" data-number="6.3.6">
+<h3 data-number="6.3.6" class="anchored" data-anchor-id="passo-6-apresentar-a-conclusão"><span class="header-section-number">6.3.6</span> Passo 6: Apresentar a conclusão</h3>
+<p>Após calcular o <span class="math inline">\(p\)</span>-valor, devemos compará-lo com o nível de significância previamente escolhido, <span class="math inline">\(\alpha\)</span>. As regras de decisão são as seguintes:</p>
+<ol type="1">
+<li>Se (<span class="math inline">\(p_{\text{valor}} &lt; \alpha\)</span>), rejeitamos a hipótese nula (<span class="math inline">\(H_0\)</span>) em favor da hipótese alternativa (<span class="math inline">\(H_A\)</span>).</li>
+</ol>
+<p>A justificativa é que, supondo que a hipótese nula seja verdadeira, a probabilidade de observarmos um resultado tão extremo quanto o obtido (ou ainda mais extremo) é igual ao <span class="math inline">\(p\)</span>-valor. Se essa probabilidade for menor do que o nível de significância estabelecido, consideramos que os dados observados são incompatíveis com a hipótese nula.</p>
+<ol start="2" type="1">
+<li>Se (<span class="math inline">\(p_{\text{valor}} \geq \alpha\)</span>), não rejeitamos a hipótese nula (<span class="math inline">\(H_0\)</span>).</li>
+</ol>
+<p>Como <span class="math inline">\(p_{\text{valor}} = 0{,}0047 \quad\text{e}\quad \alpha = 0{,}05,\)</span> temos <span class="math inline">\(0{,}0047 &lt; 0.05\)</span>. Portanto, rejeitamos a hipótese nula ao nível de significância de 5%. Podemos concluir que existem evidências estatísticas significativas para sugerir que o curso SuperENEM Preparação ajuda os estudantes a obter melhores resultados no ENEM.</p>
+<blockquote class="blockquote">
+<p>Em testes de hipóteses, nunca dizemos que aceitamos a hipótese nula. A única conclusão possível é: rejeitar (<span class="math inline">\(H_0\)</span>); ou não rejeitar (<span class="math inline">\(H_0\)</span>).</p>
+</blockquote>
+<p>A razão para isso pode ser compreendida retomando o exemplo da moeda. Suponha que, em vez de observarmos 99 caras em 100 lançamentos, tivéssemos observado apenas 55 caras. Esse resultado não seria particularmente improvável para uma moeda honesta. Portanto, não teríamos motivos para acusar o mágico de estar mentindo. Entretanto, isso não significa que tenhamos provado que a probabilidade de cara seja exatamente</p>
+<p><span class="math display">\[
+p=0{,}5.
+\]</span></p>
+<p>A verdadeira probabilidade poderia ser, por exemplo,</p>
+<p><span class="math display">\[
+p=0{,}54
+\quad\text{ou}\quad
+p=0{,}58.
+\]</span></p>
+<p>Os dados simplesmente não forneceram evidências suficientemente fortes para rejeitar a hipótese de que a moeda é justa. Em resumo, a ausência de evidências contra uma hipótese não constitui evidência de que ela seja verdadeira. Por essa razão, em Estatística, preferimos dizer que não rejeitamos a hipótese nula em vez de afirmar que a aceitamos.</p>
+</section>
+<section id="passo-7-interpretação" class="level3" data-number="6.3.7">
+<h3 data-number="6.3.7" class="anchored" data-anchor-id="passo-7-interpretação"><span class="header-section-number">6.3.7</span> Passo 7: Interpretação</h3>
+<p>Os dados fornecem evidências estatisticamente significativas de que os estudantes participantes do curso SuperENEM Preparação apresentam, em média, pontuações superiores à média nacional de 662 pontos.</p>
+<p>Em outras palavras, os resultados observados são incompatíveis com a hipótese de que o programa não produz qualquer efeito, sugerindo que ele pode contribuir para melhorar o desempenho dos estudantes no ENEM.</p>
+</section>
+</section>
+<section id="teste-de-hipóteses-procedimento" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="teste-de-hipóteses-procedimento"><span class="header-section-number">6.4</span> Teste de Hipóteses (Procedimento)</h2>
+<p>O procedimento formal para a realização de um teste de hipóteses pode ser resumido nas seguintes etapas:</p>
+<section id="formular-uma-afirmação" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="formular-uma-afirmação">1. Formular uma afirmação</h3>
+<p>O primeiro passo consiste em identificar a afirmação ou hipótese que se deseja investigar. Exemplos:</p>
+<ul>
+<li>“A comida servida em aviões é boa.”</li>
+<li>“Abacaxi combina com pizza.”</li>
+<li>“Um novo medicamento reduz o risco de uma determinada doença.”</li>
+<li>“Um programa educacional melhora o desempenho dos estudantes.”</li>
+</ul>
+</section>
+<section id="definir-as-hipóteses" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="definir-as-hipóteses">2. Definir as hipóteses</h3>
+<p>Devemos estabelecer uma hipótese nula, denotada por (<span class="math inline">\(H_0\)</span>), e uma hipótese alternativa, denotada por (<span class="math inline">\(H_A\)</span>).</p>
+<ol type="a">
+<li>A hipótese alternativa pode ser unilateral ou bilateral. Exemplos:</li>
+</ol>
+<ul>
+<li>Unilateral à direita:</li>
+</ul>
+<p><span class="math display">\[
+H_A:\theta&gt;\theta_0
+\]</span></p>
+<ul>
+<li>Unilateral à esquerda:</li>
+</ul>
+<p><span class="math display">\[
+H_A:\theta&lt;\theta_0
+\]</span></p>
+<ul>
+<li>Bilateral:</li>
+</ul>
+<p><span class="math display">\[
+H_A:\theta\neq\theta_0
+\]</span></p>
+<ol start="2" type="a">
+<li>A hipótese nula</li>
+</ol>
+<p>A hipótese nula geralmente representa uma situação de referência, ausência de efeito ou o chamado <em>benefício da dúvida</em>. Em muitos problemas, ela expressa a ideia de que não existe diferença ou efeito relevante.</p>
+<ol start="3" type="a">
+<li>A hipótese alternativa</li>
+</ol>
+<p>A hipótese alternativa corresponde à afirmação para a qual buscamos evidências nos dados. Em geral, ela representa a negação da hipótese nula.</p>
+</section>
+<section id="escolher-o-nível-de-significância" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="escolher-o-nível-de-significância">3. Escolher o nível de significância</h3>
+<p>Seleciona-se um nível de significância (), que representa a probabilidade máxima tolerada de cometer um erro do tipo I. Os valores mais utilizados são <span class="math inline">\(\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.\)</span></p>
+</section>
+<section id="coletar-os-dados" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="coletar-os-dados">4. Coletar os dados</h3>
+<p>Obtém-se uma amostra da população de interesse e calcula-se a estatística necessária para o teste.</p>
+</section>
+<section id="calcular-o-nível-descritivo" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="calcular-o-nível-descritivo">5. Calcular o nível descritivo</h3>
+<p>O <span class="math inline">\(p_{\text{valor}}\)</span> é definido como</p>
+<p><span class="math display">\[p_{\text{valor}} = P(\text{observar um resultado tão extremo quanto o obtido, ou mais extremo, supondo } H_0 \text{ verdadeira}).\]</span></p>
+<p>Em outras palavras, o <span class="math inline">\(p_{\text{valor}}\)</span> mede quão compatíveis os dados observados são com a hipótese nula.</p>
+</section>
+<section id="apresentar-a-conclusão" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="apresentar-a-conclusão">6. Apresentar a conclusão</h3>
+<p>A decisão é tomada comparando o <span class="math inline">\(p_{\text{valor}}\)</span> com o nível de significância (<span class="math inline">\(\alpha\)</span>).</p>
+<ol type="a">
+<li><p>Se (<span class="math inline">\(p_{\text{valor}} &lt; \alpha\)</span>): Rejeitamos a hipótese nula (<span class="math inline">\(H_0\)</span>) em favor da hipótese alternativa (<span class="math inline">\(H_A\)</span>). Nesse caso, dizemos que o resultado é <strong>estatisticamente significativo</strong> ao nível de significância adotado.</p></li>
+<li><p>Se (<span class="math inline">\(p_{\text{valor}} \geq \alpha\)</span>): Não rejeitamos a hipótese nula (<span class="math inline">\(H_0\)</span>). Nesse caso, concluímos que os dados não fornecem evidências suficientes para apoiar a hipótese alternativa.</p></li>
+</ol>
+</section>
+<section id="observação-importante" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="observação-importante">Observação Importante</h3>
+<p>Em testes de hipóteses, nunca afirmamos que a hipótese nula foi “aceita”. A única conclusão possível é:</p>
+<ul>
+<li>rejeitar (<span class="math inline">\(H_0\)</span>); ou</li>
+<li>não rejeitar (<span class="math inline">\(H_0\)</span>).</li>
+</ul>
+<p>A ausência de evidências contra a hipótese nula não implica que ela seja verdadeira, apenas indica que os dados observados não foram suficientemente incompatíveis com ela.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

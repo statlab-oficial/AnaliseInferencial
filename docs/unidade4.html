@@ -255,7 +255,7 @@ window.Quarto = {
 \right).\]</span></p>
 <p>Todas essas expressões representam a probabilidade de que a distância entre o estimador e o parâmetro verdadeiro não ultrapasse <span class="math inline">\(\Delta\)</span>.</p>
 <p>O intervalo de confiança para <span class="math inline">\(\theta\)</span> pode ser representado como a Figura abaixo. Mais adiante, discutiremos como deve ser interpretado um intervalo de confiança associado a um nível de confiança específico.</p>
-<p><img src="figuraIC.jpeg" class="img-fluid"></p>
+<p><img src="ICplot.png" class="img-fluid"></p>
 </section>
 <section id="revisão-distribuição-normal-padrão" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="revisão-distribuição-normal-padrão"><span class="header-section-number">5.2</span> Revisão: Distribuição Normal Padrão</h2>
@@ -271,16 +271,15 @@ Z \sim N(0,1).
 <p><span class="math display">\[
 \Phi(z)=1-\Phi(-z).
 \]</span></p>
-<p>Para construir um intervalo central de 95%, precisamos encontrar um valor <span class="math inline">\(z\)</span> tal que 95% da área esteja entre <span class="math inline">\(-z\)</span> e <span class="math inline">\(z\)</span>. O valor de <span class="math inline">\(z\)</span> pode ser encontrar usando o <code>R</code> ou usando alguma tabela da normal padrão (existem várias configurações). Como restam 5% fora do intervalo, temos:</p>
+<p><img src="normal1.png" class="img-fluid"></p>
+<p>Suponha que desejemos construir um intervalo centrado tal que a probabilidade de um valor pertencer a esse intervalo seja de 95%. Note que (observe a Figura abaixo):</p>
 <ul>
-<li>2,5% à esquerda;</li>
-<li>2,5% à direita.</li>
+<li><p><strong>Limite inferior:</strong> a probabilidade de um valor ser menor que o limite inferior é de 2,5%.</p></li>
+<li><p><strong>Limite superior:</strong> a probabilidade de um valor ser maior que o limite superior é de 2,5%.</p></li>
 </ul>
-<p>Portanto,</p>
-<p><span class="math display">\[
-\Phi(z)= 0.975.
-\]</span></p>
-<p>Consultando uma tabela da normal padrão ou utilizando software estatístico, obtemos</p>
+<p>Consequentemente, a probabilidade de um valor ser menor que o limite superior deve ser de 97,5%.</p>
+<p><img src="Normal2.png" class="img-fluid"></p>
+<p>Para construir um intervalo central de 95%, precisamos encontrar um valor <span class="math inline">\(z\)</span> tal que 95% da área esteja entre <span class="math inline">\(-z\)</span> e <span class="math inline">\(z\)</span>. O valor de <span class="math inline">\(z\)</span> pode ser encontrar usando o <code>R</code> ou usando alguma tabela da normal padrão (existem várias configurações). Daí, temos que:</p>
 <p><span class="math display">\[
 z=\Phi^{-1}(0.975)=1{,}96.
 \]</span></p>
