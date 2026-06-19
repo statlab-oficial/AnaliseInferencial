@@ -271,3 +271,157 @@ Em testes de hipóteses, nunca afirmamos que a hipótese nula foi "aceita". A ú
 * não rejeitar ($H_0$).
 
 A ausência de evidências contra a hipótese nula não implica que ela seja verdadeira, apenas indica que os dados observados não foram suficientemente incompatíveis com ela.
+
+
+## Teste de hipótese para média populacional com variância conhecida
+
+
+Nesta seção, com o conjunto de dados dos estudantes. Você pode baixar o arquivo students.csv aqui e importá-lo do seu sistema de arquivos local, ou carregá-lo diretamente como um recurso da *web*. Em ambos os casos, você importará o conjunto de dados para o `Python` como um objeto **DataFrame** do pandas utilizando o método `read_csv`:
+
+```{python}
+import pandas as pd
+import numpy as np
+
+estudantes = pd.read_csv("https://userpage.fu-berlin.de/soga/data/raw-data/students.csv")
+
+estudantes.head()
+```
+
+O conjunto de dados **estudantes** consiste em 8.239 linhas, cada uma representando um estudante específico, e 16 colunas, cada uma correspondendo a uma variável/característica relacionada a esse estudante. Neste estudo, considera-se o conjunto completo de estudantes disponível na base de dados como a população de interesse. Além disso, a variável de interesse é o peso (massa corporal).
+
+Aqui iremos considerar a variância conhecida, ou seja, iremos calcular diretamente a partir dos dados completos.
+
+
+### Variância e desvio-padrão populacionais
+
+Como a base contém todos os 8.239 estudantes considerados neste estudo, a variância calculada corresponde à variância populacional.
+
+```{python}
+N = len(estudantes)
+sigma2 = estudantes["weight"].var(ddof=0) # variância populacional 
+sigma = estudantes["weight"].std(ddof=0) # desvio-padrão populacional 
+
+print(f"Tamanho da população: {N}") 
+print(f"Variância populacional: {sigma2:.2f}") 
+print(f"Desvio-padrão populacional: {sigma:.2f} kg")
+```
+
+### Objetivo
+
+Avaliar se a massa corporal média dos estudantes difere da massa corporal média da população adulta europeia, reportada por [Walpole et al. (2012)](https://link.springer.com/article/10.1186/1471-2458-12-439) como 70,8 kg. As hipóteses são:
+
+
+$$H_0: \mu = 70,8$$
+
+e
+
+$$H_1: \mu \neq 70,8$$
+em que $\mu$ representa a massa corporal média dos estudantes.
+
+
+### Cálculo do tamanho mínimo de amostra
+
+Deseja-se realizar um teste bilateral com:
+
+1. nível de confiança = 95%;
+2. poder do teste = 80%;
+3. diferença mínima detectável = 2 kg.
+
+```{python}
+from scipy.stats import norm
+
+alpha = 0.05 
+power = 0.80 
+delta = 2.0 
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = ((z_alpha + z_beta) * sigma / delta)**2 
+
+print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
+
+```
+
+Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
+
+```{python}
+n = (n0 * N)/(n0 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho corrigido da amostra: {n}")
+```
+### Seleção da amostra aleatória
+
+```{python}
+amostra = estudantes.sample(n=n, replace=False, random_state=123 ) 
+
+amostra.head()
+```
+
+
+### Teste Z para uma média com variância conhecida
+
+
+```{python}
+mu0 = 70.8 
+
+xbar = amostra["weight"].mean() 
+
+z = (xbar - mu0)/(sigma/np.sqrt(n)) 
+
+print(f"Média amostral: {xbar:.2f}") 
+print(f"Estatística Z: {z:.4f}")
+```
+
+### Cálculo do valor-p
+
+```{python}
+from scipy.stats import norm
+
+p_value = 2 * (1 - norm.cdf(abs(z)))
+
+print(f"Valor-p: {p_value:.6f}")
+
+```
+
+### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_value < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+### Intervalo de confiança de 95%
+
+```{python}
+z_crit = norm.ppf(0.975)
+
+erro = z_crit * sigma/np.sqrt(n)
+
+li = xbar - erro
+ls = xbar + erro
+
+print(f"IC95%: ({li:.2f}, {ls:.2f})")
+
+```
+
+### Conclusão
+
+Como o $p$-valor calculado (0,004493) é consideravelmente inferior ao nível de significância adotado (0,05), a decisão estatística é rejeitar a hipótese nula, ou seja, de que a massa corporal média dos estudantes é igual a massa corporal média da população adulta europeia. Sendo assim, existe evidência estatisticamente significativa de que a média populacional é diferente do valor inicialmente suposto. 
+
+
+Note que a média populacional é:
+
+```{python}
+mu_pop = estudantes["weight"].mean()
+
+print(f"Média populacional: {mu_pop:.2f} kg")
+```
+
+
+
+
