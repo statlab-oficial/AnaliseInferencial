@@ -241,7 +241,7 @@ A hipótese alternativa corresponde à afirmação para a qual buscamos evidênc
 
 ### 3. Escolher o nível de significância {.unnumbered}
 
-Seleciona-se um nível de significância (\alpha), que representa a probabilidade máxima tolerada de cometer um erro do tipo I. Os valores mais utilizados são $\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.$
+Seleciona-se um nível de significância ($\alpha$), que representa a probabilidade máxima tolerada de cometer um erro do tipo I. Os valores mais utilizados são $\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.$
 
 ### 4. Coletar os dados {.unnumbered}
 
@@ -276,7 +276,7 @@ A ausência de evidências contra a hipótese nula não implica que ela seja ver
 ## Teste de hipótese para média populacional com variância conhecida
 
 
-Nesta seção, com o conjunto de dados dos estudantes. Você pode baixar o arquivo students.csv aqui e importá-lo do seu sistema de arquivos local, ou carregá-lo diretamente como um recurso da *web*. Em ambos os casos, você importará o conjunto de dados para o `Python` como um objeto **DataFrame** do pandas utilizando o método `read_csv`:
+Nesta seção, com o conjunto de dados dos estudantes disponível em [SOGA-Py](https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Hypothesis-Tests/index.html). Você pode carregá-lo diretamente como um recurso da *web*. Vamos importar o conjunto de dados para o `Python` como um objeto **DataFrame** do pandas utilizando o método `read_csv`:
 
 ```{python}
 import pandas as pd
@@ -289,7 +289,7 @@ estudantes.head()
 
 O conjunto de dados **estudantes** consiste em 8.239 linhas, cada uma representando um estudante específico, e 16 colunas, cada uma correspondendo a uma variável/característica relacionada a esse estudante. Neste estudo, considera-se o conjunto completo de estudantes disponível na base de dados como a população de interesse. Além disso, a variável de interesse é o peso (massa corporal).
 
-Aqui iremos considerar a variância conhecida, ou seja, iremos calcular diretamente a partir dos dados completos.
+> Aqui iremos considerar a variância conhecida, ou seja, iremos calcular diretamente a partir dos dados completos.
 
 
 ### Variância e desvio-padrão populacionais
@@ -315,13 +315,13 @@ $$H_0: \mu = 70,8$$
 
 e
 
-$$H_1: \mu \neq 70,8$$
+$$H_A: \mu \neq 70,8$$
 em que $\mu$ representa a massa corporal média dos estudantes.
 
 
 ### Cálculo do tamanho mínimo de amostra
 
-Deseja-se realizar um teste bilateral com:
+Foi adotada uma diferença mínima detectável de 2 kg em relação à média de referência de 70,8 kg. O tamanho amostral foi calculado para garantir poder estatístico de 80% e nível de significância de 5%, ou seja,
 
 1. nível de confiança = 95%;
 2. poder do teste = 80%;
@@ -341,6 +341,7 @@ n0 = ((z_alpha + z_beta) * sigma / delta)**2
 print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
 
 ```
+
 
 Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
 

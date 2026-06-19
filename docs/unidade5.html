@@ -509,7 +509,7 @@ H_A:\theta\neq\theta_0
 </section>
 <section id="escolher-o-nível-de-significância" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="escolher-o-nível-de-significância">3. Escolher o nível de significância</h3>
-<p>Seleciona-se um nível de significância (), que representa a probabilidade máxima tolerada de cometer um erro do tipo I. Os valores mais utilizados são <span class="math inline">\(\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.\)</span></p>
+<p>Seleciona-se um nível de significância (<span class="math inline">\(\alpha\)</span>), que representa a probabilidade máxima tolerada de cometer um erro do tipo I. Os valores mais utilizados são <span class="math inline">\(\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.\)</span></p>
 </section>
 <section id="coletar-os-dados" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="coletar-os-dados">4. Coletar os dados</h3>
@@ -541,15 +541,15 @@ H_A:\theta\neq\theta_0
 </section>
 <section id="teste-de-hipótese-para-média-populacional-com-variância-conhecida" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="teste-de-hipótese-para-média-populacional-com-variância-conhecida"><span class="header-section-number">6.5</span> Teste de hipótese para média populacional com variância conhecida</h2>
-<p>Nesta seção, com o conjunto de dados dos estudantes. Você pode baixar o arquivo students.csv aqui e importá-lo do seu sistema de arquivos local, ou carregá-lo diretamente como um recurso da <em>web</em>. Em ambos os casos, você importará o conjunto de dados para o <code>Python</code> como um objeto <strong>DataFrame</strong> do pandas utilizando o método <code>read_csv</code>:</p>
-<div id="6f99f331" class="cell" data-execution_count="1">
+<p>Nesta seção, com o conjunto de dados dos estudantes disponível em <a href="https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Hypothesis-Tests/index.html">SOGA-Py</a>. Você pode carregá-lo diretamente como um recurso da <em>web</em>. Vamos importar o conjunto de dados para o <code>Python</code> como um objeto <strong>DataFrame</strong> do pandas utilizando o método <code>read_csv</code>:</p>
+<div id="84fc5985" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>estudantes <span class="op">=</span> pd.read_csv(<span class="st">"https://userpage.fu-berlin.de/soga/data/raw-data/students.csv"</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>estudantes.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="31">
 <div>
 <div>
 
@@ -680,11 +680,13 @@ H_A:\theta\neq\theta_0
 </div>
 </div>
 <p>O conjunto de dados <strong>estudantes</strong> consiste em 8.239 linhas, cada uma representando um estudante específico, e 16 colunas, cada uma correspondendo a uma variável/característica relacionada a esse estudante. Neste estudo, considera-se o conjunto completo de estudantes disponível na base de dados como a população de interesse. Além disso, a variável de interesse é o peso (massa corporal).</p>
+<blockquote class="blockquote">
 <p>Aqui iremos considerar a variância conhecida, ou seja, iremos calcular diretamente a partir dos dados completos.</p>
+</blockquote>
 <section id="variância-e-desvio-padrão-populacionais" class="level3" data-number="6.5.1">
 <h3 data-number="6.5.1" class="anchored" data-anchor-id="variância-e-desvio-padrão-populacionais"><span class="header-section-number">6.5.1</span> Variância e desvio-padrão populacionais</h3>
 <p>Como a base contém todos os 8.239 estudantes considerados neste estudo, a variância calculada corresponde à variância populacional.</p>
-<div id="8bf8bdbe" class="cell" data-execution_count="2">
+<div id="9f5e1fc5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="bu">len</span>(estudantes)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="op">=</span> estudantes[<span class="st">"weight"</span>].var(ddof<span class="op">=</span><span class="dv">0</span>) <span class="co"># variância populacional </span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> estudantes[<span class="st">"weight"</span>].std(ddof<span class="op">=</span><span class="dv">0</span>) <span class="co"># desvio-padrão populacional </span></span>
@@ -704,17 +706,17 @@ Desvio-padrão populacional: 8.63 kg</code></pre>
 <p>Avaliar se a massa corporal média dos estudantes difere da massa corporal média da população adulta europeia, reportada por <a href="https://link.springer.com/article/10.1186/1471-2458-12-439">Walpole et al.&nbsp;(2012)</a> como 70,8 kg. As hipóteses são:</p>
 <p><span class="math display">\[H_0: \mu = 70,8\]</span></p>
 <p>e</p>
-<p><span class="math display">\[H_1: \mu \neq 70,8\]</span> em que <span class="math inline">\(\mu\)</span> representa a massa corporal média dos estudantes.</p>
+<p><span class="math display">\[H_A: \mu \neq 70,8\]</span> em que <span class="math inline">\(\mu\)</span> representa a massa corporal média dos estudantes.</p>
 </section>
 <section id="cálculo-do-tamanho-mínimo-de-amostra" class="level3" data-number="6.5.3">
 <h3 data-number="6.5.3" class="anchored" data-anchor-id="cálculo-do-tamanho-mínimo-de-amostra"><span class="header-section-number">6.5.3</span> Cálculo do tamanho mínimo de amostra</h3>
-<p>Deseja-se realizar um teste bilateral com:</p>
+<p>Foi adotada uma diferença mínima detectável de 2 kg em relação à média de referência de 70,8 kg. O tamanho amostral foi calculado para garantir poder estatístico de 80% e nível de significância de 5%, ou seja,</p>
 <ol type="1">
 <li>nível de confiança = 95%;</li>
 <li>poder do teste = 80%;</li>
 <li>diferença mínima detectável = 2 kg.</li>
 </ol>
-<div id="1424deb4" class="cell" data-execution_count="3">
+<div id="c7e61707" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span> </span>
@@ -731,7 +733,7 @@ Desvio-padrão populacional: 8.63 kg</code></pre>
 </div>
 </div>
 <p>Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:</p>
-<div id="d5160511" class="cell" data-execution_count="4">
+<div id="176d77b3" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> (n0 <span class="op">*</span> N)<span class="op">/</span>(n0 <span class="op">+</span> N <span class="op">-</span> <span class="dv">1</span>) </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">int</span>(np.ceil(n)) </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -743,11 +745,11 @@ Desvio-padrão populacional: 8.63 kg</code></pre>
 </section>
 <section id="seleção-da-amostra-aleatória" class="level3" data-number="6.5.4">
 <h3 data-number="6.5.4" class="anchored" data-anchor-id="seleção-da-amostra-aleatória"><span class="header-section-number">6.5.4</span> Seleção da amostra aleatória</h3>
-<div id="b5b6229c" class="cell" data-execution_count="5">
+<div id="14d28621" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>amostra <span class="op">=</span> estudantes.sample(n<span class="op">=</span>n, replace<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="dv">123</span> ) </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>amostra.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="35">
 <div>
 <div>
 
@@ -880,7 +882,7 @@ Desvio-padrão populacional: 8.63 kg</code></pre>
 </section>
 <section id="teste-z-para-uma-média-com-variância-conhecida" class="level3" data-number="6.5.5">
 <h3 data-number="6.5.5" class="anchored" data-anchor-id="teste-z-para-uma-média-com-variância-conhecida"><span class="header-section-number">6.5.5</span> Teste Z para uma média com variância conhecida</h3>
-<div id="380070fc" class="cell" data-execution_count="6">
+<div id="a5ac3846" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mu0 <span class="op">=</span> <span class="fl">70.8</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>xbar <span class="op">=</span> amostra[<span class="st">"weight"</span>].mean() </span>
@@ -897,7 +899,7 @@ Estatística Z: 2.8413</code></pre>
 </section>
 <section id="cálculo-do-valor-p" class="level3" data-number="6.5.6">
 <h3 data-number="6.5.6" class="anchored" data-anchor-id="cálculo-do-valor-p"><span class="header-section-number">6.5.6</span> Cálculo do valor-p</h3>
-<div id="f4302da7" class="cell" data-execution_count="7">
+<div id="4ad843b0" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> norm.cdf(<span class="bu">abs</span>(z)))</span>
@@ -910,7 +912,7 @@ Estatística Z: 2.8413</code></pre>
 </section>
 <section id="regra-de-decisão" class="level3" data-number="6.5.7">
 <h3 data-number="6.5.7" class="anchored" data-anchor-id="regra-de-decisão"><span class="header-section-number">6.5.7</span> Regra de Decisão</h3>
-<div id="a42965ce" class="cell" data-execution_count="8">
+<div id="bfe671fc" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value <span class="op">&lt;</span> alpha: </span>
@@ -924,7 +926,7 @@ Estatística Z: 2.8413</code></pre>
 </section>
 <section id="intervalo-de-confiança-de-95" class="level3" data-number="6.5.8">
 <h3 data-number="6.5.8" class="anchored" data-anchor-id="intervalo-de-confiança-de-95"><span class="header-section-number">6.5.8</span> Intervalo de confiança de 95%</h3>
-<div id="3edf82b8" class="cell" data-execution_count="9">
+<div id="24da9416" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>z_crit <span class="op">=</span> norm.ppf(<span class="fl">0.975</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>erro <span class="op">=</span> z_crit <span class="op">*</span> sigma<span class="op">/</span>np.sqrt(n)</span>
@@ -942,7 +944,7 @@ Estatística Z: 2.8413</code></pre>
 <h3 data-number="6.5.9" class="anchored" data-anchor-id="conclusão"><span class="header-section-number">6.5.9</span> Conclusão</h3>
 <p>Como o <span class="math inline">\(p\)</span>-valor calculado (0,004493) é consideravelmente inferior ao nível de significância adotado (0,05), a decisão estatística é rejeitar a hipótese nula, ou seja, de que a massa corporal média dos estudantes é igual a massa corporal média da população adulta europeia. Sendo assim, existe evidência estatisticamente significativa de que a média populacional é diferente do valor inicialmente suposto.</p>
 <p>Note que a média populacional é:</p>
-<div id="8386dd26" class="cell" data-execution_count="10">
+<div id="46c06db9" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mu_pop <span class="op">=</span> estudantes[<span class="st">"weight"</span>].mean()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Média populacional: </span><span class="sc">{</span>mu_pop<span class="sc">:.2f}</span><span class="ss"> kg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
