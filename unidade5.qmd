@@ -4,17 +4,15 @@
 
 Estimação pontual, intervalos de confiança e testes de hipóteses têm o mesmo objetivo: **extrair informação de um conjunto de dados observado**.
 
-  - **Estimação pontual**: fornece um único valor para descrever o parâmetro (por exemplo, a média).
-  - **Intervalo de confiança**: fornece um intervalo de valores plausíveis para o parâmetro desconhecido.
-  - **Teste de hipóteses**: avalia quão compatíveis os dados são com uma determinada hipótese.
+- **Estimação pontual**: fornece um único valor para descrever o parâmetro (por exemplo, a média).
+- **Intervalo de confiança**: fornece um intervalo de valores plausíveis para o parâmetro desconhecido.
+- **Teste de hipóteses**: avalia quão compatíveis os dados são com uma determinada hipótese.
 
 Os testes de hipóteses permitem que avaliemos estatisticamente afirmações sobre parâmetros populacionais. Por exemplo, se uma empresa farmacêutica deseja afirmar que um novo medicamento reduz o risco de câncer, ela pode realizar um teste de hipóteses. Da mesma forma, se uma empresa quiser argumentar que seu programa preparatório acadêmico resulta em notas mais altas no ENEM, poderá utilizar essa mesma metodologia.
 
 Muitas decisões importantes em áreas como negócios, medicina, educação e políticas públicas dependem dos resultados de testes de hipóteses. Nas próximas seções, veremos como esses testes podem ser conduzidos de maneira adequada e como interpretar corretamente seus resultados.
 
-
 ## Teste de Hipóteses (Ideia)
-
 
 Suponha que exista um mágico chamado Jardel, que faz a seguinte afirmação:
 
@@ -38,22 +36,17 @@ Vamos dar a Jardel o benefício da dúvida e calcular a probabilidade de observa
 
 Se Jardel não estiver mentindo, então a moeda é honesta. Nesse caso, o número de caras observadas segue uma distribuição Binomial:
 
-$$
-X \sim \text{Bin}(100,0.5),
-$$
+$$X \sim \text{Bin}(100,0.5),$$
 
 pois realizamos 100 lançamentos independentes e a probabilidade de cara em cada lançamento é igual a 0,5.
 
 Queremos calcular a probabilidade de observarmos pelo menos 99 caras, já que estamos interessados em resultados tão extremos quanto o observado. Assim,
 
-$$
-P(X \geq 99)= P(X=99) + P(X=100).
-$$
+$$P(X \geq 99)= P(X=99) + P(X=100).$$
 
 Utilizando a função de probabilidade da distribuição Binomial, obtemos
 
-$$
-P(X \geq 99)= \binom{100}{99}(0.5)^{99}(0.5)^1
+$$P(X \geq 99)= \binom{100}{99}(0.5)^{99}(0.5)^1
 + \binom{100}{100}(0.5)^{100}. $$
 
 Simplificando,
@@ -66,10 +59,10 @@ Portanto, os dados fornecem evidências estatísticas extremamente fortes de que
 
 Essa lógica é muito semelhante a uma **prova por contradição probabilística**:
 
-1. Assumimos que uma afirmação é verdadeira;
-2. Calculamos a probabilidade do resultado observado sob essa suposição;
-3. Se essa probabilidade for extremamente pequena, passamos a duvidar da suposição inicial;
-4. Concluímos que os dados fornecem evidências contra a hipótese assumida.
+1.  Assumimos que uma afirmação é verdadeira;
+2.  Calculamos a probabilidade do resultado observado sob essa suposição;
+3.  Se essa probabilidade for extremamente pequena, passamos a duvidar da suposição inicial;
+4.  Concluímos que os dados fornecem evidências contra a hipótese assumida.
 
 Essa é precisamente a ideia fundamental por trás dos testes de hipóteses estatísticos.
 
@@ -77,9 +70,7 @@ Essa é precisamente a ideia fundamental por trás dos testes de hipóteses esta
 
 Existe um procedimento formal para a realização de um teste de hipóteses, que será ilustrado por meio de um exemplo. Há diversos tipos de testes de hipóteses, cada um apropriado para situações específicas, mas discutiremos essas variações mais adiante. Como veremos, o Teorema Central do Limite (TCL) desempenha um papel fundamental em muitos dos testes mais utilizados na prática.
 
-
 ### Passo 1: Formular uma afirmação
-
 
 O primeiro passo consiste em identificar a afirmação que se deseja investigar.
 
@@ -97,17 +88,13 @@ Suponha que, em 2025, a pontuação média nacional no ENEM fosse 662 pontos (em
 
 Seja $\mu$ a verdadeira média das pontuações obtidas pelos alunos que participaram do curso SuperENEM Preparação. A hipótese nula representa a situação de referência, isto é, a ausência de efeito:
 
-$$H_0:\mu=662.$$
-Em outras palavras, assumimos inicialmente que os participantes do cursinho apresentam a mesma média observada na população geral. A hipótese alternativa representa aquilo que desejamos demonstrar. Como a empresa afirma que o programa melhora o desempenho dos estudantes, definimos
+$$H_0:\mu=662.$$ Em outras palavras, assumimos inicialmente que os participantes do cursinho apresentam a mesma média observada na população geral. A hipótese alternativa representa aquilo que desejamos demonstrar. Como a empresa afirma que o programa melhora o desempenho dos estudantes, definimos
 
-$$H_A: \mu > 662.$$
-Essa hipótese afirma que os participantes do programa possuem uma média superior à média nacional. A hipótese alternativa apresentada acima é denominada unilateral à direita, pois procura evidências de que a média seja maior que 662. Outras possibilidades incluem:
+$$H_A: \mu > 662.$$ Essa hipótese afirma que os participantes do programa possuem uma média superior à média nacional. A hipótese alternativa apresentada acima é denominada unilateral à direita, pois procura evidências de que a média seja maior que 662. Outras possibilidades incluem:
 
 - Hipótese unilateral à esquerda:
 
-$$H_A:\mu<662,$$
-caso desejássemos investigar se o programa prejudica os estudantes.
-
+$$H_A:\mu<662,$$ caso desejássemos investigar se o programa prejudica os estudantes.
 
 - Hipótese bilateral:
 
@@ -121,8 +108,7 @@ Escolhemos um nível de significância $\alpha$, que representa a **probabilidad
 
 ### Passo 4: Coletar os dados
 
-Suponha que observemos as pontuações de 100 estudantes participantes do programa, $X_1,\ldots,X_{100}$. Após a coleta dos dados, verificamos que a média amostral foi $\bar{x}=696$ pontos. 
-
+Suponha que observemos as pontuações de 100 estudantes participantes do programa, $X_1,\ldots,X_{100}$. Após a coleta dos dados, verificamos que a média amostral foi $\bar{x}=696$ pontos.
 
 ### Passo 5: Calcular o nível descritivo ($p$-valor)
 
@@ -145,44 +131,34 @@ $$P(\bar{X} \geq 696) = P\left(
 {131/\sqrt{100}}
 \right) = P(Z\geq 2{,}60)$$
 
-
 Consultando a tabela da distribuição Normal padrão, obtemos aproximadamente
 
-$$
-p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.
-$$
+$$p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.$$
 Assim, a probabilidade de observarmos uma média tão elevada quanto a obtida, caso o curso não tivesse qualquer efeito, é de apenas cerca de 0,47%.
 
 ### Passo 6: Apresentar a conclusão
 
 Após calcular o $p$-valor, devemos compará-lo com o nível de significância previamente escolhido, $\alpha$. As regras de decisão são as seguintes:
 
-1. Se ($p_{\text{valor}} < \alpha$), rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$).
+1.  Se ($p_{\text{valor}} < \alpha$), rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$).
 
 A justificativa é que, supondo que a hipótese nula seja verdadeira, a probabilidade de observarmos um resultado tão extremo quanto o obtido (ou ainda mais extremo) é igual ao $p$-valor. Se essa probabilidade for menor do que o nível de significância estabelecido, consideramos que os dados observados são incompatíveis com a hipótese nula.
 
-2. Se ($p_{\text{valor}} \geq \alpha$), não rejeitamos a hipótese nula ($H_0$).
+2.  Se ($p_{\text{valor}} \geq \alpha$), não rejeitamos a hipótese nula ($H_0$).
 
-
-Como $p_{\text{valor}} = 0{,}0047 \quad\text{e}\quad \alpha = 0{,}05,$ temos
-$0{,}0047 < 0.05$. Portanto, rejeitamos a hipótese nula ao nível de significância de 5%. Podemos concluir que existem evidências estatísticas significativas para sugerir que o curso SuperENEM Preparação ajuda os estudantes a obter melhores resultados no ENEM. 
-
+Como $p_{\text{valor}} = 0{,}0047 \quad\text{e}\quad \alpha = 0{,}05,$ temos $0{,}0047 < 0.05$. Portanto, rejeitamos a hipótese nula ao nível de significância de 5%. Podemos concluir que existem evidências estatísticas significativas para sugerir que o curso SuperENEM Preparação ajuda os estudantes a obter melhores resultados no ENEM.
 
 > Em testes de hipóteses, nunca dizemos que aceitamos a hipótese nula. A única conclusão possível é: rejeitar ($H_0$); ou não rejeitar ($H_0$).
 
 A razão para isso pode ser compreendida retomando o exemplo da moeda. Suponha que, em vez de observarmos 99 caras em 100 lançamentos, tivéssemos observado apenas 55 caras. Esse resultado não seria particularmente improvável para uma moeda honesta. Portanto, não teríamos motivos para acusar o mágico de estar mentindo. Entretanto, isso não significa que tenhamos provado que a probabilidade de cara seja exatamente
 
-$$
-p=0{,}5.
-$$
+$$p=0{,}5.$$
 
 A verdadeira probabilidade poderia ser, por exemplo,
 
-$$
-p=0{,}54
+$$p=0{,}54
 \quad\text{ou}\quad
-p=0{,}58.
-$$
+p=0{,}58.$$
 
 Os dados simplesmente não forneceram evidências suficientemente fortes para rejeitar a hipótese de que a moeda é justa. Em resumo, a ausência de evidências contra uma hipótese não constitui evidência de que ela seja verdadeira. Por essa razão, em Estatística, preferimos dizer que não rejeitamos a hipótese nula em vez de afirmar que a aceitamos.
 
@@ -192,9 +168,7 @@ Os dados fornecem evidências estatisticamente significativas de que os estudant
 
 Em outras palavras, os resultados observados são incompatíveis com a hipótese de que o programa não produz qualquer efeito, sugerindo que ele pode contribuir para melhorar o desempenho dos estudantes no ENEM.
 
-
 ## Teste de Hipóteses (Procedimento)
-
 
 O procedimento formal para a realização de um teste de hipóteses pode ser resumido nas seguintes etapas:
 
@@ -202,40 +176,34 @@ O procedimento formal para a realização de um teste de hipóteses pode ser res
 
 O primeiro passo consiste em identificar a afirmação ou hipótese que se deseja investigar. Exemplos:
 
-* "A comida servida em aviões é boa."
-* "Abacaxi combina com pizza."
-* "Um novo medicamento reduz o risco de uma determinada doença."
-* "Um programa educacional melhora o desempenho dos estudantes."
+- "A comida servida em aviões é boa."
+- "Abacaxi combina com pizza."
+- "Um novo medicamento reduz o risco de uma determinada doença."
+- "Um programa educacional melhora o desempenho dos estudantes."
 
 ### 2. Definir as hipóteses {.unnumbered}
 
 Devemos estabelecer uma hipótese nula, denotada por ($H_0$), e uma hipótese alternativa, denotada por ($H_A$).
 
-a) A hipótese alternativa pode ser unilateral ou bilateral. Exemplos:
+a)  A hipótese alternativa pode ser unilateral ou bilateral. Exemplos:
 
-* Unilateral à direita:
+- Unilateral à direita:
 
-$$
-H_A:\theta>\theta_0
-$$
+$$H_A:\theta>\theta_0$$
 
-* Unilateral à esquerda:
+- Unilateral à esquerda:
 
-$$
-H_A:\theta<\theta_0
-$$
+$$H_A:\theta<\theta_0$$
 
-* Bilateral:
+- Bilateral:
 
-$$
-H_A:\theta\neq\theta_0
-$$
+$$H_A:\theta\neq\theta_0$$
 
-b) A hipótese nula
+b)  A hipótese nula
 
 A hipótese nula geralmente representa uma situação de referência, ausência de efeito ou o chamado *benefício da dúvida*. Em muitos problemas, ela expressa a ideia de que não existe diferença ou efeito relevante.
 
-c) A hipótese alternativa
+c)  A hipótese alternativa
 
 A hipótese alternativa corresponde à afirmação para a qual buscamos evidências nos dados. Em geral, ela representa a negação da hipótese nula.
 
@@ -259,22 +227,20 @@ Em outras palavras, o $p_{\text{valor}}$ mede quão compatíveis os dados observ
 
 A decisão é tomada comparando o $p_{\text{valor}}$ com o nível de significância ($\alpha$).
 
-a) Se ($p_{\text{valor}} < \alpha$): Rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$). Nesse caso, dizemos que o resultado é **estatisticamente significativo** ao nível de significância adotado.
+a)  Se ($p_{\text{valor}} < \alpha$): Rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$). Nesse caso, dizemos que o resultado é **estatisticamente significativo** ao nível de significância adotado.
 
-b) Se ($p_{\text{valor}} \geq \alpha$): Não rejeitamos a hipótese nula ($H_0$). Nesse caso, concluímos que os dados não fornecem evidências suficientes para apoiar a hipótese alternativa.
+b)  Se ($p_{\text{valor}} \geq \alpha$): Não rejeitamos a hipótese nula ($H_0$). Nesse caso, concluímos que os dados não fornecem evidências suficientes para apoiar a hipótese alternativa.
 
 ### Observação Importante {.unnumbered}
 
 Em testes de hipóteses, nunca afirmamos que a hipótese nula foi "aceita". A única conclusão possível é:
 
-* rejeitar ($H_0$); ou
-* não rejeitar ($H_0$).
+- rejeitar ($H_0$); ou
+- não rejeitar ($H_0$).
 
 A ausência de evidências contra a hipótese nula não implica que ela seja verdadeira, apenas indica que os dados observados não foram suficientemente incompatíveis com ela.
 
-
 ## Teste de hipótese para média populacional com variância conhecida
-
 
 Nesta seção, com o conjunto de dados dos estudantes disponível em [SOGA-Py](https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Hypothesis-Tests/index.html). Você pode carregá-lo diretamente como um recurso da *web*. Vamos importar o conjunto de dados para o `Python` como um objeto **DataFrame** do pandas utilizando o método `read_csv`:
 
@@ -290,7 +256,6 @@ estudantes.head()
 O conjunto de dados **estudantes** consiste em 8.239 linhas, cada uma representando um estudante específico, e 16 colunas, cada uma correspondendo a uma variável/característica relacionada a esse estudante. Neste estudo, considera-se o conjunto completo de estudantes disponível na base de dados como a população de interesse. Além disso, a variável de interesse é o peso (massa corporal).
 
 > Aqui iremos considerar a variância conhecida, ou seja, iremos calcular diretamente a partir dos dados completos.
-
 
 ### Variância e desvio-padrão populacionais
 
@@ -310,22 +275,19 @@ print(f"Desvio-padrão populacional: {sigma:.2f} kg")
 
 Avaliar se a massa corporal média dos estudantes difere da massa corporal média da população adulta europeia, reportada por [Walpole et al. (2012)](https://link.springer.com/article/10.1186/1471-2458-12-439) como 70,8 kg. As hipóteses são:
 
-
 $$H_0: \mu = 70,8$$
 
 e
 
-$$H_A: \mu \neq 70,8$$
-em que $\mu$ representa a massa corporal média dos estudantes.
-
+$$H_A: \mu \neq 70,8$$ em que $\mu$ representa a massa corporal média dos estudantes.
 
 ### Cálculo do tamanho mínimo de amostra
 
 Foi adotada uma diferença mínima detectável de 2 kg em relação à média de referência de 70,8 kg. O tamanho amostral foi calculado para garantir poder estatístico de 80% e nível de significância de 5%, ou seja,
 
-1. nível de confiança = 95%;
-2. poder do teste = 80%;
-3. diferença mínima detectável = 2 kg.
+1.  nível de confiança = 95%;
+2.  poder do teste = 80%;
+3.  diferença mínima detectável = 2 kg.
 
 ```{python}
 from scipy.stats import norm
@@ -342,7 +304,6 @@ print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
 
 ```
 
-
 Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
 
 ```{python}
@@ -351,6 +312,7 @@ n = int(np.ceil(n))
 
 print(f"Tamanho corrigido da amostra: {n}")
 ```
+
 ### Seleção da amostra aleatória
 
 ```{python}
@@ -359,9 +321,7 @@ amostra = estudantes.sample(n=n, replace=False, random_state=123 )
 amostra.head()
 ```
 
-
 ### Teste Z para uma média com variância conhecida
-
 
 ```{python}
 mu0 = 70.8 
@@ -412,8 +372,7 @@ print(f"IC95%: ({li:.2f}, {ls:.2f})")
 
 ### Conclusão
 
-Como o $p$-valor calculado (0,004493) é consideravelmente inferior ao nível de significância adotado (0,05), a decisão estatística é rejeitar a hipótese nula, ou seja, de que a massa corporal média dos estudantes é igual a massa corporal média da população adulta europeia. Sendo assim, existe evidência estatisticamente significativa de que a média populacional é diferente do valor inicialmente suposto. 
-
+Como o $p$-valor calculado (0,004493) é consideravelmente inferior ao nível de significância adotado (0,05), a decisão estatística é rejeitar a hipótese nula, ou seja, de que a massa corporal média dos estudantes é igual a massa corporal média da população adulta europeia. Sendo assim, existe evidência estatisticamente significativa de que a média populacional é diferente do valor inicialmente suposto.
 
 Note que a média populacional é:
 
@@ -424,5 +383,5 @@ print(f"Média populacional: {mu_pop:.2f} kg")
 ```
 
 
-
+## Teste de hipótese para média populacional com variância desconhecida
 

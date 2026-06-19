@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Estimação por Intervalos: Intervalo de Confiança</title>
+<title>Referências</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -33,8 +52,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./unidade5.html" rel="next">
-<link href="./unidade3.html" rel="prev">
+<link href="./unidade7.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -77,35 +95,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -281,7 +270,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade4.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">Referências</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -342,7 +331,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./unidade4.html" class="sidebar-item-text sidebar-link active">
+  <a href="./unidade4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></span></a>
   </div>
 </li>
@@ -366,7 +355,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Referências</span></a>
   </div>
 </li>
@@ -375,18 +364,8 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#motivação-para-intervalos-de-confiança" id="toc-motivação-para-intervalos-de-confiança" class="nav-link active" data-scroll-target="#motivação-para-intervalos-de-confiança"><span class="header-section-number">5.1</span> Motivação para Intervalos de Confiança</a></li>
-  <li><a href="#revisão-distribuição-normal-padrão" id="toc-revisão-distribuição-normal-padrão" class="nav-link" data-scroll-target="#revisão-distribuição-normal-padrão"><span class="header-section-number">5.2</span> Revisão: Distribuição Normal Padrão</a></li>
-  <li><a href="#construção-de-um-intervalo-de-confiança" id="toc-construção-de-um-intervalo-de-confiança" class="nav-link" data-scroll-target="#construção-de-um-intervalo-de-confiança"><span class="header-section-number">5.3</span> Construção de um Intervalo de Confiança</a></li>
-  <li><a href="#interpretação-de-um-intervalo-de-confiança" id="toc-interpretação-de-um-intervalo-de-confiança" class="nav-link" data-scroll-target="#interpretação-de-um-intervalo-de-confiança"><span class="header-section-number">5.4</span> Interpretação de um Intervalo de Confiança</a></li>
-  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">5.5</span> Exercícios</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -394,7 +373,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação por Intervalos: Intervalo de Confiança</span></h1>
+<h1 class="title">Referências</h1>
 </div>
 
 
@@ -411,226 +390,36 @@ window.Quarto = {
 </header>
 
 
-<section id="motivação-para-intervalos-de-confiança" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="motivação-para-intervalos-de-confiança"><span class="header-section-number">5.1</span> Motivação para Intervalos de Confiança</h2>
-<p>Os intervalos de confiança são utilizados no contexto frequentista, no qual os parâmetros populacionais são assumidos como desconhecidos, porém fixos, e não variáveis aleatórias. Enquanto isso, os intervalos de credibilidade (Paradigma Bayesiano) constituem a versão bayesiana dos intervalos de confiança frequentistas em que os parâmetros são tratados como variáveis aleatórias.</p>
-<p>Quando realizamos estimação pontual (como Máxima Verossimilhança ou Método dos Momentos), a probabilidade de nossa resposta estar exatamente correta (considerando a aleatoriedade das amostras iid) é</p>
-<p><span class="math display">\[P(\hat{\theta} = \theta) = 0,\]</span> porque <span class="math inline">\(\theta\)</span> é um número real e pode assumir uma quantidade incontável de valores. Portanto, a probabilidade de estarmos exatamente corretos é zero, embora possamos estar muito próximos do valor verdadeiro.</p>
-<p>Em vez disso, podemos fornecer um intervalo (frequentemente, mas não necessariamente, centrado na estimativa pontual <span class="math inline">\(\hat{\theta}\)</span>) tal que <span class="math inline">\(\theta\)</span> pertença a esse intervalo com alta probabilidade, por exemplo 95%:</p>
-<p><span class="math display">\[P(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]) = 0{,}95.\]</span> O valor <span class="math inline">\(\Delta\)</span> é denominado <strong>margem de erro</strong> e determina a amplitude do intervalo de confiança. A expressão anterior pode ser escrita de maneiras equivalentes:</p>
-<p><span class="math display">\[P\left(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]\right) = P\left(|\hat{\theta}-\theta| \leq \Delta\right) = P\left(
-\hat{\theta}
-\in
-[\theta-\Delta,\theta+\Delta]
-\right).\]</span></p>
-<p>Todas essas expressões representam a probabilidade de que a distância entre o estimador e o parâmetro verdadeiro não ultrapasse <span class="math inline">\(\Delta\)</span>.</p>
-<p>O intervalo de confiança para <span class="math inline">\(\theta\)</span> pode ser representado como a Figura abaixo. Mais adiante, discutiremos como deve ser interpretado um intervalo de confiança associado a um nível de confiança específico.</p>
-<p><img src="ICplot.png" class="img-fluid"></p>
-</section>
-<section id="revisão-distribuição-normal-padrão" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="revisão-distribuição-normal-padrão"><span class="header-section-number">5.2</span> Revisão: Distribuição Normal Padrão</h2>
-<p>Grande parte da teoria dos intervalos de confiança baseia-se na distribuição normal padrão</p>
-<p><span class="math display">\[Z \sim N(0,1).\]</span></p>
-<p>Sua função distribuição acumulada é denotada por</p>
-<p><span class="math display">\[\Phi(z)=P(Z\leq z).\]</span></p>
-<p>Uma propriedade importante da distribuição normal é sua simetria:</p>
-<p><span class="math display">\[\Phi(z)=1-\Phi(-z).\]</span></p>
-<p><img src="normal1.png" class="img-fluid"></p>
-<p>Suponha que desejemos construir um intervalo centrado tal que a probabilidade de um valor pertencer a esse intervalo seja de 95%. Note que (observe a Figura abaixo):</p>
-<ul>
-<li><p><strong>Limite inferior:</strong> a probabilidade de um valor ser menor que o limite inferior é de 2,5%.</p></li>
-<li><p><strong>Limite superior:</strong> a probabilidade de um valor ser maior que o limite superior é de 2,5%.</p></li>
-</ul>
-<p>Consequentemente, a probabilidade de um valor ser menor que o limite superior deve ser de 97,5%.</p>
-<p><img src="Normal2.png" class="img-fluid"></p>
-<p>Para construir um intervalo central de 95%, precisamos encontrar um valor <span class="math inline">\(z\)</span> tal que 95% da área esteja entre <span class="math inline">\(-z\)</span> e <span class="math inline">\(z\)</span>. O valor de <span class="math inline">\(z\)</span> pode ser encontrar usando o <code>R</code> ou usando alguma tabela da normal padrão (existem várias configurações). Daí, temos que:</p>
-<p><span class="math display">\[z=\Phi^{-1}(0.975)=1{,}96.\]</span></p>
-<p>Assim,</p>
-<p><span class="math display">\[P(-1{,}96 \leq Z \leq 1{,}96)=0{,}95.\]</span></p>
-<p>O valor 1,96 é conhecido como o valor crítico associado a um nível de confiança de 95%.</p>
-</section>
-<section id="construção-de-um-intervalo-de-confiança" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="construção-de-um-intervalo-de-confiança"><span class="header-section-number">5.3</span> Construção de um Intervalo de Confiança</h2>
-<p><strong>Exemplo:</strong> Distribuição de Poisson</p>
-<p>Suponha que</p>
-<p><span class="math display">\[X_1,\ldots,X_n \stackrel{iid}{\sim} \text{Poi}(\theta),\]</span></p>
-<p>em que <span class="math inline">\(\theta\)</span> é desconhecido.</p>
-<p>Sabemos que tanto o estimador de máxima verossimilhança quanto o estimador pelo método dos momentos são dados pela média amostral</p>
-<p><span class="math display">\[\frac{1}{n}
-\sum_{i=1}^{n}X_i.\]</span></p>
-<p>Como</p>
-<p><span class="math display">\[E(X_i)=\theta
-\quad\text{e}\quad
-Var(X_i)=\theta,\]</span></p>
-<p>segue que</p>
-<p><span class="math display">\[E(\hat{\theta})=\theta\]</span></p>
-<p>e</p>
-<p><span class="math display">\[Var(\hat{\theta}) = \frac{\theta}{n}.\]</span></p>
-<p>Pelo Teorema Central do Limite,</p>
-<p><span class="math display">\[\hat{\theta}
-\approx
-N\left(
-\theta,
-\frac{\theta}{n}
-\right).\]</span></p>
-<p>Padronizando,</p>
-<p><span class="math display">\[\frac{\hat{\theta}-\theta}
-{\sqrt{\theta/n}}
-\approx
-N(0,1).\]</span></p>
-<p>Desejamos construir um intervalo de confiança de 95%, ou seja, <span class="math inline">\(0{,}95\)</span>. Utilizando o valor crítico <span class="math inline">\(z_{0{,}975}=1{,}96\)</span>, obtemos</p>
-<p><span class="math display">\[\Delta = 1{,}96
-\sqrt{\frac{\theta}{n}}.\]</span></p>
-<p>Como <span class="math inline">\(\theta\)</span> é desconhecido, substituímos pelo estimador <span class="math inline">\(\hat{\theta}\)</span>:</p>
-<p><span class="math display">\[\left[\hat{\theta} - 1{,}96
-\sqrt{\frac{\hat{\theta}}{n}}
-;
-\hat{\theta}
-+
-1{,}96
-\sqrt{\frac{\hat{\theta}}{n}}
-\right].\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Definição: Intervalo de Confiança">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-campos2017metodos" class="csl-entry" role="listitem">
+CAMPOS, Marcilia Andrade; RÊGO, Leandro Chaves; MENDOÇA, André Feitoza
+de. <strong>M<span>é</span>todos Probabil<span>í</span>sticos e
+Estat<span>í</span>sticos com Aplica<span>ç</span><span>õ</span>es em
+Engenharias e Ci<span>ê</span>ncias Exatas</strong>. Rio de Janeiro:
+LTC, 2017.
 </div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Definição: Intervalo de Confiança
+<div id="ref-casella2002statistical" class="csl-entry" role="listitem">
+CASELLA, George; BERGER, Roger L. <strong>Statistical
+Inference</strong>. 2. ed. Pacific Grove, CA: Duxbury Press, 2002.
+</div>
+<div id="ref-moderndive" class="csl-entry" role="listitem">
+KIM, Albert Y.; ISMAY, Chester; KUHN, Max. <a href="https://doi.org/10.21105/jose.00115">Take a moderndive into
+introductory linear regression with R</a>. <strong>The Journal of Open
+Source Education</strong>, v. 4, n. 41, 115, 2021.
+</div>
+<div id="ref-magalhaes2006probabilidade" class="csl-entry" role="listitem">
+MAGALHÃES, Marcos Nascimento. <strong>Probabilidade e
+Vari<span>á</span>veis Aleat<span>ó</span>rias</strong>. 2. ed.
+S<span>ã</span>o Paulo: EDUSP, 2006.
+</div>
+<div id="ref-tidyverse" class="csl-entry" role="listitem">
+WICKHAM, Hadley <em>et al.</em> <a href="https://doi.org/10.21105/joss.01686">Welcome to the
+<span>tidyverse</span></a>. <strong>Journal of Open Source
+Software</strong>, v. 4, n. 43, p. 1686, 2019.
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>Suponha que você possua uma amostra aleatória <span class="math inline">\(X_1,\ldots,X_n\)</span> de uma distribuição com parâmetro desconhecido <span class="math inline">\(\theta\)</span>, e que disponha de um estimador <span class="math inline">\(\hat{\theta}\)</span> para esse parâmetro.</p>
-<p>Um intervalo de confiança de nível <span class="math inline">\(100(1-\alpha)\%\)</span> para <span class="math inline">\(\theta\)</span> é um intervalo (tipicamente, mas nem sempre, centrado em <span class="math inline">\(\hat{\theta}\)</span>), <span class="math inline">\([\hat{\theta}-\Delta,\hat{\theta}+\Delta],\)</span> tal que a probabilidade (considerando a aleatoriedade das amostras <span class="math inline">\(X_1,\ldots,X_n\)</span>) de o parâmetro <span class="math inline">\(\theta\)</span> pertencer a esse intervalo seja igual a <span class="math inline">\(1-\alpha\)</span>:</p>
-<p><span class="math display">\[P\left(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]\right) = 1-\alpha.\]</span> Quando <span class="math inline">\(\hat{\theta} = \frac{1}{n}\sum_{i=1}^{n}X_i\)</span> é a média amostral, o Teorema Central do Limite garante que <span class="math inline">\(\hat{\theta}\)</span> possui distribuição aproximadamente normal para amostras suficientemente grandes. Nesse caso, um intervalo de confiança de nível <span class="math inline">\(100(1-\alpha)\%\)</span> é dado por</p>
-<p><span class="math display">\[\left[\hat{\theta} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-;
-\hat{\theta}
-+
-z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right],\]</span> em que <span class="math inline">\(z_{1-\alpha/2}\)</span> é o quantil da distribuição Normal padrão e <span class="math inline">\(\sigma\)</span> representa o verdadeiro desvio-padrão de uma observação da população, o qual pode precisar ser estimado a partir dos dados.</p>
-</div>
-</div>
-<p>É importante observar que a fórmula apresentada anteriormente funciona apenas quando <span class="math inline">\(\hat{\theta}\)</span> é a média amostral. Nesse caso, podemos utilizar o Teorema Central do Limite para concluir que a distribuição de <span class="math inline">\(\hat{\theta}\)</span> é aproximadamente normal. Quando o estimador não é a média amostral, essa aproximação pode não ser válida, sendo necessário recorrer a outras estratégias para construir intervalos de confiança.</p>
-<p>Se desejarmos um intervalo de confiança de 95%, então <span class="math inline">\(100(1-\alpha)= 95\)</span>, o que implica <span class="math inline">\(\alpha=0.05\)</span>. Nesse caso, devemos encontrar o quantil da distribuição Normal padrão correspondente a <span class="math inline">\(1-\frac{0.05}{2} = 0.975\)</span>. Consultando uma tabela da distribuição Normal padrão ou utilizando um software estatístico, obtemos <span class="math inline">\(\Phi^{-1}(0.975)= 1.96\)</span>. Isso significa que um intervalo de confiança de 95% é obtido considerando aproximadamente 1,96 desvios-padrão para cada lado da estimativa pontual.</p>
-<p>De maneira análoga, se desejarmos um intervalo de confiança de 98%, teremos <span class="math inline">\(100(1-\alpha)=98,\)</span> e, portanto, <span class="math inline">\(\alpha=0.02\)</span>. Logo, <span class="math inline">\(1-\frac{0.02}{2} = 0,99\)</span>, assim, devemos calcular <span class="math inline">\(\Phi^{-1}(0.99)\)</span>. A razão para isso é simples: se desejamos que 98% da área da distribuição esteja concentrada na região central, os 2% restantes devem ser distribuídos igualmente entre as duas caudas da distribuição. Consequentemente, teremos 1% da área à esquerda e 1% da área à direita.</p>
-<p><strong>Exemplo:</strong> Intervalo de Confiança para uma Proporção</p>
-<p>Considere uma amostra de tamanho <span class="math inline">\(n=400\)</span> de uma distribuição Bernoulli com parâmetro <span class="math inline">\(\theta\)</span>. Suponha que foram observados 136 sucessos.</p>
-<p>A estimativa pontual é</p>
-<p><span class="math display">\[\hat{\theta} =  \frac{136}{400} = 0.34.\]</span></p>
-<p>Desejamos construir um intervalo de confiança de 99%. Temos</p>
-<p><span class="math display">\[\alpha = 1- \frac{99}{100} = 0.01\]</span></p>
-<p>e, portanto, <span class="math inline">\(z_{0.995} = 2.576\)</span>. Como</p>
-<p><span class="math display">\[Var(X)=\theta(1-\theta),\]</span></p>
-<p>estimamos o desvio-padrão por</p>
-<p><span class="math display">\[\sigma = \sqrt{\hat{\theta}(1-\hat{\theta})} =
-\sqrt{0.34\times0.66} = 0.474.\]</span></p>
-<p>Logo,</p>
-<p><span class="math display">\[\left[0.34 - 2.576\frac{0.474}{\sqrt{400}}
-;
-0.34
-+
-2.576\frac{0.474}{\sqrt{400}}
-\right].\]</span></p>
-<p>Após os cálculos, temos</p>
-<p><span class="math display">\[IC(\theta,0{,}99) = [0.279;0.401].\]</span> <!-- **Exemplo:** Intervalo de Confiança para média da distribuição exponencial --> <!-- Sejam $X_1, \dots, X_n$ iid exponencial $Exp(\lambda) = Gama(1, 1/\lambda)$. --> <!-- Então, --> <!-- $$\sum\limits{i=1}^n X_i \sim Gama(n, 1/\lambda) 2\lambda \sum\limits{i=1}^n X_i --> <!-- \sim Gama(n,2) = \chi^2_{2n}.$$ Considere $\alpha = 0{,}05$. Sejam $A$ e $B$ --> <!-- (ambos positivos) tal que --> <!-- $$P(A \leq 2\lambda \sum\limits{i=1}^n X_i \leq B ) = 0{,}95$$ --></p>
-</section>
-<section id="interpretação-de-um-intervalo-de-confiança" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="interpretação-de-um-intervalo-de-confiança"><span class="header-section-number">5.4</span> Interpretação de um Intervalo de Confiança</h2>
-<p>Uma interpretação muito comum, mas incorreta, é afirmar:</p>
-<blockquote class="blockquote">
-<p>Existe 99% de probabilidade de que <span class="math inline">\(\theta\)</span> pertença ao intervalo <span class="math inline">\([0.279;0.401]\)</span>.</p>
-</blockquote>
-<p>Essa afirmação está errada porque <span class="math inline">\(\theta\)</span> é um parâmetro fixo. Após observarmos os dados, o intervalo já foi determinado e <span class="math inline">\(\theta\)</span> está dentro dele ou não está.</p>
-<p>A interpretação correta é:</p>
-<blockquote class="blockquote">
-<p>Se repetirmos o procedimento de amostragem e construção do intervalo muitas vezes, aproximadamente 99% dos intervalos construídos conterão o verdadeiro valor de <span class="math inline">\(\theta\)</span>.</p>
-</blockquote>
-<p>Portanto, o nível de confiança refere-se ao método de construção do intervalo e não à probabilidade de o parâmetro pertencer ao intervalo específico obtido.</p>
-</section>
-<section id="exercícios" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">5.5</span> Exercícios</h2>
-<ol type="1">
-<li>(CESPE / CEBRASPE - 2026 - Telebras - Especialista em Gestão de Telecomunicações - Analista Superior - Subatividade: Estatística) Para avaliação da audiência do telejornal de certa emissora de televisão em determinado mês de 2025, mediram-se os pontos de audiência do programa em 25 dias desse mês, tendo sido obtido um valor médio de 34,7 pontos. Pesquisas anteriores apontaram um desvio padrão populacional de 3,50 pontos de audiência desse telejornal.</li>
-</ol>
-<p>A partir dessa situação hipotética, e supondo que a audiência do telejornal siga uma distribuição normal, julgue o item subsecutivo, assumindo um nível de confiança de 94% (<span class="math inline">\(z_{1−\alpha/2} = 1{,}88\)</span>).</p>
-<p>Infere-se das informações apresentadas que o intervalo de confiança para a média dos pontos de audiência em todo o mês é dado por <span class="math inline">\(\text{IC}(\mu, 0,94) = [33,38; 36,02]\)</span>.</p>
-<p>( ) Certo</p>
-<p>( ) Errado</p>
-<ol start="2" type="1">
-<li>(FCC - 2025 - Prefeitura de São Paulo - SP - Auditor Municipal de Controle Interno - AMCI Área de Especialização: Geral) A população formada pelos tempos de durações de atendimento a uma pessoa em um quichê de um órgão público é considerada normalmente distribuída com uma variância populacional igual a 2,56 (minutos)<span class="math inline">\(^2\)</span>. Uma amostra aleatória de tamanho 64 foi extraída, com reposição, dessa população, obtendo-se uma média amostral igual a 15 minutos. Com base na amostra, um intervalo de confiança de 95% foi construído para a média populacional, considerando que na curva normal padrão (Z) as probabilidades <span class="math inline">\(P(Z &lt; 1,64)= 95\%\)</span> e <span class="math inline">\(P(Z &lt; 1,96) = 97,5\%\)</span>. O limite superior do intervalo encontrado apresenta um valor igual a</li>
-</ol>
-<!-- -->
-<ol type="a">
-<li><p>15,6272</p></li>
-<li><p>15,3920</p></li>
-<li><p>15,5248</p></li>
-<li><p>15,4018</p></li>
-<li><p>15,5160</p></li>
-</ol>
-<!-- -->
-<ol start="3" type="1">
-<li>(FCC - 2025 - Prefeitura de São Paulo - SP - Analista de Planejamento e Desenvolvimento Organizacional Tecnologia da Informação e Comunicação) A população formada pelos salários, em salários mínimos (SM), dos empregados de uma prefeitura é normalmente distribuída com uma variância populacional igual a 2,25 SM<span class="math inline">\(^2\)</span>. Extraindo uma amostra aleatória desta população, com reposição, de tamanho 100, encontrou-se uma média amostral igual a 4,8 SM. Utilizando as informações da curva normal padrão (Z) que as probabilidades <span class="math inline">\(P(Z &lt; 1,64)= 0,95\)</span> e <span class="math inline">\(P(Z &lt; 1,96) = 0,975\)</span>, então o intervalo de confiança de 95% para a média populacional, com base na amostra, é igual a</li>
-</ol>
-<!-- -->
-<ol type="a">
-<li><p>[4,554 ; 5,046]</p></li>
-<li><p>[4,359 ; 5,241]</p></li>
-<li><p>[4,604 ; 4,956]</p></li>
-<li><p>[4,636 ; 4,964]</p></li>
-<li><p>[4,506 ; 5,094]</p></li>
-</ol>
-<!-- -->
-<ol start="4" type="1">
-<li>(IDESG - 2025 - Prefeitura de Cariacica - ES - Analista do Executivo Municipal - Estatística) Sobre o conceito de intervalos de confiança, é correto afirmar que:</li>
-</ol>
-<!-- -->
-<ol type="a">
-<li><p>O aumento do nível de confiança reduz a amplitude do intervalo.</p></li>
-<li><p>Um intervalo de confiança de 95% significa que há 95% de probabilidade de o parâmetro estar no intervalo calculado.</p></li>
-<li><p>Intervalos de confiança sempre contêm o parâmetro populacional.</p></li>
-<li><p>A amplitude do intervalo de confiança aumenta com a redução do tamanho da amostra.</p></li>
-</ol>
-<!-- -->
-<ol start="5" type="1">
-<li>(UECE-CEV - 2025 - PGE-CE - Técnico de Representação Judicial - Engenharia de Produção) A Procuradoria Geral do Estado do Ceará deseja estimar o indicador de tempo médio de tramitação de processos administrativos em sua sede. Para isso, foi coletada uma amostra aleatória de 36 processos, obtendo-se um tempo médio de 50 dias, com um desvio padrão populacional de 9 dias. Considerando um nível de confiança de 95%, assinale a opção que corresponde ao correto intervalo de confiança para o tempo médio de tramitação de processos. Considere <span class="math inline">\(z_{1-\alpha/2} = 2\)</span>.</li>
-</ol>
-<!-- -->
-<ol type="a">
-<li><p>(49,0 ; 51,0)</p></li>
-<li><p>(47,0 ; 53,0)</p></li>
-<li><p>(46,0 ; 54,0)</p></li>
-<li><p>(48,5 ; 51,5)</p></li>
-<li><p>(47,6 ; 52,9)</p></li>
-</ol>
-<!-- -->
-<ol start="6" type="1">
-<li>(FGV - 2024 - Prefeitura de Vitória - ES - Analista em Gestão Pública - Economista) Uma amostra aleatória simples de tamanho 25 de uma variável populacional com média desconhecida μ e variância suposta igual a 4 foi obtida e resultou numa média amostral igual a 5,48. Lembre-se de que, se Z tem distribuição normal padrão, então <span class="math inline">\(P[-1,96 &lt; Z &lt; 1,96] = 0,95\)</span>.</li>
-</ol>
-<p>Um intervalo de 95% de confiança para <span class="math inline">\(\mu\)</span> será então dado aproximadamente por:</p>
-<ol type="a">
-<li><p>(4,70; 6,26)</p></li>
-<li><p>(4,50; 6,46)</p></li>
-<li><p>(4,30; 6,66)</p></li>
-<li><p>(4,10; 6,86)</p></li>
-<li><p>(3,90; 7,06)</p></li>
-</ol>
-<ol start="7" type="1">
-<li>(FGV - 2006 - SERC-MS - Fiscal de Rendas - prova 1) Uma amostra aleatória simples de tamanho 25 foi selecionada para estimar a média desconhecida de uma população normal. A média amostral encontrada foi 4,2, e a variância amostral foi 1,44. O intervalo de 95% de confiança para a média populacional é:</li>
-</ol>
-<ol type="a">
-<li><p><span class="math inline">\(4,2 \pm 0,49\)</span></p></li>
-<li><p><span class="math inline">\(4,2 \pm 0,64\)</span></p></li>
-<li><p><span class="math inline">\(4,2 \pm 0,71\)</span></p></li>
-<li><p><span class="math inline">\(4,2 \pm 0,75\)</span></p></li>
-<li><p><span class="math inline">\(4,2 \pm 0,81\)</span></p></li>
-</ol>
-<ol start="8" type="1">
-<li>Considere uma amostra aleatória de uma população Normal. O caso em que a variância populacional <span class="math inline">\(\sigma^2\)</span> é conhecida pode ser visto como um caso particular do problema em que <span class="math inline">\(\sigma^2\)</span> é desconhecida. Assim, o intervalo de confiança para a média <span class="math inline">\(\mu\)</span> baseado na distribuição t de Student continua válido mesmo quando <span class="math inline">\(\sigma^2\)</span> é conhecida. Nesse contexto, explique por que não é recomendável utilizar esse intervalo quando a variância populacional é conhecida.</li>
-</ol>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1048,14 +837,11 @@ z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./unidade3.html" class="pagination-link" aria-label="Estimação Pontual">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimação Pontual</span></span>
+      <a href="./unidade7.html" class="pagination-link" aria-label="Inferência Estatística e Ciência de Dados">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferência Estatística e Ciência de Dados</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./unidade5.html" class="pagination-link" aria-label="Testes de Hipóteses">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testes de Hipóteses</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
