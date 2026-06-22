@@ -425,29 +425,13 @@ Definição
 <p>Você pode estar se perguntando: qual é a diferença entre consistência e não-viés? De fato, existe uma diferença sutil, que podemos entender comparando estimadores para <span class="math inline">\(\theta\)</span> na distribuição contínua <span class="math inline">\(\text{Unif}(0, \theta)\)</span>.</p>
 <ol type="1">
 <li><p><strong>Estimador não viesado e consistente (MoM)</strong></p>
-<p>Um exemplo é o estimador de momentos: <span class="math display">\[
-\hat{\theta}_{n,\text{MoM}} = 2\bar{X}.
-\]</span> Ele é não viesado, isto é, <span class="math display">\[
-E[\hat{\theta}_{n,\text{MoM}}] = \theta,
-\]</span> e também consistente, pois sua variância tende a zero quando <span class="math inline">\(n \to \infty\)</span>.</p></li>
+<p>Um exemplo é o estimador de momentos: <span class="math display">\[\hat{\theta}_{n,\text{MoM}} = 2\bar{X}.\]</span> Ele é não viesado, isto é, <span class="math display">\[E[\hat{\theta}_{n,\text{MoM}}] = \theta,\]</span> e também consistente, pois sua variância tende a zero quando <span class="math inline">\(n \to \infty\)</span>.</p></li>
 <li><p><strong>Não viesado, mas não consistente</strong></p>
-<p>Considere o estimador que utiliza apenas a primeira observação: <span class="math display">\[
-\hat{\theta} = 2X_1.
-\]</span> Ele é não viesado, pois <span class="math display">\[
-E[\hat{\theta}] = \theta.
-\]</span> No entanto, não é consistente, já que não melhora com o aumento de <span class="math inline">\(n\)</span>, pois ignora as demais observações. A consistência exige que o estimador se aproxime de <span class="math inline">\(\theta\)</span> à medida que <span class="math inline">\(n\)</span> cresce.</p></li>
+<p>Considere o estimador que utiliza apenas a primeira observação: <span class="math display">\[\hat{\theta} = 2X_1.\]</span> Ele é não viesado, pois <span class="math display">\[E[\hat{\theta}] = \theta.\]</span> No entanto, não é consistente, já que não melhora com o aumento de <span class="math inline">\(n\)</span>, pois ignora as demais observações. A consistência exige que o estimador se aproxime de <span class="math inline">\(\theta\)</span> à medida que <span class="math inline">\(n\)</span> cresce.</p></li>
 <li><p><strong>Viesado, mas consistente (EMV)</strong></p>
-<p>O estimador de máxima verossimilhança é: <span class="math display">\[
-\hat{\theta}_{n,\text{EMV}} = \max(X_1, \dots, X_n).
-\]</span> Sua esperança é dada por: <span class="math display">\[
-E[\hat{\theta}_{n,\text{EMV}}] = \frac{n}{n+1}\theta,
-\]</span> o que mostra que ele é viesado. No entanto, <span class="math display">\[
-\frac{n}{n+1}\theta \to \theta \quad \text{quando } n \to \infty,
-\]</span> ou seja, ele é assintoticamente não viesado e consistente.</p></li>
+<p>O estimador de máxima verossimilhança é: <span class="math display">\[\hat{\theta}_{n,\text{EMV}} = \max(X_1, \dots, X_n).\]</span> Sua esperança é dada por: <span class="math display">\[E[\hat{\theta}_{n,\text{EMV}}] = \frac{n}{n+1}\theta,\]</span> o que mostra que ele é viesado. No entanto, <span class="math display">\[\frac{n}{n+1}\theta \to \theta \quad \text{quando } n \to \infty,\]</span> ou seja, ele é assintoticamente não viesado e consistente.</p></li>
 <li><p><strong>Nem não viesado nem consistente</strong></p>
-<p>Um exemplo simples seria: <span class="math display">\[
-\hat{\theta} = \frac{1}{2}X_1,
-\]</span> que não é nem não viesado nem consistente.</p></li>
+<p>Um exemplo simples seria: <span class="math display">\[\hat{\theta} = \frac{1}{2}X_1,\]</span> que não é nem não viesado nem consistente.</p></li>
 </ol>
 <div class="callout callout-style-default callout-caution callout-titled" title="Teorema (Resultados auxiliares para provar a consistência)">
 <div class="callout-header d-flex align-content-center">
@@ -494,10 +478,8 @@ Informação de Fisher
 </div>
 <div class="callout-body-container callout-body">
 <p>Seja <span class="math inline">\(\mathbf{x} = (x_1, \dots, x_n)\)</span> uma amostra iid proveniente de uma distribuição discreta com função de massa de probabilidade <span class="math inline">\(p_X(t \mid \theta)\)</span>, ou de uma distribuição contínua com função densidade <span class="math inline">\(f_X(t \mid \theta)\)</span>, em que <span class="math inline">\(\theta\)</span> é um parâmetro (ou vetor de parâmetros).</p>
-<p>A <strong>Informação de Fisher</strong> do parâmetro <span class="math inline">\(\theta\)</span> é definida por: <span class="math display">\[
-I(\theta) = n \cdot E\left[\left(\frac{\partial}{\partial \theta} \ln L(\mathbf{x} \mid \theta)\right)^2\right]
-= -E\left[\frac{\partial^2}{\partial \theta^2} \ln L(\mathbf{x} \mid \theta)\right],
-\]</span> em que <span class="math inline">\(L(\mathbf{x} \mid \theta)\)</span> denota a função de verossimilhança dos dados dado o parâmetro <span class="math inline">\(\theta\)</span> (definida na Seção 4.3).</p>
+<p>A <strong>Informação de Fisher</strong> do parâmetro <span class="math inline">\(\theta\)</span> é definida por: <span class="math display">\[I(\theta) =   E\left[\left(\frac{\partial}{\partial \theta} \ln L(\mathbf{x} \mid \theta)\right)^2\right]
+= -E\left[\frac{\partial^2}{\partial \theta^2} \ln L(\mathbf{x} \mid \theta)\right],\]</span> em que <span class="math inline">\(L(\mathbf{x} \mid \theta)\)</span> denota a função de verossimilhança dos dados dado o parâmetro <span class="math inline">\(\theta\)</span> (definida na Seção 4.3).</p>
 <p>De acordo com a literatura, a Informação de Fisher “é uma forma de medir a quantidade de informação que uma variável aleatória observável carrega sobre um parâmetro desconhecido <span class="math inline">\(\theta\)</span> do qual depende a distribuição de probabilidade”.</p>
 </div>
 </div>
@@ -517,13 +499,9 @@ Limite Inferior de Cramér-Rao
 </div>
 <div class="callout-body-container callout-body">
 <p>Seja <span class="math inline">\(\mathbf{x} = (x_1, \dots, x_n)\)</span> uma amostra iid proveniente de uma distribuição discreta com função de massa de probabilidade <span class="math inline">\(p_X(t \mid \theta)\)</span>, ou de uma distribuição contínua com função densidade <span class="math inline">\(f_X(t \mid \theta)\)</span>, em que <span class="math inline">\(\theta\)</span> é um parâmetro (ou vetor de parâmetros).</p>
-<p>Se <span class="math inline">\(\hat{\theta}\)</span> é um estimador não viesado de <span class="math inline">\(\theta\)</span>, então: <span class="math display">\[
-\text{MSE}(\hat{\theta}, \theta) = \text{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)},
-\]</span> em que <span class="math inline">\(I(\theta)\)</span> é a Informação de Fisher definida anteriormente.</p>
+<p>Se <span class="math inline">\(\hat{\theta}\)</span> é um estimador não viesado de <span class="math inline">\(\theta\)</span>, então: <span class="math display">\[\text{MSE}(\hat{\theta}, \theta) = \text{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)},\]</span> em que <span class="math inline">\(I(\theta)\)</span> é a Informação de Fisher definida anteriormente.</p>
 <p>O que esse resultado nos diz é que, para qualquer estimador não viesado <span class="math inline">\(\hat{\theta}\)</span> de <span class="math inline">\(\theta\)</span>, a variância (que, nesse caso, coincide com o EQM) é, no mínimo, <span class="math inline">\(\frac{1}{I(\theta)}\)</span>.</p>
-<p>Se atingimos esse limite inferior, isto é, se: <span class="math display">\[
-\text{Var}(\hat{\theta}) = \frac{1}{I(\theta)},
-\]</span> então temos a menor variância possível para o estimador. Nesse caso, dizemos que <span class="math inline">\(\hat{\theta}\)</span> é um <strong>estimador não viesado de variância uniformemente mínima (ENVVUM)</strong> para <span class="math inline">\(\theta\)</span>.</p>
+<p>Se atingimos esse limite inferior, isto é, se: <span class="math display">\[\text{Var}(\hat{\theta}) = \frac{1}{I(\theta)},\]</span> então temos a menor variância possível para o estimador. Nesse caso, dizemos que <span class="math inline">\(\hat{\theta}\)</span> é um <strong>estimador não viesado de variância uniformemente mínima (ENVVUM)</strong> para <span class="math inline">\(\theta\)</span>.</p>
 </div>
 </div>
 <p>Como queremos encontrar a menor variância possível, podemos analisar esse problema sob a perspectiva da <strong>eficiência do estimador</strong>.</p>
@@ -537,14 +515,10 @@ Eficiência
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Seja <span class="math inline">\(\hat{\theta}\)</span> um estimador não viesado de <span class="math inline">\(\theta\)</span>. A eficiência de <span class="math inline">\(\hat{\theta}\)</span> é definida por: <span class="math display">\[
-e(\hat{\theta}, \theta) = \frac{I(\theta)^{-1}}{\text{Var}(\hat{\theta})} \leq 1.
-\]</span></p>
+<p>Seja <span class="math inline">\(\hat{\theta}\)</span> um estimador não viesado de <span class="math inline">\(\theta\)</span>. A eficiência de <span class="math inline">\(\hat{\theta}\)</span> é definida por: <span class="math display">\[e(\hat{\theta}, \theta) = \frac{I(\theta)^{-1}}{\text{Var}(\hat{\theta})} \leq 1.\]</span></p>
 <p>Esse valor estará sempre entre 0 e 1, pois, se a variância do estimador for igual ao LICR, então a eficiência será igual a 1. Caso a variância seja maior, a eficiência será menor que 1.</p>
 <p>Assim, quanto maior a variância, menor a eficiência; e desejamos que a eficiência seja a maior possível (isto é, igual a 1).</p>
-<p>Um estimador não viesado é dito <strong>eficiente</strong> se atinge o LICR, ou seja, quando: <span class="math display">\[
-e(\hat{\theta}, \theta) = 1.
-\]</span> Nesse caso, ele possui a menor variância possível entre todos os estimadores não viesados.</p>
+<p>Um estimador não viesado é dito <strong>eficiente</strong> se atinge o LICR, ou seja, quando: <span class="math display">\[e(\hat{\theta}, \theta) = 1.\]</span> Nesse caso, ele possui a menor variância possível entre todos os estimadores não viesados.</p>
 <p>Vale ressaltar que o LICR não é, em geral, garantido para estimadores viesados.</p>
 </div>
 </div>
@@ -557,9 +531,7 @@ e(\hat{\theta}, \theta) = 1.
 <li><p><strong>Estatístico A</strong>: conhece toda a amostra, ou seja, dispõe de <span class="math inline">\(n\)</span> observações: <span class="math inline">\(\mathbf{x} = (x_1, \dots, x_n)\)</span>.</p></li>
 <li><p><strong>Estatístico B</strong>: conhece apenas <span class="math inline">\(T(x_1, \dots, x_n) = t\)</span>, um único número que é função da amostra (por exemplo, a soma ou o máximo das observações).</p></li>
 </ul>
-<p>Heuristicamente, <span class="math inline">\(T(x_1, \dots, x_n)\)</span> é uma <strong>estatística suficiente</strong> se o Estatístico B consegue fazer um trabalho tão bom quanto o Estatístico A, mesmo tendo “menos informação”. Por exemplo, se as observações seguem uma distribuição Bernoulli, conhecer <span class="math display">\[
-T(x_1, \dots, x_n) = \sum_{i=1}^n x_i,
-\]</span> (o número de sucessos) é tão informativo quanto conhecer todos os resultados individuais. Isso ocorre porque uma boa estimativa seria a proporção de sucessos, isto é, o número de sucessos dividido pelo número total de ensaios.</p>
+<p>Heuristicamente, <span class="math inline">\(T(x_1, \dots, x_n)\)</span> é uma <strong>estatística suficiente</strong> se o Estatístico B consegue fazer um trabalho tão bom quanto o Estatístico A, mesmo tendo “menos informação”. Por exemplo, se as observações seguem uma distribuição Bernoulli, conhecer <span class="math display">\[T(x_1, \dots, x_n) = \sum_{i=1}^n x_i,\]</span> (o número de sucessos) é tão informativo quanto conhecer todos os resultados individuais. Isso ocorre porque uma boa estimativa seria a proporção de sucessos, isto é, o número de sucessos dividido pelo número total de ensaios.</p>
 <p>Assim, não nos importa a <strong>ordem</strong> dos resultados, mas apenas quantos sucessos ocorreram. A palavra “suficiente” sugere exatamente isso: uma quantidade de informação que é “suficiente” para inferência sobre o parâmetro.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Estatística Suficiente">
 <div class="callout-header d-flex align-content-center">
@@ -571,17 +543,14 @@ Estatística Suficiente
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uma estatística <span class="math inline">\(T = T(X_1, \dots, X_n)\)</span> é dita <strong>suficiente</strong> para o parâmetro <span class="math inline">\(\theta\)</span> se a distribuição condicional de <span class="math inline">\(X_1, \dots, X_n\)</span>, dado <span class="math inline">\(T = t\)</span> e <span class="math inline">\(\theta\)</span>, não depende de <span class="math inline">\(\theta\)</span>. Isto é, <span class="math display">\[
-P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)
+<p>Uma estatística <span class="math inline">\(T = T(X_1, \dots, X_n)\)</span> é dita <strong>suficiente</strong> para o parâmetro <span class="math inline">\(\theta\)</span> se a distribuição condicional de <span class="math inline">\(X_1, \dots, X_n\)</span>, dado <span class="math inline">\(T = t\)</span> e <span class="math inline">\(\theta\)</span>, não depende de <span class="math inline">\(\theta\)</span>. Isto é, <span class="math display">\[P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)
 =
-P(X_1 = x_1, \dots, X_n = x_n \mid T = t).
-\]</span></p>
+P(X_1 = x_1, \dots, X_n = x_n \mid T = t).\]</span></p>
 <p>No caso em que <span class="math inline">\(X_1, \dots, X_n\)</span> são variáveis contínuas, substituímos a probabilidade por uma função densidade.</p>
 </div>
 </div>
 <p>Para motivar a definição, retornamos ao exemplo anterior. Novamente, o Estatístico A possui toda a amostra <span class="math inline">\(x_1, \dots, x_n\)</span>, enquanto o Estatístico B conhece apenas o número <span class="math inline">\(t = T(x_1, \dots, x_n)\)</span>. A ideia é que o Estatístico B conhece apenas <span class="math inline">\(T = t\)</span>, mas, como <span class="math inline">\(T\)</span> é suficiente, ele não precisa conhecer <span class="math inline">\(\theta\)</span> para gerar novas amostras <span class="math inline">\(X_1', \dots, X_n'\)</span> da distribuição.</p>
-<p>Isso ocorre porque: <span class="math display">\[
-P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta) =
+<p>Isso ocorre porque: <span class="math display">\[P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta) =
 P(X_1 = x_1, \dots, X_n = x_n \mid T = t),\]</span> ou seja, a distribuição condicional não depende de <span class="math inline">\(\theta\)</span>. Como o Estatístico B conhece <span class="math inline">\(T = t\)</span>, ele conhece essa distribuição condicional e pode gerar novas amostras.</p>
 <p>Assim, o Estatístico B passa a ter <span class="math inline">\(n\)</span> observações iid <span class="math inline">\(X_1', \dots, X_n'\)</span> provenientes da mesma estrutura probabilística. Com essas novas observações, ele pode realizar inferência tão bem quanto o Estatístico A, que possui os dados originais <span class="math inline">\(X_1, \dots, X_n\)</span> (em média). Portanto, nenhum dos dois está em desvantagem. :)</p>
 <p>Embora essa definição seja difícil de verificar diretamente, existe um critério que facilita a identificação de estatísticas suficientes:</p>
@@ -595,11 +564,9 @@ Critério da Fatoração de Neyman-Fisher
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Sejam <span class="math inline">\(x_1, \dots, x_n\)</span> uma amostra iid com função de verossimilhança <span class="math inline">\(L(x_1, \dots, x_n \mid \theta)\)</span>. Uma estatística <span class="math inline">\(T = T(x_1, \dots, x_n)\)</span> é suficiente para <span class="math inline">\(\theta\)</span> se, e somente se, existirem funções não negativas <span class="math inline">\(g\)</span> e <span class="math inline">\(h\)</span> tais que: <span class="math display">\[
-L(x_1, \dots, x_n \mid \theta)
+<p>Sejam <span class="math inline">\(x_1, \dots, x_n\)</span> uma amostra iid com função de verossimilhança <span class="math inline">\(L(x_1, \dots, x_n \mid \theta)\)</span>. Uma estatística <span class="math inline">\(T = T(x_1, \dots, x_n)\)</span> é suficiente para <span class="math inline">\(\theta\)</span> se, e somente se, existirem funções não negativas <span class="math inline">\(g\)</span> e <span class="math inline">\(h\)</span> tais que: <span class="math display">\[L(x_1, \dots, x_n \mid \theta)
 =
-g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).
-\]</span></p>
+g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).\]</span></p>
 <p>Ou seja, a verossimilhança dos dados pode ser fatorada como o produto de dois termos:</p>
 <ul>
 <li>o primeiro termo <span class="math inline">\(g\)</span> pode depender de todos os dados, mas <strong>não depende de</strong> <span class="math inline">\(\theta\)</span>;</li>
@@ -615,40 +582,24 @@ g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).
 <section id="exemplo---usando-a-definição" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exemplo---usando-a-definição">Exemplo - Usando a Definição</h3>
 <p>Vamos analisar mais uma vez o exemplo do lançamento de moeda. Assim, <span class="math inline">\(P(X_1 = 1) = \theta\)</span>, <span class="math inline">\(P(X_1 = 0) = 1 - \theta\)</span>, e vamos considerar</p>
-<p><span class="math display">\[
-T = n\bar{X} = X_1 + \cdots + X_n.
-\]</span></p>
+<p><span class="math display">\[T = n\bar{X} = X_1 + \cdots + X_n.\]</span></p>
 <p>Afirmo que <span class="math inline">\(T\)</span> é suficiente. Para verificar isso, recorde que</p>
-<p><span class="math display">\[
-T \sim B(n,\theta),
-\]</span></p>
+<p><span class="math display">\[T \sim B(n,\theta),\]</span></p>
 <p>de modo que</p>
-<p><span class="math display">\[
-P(T=t)=\binom{n}{t}\theta^t(1-\theta)^{n-t}.
-\]</span></p>
+<p><span class="math display">\[P(T=t)=\binom{n}{t}\theta^t(1-\theta)^{n-t}.\]</span></p>
 <p>Podemos focar no caso em que</p>
-<p><span class="math display">\[
-x_1+\cdots+x_n=t,
-\]</span></p>
+<p><span class="math display">\[x_1+\cdots+x_n=t,\]</span></p>
 <p>caso contrário, a probabilidade condicional <span class="math inline">\(P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)\)</span> será simplesmente igual a zero para todo <span class="math inline">\(\theta\)</span>. Sob essa hipótese adicional, a condição <span class="math inline">\(T=t\)</span> decorre de <span class="math inline">\(X_1=x_1,\ldots,X_n=x_n\)</span>, de forma que a probabilidade de ambos os eventos ocorrerem é</p>
-<p><span class="math display">\[
-P(X_1=x_1,\ldots,X_n=x_n)=\theta^{x_1+\cdots+x_n}(1-\theta)^{n-x_1-\cdots-x_n},
-\]</span></p>
+<p><span class="math display">\[P(X_1=x_1,\ldots,X_n=x_n)=\theta^{x_1+\cdots+x_n}(1-\theta)^{n-x_1-\cdots-x_n},\]</span></p>
 <p>e, como <span class="math inline">\(x_1+\cdots+x_n=t\)</span>,</p>
-<p><span class="math display">\[
-=
-\theta^t(1-\theta)^{n-t}.
-\]</span></p>
+<p><span class="math display">\[=
+\theta^t(1-\theta)^{n-t}.\]</span></p>
 <p>Juntando tudo, obtemos</p>
-<p><span class="math display">\[
-P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
+<p><span class="math display">\[P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
 =
-\frac{P(X_1=x_1,\ldots,X_n=x_n)}{P(T=t)}
-\]</span></p>
-<p><span class="math display">\[
-=
-\frac{1}{\binom{n}{t}},
-\]</span></p>
+\frac{P(X_1=x_1,\ldots,X_n=x_n)}{P(T=t)}\]</span></p>
+<p><span class="math display">\[=
+\frac{1}{\binom{n}{t}},\]</span></p>
 <p>o que é independente de <span class="math inline">\(\theta\)</span>, como afirmado.</p>
 <p>Esse resultado final poderia ter sido escrito imediatamente, sem qualquer cálculo: cada uma das <span class="math inline">\(\binom{n}{t}\)</span> sequências <span class="math inline">\(x_1,\ldots,x_n\)</span> que contêm exatamente <span class="math inline">\(t\)</span> uns é igualmente provável, dado que <span class="math inline">\(T=t\)</span>.</p>
 </section>
@@ -661,9 +612,7 @@ P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
 <p><span class="math display">\[g(x_1,\dots,x_n) = 1,\]</span> e</p>
 <p><span class="math display">\[h(T(x_1,\dots, x_n), \theta) = \theta^{T(x_1,\dots,x_n)}(1-\theta)^{n-T(x_1,\dots,x_n)}.\]</span></p>
 <p>Pelo critério de Neyman-Fisher, <span class="math inline">\(T(x_1,\dots,x_n) = \sum\limits_{i=1}^{n}x_i\)</span> é suficiente. A média</p>
-<p><span class="math display">\[
-\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},
-\]</span></p>
+<p><span class="math display">\[\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},\]</span></p>
 <p>também é, pois conhecer o número total de caras e a proporção amostral de caras é equivalente (já que conhecemos <span class="math inline">\(n\)</span>!).</p>
 </section>
 <section id="exercícios" class="level3 unnumbered">
@@ -673,10 +622,8 @@ P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
 <li><p>Considere a distribuição <span class="math inline">\(N(\theta,1)\)</span>. Encontre uma estatística suficiente.</p></li>
 <li><p>Considere a distribuição exponencial</p></li>
 </ol>
-<p><span class="math display">\[
-f(x;\theta)=\theta e^{-\theta x},
-\qquad (x&gt;0).
-\]</span></p>
+<p><span class="math display">\[f(x;\theta)=\theta e^{-\theta x},
+\qquad (x&gt;0).\]</span></p>
 <p>Encontre uma estatística suficiente.</p>
 <ol start="4" type="1">
 <li><p>Considere a distribuição <span class="math inline">\(U(0, \theta)\)</span>. Encontre uma estatística suficiente.</p></li>
@@ -699,12 +646,8 @@ Momentos (Revisão)
 </div>
 <div class="callout-body-container callout-body">
 <p>Seja <span class="math inline">\(X\)</span> uma variável aleatória e <span class="math inline">\(c \in \mathbb{R}\)</span> um escalar. Então, o <span class="math inline">\(k\)</span>-ésimo momento de <span class="math inline">\(X\)</span> é:</p>
-<p><span class="math display">\[
-E[X^k],
-\]</span> e o <span class="math inline">\(k\)</span>-ésimo momento de <span class="math inline">\(X\)</span> em torno de <span class="math inline">\(c\)</span> é:</p>
-<p><span class="math display">\[
-E[(X - c)^k].
-\]</span> Em geral, temos interesse especial no <strong>primeiro momento</strong> (média) de <span class="math inline">\(X\)</span>: <span class="math inline">\(\mu = E[X]\)</span>, e no <strong>segundo momento em torno da média</strong> (variância): <span class="math inline">\(\text{Var}(X) = E[(X - \mu)^2]\)</span>.</p>
+<p><span class="math display">\[E[X^k],\]</span> e o <span class="math inline">\(k\)</span>-ésimo momento de <span class="math inline">\(X\)</span> em torno de <span class="math inline">\(c\)</span> é:</p>
+<p><span class="math display">\[E[(X - c)^k].\]</span> Em geral, temos interesse especial no <strong>primeiro momento</strong> (média) de <span class="math inline">\(X\)</span>: <span class="math inline">\(\mu = E[X]\)</span>, e no <strong>segundo momento em torno da média</strong> (variância): <span class="math inline">\(\text{Var}(X) = E[(X - \mu)^2]\)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Momentos Amostrais">
@@ -717,11 +660,7 @@ Momentos Amostrais
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Seja <span class="math inline">\(X\)</span> uma variável aleatória e <span class="math inline">\(x_1, \ldots, x_n\)</span> uma amostra i.i.d. de <span class="math inline">\(X\)</span>. O <span class="math inline">\(k\)</span>-ésimo momento amostral é: <span class="math display">\[
-\frac{1}{n} \sum_{i=1}^{n} x_i^k.
-\]</span> O <span class="math inline">\(k\)</span>-ésimo momento amostral em torno de <span class="math inline">\(c\)</span> é: <span class="math display">\[
-\frac{1}{n} \sum_{i=1}^{n} (x_i - c)^k.
-\]</span></p>
+<p>Seja <span class="math inline">\(X\)</span> uma variável aleatória e <span class="math inline">\(x_1, \ldots, x_n\)</span> uma amostra i.i.d. de <span class="math inline">\(X\)</span>. O <span class="math inline">\(k\)</span>-ésimo momento amostral é: <span class="math display">\[\frac{1}{n} \sum_{i=1}^{n} x_i^k.\]</span> O <span class="math inline">\(k\)</span>-ésimo momento amostral em torno de <span class="math inline">\(c\)</span> é: <span class="math display">\[\frac{1}{n} \sum_{i=1}^{n} (x_i - c)^k.\]</span></p>
 <p>Casos particulares importantes:</p>
 <ul>
 <li>O primeiro momento amostral é a <strong>média amostral</strong>;</li>
@@ -733,139 +672,97 @@ Momentos Amostrais
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="ideia-por-trás-do-método"><span class="header-section-number">4.2.1</span> Ideia por trás do método</h3>
 <p>A estimação pelo método dos momentos baseia-se exclusivamente na <strong>Lei dos Grandes Números</strong>, que relembramos a seguir:</p>
 <p>Sejam <span class="math inline">\(Y_1, Y_2, \ldots\)</span> variáveis aleatórias independentes com uma distribuição comum que possui média <span class="math inline">\(\mu_{Y}\)</span>. Então, as médias amostrais convergem para a média da distribuição à medida que o número de observações aumenta:</p>
-<p><span class="math display">\[
-\bar{Y}_{n} = \frac{1}{n} \sum_{i=1}^{n} Y_i \to \mu_{Y} \quad \text{quando } n \to \infty.
-\]</span></p>
+<p><span class="math display">\[\bar{Y}_{n} = \frac{1}{n} \sum_{i=1}^{n} Y_i \to \mu_{Y} \quad \text{quando } n \to \infty.\]</span></p>
 <p>Para mostrar como o método dos momentos determina um estimador, consideramos inicialmente o caso de <strong>um único parâmetro</strong>.</p>
 <p>Começamos com variáveis aleatórias independentes <span class="math inline">\(X_1, X_2, \ldots\)</span>, geradas segundo a função densidade de probabilidade <span class="math inline">\(f_X(x \mid \theta)\)</span>, associada a um parâmetro desconhecido <span class="math inline">\(\theta\)</span>. A média comum das variáveis <span class="math inline">\(X_i\)</span>, denotada por <span class="math inline">\(\mu_X\)</span>, é uma função <span class="math inline">\(k(\theta)\)</span> de <span class="math inline">\(\theta\)</span>. Por exemplo, se as <span class="math inline">\(X_i\)</span> são variáveis aleatórias contínuas, então:</p>
-<p><span class="math display">\[
-\mu_X = \int_{-\infty}^{\infty} x f_X(x \mid \theta)\, dx = k(\theta).
-\]</span></p>
+<p><span class="math display">\[\mu_X = \int_{-\infty}^{\infty} x f_X(x \mid \theta)\, dx = k(\theta).\]</span></p>
 <p>A Lei dos Grandes Números afirma que:</p>
-<p><span class="math display">\[
-\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i \to \mu_X \quad \text{quando } n \to \infty.
-\]</span></p>
+<p><span class="math display">\[\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i \to \mu_X \quad \text{quando } n \to \infty.\]</span></p>
 <p>Assim, quando o número de observações <span class="math inline">\(n\)</span> é grande, a média da distribuição <span class="math inline">\(\mu = k(\theta)\)</span> pode ser bem aproximada pela média amostral, isto é:</p>
-<p><span class="math display">\[
-\bar{X} \approx k(\theta).
-\]</span></p>
+<p><span class="math display">\[\bar{X} \approx k(\theta).\]</span></p>
 <p>Essa relação pode ser transformada em um estimador <span class="math inline">\(\hat{\theta}\)</span>, definindo:</p>
-<p><span class="math display">\[
-\bar{X} = k(\hat{\theta}),
-\]</span></p>
+<p><span class="math display">\[\bar{X} = k(\hat{\theta}),\]</span></p>
 <p>e resolvendo essa equação em relação a <span class="math inline">\(\hat{\theta}\)</span>.</p>
 <p>Na sequência, descreveremos o procedimento no caso de um <strong>vetor de parâmetros</strong> e apresentaremos diversos exemplos. Veremos também que o <strong>método delta</strong> pode ser utilizado para estimar a variância dos estimadores obtidos pelo método dos momentos.</p>
 </section>
 <section id="procedimento-geral-do-método-dos-momentos" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="procedimento-geral-do-método-dos-momentos"><span class="header-section-number">4.2.2</span> Procedimento Geral do Método dos Momentos</h3>
 <p>De forma mais geral, para variáveis aleatórias independentes <span class="math inline">\(X_1, X_2, \ldots\)</span>, geradas segundo uma distribuição associada ao parâmetro <span class="math inline">\(\theta\)</span>, e sendo <span class="math inline">\(m\)</span> uma função real, se <span class="math inline">\(k(\theta) =E_{\theta}[m(X_1)],\)</span> então</p>
-<p><span class="math display">\[
-\frac{1}{n} \sum_{i=1}^{n} m(X_i) \to k(\theta) \quad \text{quando } n \to \infty.
-\]</span></p>
+<p><span class="math display">\[\frac{1}{n} \sum_{i=1}^{n} m(X_i) \to k(\theta) \quad \text{quando } n \to \infty.\]</span></p>
 <p>O método dos momentos resulta das escolhas <span class="math inline">\(m(x) = x^m\)</span>. Denotamos</p>
-<p><span class="math display">\[
-\mu_m = E[X^m] = k_m(\theta). \tag{1}
-\]</span></p>
+<p><span class="math display">\[\mu_m = E[X^m] = k_m(\theta). \tag{1}\]</span></p>
 <p>para o <span class="math inline">\(m\)</span>-ésimo momento.</p>
 <p>Nosso procedimento de estimação segue os <strong>4 passos</strong> abaixo, que conectam os momentos amostrais aos parâmetros do modelo:</p>
 </section>
 <section id="passo-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-1">Passo 1</h3>
 <p>Se o modelo possui <span class="math inline">\(d\)</span> parâmetros, calculamos as funções <span class="math inline">\(k_m\)</span> na equação (1) para os primeiros <span class="math inline">\(d\)</span> momentos:</p>
-<p><span class="math display">\[
-\mu_1 = k_1(\theta_1, \theta_2, \ldots, \theta_d), \quad
+<p><span class="math display">\[\mu_1 = k_1(\theta_1, \theta_2, \ldots, \theta_d), \quad
 \mu_2 = k_2(\theta_1, \theta_2, \ldots, \theta_d), \quad \ldots \quad
-\mu_d = k_d(\theta_1, \theta_2, \ldots, \theta_d),
-\]</span></p>
+\mu_d = k_d(\theta_1, \theta_2, \ldots, \theta_d),\]</span></p>
 <p>obtendo assim <span class="math inline">\(d\)</span> equações em <span class="math inline">\(d\)</span> incógnitas.</p>
 </section>
 <section id="passo-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-2">Passo 2</h3>
 <p>Resolvemos esse sistema para os <span class="math inline">\(d\)</span> parâmetros como funções dos momentos:</p>
-<p><span class="math display">\[
-\theta_1 = g_1(\mu_1, \mu_2, \dots, \mu_d), \quad
+<p><span class="math display">\[\theta_1 = g_1(\mu_1, \mu_2, \dots, \mu_d), \quad
 \theta_2 = g_2(\mu_1, \mu_2, \dots, \mu_d), \quad \dots \quad
-\theta_d = g_d(\mu_1, \mu_2, \dots, \mu_d). \tag{2}
-\]</span></p>
+\theta_d = g_d(\mu_1, \mu_2, \dots, \mu_d). \tag{2}\]</span></p>
 </section>
 <section id="passo-3" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-3">Passo 3</h3>
 <p>Com base nos dados <span class="math inline">\(\mathbf{x} = (x_1, x_2, \ldots, x_n)\)</span>, calculamos os primeiros <span class="math inline">\(d\)</span> momentos amostrais:</p>
-<p><span class="math display">\[
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad
+<p><span class="math display">\[\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad
 \overline{x^2} = \frac{1}{n} \sum_{i=1}^{n} x_i^2, \quad \ldots \quad
-\overline{x^d} = \frac{1}{n} \sum_{i=1}^{n} x_i^d.
-\]</span></p>
+\overline{x^d} = \frac{1}{n} \sum_{i=1}^{n} x_i^d.\]</span></p>
 <p>Pela Lei dos Grandes Números, para cada momento <span class="math inline">\(m = 1, \ldots, d\)</span>, temos: <span class="math inline">\(\mu_m \approx \overline{x^m}.\)</span></p>
 </section>
 <section id="passo-4" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-4">Passo 4</h3>
 <p>Substituímos os momentos populacionais <span class="math inline">\(\mu_m\)</span> pelos momentos amostrais <span class="math inline">\(\overline{x^m}\)</span>. Assim, as soluções em (2) fornecem as fórmulas dos estimadores de momentos <span class="math inline">\((\hat{\theta}_1, \hat{\theta}_2, \ldots, \hat{\theta}_d)\)</span>. Para os dados <span class="math inline">\(\mathbf{x}\)</span>, esses estimadores são dados por:</p>
-<p><span class="math display">\[
-\hat{\theta}_1(\mathbf{x}) = g_1(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad
+<p><span class="math display">\[\hat{\theta}_1(\mathbf{x}) = g_1(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad
 \hat{\theta}_2(\mathbf{x}) = g_2(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad \ldots \quad
-\hat{\theta}_d(\mathbf{x}) = g_d(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}).
-\]</span></p>
+\hat{\theta}_d(\mathbf{x}) = g_d(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}).\]</span></p>
 <p>A forma como essa descrição abstrata funciona na prática é melhor compreendida por meio de exemplos.</p>
 </section>
 </section>
 <section id="exemplo-distribuição-de-pareto" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exemplo-distribuição-de-pareto">Exemplo: Distribuição de Pareto</h2>
 <p>Sejam <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> uma amostra aleatória simples de variáveis aleatórias com distribuição de Pareto, cuja densidade é dada por:</p>
-<p><span class="math display">\[
-f_X(x \mid \theta) = \theta x^{-(\theta+1)}, \quad x &gt; 1.
-\]</span></p>
+<p><span class="math display">\[f_X(x \mid \theta) = \theta x^{-(\theta+1)}, \quad x &gt; 1.\]</span></p>
 <p>A função de distribuição acumulada é:</p>
-<p><span class="math display">\[
-F_X(x) = 1 - x^{-\theta}, \quad x &gt; 1.
-\]</span></p>
+<p><span class="math display">\[F_X(x) = 1 - x^{-\theta}, \quad x &gt; 1.\]</span></p>
 <p>A média e a variância são, respectivamente:</p>
-<p><span class="math display">\[
-\mu = \frac{\theta}{\theta - 1}, \quad \sigma^2 = \frac{\theta}{(\theta - 1)^2(\theta - 2)}.
-\]</span></p>
+<p><span class="math display">\[\mu = \frac{\theta}{\theta - 1}, \quad \sigma^2 = \frac{\theta}{(\theta - 1)^2(\theta - 2)}.\]</span></p>
 <p>Neste caso, temos apenas <strong>um parâmetro</strong>, <span class="math inline">\(\theta\)</span>. Assim, no <strong>Passo 1</strong>, precisamos apenas do primeiro momento:</p>
-<p><span class="math display">\[
-\mu_1 = \mu = k_1(\theta) = \frac{\theta}{\theta - 1}.
-\]</span></p>
+<p><span class="math display">\[\mu_1 = \mu = k_1(\theta) = \frac{\theta}{\theta - 1}.\]</span></p>
 <section id="passo-2-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-2-1">Passo 2</h3>
 <p>Resolvendo para <span class="math inline">\(\theta\)</span> em função da média <span class="math inline">\(\mu\)</span>:</p>
-<p><span class="math display">\[
-\theta = g_1(\mu) = \frac{\mu}{\mu - 1}.
-\]</span></p>
+<p><span class="math display">\[\theta = g_1(\mu) = \frac{\mu}{\mu - 1}.\]</span></p>
 </section>
 <section id="passos-3-e-4" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passos-3-e-4">Passos 3 e 4</h3>
 <p>Substituindo a média populacional pela média amostral <span class="math inline">\(\bar{X}\)</span>, obtemos o estimador de momentos:</p>
-<p><span class="math display">\[
-\hat{\theta} = \frac{\bar{X}}{\bar{X} - 1}.\]</span></p>
+<p><span class="math display">\[\hat{\theta} = \frac{\bar{X}}{\bar{X} - 1}.\]</span></p>
 </section>
 <section id="variância-via-método-delta" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="variância-via-método-delta">Variância via Método Delta</h3>
 <p>Um bom estimador deve ter variância pequena. Para estimar a variância de <span class="math inline">\(\hat{\theta}\)</span>, utilizamos o <strong>método delta</strong>:</p>
-<p><span class="math display">\[
-\sigma^2_{\hat{\theta}} \approx \left[g_1'(\mu)\right]^2 \frac{\sigma^2}{n}.
-\]</span></p>
+<p><span class="math display">\[\sigma^2_{\hat{\theta}} \approx \left[g_1'(\mu)\right]^2 \frac{\sigma^2}{n}.\]</span></p>
 <p>Calculamos a derivada:</p>
-<p><span class="math display">\[
-g_1'(\mu) = -\frac{1}{(\mu - 1)^2}.
-\]</span></p>
+<p><span class="math display">\[g_1'(\mu) = -\frac{1}{(\mu - 1)^2}.\]</span></p>
 <p>Substituindo <span class="math inline">\(\mu = \frac{\theta}{\theta - 1}\)</span>, obtemos:</p>
-<p><span class="math display">\[
-g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
+<p><span class="math display">\[g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <p>Assim, a variância aproximada é:</p>
-<p><span class="math display">\[
-\sigma^2_{\hat{\theta}} \approx \frac{(\theta - 1)^4}{n} \cdot \frac{\theta}{(\theta - 1)^2(\theta - 2)} = \frac{\theta(\theta - 1)^2}{n(\theta - 2)}.\]</span></p>
+<p><span class="math display">\[\sigma^2_{\hat{\theta}} \approx \frac{(\theta - 1)^4}{n} \cdot \frac{\theta}{(\theta - 1)^2(\theta - 2)} = \frac{\theta(\theta - 1)^2}{n(\theta - 2)}.\]</span></p>
 </section>
 <section id="exemplo-numérico" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exemplo-numérico">Exemplo Numérico</h3>
 <p>Considere <span class="math inline">\(\theta = 3\)</span> e <span class="math inline">\(n = 100\)</span>:</p>
-<p><span class="math display">\[
-\sigma^2_{\hat{\theta}} \approx \frac{3(3 - 1)^2}{100(3 - 2)} = \frac{12}{100} = \frac{3}{25}.\]</span></p>
+<p><span class="math display">\[\sigma^2_{\hat{\theta}} \approx \frac{3(3 - 1)^2}{100(3 - 2)} = \frac{12}{100} = \frac{3}{25}.\]</span></p>
 <p>Logo, o desvio padrão aproximado é:</p>
-<p><span class="math display">\[
-\sigma_{\hat{\theta}} \approx \sqrt{\frac{3}{25}} = 0{,}346.
-\]</span></p>
+<p><span class="math display">\[\sigma_{\hat{\theta}} \approx \sqrt{\frac{3}{25}} = 0{,}346.\]</span></p>
 </section>
 <section id="simulação-em-r" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="simulação-em-r">Simulação em R</h3>
@@ -919,16 +816,12 @@ g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <section id="passo-1-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-1-1">Passo 1</h3>
 <p>Neste caso, também temos apenas <strong>um parâmetro</strong>, <span class="math inline">\(\theta\)</span>. Assim, no <strong>Passo 1</strong>, precisamos apenas do primeiro momento:</p>
-<p><span class="math display">\[
-\mu_1 = \mu = k_1(\theta) = \frac{\theta}{2}.
-\]</span></p>
+<p><span class="math display">\[\mu_1 = \mu = k_1(\theta) = \frac{\theta}{2}.\]</span></p>
 </section>
 <section id="passo-2-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-2-2">Passo 2</h3>
 <p>Resolvendo para <span class="math inline">\(\theta\)</span> em função da média <span class="math inline">\(\mu\)</span>:</p>
-<p><span class="math display">\[
-\theta = g_1(\mu) = 2\mu.
-\]</span></p>
+<p><span class="math display">\[\theta = g_1(\mu) = 2\mu.\]</span></p>
 </section>
 <section id="passos-3-e-4-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passos-3-e-4-1">Passos 3 e 4</h3>
@@ -1023,9 +916,7 @@ g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <section id="exemplo-distribuição-gama" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exemplo-distribuição-gama">Exemplo: Distribuição Gama</h2>
 <p>Considere <span class="math inline">\(X \sim \text{Gama}(\theta_1, \theta_2)\)</span>, em que:</p>
-<p><span class="math display">\[
-\mu = E[X] = \frac{\theta_1}{\theta_2}, \quad \text{e}\quad \sigma^2 = Var(X) = \frac{\theta_1}{\theta_2^2}.
-\]</span></p>
+<p><span class="math display">\[\mu = E[X] = \frac{\theta_1}{\theta_2}, \quad \text{e}\quad \sigma^2 = Var(X) = \frac{\theta_1}{\theta_2^2}.\]</span></p>
 <section id="passo-1-4" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passo-1-4">Passo 1</h3>
 <p>Neste caso, temos dois parâmetros, <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>. Assim, utilizamos o primeiro e o segundo momento:</p>
@@ -1039,13 +930,9 @@ g_1'(\mu) = -(\theta - 1)^2.\]</span></p>
 <section id="passos-3-e-4-4" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="passos-3-e-4-4">Passos 3 e 4</h3>
 <p>Substituindo a média populacional pela média amostral <span class="math inline">\(\bar{X}\)</span> e segundo momento populacional pelo segundo momento amostral, obtemos os seguintes estimadores de momentos:</p>
-<p><span class="math display">\[
-\widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2}
-\]</span></p>
+<p><span class="math display">\[\widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2} \]</span></p>
 <p>em que:</p>
-<p><span class="math display">\[
-\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.
-\]</span></p>
+<p><span class="math display">\[\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.\]</span></p>
 <div class="callout callout-style-default callout-caution callout-titled" title="Exercícios">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1063,18 +950,12 @@ Exercícios
 <p>A colisão de um feixe de prótons (<span class="math inline">\(p\)</span>) acelerados, com energia de <span class="math inline">\(600 \, \text{MeV}\)</span> (milhões de elétron-volts), com os núcleos de um alvo de produção gera píons positivos (<span class="math inline">\(\pi^+\)</span>) por meio de uma das seguintes reações:</p>
 <p><span class="math display">\[p + p \rightarrow p + n + \pi^+ \quad \text{ou} \quad p + n \rightarrow n + n + \pi^+.\]</span></p>
 <p>A partir do decaimento subsequente dos píons (tempo de vida médio de <span class="math inline">\(26{,}03 \, \text{ns}\)</span>), múons positivos (<span class="math inline">\(\mu^+\)</span>) são formados via o decaimento de dois corpos:</p>
-<p><span class="math display">\[
-\pi^+ \rightarrow \mu^+ + \nu_\mu,
-\]</span></p>
+<p><span class="math display">\[\pi^+ \rightarrow \mu^+ + \nu_\mu,\]</span></p>
 <p>em que <span class="math inline">\(\nu_\mu\)</span> representa o <strong>neutrino do múon</strong>.</p>
 <p>O decaimento do múon em um pósitron (<span class="math inline">\(e^+\)</span>), um neutrino do elétron (<span class="math inline">\(\nu_e\)</span>) e um antineutrino do múon (<span class="math inline">\(\bar{\nu}_\mu\)</span>):</p>
-<p><span class="math display">\[
-\mu^+ \rightarrow e^+ + \nu_e + \bar{\nu}_\mu,
-\]</span></p>
+<p><span class="math display">\[\mu^+ \rightarrow e^+ + \nu_e + \bar{\nu}_\mu,\]</span></p>
 <p>possui uma distribuição angular <span class="math inline">\(t\)</span> com densidade dada por:</p>
-<p><span class="math display">\[
-f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
-\]</span></p>
+<p><span class="math display">\[f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,\]</span></p>
 <p>em que <span class="math inline">\(t\)</span> é o ângulo entre a trajetória do pósitron e o spin do <span class="math inline">\(\mu^+\)</span>, e o parâmetro de anisotropia <span class="math inline">\(\alpha \in [-1/3, 1/3]\)</span> depende da polarização do feixe de múons e da energia do pósitron. Com base nas observações <span class="math inline">\(t_1, \ldots, t_n\)</span>, obtenha o estimador de momentos <span class="math inline">\(\hat{\alpha}\)</span> para <span class="math inline">\(\alpha\)</span>.</p>
 <p><strong>Observação:</strong> Neste caso, a média é igual a <span class="math inline">\(\pi\)</span> para todos os valores de <span class="math inline">\(\alpha\)</span>. Portanto, será necessário utilizar o <strong>segundo momento</strong> para obter um estimador.</p>
 <ol start="2" type="1">
@@ -1126,9 +1007,7 @@ f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
 <h3 class="unnumbered anchored" data-anchor-id="passo-3-opcionalmente-verifique-se-hattheta-é-de-fato-um-máximo-local-checando-se-a-segunda-derivada-em-hattheta-é-negativa-quando-theta-é-um-único-parâmetro-ou-se-a-hessiana-matriz-das-segundas-derivadas-parciais-é-negativa-semidefinida-quando-theta-é-um-vetor-de-parâmetros">Passo 3: Opcionalmente, verifique se <span class="math inline">\(\hat{\theta}\)</span> é de fato um máximo (local), checando se a segunda derivada em <span class="math inline">\(\hat{\theta}\)</span> é negativa (quando <span class="math inline">\(\theta\)</span> é um único parâmetro), ou se a Hessiana (matriz das segundas derivadas parciais) é negativa semidefinida (quando <span class="math inline">\(\theta\)</span> é um vetor de parâmetros)</h3>
 <p>Também queremos calcular a segunda derivada, pois, caso contrário, não sabemos se o ponto encontrado é um máximo ou um mínimo. Derivamos novamente a primeira derivada <span class="math inline">\(\sum_{i=1}^n \left(-1 + \frac{x_i}{\theta}\right)\)</span> em relação a <span class="math inline">\(\theta\)</span>, e observamos que, como <span class="math inline">\(\theta^2\)</span> é sempre positivo, o seu negativo é sempre negativo. Assim, a segunda derivada é sempre menor que zero, o que implica que a função é côncava para baixo em todo o domínio.</p>
 <p>Isso significa que qualquer ponto onde a derivada seja zero corresponde a um máximo global. Portanto, encontramos com sucesso o máximo global da função de verossimilhança.</p>
-<p><span class="math display">\[
-\frac{\partial^2 \ln(L(\theta \mid x))}{\partial \theta^2} = \sum_{i=1}^n \left(-\frac{x_i}{\theta^2}\right) &lt; 0. \quad \text{(côncava para baixo em todo o domínio)}
-\]</span></p>
+<p><span class="math display">\[\frac{\partial^2 \ln(L(\theta \mid x))}{\partial \theta^2} = \sum_{i=1}^n \left(-\frac{x_i}{\theta^2}\right) &lt; 0. \quad \text{(côncava para baixo em todo o domínio)}\]</span></p>
 </section>
 </section>
 <section id="exemplo-emv-exponencial" class="level2 unnumbered">
@@ -1164,6 +1043,7 @@ f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
 <ol type="1">
 <li>Considere <span class="math inline">\(X_1, \ldots, X_n \overset{iid}{\sim} \text{Exp}(\mu^{-1})\)</span>. Defina <span class="math inline">\(T = X_{(1)} = \min\{X_1, \ldots, X_n\}\)</span>.</li>
 </ol>
+<!-- -->
 <ol type="a">
 <li><p>Determine o viés <span class="math inline">\(B(T,\mu)\)</span> e o erro quadrático médio <span class="math inline">\(\text{EQM}(T)\)</span>.</p></li>
 <li><p>Verifique se <span class="math inline">\(T\)</span> é um estimador consistente para <span class="math inline">\(\mu\)</span>.</p></li>
@@ -1173,9 +1053,7 @@ f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
 <ol start="2" type="1">
 <li>Seja <span class="math inline">\(X_1, \ldots, X_n\)</span> uma amostra aleatória de tamanho <span class="math inline">\(n\)</span> de uma distribuição de Bernoulli com parâmetro <span class="math inline">\(\theta \in (0,1)\)</span>. Seja <span class="math inline">\(T(X) = \bar{X}_n^2\)</span> o estimador de máxima verossimilhança de <span class="math inline">\(\theta^2\)</span>. Considere o estimador Jackknife de <span class="math inline">\(\theta^2\)</span> dado por:</li>
 </ol>
-<p><span class="math display">\[
-T_J(X) = nT - \frac{n-1}{n} \sum_{i=1}^{n} T_{(i)},
-\]</span></p>
+<p><span class="math display">\[T_J(X) = nT - \frac{n-1}{n} \sum_{i=1}^{n} T_{(i)},\]</span></p>
 <p>em que <span class="math inline">\(T_{(i)}\)</span> representa o estimador <span class="math inline">\(T\)</span> calculado com a amostra original excluindo a <span class="math inline">\(i\)</span>-ésima observação.</p>
 <ol type="a">
 <li><p>Mostre que o EMV de <span class="math inline">\(\theta^2\)</span> é viesado.</p></li>
@@ -1185,33 +1063,23 @@ T_J(X) = nT - \frac{n-1}{n} \sum_{i=1}^{n} T_{(i)},
 <ol start="3" type="1">
 <li>Sejam <span class="math inline">\(Y_1, \ldots, Y_n\)</span> variáveis aleatórias independentes tais que <span class="math inline">\(Y_i \sim \mathcal{N}(\alpha + \beta x_i, \sigma^2),\)</span> em que os valores <span class="math inline">\(x_i\)</span> são não estocásticos e satisfazem <span class="math inline">\(\sum_{i=1}^{n} (x_i - \bar{x}_n)^2 &gt; 0.\)</span> Mostre que</li>
 </ol>
-<p><span class="math display">\[
-\hat{\beta} = \frac{\sum_{i=1}^{n} (x_i - \bar{x}_n) Y_i}{\sum_{i=1}^{n} (x_i - \bar{x}_n)^2}
-\]</span></p>
+<p><span class="math display">\[\hat{\beta} = \frac{\sum_{i=1}^{n} (x_i - \bar{x}_n) Y_i}{\sum_{i=1}^{n} (x_i - \bar{x}_n)^2}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\hat{\alpha} = \bar{Y}_n - \hat{\beta} \bar{x}_n
-\]</span></p>
+<p><span class="math display">\[\hat{\alpha} = \bar{Y}_n - \hat{\beta} \bar{x}_n\]</span></p>
 <p>são estimadores não viesados de <span class="math inline">\(\beta\)</span> e <span class="math inline">\(\alpha\)</span>, respectivamente.</p>
 <ol start="4" type="1">
 <li>Sejam <span class="math inline">\(X_1, \ldots, X_n\)</span> uma amostra aleatória de uma variável com distribuição Rayleigh, cuja densidade é dada por:</li>
 </ol>
-<p><span class="math display">\[
-f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\infty)}(x), \quad \theta &gt; 0.
-\]</span></p>
+<p><span class="math display">\[f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\infty)}(x), \quad \theta &gt; 0.\]</span></p>
 <ol type="a">
 <li><p>Determine um estimador não viesado e consistente para <span class="math inline">\(\theta\)</span>.</p></li>
 <li><p>Estime <span class="math inline">\(\theta\)</span> a partir da seguinte amostra (força vibratória de uma palheta de turbina):</p></li>
 </ol>
-<p><span class="math display">\[
-16.88,\ 10.23,\ 4.59,\ 6.66,\ 13.68,\ 14.23,\ 19.87,\ 9.40,\ 6.51,\ 9.24,\ 12.20,\ 10.95.
-\]</span></p>
+<p><span class="math display">\[16.88,\ 10.23,\ 4.59,\ 6.66,\ 13.68,\ 14.23,\ 19.87,\ 9.40,\ 6.51,\ 9.24,\ 12.20,\ 10.95.\]</span></p>
 <ol start="5" type="1">
 <li>Considere <span class="math inline">\(X_1, \ldots, X_n\)</span> uma amostra aleatória de uma variável <span class="math inline">\(X\)</span> com função densidade de probabilidade dada por:</li>
 </ol>
-<p><span class="math display">\[
-f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).
-\]</span></p>
+<p><span class="math display">\[f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).\]</span></p>
 <ol type="a">
 <li><p>Determine um estimador não viesado de <span class="math inline">\(\theta\)</span> que seja função de <span class="math inline">\(X_{(1)} = \min\{X_1, \ldots, X_n\}\)</span>.</p></li>
 <li><p>Mostre que <span class="math inline">\(X_{(1)}\)</span> é um estimador consistente de <span class="math inline">\(\theta\)</span>.</p></li>

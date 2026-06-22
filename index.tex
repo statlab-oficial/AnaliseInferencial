@@ -1,30 +1,27 @@
 % Options for packages loaded elsewhere
-% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
-  brazilian,
   letterpaper,
   DIV=11,
   numbers=noendperiod]{scrreprt}
-\usepackage{xcolor}
+
 \usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{5}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
+  \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
 \usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
+\ifPDFTeX\else  
+    % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -42,29 +39,18 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
-\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -84,7 +70,7 @@
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
@@ -94,7 +80,7 @@
 \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
 \newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
@@ -107,8 +93,8 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
-\usepackage{longtable,booktabs,array}
-\newcounter{none} % for unnumbered tables
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -120,21 +106,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 % Set default figure placement to htbp
+\makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
-
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -168,26 +150,6 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-
-\ifLuaTeX
-\usepackage[bidi=basic,shorthands=off]{babel}
-\else
-\usepackage[bidi=default,shorthands=off]{babel}
-\fi
-\ifLuaTeX
-  \usepackage{selnolig} % disable illegal ligatures
-\fi
-
-
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-
-
-
- 
-
 
 \usepackage{graphicx}
 \usepackage{eso-pic}
@@ -279,9 +241,22 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{brazilian}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage{bookmark}
+
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
+\urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
   pdflang={pt-br},
   colorlinks=true,
@@ -291,9 +266,9 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-
 \author{}
 \date{}
+
 \begin{document}
 
 % Capa sem número
@@ -325,10 +300,10 @@
 
 \renewcommand*\contentsname{Índice}
 {
+\hypersetup{linkcolor=}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-
 \bookmarksetup{startatroot}
 
 \chapter*{Informações Legais e Declaração de Uso de Inteligência
@@ -849,7 +824,7 @@ fórmula:
 Resultado: número de combinações (ordem não importa).
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Escolher 2 elementos de um conjunto com 4:
 
@@ -904,7 +879,7 @@ expansão de:
 
 \[(x + y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k.\]
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Exemplo}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \[(1 + x)^4 = 1 + 4x + 6x^2 + 4x^3 + x^4.\]
 
@@ -916,7 +891,7 @@ A Progressão Geométrica (PG) é uma sequência numérica amplamente
 utilizada em Matemática, Estatística, Economia e Ciências Naturais. Ela
 descreve fenômenos que crescem ou decrescem de forma multiplicativa.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Uma PG é uma sequência em que cada termo, a partir do segundo, é obtido
 multiplicando o termo anterior por uma constante chamada razão.
@@ -963,7 +938,7 @@ Quando a PG é convergente:
 A Série de Taylor é uma ferramenta fundamental da Análise Matemática que
 permite representar funções como somas infinitas de potências.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição:}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 A expansão em série de Taylor de uma função \(f\) em torno de \(x = 0\)
 (Série de Maclaurin) é dada por:
@@ -1095,7 +1070,7 @@ Podemos resolver isso utilizando o Teorema do Mapeamento Contínuo (ou
 teorema de Mann-Wald) (de fato, essa é a base da demonstração que
 apresentaremos).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Método Delta}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Método Delta}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Suponha que \[
 \frac{\sqrt{n}(X_n - \mu)}{\sigma} \xrightarrow{d} N(0,1),
@@ -1539,7 +1514,7 @@ Exponencial}\label{distribuiuxe7uxe3o-exponencial}
   \]
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -1622,7 +1597,7 @@ observamos. Imagine que o mundo é uma ``caixa preta'' que segue certas
 regras (leis da física, comportamento humano, algoritmos de mercado),
 portanto o PGD são essas regras em funcionamento.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Realidade vs.~Observação}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Realidade vs.~Observação}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \begin{itemize}
 \item
@@ -1636,7 +1611,7 @@ portanto o PGD são essas regras em funcionamento.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Representação Matemática}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Representação Matemática}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 O PGD pode ser definido pela distribuição de probabilidade conjunta
 desconhecida \(P(X, Y)\) (ou simplemente \(P(Z)\)).
@@ -2109,7 +2084,7 @@ outros.
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}}
+\includegraphics{unidade1_files/figure-pdf/unnamed-chunk-10-1.pdf}
 
 Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas
 inferiores a 30\%. Por outro lado, em alguns casos, obtivemos proporções
@@ -2415,7 +2390,7 @@ observáveis (como, por exemplo, uma amostra aleatória de \(n\)
 indivíduos de uma população de interesse). Uma estatística \(T\) é uma
 função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{População vs.~Amostra}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \begin{itemize}
 \item
@@ -2429,7 +2404,7 @@ função aplicada a essa amostra: \[T=\mathcal{T}(X_{1},X_{2},...,X_{n})\]
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Parâmetro vs.~Estatística}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \textbf{Parâmetro:} Um valor numérico calculado a partir de \emph{todos}
 os indivíduos na população. \emph{(Discreta / Contínua)}
@@ -2477,7 +2452,7 @@ correlações}\label{covariuxe2ncia-variuxe2ncia-de-somas-e-correlauxe7uxf5es}
 O resultado a seguir mostra que a esperança de um produto de variáveis
 aleatórias independentes é igual ao produto de suas esperanças.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 1:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 1:}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Se \(X\) e \(Y\) são independentes, então, para quaisquer funções \(h\)
 e \(g\),
@@ -2500,7 +2475,7 @@ E[g(X)h(Y)] =& \int\limits_{-\infty}^{+\infty}\int\limits_{-\infty}^{+\infty} g(
 
 A demonstração para o caso discreto pode ser feita de maneira similar.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definição 1:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definição 1:}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 A covariância entre \(X\) e \(Y\), representada como \(Cov(X,Y)\), é
 definida como
@@ -2520,7 +2495,7 @@ Cov(X,Y) = & E[\underline{\hspace{2cm}} - \underline{\hspace{2cm}} - \underline{
 Note que, se \(X\) e \(Y\) são independentes, então, pela Proposição 1,
 \(Cov(X,Y) = 0\). No entanto, o inverso não é verdade.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 2:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Proposição 2:}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \begin{enumerate}
 \def\labelenumi{\roman{enumi})}
@@ -2544,7 +2519,7 @@ Proposição 2, temos que
 =&\sum\limits_{i=1}^{n} Var(X_i) + 2\mathop{\sum\sum}\limits_{i < j}Cov(X_i,X_j).
 \end{aligned}\]
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição 2: Amostra Aleatória:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Definição 2: Amostra Aleatória:}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 A variáveis aleatórias \(X_1, X_2, \dots, X_n\) são chamadas de amostra
 aleatória e de tamanho \(n\) da população \(f(x)\) se
@@ -2623,7 +2598,7 @@ Essa FDP pode ser usada para responder perguntas sobre a amostra. Por
 exemplo, qual é a probabilidade de que todas as placas durem mais de 2
 anos?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Resposta:}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Resposta:}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \end{tcolorbox}
 
@@ -2649,7 +2624,6 @@ coletados. Uma população finita é um conjunto finito de números,
 dessa população. Essas amostras podem ser obtidas de quatro maneiras
 diferentes. Podemos resumir as quatro situações na Tabela 1 a seguir:
 
-{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}lll@{}}
 \toprule\noalign{}
 Tipo de seleção & Sem reposição & Com reposição \\
@@ -2660,7 +2634,6 @@ Tipo de seleção & Sem reposição & Com reposição \\
 \textbf{Ordenado} & \(\frac{n!}{(n-r)!}\) & \(n^r\) \\
 \textbf{Não ordenado} & \(\binom{n}{r}\) & \(\binom{n+r-1}{r}\) \\
 \end{longtable}
-}
 
 Tabela 1: Número de possíveis arranjos de tamanho \(r\) a partir de
 \(n\) objetos.
@@ -2753,7 +2726,7 @@ distribuição condicional de \(X_i\) dados \(X_1, \dots, X_{i-1}\) são
 \(1/(N - i + 1)\), que são próximas de \(1/N\) se \(i \le n\) for
 pequeno em comparação com \(N\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Arranjos ou combinação ao contar amostras?}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Arranjos ou combinação ao contar amostras?}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Ao contar o número de \textbf{amostras aleatórias simples} possíveis, o
 resultado depende de como definimos uma \emph{amostra}.
@@ -2862,7 +2835,7 @@ Visto que \(X_1, \dots, X_n\) são identicamente distribuídas,
 \(M_{X_i}(t)\) é a mesma função para cada \(i\). Assim, temos o
 seguinte:
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 2}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 2}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(X_1, \dots, X_n\) uma amostra aleatória de uma população com FGM
 \(M_X(t)\). Então a FGM da média amostral é:
@@ -2914,7 +2887,7 @@ distribuição!
 estatística provenientes de todas as amostras possíveis de tamanho
 \(n\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O Método de `Força Bruta' para construir uma Distribuição Amostral}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Para entender a origem de uma distribuição amostral, imagine o seguinte
 processo exato (ou de ``força bruta''):
@@ -2987,7 +2960,7 @@ com média \(\mu_{x}\) e variância \(\sigma_{x}^{2}\):
 Para compreendermos como a média amostral se comporta, utilizamos as
 seguintes propriedades das combinações lineares:
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Teorema 1: Combinações Lineares}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Sejam \(a_{i}\) para \(i=1,2,...,k\) constantes e sejam \(X_{i}\) para
 \(i=1,2,...,k\) variáveis aleatórias. Então:
@@ -3125,7 +3098,7 @@ Um parâmetro populacional de interesse comum é a variância populacional
 \(S^2\) para estimar \(\sigma^2\). Portanto, a distribuição amostral de
 \(S^2\) é de grande interesse.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição Qui-quadrado (\(\chi^2\))}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 A soma dos quadrados de variáveis normais padrão independentes é
 distribuída como uma variável aleatória \(\chi^2\). Mais formalmente:
@@ -3198,7 +3171,7 @@ determinar a quantos erros padrões (\(S/\sqrt{n}\)) a média amostral
 \(\bar{X}\) está de um valor hipotético \(\mu\). Portanto, a
 distribuição amostral desta razão é de extrema importância.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição t de Student}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \textbf{Definição 2.1:} Se \(Z \sim N(0, 1)\), \(W \sim \chi^2(\nu)\), e
 \(Z\) e \(W\) são independentes, então:
@@ -3245,7 +3218,7 @@ Para um tamanho de amostra \textbf{GRANDE} \(n\) e uma AA
 
 \[T = \frac{\bar{X} - \mu_x}{S/\sqrt{n}}\,  \dot{\sim} \, t(n - 1).\]
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Fatos Úteis}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Fatos Úteis}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \begin{itemize}
 \tightlist
@@ -3296,7 +3269,7 @@ AA, uma de tamanho \(n_1\) com variância amostral \(S_1^2\) e outra de
 tamanho \(n_2\) com variância amostral \(S_2^2\), a estatística
 \(\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\) é utilizada.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Distribuição F}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \textbf{Definição 2.2:} Se \(W_1 \sim \chi^2(\nu_1)\) e
 \(W_2 \sim \chi^2(\nu_2)\) são independentes, então:
@@ -3387,7 +3360,7 @@ grande número de repetições, torna-se um resultado matemático rigoroso,
 através da aplicação de um caso especial da Lei dos Grandes Números
 (Magalhães, 2006).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Lei dos Grandes Números}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Lei dos Grandes Números}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Sejam \(X_1, X_2, \dots\) variáveis aleatórias com esperanças finitas e
 seja \(S_n = X_1+ X_2 + \dots + X_n\). A sequência \(\{X_n: n\geq 1\}\)
@@ -3450,12 +3423,12 @@ Rêgo; Mendoça, 2017).
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{unidade2_files/figure-pdf/unnamed-chunk-1-1.pdf}}
+\includegraphics{unidade2_files/figure-pdf/unnamed-chunk-1-1.pdf}
 
 \section{Teorema Central do Limite
 (TCL)}\label{teorema-central-do-limite-tcl}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema Central do Limite}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teorema Central do Limite}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(X_{1},X_{2},...,X_{n}\) uma AA de uma distribuição com média
 \(\mu_{x}\) e variância \(\sigma_{x}^{2}<\infty\). Então para
@@ -3652,7 +3625,7 @@ A primeira propriedade de estimadores que abordaremos é o viés. O viés
 de um estimador mede se, em termos de valor esperado, o estimador é
 igual ao verdadeiro parâmetro.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(\hat{\theta}\) um estimador para \(\theta\). O viés de
 \(\hat{\theta}\) como estimador para \(\theta\) é
@@ -3709,7 +3682,7 @@ Observe que, se \(\hat{\theta}\) for não viesado, então
 \(E(\hat{\theta}) = \theta\), e, nesse caso, o EQM coincide com a
 variância.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Definição}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Definição}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 O EQM de um estimador \(\hat{\theta}\) de \(\theta\) é
 
@@ -3735,7 +3708,7 @@ apenas vendo os conceitos básicos!).
 \subsection*{Consistência}\label{consistuxeancia}
 \addcontentsline{toc}{subsection}{Consistência}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definição}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Um estimador \(\hat{\theta}_n\) (dependendo de \(n\) amostras iid) de
 \(\theta\) é dito (fracamente) \textbf{consistente} se este converge (em
@@ -3785,41 +3758,36 @@ comparando estimadores para \(\theta\) na distribuição contínua
 \item
   \textbf{Estimador não viesado e consistente (MoM)}
 
-  Um exemplo é o estimador de momentos: \[
-  \hat{\theta}_{n,\text{MoM}} = 2\bar{X}.
-  \] Ele é não viesado, isto é, \[
-  E[\hat{\theta}_{n,\text{MoM}}] = \theta,
-  \] e também consistente, pois sua variância tende a zero quando
-  \(n \to \infty\).
+  Um exemplo é o estimador de momentos:
+  \[\hat{\theta}_{n,\text{MoM}} = 2\bar{X}.\] Ele é não viesado, isto é,
+  \[E[\hat{\theta}_{n,\text{MoM}}] = \theta,\] e também consistente,
+  pois sua variância tende a zero quando \(n \to \infty\).
 \item
   \textbf{Não viesado, mas não consistente}
 
-  Considere o estimador que utiliza apenas a primeira observação: \[
-  \hat{\theta} = 2X_1.
-  \] Ele é não viesado, pois \[
-  E[\hat{\theta}] = \theta.
-  \] No entanto, não é consistente, já que não melhora com o aumento de
-  \(n\), pois ignora as demais observações. A consistência exige que o
-  estimador se aproxime de \(\theta\) à medida que \(n\) cresce.
+  Considere o estimador que utiliza apenas a primeira observação:
+  \[\hat{\theta} = 2X_1.\] Ele é não viesado, pois
+  \[E[\hat{\theta}] = \theta.\] No entanto, não é consistente, já que
+  não melhora com o aumento de \(n\), pois ignora as demais observações.
+  A consistência exige que o estimador se aproxime de \(\theta\) à
+  medida que \(n\) cresce.
 \item
   \textbf{Viesado, mas consistente (EMV)}
 
-  O estimador de máxima verossimilhança é: \[
-  \hat{\theta}_{n,\text{EMV}} = \max(X_1, \dots, X_n).
-  \] Sua esperança é dada por: \[
-  E[\hat{\theta}_{n,\text{EMV}}] = \frac{n}{n+1}\theta,
-  \] o que mostra que ele é viesado. No entanto, \[
-  \frac{n}{n+1}\theta \to \theta \quad \text{quando } n \to \infty,
-  \] ou seja, ele é assintoticamente não viesado e consistente.
+  O estimador de máxima verossimilhança é:
+  \[\hat{\theta}_{n,\text{EMV}} = \max(X_1, \dots, X_n).\] Sua esperança
+  é dada por: \[E[\hat{\theta}_{n,\text{EMV}}] = \frac{n}{n+1}\theta,\]
+  o que mostra que ele é viesado. No entanto,
+  \[\frac{n}{n+1}\theta \to \theta \quad \text{quando } n \to \infty,\]
+  ou seja, ele é assintoticamente não viesado e consistente.
 \item
   \textbf{Nem não viesado nem consistente}
 
-  Um exemplo simples seria: \[
-  \hat{\theta} = \frac{1}{2}X_1,
-  \] que não é nem não viesado nem consistente.
+  Um exemplo simples seria: \[\hat{\theta} = \frac{1}{2}X_1,\] que não é
+  nem não viesado nem consistente.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Teorema (Resultados auxiliares para provar a consistência)}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Teorema (Resultados auxiliares para provar a consistência)}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3875,7 +3843,7 @@ consistência e não-viés, temos um estimador que:
   e faz isso da maneira mais rápida possível (\emph{eficiente}).
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Informação de Fisher}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Informação de Fisher}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(\mathbf{x} = (x_1, \dots, x_n)\) uma amostra iid proveniente de
 uma distribuição discreta com função de massa de probabilidade
@@ -3884,12 +3852,10 @@ densidade \(f_X(t \mid \theta)\), em que \(\theta\) é um parâmetro (ou
 vetor de parâmetros).
 
 A \textbf{Informação de Fisher} do parâmetro \(\theta\) é definida por:
-\[
-I(\theta) = n \cdot E\left[\left(\frac{\partial}{\partial \theta} \ln L(\mathbf{x} \mid \theta)\right)^2\right]
-= -E\left[\frac{\partial^2}{\partial \theta^2} \ln L(\mathbf{x} \mid \theta)\right],
-\] em que \(L(\mathbf{x} \mid \theta)\) denota a função de
-verossimilhança dos dados dado o parâmetro \(\theta\) (definida na Seção
-4.3).
+\[I(\theta) =   E\left[\left(\frac{\partial}{\partial \theta} \ln L(\mathbf{x} \mid \theta)\right)^2\right]
+= -E\left[\frac{\partial^2}{\partial \theta^2} \ln L(\mathbf{x} \mid \theta)\right],\]
+em que \(L(\mathbf{x} \mid \theta)\) denota a função de verossimilhança
+dos dados dado o parâmetro \(\theta\) (definida na Seção 4.3).
 
 De acordo com a literatura, a Informação de Fisher ``é uma forma de
 medir a quantidade de informação que uma variável aleatória observável
@@ -3929,7 +3895,7 @@ ele é \textbf{eficiente}; uma propriedade altamente desejável em
 inferência estatística. Esse limite mínimo é conhecido como
 \textbf{Limite Inferior de Cramér-Rao}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Limite Inferior de Cramér-Rao}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Limite Inferior de Cramér-Rao}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(\mathbf{x} = (x_1, \dots, x_n)\) uma amostra iid proveniente de
 uma distribuição discreta com função de massa de probabilidade
@@ -3937,31 +3903,30 @@ uma distribuição discreta com função de massa de probabilidade
 densidade \(f_X(t \mid \theta)\), em que \(\theta\) é um parâmetro (ou
 vetor de parâmetros).
 
-Se \(\hat{\theta}\) é um estimador não viesado de \(\theta\), então: \[
-\text{MSE}(\hat{\theta}, \theta) = \text{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)},
-\] em que \(I(\theta)\) é a Informação de Fisher definida anteriormente.
+Se \(\hat{\theta}\) é um estimador não viesado de \(\theta\), então:
+\[\text{MSE}(\hat{\theta}, \theta) = \text{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)},\]
+em que \(I(\theta)\) é a Informação de Fisher definida anteriormente.
 
 O que esse resultado nos diz é que, para qualquer estimador não viesado
 \(\hat{\theta}\) de \(\theta\), a variância (que, nesse caso, coincide
 com o EQM) é, no mínimo, \(\frac{1}{I(\theta)}\).
 
-Se atingimos esse limite inferior, isto é, se: \[
-\text{Var}(\hat{\theta}) = \frac{1}{I(\theta)},
-\] então temos a menor variância possível para o estimador. Nesse caso,
-dizemos que \(\hat{\theta}\) é um \textbf{estimador não viesado de
-variância uniformemente mínima (ENVVUM)} para \(\theta\).
+Se atingimos esse limite inferior, isto é, se:
+\[\text{Var}(\hat{\theta}) = \frac{1}{I(\theta)},\] então temos a menor
+variância possível para o estimador. Nesse caso, dizemos que
+\(\hat{\theta}\) é um \textbf{estimador não viesado de variância
+uniformemente mínima (ENVVUM)} para \(\theta\).
 
 \end{tcolorbox}
 
 Como queremos encontrar a menor variância possível, podemos analisar
 esse problema sob a perspectiva da \textbf{eficiência do estimador}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Eficiência}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Eficiência}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(\hat{\theta}\) um estimador não viesado de \(\theta\). A
-eficiência de \(\hat{\theta}\) é definida por: \[
-e(\hat{\theta}, \theta) = \frac{I(\theta)^{-1}}{\text{Var}(\hat{\theta})} \leq 1.
-\]
+eficiência de \(\hat{\theta}\) é definida por:
+\[e(\hat{\theta}, \theta) = \frac{I(\theta)^{-1}}{\text{Var}(\hat{\theta})} \leq 1.\]
 
 Esse valor estará sempre entre 0 e 1, pois, se a variância do estimador
 for igual ao LICR, então a eficiência será igual a 1. Caso a variância
@@ -3971,10 +3936,8 @@ Assim, quanto maior a variância, menor a eficiência; e desejamos que a
 eficiência seja a maior possível (isto é, igual a 1).
 
 Um estimador não viesado é dito \textbf{eficiente} se atinge o LICR, ou
-seja, quando: \[
-e(\hat{\theta}, \theta) = 1.
-\] Nesse caso, ele possui a menor variância possível entre todos os
-estimadores não viesados.
+seja, quando: \[e(\hat{\theta}, \theta) = 1.\] Nesse caso, ele possui a
+menor variância possível entre todos os estimadores não viesados.
 
 Vale ressaltar que o LICR não é, em geral, garantido para estimadores
 viesados.
@@ -4001,28 +3964,25 @@ proveniente de uma distribuição conhecida com parâmetro desconhecido
 Heuristicamente, \(T(x_1, \dots, x_n)\) é uma \textbf{estatística
 suficiente} se o Estatístico B consegue fazer um trabalho tão bom quanto
 o Estatístico A, mesmo tendo ``menos informação''. Por exemplo, se as
-observações seguem uma distribuição Bernoulli, conhecer \[
-T(x_1, \dots, x_n) = \sum_{i=1}^n x_i,
-\] (o número de sucessos) é tão informativo quanto conhecer todos os
-resultados individuais. Isso ocorre porque uma boa estimativa seria a
-proporção de sucessos, isto é, o número de sucessos dividido pelo número
-total de ensaios.
+observações seguem uma distribuição Bernoulli, conhecer
+\[T(x_1, \dots, x_n) = \sum_{i=1}^n x_i,\] (o número de sucessos) é tão
+informativo quanto conhecer todos os resultados individuais. Isso ocorre
+porque uma boa estimativa seria a proporção de sucessos, isto é, o
+número de sucessos dividido pelo número total de ensaios.
 
 Assim, não nos importa a \textbf{ordem} dos resultados, mas apenas
 quantos sucessos ocorreram. A palavra ``suficiente'' sugere exatamente
 isso: uma quantidade de informação que é ``suficiente'' para inferência
 sobre o parâmetro.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Estatística Suficiente}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Estatística Suficiente}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-tip-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Uma estatística \(T = T(X_1, \dots, X_n)\) é dita \textbf{suficiente}
 para o parâmetro \(\theta\) se a distribuição condicional de
 \(X_1, \dots, X_n\), dado \(T = t\) e \(\theta\), não depende de
-\(\theta\). Isto é, \[
-P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)
+\(\theta\). Isto é, \[P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)
 =
-P(X_1 = x_1, \dots, X_n = x_n \mid T = t).
-\]
+P(X_1 = x_1, \dots, X_n = x_n \mid T = t).\]
 
 No caso em que \(X_1, \dots, X_n\) são variáveis contínuas, substituímos
 a probabilidade por uma função densidade.
@@ -4036,8 +3996,8 @@ ideia é que o Estatístico B conhece apenas \(T = t\), mas, como \(T\) é
 suficiente, ele não precisa conhecer \(\theta\) para gerar novas
 amostras \(X_1', \dots, X_n'\) da distribuição.
 
-Isso ocorre porque: \[
-P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta) =
+Isso ocorre porque:
+\[P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta) =
 P(X_1 = x_1, \dots, X_n = x_n \mid T = t),\] ou seja, a distribuição
 condicional não depende de \(\theta\). Como o Estatístico B conhece
 \(T = t\), ele conhece essa distribuição condicional e pode gerar novas
@@ -4052,16 +4012,15 @@ média). Portanto, nenhum dos dois está em desvantagem. :)
 Embora essa definição seja difícil de verificar diretamente, existe um
 critério que facilita a identificação de estatísticas suficientes:
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Critério da Fatoração de Neyman-Fisher}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Critério da Fatoração de Neyman-Fisher}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Sejam \(x_1, \dots, x_n\) uma amostra iid com função de verossimilhança
 \(L(x_1, \dots, x_n \mid \theta)\). Uma estatística
 \(T = T(x_1, \dots, x_n)\) é suficiente para \(\theta\) se, e somente
-se, existirem funções não negativas \(g\) e \(h\) tais que: \[
-L(x_1, \dots, x_n \mid \theta)
+se, existirem funções não negativas \(g\) e \(h\) tais que:
+\[L(x_1, \dots, x_n \mid \theta)
 =
-g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).
-\]
+g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).\]
 
 Ou seja, a verossimilhança dos dados pode ser fatorada como o produto de
 dois termos:
@@ -4096,27 +4055,19 @@ Definição}\label{exemplo---usando-a-definiuxe7uxe3o}
 Vamos analisar mais uma vez o exemplo do lançamento de moeda. Assim,
 \(P(X_1 = 1) = \theta\), \(P(X_1 = 0) = 1 - \theta\), e vamos considerar
 
-\[
-T = n\bar{X} = X_1 + \cdots + X_n.
-\]
+\[T = n\bar{X} = X_1 + \cdots + X_n.\]
 
 Afirmo que \(T\) é suficiente. Para verificar isso, recorde que
 
-\[
-T \sim B(n,\theta),
-\]
+\[T \sim B(n,\theta),\]
 
 de modo que
 
-\[
-P(T=t)=\binom{n}{t}\theta^t(1-\theta)^{n-t}.
-\]
+\[P(T=t)=\binom{n}{t}\theta^t(1-\theta)^{n-t}.\]
 
 Podemos focar no caso em que
 
-\[
-x_1+\cdots+x_n=t,
-\]
+\[x_1+\cdots+x_n=t,\]
 
 caso contrário, a probabilidade condicional
 \(P(X_1 = x_1, \dots, X_n = x_n \mid T = t, \theta)\) será simplesmente
@@ -4124,29 +4075,21 @@ igual a zero para todo \(\theta\). Sob essa hipótese adicional, a
 condição \(T=t\) decorre de \(X_1=x_1,\ldots,X_n=x_n\), de forma que a
 probabilidade de ambos os eventos ocorrerem é
 
-\[
-P(X_1=x_1,\ldots,X_n=x_n)=\theta^{x_1+\cdots+x_n}(1-\theta)^{n-x_1-\cdots-x_n},
-\]
+\[P(X_1=x_1,\ldots,X_n=x_n)=\theta^{x_1+\cdots+x_n}(1-\theta)^{n-x_1-\cdots-x_n},\]
 
 e, como \(x_1+\cdots+x_n=t\),
 
-\[
-=
-\theta^t(1-\theta)^{n-t}.
-\]
+\[=
+\theta^t(1-\theta)^{n-t}.\]
 
 Juntando tudo, obtemos
 
-\[
-P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
+\[P(X_1=x_1,\ldots,X_n=x_n\mid T=t)
 =
-\frac{P(X_1=x_1,\ldots,X_n=x_n)}{P(T=t)}
-\]
+\frac{P(X_1=x_1,\ldots,X_n=x_n)}{P(T=t)}\]
 
-\[
-=
-\frac{1}{\binom{n}{t}},
-\]
+\[=
+\frac{1}{\binom{n}{t}},\]
 
 o que é independente de \(\theta\), como afirmado.
 
@@ -4176,9 +4119,7 @@ Portanto,
 Pelo critério de Neyman-Fisher,
 \(T(x_1,\dots,x_n) = \sum\limits_{i=1}^{n}x_i\) é suficiente. A média
 
-\[
-\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},
-\]
+\[\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},\]
 
 também é, pois conhecer o número total de caras e a proporção amostral
 de caras é equivalente (já que conhecemos \(n\)!).
@@ -4198,10 +4139,8 @@ de caras é equivalente (já que conhecemos \(n\)!).
   Considere a distribuição exponencial
 \end{enumerate}
 
-\[
-f(x;\theta)=\theta e^{-\theta x},
-\qquad (x>0).
-\]
+\[f(x;\theta)=\theta e^{-\theta x},
+\qquad (x>0).\]
 
 Encontre uma estatística suficiente.
 
@@ -4227,31 +4166,25 @@ As definições iniciais e a estratégia podem parecer confusas à primeira
 vista, mas apresentaremos vários exemplos que devem ajudar a tornar tudo
 mais claro.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Momentos (Revisão)}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Momentos (Revisão)}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(X\) uma variável aleatória e \(c \in \mathbb{R}\) um escalar.
 Então, o \(k\)-ésimo momento de \(X\) é:
 
-\[
-E[X^k],
-\] e o \(k\)-ésimo momento de \(X\) em torno de \(c\) é:
+\[E[X^k],\] e o \(k\)-ésimo momento de \(X\) em torno de \(c\) é:
 
-\[
-E[(X - c)^k].
-\] Em geral, temos interesse especial no \textbf{primeiro momento}
-(média) de \(X\): \(\mu = E[X]\), e no \textbf{segundo momento em torno
-da média} (variância): \(\text{Var}(X) = E[(X - \mu)^2]\).
+\[E[(X - c)^k].\] Em geral, temos interesse especial no \textbf{primeiro
+momento} (média) de \(X\): \(\mu = E[X]\), e no \textbf{segundo momento
+em torno da média} (variância): \(\text{Var}(X) = E[(X - \mu)^2]\).
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Momentos Amostrais}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Momentos Amostrais}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-important-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Seja \(X\) uma variável aleatória e \(x_1, \ldots, x_n\) uma amostra
-i.i.d. de \(X\). O \(k\)-ésimo momento amostral é: \[
-\frac{1}{n} \sum_{i=1}^{n} x_i^k.
-\] O \(k\)-ésimo momento amostral em torno de \(c\) é: \[
-\frac{1}{n} \sum_{i=1}^{n} (x_i - c)^k.
-\]
+i.i.d. de \(X\). O \(k\)-ésimo momento amostral é:
+\[\frac{1}{n} \sum_{i=1}^{n} x_i^k.\] O \(k\)-ésimo momento amostral em
+torno de \(c\) é: \[\frac{1}{n} \sum_{i=1}^{n} (x_i - c)^k.\]
 
 Casos particulares importantes:
 
@@ -4277,9 +4210,7 @@ distribuição comum que possui média \(\mu_{Y}\). Então, as médias
 amostrais convergem para a média da distribuição à medida que o número
 de observações aumenta:
 
-\[
-\bar{Y}_{n} = \frac{1}{n} \sum_{i=1}^{n} Y_i \to \mu_{Y} \quad \text{quando } n \to \infty.
-\]
+\[\bar{Y}_{n} = \frac{1}{n} \sum_{i=1}^{n} Y_i \to \mu_{Y} \quad \text{quando } n \to \infty.\]
 
 Para mostrar como o método dos momentos determina um estimador,
 consideramos inicialmente o caso de \textbf{um único parâmetro}.
@@ -4291,30 +4222,22 @@ geradas segundo a função densidade de probabilidade
 é uma função \(k(\theta)\) de \(\theta\). Por exemplo, se as \(X_i\) são
 variáveis aleatórias contínuas, então:
 
-\[
-\mu_X = \int_{-\infty}^{\infty} x f_X(x \mid \theta)\, dx = k(\theta).
-\]
+\[\mu_X = \int_{-\infty}^{\infty} x f_X(x \mid \theta)\, dx = k(\theta).\]
 
 A Lei dos Grandes Números afirma que:
 
-\[
-\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i \to \mu_X \quad \text{quando } n \to \infty.
-\]
+\[\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i \to \mu_X \quad \text{quando } n \to \infty.\]
 
 Assim, quando o número de observações \(n\) é grande, a média da
 distribuição \(\mu = k(\theta)\) pode ser bem aproximada pela média
 amostral, isto é:
 
-\[
-\bar{X} \approx k(\theta).
-\]
+\[\bar{X} \approx k(\theta).\]
 
 Essa relação pode ser transformada em um estimador \(\hat{\theta}\),
 definindo:
 
-\[
-\bar{X} = k(\hat{\theta}),
-\]
+\[\bar{X} = k(\hat{\theta}),\]
 
 e resolvendo essa equação em relação a \(\hat{\theta}\).
 
@@ -4331,15 +4254,11 @@ De forma mais geral, para variáveis aleatórias independentes
 parâmetro \(\theta\), e sendo \(m\) uma função real, se
 \(k(\theta) =E_{\theta}[m(X_1)],\) então
 
-\[
-\frac{1}{n} \sum_{i=1}^{n} m(X_i) \to k(\theta) \quad \text{quando } n \to \infty.
-\]
+\[\frac{1}{n} \sum_{i=1}^{n} m(X_i) \to k(\theta) \quad \text{quando } n \to \infty.\]
 
 O método dos momentos resulta das escolhas \(m(x) = x^m\). Denotamos
 
-\[
-\mu_m = E[X^m] = k_m(\theta). \tag{1}
-\]
+\[\mu_m = E[X^m] = k_m(\theta). \tag{1}\]
 
 para o \(m\)-ésimo momento.
 
@@ -4352,11 +4271,9 @@ conectam os momentos amostrais aos parâmetros do modelo:
 Se o modelo possui \(d\) parâmetros, calculamos as funções \(k_m\) na
 equação (1) para os primeiros \(d\) momentos:
 
-\[
-\mu_1 = k_1(\theta_1, \theta_2, \ldots, \theta_d), \quad
+\[\mu_1 = k_1(\theta_1, \theta_2, \ldots, \theta_d), \quad
 \mu_2 = k_2(\theta_1, \theta_2, \ldots, \theta_d), \quad \ldots \quad
-\mu_d = k_d(\theta_1, \theta_2, \ldots, \theta_d),
-\]
+\mu_d = k_d(\theta_1, \theta_2, \ldots, \theta_d),\]
 
 obtendo assim \(d\) equações em \(d\) incógnitas.
 
@@ -4366,11 +4283,9 @@ obtendo assim \(d\) equações em \(d\) incógnitas.
 Resolvemos esse sistema para os \(d\) parâmetros como funções dos
 momentos:
 
-\[
-\theta_1 = g_1(\mu_1, \mu_2, \dots, \mu_d), \quad
+\[\theta_1 = g_1(\mu_1, \mu_2, \dots, \mu_d), \quad
 \theta_2 = g_2(\mu_1, \mu_2, \dots, \mu_d), \quad \dots \quad
-\theta_d = g_d(\mu_1, \mu_2, \dots, \mu_d). \tag{2}
-\]
+\theta_d = g_d(\mu_1, \mu_2, \dots, \mu_d). \tag{2}\]
 
 \subsection*{Passo 3}\label{passo-3}
 \addcontentsline{toc}{subsection}{Passo 3}
@@ -4378,11 +4293,9 @@ momentos:
 Com base nos dados \(\mathbf{x} = (x_1, x_2, \ldots, x_n)\), calculamos
 os primeiros \(d\) momentos amostrais:
 
-\[
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad
+\[\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad
 \overline{x^2} = \frac{1}{n} \sum_{i=1}^{n} x_i^2, \quad \ldots \quad
-\overline{x^d} = \frac{1}{n} \sum_{i=1}^{n} x_i^d.
-\]
+\overline{x^d} = \frac{1}{n} \sum_{i=1}^{n} x_i^d.\]
 
 Pela Lei dos Grandes Números, para cada momento \(m = 1, \ldots, d\),
 temos: \(\mu_m \approx \overline{x^m}.\)
@@ -4396,11 +4309,9 @@ fórmulas dos estimadores de momentos
 \((\hat{\theta}_1, \hat{\theta}_2, \ldots, \hat{\theta}_d)\). Para os
 dados \(\mathbf{x}\), esses estimadores são dados por:
 
-\[
-\hat{\theta}_1(\mathbf{x}) = g_1(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad
+\[\hat{\theta}_1(\mathbf{x}) = g_1(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad
 \hat{\theta}_2(\mathbf{x}) = g_2(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad \ldots \quad
-\hat{\theta}_d(\mathbf{x}) = g_d(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}).
-\]
+\hat{\theta}_d(\mathbf{x}) = g_d(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}).\]
 
 A forma como essa descrição abstrata funciona na prática é melhor
 compreendida por meio de exemplos.
@@ -4415,37 +4326,27 @@ Sejam \(X_1, X_2, \dots, X_n\) uma amostra aleatória simples de
 variáveis aleatórias com distribuição de Pareto, cuja densidade é dada
 por:
 
-\[
-f_X(x \mid \theta) = \theta x^{-(\theta+1)}, \quad x > 1.
-\]
+\[f_X(x \mid \theta) = \theta x^{-(\theta+1)}, \quad x > 1.\]
 
 A função de distribuição acumulada é:
 
-\[
-F_X(x) = 1 - x^{-\theta}, \quad x > 1.
-\]
+\[F_X(x) = 1 - x^{-\theta}, \quad x > 1.\]
 
 A média e a variância são, respectivamente:
 
-\[
-\mu = \frac{\theta}{\theta - 1}, \quad \sigma^2 = \frac{\theta}{(\theta - 1)^2(\theta - 2)}.
-\]
+\[\mu = \frac{\theta}{\theta - 1}, \quad \sigma^2 = \frac{\theta}{(\theta - 1)^2(\theta - 2)}.\]
 
 Neste caso, temos apenas \textbf{um parâmetro}, \(\theta\). Assim, no
 \textbf{Passo 1}, precisamos apenas do primeiro momento:
 
-\[
-\mu_1 = \mu = k_1(\theta) = \frac{\theta}{\theta - 1}.
-\]
+\[\mu_1 = \mu = k_1(\theta) = \frac{\theta}{\theta - 1}.\]
 
 \subsection*{Passo 2}\label{passo-2-1}
 \addcontentsline{toc}{subsection}{Passo 2}
 
 Resolvendo para \(\theta\) em função da média \(\mu\):
 
-\[
-\theta = g_1(\mu) = \frac{\mu}{\mu - 1}.
-\]
+\[\theta = g_1(\mu) = \frac{\mu}{\mu - 1}.\]
 
 \subsection*{Passos 3 e 4}\label{passos-3-e-4}
 \addcontentsline{toc}{subsection}{Passos 3 e 4}
@@ -4453,8 +4354,7 @@ Resolvendo para \(\theta\) em função da média \(\mu\):
 Substituindo a média populacional pela média amostral \(\bar{X}\),
 obtemos o estimador de momentos:
 
-\[
-\hat{\theta} = \frac{\bar{X}}{\bar{X} - 1}.\]
+\[\hat{\theta} = \frac{\bar{X}}{\bar{X} - 1}.\]
 
 \subsection*{Variância via Método
 Delta}\label{variuxe2ncia-via-muxe9todo-delta}
@@ -4463,39 +4363,30 @@ Delta}\label{variuxe2ncia-via-muxe9todo-delta}
 Um bom estimador deve ter variância pequena. Para estimar a variância de
 \(\hat{\theta}\), utilizamos o \textbf{método delta}:
 
-\[
-\sigma^2_{\hat{\theta}} \approx \left[g_1'(\mu)\right]^2 \frac{\sigma^2}{n}.
-\]
+\[\sigma^2_{\hat{\theta}} \approx \left[g_1'(\mu)\right]^2 \frac{\sigma^2}{n}.\]
 
 Calculamos a derivada:
 
-\[
-g_1'(\mu) = -\frac{1}{(\mu - 1)^2}.
-\]
+\[g_1'(\mu) = -\frac{1}{(\mu - 1)^2}.\]
 
 Substituindo \(\mu = \frac{\theta}{\theta - 1}\), obtemos:
 
-\[
-g_1'(\mu) = -(\theta - 1)^2.\]
+\[g_1'(\mu) = -(\theta - 1)^2.\]
 
 Assim, a variância aproximada é:
 
-\[
-\sigma^2_{\hat{\theta}} \approx \frac{(\theta - 1)^4}{n} \cdot \frac{\theta}{(\theta - 1)^2(\theta - 2)} = \frac{\theta(\theta - 1)^2}{n(\theta - 2)}.\]
+\[\sigma^2_{\hat{\theta}} \approx \frac{(\theta - 1)^4}{n} \cdot \frac{\theta}{(\theta - 1)^2(\theta - 2)} = \frac{\theta(\theta - 1)^2}{n(\theta - 2)}.\]
 
 \subsection*{Exemplo Numérico}\label{exemplo-numuxe9rico}
 \addcontentsline{toc}{subsection}{Exemplo Numérico}
 
 Considere \(\theta = 3\) e \(n = 100\):
 
-\[
-\sigma^2_{\hat{\theta}} \approx \frac{3(3 - 1)^2}{100(3 - 2)} = \frac{12}{100} = \frac{3}{25}.\]
+\[\sigma^2_{\hat{\theta}} \approx \frac{3(3 - 1)^2}{100(3 - 2)} = \frac{12}{100} = \frac{3}{25}.\]
 
 Logo, o desvio padrão aproximado é:
 
-\[
-\sigma_{\hat{\theta}} \approx \sqrt{\frac{3}{25}} = 0{,}346.
-\]
+\[\sigma_{\hat{\theta}} \approx \sqrt{\frac{3}{25}} = 0{,}346.\]
 
 \subsection*{Simulação em R}\label{simulauxe7uxe3o-em-r}
 \addcontentsline{toc}{subsection}{Simulação em R}
@@ -4524,7 +4415,7 @@ Código em \texttt{R}:
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}}
+\includegraphics{unidade3_files/figure-pdf/unnamed-chunk-1-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4533,7 +4424,7 @@ Código em \texttt{R}:
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{unidade3_files/figure-pdf/unnamed-chunk-1-2.pdf}}
+\includegraphics{unidade3_files/figure-pdf/unnamed-chunk-1-2.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4581,18 +4472,14 @@ Considere \(X \sim U(0, \theta)\). Sabemos que:
 Neste caso, também temos apenas \textbf{um parâmetro}, \(\theta\).
 Assim, no \textbf{Passo 1}, precisamos apenas do primeiro momento:
 
-\[
-\mu_1 = \mu = k_1(\theta) = \frac{\theta}{2}.
-\]
+\[\mu_1 = \mu = k_1(\theta) = \frac{\theta}{2}.\]
 
 \subsection*{Passo 2}\label{passo-2-2}
 \addcontentsline{toc}{subsection}{Passo 2}
 
 Resolvendo para \(\theta\) em função da média \(\mu\):
 
-\[
-\theta = g_1(\mu) = 2\mu.
-\]
+\[\theta = g_1(\mu) = 2\mu.\]
 
 \subsection*{Passos 3 e 4}\label{passos-3-e-4-1}
 \addcontentsline{toc}{subsection}{Passos 3 e 4}
@@ -4795,9 +4682,7 @@ Gama}\label{exemplo-distribuiuxe7uxe3o-gama}
 
 Considere \(X \sim \text{Gama}(\theta_1, \theta_2)\), em que:
 
-\[
-\mu = E[X] = \frac{\theta_1}{\theta_2}, \quad \text{e}\quad \sigma^2 = Var(X) = \frac{\theta_1}{\theta_2^2}.
-\]
+\[\mu = E[X] = \frac{\theta_1}{\theta_2}, \quad \text{e}\quad \sigma^2 = Var(X) = \frac{\theta_1}{\theta_2^2}.\]
 
 \subsection*{Passo 1}\label{passo-1-4}
 \addcontentsline{toc}{subsection}{Passo 1}
@@ -4822,17 +4707,13 @@ Substituindo a média populacional pela média amostral \(\bar{X}\) e
 segundo momento populacional pelo segundo momento amostral, obtemos os
 seguintes estimadores de momentos:
 
-\[
-\widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2} 
-\]
+\[\widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2} \]
 
 em que:
 
-\[
-\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.
-\]
+\[\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.\]
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, colframe=quarto-callout-caution-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-caution-color!10!white, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Exercícios}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-caution-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -4859,24 +4740,18 @@ A partir do decaimento subsequente dos píons (tempo de vida médio de
 \(26{,}03 \, \text{ns}\)), múons positivos (\(\mu^+\)) são formados via
 o decaimento de dois corpos:
 
-\[
-\pi^+ \rightarrow \mu^+ + \nu_\mu,
-\]
+\[\pi^+ \rightarrow \mu^+ + \nu_\mu,\]
 
 em que \(\nu_\mu\) representa o \textbf{neutrino do múon}.
 
 O decaimento do múon em um pósitron (\(e^+\)), um neutrino do elétron
 (\(\nu_e\)) e um antineutrino do múon (\(\bar{\nu}_\mu\)):
 
-\[
-\mu^+ \rightarrow e^+ + \nu_e + \bar{\nu}_\mu,
-\]
+\[\mu^+ \rightarrow e^+ + \nu_e + \bar{\nu}_\mu,\]
 
 possui uma distribuição angular \(t\) com densidade dada por:
 
-\[
-f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,
-\]
+\[f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,\]
 
 em que \(t\) é o ângulo entre a trajetória do pósitron e o spin do
 \(\mu^+\), e o parâmetro de anisotropia \(\alpha \in [-1/3, 1/3]\)
@@ -5017,9 +4892,7 @@ Isso significa que qualquer ponto onde a derivada seja zero corresponde
 a um máximo global. Portanto, encontramos com sucesso o máximo global da
 função de verossimilhança.
 
-\[
-\frac{\partial^2 \ln(L(\theta \mid x))}{\partial \theta^2} = \sum_{i=1}^n \left(-\frac{x_i}{\theta^2}\right) < 0. \quad \text{(côncava para baixo em todo o domínio)}
-\]
+\[\frac{\partial^2 \ln(L(\theta \mid x))}{\partial \theta^2} = \sum_{i=1}^n \left(-\frac{x_i}{\theta^2}\right) < 0. \quad \text{(côncava para baixo em todo o domínio)}\]
 
 \section*{Exemplo EMV (Exponencial)}\label{exemplo-emv-exponencial}
 \addcontentsline{toc}{section}{Exemplo EMV (Exponencial)}
@@ -5132,9 +5005,7 @@ Ver
   por:
 \end{enumerate}
 
-\[
-T_J(X) = nT - \frac{n-1}{n} \sum_{i=1}^{n} T_{(i)},
-\]
+\[T_J(X) = nT - \frac{n-1}{n} \sum_{i=1}^{n} T_{(i)},\]
 
 em que \(T_{(i)}\) representa o estimador \(T\) calculado com a amostra
 original excluindo a \(i\)-ésima observação.
@@ -5161,15 +5032,11 @@ original excluindo a \(i\)-ésima observação.
   \(\sum_{i=1}^{n} (x_i - \bar{x}_n)^2 > 0.\) Mostre que
 \end{enumerate}
 
-\[
-\hat{\beta} = \frac{\sum_{i=1}^{n} (x_i - \bar{x}_n) Y_i}{\sum_{i=1}^{n} (x_i - \bar{x}_n)^2}
-\]
+\[\hat{\beta} = \frac{\sum_{i=1}^{n} (x_i - \bar{x}_n) Y_i}{\sum_{i=1}^{n} (x_i - \bar{x}_n)^2}\]
 
 e
 
-\[
-\hat{\alpha} = \bar{Y}_n - \hat{\beta} \bar{x}_n
-\]
+\[\hat{\alpha} = \bar{Y}_n - \hat{\beta} \bar{x}_n\]
 
 são estimadores não viesados de \(\beta\) e \(\alpha\), respectivamente.
 
@@ -5182,9 +5049,7 @@ são estimadores não viesados de \(\beta\) e \(\alpha\), respectivamente.
   distribuição Rayleigh, cuja densidade é dada por:
 \end{enumerate}
 
-\[
-f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\infty)}(x), \quad \theta > 0.
-\]
+\[f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\infty)}(x), \quad \theta > 0.\]
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -5195,9 +5060,7 @@ f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\
   uma palheta de turbina):
 \end{enumerate}
 
-\[
-16.88,\ 10.23,\ 4.59,\ 6.66,\ 13.68,\ 14.23,\ 19.87,\ 9.40,\ 6.51,\ 9.24,\ 12.20,\ 10.95.
-\]
+\[16.88,\ 10.23,\ 4.59,\ 6.66,\ 13.68,\ 14.23,\ 19.87,\ 9.40,\ 6.51,\ 9.24,\ 12.20,\ 10.95.\]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5208,9 +5071,7 @@ f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\
   \(X\) com função densidade de probabilidade dada por:
 \end{enumerate}
 
-\[
-f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).
-\]
+\[f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).\]
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -5268,7 +5129,7 @@ O intervalo de confiança para \(\theta\) pode ser representado como a
 Figura abaixo. Mais adiante, discutiremos como deve ser interpretado um
 intervalo de confiança associado a um nível de confiança específico.
 
-\pandocbounded{\includegraphics[keepaspectratio]{ICplot.png}}
+\includegraphics{ICplot.png}
 
 \section{Revisão: Distribuição Normal
 Padrão}\label{revisuxe3o-distribuiuxe7uxe3o-normal-padruxe3o}
@@ -5286,7 +5147,7 @@ Uma propriedade importante da distribuição normal é sua simetria:
 
 \[\Phi(z)=1-\Phi(-z).\]
 
-\pandocbounded{\includegraphics[keepaspectratio]{normal1.png}}
+\includegraphics{normal1.png}
 
 Suponha que desejemos construir um intervalo centrado tal que a
 probabilidade de um valor pertencer a esse intervalo seja de 95\%. Note
@@ -5304,7 +5165,7 @@ que (observe a Figura abaixo):
 Consequentemente, a probabilidade de um valor ser menor que o limite
 superior deve ser de 97,5\%.
 
-\pandocbounded{\includegraphics[keepaspectratio]{Normal2.png}}
+\includegraphics{Normal2.png}
 
 Para construir um intervalo central de 95\%, precisamos encontrar um
 valor \(z\) tal que 95\% da área esteja entre \(-z\) e \(z\). O valor de
@@ -5385,7 +5246,7 @@ Como \(\theta\) é desconhecido, substituímos pelo estimador
 \sqrt{\frac{\hat{\theta}}{n}}
 \right].\]
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Definição: Intervalo de Confiança}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, left=2mm, bottomrule=.15mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Definição: Intervalo de Confiança}, opacitybacktitle=0.6, leftrule=.75mm, bottomtitle=1mm, rightrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm]
 
 Suponha que você possua uma amostra aleatória \(X_1,\ldots,X_n\) de uma
 distribuição com parâmetro desconhecido \(\theta\), e que disponha de um
@@ -5799,9 +5660,7 @@ ele esteja dizendo a verdade.
 Se Jardel não estiver mentindo, então a moeda é honesta. Nesse caso, o
 número de caras observadas segue uma distribuição Binomial:
 
-\[
-X \sim \text{Bin}(100,0.5),
-\]
+\[X \sim \text{Bin}(100,0.5),\]
 
 pois realizamos 100 lançamentos independentes e a probabilidade de cara
 em cada lançamento é igual a 0,5.
@@ -5810,14 +5669,11 @@ Queremos calcular a probabilidade de observarmos pelo menos 99 caras, já
 que estamos interessados em resultados tão extremos quanto o observado.
 Assim,
 
-\[
-P(X \geq 99)= P(X=99) + P(X=100).
-\]
+\[P(X \geq 99)= P(X=99) + P(X=100).\]
 
 Utilizando a função de probabilidade da distribuição Binomial, obtemos
 
-\[
-P(X \geq 99)= \binom{100}{99}(0.5)^{99}(0.5)^1
+\[P(X \geq 99)= \binom{100}{99}(0.5)^{99}(0.5)^1
 + \binom{100}{100}(0.5)^{100}. \]
 
 Simplificando,
@@ -5975,11 +5831,9 @@ variável, obtemos
 Consultando a tabela da distribuição Normal padrão, obtemos
 aproximadamente
 
-\[
-p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.
-\] Assim, a probabilidade de observarmos uma média tão elevada quanto a
-obtida, caso o curso não tivesse qualquer efeito, é de apenas cerca de
-0,47\%.
+\[p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.\] Assim, a
+probabilidade de observarmos uma média tão elevada quanto a obtida, caso
+o curso não tivesse qualquer efeito, é de apenas cerca de 0,47\%.
 
 \subsection{Passo 6: Apresentar a
 conclusão}\label{passo-6-apresentar-a-conclusuxe3o}
@@ -6031,17 +5885,13 @@ teríamos motivos para acusar o mágico de estar mentindo. Entretanto,
 isso não significa que tenhamos provado que a probabilidade de cara seja
 exatamente
 
-\[
-p=0{,}5.
-\]
+\[p=0{,}5.\]
 
 A verdadeira probabilidade poderia ser, por exemplo,
 
-\[
-p=0{,}54
+\[p=0{,}54
 \quad\text{ou}\quad
-p=0{,}58.
-\]
+p=0{,}58.\]
 
 Os dados simplesmente não forneceram evidências suficientemente fortes
 para rejeitar a hipótese de que a moeda é justa. Em resumo, a ausência
@@ -6103,9 +5953,7 @@ hipótese alternativa, denotada por (\(H_A\)).
   Unilateral à direita:
 \end{itemize}
 
-\[
-H_A:\theta>\theta_0
-\]
+\[H_A:\theta>\theta_0\]
 
 \begin{itemize}
 \tightlist
@@ -6113,9 +5961,7 @@ H_A:\theta>\theta_0
   Unilateral à esquerda:
 \end{itemize}
 
-\[
-H_A:\theta<\theta_0
-\]
+\[H_A:\theta<\theta_0\]
 
 \begin{itemize}
 \tightlist
@@ -6123,9 +5969,7 @@ H_A:\theta<\theta_0
   Bilateral:
 \end{itemize}
 
-\[
-H_A:\theta\neq\theta_0
-\]
+\[H_A:\theta\neq\theta_0\]
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -6156,7 +6000,7 @@ nula.
 significância}\label{escolher-o-nuxedvel-de-significuxe2ncia}
 \addcontentsline{toc}{subsection}{3. Escolher o nível de significância}
 
-Seleciona-se um nível de significância (\alpha), que representa a
+Seleciona-se um nível de significância (\(\alpha\)), que representa a
 probabilidade máxima tolerada de cometer um erro do tipo I. Os valores
 mais utilizados são \(\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.\)
 
@@ -6214,6 +6058,296 @@ A ausência de evidências contra a hipótese nula não implica que ela seja
 verdadeira, apenas indica que os dados observados não foram
 suficientemente incompatíveis com ela.
 
+\section{Teste de hipótese para média populacional com variância
+conhecida}\label{teste-de-hipuxf3tese-para-muxe9dia-populacional-com-variuxe2ncia-conhecida}
+
+Nesta seção, com o conjunto de dados dos estudantes disponível em
+\href{https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Hypothesis-Tests/index.html}{SOGA-Py}.
+Você pode carregá-lo diretamente como um recurso da \emph{web}. Vamos
+importar o conjunto de dados para o \texttt{Python} como um objeto
+\textbf{DataFrame} do pandas utilizando o método \texttt{read\_csv}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+
+\NormalTok{estudantes }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\StringTok{"https://userpage.fu{-}berlin.de/soga/data/raw{-}data/students.csv"}\NormalTok{)}
+
+\NormalTok{estudantes.head()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lllllllllllllllll@{}}
+\toprule\noalign{}
+& stud.id & name & gender & age & height & weight & religion & nc.score
+& semester & major & minor & score1 & score2 & online.tutorial &
+graduated & salary \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 833917 & Gonzales, Christina & Female & 19 & 160 & 64.8 & Muslim &
+1.91 & 1st & Political Science & Social Sciences & NaN & NaN & 0 & 0 &
+NaN \\
+2 & 898539 & Lozano, T\textquotesingle Hani & Female & 19 & 172 & 73.0 &
+Other & 1.56 & 2nd & Social Sciences & Mathematics and Statistics & NaN
+& NaN & 0 & 0 & NaN \\
+3 & 379678 & Williams, Hanh & Female & 22 & 168 & 70.6 & Protestant &
+1.24 & 3rd & Social Sciences & Mathematics and Statistics & 45.0 & 46.0
+& 0 & 0 & NaN \\
+4 & 807564 & Nem, Denzel & Male & 19 & 183 & 79.7 & Other & 1.37 & 2nd &
+Environmental Sciences & Mathematics and Statistics & NaN & NaN & 0 & 0
+& NaN \\
+5 & 383291 & Powell, Heather & Female & 21 & 175 & 71.4 & Catholic &
+1.46 & 1st & Environmental Sciences & Mathematics and Statistics & NaN &
+NaN & 0 & 0 & NaN \\
+\end{longtable}
+
+O conjunto de dados \textbf{estudantes} consiste em 8.239 linhas, cada
+uma representando um estudante específico, e 16 colunas, cada uma
+correspondendo a uma variável/característica relacionada a esse
+estudante. Neste estudo, considera-se o conjunto completo de estudantes
+disponível na base de dados como a população de interesse. Além disso, a
+variável de interesse é o peso (massa corporal).
+
+\begin{quote}
+Aqui iremos considerar a variância conhecida, ou seja, iremos calcular
+diretamente a partir dos dados completos.
+\end{quote}
+
+\subsection{Variância e desvio-padrão
+populacionais}\label{variuxe2ncia-e-desvio-padruxe3o-populacionais}
+
+Como a base contém todos os 8.239 estudantes considerados neste estudo,
+a variância calculada corresponde à variância populacional.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N }\OperatorTok{=} \BuiltInTok{len}\NormalTok{(estudantes)}
+\NormalTok{sigma2 }\OperatorTok{=}\NormalTok{ estudantes[}\StringTok{"weight"}\NormalTok{].var(ddof}\OperatorTok{=}\DecValTok{0}\NormalTok{) }\CommentTok{\# variância populacional }
+\NormalTok{sigma }\OperatorTok{=}\NormalTok{ estudantes[}\StringTok{"weight"}\NormalTok{].std(ddof}\OperatorTok{=}\DecValTok{0}\NormalTok{) }\CommentTok{\# desvio{-}padrão populacional }
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Tamanho da população: }\SpecialCharTok{\{}\NormalTok{N}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{) }
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Variância populacional: }\SpecialCharTok{\{}\NormalTok{sigma2}\SpecialCharTok{:.2f\}}\SpecialStringTok{"}\NormalTok{) }
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Desvio{-}padrão populacional: }\SpecialCharTok{\{}\NormalTok{sigma}\SpecialCharTok{:.2f\}}\SpecialStringTok{ kg"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Tamanho da população: 8239
+Variância populacional: 74.56
+Desvio-padrão populacional: 8.63 kg
+\end{verbatim}
+
+\subsection{Objetivo}\label{objetivo}
+
+Avaliar se a massa corporal média dos estudantes difere da massa
+corporal média da população adulta europeia, reportada por
+\href{https://link.springer.com/article/10.1186/1471-2458-12-439}{Walpole
+et al.~(2012)} como 70,8 kg. As hipóteses são:
+
+\[H_0: \mu = 70,8\]
+
+e
+
+\[H_A: \mu \neq 70,8\] em que \(\mu\) representa a massa corporal média
+dos estudantes.
+
+\subsection{Cálculo do tamanho mínimo de
+amostra}\label{cuxe1lculo-do-tamanho-muxednimo-de-amostra}
+
+Foi adotada uma diferença mínima detectável de 2 kg em relação à média
+de referência de 70,8 kg. O tamanho amostral foi calculado para garantir
+poder estatístico de 80\% e nível de significância de 5\%, ou seja,
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  nível de confiança = 95\%;
+\item
+  poder do teste = 80\%;
+\item
+  diferença mínima detectável = 2 kg.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ scipy.stats }\ImportTok{import}\NormalTok{ norm}
+
+\NormalTok{alpha }\OperatorTok{=} \FloatTok{0.05} 
+\NormalTok{power }\OperatorTok{=} \FloatTok{0.80} 
+\NormalTok{delta }\OperatorTok{=} \FloatTok{2.0} 
+
+\NormalTok{z\_alpha }\OperatorTok{=}\NormalTok{ norm.ppf(}\DecValTok{1} \OperatorTok{{-}}\NormalTok{ alpha}\OperatorTok{/}\DecValTok{2}\NormalTok{) }
+\NormalTok{z\_beta }\OperatorTok{=}\NormalTok{ norm.ppf(power) }
+\NormalTok{n0 }\OperatorTok{=}\NormalTok{ ((z\_alpha }\OperatorTok{+}\NormalTok{ z\_beta) }\OperatorTok{*}\NormalTok{ sigma }\OperatorTok{/}\NormalTok{ delta)}\OperatorTok{**}\DecValTok{2} 
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Tamanho inicial da amostra: }\SpecialCharTok{\{}\NormalTok{np}\SpecialCharTok{.}\NormalTok{ceil(n0)}\SpecialCharTok{:.0f\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Tamanho inicial da amostra: 147
+\end{verbatim}
+
+Como a população possui apenas 8.239 indivíduos, aplicaremos uma
+correção para população finita:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OperatorTok{=}\NormalTok{ (n0 }\OperatorTok{*}\NormalTok{ N)}\OperatorTok{/}\NormalTok{(n0 }\OperatorTok{+}\NormalTok{ N }\OperatorTok{{-}} \DecValTok{1}\NormalTok{) }
+\NormalTok{n }\OperatorTok{=} \BuiltInTok{int}\NormalTok{(np.ceil(n)) }
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Tamanho corrigido da amostra: }\SpecialCharTok{\{}\NormalTok{n}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Tamanho corrigido da amostra: 144
+\end{verbatim}
+
+\subsection{Seleção da amostra
+aleatória}\label{seleuxe7uxe3o-da-amostra-aleatuxf3ria}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{amostra }\OperatorTok{=}\NormalTok{ estudantes.sample(n}\OperatorTok{=}\NormalTok{n, replace}\OperatorTok{=}\VariableTok{False}\NormalTok{, random\_state}\OperatorTok{=}\DecValTok{123}\NormalTok{ ) }
+
+\NormalTok{amostra.head()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lllllllllllllllll@{}}
+\toprule\noalign{}
+& stud.id & name & gender & age & height & weight & religion & nc.score
+& semester & major & minor & score1 & score2 & online.tutorial &
+graduated & salary \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+3165 & 802420 & Stravia, Kelly & Female & 23 & 158 & 67.2 & Catholic &
+3.85 & 1st & Political Science & Environmental Sciences & NaN & NaN & 0
+& 0 & NaN \\
+7715 & 307406 & Ha, Edmond & Male & 21 & 185 & 80.5 & Catholic & 2.21 &
+5th & Social Sciences & Economics and Finance & 55.0 & 46.0 & 0 & 1 &
+30038.217858 \\
+614 & 786879 & Benson, Joseph & Male & 22 & 174 & 75.2 & Catholic & 1.05
+& 5th & Environmental Sciences & Mathematics and Statistics & 74.0 &
+70.0 & 0 & 1 & 39145.213015 \\
+1458 & 807680 & Johnson, Xin & Male & 24 & 187 & 83.4 & Orthodox & 1.64
+& 3rd & Mathematics and Statistics & Environmental Sciences & 84.0 &
+90.0 & 0 & 0 & NaN \\
+4657 & 142413 & Ward, Sendy & Female & 23 & 155 & 61.6 & Muslim & 2.07 &
+1st & Social Sciences & Mathematics and Statistics & NaN & NaN & 0 & 0 &
+NaN \\
+\end{longtable}
+
+\subsection{Teste Z para uma média com variância
+conhecida}\label{teste-z-para-uma-muxe9dia-com-variuxe2ncia-conhecida}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu0 }\OperatorTok{=} \FloatTok{70.8} 
+
+\NormalTok{xbar }\OperatorTok{=}\NormalTok{ amostra[}\StringTok{"weight"}\NormalTok{].mean() }
+
+\NormalTok{z }\OperatorTok{=}\NormalTok{ (xbar }\OperatorTok{{-}}\NormalTok{ mu0)}\OperatorTok{/}\NormalTok{(sigma}\OperatorTok{/}\NormalTok{np.sqrt(n)) }
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Média amostral: }\SpecialCharTok{\{}\NormalTok{xbar}\SpecialCharTok{:.2f\}}\SpecialStringTok{"}\NormalTok{) }
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Estatística Z: }\SpecialCharTok{\{}\NormalTok{z}\SpecialCharTok{:.4f\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Média amostral: 72.84
+Estatística Z: 2.8413
+\end{verbatim}
+
+\subsection{Cálculo do valor-p}\label{cuxe1lculo-do-valor-p}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ scipy.stats }\ImportTok{import}\NormalTok{ norm}
+
+\NormalTok{p\_value }\OperatorTok{=} \DecValTok{2} \OperatorTok{*}\NormalTok{ (}\DecValTok{1} \OperatorTok{{-}}\NormalTok{ norm.cdf(}\BuiltInTok{abs}\NormalTok{(z)))}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Valor{-}p: }\SpecialCharTok{\{}\NormalTok{p\_value}\SpecialCharTok{:.6f\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Valor-p: 0.004493
+\end{verbatim}
+
+\subsection{Regra de Decisão}\label{regra-de-decisuxe3o}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha }\OperatorTok{=} \FloatTok{0.05} 
+
+\ControlFlowTok{if}\NormalTok{ p\_value }\OperatorTok{\textless{}}\NormalTok{ alpha: }
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"Rejeita H0"}\NormalTok{) }
+\ControlFlowTok{else}\NormalTok{: }
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"Não rejeita H0"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Rejeita H0
+\end{verbatim}
+
+\subsection{Intervalo de confiança de
+95\%}\label{intervalo-de-confianuxe7a-de-95}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{z\_crit }\OperatorTok{=}\NormalTok{ norm.ppf(}\FloatTok{0.975}\NormalTok{)}
+
+\NormalTok{erro }\OperatorTok{=}\NormalTok{ z\_crit }\OperatorTok{*}\NormalTok{ sigma}\OperatorTok{/}\NormalTok{np.sqrt(n)}
+
+\NormalTok{li }\OperatorTok{=}\NormalTok{ xbar }\OperatorTok{{-}}\NormalTok{ erro}
+\NormalTok{ls }\OperatorTok{=}\NormalTok{ xbar }\OperatorTok{+}\NormalTok{ erro}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"IC95\%: (}\SpecialCharTok{\{}\NormalTok{li}\SpecialCharTok{:.2f\}}\SpecialStringTok{, }\SpecialCharTok{\{}\NormalTok{ls}\SpecialCharTok{:.2f\}}\SpecialStringTok{)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+IC95%: (71.43, 74.25)
+\end{verbatim}
+
+\subsection{Conclusão}\label{conclusuxe3o}
+
+Como o \(p\)-valor calculado (0,004493) é consideravelmente inferior ao
+nível de significância adotado (0,05), a decisão estatística é rejeitar
+a hipótese nula, ou seja, de que a massa corporal média dos estudantes é
+igual a massa corporal média da população adulta europeia. Sendo assim,
+existe evidência estatisticamente significativa de que a média
+populacional é diferente do valor inicialmente suposto.
+
+Note que a média populacional é:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu\_pop }\OperatorTok{=}\NormalTok{ estudantes[}\StringTok{"weight"}\NormalTok{].mean()}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Média populacional: }\SpecialCharTok{\{}\NormalTok{mu\_pop}\SpecialCharTok{:.2f\}}\SpecialStringTok{ kg"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Média populacional: 73.00 kg
+\end{verbatim}
+
+\section{Teste de hipótese para média populacional com variância
+desconhecida}\label{teste-de-hipuxf3tese-para-muxe9dia-populacional-com-variuxe2ncia-desconhecida}
+
+Agora iremos considerar a situação mais realista que é quando a
+variância populacional é desconhecida.
+
 \bookmarksetup{startatroot}
 
 \chapter{Testes de Homogeneidade e
@@ -6226,7 +6360,7 @@ Dados}\label{inferuxeancia-estatuxedstica-e-ciuxeancia-de-dados}
 
 \section{Trabalho Aplicado}\label{trabalho-aplicado}
 
-\subsection{Objetivo}\label{objetivo}
+\subsection{Objetivo}\label{objetivo-1}
 
 O objetivo deste trabalho é aplicar os principais conceitos estudados na
 disciplina de Análise Inferencial em um problema real. Os estudantes
@@ -6701,7 +6835,6 @@ relatório, deverá ser entregue:
 \subsection{Critérios de
 Avaliação}\label{crituxe9rios-de-avaliauxe7uxe3o-1}
 
-{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}lr@{}}
 \toprule\noalign{}
 Critério & Pontuação \\
@@ -6717,7 +6850,6 @@ Teste de hipóteses & 2,0 \\
 Qualidade do relatório e interpretação dos resultados & 1,5 \\
 \textbf{Total} & \textbf{10,0} \\
 \end{longtable}
-}
 
 \subsection{Observações}\label{observauxe7uxf5es}
 
@@ -6742,7 +6874,7 @@ Qualidade do relatório e interpretação dos resultados & 1,5 \\
 
 \markboth{Referências}{Referências}
 
-\protect\phantomsection\label{refs}
+\phantomsection\label{refs}
 \begin{CSLReferences}{0}{1}
 \bibitem[\citeproctext]{ref-campos2017metodos}
 CAMPOS, Marcilia Andrade; RÊGO, Leandro Chaves; MENDOÇA, André Feitoza
@@ -6770,7 +6902,6 @@ WICKHAM, Hadley \emph{et al.}
 \textbf{Journal of Open Source Software}, v. 4, n. 43, p. 1686, 2019.
 
 \end{CSLReferences}
-
 
 
 

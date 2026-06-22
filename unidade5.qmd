@@ -133,8 +133,7 @@ $$P(\bar{X} \geq 696) = P\left(
 
 Consultando a tabela da distribuição Normal padrão, obtemos aproximadamente
 
-$$p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.$$
-Assim, a probabilidade de observarmos uma média tão elevada quanto a obtida, caso o curso não tivesse qualquer efeito, é de apenas cerca de 0,47%.
+$$p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.$$ Assim, a probabilidade de observarmos uma média tão elevada quanto a obtida, caso o curso não tivesse qualquer efeito, é de apenas cerca de 0,47%.
 
 ### Passo 6: Apresentar a conclusão
 
@@ -334,7 +333,7 @@ print(f"Média amostral: {xbar:.2f}")
 print(f"Estatística Z: {z:.4f}")
 ```
 
-### Cálculo do valor-p
+### Cálculo do p-valor
 
 ```{python}
 from scipy.stats import norm
@@ -382,6 +381,370 @@ mu_pop = estudantes["weight"].mean()
 print(f"Média populacional: {mu_pop:.2f} kg")
 ```
 
-
 ## Teste de hipótese para média populacional com variância desconhecida
 
+Agora iremos considerar a situação mais realista que é quando a variância populacional é desconhecida. Para calcular o tamanho mínimo de amostra iremos precisar estimar a variância populacional. Para isto, iremos usar uma amostra piloto. 
+
+
+### Amostra piloto
+
+```{python}
+amostra_piloto = estudantes.sample(n=50, replace=False, random_state=123 ) 
+
+n_piloto = len(amostra_piloto)
+s2 = amostra_piloto["weight"].var(ddof=1) # variância amostral 
+s = amostra_piloto["weight"].std(ddof=1) # desvio-padrão amostral
+
+print(f"Tamanho da amostra piloto: {n_piloto}") 
+print(f"Variância amostral: {s2:.2f}") 
+print(f"Desvio-padrão amostral: {s:.2f} kg")
+
+amostra_piloto.head()
+
+```
+
+
+### Cálculo do tamanho mínimo de amostra
+
+
+```{python}
+from scipy.stats import t
+
+alpha = 0.05 
+power = 0.80 
+delta = 2.0 
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+
+n0 = ((z_alpha + z_beta) * s/delta)**2
+
+print(f"Tamanho inicial da amostra (usando quantil da normal padrão): {np.ceil(n0):.0f}")
+
+
+t_alpha = t.ppf(1 - alpha/2, df = n0-1)
+t_beta = t.ppf(power, df = n0-1)
+n1 = ((t_alpha + t_beta) * s/delta)**2 
+
+print(f"Tamanho inicial da amostra (usando quantil da t-student): {np.ceil(n1):.0f}")
+```
+
+
+Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
+
+```{python}
+n = (n1 * N)/(n1 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho corrigido da amostra: {n}")
+```
+
+### Seleção da amostra aleatória
+
+Iremos considerar os estudantes coletados na amostra piloto na amostra final considerada para o estudo. Assim, iremos selecionar mais 81 estudantes. Como a semente aleatória é a mesma da amostra piloto, basta selecionar normalmente os 131 estudantes.
+
+```{python}
+amostra = estudantes.sample(n=n, replace=False, random_state=123 ) 
+
+amostra.head()
+```
+
+### Verificando normalidade dos dados
+
+Agora, vamos testar a suposição de normalidade plotando um gráfico de probabilidade normal, frequentemente chamado de QQ plot. Se a variável tiver distribuição normal, o gráfico de probabilidade normal deverá ser aproximadamente linear.
+
+```{python}
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+fig, ax = plt.subplots()
+
+stats.probplot(amostra["weight"], dist="norm", plot=ax)
+
+ax.set_title("Q-Q plot (amostra)")
+ax.set_ylabel("Quantis amostrais")
+ax.set_xlabel("Quantis teóricos")
+
+
+plt.show()
+```
+
+
+Observamos que os dados da amostra apresentam algum ruído, os desvios da linha reta na parte inferior sugerem que a distribuição dos dados é ligeiramente assimétrica, como pode ser visto no histograma abaixo.
+
+```{python}
+plt.hist(amostra["weight"], bins=20)
+plt.title("Histograma da variável weight")
+plt.xlabel("Weight")
+plt.ylabel("Frequência")
+plt.show()
+```
+
+
+
+Podemos usar algum teste de hipótese para teste a normalidade dos dados. As hipóteses do teste são:
+
+- Hipótese Nula: Os dados vem de uma distribuição normal.
+
+- Hipótese Alternativa: Os dados observados não vêm da distribuição normal.
+
+
+```{python}
+from statsmodels.stats.diagnostic import lilliefors
+
+lilliefors(amostra["weight"], dist='norm')
+```
+
+```{python}
+from scipy.stats import anderson
+
+anderson(amostra["weight"], dist='norm')
+```
+
+
+```{python}
+from scipy.stats import jarque_bera
+
+jarque_bera(amostra["weight"])
+```
+
+
+```{python}
+from scipy.stats import normaltest
+
+normaltest(amostra["weight"]) #teste de D’Agostino-Pearson
+```
+
+
+Se considerarmos um nível de significância de 1%, temos que a maioria dos testes não rejeita a hipótese de que os dados são provenientes de uma população normal. No entanto, ao considerarmos um nível de 5% temos que o resultado se inverte.
+
+### Teste t para uma média com variância desconhecida
+
+```{python}
+mu0 = 70.8 
+
+xbar = amostra["weight"].mean() 
+s_amostral = amostra["weight"].std(ddof=1)
+
+tc = (xbar - mu0)/(s_amostral/np.sqrt(n)) 
+
+print(f"Desvio-Padrão amostral: {s_amostral:.2f}")
+print(f"Média amostral: {xbar:.2f}") 
+print(f"Estatística t: {tc:.4f}")
+```
+
+### Cálculo do p-valor
+
+```{python}
+from scipy.stats import t
+gl = n-1
+
+p_value = 2 * (1 - t.cdf(x=abs(tc), df = gl))
+
+print(f"Valor-p: {p_value:.6f}")
+
+```
+
+
+```{python}
+from statsmodels.stats.weightstats import DescrStatsW
+
+d = DescrStatsW(amostra["weight"])
+
+t_stat, p_value, gl = d.ttest_mean(mu0)
+
+print(d)
+print(f"t = {t_stat:.4f}")
+print(f"p = {p_value:.6f}")
+print(f"gl = {gl:.0f}")
+```
+
+
+### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_value < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+### Intervalo de confiança de 95%
+
+```{python}
+
+t_crit = t.ppf(1-alpha/2, df = gl)
+
+erro = t_crit * s_amostral/np.sqrt(n)
+
+li = xbar - erro
+ls = xbar + erro
+
+print(f"IC95%: ({li:.2f}, {ls:.2f})")
+
+```
+
+## Teste para Proporção
+
+Segundo a [*Deutsche Bischofskonferenz (Conferência Episcopal Alemã, DBK)*](https://www.vaticannews.va/pt/igreja/news/2024-06/alemanha-igreja-catolica-dados-estatisticos.html), aproximadamente 24% da população alemã se declara católica. Neste estudo, pretende-se investigar se a proporção de estudantes católicos difere da proporção observada na população geral da Alemanha.
+
+Para isso, será obtida uma amostra aleatória de estudantes, a partir da qual será realizada uma inferência estatística sobre a proporção populacional. Em particular, o objetivo é testar a hipótese de igualdade entre a proporção de católicos no grupo de estudantes e o valor de referência de 0,24. Iremos considerar a seguintes hipótese:
+
+$$H_0: p = 0,24$$
+
+e
+
+$$H_A: p \neq 0,24$$ em que $p$ representa a proporção dos estudantes que são católicos.
+
+### Cálculo do tamanho mínimo de amostra
+
+Desejamos ter 80% de poder para detectar diferenças de pelo menos 2 pontos percentuais em relação ao valor de referência. Além disso, o valor de $p=0.5$ maximiza a variância $p(1-p)$ e, portanto, produz o maior tamanho amostral possível.
+
+```{python}
+from scipy.stats import norm
+
+alpha = 0.05 
+power = 0.80 
+delta = 0.02
+p = 0.5
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = (p*(1-p))*((z_alpha + z_beta) * 1 / delta)**2 
+
+print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
+
+```
+
+Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
+
+```{python}
+n = (n0 * N)/(n0 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho corrigido da amostra: {n}")
+```
+
+Agora iremos retirar uma amostra piloto para estimar a proporção de estudantes que são católicos.
+
+```{python}
+amostra_piloto = estudantes.sample(n=50, replace=False, random_state=2026) 
+
+proporcao_catolica = (amostra_piloto["religion"] == "Catholic").mean()
+
+print(f"Proporção de Católicos na amostra piloto: {proporcao_catolica}")
+
+```
+
+Agora, o tamanho de amostra mínimo será:
+
+```{python}
+from scipy.stats import norm
+
+alpha = 0.05 
+power = 0.80 
+delta = 0.02
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = (proporcao_catolica*(1-proporcao_catolica))*((z_alpha + z_beta) * 1 / delta)**2 
+n = (n0 * N)/(n0 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho da amostra: {np.ceil(n):.0f}")
+
+```
+
+### Seleção da amostra aleatória
+
+Agora iremos selecionar aleatoriamente os 2920 estudantes.
+
+
+```{python}
+amostra = estudantes.sample(n=n, replace=False, random_state=2026) 
+
+amostra.head()
+```
+
+
+### Teste Z para uma proporção
+
+
+```{python}
+p0 =  0.24 
+
+p_amostral = (amostra["religion"] == "Catholic").mean()
+
+z = (p_amostral - p0)/(np.sqrt(p0*(1-p0)/n)) 
+
+print(f"Proporção amostral: {p_amostral:.2f}") 
+print(f"Estatística Z: {z:.4f}")
+```
+
+
+### Cálculo do p-valor
+
+```{python}
+from scipy.stats import norm
+
+p_value = 2 * (1 - norm.cdf(abs(z)))
+
+print(f"Valor-p: {p_value:.6f}")
+
+```
+
+
+```{python}
+from statsmodels.stats.proportion import proportions_ztest
+
+x = (amostra["religion"] == "Catholic").sum()
+
+stat, p_value = proportions_ztest(
+    count=x,
+    nobs=n,
+    value=0.24,
+    prop_var = p0, #por padrao usa a proporcao amostral
+    alternative='two-sided'
+)
+
+print(f"Estatística Z: {stat:.4f}")
+print(f"Valor-p: {p_value:.6f}")
+```
+
+
+::: {.callout-note}
+## Observação
+
+A função `proportions_ztest()` do pacote `statsmodels` utiliza, por padrão, a proporção amostral para estimar a variância da estatística de teste.
+:::
+
+### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_value < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+### Intervalo de confiança de 95%
+
+```{python}
+z_crit = norm.ppf(1-alpha/2)
+
+erro = z_crit * np.sqrt(p_amostral*(1-p_amostral)/n)
+
+li = p_amostral - erro
+ls = p_amostral + erro
+
+print(f"IC95%: ({li:.2f}, {ls:.2f})")
+
+```
+
+### Conclusão
+
+Ao nível de significância de 5%, os dados fornecem evidências suficientes para concluir que a proporção de estudantes católicos difere da proporção de 24% observada na população alemã segundo a DBK. O resultado sugere que a composição religiosa da população estudantil não reflete exatamente a composição religiosa da população geral.
