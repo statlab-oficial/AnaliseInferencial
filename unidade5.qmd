@@ -383,8 +383,7 @@ print(f"Média populacional: {mu_pop:.2f} kg")
 
 ## Teste de hipótese para média populacional com variância desconhecida
 
-Agora iremos considerar a situação mais realista que é quando a variância populacional é desconhecida. Para calcular o tamanho mínimo de amostra iremos precisar estimar a variância populacional. Para isto, iremos usar uma amostra piloto. 
-
+Agora iremos considerar a situação mais realista que é quando a variância populacional é desconhecida. Para calcular o tamanho mínimo de amostra iremos precisar estimar a variância populacional. Para isto, iremos usar uma amostra piloto.
 
 ### Amostra piloto
 
@@ -403,9 +402,7 @@ amostra_piloto.head()
 
 ```
 
-
 ### Cálculo do tamanho mínimo de amostra
-
 
 ```{python}
 from scipy.stats import t
@@ -428,7 +425,6 @@ n1 = ((t_alpha + t_beta) * s/delta)**2
 
 print(f"Tamanho inicial da amostra (usando quantil da t-student): {np.ceil(n1):.0f}")
 ```
-
 
 Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
 
@@ -469,7 +465,6 @@ ax.set_xlabel("Quantis teóricos")
 plt.show()
 ```
 
-
 Observamos que os dados da amostra apresentam algum ruído, os desvios da linha reta na parte inferior sugerem que a distribuição dos dados é ligeiramente assimétrica, como pode ser visto no histograma abaixo.
 
 ```{python}
@@ -480,14 +475,11 @@ plt.ylabel("Frequência")
 plt.show()
 ```
 
-
-
 Podemos usar algum teste de hipótese para teste a normalidade dos dados. As hipóteses do teste são:
 
 - Hipótese Nula: Os dados vem de uma distribuição normal.
 
 - Hipótese Alternativa: Os dados observados não vêm da distribuição normal.
-
 
 ```{python}
 from statsmodels.stats.diagnostic import lilliefors
@@ -501,20 +493,17 @@ from scipy.stats import anderson
 anderson(amostra["weight"], dist='norm')
 ```
 
-
 ```{python}
 from scipy.stats import jarque_bera
 
 jarque_bera(amostra["weight"])
 ```
 
-
 ```{python}
 from scipy.stats import normaltest
 
 normaltest(amostra["weight"]) #teste de D’Agostino-Pearson
 ```
-
 
 Se considerarmos um nível de significância de 1%, temos que a maioria dos testes não rejeita a hipótese de que os dados são provenientes de uma população normal. No entanto, ao considerarmos um nível de 5% temos que o resultado se inverte.
 
@@ -545,7 +534,6 @@ print(f"Valor-p: {p_value:.6f}")
 
 ```
 
-
 ```{python}
 from statsmodels.stats.weightstats import DescrStatsW
 
@@ -558,7 +546,6 @@ print(f"t = {t_stat:.4f}")
 print(f"p = {p_value:.6f}")
 print(f"gl = {gl:.0f}")
 ```
-
 
 ### Regra de Decisão
 
@@ -661,16 +648,13 @@ print(f"Tamanho da amostra: {np.ceil(n):.0f}")
 
 Agora iremos selecionar aleatoriamente os 2920 estudantes.
 
-
 ```{python}
 amostra = estudantes.sample(n=n, replace=False, random_state=2026) 
 
 amostra.head()
 ```
 
-
 ### Teste Z para uma proporção
-
 
 ```{python}
 p0 =  0.24 
@@ -683,7 +667,6 @@ print(f"Proporção amostral: {p_amostral:.2f}")
 print(f"Estatística Z: {z:.4f}")
 ```
 
-
 ### Cálculo do p-valor
 
 ```{python}
@@ -694,7 +677,6 @@ p_value = 2 * (1 - norm.cdf(abs(z)))
 print(f"Valor-p: {p_value:.6f}")
 
 ```
-
 
 ```{python}
 from statsmodels.stats.proportion import proportions_ztest
@@ -713,8 +695,7 @@ print(f"Estatística Z: {stat:.4f}")
 print(f"Valor-p: {p_value:.6f}")
 ```
 
-
-::: {.callout-note}
+::: callout-note
 ## Observação
 
 A função `proportions_ztest()` do pacote `statsmodels` utiliza, por padrão, a proporção amostral para estimar a variância da estatística de teste.
@@ -748,3 +729,284 @@ print(f"IC95%: ({li:.2f}, {ls:.2f})")
 ### Conclusão
 
 Ao nível de significância de 5%, os dados fornecem evidências suficientes para concluir que a proporção de estudantes católicos difere da proporção de 24% observada na população alemã segundo a DBK. O resultado sugere que a composição religiosa da população estudantil não reflete exatamente a composição religiosa da população geral.
+
+## Testes de Hipóteses para médias de duas populações
+
+Até agora, temos nos concentrado em testes de hipóteses para a média de uma única população. No entanto, em muitas aplicações, desejamos comparar as médias de duas ou mais populações. Para isso, primeiro precisamos distinguir entre amostras provenientes de duas populações independentes e amostras provenientes de populações que não são independentes, chamadas de amostras pareadas. Nas seções seguintes, discutiremos procedimentos inferenciais para comparar as médias de duas populações.
+
+Para amostras independentes de tamanhos $n_1$ e $n_2$, provenientes das populações 1 e 2, a média de todas as possíveis diferenças entre as duas médias amostrais é igual à diferença entre as duas médias populacionais:
+
+$$\mu_{\bar{x}_1-\bar{x}_2} = \mu_1 - \mu_2.$$
+
+Além disso, o desvio-padrão de todas as possíveis diferenças entre as duas médias amostrais é igual à raiz quadrada da soma das variâncias populacionais, cada uma dividida pelo respectivo tamanho da amostra:
+
+$$\sigma_{\bar{x}_1-\bar{x}_2} = \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}.$$ Uma variável normalmente distribuída ou um tamanho de amostra suficientemente grande (lembre-se do Teorema Central do Limite) faz com que a diferença entre as médias amostrais ($\bar{x}_1-\bar{x}_2$) também tenha distribuição normal.
+
+Os procedimentos de teste de hipóteses para duas médias populacionais são, na verdade, os mesmos utilizados para uma única média populacional.O procedimento passo a passo para testes de hipóteses é resumido da seguinte forma:
+
+1.  Formular a hipótese nula ($H_0$) e a hipótese alternativa ($H_A$).
+
+2.  Definir o nível de significância ($\alpha$).
+
+3.  Calcular o valor da estatística de teste.
+
+4.  Determinar o $p$-valor.
+
+5.  Se $p \leq \alpha$, rejeitar $H_0$; caso contrário, não rejeitar $H_0$.
+
+6.  Interpretar o resultado do teste de hipóteses.
+
+### Inferências para Duas Médias Populacionais, Utilizando Amostras Independentes e Assumindo Desvios-Padrão Iguais
+
+Nesta seção, realizamos um teste de hipóteses para as médias de duas populações. Assumimos que os desvios-padrão das duas populações são iguais, porém desconhecidos.
+
+Se conhecêssemos o desvio-padrão populacional comum $\sigma$ e e a diferença entre as médias amostrais $\bar{x}_1 - \bar{x}_2$, a estatística de teste seria dada por:
+
+$$z = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2) }{\sigma \sqrt{\frac{1}{n_1}+ \frac{1}{n_2}}}.$$ No entanto, em quase todas as aplicações práticas, o valor de $\sigma$ é desconhecido. Assim, precisamos estimá-lo.
+
+A melhor maneira de fazer isso é considerar as variâncias amostrais $s_1^2$ e $s_2^2$ como duas estimativas de $\sigma^2$. Combinando (ou "agrupando") essas variâncias e ponderando-as pelos respectivos tamanhos das amostras, obtemos a estimativa da variância populacional comum:
+
+$$s^2_c = \frac{(n_1 -1)\cdot s_1^2 + (n_2 - 1) \cdot s_2^2}{n_1 + n_2 - 2},$$
+
+e tomando a raiz quadrada temos:
+
+$$s_c = \sqrt{\frac{(n_1 -1)\cdot s_1^2 + (n_2 - 1) \cdot s_2^2}{n_1 + n_2 - 2}}.$$ A quantidade $s_c$ é denominada desvio-padrão amostral combinado em que o subscrito $c$ significa combinado. Substituindo $\sigma$ por $s_c$, temos:
+
+$$t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2) }{s_c \sqrt{\frac{1}{n_1}+ \frac{1}{n_2}}},$$ em que $t$ segue uma distribuição t-student com $n_1+n_2 -2$ graus de liberdade.
+
+### Estimação por Intervalo de $\mu_1-\mu_2$
+
+O intervalo de confiança de $100\cdot(1-\alpha)\%$ para a diferença entre as médias populacionais $(mu_1-\mu_2)$ é dada por:
+
+$$(\bar{x}_1 - \bar{x}_2) \pm t_{n_1+n_2-2, \frac{\alpha}{2} }\cdot s_c \sqrt{\frac{1}{n_1}+ \frac{1}{n_2}},$$
+
+em que o valor crítico $t_{n_1+n_2-2, \frac{\alpha}{2} }$ é obtido na distribuição t-Student para o nível de confiança desejado e $n_1+n_2-2$ graus de liberdade.
+
+Esse intervalo fornece uma faixa de valores plausíveis para a diferença entre as médias populacionais. Se o valor zero estiver contido no intervalo, isso sugere que não há evidência suficiente para concluir que as médias das duas populações são diferentes. Por outro lado, se o intervalo não contiver zero, há evidências de uma diferença significativa entre as médias populacionais.
+
+### Exemplo Prático
+
+O `Python` permite realizar um teste t com variâncias combinadas utilizando a função `ttest_ind_from_stats()`, disponível no módulo `stats` do pacote `scipy`.
+
+> No exemplo, assumiremos que as variâncias das duas amostras são iguais. Portanto, o argumento `equal_var` da função será definido como `True`.
+
+Para praticar a aplicação do teste t com variâncias combinadas, utilizaremos o conjunto de dados *estudantes*.
+
+
+#### Hipóteses
+
+Queremos verificar se existe diferença entre os ganhos de homens e mulheres graduados. Desta forma, queremos testar as seguintes hipóteses:
+
+$$H_0: \mu_1 = \mu_2$$
+
+e
+
+$$H_A: \mu_1 \neq \mu_2$$ em que $\mu_1$ e $\mu_2$ representam as médias salariais dos estudantes graduados do sexo masculino e feminino, respectivamente.
+
+
+#### Preparação dos dados
+
+Começamos com a preparação dos dados, que inclui as seguintes etapas:
+
+1.  Subdividimos o conjunto de dados com base na variável binária `graduated`, que indica se o estudante já se formou. O valor 1 representa “formado”, enquanto 0 indica “não formado”.
+
+2.  Em seguida, dividimos o conjunto de dados por gênero (masculino e feminino).
+
+3.  Depois, selecionamos aleatoriamente uma amostra de 50 estudantes do sexo feminino e 50 do sexo masculino de cada subconjunto e extraímos a média do salário anual (em euros) como variável de interesse.
+
+Armazenaremos as informações de salário dos grupos masculino e feminino em variáveis separadas chamadas `amostra_homens` e `amostra_mulheres`. A informação relevante está armazenada na coluna `salary`.
+
+```{python}
+estudantes_graduados = estudantes.loc[estudantes.graduated == 1] #filta estudantes formados
+
+homens_graduados = estudantes_graduados.loc[estudantes.gender == "Male"] #separa homens formados
+
+mulheres_graduadas = estudantes_graduados.loc[estudantes.gender == "Female"] #separa mulheres formadas
+
+n_piloto = 30
+
+amostra_homens_piloto = homens_graduados.sample(n_piloto, random_state = 24, replace = False)["salary"] #Sorteia amostra de homens e pega salário
+
+amostra_mulheres_piloto = mulheres_graduadas.sample(n_piloto, random_state = 24, replace = False)["salary"] #Sorteia amostra de mulheres e pega salário
+
+s21_piloto = np.var(amostra_homens_piloto, ddof = 1)
+s22_piloto = np.var(amostra_mulheres_piloto, ddof = 1)
+
+n1 = n2 = n_piloto
+
+
+alpha = 0.05 
+power = 0.90 
+delta = 5000 
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = (((z_alpha + z_beta)/ delta)**2)*(s21_piloto + s22_piloto) 
+
+print(f"Razão entre as variâncias da amostra piloto: {np.sqrt(s21_piloto)/np.sqrt(s22_piloto):.2f}")
+print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
+
+```
+
+A razão entre os desvios-padrão é aproximadamente 1,34 e, portanto, nota-se que o suposição de igualdade dos desvios-padrão populacionais parece razoável.
+
+```{python}
+tol = 1
+max_iter = 100
+n0 = np.ceil(n0)
+
+for i in range(max_iter):
+
+    gl = 2*n0 - 2
+
+    t_alpha = t.ppf(1 - alpha/2, df=gl)
+    t_beta = t.ppf(power, df=gl)
+
+    n_novo = (((t_alpha + t_beta)/delta)**2) * (s21_piloto + s22_piloto)
+
+    # normalmente arredondamos para cima
+    n_novo = np.ceil(n_novo)
+
+    if n_novo == n0:
+        break
+
+    n0 = n_novo
+
+n = int(np.ceil(n0)) 
+
+print(f"Convergiu em {i+1} iterações")
+print(f"n por grupo = {int(n)}")
+```
+
+
+
+### Seleção da amostra
+
+```{python}
+amostra_homens = homens_graduados.sample(n, random_state = 24, replace = False)["salary"] #Sorteia amostra de homens e pega salário
+
+amostra_mulheres = mulheres_graduadas.sample(n, random_state = 24, replace = False)["salary"] #Sorteia amostra de mulheres e pega salário
+
+```
+
+```{python}
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+plt.figure(figsize=(12,5))
+
+ax = plt.subplot(1, 2, 1)
+qq = stats.probplot(amostra_homens, dist="norm", plot = plt)
+ax.set_title("Q-Q plot para homens (amostra)")
+ax.set_ylabel("Quantis Amostrais")
+
+ax = plt.subplot(1, 2, 2)
+qq = stats.probplot(amostra_mulheres, dist="norm", plot = plt)
+ax.set_title("Q-Q plot para mulheres (amostra)")
+ax.set_ylabel("Quantis Amostrais")
+```
+
+Observamos que os dados da amostra apresentam certo nível de ruído, mas ainda seguem aproximadamente uma distribuição normal. Além disso, verificamos se os desvios-padrão das duas populações são aproximadamente iguais. Como regra prática, a condição de igualdade dos desvios-padrão populacionais é considerada satisfeita se a razão entre o maior e o menor desvio-padrão amostral for inferior a 2.
+
+```{python}
+s1 = np.std(amostra_homens, ddof = 1)
+s2 = np.std(amostra_mulheres, ddof = 1)
+
+n1 = n2 = n
+
+sc = np.sqrt(((n1 - 1) * s1**2 + (n2 - 1) * s2**2) / (n1 + n2 - 2))
+
+print(f"Razão entre os desvios-padrão: {s1/s2:.2f}")
+```
+
+Podemos analisar a suposição de igualdade das variâncias, fazendo um boxplot por gênero.
+
+```{python}
+import seaborn as sns
+
+plt.figure(figsize=(11,5))
+
+amostra = pd.melt(pd.DataFrame({'Homens': amostra_homens.values, 'Mulheres': amostra_mulheres.values}))
+
+amostra.columns = ["Gênero", "Salário Anual em Euros"]
+
+sns.boxplot(x='Gênero', 
+            y='Salário Anual em Euros', 
+            hue='Gênero',
+            data=amostra).set(title='Dados Amostrais')
+
+```
+
+
+#### Estatística de Teste
+
+```{python}
+gl = 2*n-2
+xbar1 = np.mean(amostra_homens)
+xbar2 = np.mean(amostra_mulheres)
+
+t_cal = (xbar1 - xbar2) / (sc * np.sqrt((1/n1) + (1/n2)))
+
+p_valor = 1 - t.cdf(t_cal, df = gl)
+p_valor
+
+print(f"EGraus de Liberdade: {gl: 0f}")
+print(f"Estatística de Teste: {t_cal:.2f}")
+print(f"P-valor: {p_valor:.4f}")
+
+```
+
+#### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_valor < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+#### Usando `scipy`
+
+```{python}
+from scipy import stats
+
+resultado_teste = stats.ttest_ind(amostra_homens, amostra_mulheres, 
+                              equal_var = True, 
+                              alternative = "two-sided")
+
+resultado_teste
+```
+
+
+#### Conclusão
+
+Ao nível de significância de 1%, os dados fornecem evidências muito fortes para concluir que o salário médio dos graduados do sexo masculino é diferente do salário médio das graduadas do sexo feminino.
+
+
+## Inferências para duas médias populacionais com amostras independentes e variâncias desiguais
+
+Nos casos em que desejamos testar a igualdade de duas médias populacionais e os desvios-padrão das duas populações são diferentes, aplica-se o chamado teste t de *Welch*.
+
+O teste t de *Welch* é semelhante ao teste apresentado na seção anterior. A diferença é que agora o estimador do desvio-padrão é dado por:
+
+$$s_{\bar{x}_1 - \bar{x}_2} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}.$$
+Além disso, a estatística t segue uma distribuição t-Student, e os graus de liberdade (gl) são calculados pela fórmula de *Welch-Satterthwaite*:
+
+$$gl = \frac{\left(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}\right)^2}{\frac{\left(\frac{s_1^2}{n_1}\right)^2}{n_1-1} + \frac{\left(\frac{s_2^2}{n_2}\right)^2}{n_2-1}}.$$
+Ao utilizar tabelas da distribuição t, recomenda-se arredondar os graus de liberdade para baixo até o inteiro mais próximo. 
+
+> O teste t de *Welch* é robusto a violações moderadas da suposição de normalidade das populações. Entretanto, ele é menos robusto à presença de valores extremos (*outliers*) (Weiss, 2010).
+
+
+No exemplo, anterior poderíamos aplicar o teste de maneira prática e fácil usando a função `stats.ttest_ind()` com o argumento `equal_var = False`.
+
+```{python}
+resultado_teste_Welch = stats.ttest_ind(amostra_homens, amostra_mulheres, 
+                              equal_var = False, 
+                              alternative = "two-sided")
+
+resultado_teste_Welch
+```
+
