@@ -1010,3 +1010,196 @@ resultado_teste_Welch = stats.ttest_ind(amostra_homens, amostra_mulheres,
 resultado_teste_Welch
 ```
 
+
+## Inferências para Duas Médias Populacionais com Amostras Dependentes (Pareadas)
+
+Estudaremos agora a um procedimento de teste de hipóteses para a diferença entre duas médias populacionais quando as amostras são dependentes. Quando, por exemplo, dois valores são coletados da mesma fonte (ou unidade amostral), diz-se que as amostras são **pareadas** ou **emparelhadas**.
+
+Esses procedimentos são frequentemente aplicados em análises do tipo **Antes–Depois–Controle–Impacto (BACI, *Before-After-Control-Impact*)**. Imagine que você precise avaliar a eficácia de um sistema de filtragem na remoção de poluentes atmosféricos emitidos por uma fábrica. Nesse caso, uma população consiste em medições da qualidade do ar realizadas antes da implementação ou renovação do sistema de filtragem. A outra população consiste em medições da qualidade do ar realizadas após a instalação do novo sistema. Trata-se, portanto, de amostras pareadas, pois os dois conjuntos de dados são coletados da mesma fonte, isto é, a fábrica.
+
+Em amostras pareadas, a diferença entre os valores observados nos dois conjuntos de dados é denotada por (d), frequentemente chamada de **diferença pareada**. Observe que o tamanho amostral ($n$) é o mesmo para ambas as amostras. A média das diferenças pareadas é representada por ($\bar{d}$):
+
+
+$$\bar{d} = \frac{\sum d}{n}.$$
+
+
+O desvio-padrão das diferenças pareadas, denotado por ($s_d$), é calculado por:
+
+
+$$s_d =
+\sqrt{
+\frac{
+\sum d^2 - \frac{(\sum d)^2}{n}
+}
+{n-1}
+}.$$
+
+Suponha que a variável diferença pareada ($d$) siga uma distribuição normal. Nesse caso, a estatística do **teste t pareado** é dada por:
+
+
+$$t =
+\frac{
+\bar{d} - (\mu_1 - \mu_2)
+}
+{
+s_d / \sqrt{n}
+}.$$
+
+Quando a hipótese nula assume que não existe diferença entre as médias populacionais, isto é,
+
+
+$$\mu_1 - \mu_2 = 0,$$
+
+a estatística de teste simplifica-se para:
+
+
+$$t =
+\frac{\bar{d}}
+{s_d / \sqrt{n}}.$$
+
+A estatística ($t$) para amostras pareadas segue uma distribuição t de Student com $gl = n - 1$ graus de liberdade.
+
+### Estimação por Intervalo para ($\mu_d$)
+
+O intervalo de confiança de ($100\cdot(1-\alpha)\%$) para a média das diferenças pareadas ($\mu_d$) é dado por:
+
+
+$$\bar{d}
+\pm
+t^*
+\frac{s_d}{\sqrt{n}},$$
+
+
+em que ($t^*$) é o valor crítico obtido da distribuição t-Student para o nível de confiança desejado e ($n-1$) graus de liberdade.
+
+### Exemplo Prático
+
+
+Para ilustrar a aplicação do teste t pareado para amostras dependentes, estamos interessados em verificar se um tutorial online de Estatística auxilia os estudantes a melhorar seu desempenho acadêmico.
+
+Existem três variáveis de interesse no conjunto de dados dos estudantes:
+
+1. A variável `online.tutorial é uma variável binária que assume valor 1 se o estudante concluiu o tutorial online de Estatística e 0 caso contrário.
+
+2. As variáveis `score1` e `score2` representam as notas (de 0 a 100) obtidas em duas avaliações de Matemática e Estatística. Quanto maior a nota, melhor o desempenho do estudante.
+
+3. Observe que a primeira avaliação ocorre antes da participação dos estudantes no tutorial online de Estatística. A participação no tutorial é opcional, mas as duas avaliações são obrigatórias para todos os estudantes. A primeira prova (`score1`) é realizada no início do terceiro semestre, enquanto a segunda prova (`score2`) é realizada ao final do terceiro semestre.
+
+Neste contexto, há duas questões de pesquisa de interesse:
+
+- Verificar se o grupo de estudantes que participou do tutorial online de Estatística apresentou melhor desempenho na segunda avaliação em comparação com a primeira avaliação.
+
+- Avaliar o desempenho do grupo de estudantes que não participou do tutorial online, comparando os resultados obtidos na primeira e na segunda avaliação.
+
+### Hipóteses
+
+A hipótese nula afirma que não há diferença entre as médias das notas dos dois exames:
+
+$$
+H_0: \mu_1 = \mu_2
+$$
+
+A hipótese alternativa indica que os alunos têm melhor desempenho no segundo exame:
+
+$$
+H_A: \mu_1 < \mu_2
+$$
+
+Isso caracteriza um teste de hipótese unilateral à esquerda 
+
+
+### Preparação dos Dados e Amostra Piloto
+
+
+```{python}
+subconjunto = estudantes.loc[estudantes["online.tutorial"] == 1]
+
+n_piloto = 50
+
+amostra_piloto = subconjunto.sample(n_piloto, random_state = 24)[["score1", "score2"]]
+
+d_piloto = (amostra_piloto["score1"] - amostra_piloto["score2"]).to_frame(name="diferenca")
+
+sd_piloto = np.std(d_piloto["diferenca"])
+
+print(f"Desvio-padrão da diferença (amostra piloto) : {sd_piloto:.2f}")
+
+```
+
+## Cálculo do tamanho amostral
+
+```{python}
+from scipy.stats import t
+
+alpha = 0.01 
+power = 0.80 
+delta = 2.0 
+
+z_alpha = norm.ppf(1 - alpha) 
+z_beta = norm.ppf(power) 
+
+n0 = ((z_alpha + z_beta) * sd_piloto/delta)**2
+
+print(f"Tamanho inicial da amostra (usando quantil da normal padrão): {np.ceil(n0):.0f}")
+
+
+t_alpha = t.ppf(1 - alpha, df = n0-1)
+t_beta = t.ppf(power, df = n0-1)
+n1 = ((t_alpha + t_beta) * s/delta)**2
+N = 3182
+n = (n1 * N)/(n1 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho mínimo da amostra (usando quantil da t-student): {n:.0f}")
+```
+
+### Seleção da Amostra
+
+```{python}
+amostra = subconjunto.sample(n, random_state = 24)[["score1", "score2"]]
+
+```
+
+### Estatística de Teste
+
+```{python}
+d = (amostra["score1"] - amostra["score2"]).to_frame(name="diferenca")
+
+diff_mean = np.mean(d)
+diff_std = np.sqrt((np.sum(d**2) - ((np.sum(d)**2) / n)) / (n - 1))
+
+t_value = diff_mean / (diff_std / np.sqrt(n))
+
+
+p = t.cdf(t_value, df = n-1)
+
+
+print(f"EGraus de Liberdade: {n-1: 0f}")
+print(f"Estatística de Teste: {t_value:.2f}")
+print(f"P-valor: {p:.4f}")
+```
+
+
+#### Regra de Decisão
+
+```{python}
+alpha = 0.01 
+
+if p < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+#### Usando funções do Python
+
+```{python}
+test_result = stats.ttest_rel(amostra["score1"], amostra["score2"], alternative = "less")
+
+test_result
+```
+
+
+#### Conclusão
+
+Ao nível de significância de 1%, os dados fornecem evidência forte para concluir que as notas dos estudantes em exames melhoram após realizarem um tutorial online de aprendizagem de estatística.
