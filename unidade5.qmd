@@ -230,16 +230,226 @@ a)  Se ($p_{\text{valor}} < \alpha$): Rejeitamos a hipótese nula ($H_0$) em fav
 
 b)  Se ($p_{\text{valor}} \geq \alpha$): Não rejeitamos a hipótese nula ($H_0$). Nesse caso, concluímos que os dados não fornecem evidências suficientes para apoiar a hipótese alternativa.
 
-### Observação Importante {.unnumbered}
 
-Em testes de hipóteses, nunca afirmamos que a hipótese nula foi "aceita". A única conclusão possível é:
+## Possíveis Resultados de um Teste de Hipóteses
 
-- rejeitar ($H_0$); ou
-- não rejeitar ($H_0$).
+Em um teste de hipóteses, considera-se que existem apenas duas hipóteses possíveis:
 
-A ausência de evidências contra a hipótese nula não implica que ela seja verdadeira, apenas indica que os dados observados não foram suficientemente incompatíveis com ela.
+- **Hipótese nula ($H_0$)**: representa a hipótese inicialmente assumida como verdadeira.
+- **Hipótese alternativa ($H_A$)**: representa a hipótese que será aceita caso existam evidências suficientes para rejeitar $H_0$.
+
+Por convenção, as decisões em um teste de hipóteses são sempre expressas em relação à hipótese nula. Assim, existem apenas duas decisões possíveis:
+
+- **Não rejeitar $H_0$** (ou aceitar $H_0$, na terminologia clássica);
+- **Rejeitar $H_0$**.
+
+Como o verdadeiro estado da natureza é desconhecido, quatro situações podem ocorrer:
+
+1. **Não rejeitar $H_0$** quando $H_0$ é verdadeira.
+2. **Não rejeitar $H_0$** quando $H_A$ é verdadeira.
+3. **Rejeitar $H_0$** quando $H_0$ é verdadeira.
+4. **Rejeitar $H_0$** quando $H_A$ é verdadeira.
+
+A Tabela abaixo resume essas quatro possibilidades.
+
+| **Decisão** | **$H_0$ é verdadeira** | **$H_A$ é verdadeira** |
+|:------------|:-------------------------|:-------------------------|
+| Não rejeitar $H_0$ | Decisão correta | Erro do Tipo II |
+| Rejeitar $H_0$ | Erro do Tipo I | Decisão correta |
+
+::: {.callout-note}
+## Observação
+
+Na prática, é mais apropriado utilizar a expressão **"não rejeitar $H_0$"** em vez de **"aceitar $H_0$"**. Isso ocorre porque a ausência de evidências para rejeitar a hipótese nula não significa que ela seja verdadeira, mas apenas que os dados observados não fornecem evidências suficientes para rejeitá-la.
+:::
+
+## Erro do Tipo II
+
+A probabilidade de cometer um **erro do Tipo II** é representada pela letra grega $\beta$. O erro do Tipo II ocorre quando **não se rejeita a hipótese nula ($H_0$)**, embora ela seja falsa. Em outras palavras, esse erro acontece quando a hipótese alternativa ($H_A$) é verdadeira, mas o teste não apresenta evidências suficientes para rejeitar $H_0$.
+
+O valor de $\beta$ depende de diversos fatores, como:
+
+- o tamanho da amostra;
+- a variabilidade dos dados;
+- o nível de significância ($\alpha$);
+- a magnitude da diferença entre o parâmetro populacional e o valor especificado em $H_0$.
+
+Quanto menor for o valor de $\beta$, menor será a probabilidade de não detectar uma diferença que realmente existe.
+
+::: {.callout-note}
+## Poder do teste
+
+O complemento da probabilidade de cometer um erro do Tipo II é denominado **poder do teste** e é dado por:
+
+$$
+\text{Poder} = 1 - \beta.
+$$
+
+O poder representa a probabilidade de o teste rejeitar corretamente a hipótese nula quando ela é falsa. Em geral, busca-se desenvolver testes com alto poder, pois eles apresentam maior capacidade de detectar diferenças ou efeitos reais.
+:::
 
 ## Teste de hipótese para média populacional com variância conhecida
+
+
+Considere uma população normal com desvio padrão populacional $\sigma$ conhecido. O teste de hipótese para a média é baseado na estatística:
+
+$$
+z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}},
+$$
+
+em que:
+
+- $\bar{x}$ é a média amostral;
+- $\mu_0$ é o valor hipotetizado para a média;
+- $\sigma$ é o desvio padrão populacional conhecido;
+- $n$ é o tamanho da amostra.
+
+### Teste bicaudal ($H_A: \mu \neq \mu_0$)
+
+Hipóteses:
+
+$$
+H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu \neq \mu_0
+$$
+
+Regra de decisão:
+
+- Rejeita-se $H_0$ se:
+$$
+z < -z_{\alpha/2} \quad \text{ou} \quad z > z_{1-\alpha/2}
+$$
+
+- Caso contrário, não se rejeita $H_0$.
+
+Região de não rejeição:
+$$
+- z_{\alpha/2} \le z \le z_{1-\alpha/2}
+$$
+
+#### p-valor (bicaudal)
+
+$$
+p_{\text{valor}} = 2 \cdot P(Z \ge |z|)
+$$
+
+### Teste unilateral à esquerda ($H_A: \mu < \mu_0$)
+
+Hipóteses:
+
+$$
+H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu < \mu_0
+$$
+
+Regra de decisão:
+
+- Rejeita-se $H_0$ se:
+$$
+z < -z_{\alpha}
+$$
+
+- Caso contrário, não se rejeita $H_0$.
+
+#### p-valor
+
+$$
+p_{\text{valor}} = \Phi(z),
+$$
+
+em que $\Phi(\cdot)$ é a função de distribuição acumulada da distribuição normal padrão.
+
+### Teste unilateral à direita ($H_A: \mu > \mu_0$)
+
+Hipóteses:
+
+$$
+H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu > \mu_0
+$$
+
+Regra de decisão:
+
+- Rejeita-se $H_0$ se:
+$$
+z > z_{1-\alpha}
+$$
+
+- Caso contrário, não se rejeita $H_0$.
+
+#### p-valor
+
+$$
+p_{\text{valor}} = 1 - \Phi(z).
+$$
+
+### Estimativa do Tamanho Amostral para Teste da Média (Alternativa Unilateral)
+
+Considere o problema de testar:
+
+$$
+H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu > \mu_0,
+$$
+
+ou
+
+$$
+H_A: \mu < \mu_0,
+$$
+
+em uma população normal com variância conhecida $\sigma^2$. O tamanho amostral necessário para realizar um teste unilateral com nível de significância $\alpha$ e poder $1 - \beta$ é dado por:
+
+$$
+n = \left[\frac{(z_{1-\alpha} + z_{1-\beta}) \sigma}{\mu_1 - \mu_0} \right]^2,
+$$
+em que:
+
+- $\mu_0$: valor sob a hipótese nula.  
+- $\mu_1$: valor verdadeiro assumido sob a hipótese alternativa.  
+- $\sigma$: desvio padrão populacional conhecido.  
+- $z_{1-\alpha}$: quantil da normal padrão associado ao nível de significância.  
+- $z_{1-\beta}$: quantil associado ao poder do teste.
+
+#### Exemplo: Cálculo do Tamanho Amostral (Teste Unilateral para a Média)
+
+Considere o seguinte problema:
+
+- $\mu_0 = 120$   
+- $\mu_1 = 115$   
+- $\sigma = 24$   
+- $\alpha = 0{,}05$  
+- Poder do teste: $1 - \beta = 0{,}80$
+
+Deseja-se determinar o tamanho amostral necessário para um **teste unilateral** da média. Os valores críticos são:
+
+- $z_{1-\alpha} = 1{,}645$.
+- $z_{1-\beta} = 0{,}84$.
+
+Diferença entre as médias:
+
+$$
+\mu_0 - \mu_1 = 120 - 115 = 5.
+$$
+
+Substituindo na fórmula:
+
+$$
+n = \left( \frac{(1{,}645 + 0{,}84)\cdot 24}{5} \right)^2 \approx 142{,}3.
+$$
+
+> O tamanho da amostra é sempre arredondado para cima, para garantir que se atinja pelo menos o nível de poder desejado (neste caso, 80%). Assim, é necessário um tamanho amostral de 143 para ter 80% de chance de detectar uma diferença significativa ao nível de 5%, caso a média alternativa seja 115 e seja utilizado um teste unilateral.
+
+### Estimativa do Tamanho Amostral para Teste da Média (Alternativa Bicaudal)
+
+Suponha que desejamos testar:
+
+$$
+H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu = \mu_1,
+$$
+onde os dados são provenientes de uma distribuição normal com média $\mu$ e variância conhecida $\sigma^2$. O tamanho amostral necessário para realizar um teste bicaudal com nível de significância $\alpha$ e poder $1-\beta$ é dada por:
+
+$$n = \left[\frac{(z_{1-\frac{\alpha}{2}} + z_{1-\beta}) \sigma}{\mu_1 - \mu_0} \right]^2.$$
+
+> Note que o tamanho da amostra para um teste bicaudal é sempre maior do que o tamanho correspondente para um teste unilateral. Isso ocorre porque o quantil $z_{1-\frac{\alpha}{2}}$ é maior do que $z_{1-\alpha}$, o que exige uma amostra maior para alcançar o mesmo nível de poder do teste.
+
+### Exemplo Aplicado
 
 Nesta seção, com o conjunto de dados dos estudantes disponível em [SOGA-Py](https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Hypothesis-Tests/index.html). Você pode carregá-lo diretamente como um recurso da *web*. Vamos importar o conjunto de dados para o `Python` como um objeto **DataFrame** do pandas utilizando o método `read_csv`:
 
