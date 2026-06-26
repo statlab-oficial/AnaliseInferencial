@@ -253,9 +253,15 @@ window.Quarto = {
   <li><a href="#intervalo-de-confiança-para-média-com-variância-conhecida" id="toc-intervalo-de-confiança-para-média-com-variância-conhecida" class="nav-link" data-scroll-target="#intervalo-de-confiança-para-média-com-variância-conhecida"><span class="header-section-number">5.5</span> Intervalo de confiança para média com variância conhecida</a></li>
   <li><a href="#intervalo-de-confiança-para-média-com-variância-desconhecida-amostra-grande" id="toc-intervalo-de-confiança-para-média-com-variância-desconhecida-amostra-grande" class="nav-link" data-scroll-target="#intervalo-de-confiança-para-média-com-variância-desconhecida-amostra-grande"><span class="header-section-number">5.6</span> Intervalo de confiança para média com variância desconhecida (amostra grande)</a></li>
   <li><a href="#intervalo-de-confiança-para-média-com-variância-desconhecida" id="toc-intervalo-de-confiança-para-média-com-variância-desconhecida" class="nav-link" data-scroll-target="#intervalo-de-confiança-para-média-com-variância-desconhecida"><span class="header-section-number">5.7</span> Intervalo de confiança para média com variância desconhecida</a></li>
-  <li><a href="#método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção" id="toc-método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção" class="nav-link" data-scroll-target="#método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção"><span class="header-section-number">5.8</span> Método de Wald para obter um intervalo de confiança para proporção</a></li>
-  <li><a href="#método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson" id="toc-método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson" class="nav-link" data-scroll-target="#método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson"><span class="header-section-number">5.9</span> Método Exato para Obtenção de IC para o parâmetro <span class="math inline">\(p\)</span> da binomial (Método de Clopper–Pearson)</a></li>
-  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">5.10</span> Exercícios</a></li>
+  <li><a href="#fatores-que-afetam-a-amplitude-de-um-intervalo-de-confiança" id="toc-fatores-que-afetam-a-amplitude-de-um-intervalo-de-confiança" class="nav-link" data-scroll-target="#fatores-que-afetam-a-amplitude-de-um-intervalo-de-confiança"><span class="header-section-number">5.8</span> Fatores que Afetam a Amplitude de um Intervalo de Confiança</a>
+  <ul class="collapse">
+  <li><a href="#tamanho-da-amostra-n" id="toc-tamanho-da-amostra-n" class="nav-link" data-scroll-target="#tamanho-da-amostra-n"><span class="header-section-number">5.8.1</span> Tamanho da amostra (<span class="math inline">\(n\)</span>)</a></li>
+  <li><a href="#desvio-padrão-s" id="toc-desvio-padrão-s" class="nav-link" data-scroll-target="#desvio-padrão-s"><span class="header-section-number">5.8.2</span> Desvio padrão (<span class="math inline">\(s\)</span>)</a></li>
+  <li><a href="#nível-de-confiança-1-alpha" id="toc-nível-de-confiança-1-alpha" class="nav-link" data-scroll-target="#nível-de-confiança-1-alpha"><span class="header-section-number">5.8.3</span> Nível de confiança (<span class="math inline">\(1-\alpha\)</span>)</a></li>
+  </ul></li>
+  <li><a href="#método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção" id="toc-método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção" class="nav-link" data-scroll-target="#método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção"><span class="header-section-number">5.9</span> Método de Wald para obter um intervalo de confiança para proporção</a></li>
+  <li><a href="#método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson" id="toc-método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson" class="nav-link" data-scroll-target="#método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson"><span class="header-section-number">5.10</span> Método Exato para Obtenção de IC para o parâmetro <span class="math inline">\(p\)</span> da binomial (Método de Clopper–Pearson)</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">5.11</span> Exercícios</a></li>
   </ul>
 </nav>
     </div>
@@ -422,19 +428,22 @@ z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
 <section id="intervalo-de-confiança-para-média-com-variância-conhecida" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="intervalo-de-confiança-para-média-com-variância-conhecida"><span class="header-section-number">5.5</span> Intervalo de confiança para média com variância conhecida</h2>
 <p>Se o desvio padrão populacional <span class="math inline">\(\sigma\)</span> for conhecido, o intervalo de confiança para média baseado na distribuição normal pode ser utilizado para qualquer tamanho de amostra. Nesse caso, basta calcular:</p>
-<p><span class="math display">\[
-\left(
+<p><span class="math display">\[\left(
 \bar{x} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},
 \;
 \bar{x} + z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right)
-\]</span></p>
+\right)\]</span></p>
 <p>ou, de forma equivalente,</p>
-<p><span class="math display">\[
-\bar{x} \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}.
-\]</span></p>
+<p><span class="math display">\[\bar{x} \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},\]</span></p>
+<p>em que:</p>
+<ul>
+<li><span class="math inline">\(\bar{x}\)</span> é a média amostral;</li>
+<li><span class="math inline">\(\sigma\)</span> é o desvio padrão populacional;</li>
+<li><span class="math inline">\(n\)</span> é o tamanho da amostra;</li>
+<li><span class="math inline">\(z_{1-\alpha/2}\)</span> é o quantil de ordem <span class="math inline">\(1-\frac{\alpha}{2}\)</span> da distribuição normal padrão para o nível de confiança desejado</li>
+</ul>
 <p>Quando a variância populacional é conhecida, o intervalo de confiança baseado na distribuição normal fornece uma estimativa exata para a média da população, desde que os dados sejam provenientes de uma distribuição normal. No exemplo a seguir, mostramos como calcular esse intervalo de confiança utilizando <code>Python</code>.</p>
-<div id="a40b8209" class="cell" data-execution_count="1">
+<div id="45b2d852" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -467,17 +476,13 @@ IC 95%: (11.89, 15.36)</code></pre>
 <section id="intervalo-de-confiança-para-média-com-variância-desconhecida-amostra-grande" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="intervalo-de-confiança-para-média-com-variância-desconhecida-amostra-grande"><span class="header-section-number">5.6</span> Intervalo de confiança para média com variância desconhecida (amostra grande)</h2>
 <p>Quando o objetivo é estimar a média populacional <span class="math inline">\(\mu\)</span> de uma distribuição normal e a variância populacional é desconhecida, um intervalo de confiança aproximado de <span class="math inline">\(100(1-\alpha)\%\)</span>, considerando uma amostra suficientemente grande, pode ser obtido pela aproximação normal:</p>
-<p><span class="math display">\[
-\left(
+<p><span class="math display">\[\left(
 \bar{x} - z_{1-\alpha/2}\frac{s}{\sqrt{n}},
 \;
 \bar{x} + z_{1-\alpha/2}\frac{s}{\sqrt{n}}
-\right)
-\]</span></p>
+\right)\]</span></p>
 <p>ou, de forma abreviada,</p>
-<p><span class="math display">\[
-\bar{x} \pm z_{1-\alpha/2}\frac{s}{\sqrt{n}}.
-\]</span></p>
+<p><span class="math display">\[\bar{x} \pm z_{1-\alpha/2}\frac{s}{\sqrt{n}},\]</span></p>
 <p>em que:</p>
 <ul>
 <li><span class="math inline">\(\bar{x}\)</span> é a média amostral;</li>
@@ -507,7 +512,7 @@ Importante
 <p><span class="math display">\[\bar{x} \pm t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}},\]</span></p>
 <p>em que <span class="math inline">\(\bar{x}\)</span> é a média amostral, <span class="math inline">\(s\)</span> é o desvio padrão amostral, <span class="math inline">\(n\)</span> é o tamanho da amostra e <span class="math inline">\(t_{1-\frac{\alpha}{2}}\)</span> o quantil de ordem <span class="math inline">\(1-\frac{\alpha}{2}\)</span> da distribuição <span class="math inline">\(t\)</span>-Student com <span class="math inline">\(n-1\)</span> graus de liberdade.</p>
 <p>A seguir, é apresentada uma função do <code>Python</code> que pode ser utilizada para construir intervalos de confiança para média.</p>
-<div id="f03ff1b8" class="cell" data-execution_count="2">
+<div id="e9c6d4e7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.stats.api <span class="im">as</span> sms</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -521,8 +526,28 @@ Importante
 </div>
 </div>
 </section>
-<section id="método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção"><span class="header-section-number">5.8</span> Método de Wald para obter um intervalo de confiança para proporção</h2>
+<section id="fatores-que-afetam-a-amplitude-de-um-intervalo-de-confiança" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="fatores-que-afetam-a-amplitude-de-um-intervalo-de-confiança"><span class="header-section-number">5.8</span> Fatores que Afetam a Amplitude de um Intervalo de Confiança</h2>
+<p>A amplitude de um intervalo de confiança de <span class="math inline">\(100\cdot(1-\alpha)\%\)</span> para a média <span class="math inline">\(\mu\)</span> é dada por:</p>
+<p><span class="math display">\[
+2\cdot t_{1-\frac{\alpha}{2},\;n-1}\frac{s}{\sqrt{n}},
+\]</span></p>
+<p>sendo determinada por três fatores principais: o tamanho da amostra (<span class="math inline">\(n\)</span>), o desvio padrão amostral (<span class="math inline">\(s\)</span>) e o nível de confiança (<span class="math inline">\(1-\alpha\)</span>).</p>
+<section id="tamanho-da-amostra-n" class="level3" data-number="5.8.1">
+<h3 data-number="5.8.1" class="anchored" data-anchor-id="tamanho-da-amostra-n"><span class="header-section-number">5.8.1</span> Tamanho da amostra (<span class="math inline">\(n\)</span>)</h3>
+<p>À medida que o tamanho da amostra aumenta, a amplitude do intervalo de confiança diminui. Isso ocorre porque amostras maiores fornecem estimativas mais precisas da média populacional.</p>
+</section>
+<section id="desvio-padrão-s" class="level3" data-number="5.8.2">
+<h3 data-number="5.8.2" class="anchored" data-anchor-id="desvio-padrão-s"><span class="header-section-number">5.8.2</span> Desvio padrão (<span class="math inline">\(s\)</span>)</h3>
+<p>Quanto maior o desvio padrão amostral, maior será a amplitude do intervalo de confiança. Isso acontece porque um maior desvio padrão indica maior variabilidade nos dados, aumentando a incerteza na estimativa da média.</p>
+</section>
+<section id="nível-de-confiança-1-alpha" class="level3" data-number="5.8.3">
+<h3 data-number="5.8.3" class="anchored" data-anchor-id="nível-de-confiança-1-alpha"><span class="header-section-number">5.8.3</span> Nível de confiança (<span class="math inline">\(1-\alpha\)</span>)</h3>
+<p>Quanto maior o nível de confiança desejado (ou, equivalentemente, quanto menor o valor de <span class="math inline">\(\alpha\)</span>, maior será a amplitude do intervalo de confiança. Isso ocorre porque níveis de confiança mais elevados exigem intervalos mais amplos para aumentar a chance de conter o verdadeiro valor da média populacional.</p>
+</section>
+</section>
+<section id="método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="método-de-wald-para-obter-um-intervalo-de-confiança-para-proporção"><span class="header-section-number">5.9</span> Método de Wald para obter um intervalo de confiança para proporção</h2>
 <p>Um intervalo de confiança aproximado de <span class="math inline">\(100\cdot (1-\alpha)\%\)</span> para o parâmetro <span class="math inline">\(p\)</span> de uma binomial, baseado na baseado na aproximação normal da distribuição binomial, é dado por:</p>
 <p><span class="math display">\[\hat{p} \pm z_{1-\frac{\alpha}{2}}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}},\]</span></p>
 <p>em que <span class="math inline">\(\hat{p}\)</span> é a proporção amostral de “sucessos”, <span class="math inline">\(n\)</span> é o tamanho da amostra e <span class="math inline">\(z_{1-\frac{\alpha}{2}}\)</span> é o quantil de ordem <span class="math inline">\(1-\frac{\alpha}{2}\)</span> da distribuição normal padrão.</p>
@@ -530,7 +555,7 @@ Importante
 <p>Este método de estimação de intervalo só deve ser utilizado se: <span class="math inline">\(n\hat{p}(1-\hat{p}) \geq 5\)</span>.</p>
 </blockquote>
 <p>Abaixo é apresentado um código que calcula um intervalo de confiança aproximado para o parâmetro <span class="math inline">\(p\)</span> da binomial usando a função <code>proportion_confint</code> do <code>statsmodels</code>.</p>
-<div id="c95893c7" class="cell" data-execution_count="3">
+<div id="9d1ade03" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportion_confint</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">12</span>   <span class="co"># número de sucessos</span></span>
@@ -550,29 +575,29 @@ Importante
 </div>
 </div>
 </section>
-<section id="método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson"><span class="header-section-number">5.9</span> Método Exato para Obtenção de IC para o parâmetro <span class="math inline">\(p\)</span> da binomial (Método de Clopper–Pearson)</h2>
+<section id="método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="método-exato-para-obtenção-de-ic-para-o-parâmetro-p-da-binomial-método-de-clopperpearson"><span class="header-section-number">5.10</span> Método Exato para Obtenção de IC para o parâmetro <span class="math inline">\(p\)</span> da binomial (Método de Clopper–Pearson)</h2>
 <p>Um intervalo de confiança exato de <span class="math inline">\(100\cdot(1−α)\%\)</span> para o parâmetro <span class="math inline">\(p\)</span> da binomial, que é sempre válido, é dado por <span class="math inline">\((p_1, p_2)\)</span>, em que <span class="math inline">\(p_1\)</span> e <span class="math inline">\(p_2\)</span> satisfazem as seguintes condições baseadas na distribuição binomial:</p>
 <p><span class="math display">\[P(X \ge x \mid p_1) = \sum_{k=x}^{n} \binom{n}{k} p_1^k (1 - p_1)^{n-k} = \frac{\alpha}{2}\]</span></p>
 <p>e</p>
 <p><span class="math display">\[P(X \le x \mid p_2) = \sum_{k=0}^{x} \binom{n}{k} p_2^k (1 - p_2)^{n-k} = \frac{\alpha}{2},\]</span></p>
 <p>em que <span class="math inline">\(X\)</span> é uma variável aleatória com distribuição Binomial, <span class="math inline">\(x\)</span> é o número observado se sucessos, <span class="math inline">\(n\)</span> o tamanho da amostra, <span class="math inline">\(p_1\)</span> é o limite inferior do intervalo, <span class="math inline">\(p_2\)</span> é o limite superior do intervalo e <span class="math inline">\(\alpha\)</span> é o nível de significância.</p>
 <p>Abaixo o código que calcula um intervalo de confiança exato (Clopper–Pearson) para o parâmetro <span class="math inline">\(p\)</span> da binomial usando a função <code>proportion_confint</code> do <code>statsmodels</code>.</p>
-<div id="5ed68d32" class="cell" data-execution_count="4">
+<div id="c35e8306" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportion_confint</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">12</span>   <span class="co"># número de sucessos</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">50</span>   <span class="co"># tamanho da amostra</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span>  <span class="co"># IC de 95%</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ci_low, ci_high <span class="op">=</span> proportion_confint(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>lim_inf, lim_sup <span class="op">=</span> proportion_confint(</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    count<span class="op">=</span>x,</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    nobs<span class="op">=</span>n,</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span>alpha,</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">"beta"</span>   <span class="co"># Clopper-Pearson (exato)</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"IC: (</span><span class="sc">{</span>ci_low<span class="sc">:.2f}</span><span class="ss">, </span><span class="sc">{</span>ci_high<span class="sc">:.2f}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"IC: (</span><span class="sc">{</span>lim_inf<span class="sc">:.2f}</span><span class="ss">, </span><span class="sc">{</span>lim_sup<span class="sc">:.2f}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>IC: (0.13, 0.38)</code></pre>
 </div>
@@ -581,8 +606,8 @@ Importante
 <p>A função <code>proportion_confint</code> apresenta outros métodos como: “wilson”, “agresti_coull” e “jeffreys”.</p>
 </blockquote>
 </section>
-<section id="exercícios" class="level2" data-number="5.10">
-<h2 data-number="5.10" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">5.10</span> Exercícios</h2>
+<section id="exercícios" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">5.11</span> Exercícios</h2>
 <ol type="1">
 <li>(CESPE / CEBRASPE - 2026 - Telebras - Especialista em Gestão de Telecomunicações - Analista Superior - Subatividade: Estatística) Para avaliação da audiência do telejornal de certa emissora de televisão em determinado mês de 2025, mediram-se os pontos de audiência do programa em 25 dias desse mês, tendo sido obtido um valor médio de 34,7 pontos. Pesquisas anteriores apontaram um desvio padrão populacional de 3,50 pontos de audiência desse telejornal.</li>
 </ol>

@@ -133,7 +133,7 @@ $$\left[\hat{\theta} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
 \hat{\theta}
 +
 z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right],$$ 
+\right],$$
 
 em que $z_{1-\alpha/2}$ é o quantil da distribuição Normal padrão e $\sigma$ representa o verdadeiro desvio-padrão de uma observação da população, o qual pode precisar ser estimado a partir dos dados.
 :::
@@ -192,27 +192,28 @@ A interpretação correta é:
 
 Portanto, o nível de confiança refere-se ao método de construção do intervalo e não à probabilidade de o parâmetro pertencer ao intervalo específico obtido.
 
-
 ## Intervalo de confiança para média com variância conhecida
 
 Se o desvio padrão populacional $\sigma$ for conhecido, o intervalo de confiança para média baseado na distribuição normal pode ser utilizado para qualquer tamanho de amostra. Nesse caso, basta calcular:
 
-$$
-\left(
+$$\left(
 \bar{x} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},
 \;
 \bar{x} + z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right)
-$$
+\right)$$
 
 ou, de forma equivalente,
 
-$$
-\bar{x} \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}.
-$$
+$$\bar{x} \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},$$
+
+em que:
+
+- $\bar{x}$ é a média amostral;
+- $\sigma$ é o desvio padrão populacional;
+- $n$ é o tamanho da amostra;
+- $z_{1-\alpha/2}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão para o nível de confiança desejado
 
 Quando a variância populacional é conhecida, o intervalo de confiança baseado na distribuição normal fornece uma estimativa exata para a média da população, desde que os dados sejam provenientes de uma distribuição normal. No exemplo a seguir, mostramos como calcular esse intervalo de confiança utilizando `Python`.
-
 
 ```{python}
 import numpy as np
@@ -240,23 +241,19 @@ print(f"Média: {media:.2f}")
 print(f"IC 95%: ({lim_inf:.2f}, {lim_sup:.2f})")
 ```
 
-## Intervalo de confiança para média com variância desconhecida (amostra grande) 
+## Intervalo de confiança para média com variância desconhecida (amostra grande)
 
 Quando o objetivo é estimar a média populacional $\mu$ de uma distribuição normal e a variância populacional é desconhecida, um intervalo de confiança aproximado de $100(1-\alpha)\%$, considerando uma amostra suficientemente grande, pode ser obtido pela aproximação normal:
 
-$$
-\left(
+$$\left(
 \bar{x} - z_{1-\alpha/2}\frac{s}{\sqrt{n}},
 \;
 \bar{x} + z_{1-\alpha/2}\frac{s}{\sqrt{n}}
-\right)
-$$
+\right)$$
 
 ou, de forma abreviada,
 
-$$
-\bar{x} \pm z_{1-\alpha/2}\frac{s}{\sqrt{n}}.
-$$
+$$\bar{x} \pm z_{1-\alpha/2}\frac{s}{\sqrt{n}},$$
 
 em que:
 
@@ -265,13 +262,11 @@ em que:
 - $n$ é o tamanho da amostra;
 - $z_{1-\alpha/2}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão para o nível de confiança desejado.
 
-::: {.callout-warning}
+::: callout-warning
 ## Importante
 
 Este intervalo é uma **aproximação** e deve ser utilizado apenas quando o tamanho da amostra é suficientemente grande, isto é, $n > 200$. Para amostras menores, recomenda-se utilizar o intervalo baseado na distribuição **t-Student**, que leva em consideração a incerteza decorrente da estimativa da variância populacional.
 :::
-
-
 
 ## Intervalo de confiança para média com variância desconhecida
 
@@ -299,6 +294,28 @@ print(f"IC 95%: ({lim_inf:.2f}, {lim_sup:.2f})")
 ```
 
 
+## Fatores que Afetam a Amplitude de um Intervalo de Confiança
+
+A amplitude de um intervalo de confiança de $100\cdot(1-\alpha)\%$ para a média $\mu$ é dada por:
+
+$$
+2\cdot t_{1-\frac{\alpha}{2},\;n-1}\frac{s}{\sqrt{n}},
+$$
+
+sendo determinada por três fatores principais: o tamanho da amostra ($n$), o desvio padrão amostral ($s$) e o nível de confiança ($1-\alpha$).
+
+### Tamanho da amostra ($n$)
+
+À medida que o tamanho da amostra aumenta, a amplitude do intervalo de confiança diminui. Isso ocorre porque amostras maiores fornecem estimativas mais precisas da média populacional.
+
+### Desvio padrão ($s$)
+
+Quanto maior o desvio padrão amostral, maior será a amplitude do intervalo de confiança. Isso acontece porque um maior desvio padrão indica maior variabilidade nos dados, aumentando a incerteza na estimativa da média.
+
+### Nível de confiança ($1-\alpha$)
+
+Quanto maior o nível de confiança desejado (ou, equivalentemente, quanto menor o valor de $\alpha$, maior será a amplitude do intervalo de confiança. Isso ocorre porque níveis de confiança mais elevados exigem intervalos mais amplos para aumentar a chance de conter o verdadeiro valor da média populacional.
+
 
 ## Método de Wald para obter um intervalo de confiança para proporção
 
@@ -306,7 +323,7 @@ Um intervalo de confiança aproximado de $100\cdot (1-\alpha)\%$ para o parâmet
 
 $$\hat{p} \pm z_{1-\frac{\alpha}{2}}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}},$$
 
-em que $\hat{p}$ é a proporção amostral de "sucessos", $n$ é o tamanho da amostra e $z_{1-\frac{\alpha}{2}}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão. 
+em que $\hat{p}$ é a proporção amostral de "sucessos", $n$ é o tamanho da amostra e $z_{1-\frac{\alpha}{2}}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão.
 
 > Este método de estimação de intervalo só deve ser utilizado se: $n\hat{p}(1-\hat{p}) \geq 5$.
 
@@ -335,10 +352,9 @@ Um intervalo de confiança exato de $100\cdot(1−α)\%$ para o parâmetro $p$ d
 
 $$P(X \ge x \mid p_1) = \sum_{k=x}^{n} \binom{n}{k} p_1^k (1 - p_1)^{n-k} = \frac{\alpha}{2}$$
 
-e 
+e
 
 $$P(X \le x \mid p_2) = \sum_{k=0}^{x} \binom{n}{k} p_2^k (1 - p_2)^{n-k} = \frac{\alpha}{2},$$
-
 
 em que $X$ é uma variável aleatória com distribuição Binomial, $x$ é o número observado se sucessos, $n$ o tamanho da amostra, $p_1$ é o limite inferior do intervalo, $p_2$ é o limite superior do intervalo e $\alpha$ é o nível de significância.
 
@@ -351,16 +367,15 @@ x = 12   # número de sucessos
 n = 50   # tamanho da amostra
 alpha = 0.05  # IC de 95%
 
-ci_low, ci_high = proportion_confint(
+lim_inf, lim_sup = proportion_confint(
     count=x,
     nobs=n,
     alpha=alpha,
     method="beta"   # Clopper-Pearson (exato)
 )
 
-print(f"IC: ({ci_low:.2f}, {ci_high:.2f})")
+print(f"IC: ({lim_inf:.2f}, {lim_sup:.2f})")
 ```
-
 
 > A função `proportion_confint` apresenta outros métodos como: "wilson", "agresti_coull" e "jeffreys".
 
