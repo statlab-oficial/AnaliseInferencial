@@ -434,7 +434,7 @@ $$
 n = \left( \frac{(1{,}645 + 0{,}84)\cdot 24}{5} \right)^2 \approx 142{,}3.
 $$
 
-> O tamanho da amostra é sempre arredondado para cima, para garantir que se atinja pelo menos o nível de poder desejado (neste caso, 80%). Assim, é necessário um tamanho amostral de 143 para que o teste unilateral tenha 80% de probabilidade de detectar uma diferença de pelo menos 5 unidades entre a média populacional e a média especificada na hipótese nula ($\mu_0 = 110$), ao nível de significância de 5%.
+> O tamanho da amostra é sempre arredondado para cima, para garantir que se atinja pelo menos o nível de poder desejado (neste caso, 80%). Assim, é necessário um tamanho amostral de 143 para que o teste unilateral tenha 80% de probabilidade de detectar uma diferença de pelo menos 5 unidades entre a média populacional e a média especificada na hipótese nula ($\mu_0 = 120$), ao nível de significância de 5%.
 
 ### Estimativa do Tamanho Amostral para Teste da Média (Alternativa Bicaudal)
 
@@ -1413,3 +1413,124 @@ test_result
 #### Conclusão
 
 Ao nível de significância de 1%, os dados fornecem evidência forte para concluir que as notas dos estudantes em exames melhoram após realizarem um tutorial online de aprendizagem de estatística.
+
+
+## O teste de hipótese para a comparação de proporções entre duas populações (independentes)
+
+
+O teste de hipótese para a comparação de proporções entre duas populações independentes (proporções binomiais) pode ser utilizado para determinar se a probabilidade de um evento de interesse é estatisticamente diferente entre dois grupos.
+
+### Formulação das hipóteses
+
+Dependendo do objetivo do estudo, podemos formular diferentes tipos de hipóteses alternativas ($H_A$):
+
+- *Teste Bilateral*: É aplicada quando o objetivo é verificar se existe qualquer diferença significativa entre as proporções das duas populações, sem especificar qual delas seria maior.
+
+  - $H_0: p_1 = p_2$ 
+  - $H_A: p_1 \neq p_2$ 
+  
+- *Teste de Unilateral à direita*: Utilizado quando se deseja testar se a proporção da primeira população é estritamente maior que a da segunda.
+
+  - $H_0: p_1 = p_2$ 
+  - $H_A: p_1 > p_2$ 
+
+- *Teste de Unilateral à esquerda*: Utilizado quando o interesse é comprovar que a proporção da primeira população é estritamente menor que a da segunda.
+
+  - $H_0: p_1 = p_2$ 
+  - $H_A: p_1 < p_2$ 
+  
+> A escolha entre uma alternativa bilateral ou unilateral deve ser feita antes da coleta de dados, baseando-se no referencial teórico ou no objetivo do estudo. Testes unilaterais possuem maior poder estatístico para detectar diferenças na direção especificada, mas não permitem concluir nada caso a diferença real ocorra na direção oposta.
+
+### Estatística do Teste
+
+Primeiro, calculam-se as proporções de sucessos observadas em cada amostra $(\hat{p}_1 = x_1/n_1)$ e $(\hat{p}_2 = x_2/n_2)$. Sob a hipótese nula, a melhor estimativa da proporção comum $(p)$ é a proporção combinada, calculada como:
+
+$$\hat{p} = \frac{x_1 + x_2}{n_1 + n_2},$$
+
+em que $x_1$ e $x_2$ são os números de sucessos nas amostras de tamanho $n_1$ e $n_2$, respectivamente. 
+
+A estatística de teste é obtida dividindo-se a diferença observada entre as proporções amostrais pelo seu erro padrão estimado.
+
+$$z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)} }.$$
+Para que essa estatística siga aproximadamente uma distribuição normal padrão sob a hipótese nula, é necessário que o tamanho da amostra seja suficientemente grande. O critério usual é que o número esperado de sucessos e falhas em ambos os grupos seja pelo menos 5, ou seja: $n_1 \hat{p}(1-\hat{p}) \geq 5$ e $n_2 \hat{p}(1-\hat{p}) \geq 5$. Caso esses valores esperados sejam inferiores a 5, recomenda-se o uso do Teste Exato de Fisher em vez da estatística Z.
+
+### Regra de Decisão
+
+1. **Método do Valor Crítico**
+
+- *Teste Bilateral*: Rejeita-se $H_0$ se o valor absoluto de $z$ for maior que o valor crítico da tabela da normal padrão para $\alpha/2$ ($z_{1-\alpha/2}$).
+
+- *Teste Unilateal à direita*: Rejeita-se $H_0$ se $z > z_{1-\alpha}$.
+
+- *Teste Unilateal à esquerda*: Rejeita-se $H_0$ se $z < -z_{\alpha}$.
+
+2. **Método do Nível Descritivo**
+
+O $p_{\text{valor}}$ é a probabilidade de obter uma estatística de teste tão extrema quanto a observada, assumindo que a hipótese nula seja verdadeira. 
+
+- Regra de Decisão:
+
+ - Se o $p_{\text{valor}} < \alpha$: Rejeita-se $H_0$;
+ 
+ - Se o $p_{\text{valor}} \geq \alpha$: Não se rejeita $H_0$;
+
+- Cálculo bilateral: O $p_{\text{valor}}$ é calculado como $2\cdot (1 - \Phi(|z|)),$ em que $\Phi(\cdot)$ é a função de distribuição acumulada da normal padrão.
+
+::: {.callout-note}
+
+## Dados Pareados: 
+
+Se as proporções vierem dos mesmos indivíduos (antes e depois), você pode usar o Teste de McNemar. 
+
+:::
+
+### Tamanho da amostra para comparação de duas proporções binomiais
+
+O tamanho da amostra necessário para comparar duas proporções binomiais utilizando um teste bilateral, com nível de significância $\alpha$ e poder estatístico $1-\beta$, quando uma amostra ($n_2$) é $k$ vezes maior que a outra ($n_1$), é dado pelas seguintes expressões.
+
+Deseja-se testar as hipóteses
+
+$$
+H_0: p_1 = p_2 \quad \text{vs} \quad H_A: p_1 \neq p_2,
+$$
+
+para uma diferença específica $|p_1-p_2|=\Delta$. O tamanho da amostra do primeiro grupo é
+
+$$
+n_1=
+\frac{
+\left[
+\sqrt{\bar p\,\bar q\left(1+\frac{1}{k}\right)}\,z_{1-\alpha/2}
++
+\sqrt{p_1q_1+\frac{p_2q_2}{k}}\,z_{1-\beta}
+\right]^2
+}
+{\Delta^2},$$
+
+e o tamanho da amostra do segundo grupo é $n_2 = k n_1$, em que $q_1 = 1-p_1$ e
+$q_2 = 1-p_2$. Além disso,
+
+$$
+\bar p=
+\frac{p_1+kp_2}{1+k},
+$$
+
+e
+
+$$
+\bar q = 1-\bar p.
+$$
+
+As quantidades $p_1$ e $p_2$ representam as probabilidades verdadeiras de sucesso nos dois grupos.
+
+> **Observação:** Embora essa expressão seja derivada para a comparação de duas proporções binomiais, ela pode ser utilizada como aproximação para eventos raros. Entretanto, quando o interesse é comparar **taxas de incidência** (por exemplo, taxas de suicídio ou homicídio), a literatura epidemiológica recomenda preferencialmente métodos baseados na distribuição de Poisson, como o teste para comparação de taxas ou a regressão de Poisson com *offset* para a população exposta.
+
+::: {.callout-note}
+
+## Nota: 
+
+O tamanho da amostra é inversamente proporcional ao quadrado da diferença que se deseja detectar ($|p_1-p_2|^2$). Reduzir a diferença alvo pela metade exige uma amostra quatro vezes maior. Além disso, em ensaios clínicos reais, o tamanho da amostra deve ser inflado para compensar possíveis perdas de seguimento ou não-adesão dos participantes.
+
+:::
+
+
