@@ -133,7 +133,9 @@ $$\left[\hat{\theta} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
 \hat{\theta}
 +
 z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right],$$ em que $z_{1-\alpha/2}$ é o quantil da distribuição Normal padrão e $\sigma$ representa o verdadeiro desvio-padrão de uma observação da população, o qual pode precisar ser estimado a partir dos dados.
+\right],$$ 
+
+em que $z_{1-\alpha/2}$ é o quantil da distribuição Normal padrão e $\sigma$ representa o verdadeiro desvio-padrão de uma observação da população, o qual pode precisar ser estimado a partir dos dados.
 :::
 
 É importante observar que a fórmula apresentada anteriormente funciona apenas quando $\hat{\theta}$ é a média amostral. Nesse caso, podemos utilizar o Teorema Central do Limite para concluir que a distribuição de $\hat{\theta}$ é aproximadamente normal. Quando o estimador não é a média amostral, essa aproximação pode não ser válida, sendo necessário recorrer a outras estratégias para construir intervalos de confiança.
@@ -189,6 +191,178 @@ A interpretação correta é:
 > Se repetirmos o procedimento de amostragem e construção do intervalo muitas vezes, aproximadamente 99% dos intervalos construídos conterão o verdadeiro valor de $\theta$.
 
 Portanto, o nível de confiança refere-se ao método de construção do intervalo e não à probabilidade de o parâmetro pertencer ao intervalo específico obtido.
+
+
+## Intervalo de confiança para média com variância conhecida
+
+Se o desvio padrão populacional $\sigma$ for conhecido, o intervalo de confiança para média baseado na distribuição normal pode ser utilizado para qualquer tamanho de amostra. Nesse caso, basta calcular:
+
+$$
+\left(
+\bar{x} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},
+\;
+\bar{x} + z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
+\right)
+$$
+
+ou, de forma equivalente,
+
+$$
+\bar{x} \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}.
+$$
+
+Quando a variância populacional é conhecida, o intervalo de confiança baseado na distribuição normal fornece uma estimativa exata para a média da população, desde que os dados sejam provenientes de uma distribuição normal. No exemplo a seguir, mostramos como calcular esse intervalo de confiança utilizando `Python`.
+
+
+```{python}
+import numpy as np
+from scipy.stats import norm
+
+dados = [12, 15, 14, 10, 13, 16, 14, 15]
+
+sigma = 2.5      # desvio padrão populacional conhecido
+alpha = 0.05     # IC de 95%
+
+n = len(dados)
+media = np.mean(dados)
+
+# Quantil da normal padrão
+z = norm.ppf(1 - alpha/2)
+
+# Margem de erro
+erro = z * sigma / np.sqrt(n)
+
+# Intervalo de confiança
+lim_inf = media - erro
+lim_sup = media + erro
+
+print(f"Média: {media:.2f}")
+print(f"IC 95%: ({lim_inf:.2f}, {lim_sup:.2f})")
+```
+
+## Intervalo de confiança para média com variância desconhecida (amostra grande) 
+
+Quando o objetivo é estimar a média populacional $\mu$ de uma distribuição normal e a variância populacional é desconhecida, um intervalo de confiança aproximado de $100(1-\alpha)\%$, considerando uma amostra suficientemente grande, pode ser obtido pela aproximação normal:
+
+$$
+\left(
+\bar{x} - z_{1-\alpha/2}\frac{s}{\sqrt{n}},
+\;
+\bar{x} + z_{1-\alpha/2}\frac{s}{\sqrt{n}}
+\right)
+$$
+
+ou, de forma abreviada,
+
+$$
+\bar{x} \pm z_{1-\alpha/2}\frac{s}{\sqrt{n}}.
+$$
+
+em que:
+
+- $\bar{x}$ é a média amostral;
+- $s$ é o desvio padrão amostral;
+- $n$ é o tamanho da amostra;
+- $z_{1-\alpha/2}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão para o nível de confiança desejado.
+
+::: {.callout-warning}
+## Importante
+
+Este intervalo é uma **aproximação** e deve ser utilizado apenas quando o tamanho da amostra é suficientemente grande, isto é, $n > 200$. Para amostras menores, recomenda-se utilizar o intervalo baseado na distribuição **t-Student**, que leva em consideração a incerteza decorrente da estimativa da variância populacional.
+:::
+
+
+
+## Intervalo de confiança para média com variância desconhecida
+
+Um intervalo de confiança de $100\cdot (1-\alpha)\%$ para média $\mu$ de uma distribuição normal com variância desconhecida é dada por:
+
+$$\left(\bar{x} - t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}}, \bar{x} + t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}}\right),$$
+
+ou se maneira abreviada
+
+$$\bar{x} \pm t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}},$$
+
+em que $\bar{x}$ é a média amostral, $s$ é o desvio padrão amostral, $n$ é o tamanho da amostra e $t_{1-\frac{\alpha}{2}}$ o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição $t$-Student com $n-1$ graus de liberdade.
+
+A seguir, é apresentada uma função do `Python` que pode ser utilizada para construir intervalos de confiança para média.
+
+```{python}
+import numpy as np
+import statsmodels.stats.api as sms
+
+dados = [12, 15, 14, 10, 13, 16, 14, 15]
+
+lim_inf, lim_sup = sms.DescrStatsW(dados).tconfint_mean(alpha=0.05)
+
+print(f"IC 95%: ({lim_inf:.2f}, {lim_sup:.2f})")
+```
+
+
+
+## Método de Wald para obter um intervalo de confiança para proporção
+
+Um intervalo de confiança aproximado de $100\cdot (1-\alpha)\%$ para o parâmetro $p$ de uma binomial, baseado na baseado na aproximação normal da distribuição binomial, é dado por:
+
+$$\hat{p} \pm z_{1-\frac{\alpha}{2}}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}},$$
+
+em que $\hat{p}$ é a proporção amostral de "sucessos", $n$ é o tamanho da amostra e $z_{1-\frac{\alpha}{2}}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão. 
+
+> Este método de estimação de intervalo só deve ser utilizado se: $n\hat{p}(1-\hat{p}) \geq 5$.
+
+Abaixo é apresentado um código que calcula um intervalo de confiança aproximado para o parâmetro $p$ da binomial usando a função `proportion_confint` do `statsmodels`.
+
+```{python}
+from statsmodels.stats.proportion import proportion_confint
+
+x = 12   # número de sucessos
+n = 50   # tamanho da amostra
+alpha = 0.05  # IC de 95%
+
+lim_inf, lim_sup = proportion_confint(
+    count=x,
+    nobs=n,
+    alpha=alpha,
+    method="normal"   # Wald (aproximado)
+)
+
+print(f"IC: ({lim_inf:.2f}, {lim_sup:.2f})")
+```
+
+## Método Exato para Obtenção de IC para o parâmetro $p$ da binomial (Método de Clopper–Pearson)
+
+Um intervalo de confiança exato de $100\cdot(1−α)\%$ para o parâmetro $p$ da binomial, que é sempre válido, é dado por $(p_1, p_2)$, em que $p_1$ e $p_2$ satisfazem as seguintes condições baseadas na distribuição binomial:
+
+$$P(X \ge x \mid p_1) = \sum_{k=x}^{n} \binom{n}{k} p_1^k (1 - p_1)^{n-k} = \frac{\alpha}{2}$$
+
+e 
+
+$$P(X \le x \mid p_2) = \sum_{k=0}^{x} \binom{n}{k} p_2^k (1 - p_2)^{n-k} = \frac{\alpha}{2},$$
+
+
+em que $X$ é uma variável aleatória com distribuição Binomial, $x$ é o número observado se sucessos, $n$ o tamanho da amostra, $p_1$ é o limite inferior do intervalo, $p_2$ é o limite superior do intervalo e $\alpha$ é o nível de significância.
+
+Abaixo o código que calcula um intervalo de confiança exato (Clopper–Pearson) para o parâmetro $p$ da binomial usando a função `proportion_confint` do `statsmodels`.
+
+```{python}
+from statsmodels.stats.proportion import proportion_confint
+
+x = 12   # número de sucessos
+n = 50   # tamanho da amostra
+alpha = 0.05  # IC de 95%
+
+ci_low, ci_high = proportion_confint(
+    count=x,
+    nobs=n,
+    alpha=alpha,
+    method="beta"   # Clopper-Pearson (exato)
+)
+
+print(f"IC: ({ci_low:.2f}, {ci_high:.2f})")
+```
+
+
+> A função `proportion_confint` apresenta outros métodos como: "wilson", "agresti_coull" e "jeffreys".
 
 ## Exercícios
 
