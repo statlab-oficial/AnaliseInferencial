@@ -1853,6 +1853,9 @@ print(f"Valor-p Empírico: {p_empirico:.4f}")
 
 
 ```{python}
+#| warning: false
+#| message: false
+
 plt.figure(figsize=(7, 4))
 plt.hist(chi2_simulados, bins=40, density=True, alpha=0.6, color='#2b5c8f', label='$\chi^2$ Simulado')
 plt.axvline(6.10, color='red', linestyle='--', linewidth=2, label='$\chi^2$ Observado (6.10)')
@@ -1987,6 +1990,12 @@ Com um $p_{\text{valor}}$ $< 0,001$, rejeitamos veementemente a hipótese de ind
 
 Embora as narrativas de pesquisa e os delineamentos experimentais mudem de nome conforme o escopo do projeto, a alma algébrica criada por Karl Pearson permanece imutável. Toda a engenharia do capítulo converge para o mesmo motor estatístico:
 
+| Teste | Amostragem / Delineamento | Critério de Frequência Esperada ($E_i$) | Pergunta Científica |
+| :--- | :--- | :--- | :--- |
+| **Aderência** | Uma única amostra; uma única variável. | Vetor teórico imutável, fixado por modelo externo. | Os dados se ajustam à distribuição teórica preconizada? |
+| **Homogeneidade** | Múltiplas populações com tamanhos amostrais fixos. | Estimada pelas margens agregadas da tabela de contingência. | As populações possuem o mesmo comportamento probabilístico? |
+| **Independência** | Uma única amostra global; duas variáveis cruzadas. | Estimada pelo produto das probabilidades marginais. | As variáveis compartilham alguma estrutura de associação? |
+
 
 # Dimensionamento do Tamanho Mínimo da Amostra nos Testes Qui-Quadrado
 
@@ -2072,10 +2081,10 @@ $$\nu = (2 - 1) \times (2 - 1) = 1.$$
 import numpy as np
 from statsmodels.stats.power import GofChisquarePower
 
-# Instancia o motor de análise de poder
+# Análise de poder
 analisador_poder = GofChisquarePower()
 
-# Parâmetros estruturais do projeto
+# Parâmetros 
 efeito_w = 0.30
 alfa = 0.05
 poder_alvo = 0.80
