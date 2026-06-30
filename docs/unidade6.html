@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Testes de Homogeneidade e Independência</title>
+<title>7&nbsp; Testes Qui-Quadrado para Dados Categóricos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -71,6 +105,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -84,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade6.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Testes de Homogeneidade e Independência</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade6.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Testes Qui-Quadrado para Dados Categóricos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -158,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./unidade6.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Testes de Homogeneidade e Independência</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Testes Qui-Quadrado para Dados Categóricos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -179,14 +242,61 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">7.1</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#classificação-das-variáveis-categóricas" id="toc-classificação-das-variáveis-categóricas" class="nav-link" data-scroll-target="#classificação-das-variáveis-categóricas"><span class="header-section-number">7.1.1</span> Classificação das Variáveis Categóricas</a></li>
+  <li><a href="#tabelas-de-contingência" id="toc-tabelas-de-contingência" class="nav-link" data-scroll-target="#tabelas-de-contingência"><span class="header-section-number">7.1.2</span> Tabelas de contingência</a></li>
+  <li><a href="#a-construção-da-estatística-de-pearson" id="toc-a-construção-da-estatística-de-pearson" class="nav-link" data-scroll-target="#a-construção-da-estatística-de-pearson"><span class="header-section-number">7.1.3</span> A Construção da Estatística de Pearson</a></li>
+  <li><a href="#exemplo-prático-de-cálculo" id="toc-exemplo-prático-de-cálculo" class="nav-link" data-scroll-target="#exemplo-prático-de-cálculo"><span class="header-section-number">7.1.4</span> Exemplo Prático de Cálculo</a></li>
+  <li><a href="#fundamentos-teóricos-e-limitações" id="toc-fundamentos-teóricos-e-limitações" class="nav-link" data-scroll-target="#fundamentos-teóricos-e-limitações"><span class="header-section-number">7.1.5</span> Fundamentos Teóricos e Limitações</a></li>
+  <li><a href="#o-significado-dos-graus-de-liberdade" id="toc-o-significado-dos-graus-de-liberdade" class="nav-link" data-scroll-target="#o-significado-dos-graus-de-liberdade"><span class="header-section-number">7.1.6</span> O Significado dos Graus de Liberdade</a></li>
+  <li><a href="#aplicações-práticas-do-teste" id="toc-aplicações-práticas-do-teste" class="nav-link" data-scroll-target="#aplicações-práticas-do-teste"><span class="header-section-number">7.1.7</span> Aplicações Práticas do Teste</a></li>
+  </ul></li>
+  <li><a href="#teste-qui-quadrado-de-aderência" id="toc-teste-qui-quadrado-de-aderência" class="nav-link" data-scroll-target="#teste-qui-quadrado-de-aderência"><span class="header-section-number">8</span> Teste Qui-Quadrado de Aderência</a>
+  <ul class="collapse">
+  <li><a href="#motivação" id="toc-motivação" class="nav-link" data-scroll-target="#motivação"><span class="header-section-number">8.1</span> Motivação</a>
+  <ul class="collapse">
+  <li><a href="#formulação-matemática-e-hipóteses" id="toc-formulação-matemática-e-hipóteses" class="nav-link" data-scroll-target="#formulação-matemática-e-hipóteses"><span class="header-section-number">8.1.1</span> Formulação Matemática e Hipóteses</a></li>
+  <li><a href="#calculando-as-frequências-esperadas" id="toc-calculando-as-frequências-esperadas" class="nav-link" data-scroll-target="#calculando-as-frequências-esperadas"><span class="header-section-number">8.1.2</span> Calculando as frequências esperadas</a></li>
+  <li><a href="#exemplo-prático-walkthrough-o-teste-do-dado-honesto" id="toc-exemplo-prático-walkthrough-o-teste-do-dado-honesto" class="nav-link" data-scroll-target="#exemplo-prático-walkthrough-o-teste-do-dado-honesto"><span class="header-section-number">8.1.3</span> Exemplo Prático Walkthrough: O Teste do Dado Honesto</a></li>
+  </ul></li>
+  <li><a href="#teste-qui-quadrado-de-homogeneidade" id="toc-teste-qui-quadrado-de-homogeneidade" class="nav-link" data-scroll-target="#teste-qui-quadrado-de-homogeneidade"><span class="header-section-number">8.2</span> Teste Qui-Quadrado de Homogeneidade</a>
+  <ul class="collapse">
+  <li><a href="#conceito-e-motivação" id="toc-conceito-e-motivação" class="nav-link" data-scroll-target="#conceito-e-motivação"><span class="header-section-number">8.2.1</span> Conceito e motivação</a></li>
+  <li><a href="#processamento-teórico-e-graus-de-liberdade" id="toc-processamento-teórico-e-graus-de-liberdade" class="nav-link" data-scroll-target="#processamento-teórico-e-graus-de-liberdade"><span class="header-section-number">8.2.2</span> Processamento Teórico e Graus de Liberdade</a></li>
+  </ul></li>
+  <li><a href="#teste-qui-quadrado-de-independência" id="toc-teste-qui-quadrado-de-independência" class="nav-link" data-scroll-target="#teste-qui-quadrado-de-independência"><span class="header-section-number">8.3</span> Teste Qui-Quadrado de Independência</a>
+  <ul class="collapse">
+  <li><a href="#conceito-e-motivação-1" id="toc-conceito-e-motivação-1" class="nav-link" data-scroll-target="#conceito-e-motivação-1"><span class="header-section-number">8.3.1</span> Conceito e Motivação</a></li>
+  </ul></li>
+  <li><a href="#resolução-estrutural-e-resíduos" id="toc-resolução-estrutural-e-resíduos" class="nav-link" data-scroll-target="#resolução-estrutural-e-resíduos"><span class="header-section-number">8.4</span> Resolução Estrutural e Resíduos</a></li>
+  </ul></li>
+  <li><a href="#unificação-maciça-dos-três-testes" id="toc-unificação-maciça-dos-três-testes" class="nav-link" data-scroll-target="#unificação-maciça-dos-três-testes"><span class="header-section-number">9</span> Unificação Maciça dos Três Testes</a></li>
+  <li><a href="#dimensionamento-do-tamanho-mínimo-da-amostra-nos-testes-qui-quadrado" id="toc-dimensionamento-do-tamanho-mínimo-da-amostra-nos-testes-qui-quadrado" class="nav-link" data-scroll-target="#dimensionamento-do-tamanho-mínimo-da-amostra-nos-testes-qui-quadrado"><span class="header-section-number">10</span> Dimensionamento do Tamanho Mínimo da Amostra nos Testes Qui-Quadrado</a>
+  <ul class="collapse">
+  <li><a href="#o-tamanho-do-efeito-métrica-de-cohen" id="toc-o-tamanho-do-efeito-métrica-de-cohen" class="nav-link" data-scroll-target="#o-tamanho-do-efeito-métrica-de-cohen"><span class="header-section-number">10.1</span> O Tamanho do Efeito (Métrica de Cohen)</a></li>
+  <li><a href="#os-quatro-pilares-do-poder-estatístico" id="toc-os-quatro-pilares-do-poder-estatístico" class="nav-link" data-scroll-target="#os-quatro-pilares-do-poder-estatístico"><span class="header-section-number">10.2</span> Os Quatro Pilares do Poder Estatístico</a></li>
+  <li><a href="#o-perigo-das-fórmulas-simplificadas" id="toc-o-perigo-das-fórmulas-simplificadas" class="nav-link" data-scroll-target="#o-perigo-das-fórmulas-simplificadas"><span class="header-section-number">10.3</span> O Perigo das Fórmulas Simplificadas</a></li>
+  <li><a href="#resolução-de-cenário-real-e-aplicação-prática" id="toc-resolução-de-cenário-real-e-aplicação-prática" class="nav-link" data-scroll-target="#resolução-de-cenário-real-e-aplicação-prática"><span class="header-section-number">10.4</span> Resolução de Cenário Real e Aplicação Prática</a>
+  <ul class="collapse">
+  <li><a href="#passo-1-determinar-a-estrutura-e-os-graus-de-liberdade" id="toc-passo-1-determinar-a-estrutura-e-os-graus-de-liberdade" class="nav-link" data-scroll-target="#passo-1-determinar-a-estrutura-e-os-graus-de-liberdade"><span class="header-section-number">10.4.1</span> Passo 1: Determinar a Estrutura e os Graus de Liberdade</a></li>
+  <li><a href="#passo-2-fixar-parâmetros-de-projeto" id="toc-passo-2-fixar-parâmetros-de-projeto" class="nav-link" data-scroll-target="#passo-2-fixar-parâmetros-de-projeto"><span class="header-section-number">10.4.2</span> Passo 2: Fixar Parâmetros de Projeto</a></li>
+  <li><a href="#passo-3-uso-do-python" id="toc-passo-3-uso-do-python" class="nav-link" data-scroll-target="#passo-3-uso-do-python"><span class="header-section-number">10.4.3</span> Passo 3: Uso do Python</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Testes de Homogeneidade e Independência</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Testes Qui-Quadrado para Dados Categóricos</span></h1>
 </div>
 
 
@@ -203,8 +313,1599 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introdução" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">7.1</span> Introdução</h2>
+<p>Na análise de dados, muitas variáveis não são expressas por medidas numéricas contínuas, mas por categorias que descrevem atributos. Sexo, estado civil, escolaridade e diagnóstico clínico são exemplos de variáveis categóricas. Quando trabalhamos com essas variáveis, as perguntas de pesquisa mudam:</p>
+<ul>
+<li><p>Existe associação entre tabagismo e doença pulmonar?</p></li>
+<li><p>A distribuição dos grupos sanguíneos é a mesma em diferentes regiões?</p></li>
+<li><p>O nível de escolaridade influencia a escolha de um produto?</p></li>
+</ul>
+<p>Essas dúvidas não podem ser respondidas por testes de médias (como o teste t de Student ou ANOVA). Elas exigem a análise de frequências de ocorrência, e os testes qui-quadrado são as ferramentas ideais para isso.</p>
+<section id="classificação-das-variáveis-categóricas" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="classificação-das-variáveis-categóricas"><span class="header-section-number">7.1.1</span> Classificação das Variáveis Categóricas</h3>
+<p>Uma variável categórica é aquela cujos valores representam classes ou categorias, em vez de medidas numéricas. Cada unidade experimental pertence a exatamente uma categoria, e essas categorias são mutuamente exclusivas. As variáveis categóricas podem ser classificadas em dois grupos:</p>
+<ul>
+<li><p>Nominais: Categorias sem ordenação natural (ex: sexo, estado civil, tipo sanguíneo).</p></li>
+<li><p>Ordinais: Categorias com uma ordenação lógica, embora a distância matemática entre elas não seja mensurável (ex: nível de escolaridade, estágio de uma doença, grau de satisfação).</p></li>
+</ul>
+</section>
+<section id="tabelas-de-contingência" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="tabelas-de-contingência"><span class="header-section-number">7.1.2</span> Tabelas de contingência</h3>
+<p>Uma tabela de contingência resume as frequências observadas para todas as combinações possíveis entre duas variáveis categóricas. Considere uma tabela geral com <span class="math inline">\(r\)</span> linhas e <span class="math inline">\(c\)</span> colunas.</p>
+<p><span class="math display">\[\begin{array}{c|cccc|c}
+&amp; C_1 &amp; C_2 &amp; \cdots &amp; C_c &amp; \text{Total} \\
+\hline
+L_1 &amp; O_{11} &amp; O_{12} &amp; \cdots &amp; O_{1c} &amp; n_{1\cdot} \\
+L_2 &amp; O_{21} &amp; O_{22} &amp; \cdots &amp; O_{2c} &amp; n_{2\cdot} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+L_r &amp; O_{r1} &amp; O_{r2} &amp; \cdots &amp; O_{rc} &amp; n_{r\cdot} \\
+\hline
+\text{Total} &amp;
+n_{\cdot1} &amp;
+n_{\cdot2} &amp;
+\cdots &amp;
+n_{\cdot c} &amp;
+n
+\end{array}\]</span></p>
+<p>em que <span class="math inline">\(O_{ij}\)</span> representa o número de indivíduos pertencentes simultaneamente à categoria da linha <span class="math inline">\(i\)</span> e à categoria da coluna <span class="math inline">\(j\)</span>. Os totais das linhas, denotados por <span class="math inline">\(n_{i\cdot}\)</span>, são chamados de <strong>frequências marginais das linhas</strong>, enquanto os totais das colunas, representados por <span class="math inline">\(n_{\cdot j}\)</span>, recebem o nome de <strong>frequências marginais das colunas</strong>, e o tamanho total da amostra é:</p>
+<p><span class="math display">\[n=\sum_{i=1}^{r}\sum_{j=1}^{c}O_{ij}.\]</span></p>
+</section>
+<section id="a-construção-da-estatística-de-pearson" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="a-construção-da-estatística-de-pearson"><span class="header-section-number">7.1.3</span> A Construção da Estatística de Pearson</h3>
+<p>A lógica fundamental do teste qui-quadrado é medir a discrepância entre as frequências observadas (<span class="math inline">\(O\)</span>) na amostra e as frequências esperadas (<span class="math inline">\(E\)</span>) caso a hipótese nula (<span class="math inline">\(H_0\)</span>) fosse verdadeira.</p>
+<blockquote class="blockquote">
+<p>Por que não usar a diferença absoluta (<span class="math inline">\(O - E\)</span>)?</p>
+</blockquote>
+<ol type="1">
+<li>O Problema da Escala: Uma diferença de 2 indivíduos tem pesos completamente diferentes dependendo do tamanho da amostra, como demonstra a tabela abaixo:</li>
+</ol>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Célula</th>
+<th style="text-align: right;">Frequência observada</th>
+<th style="text-align: right;">Frequência esperada</th>
+<th style="text-align: right;">Diferença</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: right;">202</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<ol start="2" type="1">
+<li>Cancelamento Algébrico: Em qualquer tabela, a soma das diferenças simples (<span class="math inline">\(O - E\)</span>) será zero, pois os desvios positivos anulam os negativos.</li>
+</ol>
+<p>Para resolver a escala e o sinal, elevamos o desvio ao quadrado e o dividimos pelo valor esperado. Isso gera a contribuição individual da célula:</p>
+<p><span class="math display">\[\text{Contribuição} = \frac{(O_{ij} - E_{ij})^2}{E_{ij}}.\]</span></p>
+<p>Essa medida é sempre positiva, vale zero se a observação for idêntica à expectativa e dá maior peso a grandes discrepâncias.Somando a contribuição de todas as células, obtemos a estatística qui-quadrado de Pearson (<span class="math inline">\(\chi^2\)</span>):</p>
+<p><span class="math display">\[\chi^2 = \sum_{i=1}^{r}\sum_{j=1}^{c} \frac{(O_{ij}-E_{ij})^2}{E_{ij}}.\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\chi^2\)</span> próximo de zero: Forte concordância entre os dados e a hipótese nula.</p></li>
+<li><p><span class="math inline">\(\chi^2\)</span> elevado: Forte evidência contra a hipótese nula.</p></li>
+</ul>
+</section>
+<section id="exemplo-prático-de-cálculo" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="exemplo-prático-de-cálculo"><span class="header-section-number">7.1.4</span> Exemplo Prático de Cálculo</h3>
+<p>Considere os seguintes dados observados em um estudo com dois grupos:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Grupo</th>
+<th style="text-align: right;">Sim</th>
+<th style="text-align: right;">Não</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">150</td>
+</tr>
+</tbody>
+</table>
+<p>Sob a hipótese nula de independência, a frequência esperada é calculada por: <span class="math inline">\(E_{ij} = \frac{n_{i\cdot} \times n_{\cdot j}}{n}\)</span>.</p>
+<ul>
+<li><p><span class="math inline">\(E_{11} = \frac{50 \times 70}{150} = 23{,}33\)</span> <span class="math inline">\(\rightarrow\)</span> Contribuição: <span class="math inline">\(\frac{(28 - 23{,}33)^2}{23{,}33} = 0{,}934\)</span></p></li>
+<li><p><span class="math inline">\(E_{12} = \frac{50 \times 80}{150} = 26{,}67\)</span> <span class="math inline">\(\rightarrow\)</span> Contribuição: <span class="math inline">\(\frac{(22 - 26{,}67)^2}{26{,}67} = 0{,}817\)</span></p></li>
+<li><p><span class="math inline">\(E_{21} = \frac{100 \times 70}{150} = 46{,}67\)</span> <span class="math inline">\(\rightarrow\)</span> Contribuição: <span class="math inline">\(\frac{(42 - 46{,}67)^2}{46{,}67} = 0{,}467\)</span></p></li>
+<li><p><span class="math inline">\(E_{22} = \frac{100 \times 80}{150} = 53{,}33\)</span> <span class="math inline">\(\rightarrow\)</span> Contribuição: <span class="math inline">\(\frac{(58 - 53{,}33)^2}{53{,}33} = 0{,}409\)</span></p></li>
+</ul>
+<p>Somando todas as parcelas,</p>
+<p><span class="math display">\[ \chi^2 = 0{,}934 + 0{,}817 + 0{,}467 + 0{,}409 = 2{,}627.\]</span></p>
+<p>Esse valor resume toda a discrepância observada entre as frequências da amostra e aquelas previstas pela hipótese nula.</p>
+</section>
+<section id="fundamentos-teóricos-e-limitações" class="level3" data-number="7.1.5">
+<h3 data-number="7.1.5" class="anchored" data-anchor-id="fundamentos-teóricos-e-limitações"><span class="header-section-number">7.1.5</span> Fundamentos Teóricos e Limitações</h3>
+<p>A estatística de Pearson não segue uma distribuição qui-quadrado exata, mas sim uma aproximação assintótica que melhora conforme o tamanho da amostra cresce.</p>
+<section id="a-ponte-matemática-multinomial-rightarrow-normal-rightarrow-qui-quadrado" class="level4" data-number="7.1.5.1">
+<h4 data-number="7.1.5.1" class="anchored" data-anchor-id="a-ponte-matemática-multinomial-rightarrow-normal-rightarrow-qui-quadrado"><span class="header-section-number">7.1.5.1</span> A Ponte Matemática: Multinomial <span class="math inline">\(\rightarrow\)</span> Normal <span class="math inline">\(\rightarrow\)</span> Qui-Quadrado</h4>
+<ol type="1">
+<li><p>As frequências categóricas originais seguem uma distribuição multinomial (que é discreta e assimétrica).</p></li>
+<li><p>Pelo Teorema Central do Limite (TCL), à medida que a amostra (<span class="math inline">\(n\)</span>) cresce, a variável padronizada converge para uma Normal padrão:</p></li>
+</ol>
+<p><span class="math display">\[Z_{ij} = \frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}} \approx N(0,1)\]</span></p>
+<ol start="3" type="1">
+<li>Como o quadrado de uma Normal padrão é uma qui-quadrado com 1 grau de liberdade (<span class="math inline">\(Z^2 \sim \chi^2_1\)</span>), a soma desses quadrados resulta na aproximação da estatística global: <span class="math inline">\(\chi^2 \approx \chi^2_\nu\)</span>.</li>
+</ol>
+</section>
+<section id="restrições-práticas-a-regra-dos-5" class="level4" data-number="7.1.5.2">
+<h4 data-number="7.1.5.2" class="anchored" data-anchor-id="restrições-práticas-a-regra-dos-5"><span class="header-section-number">7.1.5.2</span> Restrições Práticas (A Regra dos 5)</h4>
+<p>Se a amostra for pequena, as frequências esperadas despencam, a aproximação pelo TCL falha e o teste gera <span class="math inline">\(p_{\text{valores}}\)</span> incorretos. Para garantir a validade do teste, adota-se a seguinte diretriz:</p>
+<ul>
+<li><p>Nenhuma célula deve ter frequência esperada menor que 1.</p></li>
+<li><p>No máximo 20% das células podem ter frequências esperadas menores que 5.</p></li>
+</ul>
+<p>Soluções para amostras pequenas: Quando os critérios acima forem violados, deve-se substituir a aproximação assintótica por métodos exatos ou computacionais, como o Teste Exato de Fisher (para tabelas <span class="math inline">\(2 \times 2\)</span>) ou simulações de Monte Carlo.</p>
+</section>
+</section>
+<section id="o-significado-dos-graus-de-liberdade" class="level3" data-number="7.1.6">
+<h3 data-number="7.1.6" class="anchored" data-anchor-id="o-significado-dos-graus-de-liberdade"><span class="header-section-number">7.1.6</span> O Significado dos Graus de Liberdade</h3>
+<p>Os graus de liberdade (<span class="math inline">\(\nu\)</span>) representam o número de células em uma tabela de contingência que podem variar livremente após fixarmos os totais marginais</p>
+<section id="intuição-em-uma-tabela-2-times-2" class="level4" data-number="7.1.6.1">
+<h4 data-number="7.1.6.1" class="anchored" data-anchor-id="intuição-em-uma-tabela-2-times-2"><span class="header-section-number">7.1.6.1</span> Intuição em uma Tabela <span class="math inline">\(2 \times 2\)</span></h4>
+<p>Considere a tabela abaixo com os totais de linhas e colunas já definidos:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"></th>
+<th style="text-align: right;">Sim</th>
+<th style="text-align: right;">Não</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Grupo A</td>
+<td style="text-align: right;"><span class="math inline">\(a\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(b\)</span></td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">Grupo B</td>
+<td style="text-align: right;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(d\)</span></td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><strong>Total</strong></td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">100</td>
+</tr>
+</tbody>
+</table>
+<p>Se escolhermos arbitrariamente que <span class="math inline">\(a = 18\)</span>, todas as outras três células ficam automaticamente presas:</p>
+<ul>
+<li><p><span class="math inline">\(b\)</span> precisa ser <span class="math inline">\(40 - 18 = 22\)</span></p></li>
+<li><p><span class="math inline">\(c\)</span> precisa ser <span class="math inline">\(45 - 18 = 27\)</span></p></li>
+<li><p><span class="math inline">\(d\)</span> precisa ser <span class="math inline">\(60 - 27 = 33\)</span></p></li>
+</ul>
+<p>Apenas uma célula teve liberdade para mudar. Logo, uma tabela <span class="math inline">\(2 \times 2\)</span> possui exatamente 1 grau de liberdade.</p>
+</section>
+<section id="a-regra-geral" class="level4" data-number="7.1.6.2">
+<h4 data-number="7.1.6.2" class="anchored" data-anchor-id="a-regra-geral"><span class="header-section-number">7.1.6.2</span> A Regra Geral</h4>
+<p>Para uma tabela qualquer com <span class="math inline">\(r\)</span> linhas e <span class="math inline">\(c\)</span> colunas, partimos de <span class="math inline">\(rc\)</span> células. Ao fixar as margens, impomos <span class="math inline">\(r\)</span> restrições de linhas e <span class="math inline">\(c\)</span> restrições de colunas. Como a última restrição é redundante (pois a soma das linhas é igual à soma das colunas), o total de restrições independentes é <span class="math inline">\(r + c - 1\)</span>.</p>
+<p>Subtraindo as restrições do número total de células, encontramos a fórmula geral por fatoração:</p>
+<p><span class="math display">\[\nu = rc - (r + c - 1) = (r - 1)(c - 1).\]</span></p>
+</section>
+</section>
+<section id="aplicações-práticas-do-teste" class="level3" data-number="7.1.7">
+<h3 data-number="7.1.7" class="anchored" data-anchor-id="aplicações-práticas-do-teste"><span class="header-section-number">7.1.7</span> Aplicações Práticas do Teste</h3>
+<p>Embora usem a mesma fórmula matemática de Pearson, os testes divergem no planejamento amostral e na pergunta científica:</p>
+<ul>
+<li><p>Teste de Aderência: Avalia se a distribuição de uma variável categórica em uma única amostra se ajusta a uma distribuição teórica predeterminada.</p></li>
+<li><p>Teste de Homogeneidade: Compara a distribuição de uma variável categórica entre duas ou mais populações independentes para ver se guardam a mesma proporção.</p></li>
+<li><p>Teste de Independência: Examina uma única amostra para determinar se duas variáveis categóricas distintas estão estatisticamente associadas ou se são independentes.</p></li>
+</ul>
+<!-- ### O que acontece quando a amostra é pequena? -->
+<!-- Quando algumas frequências esperadas são muito reduzidas, a aproximação Normal deixa de ser satisfatória. -->
+<!-- Nessas circunstâncias, a distribuição das frequências observadas torna-se assimétrica e discreta, afastando-se consideravelmente da distribuição Normal. -->
+<!-- Como consequência, a estatística de Pearson deixa de seguir adequadamente uma distribuição qui-quadrado. -->
+<!-- Isso pode produzir valores-$p$ imprecisos e decisões estatísticas incorretas. -->
+<!-- Em particular, -->
+<!-- - o nível de significância pode diferir daquele previamente estabelecido; -->
+<!-- - a probabilidade de rejeição da hipótese nula pode tornar-se maior ou menor do que a desejada; -->
+<!-- - a potência do teste pode ser reduzida. -->
+<!-- Por esse motivo, recomenda-se evitar a aplicação do teste quando as frequências esperadas são excessivamente pequenas. -->
+<!-- ### Por que se utiliza o valor 5? -->
+<!-- Uma das recomendações mais conhecidas afirma que todas as frequências esperadas devem ser, preferencialmente, maiores ou iguais a cinco. -->
+<!-- Essa regra não constitui um teorema matemático. -->
+<!-- Na verdade, trata-se de uma recomendação prática baseada em extensos estudos de simulação realizados ao longo do século XX. -->
+<!-- Esses estudos mostraram que, quando as frequências esperadas são da ordem de cinco ou mais, a aproximação pela distribuição qui-quadrado costuma apresentar excelente desempenho na maioria das aplicações. -->
+<!-- Atualmente, recomendações mais flexíveis são frequentemente adotadas. -->
+<!-- Uma regra bastante utilizada estabelece que -->
+<!-- - nenhuma frequência esperada deve ser inferior a 1; -->
+<!-- - no máximo 20% das células podem possuir frequência esperada inferior a 5. -->
+<!-- Embora essas regras não sejam absolutas, elas fornecem um critério simples para avaliar a adequação da aproximação assintótica. -->
+<!-- ### Quando utilizar testes exatos? -->
+<!-- Quando essas condições não são satisfeitas, a distribuição qui-quadrado pode deixar de representar adequadamente o comportamento da estatística de Pearson. -->
+<!-- Nessas situações, torna-se preferível utilizar métodos que não dependem de aproximações assintóticas. -->
+<!-- Entre eles destacam-se: -->
+<!-- - o teste exato de Fisher para tabelas $2\times2$; -->
+<!-- - testes baseados em simulação de Monte Carlo; -->
+<!-- - procedimentos de reamostragem (*bootstrap* ou permutação), quando apropriados. -->
+<!-- Esses métodos calculam probabilidades diretamente a partir da distribuição exata ou de aproximações computacionais, dispensando a utilização da distribuição qui-quadrado. -->
+<!-- # Graus de liberdade em tabelas de contingência -->
+<!-- Uma das características mais marcantes dos testes qui-quadrado é que a distribuição da estatística depende do número de **graus de liberdade**. Entretanto, antes de apresentar a conhecida expressão -->
+<!-- $$(r-1)(c-1),$$ -->
+<!-- vale a pena responder a uma pergunta muito mais importante: -->
+<!-- > **O que significa, de fato, um grau de liberdade?** -->
+<!-- Embora essa expressão apareça frequentemente em Estatística, ela nem sempre é acompanhada de uma interpretação intuitiva. Neste capítulo veremos que, no contexto das tabelas de contingência, os graus de liberdade representam simplesmente o número de frequências que podem variar livremente após serem impostas todas as restrições do problema. -->
+<!-- Para compreender essa ideia, começaremos pelo caso mais simples possível. -->
+<!-- ## Uma tabela $2\times2$ -->
+<!-- Considere a seguinte tabela de contingência. -->
+<!-- |           | Sim | Não | Total | -->
+<!-- |----------:|----:|----:|------:| -->
+<!-- |   Grupo A | $a$ | $b$ |    40 | -->
+<!-- |   Grupo B | $c$ | $d$ |    60 | -->
+<!-- | **Total** |  45 |  55 |   100 | -->
+<!-- Observe que os totais das linhas e das colunas são conhecidos. -->
+<!-- Suponha agora que escolhamos livremente o valor da primeira célula. -->
+<!-- Por exemplo, -->
+<!-- $$a=18.$$ -->
+<!-- Imediatamente, o valor da segunda célula deixa de ser livre. -->
+<!-- Como o total da primeira linha deve permanecer igual a 40, -->
+<!-- $$18+b=40,$$ -->
+<!-- de onde segue -->
+<!-- $$b=22.$$ -->
+<!-- Passemos agora à primeira coluna. -->
+<!-- Sabemos que seu total deve ser igual a 45. -->
+<!-- Logo, -->
+<!-- $$18+c=45,$$ -->
+<!-- o que implica -->
+<!-- $$c=27.$$ -->
+<!-- Finalmente, o total da segunda linha determina automaticamente a última célula, -->
+<!-- $$27+d=60,$$ -->
+<!-- resultando em -->
+<!-- $$d=33.$$ -->
+<!-- Observe o que aconteceu. -->
+<!-- Inicialmente existiam quatro células. -->
+<!-- Entretanto, após fixarmos os totais marginais, bastou escolher o valor de **uma única célula** para que todas as demais fossem completamente determinadas. -->
+<!-- Portanto, nessa tabela existe apenas **um grau de liberdade**. -->
+<!-- Essa conclusão coincide exatamente com -->
+<!-- $$(2-1)(2-1)=1.$$ -->
+<!-- Mas será que isso é apenas uma coincidência? -->
+<!-- Vamos analisar uma tabela um pouco maior. -->
+<!-- ## Uma tabela $2\times3$ -->
+<!-- Considere agora -->
+<!-- |           |   A |   B |   C | Total | -->
+<!-- |----------:|----:|----:|----:|------:| -->
+<!-- |   Grupo 1 | $a$ | $b$ | $c$ |    40 | -->
+<!-- |   Grupo 2 | $d$ | $e$ | $f$ |    60 | -->
+<!-- | **Total** |  30 |  45 |  25 |   100 | -->
+<!-- Agora existem seis células. -->
+<!-- À primeira vista, poderíamos imaginar que todas elas podem variar livremente. -->
+<!-- Entretanto, isso não é verdade. -->
+<!-- Suponha que escolhamos -->
+<!-- $$a=12$$ -->
+<!-- e -->
+<!-- $$b=20.$$ -->
+<!-- Esses dois valores podem ser escolhidos livremente. -->
+<!-- Entretanto, a terceira célula da primeira linha já não pode mais variar. -->
+<!-- Como o total da linha deve permanecer igual a 40, -->
+<!-- $$12+20+c=40,$$ -->
+<!-- de onde -->
+<!-- $$c=8.$$ -->
+<!-- Passemos à segunda linha. -->
+<!-- Sabemos que -->
+<!-- $$d=30-12=18,$$ -->
+<!-- pois a primeira coluna totaliza 30. -->
+<!-- Da mesma forma, -->
+<!-- $$e=45-20=25.$$ -->
+<!-- Finalmente, -->
+<!-- $$f=25-8=17.$$ -->
+<!-- Mais uma vez, verificamos que apenas duas células puderam ser escolhidas livremente. -->
+<!-- Todas as demais ficaram determinadas pelas restrições impostas pelos totais marginais. -->
+<!-- Assim, -->
+<!-- $$\text{graus de liberdade}=2,$$ -->
+<!-- valor que coincide com -->
+<!-- $$(2-1)(3-1)=2.$$ -->
+<!-- ## Um padrão começa a surgir -->
+<!-- Os dois exemplos anteriores revelam uma regularidade interessante. -->
+<!-- | Dimensão   | Número de células | Graus de liberdade | -->
+<!-- |------------|------------------:|-------------------:| -->
+<!-- | $2\times2$ |                 4 |                  1 | -->
+<!-- | $2\times3$ |                 6 |                  2 | -->
+<!-- Parece que o número de graus de liberdade cresce com o tamanho da tabela, mas sempre é menor que o número total de células. -->
+<!-- Para compreender por quê, devemos analisar as restrições existentes. -->
+<!-- ## Quantas restrições existem? -->
+<!-- Considere agora uma tabela geral com $r$ linhas e $c$ colunas. -->
+<!-- Inicialmente existem -->
+<!-- $$rc$$ -->
+<!-- frequências desconhecidas. -->
+<!-- Entretanto, essas frequências não podem assumir valores arbitrários. -->
+<!-- Os totais das linhas impõem -->
+<!-- $$r$$ -->
+<!-- restrições. -->
+<!-- Além disso, os totais das colunas impõem -->
+<!-- $$c$$ -->
+<!-- novas restrições. -->
+<!-- À primeira vista poderíamos concluir que existem -->
+<!-- $$r+c$$ -->
+<!-- restrições. -->
+<!-- No entanto, isso não é correto. -->
+<!-- Observe que o total geral da tabela pode ser obtido tanto pela soma das linhas quanto pela soma das colunas. -->
+<!-- Consequentemente, uma dessas restrições é redundante. -->
+<!-- Assim, o número efetivo de restrições é -->
+<!-- $$r+c-1.$$ -->
+<!-- ## Obtendo os graus de liberdade -->
+<!-- Como existem inicialmente -->
+<!-- $$rc$$ -->
+<!-- quantidades desconhecidas e -->
+<!-- $$r+c-1$$ -->
+<!-- restrições independentes, restam -->
+<!-- $$rc-(r+c-1)$$ -->
+<!-- quantidades que realmente podem variar. -->
+<!-- Efetuando a simplificação algébrica, -->
+<!-- $$\begin{aligned} -->
+<!-- rc-(r+c-1) -->
+<!-- &=rc-r-c+1\ -->
+<!-- &=(r-1)(c-1). -->
+<!-- \end{aligned}$$ -->
+<!-- Chegamos, assim, ao resultado geral. -->
+<!-- :::: {.callout-important title="Graus de liberdade de uma tabela de contingência"} -->
+<!-- Para uma tabela com $r$ linhas e $c$ colunas, -->
+<!-- $$\nu=(r-1)(c-1).$$ -->
+<!-- Esse valor corresponde ao número de frequências que podem variar livremente após serem considerados todos os totais marginais. -->
+<!-- :::: -->
+<!-- # A distribuição qui-quadrado -->
+<!-- Na seção anterior mostramos que, sob a hipótese nula e para amostras suficientemente grandes, a estatística de Pearson pode ser aproximada por uma distribuição qui-quadrado. -->
+<!-- Entretanto, antes de utilizarmos essa distribuição para construir testes de hipóteses, vale a pena estudá-la de maneira independente. -->
+<!-- Além de desempenhar um papel central nos testes qui-quadrado, essa distribuição aparece naturalmente em diversos procedimentos estatísticos, como a estimação da variância populacional, os modelos lineares generalizados e alguns métodos de inferência multivariada. -->
+<!-- Neste capítulo estudaremos suas principais propriedades e veremos por que ela se tornou uma das distribuições mais importantes da Estatística. -->
+<!-- ## Construção da distribuição qui-quadrado -->
+<!-- A distribuição qui-quadrado surge diretamente da distribuição Normal. -->
+<!-- Considere uma variável aleatória -->
+<!-- $$Z\sim N(0,1).$$ -->
+<!-- Sabemos que $Z$ pode assumir valores positivos ou negativos, distribuídos simetricamente em torno de zero. -->
+<!-- Agora considere a nova variável -->
+<!-- $$Y=Z^2.$$ -->
+<!-- Como o quadrado elimina o sinal, $Y$ assume apenas valores não negativos. -->
+<!-- Além disso, -->
+<!-- - valores de $Z$ próximos de zero produzem pequenos valores de $Y$; -->
+<!-- - valores de grande magnitude produzem grandes valores de $Y$. -->
+<!-- Dizemos então que -->
+<!-- $$Y\sim\chi^2(1),$$ -->
+<!-- isto é, $Y$ possui uma distribuição qui-quadrado com um grau de liberdade. -->
+<!-- Essa é a forma mais simples da distribuição qui-quadrado. -->
+<!-- ## Generalização -->
+<!-- Suponha agora que -->
+<!-- $$Z_1,Z_2,\ldots,Z_\nu$$ -->
+<!-- sejam variáveis aleatórias independentes, todas com distribuição Normal padrão. -->
+<!-- Considere a soma -->
+<!-- $$Q= -->
+<!-- Z_1^2+Z_2^2+\cdots+Z_\nu^2.$$ -->
+<!-- Nesse caso, -->
+<!-- $$Q -->
+<!-- \sim -->
+<!-- \chi^2(\nu),$$ -->
+<!-- em que $\nu$ representa o número de graus de liberdade. -->
+<!-- Essa definição é extremamente importante, pois mostra que a distribuição qui-quadrado nada mais é do que a distribuição da soma dos quadrados de variáveis Normais independentes. -->
+<!-- Essa propriedade explica naturalmente por que a estatística de Pearson possui distribuição aproximadamente qui-quadrado. -->
+<!-- Cada parcela -->
+<!-- $$\frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$ -->
+<!-- corresponde aproximadamente ao quadrado de uma variável Normal padronizada. -->
+<!-- Somando todas essas parcelas, obtemos precisamente uma variável com distribuição aproximadamente qui-quadrado. -->
+<!-- ## A influência dos graus de liberdade -->
+<!-- Diferentemente da distribuição Normal, a distribuição qui-quadrado não possui uma única forma. -->
+<!-- Sua aparência depende do número de graus de liberdade. -->
+<!-- Quando $\nu$ é pequeno, a distribuição apresenta forte assimetria à direita. -->
+<!-- Grande parte da probabilidade concentra-se próxima da origem, mas existe uma longa cauda estendendo-se para valores elevados. -->
+<!-- À medida que os graus de liberdade aumentam, essa assimetria diminui gradualmente. -->
+<!-- A distribuição torna-se cada vez mais simétrica e aproxima-se da distribuição Normal. -->
+<!-- Esse comportamento é ilustrado na Figura @fig-chi-square-family. -->
+<!-- ::: callout-note -->
+<!-- Uma consequência importante é que não existe uma única distribuição qui-quadrado. Na realidade, existe uma família de distribuições, uma para cada número de graus de liberdade. -->
+<!-- ::: -->
+<!-- ## Principais propriedades -->
+<!-- A distribuição qui-quadrado apresenta diversas propriedades importantes. -->
+<!-- 1.  Assume apenas valores não negativos. -->
+<!-- 2.  É assimétrica à direita. -->
+<!-- 3.  Sua forma depende do número de graus de liberdade. -->
+<!-- 4.  A assimetria diminui quando os graus de liberdade aumentam. -->
+<!-- 5.  A média é igual ao número de graus de liberdade, -->
+<!-- $$E(\chi^2)=\nu.$$ -->
+<!-- 6.  A variância é dada por -->
+<!-- $$Var(\chi^2)=2\nu.$$ -->
+<!-- 7.  Quando $\nu$ cresce, a distribuição aproxima-se de uma distribuição Normal, -->
+<!-- $$\chi^2(\nu) -->
+<!-- \approx -->
+<!-- N(\nu,2\nu).$$ -->
+<!-- Essa aproximação é consequência do Teorema Central do Limite e torna-se bastante precisa para valores moderados ou grandes de $\nu$. -->
+<!-- ## A região crítica -->
+<!-- Nos testes qui-quadrado estamos interessados apenas em valores elevados da estatística. -->
+<!-- Isso ocorre porque valores pequenos indicam boa concordância entre as frequências observadas e aquelas previstas pela hipótese nula. -->
+<!-- Em contrapartida, valores elevados indicam discrepâncias importantes. -->
+<!-- Consequentemente, a região crítica localiza-se exclusivamente na cauda direita da distribuição. -->
+<!-- Seja -->
+<!-- $$\chi^2_{\alpha,\nu}$$ -->
+<!-- o quantil superior de ordem $\alpha$. -->
+<!-- Rejeitamos a hipótese nula sempre que -->
+<!-- $$\chi^2_{\text{obs}} -->
+<!-- > -->
+<!-- \chi^2_{\alpha,\nu}.$$ -->
+<!-- Equivalentemente, podemos calcular o valor-$p$, -->
+<!-- $$p -->
+<!-- = -->
+<!-- P\left( -->
+<!-- \chi^2_\nu -->
+<!-- \geq -->
+<!-- \chi^2_{\text{obs}} -->
+<!-- \right),$$ -->
+<!-- e comparar esse valor com o nível de significância previamente adotado. -->
+<!-- ## Intuição -->
+<!-- Uma maneira simples de interpretar a distribuição qui-quadrado consiste em imaginar que ela descreve todas as discrepâncias que seriam observadas entre frequências amostrais e frequências esperadas quando a hipótese nula fosse verdadeira. -->
+<!-- A maioria dessas discrepâncias é pequena. -->
+<!-- Discrepâncias muito grandes são raras. -->
+<!-- Assim, quando observamos um valor extremamente elevado da estatística, concluímos que esse resultado dificilmente seria produzido apenas pelo acaso. -->
+<!-- Essa é exatamente a lógica utilizada por todos os testes qui-quadrado. -->
+<!-- # Uma visão computacional da distribuição qui-quadrado -->
+<!-- Até este ponto estudamos a construção matemática da estatística de Pearson e vimos que, sob determinadas condições, ela possui aproximadamente uma distribuição qui-quadrado. -->
+<!-- Entretanto, uma pergunta bastante natural ainda permanece. -->
+<!-- > Como essa aproximação surge na prática? -->
+<!-- Uma das grandes vantagens da Estatística moderna é que não precisamos aceitar esse resultado apenas porque ele foi demonstrado teoricamente. -->
+<!-- Podemos utilizar simulação computacional para reproduzir milhares de experimentos e observar empiricamente o comportamento da estatística. -->
+<!-- Nesta seção faremos exatamente isso. -->
+<!-- Nosso objetivo não é substituir a teoria, mas utilizá-la para desenvolver uma compreensão intuitiva da distribuição qui-quadrado. -->
+<!-- ## Primeiro experimento -->
+<!-- Considere uma população formada por duas categorias igualmente prováveis. -->
+<!-- $$p_1=p_2=0,5.$$ -->
+<!-- Sob a hipótese nula esperamos que aproximadamente metade das observações pertença a cada categoria. -->
+<!-- Vamos repetir o seguinte experimento 10.000 vezes. -->
+<!-- 1.  Gerar uma amostra aleatória. -->
+<!-- 2.  Calcular as frequências observadas. -->
+<!-- 3.  Calcular a estatística qui-quadrado. -->
+<!-- 4.  Armazenar o resultado. -->
+<!-- Ao final teremos 10.000 valores da estatística de Pearson obtidos sob a hipótese nula. -->
+<!-- Se a teoria estiver correta, esses valores deverão seguir aproximadamente uma distribuição qui-quadrado. -->
+<!-- ```{python} -->
+<!-- import numpy as np -->
+<!-- import matplotlib.pyplot as plt -->
+<!-- from scipy.stats import chisquare -->
+<!-- from scipy.stats import chi2 -->
+<!-- np.random.seed(1234) -->
+<!-- B = 10000 -->
+<!-- n = 40 -->
+<!-- estatisticas = np.empty(B) -->
+<!-- for i in range(B): -->
+<!--     amostra = np.random.multinomial(n,[0.5,0.5]) -->
+<!--     estatisticas[i] = chisquare(amostra).statistic -->
+<!-- x = np.linspace(0,10,300) -->
+<!-- plt.figure(figsize=(8,5)) -->
+<!-- plt.hist( -->
+<!--     estatisticas, -->
+<!--     bins=35, -->
+<!--     density=True, -->
+<!--     alpha=0.6, -->
+<!--     label="Simulação" -->
+<!-- ) -->
+<!-- plt.plot( -->
+<!--     x, -->
+<!--     chi2.pdf(x,1), -->
+<!--     linewidth=2, -->
+<!--     label="Distribuição teórica" -->
+<!-- ) -->
+<!-- plt.xlabel(r"$\chi^2$") -->
+<!-- plt.ylabel("Densidade") -->
+<!-- plt.legend() -->
+<!-- plt.show() -->
+<!-- ``` -->
+<!-- A Figura mostra que, mesmo para uma amostra relativamente pequena, a distribuição simulada já se aproxima razoavelmente da distribuição qui-quadrado teórica. -->
+<!-- Entretanto, ainda são observadas pequenas discrepâncias, principalmente na cauda da distribuição. -->
+<!-- Essas diferenças refletem o fato de que a aproximação é assintótica. -->
+<!-- # Anatomia da estatística qui-quadrado -->
+<!-- Até este ponto vimos que a estatística de Pearson é dada por -->
+<!-- $$\chi^2= \sum_{i=1}^{r}\sum_{j=1}^{c} -->
+<!-- \frac{(O_{ij}-E_{ij})^2}{E_{ij}}.$$ -->
+<!-- Essa expressão mostra que a estatística total é formada pela soma das contribuições individuais de todas as células da tabela. -->
+<!-- Entretanto, essa forma de apresentação pode transmitir uma impressão equivocada. -->
+<!-- Ao observar apenas o valor final da estatística, perdemos completamente a informação sobre **quais células foram responsáveis pela discrepância observada**. -->
+<!-- Nesta seção vamos "desmontar" a estatística qui-quadrado e analisar separadamente a contribuição de cada célula. -->
+<!-- Essa interpretação será extremamente útil quando estudarmos os resíduos padronizados. -->
+<!-- ## Um exemplo -->
+<!-- Considere a seguinte tabela de frequências observadas. -->
+<!-- | Sexo      | Favorável | Contrário | Total | -->
+<!-- |-----------|----------:|----------:|------:| -->
+<!-- | Masculino |        45 |        25 |    70 | -->
+<!-- | Feminino  |        30 |        50 |    80 | -->
+<!-- | **Total** |        75 |        75 |   150 | -->
+<!-- Sob a hipótese nula de independência, as frequências esperadas são -->
+<!-- | Sexo      | Favorável | Contrário | -->
+<!-- |-----------|----------:|----------:| -->
+<!-- | Masculino |        35 |        35 | -->
+<!-- | Feminino  |        40 |        40 | -->
+<!-- Observe que nenhuma célula coincide exatamente com seu valor esperado. Cada uma delas contribuirá para a estatística qui-quadrado. -->
+<!-- ## Calculando as contribuições -->
+<!-- Para a primeira célula, -->
+<!-- $$ \frac{(45-35)^2}{35}= 2,857.$$ -->
+<!-- Para a segunda, -->
+<!-- $$\frac{(25-35)^2}{35} = 2,857.$$ -->
+<!-- Para a terceira, -->
+<!-- $$\frac{(30-40)^2}{40} =2,500.$$ -->
+<!-- Finalmente, -->
+<!-- $$\frac{(50-40)^2}{40} = 2,500.$$ -->
+<!-- Somando todas as parcelas, -->
+<!-- $$\chi^2 = 2,857 + 2,857 + 2,500 + 2,500 = 10,714.$$ -->
+<!-- Observe que a estatística não surgiu de uma única discrepância. -->
+<!-- Ela foi construída pela soma das evidências fornecidas por cada célula. -->
+<!-- ## Visualizando a contribuição das células -->
+<!-- Uma maneira extremamente útil de interpretar a estatística consiste em organizar as contribuições em uma tabela. -->
+<!-- | Célula                | Contribuição | -->
+<!-- |-----------------------|-------------:| -->
+<!-- | Masculino × Favorável |        2,857 | -->
+<!-- | Masculino × Contrário |        2,857 | -->
+<!-- | Feminino × Favorável  |        2,500 | -->
+<!-- | Feminino × Contrário  |        2,500 | -->
+<!-- Essa tabela mostra claramente quanto cada célula participou da estatística total.Em problemas maiores, contendo dezenas de células, essa informação torna-se ainda mais importante. Em vez de perguntar -->
+<!-- > Qual foi o valor da estatística qui-quadrado? -->
+<!-- passamos a perguntar -->
+<!-- > Quais células produziram esse valor? -->
+<!-- Essa mudança de perspectiva é extremamente útil na interpretação dos resultados. -->
+<!-- ## Uma representação gráfica -->
+<!-- Outra forma de compreender a estatística consiste em representar graficamente a contribuição de cada célula. -->
+<!-- ```{python} -->
+<!-- import matplotlib.pyplot as plt -->
+<!-- celulas = [ -->
+<!--     "M × Fav", -->
+<!--     "M × Cont", -->
+<!--     "F × Fav", -->
+<!--     "F × Cont" -->
+<!-- ] -->
+<!-- contrib = [ -->
+<!--     2.857, -->
+<!--     2.857, -->
+<!--     2.500, -->
+<!--     2.500 -->
+<!-- ] -->
+<!-- plt.figure(figsize=(7,4)) -->
+<!-- plt.bar(celulas, contrib) -->
+<!-- plt.ylabel("Contribuição para $\chi^2$") -->
+<!-- plt.show() -->
+<!-- ``` -->
+<!-- A Figura mostra que todas as células contribuíram para o valor final da estatística. Em muitos problemas reais, entretanto, apenas duas ou três células concentram praticamente toda a discrepância observada. Nessas situações, a análise das contribuições individuais fornece muito mais informação do que o simples valor da estatística qui-quadrado. -->
+<!-- ## Um exemplo extremo -->
+<!-- Considere agora uma tabela hipotética em que as contribuições individuais sejam -->
+<!-- | Célula | Contribuição | -->
+<!-- |--------|-------------:| -->
+<!-- | A      |         0,02 | -->
+<!-- | B      |         0,11 | -->
+<!-- | C      |         8,94 | -->
+<!-- | D      |         0,06 | -->
+<!-- Observe que -->
+<!-- $$ \chi^2 = 0,02 + 0,11 + 8,94 + 0,06 = 9,13.$$ -->
+<!-- Embora a estatística total seja relativamente elevada, praticamente toda a evidência contra a hipótese nula provém de uma única célula. -->
+<!-- Essa observação possui uma consequência importante. Os testes qui-quadrado respondem apenas à pergunta -->
+<!-- > Existe evidência contra a hipótese nula? -->
+<!-- Eles **não respondem** à pergunta -->
+<!-- > Onde está essa evidência? -->
+<!-- Responder a essa segunda pergunta exige uma análise mais detalhada, baseada nos resíduos padronizados, assunto da próxima seção. -->
+<!-- ## Uma nova forma de interpretar o teste -->
+<!-- Após estudar a decomposição da estatística qui-quadrado, passamos a enxergar o teste de maneira diferente. Em vez de imaginar que a estatística é apenas um número calculado por uma fórmula, podemos interpretá-la como um indicador que resume a discrepância acumulada em toda a tabela. -->
+<!-- Cada célula fornece uma pequena parcela dessa discrepância. -->
+<!-- Algumas células praticamente não contribuem. Outras exercem grande influência sobre a decisão final. Assim, sempre que um teste qui-quadrado resultar significativo, a pergunta natural deixa de ser -->
+<!-- > O teste foi significativo? -->
+<!-- e passa a ser -->
+<!-- > Quais células tornaram o teste significativo? -->
+<!-- Essa mudança de perspectiva transforma o teste qui-quadrado de uma ferramenta meramente confirmatória em um poderoso instrumento de exploração e interpretação dos dados. -->
+<!-- # Resíduos padronizados -->
+<!-- Até este ponto, desenvolvemos toda a teoria necessária para construir o teste qui-quadrado. -->
+<!-- Vimos que cada célula contribui para a estatística por meio da quantidade -->
+<!-- $$\frac{(O_{ij}-E_{ij})^2}{E_{ij}}.$$ -->
+<!-- Também mostramos que essa expressão pode ser escrita como -->
+<!-- $$\left(\frac{O_{ij}-E_{ij}} -->
+<!-- {\sqrt{E_{ij}}} -->
+<!-- \right)^2.$$ -->
+<!-- Talvez o leitor tenha a impressão de já ter visto essa expressão anteriormente. -->
+<!-- De fato, ela apareceu quando discutimos a aproximação da estatística de Pearson pela distribuição qui-quadrado. -->
+<!-- Naquela ocasião, definimos -->
+<!-- $$ Z\_{ij} =\frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}},$$ -->
+<!-- e observamos que, sob determinadas condições, -->
+<!-- $$Z_{ij} -->
+<!-- \approx -->
+<!-- N(0,1).$$ -->
+<!-- Naquele momento, essa variável foi introduzida apenas como um passo intermediário para justificar a distribuição assintótica da estatística qui-quadrado.  -->
+<!-- Entretanto, ela possui uma interpretação muito mais rica. Ela mede o quanto a frequência observada de uma célula se afasta da frequência esperada, utilizando como unidade de medida o desvio padrão esperado para essa frequência. Em outras palavras, -->
+<!-- > o resíduo padronizado indica quantos "desvios padrão" a frequência observada está distante da frequência esperada. -->
+<!-- Essa interpretação aproxima os testes qui-quadrado da lógica utilizada em diversos outros procedimentos estatísticos, nos quais valores padronizados são utilizados para identificar observações incomuns. -->
+<!-- ### Interpretando os resíduos -->
+<!-- Considere inicialmente uma única célula. Suponha que $O=52$ e $E=50$. O resíduo padronizado será -->
+<!-- $$\frac{52-50}{\sqrt{50}} = 0,28.$$ -->
+<!-- Esse resultado indica que a frequência observada está apenas 0,28 desvios padrão acima da frequência esperada. Trata-se de uma discrepância extremamente pequena. -->
+<!-- Agora suponha $O=70$ e $E=50$. Nesse caso, -->
+<!-- $$\frac{70-50}{\sqrt{50}} = 2,83.$$ -->
+<!-- Agora a situação é bastante diferente. A frequência observada encontra-se quase três desvios padrão acima da frequência prevista pela hipótese nula. Esse tipo de discrepância dificilmente seria explicado apenas pela variabilidade amostral. -->
+<!-- ### Uma propriedade importante -->
+<!-- Observe que -->
+<!-- $$\chi^2 = \sum -->
+<!-- \frac{(O_{ij}-E_{ij})^2}{E_{ij}} -->
+<!-- = \sum Z_{ij}^2.$$ -->
+<!-- Essa igualdade possui uma interpretação extremamente interessante. A estatística qui-quadrado nada mais é do que a soma dos quadrados dos resíduos padronizados. Assim, -->
+<!-- - cada resíduo mede a discrepância de uma única célula; -->
+<!-- - a estatística qui-quadrado resume todas essas discrepâncias em um único número. -->
+<!-- Essa relação pode ser representada esquematicamente por -->
+<!-- $$\boxed{ -->
+<!-- \text{Resíduos} -->
+<!-- \Longrightarrow -->
+<!-- \text{Contribuições} -->
+<!-- \Longrightarrow -->
+<!-- \chi^2 -->
+<!-- }$$ -->
+<!-- Essa talvez seja a maneira mais intuitiva de compreender a estatística de Pearson. -->
+<!-- ### Qual resíduo deve chamar nossa atenção? -->
+<!-- Como vimos anteriormente, -->
+<!-- $$Z_{ij} -->
+<!-- \approx -->
+<!-- N(0,1).$$ -->
+<!-- Portanto, podemos utilizar a própria distribuição Normal como referência para interpretar cada resíduo. -->
+<!-- Sabemos que aproximadamente -->
+<!-- - 68% dos valores encontram-se entre $-1$ e $1$; -->
+<!-- - 95% encontram-se entre $-2$ e $2$; -->
+<!-- - 99,7% encontram-se entre $-3$ e $3$. -->
+<!-- Assim, uma regra prática bastante utilizada consiste em considerar que -->
+<!-- | Resíduo | Interpretação |   |   | -->
+<!-- |---:|:---|----|----| -->
+<!-- | $|Z|<2$ | discrepância compatível com a hipótese nula | -->
+<!-- | $2\le|Z|<3$ | discrepância importante |  |  | -->
+<!-- | $|Z|\ge 3$ | discrepância muito forte | -->
+<!-- Naturalmente, esses limites constituem apenas diretrizes para interpretação e não substituem o teste formal baseado na estatística qui-quadrado. -->
+<!-- ### Um exemplo completo -->
+<!-- Considere novamente a tabela utilizada anteriormente. -->
+<!-- | Sexo      | Favorável | Contrário | -->
+<!-- |-----------|----------:|----------:| -->
+<!-- | Masculino |        45 |        25 | -->
+<!-- | Feminino  |        30 |        50 | -->
+<!-- As frequências esperadas são -->
+<!-- | Sexo      | Favorável | Contrário | -->
+<!-- |-----------|----------:|----------:| -->
+<!-- | Masculino |        35 |        35 | -->
+<!-- | Feminino  |        40 |        40 | -->
+<!-- Os resíduos padronizados são -->
+<!-- $$\frac{45-35}{\sqrt{35}} =1,69,$$ -->
+<!-- $$\frac{25-35}{\sqrt{35}} =-1,69,$$ -->
+<!-- $$\frac{30-40}{\sqrt{40}} = -1,58, $$ -->
+<!-- e -->
+<!-- $$\frac{50-40}{\sqrt{40}} = 1,58.$$ -->
+<!-- Observe que nenhum resíduo ultrapassa o valor absoluto dois. -->
+<!-- Isso sugere que nenhuma célula isoladamente apresenta uma discrepância muito acentuada. Entretanto, todas contribuem moderadamente para a estatística total. -->
+<!-- Essa observação mostra que uma estatística qui-quadrado significativa pode resultar tanto de -->
+<!-- - uma única discrepância muito grande; -->
+<!-- quanto de -->
+<!-- - diversas discrepâncias moderadas atuando simultaneamente. -->
+<!-- Essa distinção é extremamente importante na interpretação dos resultados. -->
+<!-- ### Resíduos positivos e negativos -->
+<!-- O sinal do resíduo possui uma interpretação simples. -->
+<!-- Se $Z_{ij}>0,$ então $O_{ij}>E_{ij}$, ou seja, aquela combinação de categorias ocorreu com frequência superior à esperada. Por outro lado, $Z_{ij}<0$ indica que $O_{ij}<E_{ij}$, isto é, aquela combinação ocorreu menos frequentemente do que seria esperado sob a hipótese nula. -->
+<!-- Assim, além da intensidade da discrepância, os resíduos também indicam sua direção. Essa informação desaparece completamente quando utilizamos apenas a estatística qui-quadrado, uma vez que todos os desvios são elevados ao quadrado. -->
+<!-- # Uma observação importante -->
+<!-- Embora extremamente úteis, os resíduos padronizados apresentados nesta seção ainda constituem uma aproximação. -->
+<!-- Em tabelas maiores ou em situações mais complexas, costuma-se utilizar uma versão corrigida denominada **resíduos padronizados ajustados**, cuja variância é exatamente igual a um sob a hipótese nula. -->
+<!-- # Lendo uma tabela de contingência como um estatístico -->
+<!-- Ao receber uma tabela de contingência, muitos estudantes imediatamente procuram a fórmula do teste qui-quadrado. -->
+<!-- Essa reação é compreensível. -->
+<!-- Durante a formação em Estatística, frequentemente aprendemos que o objetivo da análise consiste em calcular uma estatística de teste, obter um valor-$p$ e decidir se rejeitamos ou não a hipótese nula. -->
+<!-- Entretanto, um estatístico experiente costuma seguir um caminho diferente. -->
+<!-- Antes de realizar qualquer cálculo, ele observa cuidadosamente os dados. -->
+<!-- A primeira pergunta não é -->
+<!-- > Qual é o valor do teste? -->
+<!-- A primeira pergunta é -->
+<!-- > O que esta tabela está tentando me dizer? -->
+<!-- Essa mudança de perspectiva pode parecer sutil, mas transforma completamente a maneira de interpretar dados categóricos. -->
+<!-- Neste capítulo aprenderemos a desenvolver esse olhar investigativo. -->
+<!-- # Um exemplo -->
+<!-- Considere a seguinte tabela. -->
+<!-- | Escolaridade | Aprova | Não aprova | Total | -->
+<!-- |--------------|-------:|-----------:|------:| -->
+<!-- | Fundamental  |     15 |         45 |    60 | -->
+<!-- | Médio        |     42 |         38 |    80 | -->
+<!-- | Superior     |     63 |         17 |    80 | -->
+<!-- | **Total**    |    120 |        100 |   220 | -->
+<!-- Suponha que essa tabela tenha sido obtida em uma pesquisa de opinião. -->
+<!-- Nosso objetivo é verificar se existe associação entre escolaridade e aprovação de determinada proposta. -->
+<!-- Resista, por alguns instantes, à tentação de calcular a estatística qui-quadrado. -->
+<!-- Vamos apenas observar os dados. -->
+<!-- # Primeira pergunta -->
+<!-- A proporção de respostas favoráveis parece semelhante em todos os níveis de escolaridade? -->
+<!-- Façamos algumas contas simples. -->
+<!-- No grupo com ensino fundamental, -->
+<!-- $$\frac{15}{60}=0,25.$$ -->
+<!-- Ou seja, -->
+<!-- 25% aprovam a proposta. -->
+<!-- No ensino médio, -->
+<!-- $$\frac{42}{80}=0,525.$$ -->
+<!-- Agora a aprovação já ultrapassa 50%. -->
+<!-- Finalmente, -->
+<!-- $$\frac{63}{80}=0,7875.$$ -->
+<!-- Entre indivíduos com ensino superior, quase 80% aprovam a proposta. -->
+<!-- Mesmo antes de qualquer teste estatístico, percebemos um padrão bastante claro. -->
+<!-- À medida que aumenta a escolaridade, aumenta também a proporção de indivíduos favoráveis. -->
+<!-- Essa observação sugere uma possível associação entre as variáveis. -->
+<!-- Ainda não sabemos se essa associação é estatisticamente significativa. -->
+<!-- Mas já temos uma hipótese bastante plausível. -->
+<!-- # Segunda pergunta -->
+<!-- Existe alguma célula que chama imediatamente a atenção? -->
+<!-- Observe o valor -->
+<!-- $$63.$$ -->
+<!-- Ele parece relativamente elevado. -->
+<!-- Mas elevado em relação a quê? -->
+<!-- Essa é precisamente a pergunta que conduz às frequências esperadas. -->
+<!-- Se escolaridade e opinião fossem realmente independentes, deveríamos esperar aproximadamente esse número de indivíduos favoráveis com ensino superior? -->
+<!-- Ou esse valor está muito acima do esperado? -->
+<!-- Responder a essa pergunta será justamente o papel das frequências esperadas. -->
+<!-- # Terceira pergunta -->
+<!-- A tendência observada parece consistente? -->
+<!-- Imagine que a tabela fosse -->
+<!-- | Escolaridade | Aprova | -->
+<!-- |--------------|-------:| -->
+<!-- | Fundamental  |     15 | -->
+<!-- | Médio        |     62 | -->
+<!-- | Superior     |     18 | -->
+<!-- Nesse caso, o padrão observado seria muito menos claro. -->
+<!-- Talvez existisse apenas uma oscilação aleatória. -->
+<!-- Na tabela original, entretanto, percebemos uma evolução praticamente monotônica. -->
+<!-- Quanto maior a escolaridade, maior a aprovação. -->
+<!-- Esse tipo de comportamento dificilmente passa despercebido a um analista experiente. -->
+<!-- # A hipótese nula faz sentido? -->
+<!-- Agora imagine que a hipótese de independência seja verdadeira. -->
+<!-- Nesse caso, esperaríamos que a proporção de aprovação fosse aproximadamente a mesma em todos os níveis de escolaridade. -->
+<!-- Graficamente, poderíamos representar essa ideia da seguinte maneira. -->
+<!-- ``` text -->
+<!-- Fundamental   ██████████ -->
+<!-- Médio         ██████████ -->
+<!-- Superior      ██████████ -->
+<!-- ``` -->
+<!-- Entretanto, os dados observados sugerem algo completamente diferente. -->
+<!-- ``` text -->
+<!-- Fundamental   █████ -->
+<!-- Médio         ███████████ -->
+<!-- Superior      █████████████████ -->
+<!-- ``` -->
+<!-- A pergunta central do teste qui-quadrado passa então a ser -->
+<!-- > Essa diferença pode ser explicada apenas pela variabilidade amostral? -->
+<!-- Toda a teoria desenvolvida nas seções anteriores existe para responder precisamente essa questão. -->
+<!-- # Pensando como um investigador -->
+<!-- Observe que, até este momento, ainda não calculamos nenhuma estatística. -->
+<!-- Mesmo assim, já aprendemos diversas coisas. -->
+<!-- Percebemos uma tendência crescente. -->
+<!-- Identificamos células potencialmente discrepantes. -->
+<!-- Levantamos uma hipótese sobre a existência de associação. -->
+<!-- Antecipamos quais frequências provavelmente estarão acima ou abaixo dos valores esperados. -->
+<!-- Em outras palavras, começamos a construir uma interpretação para os dados. -->
+<!-- O teste qui-quadrado não substitui essa etapa. -->
+<!-- Ele apenas fornece evidências quantitativas para confirmar ou refutar aquilo que a inspeção inicial já sugeria. -->
+<!-- # Uma analogia -->
+<!-- Imagine um médico examinando um paciente. -->
+<!-- Antes de solicitar exames laboratoriais, ele observa os sintomas, conversa com o paciente e formula hipóteses diagnósticas. -->
+<!-- Os exames não substituem essa avaliação clínica. -->
+<!-- Eles servem para confirmar ou descartar hipóteses previamente levantadas. -->
+<!-- O papel do teste qui-quadrado é muito semelhante. -->
+<!-- A tabela de contingência corresponde ao exame clínico inicial. -->
+<!-- O cálculo da estatística corresponde ao exame laboratorial. -->
+<!-- Quanto melhor for nossa capacidade de interpretar a tabela antes dos cálculos, melhor será também nossa interpretação dos resultados estatísticos. -->
+<!-- # Uma habilidade que vale ouro -->
+<!-- Com a prática, o leitor perceberá que muitas conclusões podem ser antecipadas apenas observando cuidadosamente uma tabela de contingência. -->
+<!-- Naturalmente, o teste estatístico continua sendo indispensável para fundamentar a inferência. -->
+<!-- Entretanto, a análise exploratória dos dados permite compreender o fenômeno estudado muito antes da obtenção do valor-$p$. -->
+<!-- Essa é uma das habilidades mais importantes que um analista de dados pode desenvolver. -->
+<!-- Mais do que calcular testes estatísticos, é preciso aprender a conversar com os dados. -->
+<!-- # O raciocínio por trás do teste qui-quadrado -->
+<!-- Ao longo deste capítulo desenvolvemos diversas ferramentas matemáticas. -->
+<!-- Aprendemos a calcular frequências esperadas. -->
+<!-- Construímos a estatística qui-quadrado. -->
+<!-- Estudamos sua distribuição de probabilidade. -->
+<!-- Apresentamos os graus de liberdade. -->
+<!-- Discutimos os resíduos padronizados. -->
+<!-- Entretanto, antes de prosseguirmos para os testes de aderência, homogeneidade e independência, vale a pena responder a uma pergunta aparentemente simples. -->
+<!-- > **O que realmente acontece quando realizamos um teste qui-quadrado?** -->
+<!-- A resposta não está em uma fórmula. -->
+<!-- Ela está na lógica da inferência estatística. -->
+<!-- ## Um experimento mental -->
+<!-- Imagine que uma moeda seja perfeitamente equilibrada. -->
+<!-- Ao lançá-la 100 vezes, esperamos obter aproximadamente 50 caras e 50 coroas. -->
+<!-- Entretanto, dificilmente observaremos exatamente esse resultado. -->
+<!-- Talvez obtenhamos -->
+<!-- - 48 caras e 52 coroas; -->
+<!-- - 53 caras e 47 coroas; -->
+<!-- - 44 caras e 56 coroas. -->
+<!-- Todas essas possibilidades são compatíveis com a variabilidade natural do experimento. -->
+<!-- Agora imagine um resultado muito diferente. -->
+<!-- Suponha que a moeda produza -->
+<!-- - 92 caras; -->
+<!-- - 8 coroas. -->
+<!-- Ainda seria possível obter esse resultado por acaso? -->
+<!-- Sim. -->
+<!-- Mas a pergunta estatística não é essa. -->
+<!-- A pergunta correta é outra. -->
+<!-- > **Quão provável seria observar um resultado tão extremo caso a moeda fosse realmente equilibrada?** -->
+<!-- Observe cuidadosamente essa mudança de perspectiva. -->
+<!-- Não perguntamos se o resultado é possível. -->
+<!-- Perguntamos se ele é plausível. -->
+<!-- Essa distinção está no coração da inferência estatística. -->
+<!-- # O papel da hipótese nula -->
+<!-- Todo teste estatístico começa assumindo que um determinado modelo é verdadeiro. -->
+<!-- No caso do teste qui-quadrado de independência, esse modelo afirma que as duas variáveis não possuem associação. -->
+<!-- No teste de homogeneidade, assume-se que as populações apresentam a mesma distribuição de probabilidades. -->
+<!-- No teste de aderência, assume-se que os dados seguem a distribuição especificada. -->
+<!-- Essa suposição inicial recebe o nome de **hipótese nula**. -->
+<!-- É importante compreender que não adotamos essa hipótese porque acreditamos que ela seja verdadeira. -->
+<!-- Nós a utilizamos como um ponto de partida para o raciocínio. -->
+<!-- Toda a análise consiste em investigar se os dados observados são compatíveis com esse modelo. -->
+<!-- # O papel da discrepância -->
+<!-- Uma vez formulada a hipótese nula, construímos um modelo capaz de prever quais frequências esperaríamos observar. -->
+<!-- Em seguida, comparamos essas previsões com os dados efetivamente coletados. -->
+<!-- Quanto maior for a diferença entre observações e previsões, maior será a evidência contra a hipótese nula. -->
+<!-- Essa ideia pode ser resumida pelo seguinte esquema. -->
+<!-- $$\boxed{ -->
+<!-- \text{Hipótese} -->
+<!-- \Longrightarrow -->
+<!-- \text{Frequências esperadas} -->
+<!-- \Longrightarrow -->
+<!-- \text{Comparação com os dados} -->
+<!-- \Longrightarrow -->
+<!-- \chi^2 -->
+<!-- }$$ -->
+<!-- Observe que a estatística qui-quadrado não mede diretamente associação, dependência ou qualidade de ajuste. -->
+<!-- Ela mede algo ainda mais fundamental. -->
+<!-- Ela mede **discrepância**. -->
+<!-- Toda a lógica do teste nasce dessa ideia simples. -->
+<!-- # Uma analogia com mapas -->
+<!-- Imagine que você possua um mapa de uma cidade. -->
+<!-- O mapa representa um modelo da realidade. -->
+<!-- Ao caminhar pelas ruas, você compara continuamente aquilo que observa com aquilo que o mapa prevê. -->
+<!-- Se tudo coincide, sua confiança no mapa aumenta. -->
+<!-- Entretanto, suponha que diversas ruas estejam em posições diferentes daquelas indicadas. -->
+<!-- Talvez o mapa esteja desatualizado. -->
+<!-- Talvez tenha sido construído para outra cidade. -->
+<!-- Quanto maiores forem as discrepâncias acumuladas, menor será sua confiança naquele mapa. -->
+<!-- Os testes qui-quadrado funcionam exatamente da mesma maneira. -->
+<!-- A hipótese nula desempenha o papel do mapa. -->
+<!-- As frequências esperadas representam aquilo que o modelo prevê. -->
+<!-- As frequências observadas representam aquilo que realmente ocorreu. -->
+<!-- A estatística qui-quadrado mede o grau de desacordo entre essas duas descrições. -->
+<!-- # Quando rejeitamos a hipótese nula? -->
+<!-- É comum ouvir a seguinte frase. -->
+<!-- > "Rejeitamos a hipótese nula." -->
+<!-- Embora correta, essa afirmação pode induzir a uma interpretação equivocada. -->
+<!-- Não rejeitamos a hipótese porque ela seja impossível. -->
+<!-- Nós a rejeitamos porque ela se tornou pouco plausível diante dos dados observados. -->
+<!-- Essa distinção merece destaque. -->
+<!-- Os testes estatísticos não produzem demonstrações matemáticas. -->
+<!-- Eles produzem evidências. -->
+<!-- Essas evidências podem ser fortes, moderadas ou fracas. -->
+<!-- Em Estatística, quase nunca trabalhamos com certezas absolutas. -->
+<!-- Trabalhamos com graus de compatibilidade entre modelos e dados. -->
+<!-- # O valor-$p$ sob uma nova perspectiva -->
+<!-- À luz dessa discussão, o valor-$p$ adquire uma interpretação muito mais clara. -->
+<!-- Ele representa a probabilidade de observar uma discrepância tão grande quanto a encontrada — ou ainda maior — caso a hipótese nula seja verdadeira. -->
+<!-- Portanto, -->
+<!-- - valores elevados do valor-$p$ indicam que discrepâncias semelhantes são relativamente comuns sob a hipótese nula; -->
+<!-- - valores pequenos indicam que discrepâncias dessa magnitude seriam raras se a hipótese nula fosse verdadeira. -->
+<!-- Perceba que o valor-$p$ não mede a probabilidade de a hipótese nula estar correta. -->
+<!-- Ele mede a compatibilidade entre os dados observados e aquilo que a hipótese nula prevê. -->
+<!-- Essa diferença conceitual é fundamental e será retomada diversas vezes ao longo deste livro. -->
+<!-- # O verdadeiro objetivo do teste -->
+<!-- Ao final desta discussão, podemos resumir a lógica do teste qui-quadrado em uma única pergunta. -->
+<!-- > **Os dados observados são compatíveis com as frequências previstas pelo modelo representado pela hipótese nula?** -->
+<!-- Todo o restante — frequências esperadas, estatística qui-quadrado, graus de liberdade, distribuição qui-quadrado, região crítica, valor-$p$ e resíduos padronizados — constitui apenas o aparato matemático necessário para responder essa pergunta de maneira objetiva e quantitativa. -->
+<!-- Em última análise, o teste qui-quadrado não é apenas um procedimento de cálculo. -->
+<!-- Ele é um método sistemático para confrontar um modelo estatístico com a realidade observada. -->
+<!-- # Quando não devemos confiar no teste qui-quadrado? -->
+<!-- Ao longo deste capítulo desenvolvemos toda a fundamentação matemática do teste qui-quadrado. -->
+<!-- Entretanto, como todo procedimento estatístico, esse teste baseia-se em um conjunto de hipóteses e aproximações. Quando essas condições não são satisfeitas, suas conclusões podem tornar-se imprecisas ou até mesmo enganosas. -->
+<!-- Por essa razão, um resultado estatisticamente significativo não deve ser interpretado isoladamente. -->
+<!-- Antes de aceitar qualquer conclusão, é recomendável verificar se as condições de aplicação do teste foram adequadamente atendidas. -->
+<!-- Neste capítulo aprenderemos que um bom analista não aplica um teste automaticamente. Antes disso, ele procura responder à seguinte pergunta: -->
+<!-- > **Posso confiar nas conclusões produzidas por este teste?** -->
+<!-- Essa é uma das questões mais importantes da inferência estatística. -->
+<!-- ## A qualidade da informação é tão importante quanto o teste -->
+<!-- Imagine que uma balança esteja descalibrada. -->
+<!-- Mesmo utilizando corretamente a balança, todas as medidas obtidas apresentarão algum erro. -->
+<!-- O problema não está no procedimento de medição. -->
+<!-- O problema está na qualidade do instrumento. -->
+<!-- Algo semelhante acontece com os testes estatísticos. -->
+<!-- O algoritmo utilizado para calcular a estatística qui-quadrado pode estar perfeitamente correto. -->
+<!-- Entretanto, se os dados violarem os pressupostos do método, o resultado poderá ser pouco confiável. -->
+<!-- Em outras palavras, um cálculo correto não garante uma conclusão correta. -->
+<!-- # Primeira condição: independência das observações -->
+<!-- O teste qui-quadrado pressupõe que cada observação da amostra tenha sido obtida de forma independente. -->
+<!-- Isso significa que a classificação de um indivíduo não deve influenciar a classificação de outro. -->
+<!-- Essa condição é satisfeita, por exemplo, quando os participantes são selecionados aleatoriamente e cada indivíduo contribui apenas uma vez para a tabela. -->
+<!-- Por outro lado, ela pode ser violada em situações como: -->
+<!-- - medidas repetidas sobre o mesmo indivíduo; -->
+<!-- - respostas coletadas em grupos altamente correlacionados (como membros da mesma família, pacientes do mesmo hospital ou estudantes da mesma turma); -->
+<!-- - registros duplicados da mesma unidade amostral. -->
+<!-- Quando existe dependência entre as observações, a variabilidade real dos dados tende a ser diferente daquela assumida pelo teste, comprometendo a validade das inferências. -->
+<!-- # Segunda condição: frequências esperadas suficientemente grandes -->
+<!-- Outro requisito importante diz respeito ao tamanho das frequências esperadas. -->
+<!-- Como vimos anteriormente, a distribuição qui-quadrado utilizada no teste é apenas uma aproximação assintótica. -->
+<!-- Essa aproximação torna-se confiável quando as frequências esperadas não são muito pequenas. -->
+<!-- De maneira geral, recomenda-se que -->
+<!-- - nenhuma frequência esperada seja inferior a 1; -->
+<!-- - no máximo 20% das células apresentem frequência esperada inferior a 5. -->
+<!-- Essas recomendações não constituem leis matemáticas. -->
+<!-- Elas representam critérios práticos baseados em estudos teóricos e de simulação. -->
+<!-- Sempre que essas condições forem violadas, o pesquisador deve considerar métodos alternativos, como o teste exato de Fisher ou procedimentos baseados em simulação. -->
+<!-- # Terceira condição: amostragem adequada -->
+<!-- O teste qui-quadrado foi desenvolvido para dados provenientes de uma amostra representativa da população de interesse. -->
+<!-- Se a amostra for obtida por conveniência, apresentar forte viés de seleção ou não representar adequadamente a população, a inferência poderá tornar-se questionável. -->
+<!-- É importante lembrar que nenhum teste estatístico é capaz de corrigir problemas de planejamento amostral. -->
+<!-- Uma análise sofisticada não compensa uma amostra inadequada. -->
+<!-- # Significância estatística não é importância prática -->
+<!-- Uma armadilha bastante comum consiste em interpretar um resultado estatisticamente significativo como sinônimo de um resultado importante. -->
+<!-- Esses conceitos são distintos. -->
+<!-- Considere uma pesquisa envolvendo centenas de milhares de participantes. -->
+<!-- Mesmo diferenças extremamente pequenas entre as frequências observadas e esperadas podem produzir valores elevados da estatística qui-quadrado, conduzindo à rejeição da hipótese nula. -->
+<!-- Entretanto, tais diferenças podem ser irrelevantes do ponto de vista científico, clínico ou econômico. -->
+<!-- Da mesma forma, uma associação potencialmente importante pode deixar de ser detectada em estudos com amostras muito pequenas. -->
+<!-- Por essa razão, recomenda-se interpretar o resultado do teste em conjunto com medidas de tamanho de efeito, como o coeficiente $\phi$, o $V$ de Cramér ou o coeficiente de contingência, que serão estudados posteriormente. -->
+<!-- # A importância da inspeção gráfica -->
+<!-- Embora o teste qui-quadrado seja uma ferramenta poderosa, ele nunca deve substituir a análise exploratória dos dados. -->
+<!-- Antes de realizar qualquer inferência, recomenda-se examinar cuidadosamente a tabela de contingência, calcular proporções, construir gráficos e identificar possíveis padrões. -->
+<!-- Em muitos casos, a inspeção visual já fornece indícios importantes sobre a existência de associação entre as variáveis. -->
+<!-- O teste estatístico complementa essa análise, oferecendo uma medida objetiva da evidência observada. -->
+<!-- A Estatística não substitui a interpretação dos dados. Ela a fortalece. -->
+<!-- # Uma lista de verificação -->
+<!-- Antes de interpretar o resultado de um teste qui-quadrado, pergunte a si mesmo: -->
+<!-- - As observações são independentes? -->
+<!-- - A amostra representa adequadamente a população de interesse? -->
+<!-- - As frequências esperadas satisfazem as condições para a aproximação qui-quadrado? -->
+<!-- - O tamanho da amostra é suficiente? -->
+<!-- - A diferença observada possui relevância prática ou apenas significância estatística? -->
+<!-- - Quais células contribuíram mais para o resultado? -->
+<!-- - Há evidências de associação consistentes com o contexto do problema? -->
+<!-- Responder a essas perguntas é parte integrante da análise estatística. -->
+<!-- O teste qui-quadrado não encerra a investigação. -->
+<!-- Ele representa apenas uma etapa de um processo mais amplo de compreensão dos dados. -->
+<!-- # Uma mensagem ao leitor -->
+<!-- Ao longo deste capítulo apresentamos diversas fórmulas, propriedades e resultados matemáticos. -->
+<!-- Entretanto, gostaríamos de encerrar esta parte com uma observação que consideramos essencial. -->
+<!-- A Estatística não é uma coleção de testes. -->
+<!-- Ela é uma forma de raciocinar diante da incerteza. -->
+<!-- Os testes estatísticos são ferramentas extremamente úteis, mas somente produzem boas respostas quando são aplicados às perguntas corretas, com dados de qualidade e interpretados à luz do contexto do problema. -->
+<!-- Cultivar esse olhar crítico é um dos objetivos centrais deste livro. -->
+<!-- # O princípio da comparação -->
+<!-- Ao longo deste capítulo apresentamos três problemas estatísticos que, à primeira vista, parecem bastante distintos. -->
+<!-- No teste de aderência, desejamos verificar se uma população segue uma distribuição de probabilidades previamente especificada. -->
+<!-- No teste de homogeneidade, investigamos se diferentes populações apresentam a mesma distribuição para uma variável categórica. -->
+<!-- No teste de independência, buscamos determinar se duas variáveis categóricas estão associadas. -->
+<!-- Tradicionalmente, esses problemas são apresentados em seções separadas, como se correspondessem a técnicas diferentes. -->
+<!-- Entretanto, existe uma ideia muito mais simples — e, ao mesmo tempo, muito mais profunda — que unifica todos esses procedimentos. -->
+<!-- Em todos os casos, fazemos exatamente a mesma pergunta. -->
+<!-- > **Os dados observados são compatíveis com aquilo que o modelo prevê?** -->
+<!-- Essa pergunta resume toda a lógica dos testes qui-quadrado. -->
+<!-- O que muda de um teste para outro não é a estatística utilizada. -->
+<!-- O que muda é apenas a maneira como as frequências esperadas são obtidas. -->
+<!-- ## Três problemas, uma única ideia -->
+<!-- Considere inicialmente o teste de aderência. -->
+<!-- Nesse caso, as probabilidades esperadas são especificadas antes da coleta dos dados. -->
+<!-- Por exemplo, suponha que um fabricante afirme que as cores produzidas por uma máquina seguem as proporções -->
+<!-- $$0,40,\quad -->
+<!-- 0,30,\quad -->
+<!-- 0,20,\quad -->
+<!-- 0,10.$$ -->
+<!-- A partir dessas probabilidades calculamos as frequências esperadas. -->
+<!-- Em seguida, verificamos se os dados observados são compatíveis com essa previsão. -->
+<!-- No teste de homogeneidade, a situação é diferente. -->
+<!-- Agora não existe uma distribuição previamente conhecida. -->
+<!-- Em vez disso, desejamos verificar se diferentes populações compartilham uma mesma distribuição. -->
+<!-- As frequências esperadas passam a ser calculadas assumindo que todas as populações possuem proporções idênticas. -->
+<!-- Finalmente, no teste de independência, também não conhecemos previamente as frequências esperadas. -->
+<!-- Elas são obtidas supondo que as duas variáveis são independentes. -->
+<!-- Observe que a lógica continua exatamente a mesma. -->
+<!-- Mudou apenas o modelo utilizado para construir a tabela esperada. -->
+<!-- ## A estrutura comum -->
+<!-- Independentemente do problema estudado, todos os testes qui-quadrado seguem a mesma sequência lógica. -->
+<!-- $$ -->
+<!-- \begin{align} -->
+<!-- \boxed{ -->
+<!-- \begin{array}{c} -->
+<!-- \text{Hipótese nula}[0.3cm] -->
+<!-- \Downarrow[0.3cm] -->
+<!-- \text{Modelo probabilístico}[0.3cm] -->
+<!-- \Downarrow[0.3cm] -->
+<!-- \text{Frequências esperadas}[0.3cm] -->
+<!-- \Downarrow[0.3cm] -->
+<!-- \text{Comparação com as frequências observadas}[0.3cm] -->
+<!-- \Downarrow[0.3cm] -->
+<!-- \text{Estatística }\chi^2[0.3cm] -->
+<!-- \Downarrow[0.3cm] -->
+<!-- \text{Valor-}p[0.3cm] -->
+<!-- \Downarrow[0.3cm] -->
+<!-- \text{Conclusão} -->
+<!-- \end{array} -->
+<!-- } -->
+<!-- \end{align}$$ -->
+<!-- Essa sequência constitui a espinha dorsal de todos os testes apresentados neste capítulo. -->
+<!-- Uma vez compreendida essa estrutura, aprender novos testes torna-se significativamente mais simples. -->
+<!-- ## A importância das frequências esperadas -->
+<!-- Ao longo das seções anteriores dedicamos grande atenção ao cálculo das frequências esperadas. Agora fica claro por quê. -->
+<!-- As frequências esperadas representam a tradução numérica da hipótese nula. -->
+<!-- Elas expressam aquilo que o modelo considera plausível observar. Em outras palavras, a hipótese nula não é comparada diretamente com os dados. Ela é comparada por meio das frequências esperadas que produz. -->
+<!-- Essa observação explica por que o cálculo das frequências esperadas constitui o passo mais importante dos testes qui-quadrado. Se as frequências esperadas estiverem incorretas, toda a análise subsequente será comprometida. -->
+<!-- ## O verdadeiro protagonista -->
+<!-- É comum dizer que o protagonista desses testes é a estatística qui-quadrado. Na realidade, essa afirmação não é completamente correta. A estatística qui-quadrado desempenha apenas o papel de mensageira. Ela resume, em um único número, a discrepância entre duas tabelas. -->
+<!-- O verdadeiro protagonista é o modelo representado pela hipótese nula. É ele que determina quais frequências seriam esperadas. É ele que estabelece o padrão de comparação. É ele que será confrontado com os dados observados. Sem um modelo, não existem frequências esperadas. Sem frequências esperadas, não existe estatística qui-quadrado. Sem estatística, não existe teste. -->
+<!-- Assim, toda a construção apresentada neste capítulo pode ser resumida em uma única ideia. -->
+<!-- > **A inferência estatística consiste em confrontar modelos com dados.** -->
+<!-- Essa é uma das ideias centrais da Estatística moderna e reaparecerá em praticamente todos os métodos estudados ao longo deste livro. -->
+<!-- ## Um olhar para o restante do capítulo -->
+<!-- Nas próximas seções estudaremos separadamente os testes de aderência, homogeneidade e independência. -->
+<!-- Embora seus objetivos sejam diferentes, o leitor perceberá que todos seguem exatamente a mesma estrutura conceitual desenvolvida até aqui. -->
+<!-- Por essa razão, sugerimos que cada novo teste seja estudado respondendo sempre às seguintes perguntas: -->
+<!-- 1.  Qual é a hipótese nula? -->
+<!-- 2.  Como as frequências esperadas são obtidas? -->
+<!-- 3.  Como a estatística qui-quadrado é calculada? -->
+<!-- 4.  Como interpretar o valor-$p$? -->
+<!-- 5.  Quais células contribuíram mais para o resultado? -->
+<!-- 6.  Qual é a conclusão substantiva para o problema estudado? -->
+<!-- Responder sistematicamente a essas perguntas permitirá compreender cada teste não como uma nova técnica, mas como uma aplicação particular de um mesmo princípio geral de comparação entre modelos e dados. -->
+</section>
+</section>
+<section id="teste-qui-quadrado-de-aderência" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Teste Qui-Quadrado de Aderência</h1>
+<section id="motivação" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="motivação"><span class="header-section-number">8.1</span> Motivação</h2>
+<p>Imagine que o controle de qualidade de uma indústria farmacêutica precise avaliar se uma máquina de encapsulamento está operando segundo as especificações do fabricante. O manual afirma que o equipamento distribui a produção em quatro tipos de embalagens nas seguintes proporções:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th style="text-align: right;">Proporção</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">0,40</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">0,30</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">0,20</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td style="text-align: right;">0,10</td>
+</tr>
+</tbody>
+</table>
+<p>Após coletar uma amostra de 500 embalagens, o analista nota discrepâncias nas frequências absolutas. Como pequenos desvios são inevitáveis devido à variabilidade amostral, a verdadeira questão estatística é: as diferenças observadas são toleráveis pelo acaso ou indicam que a calibração da máquina mudou?</p>
+<p>O Teste de Aderência resolve esse problema ao comparar uma distribuição observada na amostra com um modelo teórico previamente especificado (seja por especificações técnicas, histórico regulatório ou leis probabilísticas). Diferente dos testes de dupla entrada, aqui analisamos uma única variável categórica confrontada contra parâmetros populacionais hipotéticos.</p>
+<p>A lógica do teste segue um fluxo linear e dedutivo:</p>
+<p><span class="math display">\[\boxed{
+\text{Modelo}
+\Longrightarrow
+\text{Probabilidades}
+\Longrightarrow
+\text{Frequências esperadas}
+\Longrightarrow
+\chi^2
+}\]</span></p>
+<section id="formulação-matemática-e-hipóteses" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="formulação-matemática-e-hipóteses"><span class="header-section-number">8.1.1</span> Formulação Matemática e Hipóteses</h3>
+<p>Sendo <span class="math inline">\(p_1, p_2, \ldots, p_k\)</span> as probabilidades populacionais das <span class="math inline">\(k\)</span> categorias da variável, testamos se esses parâmetros coincidem com os valores históricos ou teóricos propostos (<span class="math inline">\(p_{10}, p_{20}, \ldots, p_{k0}\)</span>):</p>
+<p><span class="math display">\[H_0:
+p_1=p_{10},
+;
+p_2=p_{20},
+;
+\ldots,
+;
+p_k=p_{k0},\]</span></p>
+<p>e</p>
+<p><span class="math display">\[H_1:
+\text{pelo menos uma igualdade não é verdadeira.}\]</span></p>
+<p>A hipótese alternativa (<span class="math inline">\(H_1\)</span>) é propositalmente omnidirecional: ela acusa a falha do modelo global, mas não aponta inicialmente qual categoria desviou do esperado.</p>
+</section>
+<section id="calculando-as-frequências-esperadas" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="calculando-as-frequências-esperadas"><span class="header-section-number">8.1.2</span> Calculando as frequências esperadas</h3>
+<p>Diferente dos testes de associação, no teste de aderência as frequências esperadas (<span class="math inline">\(E_i\)</span>) são independentes dos resultados amostrais observados, sendo calculadas diretamente a partir do tamanho da amostra (<span class="math inline">\(n\)</span>) e do modelo teórico:</p>
+<p><span class="math display">\[E_i = n \cdot p_i.\]</span></p>
+<p>Para a amostra de 500 embalagens, as referências esperadas sob <span class="math inline">\(H_0\)</span> seriam exatamente 200 para o Tipo A (<span class="math inline">\(500 \times 0,40\)</span>), 150 para o B, 100 para o C e 50 para o D.</p>
+</section>
+<section id="exemplo-prático-walkthrough-o-teste-do-dado-honesto" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="exemplo-prático-walkthrough-o-teste-do-dado-honesto"><span class="header-section-number">8.1.3</span> Exemplo Prático Walkthrough: O Teste do Dado Honesto</h3>
+<p>Para blindar a compreensão da mecânica do teste, avaliaremos se um lote de dados adquirido por um cassino é perfeitamente balanceado. Se o dado for honesto, cada uma das 6 faces deve registrar a mesma probabilidade teórica de ocorrência:</p>
+<p><span class="math display">\[P(1)=P(2)=\cdots=P(6)=\frac{1}{6}.\]</span></p>
+<p>O cassino realiza <span class="math inline">\(n = 120\)</span> lançamentos. A tabela abaixo consolida as frequências observadas (<span class="math inline">\(O_i\)</span>), as frequências esperadas (<span class="math inline">\(E_i = 120 \times \frac{1}{6} = 20\)</span>) e a contribuição individual de cada componente para o cálculo do <span class="math inline">\(\chi^2\)</span>:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Face</th>
+<th style="text-align: right;">Frequência observada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>120</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Análise Estatística da Tabela: Note que a soma dos desvios simples fecha em zero (anulação algébrica). A estatística global calculada foi:</p>
+<p><span class="math inline">\(\chi^2 = \frac{(14-20)^2}{20} + \frac{(18-20)^2}{20} + \frac{(17-20)^2}{20} + \frac{(23-20)^2}{20}+ \frac{(28-20)^2}{20} +\frac{(20-20)^2}{20}  = 6{,}10.\)</span></p>
+<p>Um olhar analítico sobre a última coluna revela que a face 5 sozinha responde por mais de 50% da discrepância total da tabela (<span class="math inline">\(3,20 / 6,10\)</span>). Como as probabilidades são conhecidas e fixadas a priori por <span class="math inline">\(H_0\)</span>, o número de graus de liberdade (<span class="math inline">\(\nu\)</span>) depende unicamente do número de categorias (<span class="math inline">\(k\)</span>):</p>
+<p><span class="math display">\[\nu = k - 1 = 6 - 1 = 5.\]</span></p>
+<section id="tomada-de-decisão-e-interpretação-via-python" class="level4" data-number="8.1.3.1">
+<h4 data-number="8.1.3.1" class="anchored" data-anchor-id="tomada-de-decisão-e-interpretação-via-python"><span class="header-section-number">8.1.3.1</span> Tomada de Decisão e Interpretação via Python</h4>
+<p>Para determinar se a discrepância de <span class="math inline">\(6{,}10\)</span> é estatisticamente impeditiva para um dado honesto, calculamos o valor-<span class="math inline">\(p\)</span> usando a biblioteca <code>scipy.stats</code>.</p>
+<div id="4a646b45" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>chi_obs <span class="op">=</span> <span class="fl">6.10</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>gl <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo do valor-p (área à direita da cauda)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> chi2.cdf(chi_obs, df<span class="op">=</span>gl)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor-p: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Valor-p: 0.2966</code></pre>
+</div>
+</div>
+</section>
+<section id="interpretação-do-teste" class="level4" data-number="8.1.3.2">
+<h4 data-number="8.1.3.2" class="anchored" data-anchor-id="interpretação-do-teste"><span class="header-section-number">8.1.3.2</span> Interpretação do Teste</h4>
+<p>Adotando um nível de significância padrão de <span class="math inline">\(\alpha = 0,05\)</span>, confrontamos as probabilidades: como <span class="math inline">\(p_{\text{valor}}\)</span> (<span class="math inline">\(0,2954\)</span>) <span class="math inline">\(&gt;\)</span> <span class="math inline">\(\alpha\)</span> (<span class="math inline">\(0,05\)</span>), não rejeitamos <span class="math inline">\(H_0\)</span>.</p>
+</section>
+<section id="validação-por-simulação-computacional-monte-carlo" class="level4" data-number="8.1.3.3">
+<h4 data-number="8.1.3.3" class="anchored" data-anchor-id="validação-por-simulação-computacional-monte-carlo"><span class="header-section-number">8.1.3.3</span> Validação por Simulação Computacional (Monte Carlo)</h4>
+<p>Para materializar o significado real do <span class="math inline">\(p_{\text{valor}}\)</span>, podemos simular o comportamento de um dado honesto lançado 120 vezes, repetindo o experimento 10.000 vezes para mapear a distribuição empírica do <span class="math inline">\(\chi^2\)</span> sob a validade de <span class="math inline">\(H_0\)</span>:</p>
+<div id="ca9267bb" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n, k, n_sim <span class="op">=</span> <span class="dv">120</span>, <span class="dv">6</span>, <span class="dv">10000</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>p_teorico <span class="op">=</span> np.ones(k) <span class="op">/</span> k</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>chi2_simulados <span class="op">=</span> []</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_sim):</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simula 120 lançamentos de um dado honesto</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    amostra <span class="op">=</span> np.random.choice(np.arange(k), size<span class="op">=</span>n, p<span class="op">=</span>p_teorico)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    obs <span class="op">=</span> np.bincount(amostra, minlength<span class="op">=</span>k)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    exp <span class="op">=</span> np.ones(k) <span class="op">*</span> (n <span class="op">/</span> k)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    chi2_stat <span class="op">=</span> np.<span class="bu">sum</span>((obs <span class="op">-</span> exp)<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> exp)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    chi2_simulados.append(chi2_stat)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>chi2_simulados <span class="op">=</span> np.array(chi2_simulados)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>p_empirico <span class="op">=</span> np.mean(chi2_simulados <span class="op">&gt;=</span> <span class="fl">6.10</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor-p Empírico: </span><span class="sc">{</span>p_empirico<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Valor-p Empírico: 0.3064</code></pre>
+</div>
+</div>
+<div id="1df1c4cf" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.hist(chi2_simulados, bins<span class="op">=</span><span class="dv">40</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'#2b5c8f'</span>, label<span class="op">=</span><span class="st">'$\chi^2$ Simulado'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="fl">6.10</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'$\chi^2$ Observado (6.10)'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribuição Empírica do $\chi^2$ sob $H_0$"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Valor de $\chi^2$"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Densidade"</span>)<span class="op">;</span> plt.legend()<span class="op">;</span> plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:2: SyntaxWarning: invalid escape sequence '\c'
+&lt;&gt;:3: SyntaxWarning: invalid escape sequence '\c'
+&lt;&gt;:4: SyntaxWarning: invalid escape sequence '\c'
+&lt;&gt;:5: SyntaxWarning: invalid escape sequence '\c'
+&lt;&gt;:2: SyntaxWarning: invalid escape sequence '\c'
+&lt;&gt;:3: SyntaxWarning: invalid escape sequence '\c'
+&lt;&gt;:4: SyntaxWarning: invalid escape sequence '\c'
+&lt;&gt;:5: SyntaxWarning: invalid escape sequence '\c'
+/tmp/ipykernel_34994/1095744629.py:2: SyntaxWarning: invalid escape sequence '\c'
+  plt.hist(chi2_simulados, bins=40, density=True, alpha=0.6, color='#2b5c8f', label='$\chi^2$ Simulado')
+/tmp/ipykernel_34994/1095744629.py:3: SyntaxWarning: invalid escape sequence '\c'
+  plt.axvline(6.10, color='red', linestyle='--', linewidth=2, label='$\chi^2$ Observado (6.10)')
+/tmp/ipykernel_34994/1095744629.py:4: SyntaxWarning: invalid escape sequence '\c'
+  plt.title("Distribuição Empírica do $\chi^2$ sob $H_0$")
+/tmp/ipykernel_34994/1095744629.py:5: SyntaxWarning: invalid escape sequence '\c'
+  plt.xlabel("Valor de $\chi^2$"); plt.ylabel("Densidade"); plt.legend(); plt.show()</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="unidade6_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A simulação prova visualmente que a estatística calculada (<span class="math inline">\(6,10\)</span>) repousa no coração da zona de alta densidade da distribuição. O teste qui-quadrado não avalia a impossibilidade matemática do evento, mas sim o quão incomum ou comum um comportamento amostral se revela sob o teto de um modelo hipotético.</p>
+</section>
+</section>
+</section>
+<section id="teste-qui-quadrado-de-homogeneidade" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="teste-qui-quadrado-de-homogeneidade"><span class="header-section-number">8.2</span> Teste Qui-Quadrado de Homogeneidade</h2>
+<section id="conceito-e-motivação" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="conceito-e-motivação"><span class="header-section-number">8.2.1</span> Conceito e motivação</h3>
+<p>Enquanto o teste de aderência valida uma única amostra contra um padrão abstrato, o Teste de Homogeneidade avalia se duas ou mais populações independentes compartilham a mesma distribuição de uma variável categórica.</p>
+<p>Considere um estudo educacional que avalia o impacto de três abordagens pedagógicas distintas no desempenho final dos estudantes. Foram amostrados 100 alunos de cada método (totais de linha fixados pelo pesquisador):</p>
+<p>Até aqui utilizamos o teste qui-quadrado de aderência para comparar uma distribuição observada com uma distribuição teórica.Agora mudaremos o cenário. Em vez de comparar uma amostra com um modelo conhecido, queremos comparar <strong>duas ou mais populações</strong>. A pergunta central passa a ser:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Método</th>
+<th style="text-align: right;">Reprovado</th>
+<th style="text-align: right;">Regular</th>
+<th style="text-align: right;">Bom</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">300</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>A pergunta central é:</strong> A distribuição de notas é homogênea entre os três métodos, ou o tipo de ensino altera o perfil de desempenho?</p>
+</blockquote>
+<p><span class="math display">\[ H_0: P_1(\text{categoria } j) =  P_2(\text{categoria } j)
+= P_3(\text{categoria } j) \quad \forall j,\]</span></p>
+<p>e</p>
+<p><span class="math display">\[H_1: \text{Pelo menos uma população apresenta distribuição de frequências divergente.}\]</span></p>
+</section>
+<section id="processamento-teórico-e-graus-de-liberdade" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="processamento-teórico-e-graus-de-liberdade"><span class="header-section-number">8.2.2</span> Processamento Teórico e Graus de Liberdade</h3>
+<p>Sob a premissa de homogeneidade (<span class="math inline">\(H_0\)</span>), as populações compartilham um comportamento idêntico. Logo, estimamos a distribuição marginal combinando todos os dados: a taxa global de reprovação é de <span class="math inline">\(35 / 300\)</span>, a de regulares é <span class="math inline">\(105 / 300\)</span> e a de bons alunos é <span class="math inline">\(160 / 300\)</span>.</p>
+<p>Ao projetar essas taxas sobre o tamanho amostral de cada grupo (<span class="math inline">\(n_i = 100\)</span>), geramos a matriz de frequências esperadas:</p>
+<p><span class="math display">\[E_{ij} = \frac{\text{Total da Linha } i \times \text{Total da Coluna } j}{n_{\text{total}}}.\]</span></p>
+<p>Neste cenário, as frequências esperadas para as três linhas seriam simétricas: <span class="math inline">\(11,67\)</span> (Reprovados), <span class="math inline">\(35,00\)</span> (Regulares) e <span class="math inline">\(53,33\)</span> (Bons). Como os totais marginais limitam a variação interna da tabela, os graus de liberdade seguem a regra do produto marginal:</p>
+<p><span class="math display">\[\nu = (r - 1)(c - 1) = (3 - 1)(3 - 1) = 4.\]</span></p>
+<div id="45613491" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>obs_homog <span class="op">=</span> np.array([[<span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">50</span>], [<span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">50</span>], [<span class="dv">5</span>, <span class="dv">35</span>, <span class="dv">60</span>]])</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>chi2_h, p_h, gl_h, exp_h <span class="op">=</span> chi2_contingency(obs_homog)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Chi2: </span><span class="sc">{</span>chi2_h<span class="sc">:.3f}</span><span class="ss"> | Valor-p: </span><span class="sc">{</span>p_h<span class="sc">:.4f}</span><span class="ss"> | GL: </span><span class="sc">{</span>gl_h<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Chi2: 12.679 | Valor-p: 0.0130 | GL: 4</code></pre>
+</div>
+</div>
+<section id="decisão" class="level4" data-number="8.2.2.1">
+<h4 data-number="8.2.2.1" class="anchored" data-anchor-id="decisão"><span class="header-section-number">8.2.2.1</span> Decisão</h4>
+<p>Como o <span class="math inline">\(p_{valor}\)</span> (<span class="math inline">\(0,0269\)</span>) <span class="math inline">\(&lt;\)</span> <span class="math inline">\(0,05\)</span>, rejeitamos <span class="math inline">\(H_0\)</span>. Conclui-se que as distribuições de desempenho não são homogêneas; o método de ensino gera variações estatisticamente significativas no resultado dos alunos.</p>
+</section>
+</section>
+</section>
+<section id="teste-qui-quadrado-de-independência" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="teste-qui-quadrado-de-independência"><span class="header-section-number">8.3</span> Teste Qui-Quadrado de Independência</h2>
+<section id="conceito-e-motivação-1" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="conceito-e-motivação-1"><span class="header-section-number">8.3.1</span> Conceito e Motivação</h3>
+<p>O Teste de Independência investiga se duas variáveis categóricas, medidas sobre a mesma amostra, apresentam associação estatística. Diferente da homogeneidade, o pesquisador não fixa previamente os totais de linha ou coluna; ele extrai uma única amostra global e observa o cruzamento dos dados.</p>
+<p>Um estudo de saúde pública investiga a relação entre o nível de renda familiar e a presença de hipertensão arterial em 300 indivíduos:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Renda</th>
+<th style="text-align: right;">Hipertensão: Sim</th>
+<th style="text-align: right;">Hipertensão: Não</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Baixa</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td>Média</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td>Alta</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">300</td>
+</tr>
+</tbody>
+</table>
+<p>A pergunta do estudo é direta:</p>
+<blockquote class="blockquote">
+<p><strong>Existe associação entre renda e hipertensão?</strong></p>
+</blockquote>
+<p>A intenção é mapear a estrutura conjunta: conhecer o nível de renda de um paciente altera a probabilidade de ele ser hipertenso?</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: Renda e Hipertensão são variáveis independentes <span class="math inline">\(\rightarrow P(A \cap B) = P(A) \cdot P(B)\)</span>.</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: As variáveis estão associadas na população.</p></li>
+</ul>
+</section>
+</section>
+<section id="resolução-estrutural-e-resíduos" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="resolução-estrutural-e-resíduos"><span class="header-section-number">8.4</span> Resolução Estrutural e Resíduos</h2>
+<p>Se a independência for estrita, a taxa geral de hipertensão (<span class="math inline">\(125/300 \approx 41,67\%\)</span>) deve se manter constante em todos os estratos financeiros. A tabela teórica sob isolamento total das variáveis seria:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Renda</th>
+<th style="text-align: right;">Sim</th>
+<th style="text-align: right;">Não</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Baixa</td>
+<td style="text-align: right;">41,67</td>
+<td style="text-align: right;">58,33</td>
+</tr>
+<tr class="even">
+<td>Média</td>
+<td style="text-align: right;">41,67</td>
+<td style="text-align: right;">58,33</td>
+</tr>
+<tr class="odd">
+<td>Alta</td>
+<td style="text-align: right;">41,67</td>
+<td style="text-align: right;">58,33</td>
+</tr>
+</tbody>
+</table>
+<p>Ao confrontar o real com o esperado, notamos a direção da força da associação: a classe de baixa renda apresenta um excesso de indivíduos doentes frente ao modelo de independência (<span class="math inline">\(60 &gt; 41,67\)</span>), enquanto a classe alta exibe um déficit acentuado (<span class="math inline">\(20 &lt; 41,67\)</span>).</p>
+<p>No teste de independência temos que <span class="math inline">\(\nu = (r-1)(c-1)\)</span>. Como <span class="math inline">\(r = 3\)</span> (níveis de renda) e <span class="math inline">\(c = 2\)</span> (presença de hipertensão), logo: <span class="math inline">\(\nu = (3-1)(2-1) = 2\)</span>.</p>
+<div id="f4c1c8c8" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>obs_indep <span class="op">=</span> np.array([[<span class="dv">60</span>, <span class="dv">40</span>], [<span class="dv">45</span>, <span class="dv">55</span>], [<span class="dv">20</span>, <span class="dv">80</span>]])</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>chi2_i, p_i, gl_i, exp_i <span class="op">=</span> chi2_contingency(obs_indep)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Chi2: </span><span class="sc">{</span>chi2_i<span class="sc">:.3f}</span><span class="ss"> | Valor-p: </span><span class="sc">{</span>p_i<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Chi2: 33.600 | Valor-p: 0.0000</code></pre>
+</div>
+</div>
+<section id="decisão-1" class="level4" data-number="8.4.0.1">
+<h4 data-number="8.4.0.1" class="anchored" data-anchor-id="decisão-1"><span class="header-section-number">8.4.0.1</span> Decisão</h4>
+<p>Com um <span class="math inline">\(p_{\text{valor}}\)</span> <span class="math inline">\(&lt; 0,001\)</span>, rejeitamos veementemente a hipótese de independência. Existe uma associação estrutural clara e monotônica indicando que a prevalência de hipertensão declina com a ascensão da renda familiar.</p>
+</section>
+</section>
+</section>
+<section id="unificação-maciça-dos-três-testes" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Unificação Maciça dos Três Testes</h1>
+<p>Embora as narrativas de pesquisa e os delineamentos experimentais mudem de nome conforme o escopo do projeto, a alma algébrica criada por Karl Pearson permanece imutável. Toda a engenharia do capítulo converge para o mesmo motor estatístico:</p>
+</section>
+<section id="dimensionamento-do-tamanho-mínimo-da-amostra-nos-testes-qui-quadrado" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Dimensionamento do Tamanho Mínimo da Amostra nos Testes Qui-Quadrado</h1>
+<p>O planejamento de um estudo estatístico exige a determinação rigorosa do tamanho mínimo da amostra (<span class="math inline">\(n\)</span>). Uma amostra excessivamente pequena infla o Erro do Tipo II (<span class="math inline">\(\beta\)</span>), fazendo com que o teste perca o seu poder estatístico (<span class="math inline">\(1-\beta\)</span>) e falhe em detectar associações ou diferenças legítimas. Por outro lado, amostras hiperdimensionadas desperdiçam recursos e conferem significância estatística a desvios tão ínfimos que não possuem qualquer relevância prática.</p>
+<p>Nos testes qui-quadrado de aderência, homogeneidade e independência, o cálculo amostral baseia-se na distribuição qui-quadrado não-central, estruturada a partir do tamanho do efeito esperado, do erro tolerável e dos graus de liberdade da tabela.</p>
+<section id="o-tamanho-do-efeito-métrica-de-cohen" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="o-tamanho-do-efeito-métrica-de-cohen"><span class="header-section-number">10.1</span> O Tamanho do Efeito (Métrica de Cohen)</h2>
+<p>O tamanho do efeito quantifica a intensidade da divergência entre o mundo real e a hipótese nula (<span class="math inline">\(H_0\)</span>). Para testes baseados em dados categóricos, a medida padrão é o coeficiente <span class="math inline">\(w\)</span> de Cohen, calculado por:</p>
+<p><span class="math display">\[w = \sqrt{\sum_{i=1}^{r}\sum_{j=1}^{c} \frac{(p_{ij} - p_{ij}^{(0)})^2}{p_{ij}^{(0)}}},\]</span></p>
+<p>em que <span class="math inline">\(p_{ij}\)</span> representa a proporção real esperada em cada célula <span class="math inline">\((i,j)\)</span> e <span class="math inline">\(p_{ij}^{(0)}\)</span> representa a proporção teórica ditada sob as premissas de <span class="math inline">\(H_0\)</span>.</p>
+<p>Como as proporções populacionais exatas costumam ser desconhecidas na fase de planejamento, <em>Jacob Cohen</em> propôs limites operacionais de referência para guiar o desenho metodológico:</p>
+<table class="table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 38%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Magnitude do Efeito</th>
+<th style="text-align: center;">Índice <span class="math inline">\(w\)</span></th>
+<th style="text-align: left;">Interpretação Prática</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Pequeno</strong></td>
+<td style="text-align: center;">0,10</td>
+<td style="text-align: left;">Associações sutis; variações marginais entre subgrupos.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Médio</strong></td>
+<td style="text-align: center;">0,30</td>
+<td style="text-align: left;">Padrões visíveis a olho nu; desvios moderados de mercado.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Grande</strong></td>
+<td style="text-align: center;">0,50</td>
+<td style="text-align: left;">Quebras estruturais severas; forte dependência entre variáveis.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="os-quatro-pilares-do-poder-estatístico" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="os-quatro-pilares-do-poder-estatístico"><span class="header-section-number">10.2</span> Os Quatro Pilares do Poder Estatístico</h2>
+<p>O dimensionamento de <span class="math inline">\(n\)</span> é o resultado do equilíbrio dinâmico entre quatro variáveis:</p>
+<ol type="1">
+<li><p>Nível de Significância (<span class="math inline">\(\alpha\)</span>): A probabilidade de cometer um Erro do Tipo I (rejeitar falsamente uma hipótese nula verdadeira). O padrão fixado pelo mercado é <span class="math inline">\(\alpha = 0,05\)</span>.</p></li>
+<li><p>Poder Estatístico (<span class="math inline">\(1-\beta\)</span>): A probabilidade de o teste acertar e rejeitar <span class="math inline">\(H_0\)</span> quando existe um efeito real. Recomenda-se um poder mínimo de <span class="math inline">\(0,80\)</span> (80%).</p></li>
+<li><p>Tamanho do Efeito (<span class="math inline">\(w\)</span>): A menor magnitude de efeito que o pesquisador considera clinicamente ou pragmaticamente relevante capturar.</p></li>
+<li><p>Graus de Liberdade (<span class="math inline">\(\nu\)</span>): A complexidade geométrica da tabela de contingência, dada por <span class="math inline">\(\nu = (r-1)(c-1)\)</span>. Este componente é crítico e dita o comportamento da cauda do teste.</p></li>
+</ol>
+</section>
+<section id="o-perigo-das-fórmulas-simplificadas" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="o-perigo-das-fórmulas-simplificadas"><span class="header-section-number">10.3</span> O Perigo das Fórmulas Simplificadas</h2>
+<p>Muitos manuais introdutórios sugerem uma fórmula de aproximação rápida baseada puramente em quantis da distribuição Normal padrão:</p>
+<p><span class="math display">\[n = \frac{\left(z_{1-\alpha} + z_{1-\beta}\right)^2}{w^2}.\]</span></p>
+<p>Substituindo os valores usuais para <span class="math inline">\(\alpha = 0,05\)</span> (<span class="math inline">\(z_{0,95} = 1,645\)</span>) e poder de <span class="math inline">\(80\%\)</span> (<span class="math inline">\(z_{0,80} = 0,842\)</span>), chega-se à célebre expressão matemática:</p>
+<p><span class="math display">\[n \approx \frac{6,19}{w^2}.\]</span></p>
+<p><strong>Alerta de Rigor Estatístico:</strong> Essa fórmula simplificada carrega duas falhas conceituais graves: ela assume que o qui-quadrado comporta-se identicamente a um teste <span class="math inline">\(Z\)</span> unilateral e ignora completamente os graus de liberdade (<span class="math inline">\(\nu\)</span>). Como o qui-quadrado opera sempre na cauda superior direita, um teste com <span class="math inline">\(\nu=1\)</span> exige, na verdade, os quantis de um teste <span class="math inline">\(Z\)</span> bilateral (<span class="math inline">\(z_{0,975} = 1,96\)</span>), elevando o numerador base para <span class="math inline">\(7,85\)</span>. À medida que a tabela de contingência cresce, a exigência amostral expande-se exponencialmente.</p>
+<p>A tabela abaixo contrasta as estimativas geradas pela fórmula simplificada com os valores exatos reais, calculados via distribuições não-centrais conforme os graus de liberdade (<span class="math inline">\(\nu\)</span>) da tabela:</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Magnitude (<span class="math inline">\(w\)</span>)</th>
+<th style="text-align: center;">Fórmula Simplificada</th>
+<th style="text-align: center;">Real (<span class="math inline">\(\nu = 1\)</span>)</th>
+<th style="text-align: center;">Real (<span class="math inline">\(\nu = 2\)</span>)</th>
+<th style="text-align: center;">Real (<span class="math inline">\(\nu = 3\)</span>)</th>
+<th style="text-align: center;">Real (<span class="math inline">\(\nu = 4\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>0,10 (Pequeno)</strong></td>
+<td style="text-align: center;">620</td>
+<td style="text-align: center;">785</td>
+<td style="text-align: center;">964</td>
+<td style="text-align: center;">1.091</td>
+<td style="text-align: center;">1.194</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>0,30 (Médio)</strong></td>
+<td style="text-align: center;">69</td>
+<td style="text-align: center;">88</td>
+<td style="text-align: center;">108</td>
+<td style="text-align: center;">122</td>
+<td style="text-align: center;">133</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>0,50 (Grande)</strong></td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">39</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">48</td>
+</tr>
+</tbody>
+</table>
+<p><em>Nota: Todos os valores reais foram calculados via distribuição qui-quadrado não-central com poder de 80% e significância de 5%, arredondados para o próximo número inteiro superior.</em></p>
+</section>
+<section id="resolução-de-cenário-real-e-aplicação-prática" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="resolução-de-cenário-real-e-aplicação-prática"><span class="header-section-number">10.4</span> Resolução de Cenário Real e Aplicação Prática</h2>
+<p>Imagine que um epidemiologista queira desenhar um estudo para avaliar se o hábito de fumar (Fumante vs.&nbsp;Não Fumante) está associado ao diagnóstico de uma doença pulmonar severa (Sim vs.&nbsp;Não).</p>
+<section id="passo-1-determinar-a-estrutura-e-os-graus-de-liberdade" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="passo-1-determinar-a-estrutura-e-os-graus-de-liberdade"><span class="header-section-number">10.4.1</span> Passo 1: Determinar a Estrutura e os Graus de Liberdade</h3>
+<p>Como estamos cruzando duas variáveis binárias, desenha-se uma tabela de contingência <span class="math inline">\(2 \times 2\)</span>. Os graus de liberdade são calculados por:</p>
+<p><span class="math display">\[\nu = (2 - 1) \times (2 - 1) = 1.\]</span></p>
+</section>
+<section id="passo-2-fixar-parâmetros-de-projeto" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="passo-2-fixar-parâmetros-de-projeto"><span class="header-section-number">10.4.2</span> Passo 2: Fixar Parâmetros de Projeto</h3>
+<ul>
+<li><p>Nível de significância: <span class="math inline">\(\alpha = 0,05\)</span></p></li>
+<li><p>Poder desejado: <span class="math inline">\(1-\beta = 0,80\)</span></p></li>
+<li><p>Tamanho do efeito esperado: <span class="math inline">\(w = 0,30\)</span> (Magnitude média)</p></li>
+</ul>
+</section>
+<section id="passo-3-uso-do-python" class="level3" data-number="10.4.3">
+<h3 data-number="10.4.3" class="anchored" data-anchor-id="passo-3-uso-do-python"><span class="header-section-number">10.4.3</span> Passo 3: Uso do Python</h3>
+<div id="ed7bf68d" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.power <span class="im">import</span> GofChisquarePower</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Instancia o motor de análise de poder</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>analisador_poder <span class="op">=</span> GofChisquarePower()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Parâmetros estruturais do projeto</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>efeito_w <span class="op">=</span> <span class="fl">0.30</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>alfa <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>poder_alvo <span class="op">=</span> <span class="fl">0.80</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>graus_liberdade <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>n_total <span class="op">=</span> analisador_poder.solve_power(</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    effect_size<span class="op">=</span>efeito_w,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span>alfa,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    power<span class="op">=</span>poder_alvo,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    n_bins<span class="op">=</span>graus_liberdade <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tamanho mínimo total da amostra: </span><span class="sc">{</span>np<span class="sc">.</span>ceil(n_total)<span class="sc">:.0f}</span><span class="ss"> indivíduos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tamanho mínimo total da amostra: 88 indivíduos</code></pre>
+</div>
+</div>
+<p>O número obtido (<span class="math inline">\(n = 88\)</span>) representa o somatório absoluto de observações que a pesquisa precisa coletar. Para maximizar o poder estatístico real do teste qui-quadrado, o pesquisador deve buscar um desenho experimental equilibrado, tentando recrutar idealmente 44 indivíduos em cada braço do estudo (ex: 44 fumantes e 44 não fumantes). Desbalanços severos nas margens da tabela podem resultar na perda do poder real do teste.</p>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
