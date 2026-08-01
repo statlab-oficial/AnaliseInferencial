@@ -179,7 +179,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Identificação da Disciplina</span></a>
+ <span class="menu-text">Identificação da(s) Disciplina(s)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -443,7 +443,7 @@ z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
 <li><span class="math inline">\(z_{1-\alpha/2}\)</span> é o quantil de ordem <span class="math inline">\(1-\frac{\alpha}{2}\)</span> da distribuição normal padrão para o nível de confiança desejado</li>
 </ul>
 <p>Quando a variância populacional é conhecida, o intervalo de confiança baseado na distribuição normal fornece uma estimativa exata para a média da população, desde que os dados sejam provenientes de uma distribuição normal. No exemplo a seguir, mostramos como calcular esse intervalo de confiança utilizando <code>Python</code>.</p>
-<div id="6080cbc0" class="cell" data-execution_count="1">
+<div id="9a223863" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -512,7 +512,7 @@ Importante
 <p><span class="math display">\[\bar{x} \pm t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}},\]</span></p>
 <p>em que <span class="math inline">\(\bar{x}\)</span> é a média amostral, <span class="math inline">\(s\)</span> é o desvio padrão amostral, <span class="math inline">\(n\)</span> é o tamanho da amostra e <span class="math inline">\(t_{1-\frac{\alpha}{2}}\)</span> o quantil de ordem <span class="math inline">\(1-\frac{\alpha}{2}\)</span> da distribuição <span class="math inline">\(t\)</span>-Student com <span class="math inline">\(n-1\)</span> graus de liberdade.</p>
 <p>A seguir, é apresentada uma função do <code>Python</code> que pode ser utilizada para construir intervalos de confiança para média.</p>
-<div id="87d70d2a" class="cell" data-execution_count="2">
+<div id="f63eb2ff" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.stats.api <span class="im">as</span> sms</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -555,7 +555,7 @@ Importante
 <p>Este método de estimação de intervalo só deve ser utilizado se: <span class="math inline">\(n\hat{p}(1-\hat{p}) \geq 5\)</span>.</p>
 </blockquote>
 <p>Abaixo é apresentado um código que calcula um intervalo de confiança aproximado para o parâmetro <span class="math inline">\(p\)</span> da binomial usando a função <code>proportion_confint</code> do <code>statsmodels</code>.</p>
-<div id="1659371e" class="cell" data-execution_count="3">
+<div id="3ed46c8a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportion_confint</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">12</span>   <span class="co"># número de sucessos</span></span>
@@ -583,7 +583,7 @@ Importante
 <p><span class="math display">\[P(X \le x \mid p_2) = \sum_{k=0}^{x} \binom{n}{k} p_2^k (1 - p_2)^{n-k} = \frac{\alpha}{2},\]</span></p>
 <p>em que <span class="math inline">\(X\)</span> é uma variável aleatória com distribuição Binomial, <span class="math inline">\(x\)</span> é o número observado se sucessos, <span class="math inline">\(n\)</span> o tamanho da amostra, <span class="math inline">\(p_1\)</span> é o limite inferior do intervalo, <span class="math inline">\(p_2\)</span> é o limite superior do intervalo e <span class="math inline">\(\alpha\)</span> é o nível de significância.</p>
 <p>Abaixo o código que calcula um intervalo de confiança exato (Clopper–Pearson) para o parâmetro <span class="math inline">\(p\)</span> da binomial usando a função <code>proportion_confint</code> do <code>statsmodels</code>.</p>
-<div id="bd121ca7" class="cell" data-execution_count="4">
+<div id="8259a30b" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportion_confint</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">12</span>   <span class="co"># número de sucessos</span></span>
