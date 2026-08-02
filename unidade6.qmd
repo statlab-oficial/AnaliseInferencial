@@ -1,6 +1,2116 @@
-# Testes Qui-Quadrado 
+# Testes de Hipóteses e Análise de Dados Categóricos 
 
-## Introdução
+## Teste de Hipóteses
+
+Estimação pontual, intervalos de confiança e testes de hipóteses têm o mesmo objetivo: **extrair informação de um conjunto de dados observado**.
+
+- **Estimação pontual**: fornece um único valor para descrever o parâmetro (por exemplo, a média).
+- **Intervalo de confiança**: fornece um intervalo de valores plausíveis para o parâmetro desconhecido.
+- **Teste de hipóteses**: avalia quão compatíveis os dados são com uma determinada hipótese.
+
+Os testes de hipóteses permitem que avaliemos estatisticamente afirmações sobre parâmetros populacionais. Por exemplo, se uma empresa farmacêutica deseja afirmar que um novo medicamento reduz o risco de câncer, ela pode realizar um teste de hipóteses. Da mesma forma, se uma empresa quiser argumentar que seu programa preparatório acadêmico resulta em notas mais altas no ENEM, poderá utilizar essa mesma metodologia.
+
+Muitas decisões importantes em áreas como negócios, medicina, educação e políticas públicas dependem dos resultados de testes de hipóteses. Nas próximas seções, veremos como esses testes podem ser conduzidos de maneira adequada e como interpretar corretamente seus resultados.
+
+## Teste de Hipóteses (Ideia)
+
+Suponha que exista um mágico chamado Jardel, que faz a seguinte afirmação:
+
+> **Mágico Jardel:** Tenho aqui uma moeda honesta.
+
+Uma pessoa da plateia, uma Cientista de Dados cética chamada Nikelly, inicia a seguinte conversa:
+
+> **Cientista de Dados Cética Nikelly:** Eu não acredito em você. Podemos examinar a moeda?
+
+> **Mágico Jardel:** Claro, fique à vontade.
+
+> **Cientista de Dados Cética Nikelly:** Vou lançar sua moeda 100 vezes e verificar quantas caras obtenho.
+
+Após realizar os 100 lançamentos, Nikelly observa 99 caras.
+
+> **Cientista de Dados Cética Nikelly:** Você não pode estar dizendo a verdade! Não há como essa moeda ser honesta!
+
+> **Mágico Jardel:** Espere! Eu apenas tive azar. Juro que não estou mentindo!
+
+Vamos dar a Jardel o benefício da dúvida e calcular a probabilidade de observarmos um resultado pelo menos tão extremo quanto esse, supondo que ele esteja dizendo a verdade.
+
+Se Jardel não estiver mentindo, então a moeda é honesta. Nesse caso, o número de caras observadas segue uma distribuição Binomial:
+
+$$X \sim \text{Bin}(100,0.5),$$
+
+pois realizamos 100 lançamentos independentes e a probabilidade de cara em cada lançamento é igual a 0,5.
+
+Queremos calcular a probabilidade de observarmos pelo menos 99 caras, já que estamos interessados em resultados tão extremos quanto o observado. Assim,
+
+$$P(X \geq 99)= P(X=99) + P(X=100).$$
+
+Utilizando a função de probabilidade da distribuição Binomial, obtemos
+
+$$P(X \geq 99)= \binom{100}{99}(0.5)^{99}(0.5)^1
++ \binom{100}{100}(0.5)^{100}. $$
+
+Simplificando,
+
+$$P(X \geq 99) = \frac{101}{2^{100}} \approx 7.96\times 10^{-29}.$$
+
+Esse valor é praticamente zero. Em outras palavras, se a moeda fosse realmente honesta, a probabilidade de observarmos 99 ou mais caras em 100 lançamentos seria praticamente nula.
+
+Portanto, os dados fornecem evidências estatísticas extremamente fortes de que a moeda não é honesta. Nossa hipótese inicial era que a moeda fosse justa, mas, sob essa hipótese, o resultado observado seria extraordinariamente improvável. Consequentemente, há fortes razões para acreditar que nossa suposição inicial está incorreta.
+
+Essa lógica é muito semelhante a uma **prova por contradição probabilística**:
+
+1.  Assumimos que uma afirmação é verdadeira;
+2.  Calculamos a probabilidade do resultado observado sob essa suposição;
+3.  Se essa probabilidade for extremamente pequena, passamos a duvidar da suposição inicial;
+4.  Concluímos que os dados fornecem evidências contra a hipótese assumida.
+
+Essa é precisamente a ideia fundamental por trás dos testes de hipóteses estatísticos.
+
+## Exemplo
+
+Existe um procedimento formal para a realização de um teste de hipóteses, que será ilustrado por meio de um exemplo. Há diversos tipos de testes de hipóteses, cada um apropriado para situações específicas, mas discutiremos essas variações mais adiante. Como veremos, o Teorema Central do Limite (TCL) desempenha um papel fundamental em muitos dos testes mais utilizados na prática.
+
+### Passo 1: Formular uma afirmação
+
+O primeiro passo consiste em identificar a afirmação que se deseja investigar.
+
+Alguns exemplos seriam:
+
+- "A comida servida nos aviões é boa."
+- "Abacaxi combina com pizza."
+- "Um determinado programa educacional melhora o desempenho dos estudantes."
+
+Em nosso exemplo, consideraremos a empresa SuperENEM Preparação, que afirma que seu programa de preparação melhora o desempenho dos estudantes no ENEM.
+
+Suponha que, em 2025, a pontuação média nacional no ENEM fosse 662 pontos (em uma escala de 0 a 1000), com desvio-padrão igual a 131 pontos.
+
+### Passo 2: Definir as hipóteses
+
+Seja $\mu$ a verdadeira média das pontuações obtidas pelos alunos que participaram do curso SuperENEM Preparação. A hipótese nula representa a situação de referência, isto é, a ausência de efeito:
+
+$$H_0:\mu=662.$$ Em outras palavras, assumimos inicialmente que os participantes do cursinho apresentam a mesma média observada na população geral. A hipótese alternativa representa aquilo que desejamos demonstrar. Como a empresa afirma que o programa melhora o desempenho dos estudantes, definimos
+
+$$H_A: \mu > 662.$$ Essa hipótese afirma que os participantes do programa possuem uma média superior à média nacional. A hipótese alternativa apresentada acima é denominada unilateral à direita, pois procura evidências de que a média seja maior que 662. Outras possibilidades incluem:
+
+- Hipótese unilateral à esquerda:
+
+$$H_A:\mu<662,$$ caso desejássemos investigar se o programa prejudica os estudantes.
+
+- Hipótese bilateral:
+
+$$H_A:\mu\neq 662,$$
+
+caso estivéssemos interessados em verificar apenas se o programa produz alguma diferença, seja positiva ou negativa.
+
+### Passo 3: Escolher o nível de significância
+
+Escolhemos um nível de significância $\alpha$, que representa a **probabilidade máxima de rejeitarmos incorretamente a hipótese nula**. Os valores mais utilizados são 0,05 ou 0,01. Em nosso exemplo, adotaremos $\alpha = 0{,}05$.
+
+### Passo 4: Coletar os dados
+
+Suponha que observemos as pontuações de 100 estudantes participantes do programa, $X_1,\ldots,X_{100}$. Após a coleta dos dados, verificamos que a média amostral foi $\bar{x}=696$ pontos.
+
+### Passo 5: Calcular o nível descritivo ($p$-valor)
+
+O $p$-valor é definido como a probabilidade de observarmos um resultado tão extremo quanto o obtido, ou ainda mais extremo, supondo que a hipótese nula seja verdadeira. Como estamos assumindo temporariamente que $H_0:\mu=662$, o Teorema Central do Limite implica que a distribuição da média amostral é aproximadamente normal:
+
+$$\bar{X}
+\approx
+N\left(
+662,
+\frac{131^2}{100}
+\right).$$
+
+Desejamos calcular a probabilidade de observar uma média amostral pelo menos tão grande quanto a observada, $\bar{x}=696$. Padronizando a variável, obtemos
+
+$$P(\bar{X} \geq 696) = P\left(
+\frac{\bar{X}-\mu}
+{\sigma/\sqrt{n}}
+\geq
+\frac{696-662}
+{131/\sqrt{100}}
+\right) = P(Z\geq 2{,}60)$$
+
+Consultando a tabela da distribuição Normal padrão, obtemos aproximadamente
+
+$$p_{\text{valor}} = P(Z\geq 2{,}60) \approx 0{,}0047.$$ Assim, a probabilidade de observarmos uma média tão elevada quanto a obtida, caso o curso não tivesse qualquer efeito, é de apenas cerca de 0,47%.
+
+### Passo 6: Apresentar a conclusão
+
+Após calcular o $p$-valor, devemos compará-lo com o nível de significância previamente escolhido, $\alpha$. As regras de decisão são as seguintes:
+
+1.  Se ($p_{\text{valor}} < \alpha$), rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$).
+
+A justificativa é que, supondo que a hipótese nula seja verdadeira, a probabilidade de observarmos um resultado tão extremo quanto o obtido (ou ainda mais extremo) é igual ao $p$-valor. Se essa probabilidade for menor do que o nível de significância estabelecido, consideramos que os dados observados são incompatíveis com a hipótese nula.
+
+2.  Se ($p_{\text{valor}} \geq \alpha$), não rejeitamos a hipótese nula ($H_0$).
+
+Como $p_{\text{valor}} = 0{,}0047 \quad\text{e}\quad \alpha = 0{,}05,$ temos $0{,}0047 < 0.05$. Portanto, rejeitamos a hipótese nula ao nível de significância de 5%. Podemos concluir que existem evidências estatísticas significativas para sugerir que o curso SuperENEM Preparação ajuda os estudantes a obter melhores resultados no ENEM.
+
+> Em testes de hipóteses, nunca dizemos que aceitamos a hipótese nula. A única conclusão possível é: rejeitar ($H_0$); ou não rejeitar ($H_0$).
+
+A razão para isso pode ser compreendida retomando o exemplo da moeda. Suponha que, em vez de observarmos 99 caras em 100 lançamentos, tivéssemos observado apenas 55 caras. Esse resultado não seria particularmente improvável para uma moeda honesta. Portanto, não teríamos motivos para acusar o mágico de estar mentindo. Entretanto, isso não significa que tenhamos provado que a probabilidade de cara seja exatamente
+
+$$p=0{,}5.$$
+
+A verdadeira probabilidade poderia ser, por exemplo,
+
+$$p=0{,}54
+\quad\text{ou}\quad
+p=0{,}58.$$
+
+Os dados simplesmente não forneceram evidências suficientemente fortes para rejeitar a hipótese de que a moeda é justa. Em resumo, a ausência de evidências contra uma hipótese não constitui evidência de que ela seja verdadeira. Por essa razão, em Estatística, preferimos dizer que não rejeitamos a hipótese nula em vez de afirmar que a aceitamos.
+
+### Passo 7: Interpretação
+
+Os dados fornecem evidências estatisticamente significativas de que os estudantes participantes do curso SuperENEM Preparação apresentam, em média, pontuações superiores à média nacional de 662 pontos.
+
+Em outras palavras, os resultados observados são incompatíveis com a hipótese de que o programa não produz qualquer efeito, sugerindo que ele pode contribuir para melhorar o desempenho dos estudantes no ENEM.
+
+## Teste de Hipóteses (Procedimento)
+
+O procedimento formal para a realização de um teste de hipóteses pode ser resumido nas seguintes etapas:
+
+### 1. Formular uma afirmação {.unnumbered}
+
+O primeiro passo consiste em identificar a afirmação ou hipótese que se deseja investigar. Exemplos:
+
+- "A comida servida em aviões é boa."
+- "Abacaxi combina com pizza."
+- "Um novo medicamento reduz o risco de uma determinada doença."
+- "Um programa educacional melhora o desempenho dos estudantes."
+
+### 2. Definir as hipóteses {.unnumbered}
+
+Devemos estabelecer uma hipótese nula, denotada por ($H_0$), e uma hipótese alternativa, denotada por ($H_A$).
+
+a)  A hipótese alternativa pode ser unilateral ou bilateral. Exemplos:
+
+- Unilateral à direita:
+
+$$H_A:\theta>\theta_0$$
+
+- Unilateral à esquerda:
+
+$$H_A:\theta<\theta_0$$
+
+- Bilateral:
+
+$$H_A:\theta\neq\theta_0$$
+
+b)  A hipótese nula
+
+A hipótese nula geralmente representa uma situação de referência, ausência de efeito ou o chamado *benefício da dúvida*. Em muitos problemas, ela expressa a ideia de que não existe diferença ou efeito relevante.
+
+c)  A hipótese alternativa
+
+A hipótese alternativa corresponde à afirmação para a qual buscamos evidências nos dados. Em geral, ela representa a negação da hipótese nula.
+
+### 3. Escolher o nível de significância {.unnumbered}
+
+Seleciona-se um nível de significância ($\alpha$), que representa a probabilidade máxima tolerada de cometer um erro do tipo I. Os valores mais utilizados são $\alpha=0.05 \quad\text{ou}\quad \alpha=0.01.$
+
+### 4. Coletar os dados {.unnumbered}
+
+Obtém-se uma amostra da população de interesse e calcula-se a estatística necessária para o teste.
+
+### 5. Calcular o nível descritivo {.unnumbered}
+
+O $p_{\text{valor}}$ é definido como
+
+$$p_{\text{valor}} = P(\text{observar um resultado tão extremo quanto o obtido, ou mais extremo, supondo } H_0 \text{ verdadeira}).$$
+
+Em outras palavras, o $p_{\text{valor}}$ mede quão compatíveis os dados observados são com a hipótese nula.
+
+### 6. Apresentar a conclusão {.unnumbered}
+
+A decisão é tomada comparando o $p_{\text{valor}}$ com o nível de significância ($\alpha$).
+
+a)  Se ($p_{\text{valor}} < \alpha$): Rejeitamos a hipótese nula ($H_0$) em favor da hipótese alternativa ($H_A$). Nesse caso, dizemos que o resultado é **estatisticamente significativo** ao nível de significância adotado.
+
+b)  Se ($p_{\text{valor}} \geq \alpha$): Não rejeitamos a hipótese nula ($H_0$). Nesse caso, concluímos que os dados não fornecem evidências suficientes para apoiar a hipótese alternativa.
+
+## Possíveis Resultados de um Teste de Hipóteses
+
+Em um teste de hipóteses, considera-se que existem apenas duas hipóteses possíveis:
+
+- **Hipótese nula (**$H_0$): representa a hipótese inicialmente assumida como verdadeira.
+- **Hipótese alternativa (**$H_A$): representa a hipótese que será aceita caso existam evidências suficientes para rejeitar $H_0$.
+
+Por convenção, as decisões em um teste de hipóteses são sempre expressas em relação à hipótese nula. Assim, existem apenas duas decisões possíveis:
+
+- **Não rejeitar** $H_0$ (ou aceitar $H_0$, na terminologia clássica);
+- **Rejeitar** $H_0$.
+
+Como o verdadeiro estado da natureza é desconhecido, quatro situações podem ocorrer:
+
+1.  **Não rejeitar** $H_0$ quando $H_0$ é verdadeira.
+2.  **Não rejeitar** $H_0$ quando $H_A$ é verdadeira.
+3.  **Rejeitar** $H_0$ quando $H_0$ é verdadeira.
+4.  **Rejeitar** $H_0$ quando $H_A$ é verdadeira.
+
+A Tabela abaixo resume essas quatro possibilidades.
+
+| **Decisão**        | $H_0$ é verdadeira | $H_A$ é verdadeira |
+|:-------------------|:-------------------|:-------------------|
+| Não rejeitar $H_0$ | Decisão correta    | Erro do Tipo II    |
+| Rejeitar $H_0$     | Erro do Tipo I     | Decisão correta    |
+
+::: callout-note
+## Observação
+
+Na prática, é mais apropriado utilizar a expressão **"não rejeitar** $H_0$" em vez de **"aceitar** $H_0$". Isso ocorre porque a ausência de evidências para rejeitar a hipótese nula não significa que ela seja verdadeira, mas apenas que os dados observados não fornecem evidências suficientes para rejeitá-la.
+:::
+
+> Se um detector de metais não apita quando alguém passa, isso não prova que a pessoa não esteja carregando metal; apenas significa que não houve evidência suficiente para detectá-lo.
+
+## Erro do Tipo II
+
+A probabilidade de cometer um **erro do Tipo II** é representada pela letra grega $\beta$. O erro do Tipo II ocorre quando **não se rejeita a hipótese nula (**$H_0$), embora ela seja falsa. Em outras palavras, esse erro acontece quando a hipótese alternativa ($H_A$) é verdadeira, mas o teste não apresenta evidências suficientes para rejeitar $H_0$.
+
+O valor de $\beta$ depende de diversos fatores, como:
+
+- o tamanho da amostra;
+- a variabilidade dos dados;
+- o nível de significância ($\alpha$);
+- a magnitude da diferença entre o parâmetro populacional e o valor especificado em $H_0$.
+
+Quanto menor for o valor de $\beta$, menor será a probabilidade de não detectar uma diferença que realmente existe.
+
+::: callout-note
+## Poder do teste
+
+O complemento da probabilidade de cometer um erro do Tipo II é denominado **poder do teste** e é dado por:
+
+$$\text{Poder} = 1 - \beta.$$
+
+O poder representa a probabilidade de o teste rejeitar corretamente a hipótese nula quando ela é falsa. Em geral, busca-se desenvolver testes com alto poder, pois eles apresentam maior capacidade de detectar diferenças ou efeitos reais.
+:::
+
+## Teste de hipótese para média populacional com variância conhecida
+
+Considere uma população normal com desvio padrão populacional $\sigma$ conhecido. O teste de hipótese para a média é baseado na estatística:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}},$$
+
+em que:
+
+- $\bar{x}$ é a média amostral;
+- $\mu_0$ é o valor hipotetizado para a média;
+- $\sigma$ é o desvio padrão populacional conhecido;
+- $n$ é o tamanho da amostra.
+
+### Teste bicaudal ($H_A: \mu \neq \mu_0$)
+
+Hipóteses:
+
+$$H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu \neq \mu_0$$
+
+Regra de decisão:
+
+- Rejeita-se $H_0$ se:
+  $$z < -z_{\alpha/2} \quad \text{ou} \quad z > z_{1-\alpha/2}$$
+
+- Caso contrário, não se rejeita $H_0$.
+
+Região de não rejeição:
+$$- z_{\alpha/2} \le z \le z_{1-\alpha/2}$$
+
+#### p-valor (bicaudal)
+
+$$p_{\text{valor}} = 2 \cdot P(Z \ge |z|)$$
+
+### Teste unilateral à esquerda ($H_A: \mu < \mu_0$)
+
+Hipóteses:
+
+$$H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu < \mu_0$$
+
+Regra de decisão:
+
+- Rejeita-se $H_0$ se:
+  $$z < -z_{\alpha}$$
+
+- Caso contrário, não se rejeita $H_0$.
+
+#### p-valor
+
+$$p_{\text{valor}} = \Phi(z),$$
+
+em que $\Phi(\cdot)$ é a função de distribuição acumulada da distribuição normal padrão.
+
+### Teste unilateral à direita ($H_A: \mu > \mu_0$)
+
+Hipóteses:
+
+$$H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu > \mu_0$$
+
+Regra de decisão:
+
+- Rejeita-se $H_0$ se:
+  $$z > z_{1-\alpha}$$
+
+- Caso contrário, não se rejeita $H_0$.
+
+#### p-valor
+
+$$p_{\text{valor}} = 1 - \Phi(z).$$
+
+### Estimativa do Tamanho Amostral para Teste da Média (Alternativa Unilateral)
+
+Considere o problema de testar:
+
+$$H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu > \mu_0,$$
+
+ou
+
+$$H_A: \mu < \mu_0,$$
+
+em uma população normal com variância conhecida $\sigma^2$. O tamanho amostral necessário para realizar um teste unilateral com nível de significância $\alpha$ e poder $1 - \beta$ é dado por:
+
+$$n = \left[\frac{(z_{1-\alpha} + z_{1-\beta}) \sigma}{\mu_0 - \mu_1} \right]^2,$$
+em que:
+
+- $\mu_0$: valor sob a hipótese nula.\
+- $\mu_1$: valor verdadeiro assumido sob a hipótese alternativa.\
+- $\sigma$: desvio padrão populacional conhecido.\
+- $z_{1-\alpha}$: quantil da normal padrão associado ao nível de significância.\
+- $z_{1-\beta}$: quantil associado ao poder do teste.
+
+#### Exemplo: Cálculo do Tamanho Amostral (Teste Unilateral para a Média)
+
+Considere o seguinte problema:
+
+- $\mu_0 = 120$\
+- $\mu_1 = 115$\
+- $\sigma = 24$\
+- $\alpha = 0{,}05$\
+- Poder do teste: $1 - \beta = 0{,}80$
+
+Deseja-se determinar o tamanho amostral necessário para um **teste unilateral** da média. Os valores críticos são:
+
+- $z_{1-\alpha} = 1{,}645$.
+- $z_{1-\beta} = 0{,}84$.
+
+Diferença entre as médias:
+
+$$\mu_0 - \mu_1 = 120 - 115 = 5.$$
+
+Substituindo na fórmula:
+
+$$n = \left( \frac{(1{,}645 + 0{,}84)\cdot 24}{5} \right)^2 \approx 142{,}3.$$
+
+> O tamanho da amostra é sempre arredondado para cima, para garantir que se atinja pelo menos o nível de poder desejado (neste caso, 80%). Assim, é necessário um tamanho amostral de 143 para que o teste unilateral tenha 80% de probabilidade de detectar uma diferença de pelo menos 5 unidades entre a média populacional e a média especificada na hipótese nula ($\mu_0 = 120$), ao nível de significância de 5%.
+
+### Estimativa do Tamanho Amostral para Teste da Média (Alternativa Bicaudal)
+
+Suponha que desejamos testar:
+
+$$H_0: \mu = \mu_0 \quad \text{vs.} \quad H_A: \mu = \mu_1,$$
+onde os dados são provenientes de uma distribuição normal com média $\mu$ e variância conhecida $\sigma^2$. O tamanho amostral necessário para realizar um teste bicaudal com nível de significância $\alpha$ e poder $1-\beta$ é dada por:
+
+$$n = \left[\frac{(z_{1-\frac{\alpha}{2}} + z_{1-\beta}) \sigma}{\mu_0 - \mu_1} \right]^2.$$
+
+> Note que o tamanho da amostra para um teste bicaudal é sempre maior do que o tamanho correspondente para um teste unilateral. Isso ocorre porque o quantil $z_{1-\frac{\alpha}{2}}$ é maior do que $z_{1-\alpha}$, o que exige uma amostra maior para alcançar o mesmo nível de poder do teste.
+
+### Exemplo Aplicado
+
+Nesta seção, com o conjunto de dados dos estudantes disponível em [SOGA-Py](https://www.geo.fu-berlin.de/en/v/soga-py/Basics-of-statistics/Hypothesis-Tests/index.html). Você pode carregá-lo diretamente como um recurso da *web*. Vamos importar o conjunto de dados para o `Python` como um objeto **DataFrame** do pandas utilizando o método `read_csv`:
+
+```{python}
+import pandas as pd
+import numpy as np
+
+estudantes = pd.read_csv("https://userpage.fu-berlin.de/soga/data/raw-data/students.csv")
+
+estudantes.head()
+```
+
+O conjunto de dados **estudantes** consiste em 8.239 linhas, cada uma representando um estudante específico, e 16 colunas, cada uma correspondendo a uma variável/característica relacionada a esse estudante. Neste estudo, considera-se o conjunto completo de estudantes disponível na base de dados como a população de interesse. Além disso, a variável de interesse é o peso (massa corporal).
+
+> Aqui iremos considerar a variância conhecida, ou seja, iremos calcular diretamente a partir dos dados completos.
+
+### Variância e desvio-padrão populacionais
+
+Como a base contém todos os 8.239 estudantes considerados neste estudo, a variância calculada corresponde à variância populacional.
+
+```{python}
+N = len(estudantes)
+sigma2 = estudantes["weight"].var(ddof=0) # variância populacional 
+sigma = estudantes["weight"].std(ddof=0) # desvio-padrão populacional 
+
+print(f"Tamanho da população: {N}") 
+print(f"Variância populacional: {sigma2:.2f}") 
+print(f"Desvio-padrão populacional: {sigma:.2f} kg")
+```
+
+### Objetivo
+
+Avaliar se a massa corporal média dos estudantes difere da massa corporal média da população adulta europeia, reportada por [Walpole et al. (2012)](https://link.springer.com/article/10.1186/1471-2458-12-439) como 70,8 kg. As hipóteses são:
+
+$$H_0: \mu = 70,8$$
+
+e
+
+$$H_A: \mu \neq 70,8$$ em que $\mu$ representa a massa corporal média dos estudantes.
+
+### Cálculo do tamanho mínimo de amostra
+
+Foi adotada uma diferença mínima detectável de 2 kg em relação à média de referência de 70,8 kg. O tamanho amostral foi calculado para garantir poder estatístico de 80% e nível de significância de 5%, ou seja,
+
+1.  nível de confiança = 95%;
+2.  poder do teste = 80%;
+3.  diferença mínima detectável = 2 kg.
+
+```{python}
+from scipy.stats import norm
+
+alpha = 0.05 
+power = 0.80 
+delta = 2.0 
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = ((z_alpha + z_beta) * sigma / delta)**2 
+
+print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
+
+```
+
+Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
+
+```{python}
+n = (n0 * N)/(n0 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho corrigido da amostra: {n}")
+```
+
+### Seleção da amostra aleatória
+
+```{python}
+amostra = estudantes.sample(n=n, replace=False, random_state=123 ) 
+
+amostra.head()
+```
+
+### Teste Z para uma média com variância conhecida
+
+```{python}
+mu0 = 70.8 
+
+xbar = amostra["weight"].mean() 
+
+z = (xbar - mu0)/(sigma/np.sqrt(n)) 
+
+print(f"Média amostral: {xbar:.2f}") 
+print(f"Estatística Z: {z:.4f}")
+```
+
+### Cálculo do p-valor
+
+```{python}
+from scipy.stats import norm
+
+p_value = 2 * (1 - norm.cdf(abs(z)))
+
+print(f"Valor-p: {p_value:.6f}")
+
+```
+
+### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_value < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+### Intervalo de confiança de 95%
+
+```{python}
+z_crit = norm.ppf(0.975)
+
+erro = z_crit * sigma/np.sqrt(n)
+
+li = xbar - erro
+ls = xbar + erro
+
+print(f"IC95%: ({li:.2f}, {ls:.2f})")
+
+```
+
+### Conclusão
+
+Como o $p$-valor calculado (0,004493) é consideravelmente inferior ao nível de significância adotado (0,05), a decisão estatística é rejeitar a hipótese nula, ou seja, de que a massa corporal média dos estudantes é igual a massa corporal média da população adulta europeia. Sendo assim, existe evidência estatisticamente significativa de que a média populacional é diferente do valor inicialmente suposto.
+
+Note que a média populacional é:
+
+```{python}
+mu_pop = estudantes["weight"].mean()
+
+print(f"Média populacional: {mu_pop:.2f} kg")
+```
+
+## Teste *t* para a média de uma população normal com variância desconhecida
+
+Considere uma amostra aleatória
+
+$$X_1,\ldots,X_n \sim N(\mu,\sigma^2),$$
+
+em que tanto a média populacional $\mu$ quanto a variância $\sigma^2$ são desconhecidas. Nosso objetivo é realizar inferência sobre $\mu$. Quando a variância populacional é desconhecida, ela é estimada pela variância amostral
+
+$$S^2=\frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar X)^2.$$
+
+Nesse caso, a estatística
+
+
+$$T=\frac{\bar X-\mu_0}{S/\sqrt{n}},$$
+
+segue uma distribuição *t* de Student com $n-1$ graus de liberdade, sob a hipótese nula. Esse resultado substitui o teste baseado na distribuição normal quando $\sigma$ é desconhecido.
+
+Assim, todos os testes para a média são construídos a partir dessa estatística, variando apenas a hipótese alternativa.
+
+### Teste unilateral à esquerda
+
+Deseja-se testar
+
+
+$$H_0:\mu=\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu<\mu_0.$$
+
+A estatística de teste é
+
+
+$$T=\frac{\bar X-\mu_0}{S/\sqrt{n}}.$$
+
+Sob $H_0$,
+
+
+$$T\sim t_{n-1}.$$
+
+Para um nível de significância $\alpha$, a região crítica é
+
+
+$$T<t_{n-1,\alpha},$$
+
+em que $t_{n-1,\alpha}$ denota o quantil de ordem $\alpha$ da distribuição *t* de Student com $n-1$ graus de liberdade.
+
+Portanto, a regra de decisão é
+
+$$
+\boxed{
+\begin{aligned}
+T<t_{n-1,\alpha}
+&\quad\Longrightarrow\quad \text{rejeitar } H_0,\\[2mm]
+T\ge t_{n-1,\alpha}
+&\quad\Longrightarrow\quad \text{não rejeitar } H_0.
+\end{aligned}
+}
+$$
+
+Observe que, por convenção em testes de hipóteses, utiliza-se a expressão **não rejeitar $H_0$**, e não **aceitar $H_0$**, pois a evidência amostral pode ser insuficiente para rejeitar a hipótese nula, sem necessariamente confirmá-la.
+
+### Teste unilateral à direita
+
+Considere agora
+
+
+$$H_0:\mu=\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu>\mu_0.$$
+
+A estatística de teste permanece
+
+
+$$T=\frac{\bar X-\mu_0}{S/\sqrt{n}}.$$
+
+
+A região crítica é dada por
+
+
+$$T>t_{n-1,1-\alpha},$$
+
+
+e a regra de decisão é
+
+
+$$\boxed{
+\begin{aligned}
+T>t_{n-1,1-\alpha}
+&\quad\Longrightarrow\quad \text{rejeitar } H_0,\\[2mm]
+T\le t_{n-1,1-\alpha}
+&\quad\Longrightarrow\quad \text{não rejeitar } H_0.
+\end{aligned}
+}
+$$
+
+### Teste bilateral
+
+Para testar
+
+
+$$H_0:\mu=\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu\neq\mu_0,
+$$
+
+utiliza-se novamente
+
+
+$$T=\frac{\bar X-\mu_0}{S/\sqrt{n}}.$$
+
+Como a distribuição *t* é simétrica em torno da origem, a região crítica é distribuída igualmente nas duas caudas da distribuição.
+
+Assim, rejeita-se $H_0$ quando
+
+
+$$|T|>t_{n-1,\,1-\alpha/2}.$$
+
+Equivalentemente,
+
+
+$$T<-t_{n-1,\,1-\alpha/2}
+\quad\text{ou}\quad
+T>t_{n-1,\,1-\alpha/2}.$$
+
+A regra de decisão pode ser escrita de forma compacta como
+
+
+$$\boxed{
+\begin{aligned}
+|T|>t_{n-1,\,1-\alpha/2}
+&\quad\Longrightarrow\quad \text{rejeitar } H_0,\\[2mm]
+|T|\le t_{n-1,\,1-\alpha/2}
+&\quad\Longrightarrow\quad \text{não rejeitar } H_0.
+\end{aligned}
+}$$
+
+
+### Valor-p
+
+Além da abordagem baseada na região crítica, é comum utilizar o **valor-p**, definido como a probabilidade, sob $H_0$, de se observar um valor da estatística de teste tão extremo quanto o obtido na amostra.
+
+Se $t_{\text{obs}}$ denota o valor observado da estatística de teste, então:
+
+- **Teste unilateral à esquerda**
+
+
+$$p=P(T\le t_{\text{obs}}).$$
+
+- **Teste unilateral à direita**
+
+
+$$p=P(T\ge t_{\text{obs}})
+=1-F_{t_{n-1}}(t_{\text{obs}}).$$
+
+- **Teste bilateral**
+
+
+$$p=
+\begin{cases}
+2F_{t_{n-1}}(t_{\text{obs}}), & t_{\text{obs}}\le0,\\[2mm]
+2\left[1-F_{t_{n-1}}(t_{\text{obs}})\right], & t_{\text{obs}}>0,
+\end{cases}$$
+
+em que $F_{t_{n-1}}$ representa a função de distribuição acumulada da distribuição *t* de Student com $n-1$ graus de liberdade.
+
+A decisão é tomada comparando o valor-p com o nível de significância $\alpha$:
+
+
+$$\boxed{
+\begin{aligned}
+p<\alpha
+&\quad\Longrightarrow\quad \text{rejeitar } H_0,\\[2mm]
+p\ge\alpha
+&\quad\Longrightarrow\quad \text{não rejeitar } H_0.
+\end{aligned}
+}
+$$
+
+## Exemplo Aplicado
+
+Agora iremos considerar a situação mais realista que é quando a variância populacional é desconhecida. Para calcular o tamanho mínimo de amostra iremos precisar estimar a variância populacional. Para isto, iremos usar uma amostra piloto.
+
+### Amostra piloto
+
+```{python}
+amostra_piloto = estudantes.sample(n=50, replace=False, random_state=123 ) 
+
+n_piloto = len(amostra_piloto)
+s2 = amostra_piloto["weight"].var(ddof=1) # variância amostral 
+s = amostra_piloto["weight"].std(ddof=1) # desvio-padrão amostral
+
+print(f"Tamanho da amostra piloto: {n_piloto}") 
+print(f"Variância amostral: {s2:.2f}") 
+print(f"Desvio-padrão amostral: {s:.2f} kg")
+
+amostra_piloto.head()
+
+```
+
+### Cálculo do tamanho mínimo de amostra
+
+```{python}
+from scipy.stats import t
+
+alpha = 0.05 
+power = 0.80 
+delta = 2.0 
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+
+n0 = ((z_alpha + z_beta) * s/delta)**2
+
+print(f"Tamanho inicial da amostra (usando quantil da normal padrão): {np.ceil(n0):.0f}")
+
+
+t_alpha = t.ppf(1 - alpha/2, df = n0-1)
+t_beta = t.ppf(power, df = n0-1)
+n1 = ((t_alpha + t_beta) * s/delta)**2 
+
+print(f"Tamanho inicial da amostra (usando quantil da t-student): {np.ceil(n1):.0f}")
+```
+
+Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
+
+```{python}
+n = (n1 * N)/(n1 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho corrigido da amostra: {n}")
+```
+
+### Seleção da amostra aleatória
+
+Iremos considerar os estudantes coletados na amostra piloto na amostra final considerada para o estudo. Assim, iremos selecionar mais 81 estudantes. Como a semente aleatória é a mesma da amostra piloto, basta selecionar normalmente os 131 estudantes.
+
+```{python}
+amostra = estudantes.sample(n=n, replace=False, random_state=123 ) 
+
+amostra.head()
+```
+
+### Verificando normalidade dos dados
+
+Agora, vamos testar a suposição de normalidade plotando um gráfico de probabilidade normal, frequentemente chamado de QQ plot. Se a variável tiver distribuição normal, o gráfico de probabilidade normal deverá ser aproximadamente linear.
+
+```{python}
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+fig, ax = plt.subplots()
+
+stats.probplot(amostra["weight"], dist="norm", plot=ax)
+
+ax.set_title("Q-Q plot (amostra)")
+ax.set_ylabel("Quantis amostrais")
+ax.set_xlabel("Quantis teóricos")
+
+
+plt.show()
+```
+
+Observamos que os dados da amostra apresentam algum ruído, os desvios da linha reta na parte inferior sugerem que a distribuição dos dados é ligeiramente assimétrica, como pode ser visto no histograma abaixo.
+
+```{python}
+plt.hist(amostra["weight"], bins=20)
+plt.title("Histograma da variável weight")
+plt.xlabel("Weight")
+plt.ylabel("Frequência")
+plt.show()
+```
+
+Podemos usar algum teste de hipótese para teste a normalidade dos dados. As hipóteses do teste são:
+
+- Hipótese Nula: Os dados vem de uma distribuição normal.
+
+- Hipótese Alternativa: Os dados observados não vêm da distribuição normal.
+
+```{python}
+from statsmodels.stats.diagnostic import lilliefors
+
+lilliefors(amostra["weight"], dist='norm')
+```
+
+```{python}
+from scipy.stats import anderson
+
+anderson(amostra["weight"], dist='norm')
+```
+
+```{python}
+from scipy.stats import jarque_bera
+
+jarque_bera(amostra["weight"])
+```
+
+```{python}
+from scipy.stats import normaltest
+
+normaltest(amostra["weight"]) #teste de D’Agostino-Pearson
+```
+
+Se considerarmos um nível de significância de 1%, temos que a maioria dos testes não rejeita a hipótese de que os dados são provenientes de uma população normal. No entanto, ao considerarmos um nível de 5% temos que o resultado se inverte.
+
+### Teste t para uma média com variância desconhecida
+
+```{python}
+mu0 = 70.8 
+
+xbar = amostra["weight"].mean() 
+s_amostral = amostra["weight"].std(ddof=1)
+
+tc = (xbar - mu0)/(s_amostral/np.sqrt(n)) 
+
+print(f"Desvio-Padrão amostral: {s_amostral:.2f}")
+print(f"Média amostral: {xbar:.2f}") 
+print(f"Estatística t: {tc:.4f}")
+```
+
+### Cálculo do p-valor
+
+```{python}
+from scipy.stats import t
+gl = n-1
+
+p_value = 2 * (1 - t.cdf(x=abs(tc), df = gl))
+
+print(f"Valor-p: {p_value:.6f}")
+
+```
+
+```{python}
+from statsmodels.stats.weightstats import DescrStatsW
+
+d = DescrStatsW(amostra["weight"])
+
+t_stat, p_value, gl = d.ttest_mean(mu0)
+
+print(d)
+print(f"t = {t_stat:.4f}")
+print(f"p = {p_value:.6f}")
+print(f"gl = {gl:.0f}")
+```
+
+### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_value < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+### Intervalo de confiança de 95%
+
+```{python}
+
+t_crit = t.ppf(1-alpha/2, df = gl)
+
+erro = t_crit * s_amostral/np.sqrt(n)
+
+li = xbar - erro
+ls = xbar + erro
+
+print(f"IC95%: ({li:.2f}, {ls:.2f})")
+
+```
+
+
+## Teste de hipótese para uma proporção
+
+Considere uma amostra aleatória de tamanho $n$, em que cada observação corresponde a um ensaio de Bernoulli com probabilidade de sucesso $p$. Seja
+
+$$
+X=\sum_{i=1}^{n}X_i,
+$$
+
+o número de sucessos observados, de modo que
+
+$$
+X\sim\operatorname{Bin}(n,p).
+$$
+
+A proporção amostral é dada por
+
+$$
+\hat p=\frac{X}{n},
+$$
+
+sendo um estimador não viesado da proporção populacional $p$. Nosso objetivo é realizar inferência sobre $p$.
+
+Quando o tamanho da amostra é suficientemente grande, utiliza-se a aproximação normal da distribuição binomial. Sob a hipótese nula,
+
+$$
+H_0:p=p_0,
+$$
+
+a estatística
+
+$$
+Z=\frac{\hat p-p_0}
+{\sqrt{p_0(1-p_0)/n}}
+$$
+
+possui distribuição aproximadamente normal padrão,
+
+$$
+Z\overset{\text{aprox.}}{\sim}N(0,1),
+$$
+
+desde que as condições usuais para a aproximação normal sejam satisfeitas, isto é,
+
+$$
+np_0\ge5
+\qquad\text{e}\qquad
+n(1-p_0)\ge5.
+$$
+
+Assim como no teste para a média, diferentes hipóteses alternativas conduzem a diferentes regiões críticas.
+
+### Teste unilateral à esquerda
+
+Deseja-se testar
+
+$$
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p<p_0.
+$$
+
+A estatística de teste é
+
+$$
+Z=\frac{\hat p-p_0}
+{\sqrt{p_0(1-p_0)/n}}.
+$$
+
+Para um nível de significância $\alpha$, rejeita-se $H_0$ quando
+
+$$
+Z<z_\alpha,
+$$
+
+em que $z_\alpha$ representa o quantil de ordem $\alpha$ da distribuição normal padrão.
+
+Equivalentemente,
+
+$$
+\boxed{
+\begin{aligned}
+Z<z_\alpha
+&\Longrightarrow \text{rejeitar }H_0,\\[2mm]
+Z\ge z_\alpha
+&\Longrightarrow \text{não rejeitar }H_0.
+\end{aligned}
+}
+$$
+
+### Teste unilateral à direita
+
+Considere agora
+
+$$
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p>p_0.
+$$
+
+Rejeita-se \(H_0\) quando
+
+$$
+Z>z_{1-\alpha},
+$$
+
+ou, equivalentemente,
+
+$$
+\boxed{
+\begin{aligned}
+Z>z_{1-\alpha}
+&\Longrightarrow \text{rejeitar }H_0,\\[2mm]
+Z\le z_{1-\alpha}
+&\Longrightarrow \text{não rejeitar }H_0.
+\end{aligned}
+}
+$$
+
+### Teste bilateral
+
+Para testar
+
+$$
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p\neq p_0,
+$$
+
+utiliza-se a mesma estatística de teste.
+
+Como a distribuição normal padrão é simétrica em torno da origem, rejeita-se \(H_0\) quando
+
+$$
+|Z|>z_{1-\alpha/2}.
+$$
+
+A regra de decisão é
+
+$$
+\boxed{
+\begin{aligned}
+|Z|>z_{1-\alpha/2}
+&\Longrightarrow \text{rejeitar }H_0,\\[2mm]
+|Z|\le z_{1-\alpha/2}
+&\Longrightarrow \text{não rejeitar }H_0.
+\end{aligned}
+}
+$$
+
+### $p_{\text{valor}}$ utilizando a aproximação normal
+
+Se \(z_{\text{obs}}\) denota o valor observado da estatística de teste, então
+
+- **Teste unilateral à esquerda**
+
+$$
+p_{\text{valor}}=\Phi(z_{\text{obs}}).
+$$
+
+- **Teste unilateral à direita**
+
+$$
+p_{\text{valor}}=1-\Phi(z_{\text{obs}}).
+$$
+
+- **Teste bilateral**
+
+$$
+p_{\text{valor}}=
+\begin{cases}
+2\Phi(z_{\text{obs}}), & z_{\text{obs}}\le0,\\[2mm]
+2\left[1-\Phi(z_{\text{obs}})\right], & z_{\text{obs}}>0,
+\end{cases}
+$$
+
+em que $\Phi$ denota a função de distribuição acumulada da normal padrão. A decisão é tomada comparando-se o $p_{\text{valor}}$ com o nível de significância $\alpha$:
+
+$$
+\boxed{
+\begin{aligned}
+p_{\text{valor}}<\alpha
+&\Longrightarrow \text{rejeitar }H_0,\\[2mm]
+p_{\text{valor}}\ge\alpha
+&\Longrightarrow \text{não rejeitar }H_0.
+\end{aligned}
+}
+$$
+
+
+### Teste binomial exato
+
+Quando a aproximação normal não é adequada, especialmente em amostras pequenas ou quando $p_0$ está próximo de $0$ ou $1$, recomenda-se utilizar o teste binomial exato, baseado diretamente na distribuição binomial.
+
+Sejam $x$ o número observado de sucessos e
+
+$$
+X\sim\operatorname{Bin}(n,p_0),
+$$
+
+sob a hipótese nula. No teste bilateral, o $p_{\text{valor}}$ é dado por
+
+$$
+p_{\text{valor}}=
+\begin{cases}
+2P(X\le x), & \hat p\le p_0,\\[2mm]
+2P(X\ge x), & \hat p>p_0.
+\end{cases}
+$$
+
+Como probabilidades não podem exceder 1, escreve-se de forma equivalente
+
+$$
+p_{\text{valor}}=
+\begin{cases}
+\min\{2P(X\le x),1\},
+& \hat p\le p_0,\\[3mm]
+\min\{2P(X\ge x),1\},
+& \hat p>p_0.
+\end{cases}
+$$
+
+Em termos da função de probabilidade binomial,
+
+$$
+P(X\le x)=
+\sum_{k=0}^{x}
+\binom{n}{k}
+p_0^{\,k}(1-p_0)^{n-k},
+$$
+
+e
+
+$$
+P(X\ge x)=
+\sum_{k=x}^{n}
+\binom{n}{k}
+p_0^{\,k}(1-p_0)^{n-k}.
+$$
+
+A decisão permanece a mesma:
+
+$$
+\boxed{
+\begin{aligned}
+p_{\text{valor}}<\alpha
+&\Longrightarrow \text{rejeitar }H_0,\\[2mm]
+p_{\text{valor}}\ge\alpha
+&\Longrightarrow \text{não rejeitar }H_0.
+\end{aligned}
+}
+$$
+
+### Cálculo do tamanho de amostra
+
+Antes da coleta dos dados, é comum determinar o tamanho da amostra necessário para que o teste de hipótese possua uma probabilidade elevada de detectar uma diferença considerada relevante.
+
+Considere o teste
+
+$$
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p=p_1,
+$$
+
+em que $p_1\neq p_0$ representa o valor da proporção que se deseja detectar com probabilidade $1-\beta$, denominada **poder do teste**. Sob a aproximação normal, a proporção amostral possui distribuição aproximadamente normal,
+
+$$
+\hat p\sim N\!\left(p,\frac{p(1-p)}{n}\right).
+$$
+
+A determinação do tamanho da amostra consiste em encontrar o menor valor de $n$ que satisfaça simultaneamente o nível de significância $\alpha$ e o poder desejado $1-\beta$.
+
+#### Teste unilateral
+
+Para os testes unilaterais, uma aproximação amplamente utilizada fornece
+
+$$
+n=
+\frac{\left[
+z_{1-\alpha}\sqrt{p_0(1-p_0)}
++
+z_{1-\beta}\sqrt{p_1(1-p_1)}
+\right]^2}
+{(p_1-p_0)^2}.
+$$
+
+Quando a hipótese alternativa é
+
+$$
+H_1:p<p_0,
+$$
+
+utiliza-se o mesmo resultado, lembrando que $p_1<p_0$.
+
+#### Teste bilateral
+
+Para o teste
+
+$$
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p\neq p_0,
+$$
+
+a região crítica é dividida igualmente entre as duas caudas da distribuição normal. Consequentemente, substitui-se $z_{1-\alpha}$ por $z_{1-\alpha/2}$, obtendo-se
+
+$$
+n=
+\frac{\left[
+z_{1-\alpha/2}\sqrt{p_0(1-p_0)}
++
+z_{1-\beta}\sqrt{p_1(1-p_1)}
+\right]^2}
+{(p_1-p_0)^2}.
+$$
+
+Após o cálculo, como o tamanho da amostra deve ser um número inteiro, adota-se
+
+$$
+n=\lceil n^\ast\rceil,
+$$
+
+em que $n^\ast$ representa o valor obtido pela expressão anterior e $\lceil\cdot\rceil$ denota a função teto.
+
+#### Diferença mínima detectável
+
+Em aplicações práticas, costuma-se especificar uma diferença mínima de interesse,
+
+$$
+\Delta=|p_1-p_0|,
+$$
+
+de modo que as expressões anteriores podem ser escritas como
+
+$$
+n=
+\frac{\left[
+z_{1-\alpha}\sqrt{p_0(1-p_0)}
++
+z_{1-\beta}\sqrt{p_1(1-p_1)}
+\right]^2}
+{\Delta^2},
+$$
+
+para testes unilaterais, e
+
+$$
+n=
+\frac{\left[
+z_{1-\alpha/2}\sqrt{p_0(1-p_0)}
++
+z_{1-\beta}\sqrt{p_1(1-p_1)}
+\right]^2}
+{\Delta^2},
+$$
+
+para testes bilaterais. Quando não há uma estimativa confiável para a proporção populacional, é comum utilizar
+
+$$
+p_0=0.5,
+$$
+
+pois esse valor maximiza a variância
+
+$$
+p_0(1-p_0),
+$$
+
+produzindo um tamanho de amostra conservador, isto é, suficientemente grande para qualquer valor verdadeiro da proporção.
+
+
+#### Especificação de $p_0$, $p_1$ e da diferença mínima detectável
+
+A aplicação das fórmulas para o cálculo do tamanho da amostra requer a especificação dos valores $p_0$ e $p_1$. Na prática, entretanto, é mais comum que o pesquisador conheça apenas a proporção de referência e a menor diferença que deseja detectar.
+
+O valor $p_0$ corresponde à proporção estabelecida na hipótese nula,
+
+$$
+H_0:p=p_0.
+$$
+
+Esse valor geralmente é obtido de estudos anteriores, dados históricos, resultados de pesquisas piloto, especificações do fabricante, normas técnicas ou metas institucionais. Em outras palavras, $p_0$ representa a proporção atualmente aceita ou esperada.
+
+Por outro lado, a proporção $p_1$ representa um valor alternativo da proporção populacional que o pesquisador considera suficientemente diferente de $p_0$ para justificar a rejeição da hipótese nula. Em vez de especificar diretamente $p_1$, é mais natural definir a **diferença mínima detectável**, dada por
+
+$$
+\Delta=|p_1-p_0|.
+$$
+
+Essa quantidade representa a menor diferença entre a proporção verdadeira e a proporção de referência que possui importância prática, clínica ou científica.
+
+Uma vez especificado o valor de $\Delta$, a proporção alternativa é obtida de acordo com a hipótese de interesse.
+
+Para testes unilaterais à direita,
+
+$$
+H_1:p>p_0,
+$$
+
+tem-se
+
+$$
+p_1=p_0+\Delta.
+$$
+
+Para testes unilaterais à esquerda,
+
+$$
+H_1:p<p_0,
+$$
+
+utiliza-se
+
+$$
+p_1=p_0-\Delta.
+$$
+
+No caso de testes bilaterais,
+
+$$
+H_1:p\neq p_0,
+$$
+
+a diferença mínima detectável pode ocorrer em qualquer direção. Assim, é comum calcular o tamanho da amostra considerando o cenário mais relevante para a aplicação, isto é,
+
+$$
+p_1=p_0+\Delta
+\quad\text{ou}\quad
+p_1=p_0-\Delta.
+$$
+
+Na maioria dos estudos, portanto, o planejamento amostral é realizado especificando-se os seguintes elementos:
+
+- a proporção de referência $p_0$;
+- a diferença mínima detectável $\Delta$;
+- o nível de significância $\alpha$;
+- o poder desejado do teste, $1-\beta$.
+
+A proporção alternativa $p_1$ é então determinada automaticamente a partir de $p_0$ e $\Delta$.
+
+Por exemplo, suponha que estudos anteriores indiquem uma taxa de sucesso de 80%, isto é,
+
+$$
+p_0=0.80.
+$$
+
+Se o pesquisador deseja detectar um aumento de pelo menos 10 pontos percentuais, então
+
+$$
+\Delta=0.10,
+$$
+
+e a hipótese alternativa será construída considerando
+
+$$
+p_1=0.90.
+$$
+
+De forma análoga, se o objetivo for detectar uma redução de pelo menos 10 pontos percentuais, utiliza-se
+
+$$
+p_1=0.70.
+$$
+
+Observa-se, portanto, que o planejamento do tamanho da amostra é orientado principalmente pela diferença mínima considerada relevante para o estudo, e não por qualquer diferença estatisticamente detectável. Quanto menor for o valor de $\Delta$, maior deverá ser o tamanho da amostra necessário para que o teste possua o poder desejado.
+
+
+### Exemplo Aplicado
+
+Segundo a [*Deutsche Bischofskonferenz (Conferência Episcopal Alemã, DBK)*](https://www.vaticannews.va/pt/igreja/news/2024-06/alemanha-igreja-catolica-dados-estatisticos.html), aproximadamente 24% da população alemã se declara católica. Neste estudo, pretende-se investigar se a proporção de estudantes católicos difere da proporção observada na população geral da Alemanha.
+
+Para isso, será obtida uma amostra aleatória de estudantes, a partir da qual será realizada uma inferência estatística sobre a proporção populacional. Em particular, o objetivo é testar a hipótese de igualdade entre a proporção de católicos no grupo de estudantes e o valor de referência de 0,24. Iremos considerar a seguintes hipótese:
+
+$$H_0: p = 0,24$$
+
+e
+
+$$H_A: p \neq 0,24$$ em que $p$ representa a proporção dos estudantes que são católicos.
+
+#### Cálculo do tamanho mínimo de amostra
+
+Desejamos ter 80% de poder para detectar diferenças de pelo menos 2 pontos percentuais em relação ao valor de referência. Além disso, o valor de $p=0.5$ maximiza a variância $p(1-p)$ e, portanto, produz o maior tamanho amostral possível.
+
+```{python}
+from scipy.stats import norm
+
+alpha = 0.05 
+power = 0.80 
+delta = 0.02
+p0 = 0.5
+p1 = np.abs(p0-delta)
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = ((z_alpha*np.sqrt(p0*(1-p0)) + z_beta*np.sqrt(p1*(1-p1)) )/delta)**2 
+
+print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
+
+```
+
+Como a população possui apenas 8.239 indivíduos, aplicaremos uma correção para população finita:
+
+```{python}
+n = (n0 * N)/(n0 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho corrigido da amostra: {n}")
+```
+
+Agora iremos retirar uma amostra piloto para estimar a proporção de estudantes que são católicos.
+
+```{python}
+amostra_piloto = estudantes.sample(n=50, replace=False, random_state=2026) 
+
+proporcao_catolica = (amostra_piloto["religion"] == "Catholic").mean()
+
+print(f"Proporção de Católicos na amostra piloto: {proporcao_catolica}")
+
+```
+
+Agora, o tamanho de amostra mínimo será:
+
+```{python}
+from scipy.stats import norm
+
+alpha = 0.05 
+power = 0.80 
+delta = 0.02
+p0 = proporcao_catolica
+p1 = np.abs(p0-delta)
+
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = n0 = ((z_alpha*np.sqrt(p0*(1-p0)) + z_beta*np.sqrt(p1*(1-p1)) )/delta)**2 
+
+n = (n0 * N)/(n0 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho da amostra : {np.ceil(n0):.0f}")
+print(f"Tamanho da amostra corrigido: {np.ceil(n):.0f}")
+
+```
+
+
+#### Seleção da amostra aleatória
+
+Agora iremos selecionar aleatoriamente os 2905 estudantes.
+
+```{python}
+amostra = estudantes.sample(n=n, replace=False, random_state=2026) 
+
+amostra.head()
+```
+
+#### Teste Z para uma proporção
+
+```{python}
+p0 =  0.24 
+
+p_amostral = (amostra["religion"] == "Catholic").mean()
+
+z = (p_amostral - p0)/(np.sqrt(p0*(1-p0)/n)) 
+
+print(f"Proporção amostral: {p_amostral:.2f}") 
+print(f"Estatística Z: {z:.4f}")
+```
+
+#### Cálculo do $p_{\text{valor}}$
+
+```{python}
+from scipy.stats import norm
+
+p_value = 2 * (1 - norm.cdf(abs(z)))
+
+print(f"Valor-p: {p_value:.6f}")
+
+```
+
+```{python}
+from statsmodels.stats.proportion import proportions_ztest
+
+x = (amostra["religion"] == "Catholic").sum()
+
+stat, p_value = proportions_ztest(
+    count=x,
+    nobs=n,
+    value=0.24,
+    prop_var = p0, #por padrao usa a proporcao amostral
+    alternative='two-sided'
+)
+
+print(f"Estatística Z: {stat:.4f}")
+print(f"Valor-p: {p_value:.6f}")
+```
+
+::: callout-note
+## Observação
+
+A função `proportions_ztest()` do pacote `statsmodels` utiliza, por padrão, a proporção amostral para estimar a variância da estatística de teste.
+:::
+
+#### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_value < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+#### Intervalo de confiança de 95%
+
+```{python}
+z_crit = norm.ppf(1-alpha/2)
+
+erro = z_crit * np.sqrt(p_amostral*(1-p_amostral)/n)
+
+li = p_amostral - erro
+ls = p_amostral + erro
+
+print(f"IC95%: ({li:.2f}, {ls:.2f})")
+
+```
+
+#### Conclusão
+
+Ao nível de significância de 5%, os dados fornecem evidências suficientes para concluir que a proporção de estudantes católicos difere da proporção de 24% observada na população alemã segundo a DBK. O resultado sugere que a composição religiosa da população estudantil não reflete exatamente a composição religiosa da população geral.
+
+## Testes de Hipóteses para médias de duas populações
+
+Até agora, temos nos concentrado em testes de hipóteses para a média de uma única população. No entanto, em muitas aplicações, desejamos comparar as médias de duas ou mais populações. Para isso, primeiro precisamos distinguir entre amostras provenientes de duas populações independentes e amostras provenientes de populações que não são independentes, chamadas de amostras pareadas. Nas seções seguintes, discutiremos procedimentos inferenciais para comparar as médias de duas populações.
+
+Para amostras independentes de tamanhos $n_1$ e $n_2$, provenientes das populações 1 e 2, a média de todas as possíveis diferenças entre as duas médias amostrais é igual à diferença entre as duas médias populacionais:
+
+$$\mu_{\bar{x}_1-\bar{x}_2} = \mu_1 - \mu_2.$$
+
+Além disso, o desvio-padrão de todas as possíveis diferenças entre as duas médias amostrais é igual à raiz quadrada da soma das variâncias populacionais, cada uma dividida pelo respectivo tamanho da amostra:
+
+$$\sigma_{\bar{x}_1-\bar{x}_2} = \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}.$$ Uma variável normalmente distribuída ou um tamanho de amostra suficientemente grande (lembre-se do Teorema Central do Limite) faz com que a diferença entre as médias amostrais ($\bar{x}_1-\bar{x}_2$) também tenha distribuição normal.
+
+Os procedimentos de teste de hipóteses para duas médias populacionais são, na verdade, os mesmos utilizados para uma única média populacional.O procedimento passo a passo para testes de hipóteses é resumido da seguinte forma:
+
+1.  Formular a hipótese nula ($H_0$) e a hipótese alternativa ($H_A$).
+
+2.  Definir o nível de significância ($\alpha$).
+
+3.  Calcular o valor da estatística de teste.
+
+4.  Determinar o $p$-valor.
+
+5.  Se $p \leq \alpha$, rejeitar $H_0$; caso contrário, não rejeitar $H_0$.
+
+6.  Interpretar o resultado do teste de hipóteses.
+
+### Inferências para Duas Médias Populacionais, Utilizando Amostras Independentes e Assumindo Desvios-Padrão Iguais
+
+Nesta seção, realizamos um teste de hipóteses para as médias de duas populações. Assumimos que os desvios-padrão das duas populações são iguais, porém desconhecidos.
+
+Se conhecêssemos o desvio-padrão populacional comum $\sigma$ e e a diferença entre as médias amostrais $\bar{x}_1 - \bar{x}_2$, a estatística de teste seria dada por:
+
+$$z = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2) }{\sigma \sqrt{\frac{1}{n_1}+ \frac{1}{n_2}}}.$$ No entanto, em quase todas as aplicações práticas, o valor de $\sigma$ é desconhecido. Assim, precisamos estimá-lo.
+
+A melhor maneira de fazer isso é considerar as variâncias amostrais $s_1^2$ e $s_2^2$ como duas estimativas de $\sigma^2$. Combinando (ou "agrupando") essas variâncias e ponderando-as pelos respectivos tamanhos das amostras, obtemos a estimativa da variância populacional comum:
+
+$$s^2_c = \frac{(n_1 -1)\cdot s_1^2 + (n_2 - 1) \cdot s_2^2}{n_1 + n_2 - 2},$$
+
+e tomando a raiz quadrada temos:
+
+$$s_c = \sqrt{\frac{(n_1 -1)\cdot s_1^2 + (n_2 - 1) \cdot s_2^2}{n_1 + n_2 - 2}}.$$ A quantidade $s_c$ é denominada desvio-padrão amostral combinado em que o subscrito $c$ significa combinado. Substituindo $\sigma$ por $s_c$, temos:
+
+$$t = \frac{(\bar{x}_1 - \bar{x}_2) - (\mu_1 - \mu_2) }{s_c \sqrt{\frac{1}{n_1}+ \frac{1}{n_2}}},$$ 
+
+em que $t$ segue uma distribuição t-student com $n_1+n_2 -2$ graus de liberdade.
+
+### Estimação por Intervalo de $\mu_1-\mu_2$
+
+O intervalo de confiança de $100\cdot(1-\alpha)\%$ para a diferença entre as médias populacionais $(\mu_1-\mu_2)$ é dada por:
+
+$$(\bar{x}_1 - \bar{x}_2) \pm t_{n_1+n_2-2, \frac{\alpha}{2} }\cdot s_c \sqrt{\frac{1}{n_1}+ \frac{1}{n_2}},$$
+
+em que o valor crítico $t_{n_1+n_2-2, \frac{\alpha}{2} }$ é obtido na distribuição t-Student para o nível de confiança desejado e $n_1+n_2-2$ graus de liberdade.
+
+Esse intervalo fornece uma faixa de valores plausíveis para a diferença entre as médias populacionais. Se o valor zero estiver contido no intervalo, isso sugere que não há evidência suficiente para concluir que as médias das duas populações são diferentes. Por outro lado, se o intervalo não contiver zero, há evidências de uma diferença significativa entre as médias populacionais.
+
+### Exemplo Prático
+
+O `Python` permite realizar um teste t com variâncias combinadas utilizando a função `ttest_ind_from_stats()`, disponível no módulo `stats` do pacote `scipy`.
+
+> No exemplo, assumiremos que as variâncias das duas amostras são iguais. Portanto, o argumento `equal_var` da função será definido como `True`.
+
+Para praticar a aplicação do teste t com variâncias combinadas, utilizaremos o conjunto de dados *estudantes*.
+
+#### Hipóteses
+
+Queremos verificar se existe diferença entre os ganhos de homens e mulheres graduados. Desta forma, queremos testar as seguintes hipóteses:
+
+$$H_0: \mu_1 = \mu_2$$
+
+e
+
+$$H_A: \mu_1 \neq \mu_2$$ em que $\mu_1$ e $\mu_2$ representam as médias salariais dos estudantes graduados do sexo masculino e feminino, respectivamente.
+
+#### Preparação dos dados
+
+Começamos com a preparação dos dados, que inclui as seguintes etapas:
+
+1.  Subdividimos o conjunto de dados com base na variável binária `graduated`, que indica se o estudante já se formou. O valor 1 representa “formado”, enquanto 0 indica “não formado”.
+
+2.  Em seguida, dividimos o conjunto de dados por gênero (masculino e feminino).
+
+3.  Depois, selecionamos aleatoriamente uma amostra de 50 estudantes do sexo feminino e 50 do sexo masculino de cada subconjunto e extraímos a média do salário anual (em euros) como variável de interesse.
+
+Armazenaremos as informações de salário dos grupos masculino e feminino em variáveis separadas chamadas `amostra_homens` e `amostra_mulheres`. A informação relevante está armazenada na coluna `salary`.
+
+```{python}
+estudantes_graduados = estudantes.loc[estudantes.graduated == 1] #filta estudantes formados
+
+homens_graduados = estudantes_graduados.loc[estudantes.gender == "Male"] #separa homens formados
+
+mulheres_graduadas = estudantes_graduados.loc[estudantes.gender == "Female"] #separa mulheres formadas
+
+n_piloto = 30
+
+amostra_homens_piloto = homens_graduados.sample(n_piloto, random_state = 24, replace = False)["salary"] #Sorteia amostra de homens e pega salário
+
+amostra_mulheres_piloto = mulheres_graduadas.sample(n_piloto, random_state = 24, replace = False)["salary"] #Sorteia amostra de mulheres e pega salário
+
+s21_piloto = np.var(amostra_homens_piloto, ddof = 1)
+s22_piloto = np.var(amostra_mulheres_piloto, ddof = 1)
+
+n1 = n2 = n_piloto
+
+
+alpha = 0.05 
+power = 0.90 
+delta = 5000 
+
+z_alpha = norm.ppf(1 - alpha/2) 
+z_beta = norm.ppf(power) 
+n0 = (((z_alpha + z_beta)/ delta)**2)*(s21_piloto + s22_piloto) 
+
+print(f"Razão entre as variâncias da amostra piloto: {np.sqrt(s21_piloto)/np.sqrt(s22_piloto):.2f}")
+print(f"Tamanho inicial da amostra: {np.ceil(n0):.0f}")
+
+```
+
+A razão entre os desvios-padrão é aproximadamente 1,34 e, portanto, nota-se que o suposição de igualdade dos desvios-padrão populacionais parece razoável.
+
+```{python}
+tol = 1
+max_iter = 100
+n0 = np.ceil(n0)
+
+for i in range(max_iter):
+
+    gl = 2*n0 - 2
+
+    t_alpha = t.ppf(1 - alpha/2, df=gl)
+    t_beta = t.ppf(power, df=gl)
+
+    n_novo = (((t_alpha + t_beta)/delta)**2) * (s21_piloto + s22_piloto)
+
+    # normalmente arredondamos para cima
+    n_novo = np.ceil(n_novo)
+
+    if n_novo == n0:
+        break
+
+    n0 = n_novo
+
+n = int(np.ceil(n0)) 
+
+print(f"Convergiu em {i+1} iterações")
+print(f"n por grupo = {int(n)}")
+```
+
+### Seleção da amostra
+
+```{python}
+amostra_homens = homens_graduados.sample(n, random_state = 24, replace = False)["salary"] #Sorteia amostra de homens e pega salário
+
+amostra_mulheres = mulheres_graduadas.sample(n, random_state = 24, replace = False)["salary"] #Sorteia amostra de mulheres e pega salário
+
+```
+
+```{python}
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+
+plt.figure(figsize=(12,5))
+
+ax = plt.subplot(1, 2, 1)
+qq = stats.probplot(amostra_homens, dist="norm", plot = plt)
+ax.set_title("Q-Q plot para homens (amostra)")
+ax.set_ylabel("Quantis Amostrais")
+
+ax = plt.subplot(1, 2, 2)
+qq = stats.probplot(amostra_mulheres, dist="norm", plot = plt)
+ax.set_title("Q-Q plot para mulheres (amostra)")
+ax.set_ylabel("Quantis Amostrais")
+```
+
+Observamos que os dados da amostra apresentam certo nível de ruído, mas ainda seguem aproximadamente uma distribuição normal. Além disso, verificamos se os desvios-padrão das duas populações são aproximadamente iguais. Como regra prática, a condição de igualdade dos desvios-padrão populacionais é considerada satisfeita se a razão entre o maior e o menor desvio-padrão amostral for inferior a 2.
+
+```{python}
+s1 = np.std(amostra_homens, ddof = 1)
+s2 = np.std(amostra_mulheres, ddof = 1)
+
+n1 = n2 = n
+
+sc = np.sqrt(((n1 - 1) * s1**2 + (n2 - 1) * s2**2) / (n1 + n2 - 2))
+
+print(f"Razão entre os desvios-padrão: {s1/s2:.2f}")
+```
+
+Podemos analisar a suposição de igualdade das variâncias, fazendo um boxplot por gênero.
+
+```{python}
+import seaborn as sns
+
+plt.figure(figsize=(11,5))
+
+amostra = pd.melt(pd.DataFrame({'Homens': amostra_homens.values, 'Mulheres': amostra_mulheres.values}))
+
+amostra.columns = ["Gênero", "Salário Anual em Euros"]
+
+sns.boxplot(x='Gênero', 
+            y='Salário Anual em Euros', 
+            hue='Gênero',
+            data=amostra).set(title='Dados Amostrais')
+
+```
+
+#### Estatística de Teste
+
+```{python}
+gl = 2*n-2
+xbar1 = np.mean(amostra_homens)
+xbar2 = np.mean(amostra_mulheres)
+
+t_cal = (xbar1 - xbar2) / (sc * np.sqrt((1/n1) + (1/n2)))
+
+p_valor = 1 - t.cdf(t_cal, df = gl)
+p_valor
+
+print(f"EGraus de Liberdade: {gl: 0f}")
+print(f"Estatística de Teste: {t_cal:.2f}")
+print(f"P-valor: {p_valor:.4f}")
+
+```
+
+#### Regra de Decisão
+
+```{python}
+alpha = 0.05 
+
+if p_valor < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+#### Usando `scipy`
+
+```{python}
+from scipy import stats
+
+resultado_teste = stats.ttest_ind(amostra_homens, amostra_mulheres, 
+                              equal_var = True, 
+                              alternative = "two-sided")
+
+resultado_teste
+```
+
+#### Conclusão
+
+Ao nível de significância de 1%, os dados fornecem evidências muito fortes para concluir que o salário médio dos graduados do sexo masculino é diferente do salário médio das graduadas do sexo feminino.
+
+## Inferências para duas médias populacionais com amostras independentes e variâncias desiguais
+
+Nos casos em que desejamos testar a igualdade de duas médias populacionais e os desvios-padrão das duas populações são diferentes, aplica-se o chamado teste t de *Welch*.
+
+O teste t de *Welch* é semelhante ao teste apresentado na seção anterior. A diferença é que agora o estimador do desvio-padrão é dado por:
+
+$$s_{\bar{x}_1 - \bar{x}_2} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}.$$ Além disso, a estatística t segue uma distribuição t-Student, e os graus de liberdade (gl) são calculados pela fórmula de *Welch-Satterthwaite*:
+
+$$gl = \frac{\left(\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}\right)^2}{\frac{\left(\frac{s_1^2}{n_1}\right)^2}{n_1-1} + \frac{\left(\frac{s_2^2}{n_2}\right)^2}{n_2-1}}.$$ Ao utilizar tabelas da distribuição t, recomenda-se arredondar os graus de liberdade para baixo até o inteiro mais próximo.
+
+> O teste t de *Welch* é robusto a violações moderadas da suposição de normalidade das populações. Entretanto, ele é menos robusto à presença de valores extremos (*outliers*) (Weiss, 2010).
+
+No exemplo, anterior poderíamos aplicar o teste de maneira prática e fácil usando a função `stats.ttest_ind()` com o argumento `equal_var = False`.
+
+```{python}
+resultado_teste_Welch = stats.ttest_ind(amostra_homens, amostra_mulheres, 
+                              equal_var = False, 
+                              alternative = "two-sided")
+
+resultado_teste_Welch
+```
+
+## Inferências para Duas Médias Populacionais com Amostras Dependentes (Pareadas)
+
+Estudaremos agora a um procedimento de teste de hipóteses para a diferença entre duas médias populacionais quando as amostras são dependentes. Quando, por exemplo, dois valores são coletados da mesma fonte (ou unidade amostral), diz-se que as amostras são **pareadas** ou **emparelhadas**.
+
+Esses procedimentos são frequentemente aplicados em análises do tipo **Antes–Depois–Controle–Impacto (BACI, *Before-After-Control-Impact*)**. Imagine que você precise avaliar a eficácia de um sistema de filtragem na remoção de poluentes atmosféricos emitidos por uma fábrica. Nesse caso, uma população consiste em medições da qualidade do ar realizadas antes da implementação ou renovação do sistema de filtragem. A outra população consiste em medições da qualidade do ar realizadas após a instalação do novo sistema. Trata-se, portanto, de amostras pareadas, pois os dois conjuntos de dados são coletados da mesma fonte, isto é, a fábrica.
+
+Em amostras pareadas, a diferença entre os valores observados nos dois conjuntos de dados é denotada por (d), frequentemente chamada de **diferença pareada**. Observe que o tamanho amostral ($n$) é o mesmo para ambas as amostras. A média das diferenças pareadas é representada por ($\bar{d}$):
+
+$$\bar{d} = \frac{\sum d}{n}.$$
+
+O desvio-padrão das diferenças pareadas, denotado por ($s_d$), é calculado por:
+
+$$s_d =
+\sqrt{
+\frac{
+\sum d^2 - \frac{(\sum d)^2}{n}
+}
+{n-1}
+}.$$
+
+Suponha que a variável diferença pareada ($d$) siga uma distribuição normal. Nesse caso, a estatística do **teste t pareado** é dada por:
+
+$$t =
+\frac{
+\bar{d} - (\mu_1 - \mu_2)
+}
+{
+s_d / \sqrt{n}
+}.$$
+
+Quando a hipótese nula assume que não existe diferença entre as médias populacionais, isto é,
+
+$$\mu_1 - \mu_2 = 0,$$
+
+a estatística de teste simplifica-se para:
+
+$$t =
+\frac{\bar{d}}
+{s_d / \sqrt{n}}.$$
+
+A estatística ($t$) para amostras pareadas, sob a $H_0$, segue uma distribuição t de Student com $gl = n - 1$ graus de liberdade.
+
+### Estimação por Intervalo para ($\mu_d$)
+
+O intervalo de confiança de ($100\cdot(1-\alpha)\%$) para a média das diferenças pareadas ($\mu_d$) é dado por:
+
+$$\bar{d}
+\pm
+t^*
+\frac{s_d}{\sqrt{n}},$$
+
+em que ($t^*$) é o quantil obtido da distribuição t-Student para o nível de confiança desejado e ($n-1$) graus de liberdade .
+
+### Exemplo Prático
+
+Para ilustrar a aplicação do teste t pareado para amostras dependentes, estamos interessados em verificar se um tutorial online de Estatística auxilia os estudantes a melhorar seu desempenho acadêmico.
+
+Existem três variáveis de interesse no conjunto de dados dos estudantes:
+
+1.  A variável \`online.tutorial é uma variável binária que assume valor 1 se o estudante concluiu o tutorial online de Estatística e 0 caso contrário.
+
+2.  As variáveis `score1` e `score2` representam as notas (de 0 a 100) obtidas em duas avaliações de Matemática e Estatística. Quanto maior a nota, melhor o desempenho do estudante.
+
+3.  Observe que a primeira avaliação ocorre antes da participação dos estudantes no tutorial online de Estatística. A participação no tutorial é opcional, mas as duas avaliações são obrigatórias para todos os estudantes. A primeira prova (`score1`) é realizada no início do terceiro semestre, enquanto a segunda prova (`score2`) é realizada ao final do terceiro semestre.
+
+Neste contexto, há duas questões de pesquisa de interesse:
+
+- Verificar se o grupo de estudantes que participou do tutorial online de Estatística apresentou melhor desempenho na segunda avaliação em comparação com a primeira avaliação.
+
+- Avaliar o desempenho do grupo de estudantes que não participou do tutorial online, comparando os resultados obtidos na primeira e na segunda avaliação.
+
+### Hipóteses
+
+A hipótese nula afirma que não há diferença entre as médias das notas dos dois exames:
+
+$$H_0: \mu_1 = \mu_2$$
+
+A hipótese alternativa indica que os alunos têm melhor desempenho no segundo exame:
+
+$$H_A: \mu_1 < \mu_2$$
+
+Isso caracteriza um teste de hipótese unilateral à esquerda
+
+### Preparação dos Dados e Amostra Piloto
+
+```{python}
+subconjunto = estudantes.loc[estudantes["online.tutorial"] == 1]
+
+n_piloto = 50
+
+amostra_piloto = subconjunto.sample(n_piloto, random_state = 24)[["score1", "score2"]]
+
+d_piloto = (amostra_piloto["score1"] - amostra_piloto["score2"]).to_frame(name="diferenca")
+
+sd_piloto = np.std(d_piloto["diferenca"])
+
+print(f"Desvio-padrão da diferença (amostra piloto) : {sd_piloto:.2f}")
+
+```
+
+## Cálculo do tamanho amostral
+
+```{python}
+from scipy.stats import t
+
+alpha = 0.01 
+power = 0.80 
+delta = 2.0 
+
+z_alpha = norm.ppf(1 - alpha) 
+z_beta = norm.ppf(power) 
+
+n0 = ((z_alpha + z_beta) * sd_piloto/delta)**2
+
+print(f"Tamanho inicial da amostra (usando quantil da normal padrão): {np.ceil(n0):.0f}")
+
+
+t_alpha = t.ppf(1 - alpha, df = n0-1)
+t_beta = t.ppf(power, df = n0-1)
+n1 = ((t_alpha + t_beta) * s/delta)**2
+N = 3182
+n = (n1 * N)/(n1 + N - 1) 
+n = int(np.ceil(n)) 
+
+print(f"Tamanho mínimo da amostra (usando quantil da t-student): {n:.0f}")
+```
+
+### Seleção da Amostra
+
+```{python}
+amostra = subconjunto.sample(n, random_state = 24)[["score1", "score2"]]
+
+```
+
+### Estatística de Teste
+
+```{python}
+d = (amostra["score1"] - amostra["score2"]).to_frame(name="diferenca")
+
+diff_mean = np.mean(d)
+diff_std = np.sqrt((np.sum(d**2) - ((np.sum(d)**2) / n)) / (n - 1))
+
+t_value = diff_mean / (diff_std / np.sqrt(n))
+
+
+p = t.cdf(t_value, df = n-1)
+
+
+print(f"EGraus de Liberdade: {n-1: 0f}")
+print(f"Estatística de Teste: {t_value:.2f}")
+print(f"P-valor: {p:.4f}")
+```
+
+#### Regra de Decisão
+
+```{python}
+alpha = 0.01 
+
+if p < alpha: 
+  print("Rejeita H0") 
+else: 
+  print("Não rejeita H0")
+```
+
+#### Usando funções do Python
+
+```{python}
+test_result = stats.ttest_rel(amostra["score1"], amostra["score2"], alternative = "less")
+
+test_result
+```
+
+#### Conclusão
+
+Ao nível de significância de 1%, os dados fornecem evidência forte para concluir que as notas dos estudantes em exames melhoram após realizarem um tutorial online de aprendizagem de estatística.
+
+## O teste de hipótese para a comparação de proporções entre duas populações (independentes)
+
+O teste de hipótese para a comparação de proporções entre duas populações independentes (proporções binomiais) pode ser utilizado para determinar se a probabilidade de um evento de interesse é estatisticamente diferente entre dois grupos.
+
+### Formulação das hipóteses
+
+Dependendo do objetivo do estudo, podemos formular diferentes tipos de hipóteses alternativas ($H_A$):
+
+- *Teste Bilateral*: É aplicada quando o objetivo é verificar se existe qualquer diferença significativa entre as proporções das duas populações, sem especificar qual delas seria maior.
+
+  - $H_0: p_1 = p_2$
+  - $H_A: p_1 \neq p_2$
+
+- *Teste de Unilateral à direita*: Utilizado quando se deseja testar se a proporção da primeira população é estritamente maior que a da segunda.
+
+  - $H_0: p_1 = p_2$
+  - $H_A: p_1 > p_2$
+
+- *Teste de Unilateral à esquerda*: Utilizado quando o interesse é comprovar que a proporção da primeira população é estritamente menor que a da segunda.
+
+  - $H_0: p_1 = p_2$
+  - $H_A: p_1 < p_2$
+
+> A escolha entre uma alternativa bilateral ou unilateral deve ser feita antes da coleta de dados, baseando-se no referencial teórico ou no objetivo do estudo. Testes unilaterais possuem maior poder estatístico para detectar diferenças na direção especificada, mas não permitem concluir nada caso a diferença real ocorra na direção oposta.
+
+### Estatística do Teste
+
+Primeiro, calculam-se as proporções de sucessos observadas em cada amostra $(\hat{p}_1 = x_1/n_1)$ e $(\hat{p}_2 = x_2/n_2)$. Sob a hipótese nula, a melhor estimativa da proporção comum $(p)$ é a proporção combinada, calculada como:
+
+$$\hat{p} = \frac{x_1 + x_2}{n_1 + n_2},$$
+
+em que $x_1$ e $x_2$ são os números de sucessos nas amostras de tamanho $n_1$ e $n_2$, respectivamente.
+
+A estatística de teste é obtida dividindo-se a diferença observada entre as proporções amostrais pelo seu erro padrão estimado.
+
+$$z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})\left(\frac{1}{n_1} + \frac{1}{n_2}\right)} }.$$ Para que essa estatística siga aproximadamente uma distribuição normal padrão sob a hipótese nula, é necessário que o tamanho da amostra seja suficientemente grande. O critério usual é que o número esperado de sucessos e falhas em ambos os grupos seja pelo menos 5, ou seja: $n_1 \hat{p}(1-\hat{p}) \geq 5$ e $n_2 \hat{p}(1-\hat{p}) \geq 5$. Caso esses valores esperados sejam inferiores a 5, recomenda-se o uso do Teste Exato de Fisher em vez da estatística Z.
+
+### Regra de Decisão
+
+1.  **Método do Valor Crítico**
+
+- *Teste Bilateral*: Rejeita-se $H_0$ se o valor absoluto de $z$ for maior que o valor crítico da tabela da normal padrão para $\alpha/2$ ($z_{1-\alpha/2}$).
+
+- *Teste Unilateal à direita*: Rejeita-se $H_0$ se $z > z_{1-\alpha}$.
+
+- *Teste Unilateal à esquerda*: Rejeita-se $H_0$ se $z < -z_{\alpha}$.
+
+2.  **Método do Nível Descritivo**
+
+O $p_{\text{valor}}$ é a probabilidade de obter uma estatística de teste tão extrema quanto a observada, assumindo que a hipótese nula seja verdadeira.
+
+- Regra de Decisão:
+
+- Se o $p_{\text{valor}} < \alpha$: Rejeita-se $H_0$;
+
+- Se o $p_{\text{valor}} \geq \alpha$: Não se rejeita $H_0$;
+
+- Cálculo bilateral: O $p_{\text{valor}}$ é calculado como $2\cdot (1 - \Phi(|z|)),$ em que $\Phi(\cdot)$ é a função de distribuição acumulada da normal padrão.
+
+::: callout-note
+## Dados Pareados:
+
+Se as proporções vierem dos mesmos indivíduos (antes e depois), você pode usar o Teste de McNemar.
+:::
+
+### Tamanho da amostra para comparação de duas proporções binomiais
+
+O tamanho da amostra necessário para comparar duas proporções binomiais utilizando um teste bilateral, com nível de significância $\alpha$ e poder estatístico $1-\beta$, quando uma amostra ($n_2$) é $k$ vezes maior que a outra ($n_1$), é dado pelas seguintes expressões.
+
+Deseja-se testar as hipóteses
+
+$$H_0: p_1 = p_2 \quad \text{vs} \quad H_A: p_1 \neq p_2,$$
+
+para uma diferença específica $|p_1-p_2|=\Delta$. O tamanho da amostra do primeiro grupo é
+
+$$n_1=
+\frac{
+\left[
+\sqrt{\bar p\,\bar q\left(1+\frac{1}{k}\right)}\,z_{1-\alpha/2}
++
+\sqrt{p_1q_1+\frac{p_2q_2}{k}}\,z_{1-\beta}
+\right]^2
+}
+{\Delta^2},$$
+
+e o tamanho da amostra do segundo grupo é $n_2 = k n_1$, em que $q_1 = 1-p_1$ e $q_2 = 1-p_2$. Além disso,
+
+$$\bar p=
+\frac{p_1+kp_2}{1+k},$$
+
+e
+
+$$\bar q = 1-\bar p.$$
+
+As quantidades $p_1$ e $p_2$ representam as probabilidades verdadeiras de sucesso nos dois grupos.
+
+> **Observação:** Embora essa expressão seja derivada para a comparação de duas proporções binomiais, ela pode ser utilizada como aproximação para eventos raros. Entretanto, quando o interesse é comparar **taxas de incidência** (por exemplo, taxas de suicídio ou homicídio), a literatura epidemiológica recomenda preferencialmente métodos baseados na distribuição de Poisson, como o teste para comparação de taxas ou a regressão de Poisson com *offset* para a população exposta.
+
+::: callout-note
+## Nota:
+
+O tamanho da amostra é inversamente proporcional ao quadrado da diferença que se deseja detectar ($|p_1-p_2|^2$). Reduzir a diferença alvo pela metade exige uma amostra quatro vezes maior. Além disso, em ensaios clínicos reais, o tamanho da amostra deve ser inflado para compensar possíveis perdas de seguimento ou não-adesão dos participantes.
+:::
+
+
+
+## Análise de Dados Categóricos
 
 Na análise de dados, muitas variáveis não são expressas por medidas numéricas contínuas, mas por categorias que descrevem atributos. Sexo, estado civil, escolaridade e diagnóstico clínico são exemplos de variáveis categóricas. Quando trabalhamos com essas variáveis, as perguntas de pesquisa mudam:
 

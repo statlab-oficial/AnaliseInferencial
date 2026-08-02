@@ -1,488 +1,528 @@
-# Estimação por Intervalos: Intervalo de Confiança
+# Métodos de Estimação Pontual
 
-## Motivação para Intervalos de Confiança
+## Método dos Momentos
 
-Os intervalos de confiança são utilizados no contexto frequentista, no qual os parâmetros populacionais são assumidos como desconhecidos, porém fixos, e não variáveis aleatórias. Enquanto isso, os intervalos de credibilidade (Paradigma Bayesiano) constituem a versão bayesiana dos intervalos de confiança frequentistas em que os parâmetros são tratados como variáveis aleatórias.
+A estimação por máxima verossimilhança (MV), como veremos nesse capítulo, possui uma intuição bastante elegante, mas pode ser matematicamente trabalhosa de resolver. Vamos aprender inicialmente uma técnica para estimar parâmetros, chamada método dos momentos (MoM).
 
-Quando realizamos estimação pontual (como Máxima Verossimilhança ou Método dos Momentos), a probabilidade de nossa resposta estar exatamente correta (considerando a aleatoriedade das amostras iid) é
+As definições iniciais e a estratégia podem parecer confusas à primeira vista, mas apresentaremos vários exemplos que devem ajudar a tornar tudo mais claro.
 
-$$P(\hat{\theta} = \theta) = 0,$$ porque $\theta$ é um número real e pode assumir uma quantidade incontável de valores. Portanto, a probabilidade de estarmos exatamente corretos é zero, embora possamos estar muito próximos do valor verdadeiro.
+::: {.callout-note title="Momentos (Revisão)"}
+Seja $X$ uma variável aleatória e $c \in \mathbb{R}$ um escalar. Então, o $k$-ésimo momento de $X$ é:
 
-Em vez disso, podemos fornecer um intervalo (frequentemente, mas não necessariamente, centrado na estimativa pontual $\hat{\theta}$) tal que $\theta$ pertença a esse intervalo com alta probabilidade, por exemplo 95%:
+$$E[X^k],$$ e o $k$-ésimo momento de $X$ em torno de $c$ é:
 
-$$P(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]) = 0{,}95.$$ O valor $\Delta$ é denominado **margem de erro** e determina a amplitude do intervalo de confiança. A expressão anterior pode ser escrita de maneiras equivalentes:
-
-$$P\left(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]\right) = P\left(|\hat{\theta}-\theta| \leq \Delta\right) = P\left(
-\hat{\theta}
-\in
-[\theta-\Delta,\theta+\Delta]
-\right).$$
-
-Todas essas expressões representam a probabilidade de que a distância entre o estimador e o parâmetro verdadeiro não ultrapasse $\Delta$.
-
-O intervalo de confiança para $\theta$ pode ser representado como a Figura abaixo. Mais adiante, discutiremos como deve ser interpretado um intervalo de confiança associado a um nível de confiança específico.
-
-![](ICplot.png)
-
-## Revisão: Distribuição Normal Padrão
-
-Grande parte da teoria dos intervalos de confiança baseia-se na distribuição normal padrão
-
-$$Z \sim N(0,1).$$
-
-Sua função distribuição acumulada é denotada por
-
-$$\Phi(z)=P(Z\leq z).$$
-
-Uma propriedade importante da distribuição normal é sua simetria:
-
-$$\Phi(z)=1-\Phi(-z).$$
-
-![](normal1.png)
-
-Suponha que desejemos construir um intervalo centrado tal que a probabilidade de um valor pertencer a esse intervalo seja de 95%. Note que (observe a Figura abaixo):
-
-- **Limite inferior:** a probabilidade de um valor ser menor que o limite inferior é de 2,5%.
-
-- **Limite superior:** a probabilidade de um valor ser maior que o limite superior é de 2,5%.
-
-Consequentemente, a probabilidade de um valor ser menor que o limite superior deve ser de 97,5%.
-
-![](Normal2.png)
-
-Para construir um intervalo central de 95%, precisamos encontrar um valor $z$ tal que 95% da área esteja entre $-z$ e $z$. O valor de $z$ pode ser encontrar usando o `R` ou usando alguma tabela da normal padrão (existem várias configurações). Daí, temos que:
-
-$$z=\Phi^{-1}(0.975)=1{,}96.$$
-
-Assim,
-
-$$P(-1{,}96 \leq Z \leq 1{,}96)=0{,}95.$$
-
-O valor 1,96 é conhecido como o valor crítico associado a um nível de confiança de 95%.
-
-## Construção de um Intervalo de Confiança
-
-**Exemplo:** Distribuição de Poisson
-
-Suponha que
-
-$$X_1,\ldots,X_n \stackrel{iid}{\sim} \text{Poi}(\theta),$$
-
-em que $\theta$ é desconhecido.
-
-Sabemos que tanto o estimador de máxima verossimilhança quanto o estimador pelo método dos momentos são dados pela média amostral
-
-$$\frac{1}{n}
-\sum_{i=1}^{n}X_i.$$
-
-Como
-
-$$E(X_i)=\theta
-\quad\text{e}\quad
-Var(X_i)=\theta,$$
-
-segue que
-
-$$E(\hat{\theta})=\theta$$
-
-e
-
-$$Var(\hat{\theta}) = \frac{\theta}{n}.$$
-
-Pelo Teorema Central do Limite,
-
-$$\hat{\theta}
-\approx
-N\left(
-\theta,
-\frac{\theta}{n}
-\right).$$
-
-Padronizando,
-
-$$\frac{\hat{\theta}-\theta}
-{\sqrt{\theta/n}}
-\approx
-N(0,1).$$
-
-Desejamos construir um intervalo de confiança de 95%, ou seja, $0{,}95$. Utilizando o valor crítico $z_{0{,}975}=1{,}96$, obtemos
-
-$$\Delta = 1{,}96
-\sqrt{\frac{\theta}{n}}.$$
-
-Como $\theta$ é desconhecido, substituímos pelo estimador $\hat{\theta}$:
-
-$$\left[\hat{\theta} - 1{,}96
-\sqrt{\frac{\hat{\theta}}{n}}
-;
-\hat{\theta}
-+
-1{,}96
-\sqrt{\frac{\hat{\theta}}{n}}
-\right].$$
-
-::: {.callout-note title="Definição: Intervalo de Confiança"}
-Suponha que você possua uma amostra aleatória $X_1,\ldots,X_n$ de uma distribuição com parâmetro desconhecido $\theta$, e que disponha de um estimador $\hat{\theta}$ para esse parâmetro.
-
-Um intervalo de confiança de nível $100(1-\alpha)\%$ para $\theta$ é um intervalo (tipicamente, mas nem sempre, centrado em $\hat{\theta}$), $[\hat{\theta}-\Delta,\hat{\theta}+\Delta],$ tal que a probabilidade (considerando a aleatoriedade das amostras $X_1,\ldots,X_n$) de o parâmetro $\theta$ pertencer a esse intervalo seja igual a $1-\alpha$:
-
-$$P\left(\theta \in [\hat{\theta} - \Delta; \hat{\theta} + \Delta]\right) = 1-\alpha.$$ Quando $\hat{\theta} = \frac{1}{n}\sum_{i=1}^{n}X_i$ é a média amostral, o Teorema Central do Limite garante que $\hat{\theta}$ possui distribuição aproximadamente normal para amostras suficientemente grandes. Nesse caso, um intervalo de confiança de nível $100(1-\alpha)\%$ é dado por
-
-$$\left[\hat{\theta} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-;
-\hat{\theta}
-+
-z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right],$$
-
-em que $z_{1-\alpha/2}$ é o quantil da distribuição Normal padrão e $\sigma$ representa o verdadeiro desvio-padrão de uma observação da população, o qual pode precisar ser estimado a partir dos dados.
+$$E[(X - c)^k].$$ Em geral, temos interesse especial no **primeiro momento** (média) de $X$: $\mu = E[X]$, e no **segundo momento em torno da média** (variância): $\text{Var}(X) = E[(X - \mu)^2]$.
 :::
 
-É importante observar que a fórmula apresentada anteriormente funciona apenas quando $\hat{\theta}$ é a média amostral. Nesse caso, podemos utilizar o Teorema Central do Limite para concluir que a distribuição de $\hat{\theta}$ é aproximadamente normal. Quando o estimador não é a média amostral, essa aproximação pode não ser válida, sendo necessário recorrer a outras estratégias para construir intervalos de confiança.
+::: {.callout-important title="Momentos Amostrais"}
+Seja $X$ uma variável aleatória e $x_1, \ldots, x_n$ uma amostra i.i.d. de $X$. O $k$-ésimo momento amostral é: $$\frac{1}{n} \sum_{i=1}^{n} x_i^k.$$ O $k$-ésimo momento amostral em torno de $c$ é: $$\frac{1}{n} \sum_{i=1}^{n} (x_i - c)^k.$$
 
-Se desejarmos um intervalo de confiança de 95%, então $100(1-\alpha)= 95$, o que implica $\alpha=0.05$. Nesse caso, devemos encontrar o quantil da distribuição Normal padrão correspondente a $1-\frac{0.05}{2} = 0.975$. Consultando uma tabela da distribuição Normal padrão ou utilizando um software estatístico, obtemos $\Phi^{-1}(0.975)= 1.96$. Isso significa que um intervalo de confiança de 95% é obtido considerando aproximadamente 1,96 desvios-padrão para cada lado da estimativa pontual.
+Casos particulares importantes:
 
-De maneira análoga, se desejarmos um intervalo de confiança de 98%, teremos $100(1-\alpha)=98,$ e, portanto, $\alpha=0.02$. Logo, $1-\frac{0.02}{2} = 0,99$, assim, devemos calcular $\Phi^{-1}(0.99)$. A razão para isso é simples: se desejamos que 98% da área da distribuição esteja concentrada na região central, os 2% restantes devem ser distribuídos igualmente entre as duas caudas da distribuição. Consequentemente, teremos 1% da área à esquerda e 1% da área à direita.
+- O primeiro momento amostral é a **média amostral**;
+- O segundo momento amostral em torno da média é a **variância amostral**.
+:::
 
-**Exemplo:** Intervalo de Confiança para uma Proporção
+### Ideia por trás do método
 
-Considere uma amostra de tamanho $n=400$ de uma distribuição Bernoulli com parâmetro $\theta$. Suponha que foram observados 136 sucessos.
+A estimação pelo método dos momentos baseia-se exclusivamente na **Lei dos Grandes Números**, que relembramos a seguir:
 
-A estimativa pontual é
+Sejam $Y_1, Y_2, \ldots$ variáveis aleatórias independentes com uma distribuição comum que possui média $\mu_{Y}$. Então, as médias amostrais convergem para a média da distribuição à medida que o número de observações aumenta:
 
-$$\hat{\theta} =  \frac{136}{400} = 0.34.$$
+$$\bar{Y}_{n} = \frac{1}{n} \sum_{i=1}^{n} Y_i \to \mu_{Y} \quad \text{quando } n \to \infty.$$
 
-Desejamos construir um intervalo de confiança de 99%. Temos
+Para mostrar como o método dos momentos determina um estimador, consideramos inicialmente o caso de **um único parâmetro**.
 
-$$\alpha = 1- \frac{99}{100} = 0.01$$
+Começamos com variáveis aleatórias independentes $X_1, X_2, \ldots$, geradas segundo a função densidade de probabilidade $f_X(x \mid \theta)$, associada a um parâmetro desconhecido $\theta$. A média comum das variáveis $X_i$, denotada por $\mu_X$, é uma função $k(\theta)$ de $\theta$. Por exemplo, se as $X_i$ são variáveis aleatórias contínuas, então:
 
-e, portanto, $z_{0.995} = 2.576$. Como
+$$\mu_X = \int_{-\infty}^{\infty} x f_X(x \mid \theta)\, dx = k(\theta).$$
 
-$$Var(X)=\theta(1-\theta),$$
+A Lei dos Grandes Números afirma que:
 
-estimamos o desvio-padrão por
+$$\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i \to \mu_X \quad \text{quando } n \to \infty.$$
 
-$$\sigma = \sqrt{\hat{\theta}(1-\hat{\theta})} =
-\sqrt{0.34\times0.66} = 0.474.$$
+Assim, quando o número de observações $n$ é grande, a média da distribuição $\mu = k(\theta)$ pode ser bem aproximada pela média amostral, isto é:
 
-Logo,
+$$\bar{X} \approx k(\theta).$$
 
-$$\left[0.34 - 2.576\frac{0.474}{\sqrt{400}}
-;
-0.34
-+
-2.576\frac{0.474}{\sqrt{400}}
-\right].$$
+Essa relação pode ser transformada em um estimador $\hat{\theta}$, definindo:
 
-Após os cálculos, temos
+$$\bar{X} = k(\hat{\theta}),$$
 
-$$IC(\theta,0{,}99) = [0.279;0.401].$$ <!-- **Exemplo:** Intervalo de Confiança para média da distribuição exponencial --> <!-- Sejam $X_1, \dots, X_n$ iid exponencial $Exp(\lambda) = Gama(1, 1/\lambda)$. --> <!-- Então, --> <!-- $$\sum\limits{i=1}^n X_i \sim Gama(n, 1/\lambda) 2\lambda \sum\limits{i=1}^n X_i --> <!-- \sim Gama(n,2) = \chi^2_{2n}.$$ Considere $\alpha = 0{,}05$. Sejam $A$ e $B$ --> <!-- (ambos positivos) tal que --> <!-- $$P(A \leq 2\lambda \sum\limits{i=1}^n X_i \leq B ) = 0{,}95$$ -->
+e resolvendo essa equação em relação a $\hat{\theta}$.
 
-## Interpretação de um Intervalo de Confiança
+Na sequência, descreveremos o procedimento no caso de um **vetor de parâmetros** e apresentaremos diversos exemplos. Veremos também que o **método delta** pode ser utilizado para estimar a variância dos estimadores obtidos pelo método dos momentos.
 
-Uma interpretação muito comum, mas incorreta, é afirmar:
+### Procedimento Geral do Método dos Momentos
 
-> Existe 99% de probabilidade de que $\theta$ pertença ao intervalo $[0.279;0.401]$.
+De forma mais geral, para variáveis aleatórias independentes $X_1, X_2, \ldots$, geradas segundo uma distribuição associada ao parâmetro $\theta$, e sendo $m$ uma função real, se $k(\theta) =E_{\theta}[m(X_1)],$ então
 
-Essa afirmação está errada porque $\theta$ é um parâmetro fixo. Após observarmos os dados, o intervalo já foi determinado e $\theta$ está dentro dele ou não está.
+$$\frac{1}{n} \sum_{i=1}^{n} m(X_i) \to k(\theta) \quad \text{quando } n \to \infty.$$
 
-A interpretação correta é:
+O método dos momentos resulta das escolhas $m(x) = x^m$. Denotamos
 
-> Se repetirmos o procedimento de amostragem e construção do intervalo muitas vezes, aproximadamente 99% dos intervalos construídos conterão o verdadeiro valor de $\theta$.
+$$\mu_m = E[X^m] = k_m(\theta). \tag{1}$$
 
-Portanto, o nível de confiança refere-se ao método de construção do intervalo e não à probabilidade de o parâmetro pertencer ao intervalo específico obtido.
+para o $m$-ésimo momento.
 
-## Intervalo de confiança para média com variância conhecida
+Nosso procedimento de estimação segue os **4 passos** abaixo, que conectam os momentos amostrais aos parâmetros do modelo:
 
-Se o desvio padrão populacional $\sigma$ for conhecido, o intervalo de confiança para média baseado na distribuição normal pode ser utilizado para qualquer tamanho de amostra. Nesse caso, basta calcular:
+### Passo 1 {.unnumbered}
 
-$$\left(
-\bar{x} - z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},
-\;
-\bar{x} + z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
-\right)$$
+Se o modelo possui $d$ parâmetros, calculamos as funções $k_m$ na equação (1) para os primeiros $d$ momentos:
 
-ou, de forma equivalente,
+$$\mu_1 = k_1(\theta_1, \theta_2, \ldots, \theta_d), \quad
+\mu_2 = k_2(\theta_1, \theta_2, \ldots, \theta_d), \quad \ldots \quad
+\mu_d = k_d(\theta_1, \theta_2, \ldots, \theta_d),$$
 
-$$\bar{x} \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}},$$
+obtendo assim $d$ equações em $d$ incógnitas.
+
+### Passo 2 {.unnumbered}
+
+Resolvemos esse sistema para os $d$ parâmetros como funções dos momentos:
+
+$$\theta_1 = g_1(\mu_1, \mu_2, \dots, \mu_d), \quad
+\theta_2 = g_2(\mu_1, \mu_2, \dots, \mu_d), \quad \dots \quad
+\theta_d = g_d(\mu_1, \mu_2, \dots, \mu_d). \tag{2}$$
+
+### Passo 3 {.unnumbered}
+
+Com base nos dados $\mathbf{x} = (x_1, x_2, \ldots, x_n)$, calculamos os primeiros $d$ momentos amostrais:
+
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad
+\overline{x^2} = \frac{1}{n} \sum_{i=1}^{n} x_i^2, \quad \ldots \quad
+\overline{x^d} = \frac{1}{n} \sum_{i=1}^{n} x_i^d.$$
+
+Pela Lei dos Grandes Números, para cada momento $m = 1, \ldots, d$, temos: $\mu_m \approx \overline{x^m}.$
+
+### Passo 4 {.unnumbered}
+
+Substituímos os momentos populacionais $\mu_m$ pelos momentos amostrais $\overline{x^m}$. Assim, as soluções em (2) fornecem as fórmulas dos estimadores de momentos $(\hat{\theta}_1, \hat{\theta}_2, \ldots, \hat{\theta}_d)$. Para os dados $\mathbf{x}$, esses estimadores são dados por:
+
+$$\hat{\theta}_1(\mathbf{x}) = g_1(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad
+\hat{\theta}_2(\mathbf{x}) = g_2(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad \ldots \quad
+\hat{\theta}_d(\mathbf{x}) = g_d(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}).$$
+
+A forma como essa descrição abstrata funciona na prática é melhor compreendida por meio de exemplos.
+
+## Exemplo: Distribuição de Pareto {.unnumbered}
+
+Sejam $X_1, X_2, \dots, X_n$ uma amostra aleatória simples de variáveis aleatórias com distribuição de Pareto, cuja densidade é dada por:
+
+$$f_X(x \mid \theta) = \theta x^{-(\theta+1)}, \quad x > 1.$$
+
+A função de distribuição acumulada é:
+
+$$F_X(x) = 1 - x^{-\theta}, \quad x > 1.$$
+
+A média e a variância são, respectivamente:
+
+$$\mu = \frac{\theta}{\theta - 1}, \quad \sigma^2 = \frac{\theta}{(\theta - 1)^2(\theta - 2)}.$$
+
+Neste caso, temos apenas **um parâmetro**, $\theta$. Assim, no **Passo 1**, precisamos apenas do primeiro momento:
+
+$$\mu_1 = \mu = k_1(\theta) = \frac{\theta}{\theta - 1}.$$
+
+### Passo 2 {.unnumbered}
+
+Resolvendo para $\theta$ em função da média $\mu$:
+
+$$\theta = g_1(\mu) = \frac{\mu}{\mu - 1}.$$
+
+### Passos 3 e 4 {.unnumbered}
+
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
+
+$$\hat{\theta} = \frac{\bar{X}}{\bar{X} - 1}.$$
+
+### Variância via Método Delta {.unnumbered}
+
+Um bom estimador deve ter variância pequena. Para estimar a variância de $\hat{\theta}$, utilizamos o **método delta**:
+
+$$\sigma^2_{\hat{\theta}} \approx \left[g_1'(\mu)\right]^2 \frac{\sigma^2}{n}.$$
+
+Calculamos a derivada:
+
+$$g_1'(\mu) = -\frac{1}{(\mu - 1)^2}.$$
+
+Substituindo $\mu = \frac{\theta}{\theta - 1}$, obtemos:
+
+$$g_1'(\mu) = -(\theta - 1)^2.$$
+
+Assim, a variância aproximada é:
+
+$$\sigma^2_{\hat{\theta}} \approx \frac{(\theta - 1)^4}{n} \cdot \frac{\theta}{(\theta - 1)^2(\theta - 2)} = \frac{\theta(\theta - 1)^2}{n(\theta - 2)}.$$
+
+### Exemplo Numérico {.unnumbered}
+
+Considere $\theta = 3$ e $n = 100$:
+
+$$\sigma^2_{\hat{\theta}} \approx \frac{3(3 - 1)^2}{100(3 - 2)} = \frac{12}{100} = \frac{3}{25}.$$
+
+Logo, o desvio padrão aproximado é:
+
+$$\sigma_{\hat{\theta}} \approx \sqrt{\frac{3}{25}} = 0{,}346.$$
+
+### Simulação em R {.unnumbered}
+
+Para simular uma variável aleatória com distribuição de Pareto, usamos o método da transformação inversa. Se $U \sim \text{Uniforme}(0,1)$, então:
+
+$$X = (1 - U)^{-1/\theta}.$$
+
+Código em `R`:
+
+```{r}
+paretobar <- rep(0, 1000)
+
+
+set.seed(14)
+for (i in 1:1000){
+  v <- runif(100)
+  pareto <- 1 / v^(1/3)
+  paretobar[i] <- mean(pareto)
+}
+
+hist(paretobar, xlab = expression(bar(X)), probability = TRUE, main = "")
+
+betahat <- paretobar / (paretobar - 1)
+hist(betahat, xlab = expression(hat(beta)), probability = TRUE, main = "")
+
+mean(betahat)
+sd(betahat)
+
+```
+
+A média amostral do estimador de $\theta$, igual a `r round(mean(betahat),4)`, está próxima do valor verdadeiro do parâmetro considerado na simulação que foi $3$. Neste exemplo, o estimador $\hat{\theta}$ apresenta **viés positivo**. Em outras palavras, em média, a estimativa é maior que o verdadeiro valor do parâmetro, isto é: $E[\hat{\theta}] > \theta$. O desvio padrão amostral, igual a `r round(sd(betahat),4)`, é próximo do valor **0.346** estimado pelo método delta. Quando estudarmos **estimadores não viesados**, veremos que esse viés já poderia ter sido antecipado.
+
+## Exemplo: Distribuição Uniforme Contínua {.unnumbered}
+
+Considere $X \sim U(0, \theta)$. Sabemos que:
+
+$$\mu = \frac{\theta}{2} \quad \text{e} \quad \sigma^2 = \frac{\theta^2}{12}.$$
+
+### Passo 1 {.unnumbered}
+
+Neste caso, também temos apenas **um parâmetro**, $\theta$. Assim, no **Passo 1**, precisamos apenas do primeiro momento:
+
+$$\mu_1 = \mu = k_1(\theta) = \frac{\theta}{2}.$$
+
+### Passo 2 {.unnumbered}
+
+Resolvendo para $\theta$ em função da média $\mu$:
+
+$$\theta = g_1(\mu) = 2\mu.$$
+
+### Passos 3 e 4 {.unnumbered}
+
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
+
+$$\hat{\theta} = 2\bar{X}.$$
+
+### Esperança e Variância {.unnumbered}
+
+Como o estimador obtido pelo MoM é função linear da média amostral, então é fácil obter seu valor esperado, basta usar propriedades de valores esperado e o fato de $E(\bar{X}) = \mu$. Assim, temos que
+
+$$E(\hat{\theta})  = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta.$$
+
+portanto, $\hat{\theta}$ é um estimador não viciado. De maneira similar, podemos obter a expressão da variância de $\hat{\theta}$, usando propriedades de variância e o fato de $Var(\bar{X}) = \sigma^2/n$. Desta forma, temos que:
+
+$$Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.$$ Além disso, pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Agora, usamos o fato de que a convergência em probabilidade é preservada por funções contínuas (no caso, multiplicar por 2):
+
+$$\hat{\theta} = 2\bar{X} \xrightarrow{p} \theta,$$
+
+mostrando que o estimador também é **consistente**.
+
+> **Observação:** Neste caso específico, o estimador de momentos coincide com um estimador simples baseado na média. No entanto, para a distribuição uniforme, o estimador de máxima verossimilhança é $\hat{\theta}_{MV} = \max(X_1, \dots, X_n)$, o que levanta uma interessante comparação entre métodos de estimação.
+
+## Exemplo: Distribuição Uniforme Discreta {.unnumbered}
+
+Considere $X \sim U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\theta \in \Theta = \{1, 2, \ldots\}$. Sabemos que:
+
+$$\mu = E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad \sigma^2 = V(X) = \frac{\theta^2 - 1}{12}.$$
+
+### Passo 1 {.unnumbered}
+
+Neste caso, temos apenas um parâmetro, $\theta$. Assim, utilizamos o primeiro momento:
+
+$$\mu_1 = \mu = k_1(\theta) = \frac{1+\theta}{2}.$$
+
+### Passo 2 {.unnumbered}
+
+Resolvendo para $\theta$ em função da média $\mu$:
+
+$$\theta = g_1(\mu) = 2\mu -1.$$
+
+### Passos 3 e 4 {.unnumbered}
+
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
+
+$$\hat{\theta} = 2\bar{X} - 1.$$
+
+### Esperança e Variância {.unnumbered}
+
+Como o estimador obtido pelo método dos momentos é uma função linear da média amostral, podemos utilizar propriedades do valor esperado. Sabendo que $E(\bar{X}) = \mu$, temos:
+
+$$E(\hat{\theta}) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta.$$ Portanto, $\hat{\theta}$ é um estimador não viesado.
+
+De maneira similar, utilizando o fato de que $Var(\bar{X}) = \sigma^2/n$, obtemos:
+
+$$Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.$$ Além disso, como $\hat{\theta}$ é um estimador não viesado e sua variância é igual a zero, quando $n \to \infty$, logo $\hat{\theta}$ é um estimador consistente.
+
+### Comparação com o Estimador de Máxima Verossimilhança {.unnumbered}
+
+Para a distribuição uniforme discreta, o estimador de máxima verossimilhança é dado por:
+
+$$\hat{\theta}_{MV} = \max(X_1, X_2, \dots, X_n).$$ Esse resultado decorre do fato de que a função de verossimilhança é constante para $\theta \geq \max(X_i)$ e nula caso contrário, sendo maximizada no menor valor possível de $\theta$ que ainda torna a amostra observável.
+
+**Comparação entre os estimadores**
+
+- O estimador de momentos, $\hat{\theta}_{\text{MoM}} = 2\bar{X} - 1$, utiliza toda a informação da amostra, mas pode assumir valores não inteiros.
+
+- O estimador de máxima verossimilhança, $\hat{\theta}_{\text{MV}} = \max(X_1, X_2, \dots, X_n)$, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.
+
+Além disso:
+
+- $\hat{\theta}_{\text{MoM}}$ é não viesado.
+
+- $\hat{\theta}_{\text{MV}}$ é viesado (subestima o valor verdadeiro), pois $E(\max(X_1, X_2, \dots, X_n)) < \theta$, embora seja consistente.
+
+Essa comparação ilustra uma diferença fundamental entre métodos de estimação: enquanto o método dos momentos busca reproduzir características médias da distribuição, o método de máxima verossimilhança está diretamente ligado à plausibilidade dos dados observados.
+
+## Exemplo: Distribuição Exponencial {.unnumbered}
+
+Considere $X \sim \text{Exp}(\theta)$. Sabemos que:
+
+$$\mu = E(X) = \frac{1}{\theta}\quad \text{e} \quad \sigma^2 = V(X) = \frac{1}{\theta^2}.$$
+
+### Passo 1 {.unnumbered}
+
+Neste caso, temos apenas um parâmetro, $\lambda$. Assim, utilizamos o primeiro momento:
+
+$$\mu_1 = \mu = k_1(\theta) = \frac{1}{\theta}.$$
+
+### Passo 2 {.unnumbered}
+
+Resolvendo para $\theta$ em função da média $\mu$:
+
+$$\theta = g_1(\mu) = \frac{1}{\mu}.$$
+
+### Passos 3 e 4 {.unnumbered}
+
+Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
+
+$$\hat{\theta} = \frac{1}{\bar{X}}.$$
+
+### Esperança e Variância {.unnumbered}
+
+Note que o estimador $\hat{\theta}$ não é uma função linear da média amostral, o que torna a análise de suas propriedades um pouco mais envolvida. Sabemos que $S = \sum_{i=1}^n X_i \sim \text{Gama}(n, \theta)$, o que implica que:
+
+$$\bar{X} \sim \text{Gama}(n, n\theta).$$ Além disso, é possível mostrar que $\hat{\theta} = 1/\bar{X}$ segue uma distribuição gama inversa (GI) de parâmetros $n$ e $n\theta$, ou seja
+
+$$\frac{1}{\bar{X}} \sim \text{GI}(n, n\theta).$$ Consequentemente, a média e a variância são:
+
+$$E(\hat{\theta}) = \frac{n\theta}{n-1}\; (n>1) \quad \text{e} \quad Var(\hat{\theta}) = \frac{n^2\theta^2}{(n-1)^2(n-2)}\; (n>2).$$
+
+Além disso, como $\bar{X} \xrightarrow{p} \mu = \frac{1}{\theta}$ quando $n \to \infty$, segue que:
+
+$$\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,$$ pois a função $g(x)=1/x$ é quase-certamente contínua, i.e., é contínua no suporte considerado, mostrando que o estimador é consistente.
+
+## Exemplo: Distribuição Gama {.unnumbered}
+
+Considere $X \sim \text{Gama}(\theta_1, \theta_2)$, em que:
+
+$$\mu = E[X] = \frac{\theta_1}{\theta_2}, \quad \text{e}\quad \sigma^2 = Var(X) = \frac{\theta_1}{\theta_2^2}.$$
+
+### Passo 1 {.unnumbered}
+
+Neste caso, temos dois parâmetros, $\alpha$ e $\beta$. Assim, utilizamos o primeiro e o segundo momento:
+
+$$\mu_1 = k_1(\theta_1, \theta_2) = \frac{\theta_1}{\theta_2} \quad \text{e}\quad \mu_2 = k_2(\theta_1, \theta_2) = \frac{\theta_1(1 + \theta_1)}{\theta_2^2}.$$
+
+### Passo 2 {.unnumbered}
+
+Resolvendo para $\theta_1$ e $\theta_2$ em função de $\mu_1$ e $\mu_2$:
+
+$$\theta_1 = g(\mu_1, \mu_2) = \frac{\mu_1^2}{\mu_2 - \mu_1^2} \quad \text{e} \quad \theta_2 = g(\mu_1, \mu_2) = \frac{\mu_1}{\mu_2 - \mu_1^2}.$$
+
+### Passos 3 e 4 {.unnumbered}
+
+Substituindo a média populacional pela média amostral $\bar{X}$ e segundo momento populacional pelo segundo momento amostral, obtemos os seguintes estimadores de momentos:
+
+$$\widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2} $$
 
 em que:
 
-- $\bar{x}$ é a média amostral;
-- $\sigma$ é o desvio padrão populacional;
-- $n$ é o tamanho da amostra;
-- $z_{1-\alpha/2}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão para o nível de confiança desejado
+$$\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.$$
 
-Quando a variância populacional é conhecida, o intervalo de confiança baseado na distribuição normal fornece uma estimativa exata para a média da população, desde que os dados sejam provenientes de uma distribuição normal. No exemplo a seguir, mostramos como calcular esse intervalo de confiança utilizando `Python`.
+::: {.callout-caution title="Exercícios"}
+1.  O **múon** é uma partícula elementar com carga elétrica $-1$ e spin (momento angular intrínseco) igual a $\frac{1}{2}$. Trata-se de uma partícula subatômica instável com tempo de vida médio de $2{,}2 \, \mu s$.
 
-```{python}
-import numpy as np
-from scipy.stats import norm
+Os múons possuem massa aproximadamente **200 vezes maior** que a massa do elétron. Como o múon tem a mesma carga e spin que o elétron, ele pode ser visto como uma versão muito mais pesada do elétron.
 
-dados = [12, 15, 14, 10, 13, 16, 14, 15]
+A colisão de um feixe de prótons ($p$) acelerados, com energia de $600 \, \text{MeV}$ (milhões de elétron-volts), com os núcleos de um alvo de produção gera píons positivos ($\pi^+$) por meio de uma das seguintes reações:
 
-sigma = 2.5      # desvio padrão populacional conhecido
-alpha = 0.05     # IC de 95%
+$$p + p \rightarrow p + n + \pi^+ \quad \text{ou} \quad p + n \rightarrow n + n + \pi^+.$$
 
-n = len(dados)
-media = np.mean(dados)
+A partir do decaimento subsequente dos píons (tempo de vida médio de $26{,}03 \, \text{ns}$), múons positivos ($\mu^+$) são formados via o decaimento de dois corpos:
 
-# Quantil da normal padrão
-z = norm.ppf(1 - alpha/2)
+$$\pi^+ \rightarrow \mu^+ + \nu_\mu,$$
 
-# Margem de erro
-erro = z * sigma / np.sqrt(n)
+em que $\nu_\mu$ representa o **neutrino do múon**.
 
-# Intervalo de confiança
-lim_inf = media - erro
-lim_sup = media + erro
+O decaimento do múon em um pósitron ($e^+$), um neutrino do elétron ($\nu_e$) e um antineutrino do múon ($\bar{\nu}_\mu$):
 
-print(f"Média: {media:.2f}")
-print(f"IC 95%: ({lim_inf:.2f}, {lim_sup:.2f})")
-```
+$$\mu^+ \rightarrow e^+ + \nu_e + \bar{\nu}_\mu,$$
 
-## Intervalo de confiança para média com variância desconhecida (amostra grande)
+possui uma distribuição angular $t$ com densidade dada por:
 
-Quando o objetivo é estimar a média populacional $\mu$ de uma distribuição normal e a variância populacional é desconhecida, um intervalo de confiança aproximado de $100(1-\alpha)\%$, considerando uma amostra suficientemente grande, pode ser obtido pela aproximação normal:
+$$f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,$$
 
-$$\left(
-\bar{x} - z_{1-\alpha/2}\frac{s}{\sqrt{n}},
-\;
-\bar{x} + z_{1-\alpha/2}\frac{s}{\sqrt{n}}
-\right)$$
+em que $t$ é o ângulo entre a trajetória do pósitron e o spin do $\mu^+$, e o parâmetro de anisotropia $\alpha \in [-1/3, 1/3]$ depende da polarização do feixe de múons e da energia do pósitron. Com base nas observações $t_1, \ldots, t_n$, obtenha o estimador de momentos $\hat{\alpha}$ para $\alpha$.
 
-ou, de forma abreviada,
+**Observação:** Neste caso, a média é igual a $\pi$ para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador.
 
-$$\bar{x} \pm z_{1-\alpha/2}\frac{s}{\sqrt{n}},$$
+2.  Sejam $x_1, x_2, \ldots, x_n$ uma amostra i.i.d. de $X \sim N(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Queremos obter o estimador de momentos para o vetor de parâmetros: $\theta = (\theta_1, \theta_2)$. Verifique se o estimador é viesado e obtenha sua variância.
 
-em que:
-
-- $\bar{x}$ é a média amostral;
-- $s$ é o desvio padrão amostral;
-- $n$ é o tamanho da amostra;
-- $z_{1-\alpha/2}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão para o nível de confiança desejado.
-
-::: callout-warning
-## Importante
-
-Este intervalo é uma **aproximação** e deve ser utilizado apenas quando o tamanho da amostra é suficientemente grande, isto é, $n > 200$. Para amostras menores, recomenda-se utilizar o intervalo baseado na distribuição **t-Student**, que leva em consideração a incerteza decorrente da estimativa da variância populacional.
+3.  Verifique se os estimadores de momentos dos parâmetros que indexam a distribuição gama são consistentes.
 :::
 
-## Intervalo de confiança para média com variância desconhecida
+## Método de Máxima Verossimilhança
 
-Um intervalo de confiança de $100\cdot (1-\alpha)\%$ para média $\mu$ de uma distribuição normal com variância desconhecida é dada por:
+Nesta seção, apresentamos exemplos de estimação por máxima verossimilhança (MV). A ideia central é simples:
 
-$$\left(\bar{x} - t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}}, \bar{x} + t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}}\right),$$
+> Encontrar o valor de $\theta$ que maximiza a verossimilhança dos dados observados.
 
-ou se maneira abreviada
+Na Estimação por MV, utilizamos uma amostra iid $X_1, X_2, \dots, X_n$ de alguma distribuição com parâmetro(s) desconhecido(s) $\theta$, com o objetivo de estimar $\theta$.
 
-$$\bar{x} \pm t_{1-\frac{\alpha}{2}, n-1}\frac{s}{\sqrt{n}},$$
+$$\hat{\theta} = \arg\max_\theta L(\theta \mid x) = \arg\max_\theta \prod_{i=1}^n f_X(x_i \mid \theta).$$
 
-em que $\bar{x}$ é a média amostral, $s$ é o desvio padrão amostral, $n$ é o tamanho da amostra e $t_{1-\frac{\alpha}{2}}$ o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição $t$-Student com $n-1$ graus de liberdade.
+**Observação:** Recorde que, na descrição em palavras, o que fizemos para encontrar $\hat{\theta}$ foi calcular a verossimilhança; que é a probabilidade de observar os dados dado o parâmetro $\theta$; e escolher o "melhor" $\theta$ , ou seja, aquele que maximiza essa verossimilhança.
 
-A seguir, é apresentada uma função do `Python` que pode ser utilizada para construir intervalos de confiança para média.
+## Exemplo EMV (Poisson) {.unnumbered}
 
-```{python}
-import numpy as np
-import statsmodels.stats.api as sms
+Suponha que $X_1, X_2, \dots, X_n$ sejam amostras iid de uma distribuição Poisson com parâmetro $\theta$. Qual é o EMV de $\theta$?
 
-dados = [12, 15, 14, 10, 13, 16, 14, 15]
+### Passo 1: Calcule a verossimilhança e a log-verossimilhança dos dados {.unnumbered}
 
-lim_inf, lim_sup = sms.DescrStatsW(dados).tconfint_mean(alpha=0.05)
+Para fazer isso, tomamos o seguinte produto das funções de probabilidade (FP's) da Poisson em cada observação $x_i$, considerando todos os pontos de dados.
 
-print(f"IC 95%: ({lim_inf:.2f}, {lim_sup:.2f})")
-```
+$$L(\theta \mid x) = \prod_{i=1}^n \frac{e^{-\theta} \theta^{x_i}}{x_i!}.$$
 
+Novamente, isso representa a probabilidade de observar $x_1$, depois $x_2$, e assim por diante. Essa função é bastante difícil de derivar, então, para facilitar, vamos calcular a log-verossimilhança, utilizando as seguintes identidades:
 
-## Fatores que Afetam a Amplitude de um Intervalo de Confiança
+$$\ln(ab) = \ln(a) + \ln(b),\quad \ln(a/b) = \ln(a) - \ln(b), \quad \text{e} \quad \ln(a^b) = b \ln(a).$$
 
-A amplitude de um intervalo de confiança de $100\cdot(1-\alpha)\%$ para a média $\mu$ é dada por:
+Na maioria dos casos, queremos otimizar a log-verossimilhança em vez da verossimilhança (pois não queremos utilizar a regra do produto do cálculo)!
 
-$$
-2\cdot t_{1-\frac{\alpha}{2},\;n-1}\frac{s}{\sqrt{n}},
-$$
+$$\begin{aligned}
+\ln(L(\theta \mid x)) &=  \ln\left(\prod_{i=1}^n \frac{e^{-\theta} \theta^{x_i}}{x_i!}\right) \\
+&=  \sum_{i=1}^n \ln\left(\frac{e^{-\theta} \theta^{x_i}}{x_i!}\right) \\
+&= \sum_{i=1}^n\left[\ln(e^{-\theta}) + \ln(\theta^{x_i}) - \ln(x_i!)\right] \\
+&= \sum_{i=1}^n \left(-\theta + x_i \ln \theta - \ln(x_i!)\right). 
+\end{aligned}$$
 
-sendo determinada por três fatores principais: o tamanho da amostra ($n$), o desvio padrão amostral ($s$) e o nível de confiança ($1-\alpha$).
+### Passo 2: Calcule a(s) derivada(s) parcial(is) em relação a $\theta$ e iguale a zero. Resolva a(s) equação(ões) {.unnumbered}
 
-### Tamanho da amostra ($n$)
+Agora queremos calcular a derivada da log-verossimilhança em relação a $\theta$. A derivada de $-\theta$ é simplesmente $-1$, e a derivada de $x_i \ln(\theta)$ é $\frac{x_i}{\theta}$, pois lembre-se de que $x_i$ é constante em relação a $\theta$.
 
-À medida que o tamanho da amostra aumenta, a amplitude do intervalo de confiança diminui. Isso ocorre porque amostras maiores fornecem estimativas mais precisas da média populacional.
+$$\frac{\partial \ln(L(\theta \mid x))}{\partial \theta} = \sum_{i=1}^n \left(-1 + \frac{x_i}{\theta}\right).$$
 
-### Desvio padrão ($s$)
+Agora, igualamos a derivada a zero e resolvemos para $\theta$. O valor $\hat{\theta}$ é justamente o estimador que queremos encontrar. Fazendo alguma álgebra, obtemos:
 
-Quanto maior o desvio padrão amostral, maior será a amplitude do intervalo de confiança. Isso acontece porque um maior desvio padrão indica maior variabilidade nos dados, aumentando a incerteza na estimativa da média.
+$$\sum_{i=1}^n \left(-1 + \frac{x_i}{\theta}\right) = 0,$$
 
-### Nível de confiança ($1-\alpha$)
+$$-n + \frac{1}{\hat{\theta}}\sum_{i=1}^n x_i = 0,$$
 
-Quanto maior o nível de confiança desejado (ou, equivalentemente, quanto menor o valor de $\alpha$, maior será a amplitude do intervalo de confiança. Isso ocorre porque níveis de confiança mais elevados exigem intervalos mais amplos para aumentar a chance de conter o verdadeiro valor da média populacional.
+$$\hat{\theta} = \frac{1}{n}\sum_{i=1}^n x_i.$$
 
+Ou seja, o estimador de máxima verossimilhança é simplesmente a média amostral, $\bar{X}$.
 
-## Método de Wald para obter um intervalo de confiança para proporção
+### Passo 3: Opcionalmente, verifique se $\hat{\theta}$ é de fato um máximo (local), checando se a segunda derivada em $\hat{\theta}$ é negativa (quando $\theta$ é um único parâmetro), ou se a Hessiana (matriz das segundas derivadas parciais) é negativa semidefinida (quando $\theta$ é um vetor de parâmetros) {.unnumbered}
 
-Um intervalo de confiança aproximado de $100\cdot (1-\alpha)\%$ para o parâmetro $p$ de uma binomial, baseado na baseado na aproximação normal da distribuição binomial, é dado por:
+Também queremos calcular a segunda derivada, pois, caso contrário, não sabemos se o ponto encontrado é um máximo ou um mínimo. Derivamos novamente a primeira derivada $\sum_{i=1}^n \left(-1 + \frac{x_i}{\theta}\right)$ em relação a $\theta$, e observamos que, como $\theta^2$ é sempre positivo, o seu negativo é sempre negativo. Assim, a segunda derivada é sempre menor que zero, o que implica que a função é côncava para baixo em todo o domínio.
 
-$$\hat{p} \pm z_{1-\frac{\alpha}{2}}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}},$$
+Isso significa que qualquer ponto onde a derivada seja zero corresponde a um máximo global. Portanto, encontramos com sucesso o máximo global da função de verossimilhança.
 
-em que $\hat{p}$ é a proporção amostral de "sucessos", $n$ é o tamanho da amostra e $z_{1-\frac{\alpha}{2}}$ é o quantil de ordem $1-\frac{\alpha}{2}$ da distribuição normal padrão.
+$$\frac{\partial^2 \ln(L(\theta \mid x))}{\partial \theta^2} = \sum_{i=1}^n \left(-\frac{x_i}{\theta^2}\right) < 0. \quad \text{(côncava para baixo em todo o domínio)}$$
 
-> Este método de estimação de intervalo só deve ser utilizado se: $n\hat{p}(1-\hat{p}) \geq 5$.
+## Exemplo EMV (Exponencial) {.unnumbered}
 
-Abaixo é apresentado um código que calcula um intervalo de confiança aproximado para o parâmetro $p$ da binomial usando a função `proportion_confint` do `statsmodels`.
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \text{Exp}(\theta)$, em que $\theta > 0$ é a taxa. Encontre o EMV de $\theta$.
 
-```{python}
-from statsmodels.stats.proportion import proportion_confint
+## Exemplo EMV (Uniforme Discreta) {.unnumbered}
 
-x = 12   # número de sucessos
-n = 50   # tamanho da amostra
-alpha = 0.05  # IC de 95%
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\theta \in \Theta = \{1, 2, \ldots\}$. Encontre o EMV de $\theta$.
 
-lim_inf, lim_sup = proportion_confint(
-    count=x,
-    nobs=n,
-    alpha=alpha,
-    method="normal"   # Wald (aproximado)
-)
+## Exemplo EMV (Uniforme Continua) {.unnumbered}
 
-print(f"IC: ({lim_inf:.2f}, {lim_sup:.2f})")
-```
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \text{Unif}(0, \theta)$, em que $\theta > 0$. Encontre o EMV de $\theta$.
 
-## Método Exato para Obtenção de IC para o parâmetro $p$ da binomial (Método de Clopper–Pearson)
+## Exemplo EMV (Normal Inversa) {.unnumbered}
 
-Um intervalo de confiança exato de $100\cdot(1−α)\%$ para o parâmetro $p$ da binomial, que é sempre válido, é dado por $(p_1, p_2)$, em que $p_1$ e $p_2$ satisfazem as seguintes condições baseadas na distribuição binomial:
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{NI}(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é o parâmetro de forma. Encontre os EMV de $\theta_1$ e $\theta_2$.
 
-$$P(X \ge x \mid p_1) = \sum_{k=x}^{n} \binom{n}{k} p_1^k (1 - p_1)^{n-k} = \frac{\alpha}{2}$$
+## Exemplo EMV (Birnbaum-Saunders) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{BS}(\theta_1, \theta_2)$, em que $\theta_1$ é o parâmetro de forma e $\theta_2$ é o parâmetro de escala. Encontre os EMV de $\theta_1$ e $\theta_2$.
+
+## Exemplo EMV (Normal) {.unnumbered}
+
+Suponha que $X_1, X_2, \dots, X_n \overset{iid}{\sim} \mathcal{N}(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Encontre os EMV de $\theta_1$ e $\theta_2$.
+
+## Método de Mínimos Quadrados
+
+Ver [Link](https://statlab-oficial.github.io/ModelosdeRegressao/demo.html#demonstra%C3%A7%C3%A3o-de-que-hat-beta_0-e-hat-beta_1-s%C3%A3o-os-estimadores-de-mqo-em-mrls)!
+
+# Exercícios {.unnumbered}
+
+1.  Considere $X_1, \ldots, X_n \overset{iid}{\sim} \text{Exp}(\mu^{-1})$. Defina $T = X_{(1)} = \min\{X_1, \ldots, X_n\}$.
+
+<!-- -->
+
+a.  Determine o viés $B(T,\mu)$ e o erro quadrático médio $\text{EQM}(T)$.
+
+b.  Verifique se $T$ é um estimador consistente para $\mu$.
+
+c.  No caso de amostras grandes, você sugere a utilização de $T$ como estimador de $\mu$? Caso contrário, proponha um estimador melhor e justifique.
+
+**Dica:** Lembre-se que $f_T(t) = n[1 - F_X(t)]^{n-1}f_X(t)$ e $F_X(x) = 1 - e^{-\frac{x}{\mu}}$.
+
+2.  Seja $X_1, \ldots, X_n$ uma amostra aleatória de tamanho $n$ de uma distribuição de Bernoulli com parâmetro $\theta \in (0,1)$. Seja $T(X) = \bar{X}_n^2$ o estimador de máxima verossimilhança de $\theta^2$. Considere o estimador Jackknife de $\theta^2$ dado por:
+
+$$T_J(X) = nT - \frac{n-1}{n} \sum_{i=1}^{n} T_{(i)},$$
+
+em que $T_{(i)}$ representa o estimador $T$ calculado com a amostra original excluindo a $i$-ésima observação.
+
+a.  Mostre que o EMV de $\theta^2$ é viesado.
+
+b.  Mostre que $T_J(X)$ é não viesado.
+
+**Dica:** Use o fato que $T_{(i)} = \left(\frac{n\bar{X} - X_i}{n-1}\right)^2$.
+
+3.  Sejam $Y_1, \ldots, Y_n$ variáveis aleatórias independentes tais que $Y_i \sim \mathcal{N}(\alpha + \beta x_i, \sigma^2),$ em que os valores $x_i$ são não estocásticos e satisfazem $\sum_{i=1}^{n} (x_i - \bar{x}_n)^2 > 0.$ Mostre que
+
+$$\hat{\beta} = \frac{\sum_{i=1}^{n} (x_i - \bar{x}_n) Y_i}{\sum_{i=1}^{n} (x_i - \bar{x}_n)^2}$$
 
 e
 
-$$P(X \le x \mid p_2) = \sum_{k=0}^{x} \binom{n}{k} p_2^k (1 - p_2)^{n-k} = \frac{\alpha}{2},$$
+$$\hat{\alpha} = \bar{Y}_n - \hat{\beta} \bar{x}_n$$
 
-em que $X$ é uma variável aleatória com distribuição Binomial, $x$ é o número observado se sucessos, $n$ o tamanho da amostra, $p_1$ é o limite inferior do intervalo, $p_2$ é o limite superior do intervalo e $\alpha$ é o nível de significância.
+são estimadores não viesados de $\beta$ e $\alpha$, respectivamente.
 
-Abaixo o código que calcula um intervalo de confiança exato (Clopper–Pearson) para o parâmetro $p$ da binomial usando a função `proportion_confint` do `statsmodels`.
+4.  Sejam $X_1, \ldots, X_n$ uma amostra aleatória de uma variável com distribuição Rayleigh, cuja densidade é dada por:
 
-```{python}
-from statsmodels.stats.proportion import proportion_confint
+$$f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\infty)}(x), \quad \theta > 0.$$
 
-x = 12   # número de sucessos
-n = 50   # tamanho da amostra
-alpha = 0.05  # IC de 95%
+a.  Determine um estimador não viesado e consistente para $\theta$.
 
-lim_inf, lim_sup = proportion_confint(
-    count=x,
-    nobs=n,
-    alpha=alpha,
-    method="beta"   # Clopper-Pearson (exato)
-)
+b.  Estime $\theta$ a partir da seguinte amostra (força vibratória de uma palheta de turbina):
 
-print(f"IC: ({lim_inf:.2f}, {lim_sup:.2f})")
-```
+$$16.88,\ 10.23,\ 4.59,\ 6.66,\ 13.68,\ 14.23,\ 19.87,\ 9.40,\ 6.51,\ 9.24,\ 12.20,\ 10.95.$$
 
-> A função `proportion_confint` apresenta outros métodos como: "wilson", "agresti_coull" e "jeffreys".
+5.  Considere $X_1, \ldots, X_n$ uma amostra aleatória de uma variável $X$ com função densidade de probabilidade dada por:
 
-## Exercícios
+$$f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).$$
 
-1.  (CESPE / CEBRASPE - 2026 - Telebras - Especialista em Gestão de Telecomunicações - Analista Superior - Subatividade: Estatística) Para avaliação da audiência do telejornal de certa emissora de televisão em determinado mês de 2025, mediram-se os pontos de audiência do programa em 25 dias desse mês, tendo sido obtido um valor médio de 34,7 pontos. Pesquisas anteriores apontaram um desvio padrão populacional de 3,50 pontos de audiência desse telejornal.
+a.  Determine um estimador não viesado de $\theta$ que seja função de $X_{(1)} = \min\{X_1, \ldots, X_n\}$.
 
-A partir dessa situação hipotética, e supondo que a audiência do telejornal siga uma distribuição normal, julgue o item subsecutivo, assumindo um nível de confiança de 94% ($z_{1−\alpha/2} = 1{,}88$).
-
-Infere-se das informações apresentadas que o intervalo de confiança para a média dos pontos de audiência em todo o mês é dado por $\text{IC}(\mu, 0,94) = [33,38; 36,02]$.
-
-( ) Certo
-
-( ) Errado
-
-2.  (FCC - 2025 - Prefeitura de São Paulo - SP - Auditor Municipal de Controle Interno - AMCI Área de Especialização: Geral) A população formada pelos tempos de durações de atendimento a uma pessoa em um quichê de um órgão público é considerada normalmente distribuída com uma variância populacional igual a 2,56 (minutos)$^2$. Uma amostra aleatória de tamanho 64 foi extraída, com reposição, dessa população, obtendo-se uma média amostral igual a 15 minutos. Com base na amostra, um intervalo de confiança de 95% foi construído para a média populacional, considerando que na curva normal padrão (Z) as probabilidades $P(Z < 1,64)= 95\%$ e $P(Z < 1,96) = 97,5\%$. O limite superior do intervalo encontrado apresenta um valor igual a
-
-<!-- -->
-
-(a) 15,6272
-
-(b) 15,3920
-
-(c) 15,5248
-
-(d) 15,4018
-
-(e) 15,5160
-
-<!-- -->
-
-3.  (FCC - 2025 - Prefeitura de São Paulo - SP - Analista de Planejamento e Desenvolvimento Organizacional Tecnologia da Informação e Comunicação) A população formada pelos salários, em salários mínimos (SM), dos empregados de uma prefeitura é normalmente distribuída com uma variância populacional igual a 2,25 SM$^2$. Extraindo uma amostra aleatória desta população, com reposição, de tamanho 100, encontrou-se uma média amostral igual a 4,8 SM. Utilizando as informações da curva normal padrão (Z) que as probabilidades $P(Z < 1,64)= 0,95$ e $P(Z < 1,96) = 0,975$, então o intervalo de confiança de 95% para a média populacional, com base na amostra, é igual a
-
-<!-- -->
-
-a)  \[4,554 ; 5,046\]
-
-b)  \[4,359 ; 5,241\]
-
-c)  \[4,604 ; 4,956\]
-
-d)  \[4,636 ; 4,964\]
-
-e)  \[4,506 ; 5,094\]
-
-<!-- -->
-
-4.  (IDESG - 2025 - Prefeitura de Cariacica - ES - Analista do Executivo Municipal - Estatística) Sobre o conceito de intervalos de confiança, é correto afirmar que:
-
-<!-- -->
-
-a)  O aumento do nível de confiança reduz a amplitude do intervalo.
-
-b)  Um intervalo de confiança de 95% significa que há 95% de probabilidade de o parâmetro estar no intervalo calculado.
-
-c)  Intervalos de confiança sempre contêm o parâmetro populacional.
-
-d)  A amplitude do intervalo de confiança aumenta com a redução do tamanho da amostra.
-
-<!-- -->
-
-5.  (UECE-CEV - 2025 - PGE-CE - Técnico de Representação Judicial - Engenharia de Produção) A Procuradoria Geral do Estado do Ceará deseja estimar o indicador de tempo médio de tramitação de processos administrativos em sua sede. Para isso, foi coletada uma amostra aleatória de 36 processos, obtendo-se um tempo médio de 50 dias, com um desvio padrão populacional de 9 dias. Considerando um nível de confiança de 95%, assinale a opção que corresponde ao correto intervalo de confiança para o tempo médio de tramitação de processos. Considere $z_{1-\alpha/2} = 2$.
-
-<!-- -->
-
-a)  (49,0 ; 51,0)
-
-b)  (47,0 ; 53,0)
-
-c)  (46,0 ; 54,0)
-
-d)  (48,5 ; 51,5)
-
-e)  (47,6 ; 52,9)
-
-<!-- -->
-
-6.  (FGV - 2024 - Prefeitura de Vitória - ES - Analista em Gestão Pública - Economista) Uma amostra aleatória simples de tamanho 25 de uma variável populacional com média desconhecida μ e variância suposta igual a 4 foi obtida e resultou numa média amostral igual a 5,48. Lembre-se de que, se Z tem distribuição normal padrão, então $P[-1,96 < Z < 1,96] = 0,95$.
-
-Um intervalo de 95% de confiança para $\mu$ será então dado aproximadamente por:
-
-a)  (4,70; 6,26)
-
-b)  (4,50; 6,46)
-
-c)  (4,30; 6,66)
-
-d)  (4,10; 6,86)
-
-e)  (3,90; 7,06)
-
-<!-- -->
-
-7.  (FGV - 2006 - SERC-MS - Fiscal de Rendas - prova 1) Uma amostra aleatória simples de tamanho 25 foi selecionada para estimar a média desconhecida de uma população normal. A média amostral encontrada foi 4,2, e a variância amostral foi 1,44. O intervalo de 95% de confiança para a média populacional é:
-
-<!-- -->
-
-a)  $4,2 \pm 0,49$
-
-b)  $4,2 \pm 0,64$
-
-c)  $4,2 \pm 0,71$
-
-d)  $4,2 \pm 0,75$
-
-e)  $4,2 \pm 0,81$
-
-<!-- -->
-
-8.  Considere uma amostra aleatória de uma população Normal. O caso em que a variância populacional $\sigma^2$ é conhecida pode ser visto como um caso particular do problema em que $\sigma^2$ é desconhecida. Assim, o intervalo de confiança para a média $\mu$ baseado na distribuição t de Student continua válido mesmo quando $\sigma^2$ é conhecida. Nesse contexto, explique por que não é recomendável utilizar esse intervalo quando a variância populacional é conhecida.
+b.  Mostre que $X_{(1)}$ é um estimador consistente de $\theta$.
