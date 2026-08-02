@@ -7,9 +7,9 @@ Neste capítulo, iniciamos a primeira parte sobre inferência estatística apren
 O PGD é o mecanismo teórico, físico ou biológico que produz os dados que observamos. Imagine que o mundo é uma "caixa preta" que segue certas regras (leis da física, comportamento humano, algoritmos de mercado), portanto o PGD são essas regras em funcionamento.
 
 ::: {.callout-note title="Realidade vs. Observação"}
--   O PGD (A causa): É a distribuição de probabilidade teórica e os parâmetros fixos (mas desconhecidos) que regem um fenômeno.
+- O PGD (A causa): É a distribuição de probabilidade teórica e os parâmetros fixos (mas desconhecidos) que regem um fenômeno.
 
--   Os Dados (O Efeito): É a amostra específica que coletamos. É apenas uma realização de infinitas possibilidades que o PGD poderia ter gerado.
+- Os Dados (O Efeito): É a amostra específica que coletamos. É apenas uma realização de infinitas possibilidades que o PGD poderia ter gerado.
 :::
 
 ::: {.callout-tip title="Representação Matemática"}
@@ -30,13 +30,13 @@ $$z_i \sim P(Z).$$ Nesta visão, o PGD é o "mecanismo" que dita:
 
 Neste capítulo iremos utilizar os pacotes `R` `tidyverse`[@tidyverse] e `moderndive` [@moderndive]. Por exemplo, para instalar o pacote basta usar `install.packages("tidyverse")` e podemos carregar o pacote por meio do comando `library(tidyverse)`. São carregados, de uma só vez, os seguinte pacotes amplamente utilizados em ciência de dados:
 
--   `ggplot2` para visualização de dados;
+- `ggplot2` para visualização de dados;
 
--   `dplyr` para manipulação de dados;
+- `dplyr` para manipulação de dados;
 
--   `tidyr` para converter dados para o formato “tidy”;
+- `tidyr` para converter dados para o formato “tidy”;
 
--   `readr` para importar dados de planilhas para o `R`,
+- `readr` para importar dados de planilhas para o `R`,
 
 além dos pacotes mais avançados `purrr`, `tibble`, `stringr` e `forcats`.
 
@@ -55,36 +55,36 @@ Iremos realizar o seguinte experimento em sala de aula:
 
 1.  Organização
 
--   A turma é dividida em grupos independentes (por exemplo, 20 grupos).
+- A turma é dividida em grupos independentes (por exemplo, 20 grupos).
 
--   Cada grupo realiza uma única amostragem.
+- Cada grupo realiza uma única amostragem.
 
 2.  Protocolo experimental (por grupo)
 
--   A urna é misturada cuidadosamente, garantindo aleatoriedade.
+- A urna é misturada cuidadosamente, garantindo aleatoriedade.
 
--   O grupo retira uma amostra de tamanho fixo $n$ (por exemplo, $n=50$) sem reposição durante a retirada.
+- O grupo retira uma amostra de tamanho fixo $n$ (por exemplo, $n=50$) sem reposição durante a retirada.
 
--   As bolas retiradas são observadas e classificadas por cor.
+- As bolas retiradas são observadas e classificadas por cor.
 
--   O grupo registra:
+- O grupo registra:
 
-    -   $R:$ o número de bolas vermelhas na amostra;
-    -   $\hat{p} = R/n:$ proporção amostral de bolas vermelhas.
+  - $R:$ o número de bolas vermelhas na amostra;
+  - $\hat{p} = R/n:$ proporção amostral de bolas vermelhas.
 
--   Todas as bolas são devolvidas à urna.
+- Todas as bolas são devolvidas à urna.
 
--   A urna é novamente misturada antes da próxima amostragem.
+- A urna é novamente misturada antes da próxima amostragem.
 
 **Cada grupo deve atuar de forma independente, sem acesso aos resultados dos demais.**
 
 3.  Coleta e organização dos dados
 
--   Cada grupo fornece sua estimativa de $\hat{p}$.
+- Cada grupo fornece sua estimativa de $\hat{p}$.
 
--   O conjunto de estimativas é reunido em uma tabela ou planilha.
+- O conjunto de estimativas é reunido em uma tabela ou planilha.
 
--   A proporções são representadas graficamente por meio de um histograma.
+- A proporções são representadas graficamente por meio de um histograma.
 
 **Esse histograma representa a distribuição amostral da proporção para uma tamanho de amostra fixo** $n$.
 
@@ -278,14 +278,177 @@ Então, em nosso caso, o valor de `prop_red` é a estimativa pontual da proporç
 
 Iremos observa ao longo desta disciplina que a maneira como você coleta as amostras influencia diretamente a qualidade delas.
 
--   Diz-se que uma amostra é **representativa** se ela "se parecer" aproximadamente com a população. Em outras palavras, se as características da amostra forem uma "boa" representação das características da população.
+- Diz-se que uma amostra é **representativa** se ela "se parecer" aproximadamente com a população. Em outras palavras, se as características da amostra forem uma "boa" representação das características da população.
 
--   Dizemos que uma amostra é **generalizável** se quaisquer resultados baseados na amostra puderem ser generalizados para a população. Em outras palavras, se pudermos fazer "bons" palpites sobre a população usando a amostra.
+- Dizemos que uma amostra é **generalizável** se quaisquer resultados baseados na amostra puderem ser generalizados para a população. Em outras palavras, se pudermos fazer "bons" palpites sobre a população usando a amostra.
 
--   Dizemos que um procedimento de amostragem é **viesado** (ou tendencioso) se certos indivíduos em uma população tiverem uma chance maior de serem incluídos em uma amostra do que outros. Dizemos que um procedimento de amostragem é **não viesado** (ou imparcial) se cada indivíduo em uma população tiver chances iguais de ser amostrado.
+- Dizemos que um procedimento de amostragem é **viesado** (ou tendencioso) se certos indivíduos em uma população tiverem uma chance maior de serem incluídos em uma amostra do que outros. Dizemos que um procedimento de amostragem é **não viesado** (ou imparcial) se cada indivíduo em uma população tiver chances iguais de ser amostrado.
 
 Dizemos que uma amostra de $n$ bolas extraídas usando nossa pá é **representativa** da população se o seu conteúdo "se assemelhar aproximadamente" ao conteúdo da urna. Se sim, então a proporção de bolas vermelhas da pá pode ser **generalizada** para a proporção das $N = 2400$ bolas da urna que são vermelhas. Ou expresso de forma diferente, $\hat{p}$ é um "bom palpite" de $p$. Agora digamos que trapaceamos ao usar a pá e removemos um número de bolas brancas em favor de bolas vermelhas. Então, essa amostra seria viesada em relação às bolas vermelhas e, portanto, a amostra não seria mais representativa da urna.
 
 Uma maneira de garantir que uma amostra seja não viesada e representativa da população é usar a **amostragem aleatória**. Temos que **Inferência** é o ato de "dar um palpite" sobre algo desconhecido. Portanto, **Inferência estatística** é o ato de fazer um palpite sobre uma população usando uma amostra.
 
 Em nosso caso, como a função `rep_sample_n()` usa o gerador de números aleatórios do seu computador, estávamos, de fato, realizando "amostragem aleatória".
+
+## Estatísticas, estimadores e estimativas
+
+Para realizar inferências sobre uma população, partimos de uma amostra aleatória, que é um conjunto de $n$ variáveis aleatórias independentes e identicamente distribuídas (i.i.d.) retiradas de um PGD. Denotamos essa amostra antes da coleta por:
+
+$$\mathbf{X}=(X_1,X_2,\ldots,X_n).$$
+
+Nesse estágio, $\mathbf{X}$ representa o "efeito" potencial de um mecanismo teórico (PGD) cujos parâmetros são fixos, mas desconhecidos. Após a coleta, observamos uma realização particular da amostra, denotada por letras minúsculas:
+
+$$\mathbf{x}=(x_1,x_2,\ldots,x_n).$$
+Esta distinção é o pilar da inferência estatística: enquanto a amostra observada $\mathbf{x}$ é um conjunto de números fixos, a amostra aleatória $\mathbf{X}$  é um vetor de variáveis aleatórias.
+
+1. Estatística: é qualquer função da amostra que não depende de parâmetros desconhecidos. Matematicamente, se $T$ é uma estatística, então $T = g(X_1,\dots, X_n)$. Exemplos comuns incluem a média amostral ($\bar{X}$), a variância amostral ($S^2$) ou o máximo da amostra ($X_{(n)}$).
+
+2. Estimador: é uma estatística utilizada especificamente com o objetivo de aproximar um parâmetro populacional desconhecido ($\theta$). Como o estimador é uma função de variáveis aleatórias, ele próprio é uma variável aleatória. Portanto, cada estimador possui sua própria distribuição amostral, que descreve como seus valores variariam se extraíssemos infinitas amostras da mesma população.
+
+3. Estimativa: é o valor numérico específico que o estimador assume ao ser calculado com os dados de uma amostra observada $\mathbf{x}$. Enquanto o estimador $\hat \theta$ é uma "regra" ou fórmula, a estimativa é o resultado final após a substituição dos valores medidos.
+
+> Essa hierarquia permite que a estatística utilize a teoria da probabilidade para quantificar quão próxima uma estimativa pontual está do verdadeiro parâmetro, frequentemente através do cálculo do erro padrão ou da construção de intervalos de confiança
+
+## Estatística como função da amostra
+
+Um ponto fundamental é que, como os argumentos $X_1, \dots, X_n$ são variáveis aleatórias (antes da coleta), a estatística $T$ é, ela própria, uma variável aleatória. 
+
+### Exemplos Fundamentais {.unnumbered}
+
+1. Média Amostral ($\bar{X}$): É a soma das observações dividida pelo tamanho da amostra, ou seja
+
+$$\bar{X} = \frac{1}{n}\sum\limits_{i=1}^{n} X_i.$$
+Sendo o estimador natural da média populacional $\mu$.
+
+2. Variância Amostral ($S^2$): Utiliza-se geralmente o divisor $n-1$ para que o estimador seja não-viesado, compensando a perda de um grau de liberdade ao usar $\bar{X}$ no cálculo, ou seja,
+
+$$S^2 = \frac{1}{n-1}\sum\limits_{i=1}^{n}(X_i - \bar X)^2.$$
+3. Proporção Amostral ($\hat p$): Aplicada quando a população segue uma distribuição de Bernoulli, onde cada unidade é classificada binariamente (sucesso/fracasso), ou seja,
+
+$$\hat p = \frac{1}{n}\sum\limits_{i=1}^{n} X_i,$$
+em que $X_i$ assume o valor 1 para "sucesso" e 0 para "fracasso".
+
+
+## O Experimento da Urna e Variáveis de Bernoulli
+
+No contexto do experimento da urna, as bolas retiradas são modeladas como variáveis aleatórias independentes e identicamente distribuídas (i.i.d.). Ao definir:
+
+- $X_i = 1$ (Vermelha) com probabilidade $p$; e 
+
+- $X_i = 0$ (Branca) com probabilidade $(1-p)$,
+
+a estatística $R = \sum\limits_{i=1}^{n} X_i$ representa o número total de sucessos e segue uma distribuição $\text{Binomial}(n,p)$. A proporção amostral $\hat p = R/n$ é, portanto, a média aritmética dessas variáveis de Bernoulli, funcionando como um estimador não-viesado para a proporção populacional $p$.
+
+
+## Distribuição Amostral
+
+O conceito de distribuição amostral é o elo entre a probabilidade e a inferência. Ela descreve o comportamento probabilístico do estimador, apresentando todos os valores que ele pode assumir e a frequência com que esses valores ocorrem quando o procedimento de amostragem é repetido infinitamente sob as mesmas condições.
+
+No experimento virtual realizado, o histograma das proporções calculadas pelos grupos representa uma aproximação empírica da distribuição amostral de $\hat p$ para um tamanho de amostra fixo $n$. Vimos anteriormente que sob o modelo de Bernoulli independente, o número de sucessos $R$  segue uma distribuição Binomial. Como $\hat p = R/n$, as propriedades da distribuição amostral de $\hat p$ são:
+
+1. Esperança: $\operatorname{E}(\widehat{p})=p$ (o que torna $\hat p$ um estimador não-viesado).
+
+2. Variância: $\operatorname{Var}(\widehat{p})=\frac{p(1-p)}{n}$.
+
+3. Erro-Padrão: É o desvio padrão da distribuição amostral, dado por $\operatorname{EP}(\widehat{p}) = \sqrt{\frac{p(1-p)}{n}}$.
+
+Estas expressões revelam que a variabilidade de $\hat{p}$ é inversamente proporcional à raiz quadrada de $n$. Assim, amostras maiores produzem estimativas mais precisas e concentradas em torno do verdadeiro parâmetro.
+
+
+::: {.callout-note title="Modelo exato para a urna"} 
+Quando a amostragem é realizada sem reposição em uma população finita de tamanho $N$ (com $M$ bolas vermelhas), as observações não são independentes. O número de sucessos segue, então, uma distribuição $\text{Hipergeométrica} (N,M,n)$.
+
+Nesse cenário, a variância do estimador incorpora a correção para população finita:
+
+$$\operatorname{Var}(\widehat{p})=\frac{p(1-p)}{n} \cdot \left(\frac{N-n}{N-1}\right).$$
+
+O fator $\frac{N-n}{N-1}$ reduz a variabilidade do estimador, pois, em populações finitas, cada unidade amostrada reduz a incerteza sobre o que resta na população. Quando a fração amostral $n/N$  é pequena (geralmente menor que 10%), esse fator aproxima-se de 1, e o modelo binomial torna-se uma aproximação excelente e simplificada.
+:::
+
+
+## Critérios básicos para avaliar estimadores
+
+Diferentes estatísticas podem ser utilizadas para estimar um mesmo parâmetro populacional, tornando necessária a aplicação de critérios técnicos para compará-las.
+
+1. O viés de um estimador é a diferença entre o seu valor esperado e o valor real do parâmetro, sendo definido por $\operatorname{E}(\hat \theta) - \theta$.  Um estimador é considerado não viesado quando, em média, seus valores coincidem com o parâmetro alvo, ou seja, $\operatorname{E}(\hat \theta) = \theta$.
+
+2. A variância, por sua vez, quantifica a dispersão ou incerteza do estimador entre diferentes amostras possíveis. Um critério abrangente que permite comparar estimadores viesados e não viesados é o  Erro Quadrático Médio (EQM), que combina viés e variabilidade através da decomposição $\operatorname{EQM}(\hat \theta) = \operatorname{Var}(\hat \theta) + [\text{Viés}(\hat \theta)]^2$. 
+
+
+3. Além dessas propriedades de pequenas amostras, um estimador é dito consistente se ele converge em probabilidade para o valor verdadeiro do parâmetro à medida que o tamanho da amostra $n$ aumenta, garantindo que o erro de estimação tenda a zero no longo prazo.
+
+
+### Verificação de aprendizagem {.unnumbered}
+
+1. Qual é a diferença entre $\widehat{p}$ e o valor observado de $\widehat{p}$?
+
+2. Por que um estimador é considerado uma variável aleatória?
+
+3. Qual é a relação entre o histograma das proporções obtidas nas amostras repetidas e a distribuição amostral de $\widehat{p}$?
+
+4. O que acontece com a variabilidade de $\widehat{p}$ quando o tamanho da amostra aumenta?
+
+
+## Modelo estatístico e função de verossimilhança
+
+Como a descrição probabilística exata do PGD  raramente é conhecida, a inferência estatística utiliza uma família de modelos para representar, de maneira simplificada e aproximada, os aspectos fundamentais do fenômeno em estudo. Um modelo estatístico paramétrico é definido como uma coleção de distribuições de probabilidade indexadas por um parâmetro:
+
+$$\mathcal{P} = \{P_{\theta}: \theta \in \Theta\},$$
+
+em que $\theta$ representa o parâmetro (ou vetor de parâmetros) desconhecido que rege o mecanismo teórico, $\Theta$  é o espaço paramétrico, que compreende todos os valores possíveis que $\theta$ pode assumir. Cada valor de $\theta$ especifica uma distribuição de probabilidade distinta para os dados.
+
+> O objetivo central da inferência é utilizar a amostra observada para identificar quais valores de $\theta$ dentro do espaço paramétrico são mais compatíveis com a evidência empírica coletada.
+
+## Definição da função de verossimilhança
+
+Considere uma amostra observada $\mathbf{x}=(x_1,x_2,\ldots,x_n)$ proveniente de um PGD com função de probabilidade (ou densidade) $f(x;\theta)$. Sob a suposição de que as observações são i.i.d., a distribuição conjunta da amostra é dada pelo produto das densidades individuais:
+
+$$f(\mathbf{x}; \theta) = \prod\limits_{i=1}^{n}f(x_i;\theta).$$
+Quando tratamos essa expressão como uma função de $\theta$ , mantendo os dados observados $\mathbf{x}$ fixos, ela é denominada função de verossimilhança:
+
+$$L(\theta; \mathbf{x}) = \prod\limits_{i=1}^{n}f(x_i;\theta).$$
+A verossimilhança quantifica a compatibilidade relativa entre diferentes valores do parâmetro e os dados efetivamente coletados, servindo de base para métodos de estimativa e tomada de decisão.
+
+
+::: {.callout-warning title="Probabilidade e verossimilhança"} 
+
+É fundamental distinguir os dois conceitos:
+
+1. Na probabilidade $f(\mathbf{x}; \theta)$, o parâmetro $\theta$ está fixo e variamos os dados $\mathbf{x}$ para prever possíveis resultados.
+
+2. Na verossimilhança $L(\theta; \mathbf{x})$ os dados $\mathbf{x}$ estão fixos e variamos $\theta$ para avaliar qual modelo melhor explica o que foi observado.
+
+Portanto, $L(\theta; \mathbf{x})$ não é uma distribuição de probabilidade para $\theta$. Ela não indica a probabilidade de o parâmetro ser um determinado valor, mas sim o quão plausível é aquele valor dado o resultado da amostra.
+
+:::
+
+
+## Verossimilhança no experimento da urna
+
+No experimento da urna, cada retirada pode ser modelada individualmente como uma variável de Bernoulli:
+
+$$X_i \sim \text{Bernoulli}(p),$$
+em que $X_i = 1$ indica uma bola vermelha e $X_i = 0$  uma bola branca. A função de probabilidade para uma única observação é  $f(x_i;p) = p^{x_i}(1-p)^{1-x_i}$ para $0 \leq p \leq 1$. Para uma amostra de $n$ bolas, a função de verossimilhança é:
+
+$$L(p; \mathbf{x}) = \prod\limits_{i=1}^{n}p^{x_i}(1-p)^{1-x_i}.$$
+Se definirmos $r = \sum\limits_{i=1}^{n} x_i$ como o número total de bolas vermelhas, a expressão simplifica-se para:
+
+$$L(p; r) = p^{r}(1-p)^{n-r}.$$
+Este resultado demonstra que, para inferir sobre a proporção $p$, a ordem das bolas é irrelevante, apenas o total $r$ de sucessos importa.
+
+
+> Note que no exemplo da urna, a proporção amostral $\hat{p}=R/n$ desempenhou três papéis complementares: foi uma estatística calculada a partir da amostra, um estimador da proporção populacional $p$ e o estimador de máxima verossimilhança sob o modelo de Bernoulli. Essa conexão ilustra como os conceitos introduzidos ao longo da unidade se articulam em uma estrutura inferencial única.
+
+
+
+### Verificação de aprendizagem {.unnumbered}
+
+1. Na definição de $L(\theta;\mathbf{x})$, quais elementos são mantidos fixos e quais variam?
+
+2. Por que a função de verossimilhança não deve ser interpretada como uma probabilidade para o parâmetro?
+
+
+3. Mostre que, se nenhuma bola vermelha for observada, o estimador de máxima verossimilhança de $p$ será igual a zero.
+
+4. Mostre que, se todas as bolas observadas forem vermelhas, o estimador de máxima verossimilhança de $p$ será igual a um.
+

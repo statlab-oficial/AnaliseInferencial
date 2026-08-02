@@ -278,6 +278,23 @@ window.Quarto = {
   <li><a href="#lista-semanal-obrigatória" id="toc-lista-semanal-obrigatória" class="nav-link" data-scroll-target="#lista-semanal-obrigatória">Lista Semanal Obrigatória</a></li>
   </ul></li>
   <li><a href="#conceitos-importantes" id="toc-conceitos-importantes" class="nav-link" data-scroll-target="#conceitos-importantes"><span class="header-section-number">2.5</span> Conceitos Importantes</a></li>
+  <li><a href="#estatísticas-estimadores-e-estimativas" id="toc-estatísticas-estimadores-e-estimativas" class="nav-link" data-scroll-target="#estatísticas-estimadores-e-estimativas"><span class="header-section-number">2.6</span> Estatísticas, estimadores e estimativas</a></li>
+  <li><a href="#estatística-como-função-da-amostra" id="toc-estatística-como-função-da-amostra" class="nav-link" data-scroll-target="#estatística-como-função-da-amostra"><span class="header-section-number">2.7</span> Estatística como função da amostra</a>
+  <ul class="collapse">
+  <li><a href="#exemplos-fundamentais" id="toc-exemplos-fundamentais" class="nav-link" data-scroll-target="#exemplos-fundamentais">Exemplos Fundamentais</a></li>
+  </ul></li>
+  <li><a href="#o-experimento-da-urna-e-variáveis-de-bernoulli" id="toc-o-experimento-da-urna-e-variáveis-de-bernoulli" class="nav-link" data-scroll-target="#o-experimento-da-urna-e-variáveis-de-bernoulli"><span class="header-section-number">2.8</span> O Experimento da Urna e Variáveis de Bernoulli</a></li>
+  <li><a href="#distribuição-amostral" id="toc-distribuição-amostral" class="nav-link" data-scroll-target="#distribuição-amostral"><span class="header-section-number">2.9</span> Distribuição Amostral</a></li>
+  <li><a href="#critérios-básicos-para-avaliar-estimadores" id="toc-critérios-básicos-para-avaliar-estimadores" class="nav-link" data-scroll-target="#critérios-básicos-para-avaliar-estimadores"><span class="header-section-number">2.10</span> Critérios básicos para avaliar estimadores</a>
+  <ul class="collapse">
+  <li><a href="#verificação-de-aprendizagem-2" id="toc-verificação-de-aprendizagem-2" class="nav-link" data-scroll-target="#verificação-de-aprendizagem-2">Verificação de aprendizagem</a></li>
+  </ul></li>
+  <li><a href="#modelo-estatístico-e-função-de-verossimilhança" id="toc-modelo-estatístico-e-função-de-verossimilhança" class="nav-link" data-scroll-target="#modelo-estatístico-e-função-de-verossimilhança"><span class="header-section-number">2.11</span> Modelo estatístico e função de verossimilhança</a></li>
+  <li><a href="#definição-da-função-de-verossimilhança" id="toc-definição-da-função-de-verossimilhança" class="nav-link" data-scroll-target="#definição-da-função-de-verossimilhança"><span class="header-section-number">2.12</span> Definição da função de verossimilhança</a></li>
+  <li><a href="#verossimilhança-no-experimento-da-urna" id="toc-verossimilhança-no-experimento-da-urna" class="nav-link" data-scroll-target="#verossimilhança-no-experimento-da-urna"><span class="header-section-number">2.13</span> Verossimilhança no experimento da urna</a>
+  <ul class="collapse">
+  <li><a href="#verificação-de-aprendizagem-3" id="toc-verificação-de-aprendizagem-3" class="nav-link" data-scroll-target="#verificação-de-aprendizagem-3">Verificação de aprendizagem</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -691,6 +708,142 @@ Representação Matemática
 <p>Dizemos que uma amostra de <span class="math inline">\(n\)</span> bolas extraídas usando nossa pá é <strong>representativa</strong> da população se o seu conteúdo “se assemelhar aproximadamente” ao conteúdo da urna. Se sim, então a proporção de bolas vermelhas da pá pode ser <strong>generalizada</strong> para a proporção das <span class="math inline">\(N = 2400\)</span> bolas da urna que são vermelhas. Ou expresso de forma diferente, <span class="math inline">\(\hat{p}\)</span> é um “bom palpite” de <span class="math inline">\(p\)</span>. Agora digamos que trapaceamos ao usar a pá e removemos um número de bolas brancas em favor de bolas vermelhas. Então, essa amostra seria viesada em relação às bolas vermelhas e, portanto, a amostra não seria mais representativa da urna.</p>
 <p>Uma maneira de garantir que uma amostra seja não viesada e representativa da população é usar a <strong>amostragem aleatória</strong>. Temos que <strong>Inferência</strong> é o ato de “dar um palpite” sobre algo desconhecido. Portanto, <strong>Inferência estatística</strong> é o ato de fazer um palpite sobre uma população usando uma amostra.</p>
 <p>Em nosso caso, como a função <code>rep_sample_n()</code> usa o gerador de números aleatórios do seu computador, estávamos, de fato, realizando “amostragem aleatória”.</p>
+</section>
+<section id="estatísticas-estimadores-e-estimativas" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="estatísticas-estimadores-e-estimativas"><span class="header-section-number">2.6</span> Estatísticas, estimadores e estimativas</h2>
+<p>Para realizar inferências sobre uma população, partimos de uma amostra aleatória, que é um conjunto de <span class="math inline">\(n\)</span> variáveis aleatórias independentes e identicamente distribuídas (i.i.d.) retiradas de um PGD. Denotamos essa amostra antes da coleta por:</p>
+<p><span class="math display">\[\mathbf{X}=(X_1,X_2,\ldots,X_n).\]</span></p>
+<p>Nesse estágio, <span class="math inline">\(\mathbf{X}\)</span> representa o “efeito” potencial de um mecanismo teórico (PGD) cujos parâmetros são fixos, mas desconhecidos. Após a coleta, observamos uma realização particular da amostra, denotada por letras minúsculas:</p>
+<p><span class="math display">\[\mathbf{x}=(x_1,x_2,\ldots,x_n).\]</span> Esta distinção é o pilar da inferência estatística: enquanto a amostra observada <span class="math inline">\(\mathbf{x}\)</span> é um conjunto de números fixos, a amostra aleatória <span class="math inline">\(\mathbf{X}\)</span> é um vetor de variáveis aleatórias.</p>
+<ol type="1">
+<li><p>Estatística: é qualquer função da amostra que não depende de parâmetros desconhecidos. Matematicamente, se <span class="math inline">\(T\)</span> é uma estatística, então <span class="math inline">\(T = g(X_1,\dots, X_n)\)</span>. Exemplos comuns incluem a média amostral (<span class="math inline">\(\bar{X}\)</span>), a variância amostral (<span class="math inline">\(S^2\)</span>) ou o máximo da amostra (<span class="math inline">\(X_{(n)}\)</span>).</p></li>
+<li><p>Estimador: é uma estatística utilizada especificamente com o objetivo de aproximar um parâmetro populacional desconhecido (<span class="math inline">\(\theta\)</span>). Como o estimador é uma função de variáveis aleatórias, ele próprio é uma variável aleatória. Portanto, cada estimador possui sua própria distribuição amostral, que descreve como seus valores variariam se extraíssemos infinitas amostras da mesma população.</p></li>
+<li><p>Estimativa: é o valor numérico específico que o estimador assume ao ser calculado com os dados de uma amostra observada <span class="math inline">\(\mathbf{x}\)</span>. Enquanto o estimador <span class="math inline">\(\hat \theta\)</span> é uma “regra” ou fórmula, a estimativa é o resultado final após a substituição dos valores medidos.</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>Essa hierarquia permite que a estatística utilize a teoria da probabilidade para quantificar quão próxima uma estimativa pontual está do verdadeiro parâmetro, frequentemente através do cálculo do erro padrão ou da construção de intervalos de confiança</p>
+</blockquote>
+</section>
+<section id="estatística-como-função-da-amostra" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="estatística-como-função-da-amostra"><span class="header-section-number">2.7</span> Estatística como função da amostra</h2>
+<p>Um ponto fundamental é que, como os argumentos <span class="math inline">\(X_1, \dots, X_n\)</span> são variáveis aleatórias (antes da coleta), a estatística <span class="math inline">\(T\)</span> é, ela própria, uma variável aleatória.</p>
+<section id="exemplos-fundamentais" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exemplos-fundamentais">Exemplos Fundamentais</h3>
+<ol type="1">
+<li>Média Amostral (<span class="math inline">\(\bar{X}\)</span>): É a soma das observações dividida pelo tamanho da amostra, ou seja</li>
+</ol>
+<p><span class="math display">\[\bar{X} = \frac{1}{n}\sum\limits_{i=1}^{n} X_i.\]</span> Sendo o estimador natural da média populacional <span class="math inline">\(\mu\)</span>.</p>
+<ol start="2" type="1">
+<li>Variância Amostral (<span class="math inline">\(S^2\)</span>): Utiliza-se geralmente o divisor <span class="math inline">\(n-1\)</span> para que o estimador seja não-viesado, compensando a perda de um grau de liberdade ao usar <span class="math inline">\(\bar{X}\)</span> no cálculo, ou seja,</li>
+</ol>
+<p><span class="math display">\[S^2 = \frac{1}{n-1}\sum\limits_{i=1}^{n}(X_i - \bar X)^2.\]</span> 3. Proporção Amostral (<span class="math inline">\(\hat p\)</span>): Aplicada quando a população segue uma distribuição de Bernoulli, onde cada unidade é classificada binariamente (sucesso/fracasso), ou seja,</p>
+<p><span class="math display">\[\hat p = \frac{1}{n}\sum\limits_{i=1}^{n} X_i,\]</span> em que <span class="math inline">\(X_i\)</span> assume o valor 1 para “sucesso” e 0 para “fracasso”.</p>
+</section>
+</section>
+<section id="o-experimento-da-urna-e-variáveis-de-bernoulli" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="o-experimento-da-urna-e-variáveis-de-bernoulli"><span class="header-section-number">2.8</span> O Experimento da Urna e Variáveis de Bernoulli</h2>
+<p>No contexto do experimento da urna, as bolas retiradas são modeladas como variáveis aleatórias independentes e identicamente distribuídas (i.i.d.). Ao definir:</p>
+<ul>
+<li><p><span class="math inline">\(X_i = 1\)</span> (Vermelha) com probabilidade <span class="math inline">\(p\)</span>; e</p></li>
+<li><p><span class="math inline">\(X_i = 0\)</span> (Branca) com probabilidade <span class="math inline">\((1-p)\)</span>,</p></li>
+</ul>
+<p>a estatística <span class="math inline">\(R = \sum\limits_{i=1}^{n} X_i\)</span> representa o número total de sucessos e segue uma distribuição <span class="math inline">\(\text{Binomial}(n,p)\)</span>. A proporção amostral <span class="math inline">\(\hat p = R/n\)</span> é, portanto, a média aritmética dessas variáveis de Bernoulli, funcionando como um estimador não-viesado para a proporção populacional <span class="math inline">\(p\)</span>.</p>
+</section>
+<section id="distribuição-amostral" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="distribuição-amostral"><span class="header-section-number">2.9</span> Distribuição Amostral</h2>
+<p>O conceito de distribuição amostral é o elo entre a probabilidade e a inferência. Ela descreve o comportamento probabilístico do estimador, apresentando todos os valores que ele pode assumir e a frequência com que esses valores ocorrem quando o procedimento de amostragem é repetido infinitamente sob as mesmas condições.</p>
+<p>No experimento virtual realizado, o histograma das proporções calculadas pelos grupos representa uma aproximação empírica da distribuição amostral de <span class="math inline">\(\hat p\)</span> para um tamanho de amostra fixo <span class="math inline">\(n\)</span>. Vimos anteriormente que sob o modelo de Bernoulli independente, o número de sucessos <span class="math inline">\(R\)</span> segue uma distribuição Binomial. Como <span class="math inline">\(\hat p = R/n\)</span>, as propriedades da distribuição amostral de <span class="math inline">\(\hat p\)</span> são:</p>
+<ol type="1">
+<li><p>Esperança: <span class="math inline">\(\operatorname{E}(\widehat{p})=p\)</span> (o que torna <span class="math inline">\(\hat p\)</span> um estimador não-viesado).</p></li>
+<li><p>Variância: <span class="math inline">\(\operatorname{Var}(\widehat{p})=\frac{p(1-p)}{n}\)</span>.</p></li>
+<li><p>Erro-Padrão: É o desvio padrão da distribuição amostral, dado por <span class="math inline">\(\operatorname{EP}(\widehat{p}) = \sqrt{\frac{p(1-p)}{n}}\)</span>.</p></li>
+</ol>
+<p>Estas expressões revelam que a variabilidade de <span class="math inline">\(\hat{p}\)</span> é inversamente proporcional à raiz quadrada de <span class="math inline">\(n\)</span>. Assim, amostras maiores produzem estimativas mais precisas e concentradas em torno do verdadeiro parâmetro.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Modelo exato para a urna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Modelo exato para a urna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quando a amostragem é realizada sem reposição em uma população finita de tamanho <span class="math inline">\(N\)</span> (com <span class="math inline">\(M\)</span> bolas vermelhas), as observações não são independentes. O número de sucessos segue, então, uma distribuição <span class="math inline">\(\text{Hipergeométrica} (N,M,n)\)</span>.</p>
+<p>Nesse cenário, a variância do estimador incorpora a correção para população finita:</p>
+<p><span class="math display">\[\operatorname{Var}(\widehat{p})=\frac{p(1-p)}{n} \cdot \left(\frac{N-n}{N-1}\right).\]</span></p>
+<p>O fator <span class="math inline">\(\frac{N-n}{N-1}\)</span> reduz a variabilidade do estimador, pois, em populações finitas, cada unidade amostrada reduz a incerteza sobre o que resta na população. Quando a fração amostral <span class="math inline">\(n/N\)</span> é pequena (geralmente menor que 10%), esse fator aproxima-se de 1, e o modelo binomial torna-se uma aproximação excelente e simplificada.</p>
+</div>
+</div>
+</section>
+<section id="critérios-básicos-para-avaliar-estimadores" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="critérios-básicos-para-avaliar-estimadores"><span class="header-section-number">2.10</span> Critérios básicos para avaliar estimadores</h2>
+<p>Diferentes estatísticas podem ser utilizadas para estimar um mesmo parâmetro populacional, tornando necessária a aplicação de critérios técnicos para compará-las.</p>
+<ol type="1">
+<li><p>O viés de um estimador é a diferença entre o seu valor esperado e o valor real do parâmetro, sendo definido por <span class="math inline">\(\operatorname{E}(\hat \theta) - \theta\)</span>. Um estimador é considerado não viesado quando, em média, seus valores coincidem com o parâmetro alvo, ou seja, <span class="math inline">\(\operatorname{E}(\hat \theta) = \theta\)</span>.</p></li>
+<li><p>A variância, por sua vez, quantifica a dispersão ou incerteza do estimador entre diferentes amostras possíveis. Um critério abrangente que permite comparar estimadores viesados e não viesados é o Erro Quadrático Médio (EQM), que combina viés e variabilidade através da decomposição <span class="math inline">\(\operatorname{EQM}(\hat \theta) = \operatorname{Var}(\hat \theta) + [\text{Viés}(\hat \theta)]^2\)</span>.</p></li>
+<li><p>Além dessas propriedades de pequenas amostras, um estimador é dito consistente se ele converge em probabilidade para o valor verdadeiro do parâmetro à medida que o tamanho da amostra <span class="math inline">\(n\)</span> aumenta, garantindo que o erro de estimação tenda a zero no longo prazo.</p></li>
+</ol>
+<section id="verificação-de-aprendizagem-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="verificação-de-aprendizagem-2">Verificação de aprendizagem</h3>
+<ol type="1">
+<li><p>Qual é a diferença entre <span class="math inline">\(\widehat{p}\)</span> e o valor observado de <span class="math inline">\(\widehat{p}\)</span>?</p></li>
+<li><p>Por que um estimador é considerado uma variável aleatória?</p></li>
+<li><p>Qual é a relação entre o histograma das proporções obtidas nas amostras repetidas e a distribuição amostral de <span class="math inline">\(\widehat{p}\)</span>?</p></li>
+<li><p>O que acontece com a variabilidade de <span class="math inline">\(\widehat{p}\)</span> quando o tamanho da amostra aumenta?</p></li>
+</ol>
+</section>
+</section>
+<section id="modelo-estatístico-e-função-de-verossimilhança" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="modelo-estatístico-e-função-de-verossimilhança"><span class="header-section-number">2.11</span> Modelo estatístico e função de verossimilhança</h2>
+<p>Como a descrição probabilística exata do PGD raramente é conhecida, a inferência estatística utiliza uma família de modelos para representar, de maneira simplificada e aproximada, os aspectos fundamentais do fenômeno em estudo. Um modelo estatístico paramétrico é definido como uma coleção de distribuições de probabilidade indexadas por um parâmetro:</p>
+<p><span class="math display">\[\mathcal{P} = \{P_{\theta}: \theta \in \Theta\},\]</span></p>
+<p>em que <span class="math inline">\(\theta\)</span> representa o parâmetro (ou vetor de parâmetros) desconhecido que rege o mecanismo teórico, <span class="math inline">\(\Theta\)</span> é o espaço paramétrico, que compreende todos os valores possíveis que <span class="math inline">\(\theta\)</span> pode assumir. Cada valor de <span class="math inline">\(\theta\)</span> especifica uma distribuição de probabilidade distinta para os dados.</p>
+<blockquote class="blockquote">
+<p>O objetivo central da inferência é utilizar a amostra observada para identificar quais valores de <span class="math inline">\(\theta\)</span> dentro do espaço paramétrico são mais compatíveis com a evidência empírica coletada.</p>
+</blockquote>
+</section>
+<section id="definição-da-função-de-verossimilhança" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="definição-da-função-de-verossimilhança"><span class="header-section-number">2.12</span> Definição da função de verossimilhança</h2>
+<p>Considere uma amostra observada <span class="math inline">\(\mathbf{x}=(x_1,x_2,\ldots,x_n)\)</span> proveniente de um PGD com função de probabilidade (ou densidade) <span class="math inline">\(f(x;\theta)\)</span>. Sob a suposição de que as observações são i.i.d., a distribuição conjunta da amostra é dada pelo produto das densidades individuais:</p>
+<p><span class="math display">\[f(\mathbf{x}; \theta) = \prod\limits_{i=1}^{n}f(x_i;\theta).\]</span> Quando tratamos essa expressão como uma função de <span class="math inline">\(\theta\)</span> , mantendo os dados observados <span class="math inline">\(\mathbf{x}\)</span> fixos, ela é denominada função de verossimilhança:</p>
+<p><span class="math display">\[L(\theta; \mathbf{x}) = \prod\limits_{i=1}^{n}f(x_i;\theta).\]</span> A verossimilhança quantifica a compatibilidade relativa entre diferentes valores do parâmetro e os dados efetivamente coletados, servindo de base para métodos de estimativa e tomada de decisão.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Probabilidade e verossimilhança">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Probabilidade e verossimilhança
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>É fundamental distinguir os dois conceitos:</p>
+<ol type="1">
+<li><p>Na probabilidade <span class="math inline">\(f(\mathbf{x}; \theta)\)</span>, o parâmetro <span class="math inline">\(\theta\)</span> está fixo e variamos os dados <span class="math inline">\(\mathbf{x}\)</span> para prever possíveis resultados.</p></li>
+<li><p>Na verossimilhança <span class="math inline">\(L(\theta; \mathbf{x})\)</span> os dados <span class="math inline">\(\mathbf{x}\)</span> estão fixos e variamos <span class="math inline">\(\theta\)</span> para avaliar qual modelo melhor explica o que foi observado.</p></li>
+</ol>
+<p>Portanto, <span class="math inline">\(L(\theta; \mathbf{x})\)</span> não é uma distribuição de probabilidade para <span class="math inline">\(\theta\)</span>. Ela não indica a probabilidade de o parâmetro ser um determinado valor, mas sim o quão plausível é aquele valor dado o resultado da amostra.</p>
+</div>
+</div>
+</section>
+<section id="verossimilhança-no-experimento-da-urna" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="verossimilhança-no-experimento-da-urna"><span class="header-section-number">2.13</span> Verossimilhança no experimento da urna</h2>
+<p>No experimento da urna, cada retirada pode ser modelada individualmente como uma variável de Bernoulli:</p>
+<p><span class="math display">\[X_i \sim \text{Bernoulli}(p),\]</span> em que <span class="math inline">\(X_i = 1\)</span> indica uma bola vermelha e <span class="math inline">\(X_i = 0\)</span> uma bola branca. A função de probabilidade para uma única observação é <span class="math inline">\(f(x_i;p) = p^{x_i}(1-p)^{1-x_i}\)</span> para <span class="math inline">\(0 \leq p \leq 1\)</span>. Para uma amostra de <span class="math inline">\(n\)</span> bolas, a função de verossimilhança é:</p>
+<p><span class="math display">\[L(p; \mathbf{x}) = \prod\limits_{i=1}^{n}p^{x_i}(1-p)^{1-x_i}.\]</span> Se definirmos <span class="math inline">\(r = \sum\limits_{i=1}^{n} x_i\)</span> como o número total de bolas vermelhas, a expressão simplifica-se para:</p>
+<p><span class="math display">\[L(p; r) = p^{r}(1-p)^{n-r}.\]</span> Este resultado demonstra que, para inferir sobre a proporção <span class="math inline">\(p\)</span>, a ordem das bolas é irrelevante, apenas o total <span class="math inline">\(r\)</span> de sucessos importa.</p>
+<blockquote class="blockquote">
+<p>Note que no exemplo da urna, a proporção amostral <span class="math inline">\(\hat{p}=R/n\)</span> desempenhou três papéis complementares: foi uma estatística calculada a partir da amostra, um estimador da proporção populacional <span class="math inline">\(p\)</span> e o estimador de máxima verossimilhança sob o modelo de Bernoulli. Essa conexão ilustra como os conceitos introduzidos ao longo da unidade se articulam em uma estrutura inferencial única.</p>
+</blockquote>
+<section id="verificação-de-aprendizagem-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="verificação-de-aprendizagem-3">Verificação de aprendizagem</h3>
+<ol type="1">
+<li><p>Na definição de <span class="math inline">\(L(\theta;\mathbf{x})\)</span>, quais elementos são mantidos fixos e quais variam?</p></li>
+<li><p>Por que a função de verossimilhança não deve ser interpretada como uma probabilidade para o parâmetro?</p></li>
+<li><p>Mostre que, se nenhuma bola vermelha for observada, o estimador de máxima verossimilhança de <span class="math inline">\(p\)</span> será igual a zero.</p></li>
+<li><p>Mostre que, se todas as bolas observadas forem vermelhas, o estimador de máxima verossimilhança de <span class="math inline">\(p\)</span> será igual a um.</p></li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
@@ -701,6 +854,7 @@ KIM, Albert Y.; ISMAY, Chester; KUHN, Max. <a href="https://doi.org/10.21105/jos
 WICKHAM, Hadley <em>et al.</em> <a href="https://doi.org/10.21105/joss.01686">Welcome to the <span class="nocase">tidyverse</span></a>. <strong>Journal of Open Source Software</strong>, v. 4, n. 43, p. 1686, 2019.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->
