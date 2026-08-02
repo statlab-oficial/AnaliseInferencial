@@ -230,12 +230,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Inferência Estatística e Ciência de Dados</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Referências</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -1481,7 +1475,7 @@ p_k=p_{k0},\]</span></p>
 <section id="tomada-de-decisão-e-interpretação-via-python" class="level4" data-number="8.1.3.1">
 <h4 data-number="8.1.3.1" class="anchored" data-anchor-id="tomada-de-decisão-e-interpretação-via-python"><span class="header-section-number">8.1.3.1</span> Tomada de Decisão e Interpretação via Python</h4>
 <p>Para determinar se a discrepância de <span class="math inline">\(6{,}10\)</span> é estatisticamente impeditiva para um dado honesto, calculamos o valor-<span class="math inline">\(p\)</span> usando a biblioteca <code>scipy.stats</code>.</p>
-<div id="0ebc008f" class="cell" data-execution_count="1">
+<div id="81712d4a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>chi_obs <span class="op">=</span> <span class="fl">6.10</span></span>
@@ -1502,7 +1496,7 @@ p_k=p_{k0},\]</span></p>
 <section id="validação-por-simulação-computacional-monte-carlo" class="level4" data-number="8.1.3.3">
 <h4 data-number="8.1.3.3" class="anchored" data-anchor-id="validação-por-simulação-computacional-monte-carlo"><span class="header-section-number">8.1.3.3</span> Validação por Simulação Computacional (Monte Carlo)</h4>
 <p>Para materializar o significado real do <span class="math inline">\(p_{\text{valor}}\)</span>, podemos simular o comportamento de um dado honesto lançado 120 vezes, repetindo o experimento 10.000 vezes para mapear a distribuição empírica do <span class="math inline">\(\chi^2\)</span> sob a validade de <span class="math inline">\(H_0\)</span>:</p>
-<div id="03ebd38e" class="cell" data-execution_count="2">
+<div id="a06f77f0" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1526,7 +1520,7 @@ p_k=p_{k0},\]</span></p>
 <pre><code>Valor-p Empírico: 0.3064</code></pre>
 </div>
 </div>
-<div id="cd65e90d" class="cell" data-message="false" data-execution_count="3">
+<div id="347d39b9" class="cell" data-message="false" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.hist(chi2_simulados, bins<span class="op">=</span><span class="dv">40</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'#2b5c8f'</span>, label<span class="op">=</span><span class="st">'$\chi^2$ Simulado'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="fl">6.10</span>, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'$\chi^2$ Observado (6.10)'</span>)</span>
@@ -1607,7 +1601,7 @@ p_k=p_{k0},\]</span></p>
 <p><span class="math display">\[E_{ij} = \frac{\text{Total da Linha } i \times \text{Total da Coluna } j}{n_{\text{total}}}.\]</span></p>
 <p>Neste cenário, as frequências esperadas para as três linhas seriam simétricas: <span class="math inline">\(11,67\)</span> (Reprovados), <span class="math inline">\(35,00\)</span> (Regulares) e <span class="math inline">\(53,33\)</span> (Bons). Como os totais marginais limitam a variação interna da tabela, os graus de liberdade seguem a regra do produto marginal:</p>
 <p><span class="math display">\[\nu = (r - 1)(c - 1) = (3 - 1)(3 - 1) = 4.\]</span></p>
-<div id="d00f28ad" class="cell" data-execution_count="4">
+<div id="0f1c31b2" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1708,7 +1702,7 @@ p_k=p_{k0},\]</span></p>
 </table>
 <p>Ao confrontar o real com o esperado, notamos a direção da força da associação: a classe de baixa renda apresenta um excesso de indivíduos doentes frente ao modelo de independência (<span class="math inline">\(60 &gt; 41,67\)</span>), enquanto a classe alta exibe um déficit acentuado (<span class="math inline">\(20 &lt; 41,67\)</span>).</p>
 <p>No teste de independência temos que <span class="math inline">\(\nu = (r-1)(c-1)\)</span>. Como <span class="math inline">\(r = 3\)</span> (níveis de renda) e <span class="math inline">\(c = 2\)</span> (presença de hipertensão), logo: <span class="math inline">\(\nu = (3-1)(2-1) = 2\)</span>.</p>
-<div id="8c1e644b" class="cell" data-execution_count="5">
+<div id="b0a7ee24" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1893,7 +1887,7 @@ p_k=p_{k0},\]</span></p>
 </section>
 <section id="passo-3-uso-do-python" class="level3" data-number="10.4.3">
 <h3 data-number="10.4.3" class="anchored" data-anchor-id="passo-3-uso-do-python"><span class="header-section-number">10.4.3</span> Passo 3: Uso do Python</h3>
-<div id="430bbe77" class="cell" data-execution_count="6">
+<div id="f1f5ff37" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.power <span class="im">import</span> GofChisquarePower</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
