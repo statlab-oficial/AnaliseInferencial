@@ -261,6 +261,443 @@ $$\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},$$
 
 também é, pois conhecer o número total de caras e a proporção amostral de caras é equivalente (já que conhecemos $n$!).
 
+## Completude
+
+## Família Exponencial
+
+O modelo estatístico $\mathcal{P}=\{P_\theta:\theta\in\Theta\}$ 
+forma uma **família exponencial $s$-dimensional** se cada função de probabilidade ou densidade pode ser escrita como:
+
+$$
+f(x;\theta)
+=
+\exp\left\{
+\sum_{j=1}^s c_j(\theta)T_j(x)
++
+B(\theta)
++
+h(x)
+\right\}
+I_A(x),
+$$
+em que:
+
+- $c_j(\theta)$ são funções do parâmetro;
+- $T_j(x)$ são funções da observação;
+- $B(\theta)$ está associado à constante de normalização;
+- $h(x)$ depende somente da observação;
+- o suporte $A$ não depende de $\theta$.
+
+As famílias exponenciais são particularmente importantes porque incluem várias distribuições usuais e estão diretamente relacionadas à existência de estatísticas suficientes de dimensão fixa.
+
+
+Se uma observação possui densidade
+
+$$
+f(x;\theta)
+=
+\exp\left\{
+\sum_{j=1}^s c_j(\theta)T_j(x)
++
+B(\theta)
++
+h(x)
+\right\}
+I_A(x),
+$$
+
+então, para uma amostra iid $X_1,\ldots,X_n$, a densidade conjunta é
+
+$$
+\begin{aligned}
+f(\mathbf{x};\theta)
+&=
+\prod_{i=1}^n f(x_i;\theta) \\
+&=
+\exp\left\{
+\sum_{j=1}^s
+c_j(\theta)
+\sum_{i=1}^n T_j(x_i)
++
+nB(\theta)
++
+\sum_{i=1}^n h(x_i)
+\right\}
+I_{A^n}(\mathbf{x}).
+\end{aligned}
+$$
+
+Portanto,
+
+$$
+T(\mathbf{X})
+=
+\left(
+\sum_{i=1}^n T_1(X_i),
+\ldots,
+\sum_{i=1}^n T_s(X_i)
+\right)
+$$
+
+é uma estatística suficiente para $\theta$.
+
+::: {.callout-important}
+Em uma família exponencial, a estatística suficiente natural para uma amostra é formada pelas somas das estatísticas componentes de cada observação.
+:::
+
+### Exemplo - Distribuição exponencial {.unnumbered}
+
+Considere $X\sim\operatorname{Exp}(\theta), \quad \theta>0,$
+com $\theta$ representando a taxa. A fdp é
+
+$$
+f(x;\theta)
+=
+\theta e^{-\theta x}I_{(0,\infty)}(x).
+$$
+
+Podemos escrevê-la como
+
+$$
+f(x;\theta)
+=
+\exp\left\{
+-\theta x+\log\theta
+\right\}
+I_{(0,\infty)}(x).
+$$
+
+Assim,
+
+$$
+c(\theta)=-\theta,
+\qquad
+T(x)=x,
+\qquad
+B(\theta)=\log\theta,
+\qquad
+h(x)=0,
+\qquad
+A=(0,\infty).
+$$
+
+Portanto, a distribuição exponencial forma uma família exponencial unidimensional.
+
+
+### Exemplo - Distribuição beta {.unnumbered}
+
+Considere
+
+$$
+X\sim\operatorname{Beta}(\alpha,\beta),
+\qquad \alpha,\beta>0.
+$$
+
+A densidade é
+
+$$
+f(x;\alpha,\beta)
+=
+\frac{x^{\alpha-1}(1-x)^{\beta-1}}
+{B(\alpha,\beta)}
+I_{(0,1)}(x).
+$$
+
+Uma representação exponencial é
+
+$$
+\begin{aligned}
+f(x;\alpha,\beta)
+&=
+\exp\Bigl\{
+\alpha\log x
++
+\beta\log(1-x) \\
+&\qquad
+-\log[x(1-x)]
+-\log B(\alpha,\beta)
+\Bigr\}
+I_{(0,1)}(x).
+\end{aligned}
+$$
+
+Logo, trata-se de uma família exponencial bidimensional, com
+
+$$
+c_1(\theta)=\alpha,
+\qquad
+c_2(\theta)=\beta,
+$$
+
+$$
+T_1(x)=\log x,
+\qquad
+T_2(x)=\log(1-x),
+$$
+
+$$
+B(\theta)=-\log B(\alpha,\beta),
+\qquad
+h(x)=-\log[x(1-x)].
+$$
+
+### Exemplo - Distribuição Bernoulli {.unnumbered}
+
+Considere
+
+$$
+X\sim\operatorname{Bernoulli}(\theta),
+\qquad 0<\theta<1.
+$$
+
+Sua função de probabilidade é
+
+$$
+f(x;\theta)
+=
+\theta^x(1-\theta)^{1-x},
+\qquad x\in\{0,1\}.
+$$
+
+Como
+
+$$
+\begin{aligned}
+f(x;\theta)
+&=
+\left(\frac{\theta}{1-\theta}\right)^x(1-\theta) \\
+&=
+\exp\left\{
+x\log\left(\frac{\theta}{1-\theta}\right)
++
+\log(1-\theta)
+\right\},
+\end{aligned}
+$$
+
+temos uma família exponencial unidimensional com
+
+$$
+c(\theta)
+=
+\log\left(\frac{\theta}{1-\theta}\right),
+\qquad
+T(x)=x,
+$$
+
+$$
+B(\theta)=\log(1-\theta),
+\qquad
+h(x)=0,
+\qquad
+A=\{0,1\}.
+$$
+
+### Exemplo - Distribuição normal com variância conhecida {.unnumbered}
+
+
+Considere
+
+$$
+X\sim N(\mu,1),
+\qquad \mu\in\mathbb{R}.
+$$
+
+A densidade pode ser escrita como
+
+$$
+\begin{aligned}
+f(x;\mu)
+&=
+\frac{1}{\sqrt{2\pi}}
+\exp\left\{
+-\frac{(x-\mu)^2}{2}
+\right\} \\
+&=
+\exp\left\{
+\mu x
+-\frac{\mu^2}{2}
+-\frac{x^2}{2}
+-\log\sqrt{2\pi}
+\right\}.
+\end{aligned}
+$$
+
+Logo,
+
+$$
+c(\mu)=\mu,
+\qquad
+T(x)=x,
+\qquad
+B(\mu)=-\frac{\mu^2}{2},
+$$
+
+$$
+h(x)
+=
+-\frac{x^2}{2}
+-\log\sqrt{2\pi},
+\qquad
+A=\mathbb{R}.
+$$
+
+### Exemplo - Distribuição normal com variância desconhecida {.unnumbered}
+
+Para
+
+$$
+X\sim N(\mu,\sigma^2),
+$$
+
+temos
+
+$$
+\begin{aligned}
+f(x;\mu,\sigma^2)
+&=
+\exp\left\{
+-\frac{x^2}{2\sigma^2}
++
+\frac{\mu}{\sigma^2}x
+-
+\frac{\mu^2}{2\sigma^2}
+-
+\frac{1}{2}\log\sigma^2
+-
+\log\sqrt{2\pi}
+\right\}.
+\end{aligned}
+$$
+
+Essa é uma família exponencial bidimensional, com
+
+$$
+T_1(x)=x,
+\qquad
+T_2(x)=x^2,
+$$
+
+$$
+c_1(\theta)=\frac{\mu}{\sigma^2},
+\qquad
+c_2(\theta)=-\frac{1}{2\sigma^2}.
+$$
+
+Para uma amostra aleatória, as estatísticas
+
+$$
+T_1(\mathbf{X})
+=
+\sum_{i=1}^n X_i
+\qquad\text{e}\qquad
+T_2(\mathbf{X})
+=
+\sum_{i=1}^n X_i^2
+$$
+
+são conjuntamente suficientes para $(\mu,\sigma^2)$.
+
+## Estimadores baseados em estatísticas suficientes
+
+### Teorema de Rao--Blackwell
+
+Seja $T$ uma estatística suficiente para $\theta$ e seja $S=S(\mathbf{X})$ um estimador de uma função $\tau(\theta)$. Defina
+
+$$
+\widetilde{\tau}
+=
+E_\theta(S\mid T).
+$$
+
+Então $\widetilde{\tau}$ é função de $T$ e satisfaz
+
+$$
+E_\theta(\widetilde{\tau})
+=
+E_\theta(S).
+$$
+
+Além disso,
+
+$$
+\operatorname{Var}_\theta(\widetilde{\tau})
+\leq
+\operatorname{Var}_\theta(S).
+$$
+
+Consequentemente, quando $S$ é não viesado para $\tau(\theta)$, o estimador $E(S\mid T)$ também é não viesado e possui variância não superior à de $S$.
+
+### Exemplo: estimação de $e^{-\theta}$ no modelo de Poisson
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Poisson}(\theta).
+$$
+
+Queremos estimar
+
+$$
+P_\theta(X=0)=e^{-\theta}.
+$$
+
+O estimador
+
+$$
+S=I_{\{X_1=0\}}
+$$
+
+é não viesado, pois
+
+$$
+E_\theta(S)
+=
+P_\theta(X_1=0)
+=
+e^{-\theta}.
+$$
+
+A estatística
+
+$$
+T=\sum_{i=1}^n X_i
+$$
+
+é suficiente para $\theta$. Pelo teorema de Rao--Blackwell,
+
+$$
+\widetilde{\tau}
+=
+E(S\mid T)
+=
+P(X_1=0\mid T).
+$$
+
+Condicionalmente a $T=t$, o vetor $(X_1,\ldots,X_n)$ possui distribuição multinomial com total $t$ e probabilidades iguais a $1/n$. Assim,
+
+$$
+P(X_1=0\mid T=t)
+=
+\left(1-\frac{1}{n}\right)^t.
+$$
+
+Portanto,
+
+$$
+\boxed{
+\widetilde{\tau}
+=
+\left(1-\frac{1}{n}\right)^{\sum_{i=1}^n X_i}
+}
+$$
+
+é um estimador não viesado de $e^{-\theta}$, baseado na estatística suficiente $T$, e possui variância não superior à do estimador inicial $S$.
+
+
+
 ### Exercícios {.unnumbered}
 
 1.  Considere a distribuição $N(0,\sigma)$ e seja $\theta=\sigma^2$. Encontre uma estatística suficiente.
