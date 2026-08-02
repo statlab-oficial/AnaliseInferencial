@@ -218,11 +218,16 @@ window.Quarto = {
   <li><a href="#variância-e-erro-quadrático-médio" id="toc-variância-e-erro-quadrático-médio" class="nav-link" data-scroll-target="#variância-e-erro-quadrático-médio">Variância e Erro Quadrático Médio</a></li>
   <li><a href="#consistência" id="toc-consistência" class="nav-link" data-scroll-target="#consistência">Consistência</a></li>
   <li><a href="#eficiência" id="toc-eficiência" class="nav-link" data-scroll-target="#eficiência">Eficiência</a></li>
+  <li><a href="#média-de-uma-distribuição-normal-com-variância-conhecida" id="toc-média-de-uma-distribuição-normal-com-variância-conhecida" class="nav-link" data-scroll-target="#média-de-uma-distribuição-normal-com-variância-conhecida">Média de uma distribuição normal com variância conhecida</a></li>
+  <li><a href="#média-de-uma-distribuição-de-poisson" id="toc-média-de-uma-distribuição-de-poisson" class="nav-link" data-scroll-target="#média-de-uma-distribuição-de-poisson">Média de uma distribuição de Poisson</a></li>
   <li><a href="#estatística-suficiente" id="toc-estatística-suficiente" class="nav-link" data-scroll-target="#estatística-suficiente">Estatística Suficiente</a></li>
   <li><a href="#exemplo---usando-a-definição" id="toc-exemplo---usando-a-definição" class="nav-link" data-scroll-target="#exemplo---usando-a-definição">Exemplo - Usando a Definição</a></li>
   <li><a href="#exemplo---usando-o-critério-de-fatoração-de-neymanfisher" id="toc-exemplo---usando-o-critério-de-fatoração-de-neymanfisher" class="nav-link" data-scroll-target="#exemplo---usando-o-critério-de-fatoração-de-neymanfisher">Exemplo - Usando o Critério de Fatoração de Neyman–Fisher</a></li>
   </ul></li>
-  <li><a href="#completude" id="toc-completude" class="nav-link" data-scroll-target="#completude"><span class="header-section-number">4.2</span> Completude</a></li>
+  <li><a href="#estatísticas-completas" id="toc-estatísticas-completas" class="nav-link" data-scroll-target="#estatísticas-completas"><span class="header-section-number">4.2</span> Estatísticas completas</a>
+  <ul class="collapse">
+  <li><a href="#definição" id="toc-definição" class="nav-link" data-scroll-target="#definição"><span class="header-section-number">4.2.1</span> Definição</a></li>
+  </ul></li>
   <li><a href="#família-exponencial" id="toc-família-exponencial" class="nav-link" data-scroll-target="#família-exponencial"><span class="header-section-number">4.3</span> Família Exponencial</a>
   <ul class="collapse">
   <li><a href="#exemplo---distribuição-exponencial" id="toc-exemplo---distribuição-exponencial" class="nav-link" data-scroll-target="#exemplo---distribuição-exponencial">Exemplo - Distribuição exponencial</a></li>
@@ -234,7 +239,7 @@ window.Quarto = {
   <li><a href="#estimadores-baseados-em-estatísticas-suficientes" id="toc-estimadores-baseados-em-estatísticas-suficientes" class="nav-link" data-scroll-target="#estimadores-baseados-em-estatísticas-suficientes"><span class="header-section-number">4.4</span> Estimadores baseados em estatísticas suficientes</a>
   <ul class="collapse">
   <li><a href="#teorema-de-raoblackwell" id="toc-teorema-de-raoblackwell" class="nav-link" data-scroll-target="#teorema-de-raoblackwell"><span class="header-section-number">4.4.1</span> Teorema de Rao–Blackwell</a></li>
-  <li><a href="#exemplo-estimação-de-e-theta-no-modelo-de-poisson" id="toc-exemplo-estimação-de-e-theta-no-modelo-de-poisson" class="nav-link" data-scroll-target="#exemplo-estimação-de-e-theta-no-modelo-de-poisson"><span class="header-section-number">4.4.2</span> Exemplo: estimação de <span class="math inline">\(e^{-\theta}\)</span> no modelo de Poisson</a></li>
+  <li><a href="#exemplo-estimação-de-e-theta-no-modelo-de-poisson" id="toc-exemplo-estimação-de-e-theta-no-modelo-de-poisson" class="nav-link" data-scroll-target="#exemplo-estimação-de-e-theta-no-modelo-de-poisson">Exemplo: estimação de <span class="math inline">\(e^{-\theta}\)</span> no modelo de Poisson</a></li>
   <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
   </ul></li>
   </ul>
@@ -444,6 +449,123 @@ Eficiência
 </div>
 </section>
 </section>
+<section id="média-de-uma-distribuição-normal-com-variância-conhecida" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="média-de-uma-distribuição-normal-com-variância-conhecida">Média de uma distribuição normal com variância conhecida</h3>
+<p>Considere</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+N(\mu,\sigma^2),
+\]</span></p>
+<p>com <span class="math inline">\(\sigma^2\)</span> conhecida.</p>
+<p>Para uma observação,</p>
+<p><span class="math display">\[
+\log f(x;\mu)
+=
+-\frac{1}{2}\log(2\pi)
+-\frac{1}{2}\log\sigma^2
+-\frac{(x-\mu)^2}{2\sigma^2}.
+\]</span></p>
+<p>A função escore é</p>
+<p><span class="math display">\[
+\frac{\partial}{\partial\mu}\log f(x;\mu)
+=
+\frac{x-\mu}{\sigma^2}.
+\]</span></p>
+<p>Logo,</p>
+<p><span class="math display">\[
+\begin{aligned}
+I_F(\mu)
+&amp;=
+E_\mu
+\left[
+\left(
+\frac{X-\mu}{\sigma^2}
+\right)^2
+\right] \\
+&amp;=
+\frac{1}{\sigma^4}
+E_\mu[(X-\mu)^2] \\
+&amp;=
+\frac{1}{\sigma^2}.
+\end{aligned}
+\]</span></p>
+<p>O limite inferior para uma amostra de tamanho <span class="math inline">\(n\)</span> é</p>
+<p><span class="math display">\[
+LI(\mu)
+=
+\frac{1}{nI_F(\mu)}
+=
+\frac{\sigma^2}{n}.
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+E(\overline{X})=\mu
+\qquad\text{e}\qquad
+\operatorname{Var}(\overline{X})
+=
+\frac{\sigma^2}{n},
+\]</span></p>
+<p>concluímos que <span class="math inline">\(\overline{X}\)</span> é eficiente para <span class="math inline">\(\mu\)</span>.</p>
+</section>
+<section id="média-de-uma-distribuição-de-poisson" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="média-de-uma-distribuição-de-poisson">Média de uma distribuição de Poisson</h3>
+<p>Considere</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Poisson}(\theta).
+\]</span></p>
+<p>Para uma observação,</p>
+<p><span class="math display">\[
+\log f(x;\theta)
+=
+-\theta+x\log\theta-\log(x!).
+\]</span></p>
+<p>A função escore é</p>
+<p><span class="math display">\[
+\frac{\partial}{\partial\theta}
+\log f(x;\theta)
+=
+\frac{x}{\theta}-1.
+\]</span></p>
+<p>A segunda derivada é</p>
+<p><span class="math display">\[
+\frac{\partial^2}{\partial\theta^2}
+\log f(x;\theta)
+=
+-\frac{x}{\theta^2}.
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+I_F(\theta)
+=
+-
+E_\theta
+\left[
+-\frac{X}{\theta^2}
+\right]
+=
+\frac{1}{\theta}.
+\]</span></p>
+<p>O limite inferior da variância é</p>
+<p><span class="math display">\[
+LI(\theta)
+=
+\frac{1}{nI_F(\theta)}
+=
+\frac{\theta}{n}.
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+E(\overline{X})=\theta
+\qquad\text{e}\qquad
+\operatorname{Var}(\overline{X})
+=
+\frac{\theta}{n},
+\]</span></p>
+<p>a média amostral <span class="math inline">\(\overline{X}\)</span> é eficiente para <span class="math inline">\(\theta\)</span>.</p>
+</section>
 <section id="estatística-suficiente" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="estatística-suficiente">Estatística Suficiente</h3>
 <p>Suponha que temos uma amostra iid <span class="math inline">\(\mathbf{x} = (x_1, \dots, x_n)\)</span> proveniente de uma distribuição conhecida com parâmetro desconhecido <span class="math inline">\(\theta\)</span>. Imagine que temos duas pessoas:</p>
@@ -536,8 +658,24 @@ g(x_1, \dots, x_n)\cdot h\big(T(x_1, \dots, x_n), \theta\big).\]</span></p>
 <p>também é, pois conhecer o número total de caras e a proporção amostral de caras é equivalente (já que conhecemos <span class="math inline">\(n\)</span>!).</p>
 </section>
 </section>
-<section id="completude" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="completude"><span class="header-section-number">4.2</span> Completude</h2>
+<section id="estatísticas-completas" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="estatísticas-completas"><span class="header-section-number">4.2</span> Estatísticas completas</h2>
+<section id="definição" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="definição"><span class="header-section-number">4.2.1</span> Definição</h3>
+<p>Uma estatística <span class="math inline">\(T\)</span> é chamada <strong>completa</strong> para a família <span class="math inline">\(\{P_\theta:\theta\in\Theta\}\)</span> se, para toda função mensurável <span class="math inline">\(g\)</span> tal que a esperança exista,</p>
+<p><span class="math display">\[
+E_\theta[g(T)]=0
+\qquad
+\text{para todo }\theta\in\Theta
+\]</span></p>
+<p>implicar</p>
+<p><span class="math display">\[
+P_\theta\{g(T)=0\}=1
+\qquad
+\text{para todo }\theta\in\Theta.
+\]</span></p>
+<p>A completude garante que não existe uma função não trivial de <span class="math inline">\(T\)</span> cujo valor esperado seja zero para todos os valores do parâmetro.</p>
+</section>
 </section>
 <section id="família-exponencial" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="família-exponencial"><span class="header-section-number">4.3</span> Família Exponencial</h2>
@@ -611,7 +749,7 @@ T(\mathbf{X})
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -855,8 +993,8 @@ E_\theta(S).
 \]</span></p>
 <p>Consequentemente, quando <span class="math inline">\(S\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>, o estimador <span class="math inline">\(E(S\mid T)\)</span> também é não viesado e possui variância não superior à de <span class="math inline">\(S\)</span>.</p>
 </section>
-<section id="exemplo-estimação-de-e-theta-no-modelo-de-poisson" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="exemplo-estimação-de-e-theta-no-modelo-de-poisson"><span class="header-section-number">4.4.2</span> Exemplo: estimação de <span class="math inline">\(e^{-\theta}\)</span> no modelo de Poisson</h3>
+<section id="exemplo-estimação-de-e-theta-no-modelo-de-poisson" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exemplo-estimação-de-e-theta-no-modelo-de-poisson">Exemplo: estimação de <span class="math inline">\(e^{-\theta}\)</span> no modelo de Poisson</h3>
 <p>Considere</p>
 <p><span class="math display">\[
 X_1,\ldots,X_n

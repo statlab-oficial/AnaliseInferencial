@@ -157,6 +157,152 @@ Um estimador não viesado é dito **eficiente** se atinge o LICR, ou seja, quand
 Vale ressaltar que o LICR não é, em geral, garantido para estimadores viesados.
 :::
 
+
+### Média de uma distribuição normal com variância conhecida {.unnumbered}
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+N(\mu,\sigma^2),
+$$
+
+com $\sigma^2$ conhecida.
+
+Para uma observação,
+
+$$
+\log f(x;\mu)
+=
+-\frac{1}{2}\log(2\pi)
+-\frac{1}{2}\log\sigma^2
+-\frac{(x-\mu)^2}{2\sigma^2}.
+$$
+
+A função escore é
+
+$$
+\frac{\partial}{\partial\mu}\log f(x;\mu)
+=
+\frac{x-\mu}{\sigma^2}.
+$$
+
+Logo,
+
+$$
+\begin{aligned}
+I_F(\mu)
+&=
+E_\mu
+\left[
+\left(
+\frac{X-\mu}{\sigma^2}
+\right)^2
+\right] \\
+&=
+\frac{1}{\sigma^4}
+E_\mu[(X-\mu)^2] \\
+&=
+\frac{1}{\sigma^2}.
+\end{aligned}
+$$
+
+O limite inferior para uma amostra de tamanho $n$ é
+
+$$
+LI(\mu)
+=
+\frac{1}{nI_F(\mu)}
+=
+\frac{\sigma^2}{n}.
+$$
+
+Como
+
+$$
+E(\overline{X})=\mu
+\qquad\text{e}\qquad
+\operatorname{Var}(\overline{X})
+=
+\frac{\sigma^2}{n},
+$$
+
+concluímos que $\overline{X}$ é eficiente para $\mu$.
+
+### Média de uma distribuição de Poisson {.unnumbered}
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Poisson}(\theta).
+$$
+
+Para uma observação,
+
+$$
+\log f(x;\theta)
+=
+-\theta+x\log\theta-\log(x!).
+$$
+
+A função escore é
+
+$$
+\frac{\partial}{\partial\theta}
+\log f(x;\theta)
+=
+\frac{x}{\theta}-1.
+$$
+
+A segunda derivada é
+
+$$
+\frac{\partial^2}{\partial\theta^2}
+\log f(x;\theta)
+=
+-\frac{x}{\theta^2}.
+$$
+
+Portanto,
+
+$$
+I_F(\theta)
+=
+-
+E_\theta
+\left[
+-\frac{X}{\theta^2}
+\right]
+=
+\frac{1}{\theta}.
+$$
+
+O limite inferior da variância é
+
+$$
+LI(\theta)
+=
+\frac{1}{nI_F(\theta)}
+=
+\frac{\theta}{n}.
+$$
+
+Como
+
+$$
+E(\overline{X})=\theta
+\qquad\text{e}\qquad
+\operatorname{Var}(\overline{X})
+=
+\frac{\theta}{n},
+$$
+
+a média amostral $\overline{X}$ é eficiente para $\theta$.
+
+
 ### Estatística Suficiente {.unnumbered}
 
 Suponha que temos uma amostra iid $\mathbf{x} = (x_1, \dots, x_n)$ proveniente de uma distribuição conhecida com parâmetro desconhecido $\theta$. Imagine que temos duas pessoas:
@@ -261,7 +407,28 @@ $$\hat{\theta}_{MV}=\frac{\sum_{i=1}^{n} x_i}{n},$$
 
 também é, pois conhecer o número total de caras e a proporção amostral de caras é equivalente (já que conhecemos $n$!).
 
-## Completude
+
+## Estatísticas completas
+
+### Definição
+
+Uma estatística $T$ é chamada **completa** para a família $\{P_\theta:\theta\in\Theta\}$ se, para toda função mensurável $g$ tal que a esperança exista,
+
+$$
+E_\theta[g(T)]=0
+\qquad
+\text{para todo }\theta\in\Theta
+$$
+
+implicar
+
+$$
+P_\theta\{g(T)=0\}=1
+\qquad
+\text{para todo }\theta\in\Theta.
+$$
+
+A completude garante que não existe uma função não trivial de $T$ cujo valor esperado seja zero para todos os valores do parâmetro.
 
 ## Família Exponencial
 
@@ -342,6 +509,8 @@ $$
 é uma estatística suficiente para $\theta$.
 
 ::: {.callout-important}
+## Importante
+
 Em uma família exponencial, a estatística suficiente natural para uma amostra é formada pelas somas das estatísticas componentes de cada observação.
 :::
 
@@ -628,7 +797,7 @@ $$
 
 Consequentemente, quando $S$ é não viesado para $\tau(\theta)$, o estimador $E(S\mid T)$ também é não viesado e possui variância não superior à de $S$.
 
-### Exemplo: estimação de $e^{-\theta}$ no modelo de Poisson
+### Exemplo: estimação de $e^{-\theta}$ no modelo de Poisson {.unnumbered}
 
 Considere
 
