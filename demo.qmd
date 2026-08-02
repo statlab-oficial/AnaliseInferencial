@@ -1,0 +1,67 @@
+# Demonstrações
+
+## A Prova do TCL
+
+A demonstração baseia-se nas **Funções Geradoras de Momentos (FGM)**. O Teorema XX afirma que cada variável aleatória possui uma FGM única, $M(t)$, que a identifica. Para uma variável contínua $Y$ com densidade $f(y)$, a FGM é:
+  
+$$M(t) = E(e^{tY}) = \int_{-\infty}^{\infty} e^{ty} f(y) dy.$$
+    
+## Roteiro da Prova:
+    
+1.  Usar a série de Taylor para encontrar a FGM de $Z_i = \frac{X_i - \mu}{\sigma}$.
+    
+2.  Encontrar a FGM de $U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$.
+    
+3.  Mostrar que, conforme $n \to \infty$, a FGM de $U_n$ converge para $e^{t^2/2}$.
+    
+4.  Identificar $e^{t^2/2}$ como a FGM da Normal Padrão $N(0, 1)$.
+    
+### Passo 1: A variável padronizada $Z_i$
+    
+Seja $Z_i = \frac{X_i - \mu}{\sigma}$. Aqui, a suposição de variância finita ($\sigma^2 < \infty$) é crucial.
+    
+(a) **Propriedades:** Mostre que $E(Z) = 0$ e $Var(Z) = E(Z^2) = 1$. *(Dica: Z é uma função linear de X)*.
+    
+(b) **Momentos na Origem:** Mostre que:
+      
+- $M_Z(0) = 1$
+- $M_Z'(0) = E(Z) = 0$
+- $M_Z''(0) = E(Z^2) = 1$
+
+(c) **Expansão de Taylor:** Expandindo $M_Z(t)$ em torno de $t = 0$ e avaliando em $t/\sqrt{n}$:
+
+$$M_Z\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{(t/\sqrt{n})^2}{2!} + R\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right).$$ em que $R\left(\frac{t}{\sqrt{n}}\right)$ representa o resto de termos cúbicos e de ordem superior.
+
+(d) **Resto:** Mostre que o resto $\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.$
+
+### Passo 2: A FGM de $U_n$
+
+Podemos escrever $U_n$ como:
+
+$$U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} Z_i.$$
+
+Como os $X_i$ são uma AA (independentes), a FGM da soma é o produto das FGMs:
+
+$$M_{U_n}(t) = \prod_{i=1}^{n} M_{Z_i}\left(\frac{t}{\sqrt{n}}\right) = \left[ M_Z\left(\frac{t}{\sqrt{n}}\right) \right]^n.$$
+
+### Passo 3: O Limite
+
+Substituindo a expansão de Taylor:
+
+$$M_{U_n}(t) = \left[ 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right) \right]^n.$$
+
+Aplicando o limite $n \to \infty$ e usando o fato de que $\lim_{n \to \infty} (1 + \frac{a}{n})^n = e^a$, então:
+
+$$\lim_{n \to \infty} M_{U_n}(t) = e^{t^2/2}.$$ *(Use o fato que* $\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.$.
+
+### Passo 4: Reconhecimento da Distribuição
+
+Se $U \sim N(0, 1)$, então sua FGM é $M_U(t) = e^{t^2/2}$.
+
+**Prova rápida:**
+
+$$E(e^{tU}) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{tu} e^{-u^2/2} du.$$
+
+Completando o quadrado no expoente: $tu - \frac{u^2}{2} = -\frac{1}{2}(u-t)^2 + \frac{t^2}{2}$.
+
+$$E(e^{tU}) = e^{t^2/2} \underbrace{\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{(u-t)^2}{2}} du}_{1 \text{ (integral de uma FDP Normal)}} = e^{t^2/2}.$$
