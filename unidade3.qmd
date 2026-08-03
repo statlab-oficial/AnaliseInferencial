@@ -866,6 +866,465 @@ $$
 é um estimador não viesado de $e^{-\theta}$, baseado na estatística suficiente $T$, e possui variância não superior à do estimador inicial $S$.
 
 
+## Teorema de Lehmann--Scheffé
+
+Seja $T$ uma estatística suficiente e completa para $\theta$. Se existe um estimador não viesado de uma função $\tau(\theta)$, então existe um único estimador não viesado de variância uniformemente mínima, dado por uma função de $T$.
+
+Equivalentemente, se $\phi(T)$ é não viesado para $\tau(\theta)$, então $\phi(T)$ é o **estimador não viesado de variância uniformemente mínima**, abreviado por ENVUM ou UMVU.
+
+O teorema pode ser combinado com Rao--Blackwell da seguinte forma:
+
+1. parte-se de qualquer estimador não viesado $U$ de $\tau(\theta)$;
+2. calcula-se
+
+$$E(U\mid T);$$
+
+3. como $T$ é suficiente, o novo estimador não aumenta a variância;
+
+4. como $T$ é completa, essa função não viesada de $T$ é única.
+
+
+### Aplicação à distribuição uniforme {.unnumbered}
+
+No modelo $U(0,\theta)$, a estatística
+
+$$
+Y=X_{(n)}
+$$
+
+é suficiente e completa. Como
+
+$$
+\widehat{\theta}
+=
+\frac{n+1}{n}Y
+$$
+
+é não viesado e função de $Y$, o teorema de Lehmann--Scheffé garante que esse é o ENVUM de $\theta$.
+
+### Exemplo - Distribuição exponencial {.unnumbered}
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Exp}(\theta),
+$$
+
+com $\theta>0$ representando a taxa.
+
+A log-verossimilhança é
+
+$$
+\ell(\theta)
+=
+n\log\theta
+-
+\theta\sum_{i=1}^n X_i.
+$$
+
+A função escore é
+
+$$
+\frac{\partial\ell(\theta)}{\partial\theta}
+=
+\frac{n}{\theta}
+-
+\sum_{i=1}^n X_i.
+$$
+
+Igualando a zero,
+
+$$
+\widehat{\theta}_{MV}
+=
+\frac{n}{\sum_{i=1}^n X_i}
+=
+\frac{1}{\overline{X}}.
+$$
+
+A segunda derivada é
+
+$$
+\frac{\partial^2\ell(\theta)}{\partial\theta^2}
+=
+-\frac{n}{\theta^2}<0,
+$$
+
+confirmando que o ponto crítico corresponde a um máximo.
+
+A informação de Fisher da amostra é
+
+$$
+I_n(\theta)
+=
+\frac{n}{\theta^2},
+$$
+
+e o limite inferior da variância é
+
+$$
+LI(\theta)
+=
+\frac{\theta^2}{n}.
+$$
+
+Como
+
+$$
+T=\sum_{i=1}^n X_i
+\sim
+\operatorname{Gama}(n,\theta),
+$$
+
+na parametrização por taxa, temos
+
+$$
+E\left(\frac{n}{T}\right)
+=
+\frac{n}{n-1}\theta,
+\qquad n>1.
+$$
+
+Assim, o estimador de máxima verossimilhança é viesado. Um estimador não viesado é
+
+$$
+\widehat{\theta}_{NV}
+=
+\frac{n-1}{T}
+=
+\frac{n-1}{n\overline{X}}.
+$$
+
+Para $n>2$,
+
+$$
+\operatorname{Var}
+\left(
+\widehat{\theta}_{NV}
+\right)
+=
+\frac{\theta^2}{n-2}.
+$$
+
+Como $T$ é suficiente e completa e $\widehat{\theta}_{NV}$ é uma função não viesada de $T$, o teorema de Lehmann--Scheffé garante que
+
+$$
+\boxed{
+\widehat{\theta}_{NV}
+=
+\frac{n-1}{\sum_{i=1}^n X_i}
+}
+$$
+
+é o ENVUM de $\theta$.
+
+Observe que
+
+$$
+\frac{\theta^2}{n-2}
+>
+\frac{\theta^2}{n},
+$$
+
+de modo que esse estimador não atinge o limite de Cramér--Rao para amostras finitas. Ser ENVUM não implica necessariamente ser eficiente no sentido de Cramér--Rao.
+
+### Exercício resolvido: Distribuição Gama com parâmetro de forma conhecido {.unnumbered}
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Gama}(\alpha,\theta),
+$$
+
+em que o parâmetro de forma, $\alpha>0$, é conhecido e $\theta>0$ é o parâmetro de escala desconhecido. A fdp é dada por:
+
+$$
+f(x;\theta)
+=
+\frac{1}{\Gamma(\alpha)\theta^\alpha}
+x^{\alpha-1}
+e^{-x/\theta},
+\qquad x>0.
+$$
+
+#### Família exponencial {.unnumbered}
+
+Podemos escrever
+
+$$
+f(x;\theta)
+=
+\exp\left\{
+-\frac{x}{\theta}
+-\alpha\log\theta
++
+(\alpha-1)\log x
+-\log\Gamma(\alpha)
+\right\}
+I_{(0,\infty)}(x).
+$$
+
+Portanto, trata-se de uma família exponencial regular unidimensional, com
+
+$$
+c(\theta)=-\frac{1}{\theta},
+\qquad
+T(x)=x.
+$$
+
+#### Estatística suficiente e completa {.unnumbered}
+
+Para uma amostra aleatória,
+
+$$
+T=\sum_{i=1}^n X_i
+$$
+
+é suficiente. Como
+
+$$
+c(\Theta)=(-\infty,0),
+$$
+
+o espaço do parâmetro natural contém intervalos abertos. Logo, $T$ também é completa.
+
+#### Esperança e variância {.unnumbered}
+
+Como
+
+$$
+T\sim\operatorname{Gama}(n\alpha,\theta),
+$$
+
+temos
+
+$$
+E(T)=n\alpha\theta
+$$
+
+e
+
+$$
+\operatorname{Var}(T)
+=
+n\alpha\theta^2.
+$$
+
+#### Estimador não viesado de $\theta$ {.unnumbered}
+
+Defina
+
+$$
+\widehat{\theta}
+=
+\frac{T}{n\alpha}
+=
+\frac{\overline{X}}{\alpha}.
+$$
+
+Então,
+
+$$
+E(\widehat{\theta})
+=
+\theta,
+$$
+
+e
+
+$$
+\operatorname{Var}(\widehat{\theta})
+=
+\frac{\theta^2}{n\alpha}.
+$$
+
+#### Eficiência {.unnumbered}
+
+A função escore de uma observação é
+
+$$
+U(X;\theta)
+=
+-\frac{\alpha}{\theta}
++
+\frac{X}{\theta^2}.
+$$
+
+A informação de Fisher para uma observação é
+
+$$
+I_F(\theta)
+=
+\frac{\alpha}{\theta^2}.
+$$
+
+Portanto,
+
+$$
+LI(\theta)
+=
+\frac{1}{nI_F(\theta)}
+=
+\frac{\theta^2}{n\alpha}.
+$$
+
+Como
+
+$$
+\operatorname{Var}(\widehat{\theta})
+=
+LI(\theta),
+$$
+
+o estimador
+
+$$
+\boxed{
+\widehat{\theta}
+=
+\frac{\overline{X}}{\alpha}
+}
+$$
+
+é eficiente. Além disso, por ser função não viesada da estatística suficiente e completa $T$, ele também é o ENVUM de $\theta$.
+
+::: {.callout-note}
+No enunciado manuscrito, a última questão aparece como “$T$ é eficiente?”. A interpretação adotada aqui é verificar a eficiência do estimador não viesado de $\theta$ construído a partir de $T$.
+:::
+
+### Exercício resolvido: distribuição binomial {.unnumbered}
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Bin}(2,\theta),
+\qquad 0<\theta<1.
+$$
+
+#### Limite inferior da variância {.unnumbered}
+
+Para uma observação,
+
+$$
+\log f(x;\theta)
+=
+\log\binom{2}{x}
++
+x\log\theta
++
+(2-x)\log(1-\theta).
+$$
+
+A função escore é
+
+$$
+U(X;\theta)
+=
+\frac{X}{\theta}
+-
+\frac{2-X}{1-\theta}
+=
+\frac{X-2\theta}{\theta(1-\theta)}.
+$$
+
+Como
+
+$$
+\operatorname{Var}(X)
+=
+2\theta(1-\theta),
+$$
+
+a informação de Fisher de uma observação é
+
+$$
+I_F(\theta)
+=
+\frac{2}{\theta(1-\theta)}.
+$$
+
+Assim,
+
+$$
+LI(\theta)
+=
+\frac{1}{nI_F(\theta)}
+=
+\frac{\theta(1-\theta)}{2n}.
+$$
+
+#### Estimador suficiente e não viesado {.unnumbered}
+
+A estatística
+
+$$
+T=\sum_{i=1}^n X_i
+$$
+
+é suficiente para $\theta$ e possui distribuição
+
+$$
+T\sim\operatorname{Bin}(2n,\theta).
+$$
+
+O estimador
+
+$$
+\widehat{\theta}
+=
+\frac{T}{2n}
+=
+\frac{\overline{X}}{2}
+$$
+
+é não viesado, pois
+
+$$
+E(\widehat{\theta})
+=
+\frac{E(T)}{2n}
+=
+\theta.
+$$
+
+Sua variância é
+
+$$
+\operatorname{Var}(\widehat{\theta})
+=
+\frac{2n\theta(1-\theta)}{(2n)^2}
+=
+\frac{\theta(1-\theta)}{2n}.
+$$
+
+Portanto,
+
+$$
+\operatorname{Var}(\widehat{\theta})
+=
+LI(\theta),
+$$
+
+e
+
+$$
+\boxed{
+\widehat{\theta}
+=
+\frac{\overline{X}}{2}
+}
+$$
+
+é eficiente para $\theta$.
+
+Como $T$ é também completa para essa família binomial, $\widehat{\theta}$ é o ENVUM de $\theta$.
+
 
 ### Exercícios {.unnumbered}
 

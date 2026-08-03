@@ -240,6 +240,13 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#teorema-de-raoblackwell" id="toc-teorema-de-raoblackwell" class="nav-link" data-scroll-target="#teorema-de-raoblackwell"><span class="header-section-number">4.4.1</span> Teorema de Rao–Blackwell</a></li>
   <li><a href="#exemplo-estimação-de-e-theta-no-modelo-de-poisson" id="toc-exemplo-estimação-de-e-theta-no-modelo-de-poisson" class="nav-link" data-scroll-target="#exemplo-estimação-de-e-theta-no-modelo-de-poisson">Exemplo: estimação de <span class="math inline">\(e^{-\theta}\)</span> no modelo de Poisson</a></li>
+  </ul></li>
+  <li><a href="#teorema-de-lehmannscheffé" id="toc-teorema-de-lehmannscheffé" class="nav-link" data-scroll-target="#teorema-de-lehmannscheffé"><span class="header-section-number">4.5</span> Teorema de Lehmann–Scheffé</a>
+  <ul class="collapse">
+  <li><a href="#aplicação-à-distribuição-uniforme" id="toc-aplicação-à-distribuição-uniforme" class="nav-link" data-scroll-target="#aplicação-à-distribuição-uniforme">Aplicação à distribuição uniforme</a></li>
+  <li><a href="#exemplo---distribuição-exponencial-1" id="toc-exemplo---distribuição-exponencial-1" class="nav-link" data-scroll-target="#exemplo---distribuição-exponencial-1">Exemplo - Distribuição exponencial</a></li>
+  <li><a href="#exercício-resolvido-distribuição-gama-com-parâmetro-de-forma-conhecido" id="toc-exercício-resolvido-distribuição-gama-com-parâmetro-de-forma-conhecido" class="nav-link" data-scroll-target="#exercício-resolvido-distribuição-gama-com-parâmetro-de-forma-conhecido">Exercício resolvido: Distribuição Gama com parâmetro de forma conhecido</a></li>
+  <li><a href="#exercício-resolvido-distribuição-binomial" id="toc-exercício-resolvido-distribuição-binomial" class="nav-link" data-scroll-target="#exercício-resolvido-distribuição-binomial">Exercício resolvido: distribuição binomial</a></li>
   <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
   </ul></li>
   </ul>
@@ -1044,6 +1051,383 @@ P(X_1=0\mid T=t)
 }
 \]</span></p>
 <p>é um estimador não viesado de <span class="math inline">\(e^{-\theta}\)</span>, baseado na estatística suficiente <span class="math inline">\(T\)</span>, e possui variância não superior à do estimador inicial <span class="math inline">\(S\)</span>.</p>
+</section>
+</section>
+<section id="teorema-de-lehmannscheffé" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="teorema-de-lehmannscheffé"><span class="header-section-number">4.5</span> Teorema de Lehmann–Scheffé</h2>
+<p>Seja <span class="math inline">\(T\)</span> uma estatística suficiente e completa para <span class="math inline">\(\theta\)</span>. Se existe um estimador não viesado de uma função <span class="math inline">\(\tau(\theta)\)</span>, então existe um único estimador não viesado de variância uniformemente mínima, dado por uma função de <span class="math inline">\(T\)</span>.</p>
+<p>Equivalentemente, se <span class="math inline">\(\phi(T)\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>, então <span class="math inline">\(\phi(T)\)</span> é o <strong>estimador não viesado de variância uniformemente mínima</strong>, abreviado por ENVUM ou UMVU.</p>
+<p>O teorema pode ser combinado com Rao–Blackwell da seguinte forma:</p>
+<ol type="1">
+<li>parte-se de qualquer estimador não viesado <span class="math inline">\(U\)</span> de <span class="math inline">\(\tau(\theta)\)</span>;</li>
+<li>calcula-se</li>
+</ol>
+<p><span class="math display">\[E(U\mid T);\]</span></p>
+<ol start="3" type="1">
+<li><p>como <span class="math inline">\(T\)</span> é suficiente, o novo estimador não aumenta a variância;</p></li>
+<li><p>como <span class="math inline">\(T\)</span> é completa, essa função não viesada de <span class="math inline">\(T\)</span> é única.</p></li>
+</ol>
+<section id="aplicação-à-distribuição-uniforme" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="aplicação-à-distribuição-uniforme">Aplicação à distribuição uniforme</h3>
+<p>No modelo <span class="math inline">\(U(0,\theta)\)</span>, a estatística</p>
+<p><span class="math display">\[
+Y=X_{(n)}
+\]</span></p>
+<p>é suficiente e completa. Como</p>
+<p><span class="math display">\[
+\widehat{\theta}
+=
+\frac{n+1}{n}Y
+\]</span></p>
+<p>é não viesado e função de <span class="math inline">\(Y\)</span>, o teorema de Lehmann–Scheffé garante que esse é o ENVUM de <span class="math inline">\(\theta\)</span>.</p>
+</section>
+<section id="exemplo---distribuição-exponencial-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exemplo---distribuição-exponencial-1">Exemplo - Distribuição exponencial</h3>
+<p>Considere</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Exp}(\theta),
+\]</span></p>
+<p>com <span class="math inline">\(\theta&gt;0\)</span> representando a taxa.</p>
+<p>A log-verossimilhança é</p>
+<p><span class="math display">\[
+\ell(\theta)
+=
+n\log\theta
+-
+\theta\sum_{i=1}^n X_i.
+\]</span></p>
+<p>A função escore é</p>
+<p><span class="math display">\[
+\frac{\partial\ell(\theta)}{\partial\theta}
+=
+\frac{n}{\theta}
+-
+\sum_{i=1}^n X_i.
+\]</span></p>
+<p>Igualando a zero,</p>
+<p><span class="math display">\[
+\widehat{\theta}_{MV}
+=
+\frac{n}{\sum_{i=1}^n X_i}
+=
+\frac{1}{\overline{X}}.
+\]</span></p>
+<p>A segunda derivada é</p>
+<p><span class="math display">\[
+\frac{\partial^2\ell(\theta)}{\partial\theta^2}
+=
+-\frac{n}{\theta^2}&lt;0,
+\]</span></p>
+<p>confirmando que o ponto crítico corresponde a um máximo.</p>
+<p>A informação de Fisher da amostra é</p>
+<p><span class="math display">\[
+I_n(\theta)
+=
+\frac{n}{\theta^2},
+\]</span></p>
+<p>e o limite inferior da variância é</p>
+<p><span class="math display">\[
+LI(\theta)
+=
+\frac{\theta^2}{n}.
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+T=\sum_{i=1}^n X_i
+\sim
+\operatorname{Gama}(n,\theta),
+\]</span></p>
+<p>na parametrização por taxa, temos</p>
+<p><span class="math display">\[
+E\left(\frac{n}{T}\right)
+=
+\frac{n}{n-1}\theta,
+\qquad n&gt;1.
+\]</span></p>
+<p>Assim, o estimador de máxima verossimilhança é viesado. Um estimador não viesado é</p>
+<p><span class="math display">\[
+\widehat{\theta}_{NV}
+=
+\frac{n-1}{T}
+=
+\frac{n-1}{n\overline{X}}.
+\]</span></p>
+<p>Para <span class="math inline">\(n&gt;2\)</span>,</p>
+<p><span class="math display">\[
+\operatorname{Var}
+\left(
+\widehat{\theta}_{NV}
+\right)
+=
+\frac{\theta^2}{n-2}.
+\]</span></p>
+<p>Como <span class="math inline">\(T\)</span> é suficiente e completa e <span class="math inline">\(\widehat{\theta}_{NV}\)</span> é uma função não viesada de <span class="math inline">\(T\)</span>, o teorema de Lehmann–Scheffé garante que</p>
+<p><span class="math display">\[
+\boxed{
+\widehat{\theta}_{NV}
+=
+\frac{n-1}{\sum_{i=1}^n X_i}
+}
+\]</span></p>
+<p>é o ENVUM de <span class="math inline">\(\theta\)</span>.</p>
+<p>Observe que</p>
+<p><span class="math display">\[
+\frac{\theta^2}{n-2}
+&gt;
+\frac{\theta^2}{n},
+\]</span></p>
+<p>de modo que esse estimador não atinge o limite de Cramér–Rao para amostras finitas. Ser ENVUM não implica necessariamente ser eficiente no sentido de Cramér–Rao.</p>
+</section>
+<section id="exercício-resolvido-distribuição-gama-com-parâmetro-de-forma-conhecido" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercício-resolvido-distribuição-gama-com-parâmetro-de-forma-conhecido">Exercício resolvido: Distribuição Gama com parâmetro de forma conhecido</h3>
+<p>Considere</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Gama}(\alpha,\theta),
+\]</span></p>
+<p>em que o parâmetro de forma, <span class="math inline">\(\alpha&gt;0\)</span>, é conhecido e <span class="math inline">\(\theta&gt;0\)</span> é o parâmetro de escala desconhecido. A fdp é dada por:</p>
+<p><span class="math display">\[
+f(x;\theta)
+=
+\frac{1}{\Gamma(\alpha)\theta^\alpha}
+x^{\alpha-1}
+e^{-x/\theta},
+\qquad x&gt;0.
+\]</span></p>
+<section id="família-exponencial-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="família-exponencial-1">Família exponencial</h4>
+<p>Podemos escrever</p>
+<p><span class="math display">\[
+f(x;\theta)
+=
+\exp\left\{
+-\frac{x}{\theta}
+-\alpha\log\theta
++
+(\alpha-1)\log x
+-\log\Gamma(\alpha)
+\right\}
+I_{(0,\infty)}(x).
+\]</span></p>
+<p>Portanto, trata-se de uma família exponencial regular unidimensional, com</p>
+<p><span class="math display">\[
+c(\theta)=-\frac{1}{\theta},
+\qquad
+T(x)=x.
+\]</span></p>
+</section>
+<section id="estatística-suficiente-e-completa" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="estatística-suficiente-e-completa">Estatística suficiente e completa</h4>
+<p>Para uma amostra aleatória,</p>
+<p><span class="math display">\[
+T=\sum_{i=1}^n X_i
+\]</span></p>
+<p>é suficiente. Como</p>
+<p><span class="math display">\[
+c(\Theta)=(-\infty,0),
+\]</span></p>
+<p>o espaço do parâmetro natural contém intervalos abertos. Logo, <span class="math inline">\(T\)</span> também é completa.</p>
+</section>
+<section id="esperança-e-variância" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="esperança-e-variância">Esperança e variância</h4>
+<p>Como</p>
+<p><span class="math display">\[
+T\sim\operatorname{Gama}(n\alpha,\theta),
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+E(T)=n\alpha\theta
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(T)
+=
+n\alpha\theta^2.
+\]</span></p>
+</section>
+<section id="estimador-não-viesado-de-theta" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="estimador-não-viesado-de-theta">Estimador não viesado de <span class="math inline">\(\theta\)</span></h4>
+<p>Defina</p>
+<p><span class="math display">\[
+\widehat{\theta}
+=
+\frac{T}{n\alpha}
+=
+\frac{\overline{X}}{\alpha}.
+\]</span></p>
+<p>Então,</p>
+<p><span class="math display">\[
+E(\widehat{\theta})
+=
+\theta,
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(\widehat{\theta})
+=
+\frac{\theta^2}{n\alpha}.
+\]</span></p>
+</section>
+<section id="eficiência-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="eficiência-1">Eficiência</h4>
+<p>A função escore de uma observação é</p>
+<p><span class="math display">\[
+U(X;\theta)
+=
+-\frac{\alpha}{\theta}
++
+\frac{X}{\theta^2}.
+\]</span></p>
+<p>A informação de Fisher para uma observação é</p>
+<p><span class="math display">\[
+I_F(\theta)
+=
+\frac{\alpha}{\theta^2}.
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+LI(\theta)
+=
+\frac{1}{nI_F(\theta)}
+=
+\frac{\theta^2}{n\alpha}.
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+\operatorname{Var}(\widehat{\theta})
+=
+LI(\theta),
+\]</span></p>
+<p>o estimador</p>
+<p><span class="math display">\[
+\boxed{
+\widehat{\theta}
+=
+\frac{\overline{X}}{\alpha}
+}
+\]</span></p>
+<p>é eficiente. Além disso, por ser função não viesada da estatística suficiente e completa <span class="math inline">\(T\)</span>, ele também é o ENVUM de <span class="math inline">\(\theta\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No enunciado manuscrito, a última questão aparece como “<span class="math inline">\(T\)</span> é eficiente?”. A interpretação adotada aqui é verificar a eficiência do estimador não viesado de <span class="math inline">\(\theta\)</span> construído a partir de <span class="math inline">\(T\)</span>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="exercício-resolvido-distribuição-binomial" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercício-resolvido-distribuição-binomial">Exercício resolvido: distribuição binomial</h3>
+<p>Considere</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\text{iid}}{\sim}
+\operatorname{Bin}(2,\theta),
+\qquad 0&lt;\theta&lt;1.
+\]</span></p>
+<section id="limite-inferior-da-variância" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="limite-inferior-da-variância">Limite inferior da variância</h4>
+<p>Para uma observação,</p>
+<p><span class="math display">\[
+\log f(x;\theta)
+=
+\log\binom{2}{x}
++
+x\log\theta
++
+(2-x)\log(1-\theta).
+\]</span></p>
+<p>A função escore é</p>
+<p><span class="math display">\[
+U(X;\theta)
+=
+\frac{X}{\theta}
+-
+\frac{2-X}{1-\theta}
+=
+\frac{X-2\theta}{\theta(1-\theta)}.
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+2\theta(1-\theta),
+\]</span></p>
+<p>a informação de Fisher de uma observação é</p>
+<p><span class="math display">\[
+I_F(\theta)
+=
+\frac{2}{\theta(1-\theta)}.
+\]</span></p>
+<p>Assim,</p>
+<p><span class="math display">\[
+LI(\theta)
+=
+\frac{1}{nI_F(\theta)}
+=
+\frac{\theta(1-\theta)}{2n}.
+\]</span></p>
+</section>
+<section id="estimador-suficiente-e-não-viesado" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="estimador-suficiente-e-não-viesado">Estimador suficiente e não viesado</h4>
+<p>A estatística</p>
+<p><span class="math display">\[
+T=\sum_{i=1}^n X_i
+\]</span></p>
+<p>é suficiente para <span class="math inline">\(\theta\)</span> e possui distribuição</p>
+<p><span class="math display">\[
+T\sim\operatorname{Bin}(2n,\theta).
+\]</span></p>
+<p>O estimador</p>
+<p><span class="math display">\[
+\widehat{\theta}
+=
+\frac{T}{2n}
+=
+\frac{\overline{X}}{2}
+\]</span></p>
+<p>é não viesado, pois</p>
+<p><span class="math display">\[
+E(\widehat{\theta})
+=
+\frac{E(T)}{2n}
+=
+\theta.
+\]</span></p>
+<p>Sua variância é</p>
+<p><span class="math display">\[
+\operatorname{Var}(\widehat{\theta})
+=
+\frac{2n\theta(1-\theta)}{(2n)^2}
+=
+\frac{\theta(1-\theta)}{2n}.
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+\operatorname{Var}(\widehat{\theta})
+=
+LI(\theta),
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\boxed{
+\widehat{\theta}
+=
+\frac{\overline{X}}{2}
+}
+\]</span></p>
+<p>é eficiente para <span class="math inline">\(\theta\)</span>.</p>
+<p>Como <span class="math inline">\(T\)</span> é também completa para essa família binomial, <span class="math inline">\(\widehat{\theta}\)</span> é o ENVUM de <span class="math inline">\(\theta\)</span>.</p>
+</section>
 </section>
 <section id="exercícios" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercícios">Exercícios</h3>
