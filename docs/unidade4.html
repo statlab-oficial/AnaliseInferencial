@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -291,7 +311,10 @@ window.Quarto = {
   <li><a href="#passo-2-5" id="toc-passo-2-5" class="nav-link" data-scroll-target="#passo-2-5">Passo 2</a></li>
   <li><a href="#passos-3-e-4-4" id="toc-passos-3-e-4-4" class="nav-link" data-scroll-target="#passos-3-e-4-4">Passos 3 e 4</a></li>
   </ul></li>
-  <li><a href="#método-de-máxima-verossimilhança" id="toc-método-de-máxima-verossimilhança" class="nav-link" data-scroll-target="#método-de-máxima-verossimilhança"><span class="header-section-number">5.2</span> Método de Máxima Verossimilhança</a></li>
+  <li><a href="#sec-maxima-verossimilhanca" id="toc-sec-maxima-verossimilhanca" class="nav-link" data-scroll-target="#sec-maxima-verossimilhanca"><span class="header-section-number">5.2</span> Máxima Verossimilhança</a>
+  <ul class="collapse">
+  <li><a href="#exemplo-motivacional-uma-moeda-com-probabilidade-desconhecida" id="toc-exemplo-motivacional-uma-moeda-com-probabilidade-desconhecida" class="nav-link" data-scroll-target="#exemplo-motivacional-uma-moeda-com-probabilidade-desconhecida"><span class="header-section-number">5.2.1</span> Exemplo motivacional: uma moeda com probabilidade desconhecida</a></li>
+  </ul></li>
   <li><a href="#exemplo-emv-poisson" id="toc-exemplo-emv-poisson" class="nav-link" data-scroll-target="#exemplo-emv-poisson">Exemplo EMV (Poisson)</a>
   <ul class="collapse">
   <li><a href="#passo-1-calcule-a-verossimilhança-e-a-log-verossimilhança-dos-dados" id="toc-passo-1-calcule-a-verossimilhança-e-a-log-verossimilhança-dos-dados" class="nav-link" data-scroll-target="#passo-1-calcule-a-verossimilhança-e-a-log-verossimilhança-dos-dados">Passo 1: Calcule a verossimilhança e a log-verossimilhança dos dados</a></li>
@@ -306,6 +329,7 @@ window.Quarto = {
   <li><a href="#exemplo-emv-normal" id="toc-exemplo-emv-normal" class="nav-link" data-scroll-target="#exemplo-emv-normal">Exemplo EMV (Normal)</a></li>
   <li><a href="#método-de-mínimos-quadrados" id="toc-método-de-mínimos-quadrados" class="nav-link" data-scroll-target="#método-de-mínimos-quadrados"><span class="header-section-number">5.3</span> Método de Mínimos Quadrados</a></li>
   <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios">Exercícios</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -666,15 +690,31 @@ Exercícios
 </div>
 </section>
 </section>
-<section id="método-de-máxima-verossimilhança" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="método-de-máxima-verossimilhança"><span class="header-section-number">5.2</span> Método de Máxima Verossimilhança</h2>
-<p>Nesta seção, apresentamos exemplos de estimação por máxima verossimilhança (MV). A ideia central é simples:</p>
-<blockquote class="blockquote">
-<p>Encontrar o valor de <span class="math inline">\(\theta\)</span> que maximiza a verossimilhança dos dados observados.</p>
-</blockquote>
-<p>Na Estimação por MV, utilizamos uma amostra iid <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> de alguma distribuição com parâmetro(s) desconhecido(s) <span class="math inline">\(\theta\)</span>, com o objetivo de estimar <span class="math inline">\(\theta\)</span>.</p>
-<p><span class="math display">\[\hat{\theta} = \arg\max_\theta L(\theta \mid x) = \arg\max_\theta \prod_{i=1}^n f_X(x_i \mid \theta).\]</span></p>
-<p><strong>Observação:</strong> Recorde que, na descrição em palavras, o que fizemos para encontrar <span class="math inline">\(\hat{\theta}\)</span> foi calcular a verossimilhança; que é a probabilidade de observar os dados dado o parâmetro <span class="math inline">\(\theta\)</span>; e escolher o “melhor” <span class="math inline">\(\theta\)</span> , ou seja, aquele que maximiza essa verossimilhança.</p>
+<section id="sec-maxima-verossimilhanca" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-maxima-verossimilhanca"><span class="header-section-number">5.2</span> Máxima Verossimilhança</h2>
+<p>A estimação por máxima verossimilhança constitui um dos métodos mais gerais de estimação pontual em modelos paramétricos. Sua ideia fundamental é selecionar, entre os valores admissíveis do parâmetro, aquele para o qual os dados efetivamente observados apresentam maior verossimilhança. O método pode ser empregado em modelos discretos, contínuos e multiparamétricos, inclusive quando a solução requer procedimentos numéricos de otimização <span class="citation" data-cites="larsen2012 ramachandran2009">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>; <a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>)</span>.</p>
+<p>Além de fornecer estimadores de forma sistemática, o método de máxima verossimilhança possui propriedades assintóticas que fundamentam a construção de erros-padrão, intervalos de confiança e testes de hipóteses. Essas propriedades, entretanto, dependem de condições de regularidade e podem falhar em modelos com suporte dependente do parâmetro, parâmetros na fronteira ou problemas de identificabilidade <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>)</span>.</p>
+<p>Ao final desta seção, o leitor deverá ser capaz de:</p>
+<ol type="1">
+<li><p>construir a função de verossimilhança de um modelo paramétrico;</p></li>
+<li><p>distinguir probabilidade, densidade e verossimilhança; obter estimadores de máxima verossimilhança analítica ou numericamente;</p></li>
+<li><p>calcular a função escore e a informação de Fisher; reconhecer as principais condições de regularidade;</p></li>
+<li><p>utilizar as propriedades assintóticas dos estimadores de máxima verossimilhança;</p></li>
+<li><p>identificar modelos nos quais a teoria assintótica regular não se aplica diretamente.</p></li>
+</ol>
+<section id="exemplo-motivacional-uma-moeda-com-probabilidade-desconhecida" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="exemplo-motivacional-uma-moeda-com-probabilidade-desconhecida"><span class="header-section-number">5.2.1</span> Exemplo motivacional: uma moeda com probabilidade desconhecida</h3>
+<p>Considere uma moeda cuja probabilidade de produzir cara é desconhecida e denotada por <span class="math inline">\(p\)</span>. A moeda é lançada oito vezes, produzindo a sequência</p>
+<p><span class="math display">\[C, C, C, K, C, K, C, K,\]</span></p>
+<p>em que <span class="math inline">\(C\)</span> representa cara e <span class="math inline">\(K\)</span> representa coroa. Foram observadas cinco caras e três coroas. Supondo que os lançamentos sejam independentes, a probabilidade de observar exatamente essa sequência, para um valor fixado de <span class="math inline">\(p\)</span>, é</p>
+<p><span class="math display">\[p^5(1-p)^3.\]</span></p>
+<p>Os dados já foram observados. Portanto, a expressão anterior pode ser examinada como uma função do parâmetro <span class="math inline">\(p\)</span>:</p>
+<p><span class="math display">\[L(p) = p^5(1-p)^3, \quad 0 \leq p \leq 1.\]</span></p>
+<p>Essa função mede a verossimilhança dos diferentes valores de <span class="math inline">\(p\)</span> em relação à sequência observada. O método de máxima verossimilhança seleciona o valor que maximiza <span class="math inline">\(L(p)\)</span>.</p>
+<p>Como o logaritmo é uma função estritamente crescente, maximizar <span class="math inline">\(L(p)\)</span> é equivalente a maximizar a log-verossimilhança</p>
+<p><span class="math display">\[\ell(p) = \log(L(p)) = 5 \log(p) + 3\log(1-p).\]</span></p>
+<p>Derivando em relação a <span class="math inline">\(p\)</span>,</p>
+</section>
 </section>
 <section id="exemplo-emv-poisson" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="exemplo-emv-poisson">Exemplo EMV (Poisson)</h2>
@@ -784,8 +824,22 @@ Exercícios
 <li><p>Determine um estimador não viesado de <span class="math inline">\(\theta\)</span> que seja função de <span class="math inline">\(X_{(1)} = \min\{X_1, \ldots, X_n\}\)</span>.</p></li>
 <li><p>Mostre que <span class="math inline">\(X_{(1)}\)</span> é um estimador consistente de <span class="math inline">\(\theta\)</span>.</p></li>
 </ol>
+</section>
+<section id="referências" class="level1 unnumbered">
+<h1 class="unnumbered">Referências</h1>
 
 
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-chihara2022" class="csl-entry" role="listitem">
+CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical statistics with resampling and r</strong>. 3. ed. <em>[S.l.]</em>: John Wiley &amp; Sons, Inc., 2022.
+</div>
+<div id="ref-larsen2012" class="csl-entry" role="listitem">
+LARSEN, Richard J.; MARX, Morris L. <strong>An introduction to mathematical statistics and its applications</strong>. 5. ed. Boston: Prentice Hall, 2012.
+</div>
+<div id="ref-ramachandran2009" class="csl-entry" role="listitem">
+RAMACHANDRAN, Kandethody M.; TSOKOS, Chris P. <strong>Mathematical statistics with applications</strong>. <em>[S.l.]</em>: Academic Press (Elsevier), 2009.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

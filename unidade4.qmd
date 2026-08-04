@@ -386,17 +386,52 @@ em que $t$ é o ângulo entre a trajetória do pósitron e o spin do $\mu^+$, e 
 3.  Verifique se os estimadores de momentos dos parâmetros que indexam a distribuição gama são consistentes.
 :::
 
-## Método de Máxima Verossimilhança
+## Máxima Verossimilhança {#sec-maxima-verossimilhanca}
 
-Nesta seção, apresentamos exemplos de estimação por máxima verossimilhança (MV). A ideia central é simples:
+A estimação por máxima verossimilhança constitui um dos métodos mais gerais de estimação pontual em modelos paramétricos. Sua ideia fundamental é selecionar, entre os valores admissíveis do parâmetro, aquele para o qual os dados efetivamente observados apresentam maior verossimilhança. O método pode ser empregado em modelos discretos, contínuos e multiparamétricos, inclusive quando a solução requer procedimentos numéricos de otimização [@larsen2012; @ramachandran2009].
 
-> Encontrar o valor de $\theta$ que maximiza a verossimilhança dos dados observados.
+Além de fornecer estimadores de forma sistemática, o método de máxima verossimilhança possui propriedades assintóticas que fundamentam a construção de erros-padrão, intervalos de confiança e testes de hipóteses. Essas propriedades, entretanto, dependem de condições de regularidade e podem falhar em modelos com suporte dependente do parâmetro, parâmetros na fronteira ou problemas de identificabilidade [@chihara2022].
 
-Na Estimação por MV, utilizamos uma amostra iid $X_1, X_2, \dots, X_n$ de alguma distribuição com parâmetro(s) desconhecido(s) $\theta$, com o objetivo de estimar $\theta$.
+Ao final desta seção, o leitor deverá ser capaz de:
 
-$$\hat{\theta} = \arg\max_\theta L(\theta \mid x) = \arg\max_\theta \prod_{i=1}^n f_X(x_i \mid \theta).$$
+1. construir a função de verossimilhança de um modelo paramétrico;
 
-**Observação:** Recorde que, na descrição em palavras, o que fizemos para encontrar $\hat{\theta}$ foi calcular a verossimilhança; que é a probabilidade de observar os dados dado o parâmetro $\theta$; e escolher o "melhor" $\theta$ , ou seja, aquele que maximiza essa verossimilhança.
+2. distinguir probabilidade, densidade e verossimilhança;
+obter estimadores de máxima verossimilhança analítica ou numericamente;
+
+3. calcular a função escore e a informação de Fisher;
+reconhecer as principais condições de regularidade;
+
+4. utilizar as propriedades assintóticas dos estimadores de máxima verossimilhança;
+
+5. identificar modelos nos quais a teoria assintótica regular não se aplica diretamente.
+
+### Exemplo motivacional: uma moeda com probabilidade desconhecida
+
+Considere uma moeda cuja probabilidade de produzir cara é desconhecida e denotada por $p$. A moeda é lançada oito vezes, produzindo a sequência
+
+$$C, C, C, K, C, K, C, K,$$
+
+em que $C$ representa cara e $K$ representa coroa. Foram observadas cinco caras e três coroas. Supondo que os lançamentos sejam independentes, a probabilidade de observar exatamente essa sequência, para um valor fixado de $p$, é
+
+$$p^5(1-p)^3.$$
+
+Os dados já foram observados. Portanto, a expressão anterior pode ser examinada como uma função do parâmetro $p$:
+
+$$L(p) = p^5(1-p)^3, \quad 0 \leq p \leq 1.$$
+
+Essa função mede a verossimilhança dos diferentes valores de $p$ em relação à sequência observada. O método de máxima verossimilhança seleciona o valor que maximiza $L(p)$.
+
+Como o logaritmo é uma função estritamente crescente, maximizar $L(p)$ é equivalente a maximizar a log-verossimilhança
+
+
+$$\ell(p) = \log(L(p)) = 5 \log(p) + 3\log(1-p).$$
+
+
+Derivando em relação a $p$,
+
+
+
 
 ## Exemplo EMV (Poisson) {.unnumbered}
 
@@ -526,3 +561,6 @@ $$f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).$$
 a.  Determine um estimador não viesado de $\theta$ que seja função de $X_{(1)} = \min\{X_1, \ldots, X_n\}$.
 
 b.  Mostre que $X_{(1)}$ é um estimador consistente de $\theta$.
+
+
+# Referências {.unnumbered}
