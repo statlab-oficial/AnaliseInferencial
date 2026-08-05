@@ -1,67 +1,2833 @@
-# Demonstrações
+# Apresentação
 
-## A Prova do TCL
+Este capítulo reúne as demonstrações que sustentam os principais resultados utilizados ao longo do ebook. O objetivo não é reproduzir todas as provas contidas nas obras de referência, mas apresentar, em um único lugar, as demonstrações **estruturantes** dos capítulos sobre distribuições amostrais, avaliação de estimadores e redução de dados, máxima verossimilhança, mínimos quadrados, estimação intervalar, testes de hipóteses, análise de dados categóricos e algoritmo EM.
 
-A demonstração baseia-se nas **Funções Geradoras de Momentos (FGM)**. O Teorema XX afirma que cada variável aleatória possui uma FGM única, $M(t)$, que a identifica. Para uma variável contínua $Y$ com densidade $f(y)$, a FGM é:
-  
-$$M(t) = E(e^{tY}) = \int_{-\infty}^{\infty} e^{ty} f(y) dy.$$
-    
-## Roteiro da Prova:
-    
-1.  Usar a série de Taylor para encontrar a FGM de $Z_i = \frac{X_i - \mu}{\sigma}$.
-    
-2.  Encontrar a FGM de $U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$.
-    
-3.  Mostrar que, conforme $n \to \infty$, a FGM de $U_n$ converge para $e^{t^2/2}$.
-    
-4.  Identificar $e^{t^2/2}$ como a FGM da Normal Padrão $N(0, 1)$.
-    
-### Passo 1: A variável padronizada $Z_i$
-    
-Seja $Z_i = \frac{X_i - \mu}{\sigma}$. Aqui, a suposição de variância finita ($\sigma^2 < \infty$) é crucial.
-    
-(a) **Propriedades:** Mostre que $E(Z) = 0$ e $Var(Z) = E(Z^2) = 1$. *(Dica: Z é uma função linear de X)*.
-    
-(b) **Momentos na Origem:** Mostre que:
-      
-- $M_Z(0) = 1$
-- $M_Z'(0) = E(Z) = 0$
-- $M_Z''(0) = E(Z^2) = 1$
+A organização segue a dependência lógica entre os resultados. Primeiro são estabelecidos os teoremas de convergência e as distribuições amostrais. Em seguida, demonstram-se os resultados de estimação pontual e redução de dados. Esses fundamentos são então utilizados na máxima verossimilhança, nos mínimos quadrados, na construção de intervalos de confiança, nos testes de hipóteses e no algoritmo EM.
 
-(c) **Expansão de Taylor:** Expandindo $M_Z(t)$ em torno de $t = 0$ e avaliando em $t/\sqrt{n}$:
+::: {.callout-note title="Níveis de demonstração"}
+As provas são apresentadas em três níveis:
 
-$$M_Z\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{(t/\sqrt{n})^2}{2!} + R\left(\frac{t}{\sqrt{n}}\right) = 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right).$$ em que $R\left(\frac{t}{\sqrt{n}}\right)$ representa o resto de termos cúbicos e de ordem superior.
+1. **Demonstração completa:** todos os passos essenciais são explicitados sob as hipóteses declaradas.
+2. **Demonstração para o caso regular:** prova completa em uma classe de modelos suficientemente ampla para as aplicações do ebook.
+3. **Esboço de demonstração:** utilizado quando a versão geral exige ferramentas avançadas, como teoria da medida, geometria diferencial ou teoria assintótica de processos estocásticos.
 
-(d) **Resto:** Mostre que o resto $\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.$
+Sempre que uma versão geral não puder ser justificada apenas com as ferramentas desenvolvidas no ebook, essa limitação será indicada explicitamente.
+:::
 
-### Passo 2: A FGM de $U_n$
+## Correspondência com os capítulos do ebook
 
-Podemos escrever $U_n$ como:
+| Capítulo do ebook | Demonstrações principais reunidas aqui |
+|---|---|
+| Distribuições amostrais | Lei Fraca dos Grandes Números; distribuição da média; TCL; distribuição de $S^2$; distribuições $t$ e $F$ |
+| Avaliação de estimadores e redução de dados | decomposição do EQM; consistência; fatoração de Neyman--Fisher; Rao--Blackwell; Lehmann--Scheffé; Cramér--Rao |
+| Máxima verossimilhança | invariância; identidades de Bartlett; consistência e normalidade assintótica no caso regular |
+| Mínimos quadrados | equações normais; interpretação geométrica; teorema de Gauss--Markov; equivalência com máxima verossimilhança |
+| Estimação intervalar | método pivotal; intervalos exatos no modelo normal; dualidade com testes |
+| Testes de hipóteses | validade do valor-$p$; lema de Neyman--Pearson; testes UMP; razão de verossimilhanças e Wilks |
+| Dados categóricos | frequências esperadas; graus de liberdade; estatísticas de Pearson e deviance; teste exato de Fisher |
+| Algoritmo EM | construção da função $Q$ e monotonicidade da verossimilhança |
 
-$$U_n = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} Z_i.$$
+# Resultados preliminares
 
-Como os $X_i$ são uma AA (independentes), a FGM da soma é o produto das FGMs:
+## Desigualdade de Chebyshev
 
-$$M_{U_n}(t) = \prod_{i=1}^{n} M_{Z_i}\left(\frac{t}{\sqrt{n}}\right) = \left[ M_Z\left(\frac{t}{\sqrt{n}}\right) \right]^n.$$
+::: {.callout-important title="Teorema: desigualdade de Chebyshev"}
+Se $X$ possui média $\mu$ e variância finita $\sigma^2$, então, para todo $\varepsilon>0$,
 
-### Passo 3: O Limite
+$$
+P(|X-\mu|\geq\varepsilon)
+\leq
+\frac{\sigma^2}{\varepsilon^2}.
+$$
+:::
 
-Substituindo a expansão de Taylor:
+**Demonstração.** Como
 
-$$M_{U_n}(t) = \left[ 1 + \frac{t^2}{2n} + R\left(\frac{t}{\sqrt{n}}\right) \right]^n.$$
+$$
+(X-\mu)^2
+\geq
+\varepsilon^2 I_{\{|X-\mu|\geq\varepsilon\}},
+$$
 
-Aplicando o limite $n \to \infty$ e usando o fato de que $\lim_{n \to \infty} (1 + \frac{a}{n})^n = e^a$, então:
+tomando esperanças em ambos os lados, obtemos
 
-$$\lim_{n \to \infty} M_{U_n}(t) = e^{t^2/2}.$$ *(Use o fato que* $\lim_{n \to \infty} \frac{R(t/\sqrt{n})}{(t/\sqrt{n})^2} = n \lim_{n \to \infty}R(t/\sqrt{n}) = 0.$.
+$$
+E[(X-\mu)^2]
+\geq
+\varepsilon^2
+E\left[I_{\{|X-\mu|\geq\varepsilon\}}\right].
+$$
 
-### Passo 4: Reconhecimento da Distribuição
+Portanto,
 
-Se $U \sim N(0, 1)$, então sua FGM é $M_U(t) = e^{t^2/2}$.
+$$
+\sigma^2
+\geq
+\varepsilon^2P(|X-\mu|\geq\varepsilon),
+$$
 
-**Prova rápida:**
+e a desigualdade segue após dividir por $\varepsilon^2$. $\square$
 
-$$E(e^{tU}) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{tu} e^{-u^2/2} du.$$
+## Teorema da função contínua e lema de Slutsky
 
-Completando o quadrado no expoente: $tu - \frac{u^2}{2} = -\frac{1}{2}(u-t)^2 + \frac{t^2}{2}$.
+Os resultados seguintes são utilizados repetidamente nas provas assintóticas.
 
-$$E(e^{tU}) = e^{t^2/2} \underbrace{\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{(u-t)^2}{2}} du}_{1 \text{ (integral de uma FDP Normal)}} = e^{t^2/2}.$$
+::: {.callout-important title="Teorema da função contínua"}
+Se $X_n\xrightarrow{p}X$ e $g$ é contínua nos valores assumidos por $X$, então
+
+$$
+g(X_n)\xrightarrow{p}g(X).
+$$
+
+O resultado também vale substituindo convergência em probabilidade por convergência em distribuição, desde que a continuidade seja satisfeita quase certamente em relação à distribuição limite.
+:::
+
+::: {.callout-important title="Lema de Slutsky"}
+Se $X_n\xrightarrow{D}X$ e $Y_n\xrightarrow{p}c$, em que $c$ é constante, então
+
+$$
+X_n+Y_n\xrightarrow{D}X+c,
+$$
+
+$$
+X_nY_n\xrightarrow{D}cX,
+$$
+
+e, se $c\neq0$,
+
+$$
+\frac{X_n}{Y_n}\xrightarrow{D}\frac{X}{c}.
+$$
+:::
+
+As demonstrações decorrem do teorema da função contínua aplicado ao vetor $(X_n,Y_n)$ e às funções soma, produto e quociente. Uma apresentação completa requer o resultado de que $(X_n,Y_n)\xrightarrow{D}(X,c)$ quando $X_n\xrightarrow{D}X$ e $Y_n\xrightarrow{p}c$.
+
+# Distribuições amostrais e teoremas de convergência
+
+## Esperança e variância da média amostral
+
+::: {.callout-important title="Proposição: momentos da média amostral"}
+Se $X_1,\ldots,X_n$ são independentes e identicamente distribuídas, com
+
+$$
+E(X_i)=\mu
+\qquad\text{e}\qquad
+\operatorname{Var}(X_i)=\sigma^2<\infty,
+$$
+
+então
+
+$$
+E(\overline X)=\mu
+\qquad\text{e}\qquad
+\operatorname{Var}(\overline X)=\frac{\sigma^2}{n}.
+$$
+:::
+
+**Demonstração.** Pela linearidade da esperança,
+
+$$
+E(\overline X)
+=
+E\left(\frac{1}{n}\sum_{i=1}^nX_i\right)
+=
+\frac{1}{n}\sum_{i=1}^nE(X_i)
+=
+\mu.
+$$
+
+Pela independência,
+
+$$
+\begin{aligned}
+\operatorname{Var}(\overline X)
+&=
+\operatorname{Var}\left(\frac{1}{n}\sum_{i=1}^nX_i\right)\\
+&=
+\frac{1}{n^2}\sum_{i=1}^n\operatorname{Var}(X_i)\\
+&=
+\frac{n\sigma^2}{n^2}
+=
+\frac{\sigma^2}{n}.
+\end{aligned}
+$$
+
+$\square$
+
+## Lei Fraca dos Grandes Números
+
+A demonstração por Chebyshev segue a formulação clássica apresentada por Ramachandran e Tsokos (2009).
+
+::: {.callout-important title="Teorema: Lei Fraca dos Grandes Números"}
+Se $X_1,X_2,\ldots$ são iid, com $E(X_i)=\mu$ e $\operatorname{Var}(X_i)=\sigma^2<\infty$, então
+
+$$
+\overline X_n\xrightarrow{p}\mu.
+$$
+:::
+
+**Demonstração.** Para todo $\varepsilon>0$, a desigualdade de Chebyshev fornece
+
+$$
+P(|\overline X_n-\mu|\geq\varepsilon)
+\leq
+\frac{\operatorname{Var}(\overline X_n)}{\varepsilon^2}.
+$$
+
+Como
+
+$$
+\operatorname{Var}(\overline X_n)=\frac{\sigma^2}{n},
+$$
+
+temos
+
+$$
+P(|\overline X_n-\mu|\geq\varepsilon)
+\leq
+\frac{\sigma^2}{n\varepsilon^2}
+\longrightarrow0.
+$$
+
+Essa é precisamente a definição de convergência em probabilidade. $\square$
+
+::: {.callout-note title="Interpretação"}
+A Lei Fraca dos Grandes Números justifica a substituição de momentos populacionais por momentos amostrais em procedimentos como o método dos momentos. Ela não afirma que a distribuição de $\overline X_n$ seja aproximadamente normal; essa conclusão pertence ao Teorema Central do Limite.
+:::
+
+## Distribuição exata da média em populações normais
+
+A derivação pela FGM é utilizada nos capítulos de distribuições amostrais das fontes consultadas (LARSEN; MARX, 2012; RAMACHANDRAN; TSOKOS, 2009).
+
+::: {.callout-important title="Proposição: estabilidade da distribuição normal"}
+Se
+
+$$
+X_1,\ldots,X_n\overset{\text{iid}}{\sim}N(\mu,\sigma^2),
+$$
+
+então
+
+$$
+\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right).
+$$
+:::
+
+**Demonstração por função geradora de momentos.** A FGM de $X_i$ é
+
+$$
+M_X(t)
+=
+\exp\left(\mu t+\frac{\sigma^2t^2}{2}\right).
+$$
+
+Como
+
+$$
+\overline X=\frac{1}{n}\sum_{i=1}^nX_i,
+$$
+
+a independência implica
+
+$$
+\begin{aligned}
+M_{\overline X}(t)
+&=
+\prod_{i=1}^nM_X\left(\frac{t}{n}\right)\\
+&=
+\left[
+\exp\left(
+\frac{\mu t}{n}
++
+\frac{\sigma^2t^2}{2n^2}
+\right)
+\right]^n\\
+&=
+\exp\left(
+\mu t+
+\frac{(\sigma^2/n)t^2}{2}
+\right).
+\end{aligned}
+$$
+
+Essa é a FGM de uma distribuição $N(\mu,\sigma^2/n)$. Pela unicidade da FGM, a conclusão segue. $\square$
+
+## A prova do Teorema Central do Limite
+
+Larsen e Marx (2012) e Hogg e Craig (1978) apresentam a prova por FGM sob uma hipótese adicional de existência da transformada; ambas as fontes observam que a versão geral substitui a FGM pela função característica.
+
+### Correção conceitual sobre funções geradoras de momentos
+
+::: {.callout-warning title="Correção necessária na versão anterior"}
+Não é correto afirmar que toda variável aleatória possui função geradora de momentos. A FGM
+
+$$
+M_X(t)=E(e^{tX})
+$$
+
+pode ser infinita para todo $t\neq0$. Quando a FGM existe em um intervalo aberto contendo zero, ela determina a distribuição de forma única. Consequentemente, uma prova do TCL baseada em FGM exige uma hipótese adicional além de variância finita.
+
+O TCL de Lindeberg--Lévy, sob a hipótese usual $\sigma^2<\infty$, é demonstrado rigorosamente por meio de **funções características**, que sempre existem. A prova por FGM será apresentada depois como uma versão alternativa sob condição mais forte. Essa distinção é explicitada nas fontes de Larsen e Marx e de Hogg e Craig.
+:::
+
+### Versão geral por funções características
+
+::: {.callout-important title="Teorema Central do Limite de Lindeberg--Lévy"}
+Se $X_1,X_2,\ldots$ são iid, com
+
+$$
+E(X_i)=\mu,
+\qquad
+0<\operatorname{Var}(X_i)=\sigma^2<\infty,
+$$
+
+então
+
+$$
+U_n
+=
+\frac{\sqrt n(\overline X_n-\mu)}{\sigma}
+=
+\frac{1}{\sqrt n}
+\sum_{i=1}^n
+\frac{X_i-\mu}{\sigma}
+\xrightarrow{D}N(0,1).
+$$
+:::
+
+**Demonstração.** Defina
+
+$$
+Z_i=\frac{X_i-\mu}{\sigma}.
+$$
+
+Então
+
+$$
+E(Z_i)=0
+\qquad\text{e}\qquad
+E(Z_i^2)=1.
+$$
+
+A função característica de $Z_i$ é
+
+$$
+\varphi_Z(t)=E(e^{itZ}).
+$$
+
+Como $E(Z^2)<\infty$, a expansão de segunda ordem na origem é
+
+$$
+\varphi_Z(t)
+=
+1+itE(Z)-\frac{t^2}{2}E(Z^2)+o(t^2)
+=
+1-\frac{t^2}{2}+o(t^2).
+$$
+
+A função característica de
+
+$$
+U_n=\frac{1}{\sqrt n}\sum_{i=1}^nZ_i
+$$
+
+é, pela independência,
+
+$$
+\varphi_{U_n}(t)
+=
+\left[
+\varphi_Z\left(\frac{t}{\sqrt n}\right)
+\right]^n.
+$$
+
+Aplicando a expansão anterior com $u=t/\sqrt n$,
+
+$$
+\varphi_Z\left(\frac{t}{\sqrt n}\right)
+=
+1-\frac{t^2}{2n}+o\left(\frac{1}{n}\right).
+$$
+
+Logo,
+
+$$
+\varphi_{U_n}(t)
+=
+\left[
+1-\frac{t^2}{2n}+o\left(\frac{1}{n}\right)
+\right]^n.
+$$
+
+Para justificar o limite, escreva
+
+$$
+a_n=-\frac{t^2}{2n}+o\left(\frac{1}{n}\right).
+$$
+
+Então $a_n\to0$ e
+
+$$
+na_n\to-\frac{t^2}{2}.
+$$
+
+Além disso, $na_n^2\to0$. Usando
+
+$$
+\log(1+a_n)=a_n+o(a_n),
+$$
+
+obtemos
+
+$$
+\begin{aligned}
+\log\varphi_{U_n}(t)
+&=
+n\log(1+a_n)\\
+&=
+na_n+no(a_n)\\
+&\longrightarrow
+-\frac{t^2}{2}.
+\end{aligned}
+$$
+
+Portanto,
+
+$$
+\varphi_{U_n}(t)
+\longrightarrow
+\exp\left(-\frac{t^2}{2}\right).
+$$
+
+A função limite é a função característica da normal padrão. Pelo teorema da continuidade de Lévy,
+
+$$
+U_n\xrightarrow{D}N(0,1).
+$$
+
+$\square$
+
+::: {.callout-note title="Sobre a expansão da função característica"}
+O passo
+
+$$
+\varphi_Z(t)=1-\frac{t^2}{2}+o(t^2)
+$$
+
+pode ser demonstrado aplicando a expansão de $e^{itZ}$ e controlando o resto por truncamento. Esse argumento utiliza somente $E(Z^2)<\infty$; não exige a existência de momentos de ordem superior.
+:::
+
+### Versão alternativa por FGM
+
+::: {.callout-important title="Corolário: TCL por FGM sob hipótese adicional"}
+Sob as hipóteses do TCL, suponha adicionalmente que $M_Z(t)=E(e^{tZ})$ seja finita em algum intervalo aberto contendo zero. Então a convergência para a normal padrão também pode ser demonstrada por FGMs.
+:::
+
+**Demonstração.** Como
+
+$$
+M_Z(0)=1,
+\qquad
+M_Z'(0)=E(Z)=0,
+\qquad
+M_Z''(0)=E(Z^2)=1,
+$$
+
+a expansão na origem é
+
+$$
+M_Z(u)=1+\frac{u^2}{2}+o(u^2).
+$$
+
+Tomando $u=t/\sqrt n$,
+
+$$
+M_Z\left(\frac{t}{\sqrt n}\right)
+=
+1+\frac{t^2}{2n}+o\left(\frac{1}{n}\right).
+$$
+
+Pela independência,
+
+$$
+M_{U_n}(t)
+=
+\left[
+M_Z\left(\frac{t}{\sqrt n}\right)
+\right]^n
+=
+\left[
+1+\frac{t^2}{2n}+o\left(\frac{1}{n}\right)
+\right]^n.
+$$
+
+Assim,
+
+$$
+M_{U_n}(t)
+\longrightarrow
+\exp\left(\frac{t^2}{2}\right),
+$$
+
+que é a FGM de $N(0,1)$. Pelo teorema de continuidade para FGMs,
+
+$$
+U_n\xrightarrow{D}N(0,1).
+$$
+
+$\square$
+
+::: {.callout-warning title="Correção do tratamento do resto"}
+Na versão anterior, aparecia uma expressão do tipo
+
+$$
+\lim_{n\to\infty}
+\frac{R(t/\sqrt n)}{(t/\sqrt n)^2}
+=
+n\lim_{n\to\infty}R(t/\sqrt n)=0.
+$$
+
+Essa igualdade não é válida em geral. A formulação correta é
+
+$$
+R(u)=o(u^2),
+$$
+
+de modo que, para $u=t/\sqrt n$,
+
+$$
+R\left(\frac{t}{\sqrt n}\right)
+=o\left(\frac{1}{n}\right)
+$$
+
+e, consequentemente,
+
+$$
+nR\left(\frac{t}{\sqrt n}\right)\to0.
+$$
+:::
+
+### FGM da normal padrão
+
+Se $Z\sim N(0,1)$, então
+
+$$
+\begin{aligned}
+M_Z(t)
+&=
+\frac{1}{\sqrt{2\pi}}
+\int_{-\infty}^{\infty}
+\exp\left(tz-\frac{z^2}{2}\right)dz\\
+&=
+\frac{1}{\sqrt{2\pi}}
+\int_{-\infty}^{\infty}
+\exp\left[-\frac{1}{2}(z-t)^2+\frac{t^2}{2}\right]dz\\
+&=
+\exp\left(\frac{t^2}{2}\right)
+\int_{-\infty}^{\infty}
+\frac{1}{\sqrt{2\pi}}
+\exp\left[-\frac{1}{2}(z-t)^2\right]dz\\
+&=
+\exp\left(\frac{t^2}{2}\right).
+\end{aligned}
+$$
+
+## Não viés da variância amostral
+
+::: {.callout-important title="Proposição: não viés de $S^2$"}
+Se $X_1,\ldots,X_n$ são iid, com variância $\sigma^2<\infty$, e
+
+$$
+S^2
+=
+\frac{1}{n-1}
+\sum_{i=1}^n(X_i-\overline X)^2,
+$$
+
+então
+
+$$
+E(S^2)=\sigma^2.
+$$
+:::
+
+**Demonstração.** A identidade fundamental é
+
+$$
+\sum_{i=1}^n(X_i-\overline X)^2
+=
+\sum_{i=1}^n(X_i-\mu)^2
+-
+n(\overline X-\mu)^2.
+$$
+
+Para verificá-la, escreva
+
+$$
+X_i-\mu=(X_i-\overline X)+(\overline X-\mu)
+$$
+
+e expanda os quadrados. O termo cruzado desaparece porque
+
+$$
+\sum_{i=1}^n(X_i-\overline X)=0.
+$$
+
+Tomando esperanças,
+
+$$
+\begin{aligned}
+E\left[
+\sum_{i=1}^n(X_i-\overline X)^2
+\right]
+&=
+\sum_{i=1}^nE[(X_i-\mu)^2]
+-
+nE[(\overline X-\mu)^2]\\
+&=
+n\sigma^2
+-
+n\frac{\sigma^2}{n}\\
+&=
+(n-1)\sigma^2.
+\end{aligned}
+$$
+
+Dividindo por $n-1$,
+
+$$
+E(S^2)=\sigma^2.
+$$
+
+$\square$
+
+## Distribuição da variância amostral no modelo normal
+
+A prova utiliza a decomposição ortogonal que fundamenta o teorema de Cochran e as distribuições normais amostrais (HOGG; CRAIG, 1978; LAURITZEN, 2023).
+
+::: {.callout-important title="Teorema: distribuição qui-quadrado de $S^2$"}
+Se
+
+$$
+X_1,\ldots,X_n\overset{\text{iid}}{\sim}N(\mu,\sigma^2),
+$$
+
+então
+
+$$
+\frac{(n-1)S^2}{\sigma^2}
+\sim
+\chi^2_{n-1},
+$$
+
+e $\overline X$ é independente de $S^2$.
+:::
+
+**Demonstração por decomposição ortogonal.** Defina o vetor padronizado
+
+$$
+Z
+=
+\frac{1}{\sigma}
+\begin{pmatrix}
+X_1-\mu\\
+\vdots\\
+X_n-\mu
+\end{pmatrix}
+\sim N_n(0,I_n).
+$$
+
+Considere o vetor unitário
+
+$$
+e_1
+=
+\frac{1}{\sqrt n}
+(1,\ldots,1)^\top.
+$$
+
+Complete $e_1$ para formar uma base ortonormal de $\mathbb R^n$, representada por uma matriz ortogonal $A$. Defina
+
+$$
+Y=AZ.
+$$
+
+Como $A$ é ortogonal e $Z\sim N_n(0,I_n)$,
+
+$$
+Y\sim N_n(0,I_n),
+$$
+
+de modo que $Y_1,\ldots,Y_n$ são independentes e $N(0,1)$. Além disso,
+
+$$
+Y_1=e_1^\top Z
+=
+\frac{\sqrt n(\overline X-\mu)}{\sigma}.
+$$
+
+A preservação da norma por transformações ortogonais implica
+
+$$
+\sum_{i=1}^n Z_i^2
+=
+\sum_{j=1}^nY_j^2.
+$$
+
+Por outro lado, a decomposição da soma de quadrados fornece
+
+$$
+\sum_{i=1}^n\frac{(X_i-\mu)^2}{\sigma^2}
+=
+\frac{n(\overline X-\mu)^2}{\sigma^2}
++
+\frac{(n-1)S^2}{\sigma^2}.
+$$
+
+Como o primeiro termo à direita é $Y_1^2$, segue que
+
+$$
+\frac{(n-1)S^2}{\sigma^2}
+=
+\sum_{j=2}^nY_j^2.
+$$
+
+A soma dos quadrados de $n-1$ normais padrão independentes possui distribuição $\chi^2_{n-1}$. Além disso, $Y_1$ é independente de $(Y_2,\ldots,Y_n)$; portanto, $\overline X$ é independente de $S^2$. $\square$
+
+::: {.callout-note title="Relação com o teorema de Cochran"}
+A demonstração anterior é uma aplicação elementar da decomposição ortogonal de formas quadráticas normais. O teorema de Cochran generaliza esse argumento para decomposições da soma total de quadrados em várias formas quadráticas independentes.
+:::
+
+## Derivação das distribuições $t$ e $F$
+
+### Distribuição $t$
+
+Como
+
+$$
+Z=\frac{\sqrt n(\overline X-\mu)}{\sigma}\sim N(0,1),
+$$
+
+$$
+W=\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1},
+$$
+
+e $Z$ e $W$ são independentes,
+
+$$
+\frac{Z}{\sqrt{W/(n-1)}}
+=
+\frac{\overline X-\mu}{S/\sqrt n}
+\sim t_{n-1}.
+$$
+
+### Distribuição $F$
+
+Se duas amostras normais independentes fornecem variâncias $S_1^2$ e $S_2^2$, então
+
+$$
+W_1=\frac{(n_1-1)S_1^2}{\sigma_1^2}
+\sim\chi^2_{n_1-1},
+$$
+
+$$
+W_2=\frac{(n_2-1)S_2^2}{\sigma_2^2}
+\sim\chi^2_{n_2-1}.
+$$
+
+Pela independência das amostras, $W_1$ e $W_2$ são independentes. Logo,
+
+$$
+\frac{W_1/(n_1-1)}{W_2/(n_2-1)}
+=
+\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}
+\sim
+F_{n_1-1,n_2-1}.
+$$
+
+# Avaliação de estimadores e princípios de redução de dados
+
+## Decomposição do erro quadrático médio
+
+::: {.callout-important title="Proposição: decomposição viés--variância"}
+Se $T$ estima $\tau(\theta)$, então
+
+$$
+\operatorname{EQM}_\theta(T)
+=
+E_\theta[(T-\tau(\theta))^2]
+=
+\operatorname{Var}_\theta(T)
++
+\operatorname{Bias}_\theta(T)^2.
+$$
+:::
+
+**Demonstração.** Adicione e subtraia $E_\theta(T)$:
+
+$$
+T-\tau(\theta)
+=
+[T-E_\theta(T)]
++
+[E_\theta(T)-\tau(\theta)].
+$$
+
+Elevando ao quadrado e tomando esperança,
+
+$$
+\begin{aligned}
+E_\theta[(T-\tau)^2]
+&=
+E_\theta[(T-E_\theta T)^2]
++
+[E_\theta T-\tau]^2\\
+&\quad+
+2[E_\theta T-\tau]
+E_\theta[T-E_\theta T].
+\end{aligned}
+$$
+
+O último termo é zero. Assim,
+
+$$
+\operatorname{EQM}_\theta(T)
+=
+\operatorname{Var}_\theta(T)
++
+\operatorname{Bias}_\theta(T)^2.
+$$
+
+$\square$
+
+## Critério de consistência baseado em viés e variância
+
+::: {.callout-important title="Proposição: condição suficiente para consistência"}
+Se
+
+$$
+E_\theta(T_n)\to\tau(\theta)
+$$
+
+e
+
+$$
+\operatorname{Var}_\theta(T_n)\to0,
+$$
+
+então
+
+$$
+T_n\xrightarrow{p}\tau(\theta).
+$$
+:::
+
+**Demonstração.** Para $\varepsilon>0$, escolha $n$ suficientemente grande para que
+
+$$
+|E_\theta(T_n)-\tau(\theta)|<\frac{\varepsilon}{2}.
+$$
+
+Se $|T_n-\tau(\theta)|\geq\varepsilon$, então necessariamente
+
+$$
+|T_n-E_\theta(T_n)|
+\geq
+\frac{\varepsilon}{2}.
+$$
+
+Logo,
+
+$$
+\begin{aligned}
+P_\theta(|T_n-\tau(\theta)|\geq\varepsilon)
+&\leq
+P_\theta\left(
+|T_n-E_\theta(T_n)|\geq\frac{\varepsilon}{2}
+\right)\\
+&\leq
+\frac{4\operatorname{Var}_\theta(T_n)}{\varepsilon^2}
+\longrightarrow0.
+\end{aligned}
+$$
+
+$\square$
+
+## Consistência do método dos momentos
+
+Suponha que o parâmetro seja identificado pela relação
+
+$$
+\mu_1(\theta)=E_\theta(X)=m,
+$$
+
+e que $g=\mu_1^{-1}$ seja contínua. O estimador de momentos é
+
+$$
+\widehat\theta_{MM}=g(\overline X).
+$$
+
+Pela Lei Fraca dos Grandes Números,
+
+$$
+\overline X\xrightarrow{p}\mu_1(\theta).
+$$
+
+Pelo teorema da função contínua,
+
+$$
+\widehat\theta_{MM}
+=g(\overline X)
+\xrightarrow{p}
+g(\mu_1(\theta))
+=\theta.
+$$
+
+Esse argumento estende-se ao caso vetorial quando o vetor de momentos populacionais identifica o vetor de parâmetros e a aplicação inversa é contínua.
+
+## Critério da fatoração de Neyman--Fisher
+
+::: {.callout-important title="Teorema: critério da fatoração"}
+Considere uma família dominada, com densidade ou função de massa conjunta $f_\theta(x)$. Uma estatística $T(X)$ é suficiente para $\theta$ se, e somente se, existem funções não negativas $g_\theta$ e $h$ tais que
+
+$$
+f_\theta(x)
+=
+g_\theta(T(x))h(x),
+$$
+
+em que $h$ não depende de $\theta$.
+:::
+
+### Demonstração da suficiência da fatoração
+
+Suponha que
+
+$$
+f_\theta(x)=g_\theta(T(x))h(x).
+$$
+
+No caso discreto, para um valor $t$ com $P_\theta(T=t)>0$,
+
+$$
+\begin{aligned}
+P_\theta(X=x\mid T=t)
+&=
+\frac{f_\theta(x)I_{\{T(x)=t\}}}
+{\sum_{u:T(u)=t}f_\theta(u)}\\
+&=
+\frac{g_\theta(t)h(x)I_{\{T(x)=t\}}}
+{g_\theta(t)\sum_{u:T(u)=t}h(u)}\\
+&=
+\frac{h(x)I_{\{T(x)=t\}}}
+{\sum_{u:T(u)=t}h(u)}.
+\end{aligned}
+$$
+
+A distribuição condicional não depende de $\theta$; portanto, $T$ é suficiente.
+
+### Demonstração da necessidade no caso discreto
+
+Se $T$ é suficiente, a distribuição condicional de $X$ dado $T=t$ não depende de $\theta$. Escreva
+
+$$
+f_\theta(x)
+=
+P_\theta(X=x\mid T=T(x))P_\theta(T=T(x)).
+$$
+
+Defina
+
+$$
+h(x)=P(X=x\mid T=T(x))
+$$
+
+e
+
+$$
+g_\theta(t)=P_\theta(T=t).
+$$
+
+Então
+
+$$
+f_\theta(x)=g_\theta(T(x))h(x).
+$$
+
+A versão contínua exige uma formulação com densidades condicionais regulares e é demonstrada de maneira análoga em famílias dominadas. $\square$
+
+## Teorema de Rao--Blackwell
+
+A prova pela variância total é apresentada explicitamente por Ramachandran e Tsokos (2009) e por Hogg e Craig (1978).
+
+::: {.callout-important title="Teorema de Rao--Blackwell"}
+Se $T$ é suficiente para $\theta$ e $U$ é um estimador de $\tau(\theta)$ com segundo momento finito, defina
+
+$$
+U^*=E_\theta(U\mid T).
+$$
+
+Então:
+
+$$
+E_\theta(U^*)=E_\theta(U),
+$$
+
+$$
+\operatorname{Var}_\theta(U^*)
+\leq
+\operatorname{Var}_\theta(U),
+$$
+
+e, mais geralmente,
+
+$$
+\operatorname{EQM}_\theta(U^*)
+\leq
+\operatorname{EQM}_\theta(U).
+$$
+:::
+
+**Demonstração.** Pela lei da esperança iterada,
+
+$$
+E_\theta(U^*)
+=
+E_\theta[E_\theta(U\mid T)]
+=
+E_\theta(U).
+$$
+
+Como $T$ é suficiente, a distribuição condicional dos dados dado $T$ não depende de $\theta$. Consequentemente, $U^*$ é uma função de $T$ que não envolve parâmetros desconhecidos.
+
+Pela decomposição da variância total,
+
+$$
+\operatorname{Var}_\theta(U)
+=
+E_\theta[\operatorname{Var}_\theta(U\mid T)]
++
+\operatorname{Var}_\theta[E_\theta(U\mid T)].
+$$
+
+Logo,
+
+$$
+\operatorname{Var}_\theta(U)
+=
+E_\theta[\operatorname{Var}_\theta(U\mid T)]
++
+\operatorname{Var}_\theta(U^*)
+\geq
+\operatorname{Var}_\theta(U^*).
+$$
+
+Como $U$ e $U^*$ possuem o mesmo viés, a decomposição viés--variância implica também a desigualdade entre os EQMs. A igualdade ocorre se, e somente se,
+
+$$
+\operatorname{Var}(U\mid T)=0
+$$
+
+quase certamente, isto é, quando $U$ já é função de $T$. $\square$
+
+## Teorema de Lehmann--Scheffé
+
+O resultado combina suficiência, completude e Rao--Blackwell, conforme o desenvolvimento clássico das fontes de estatística matemática consultadas (HOGG; CRAIG, 1978; LAURITZEN, 2023).
+
+::: {.callout-important title="Teorema de Lehmann--Scheffé"}
+Se $T$ é suficiente e completa para $\theta$ e $\delta(T)$ é não viesado para $\tau(\theta)$, então $\delta(T)$ é o único estimador não viesado de variância uniformemente mínima de $\tau(\theta)$.
+:::
+
+**Demonstração.** Seja $U$ qualquer estimador não viesado de $\tau(\theta)$. Pelo teorema de Rao--Blackwell,
+
+$$
+U^*=E(U\mid T)
+$$
+
+é não viesado, é função de $T$ e satisfaz
+
+$$
+\operatorname{Var}_\theta(U^*)
+\leq
+\operatorname{Var}_\theta(U).
+$$
+
+Como $\delta(T)$ e $U^*$ são funções não viesadas de $T$ para a mesma quantidade,
+
+$$
+E_\theta[U^*-\delta(T)]=0
+$$
+
+para todo $\theta$. Pela completude de $T$,
+
+$$
+U^*=\delta(T)
+$$
+
+quase certamente. Portanto,
+
+$$
+\operatorname{Var}_\theta[\delta(T)]
+=
+\operatorname{Var}_\theta(U^*)
+\leq
+\operatorname{Var}_\theta(U)
+$$
+
+para todo $\theta$. Isso demonstra a propriedade UMVU.
+
+Para a unicidade, suponha que $\delta_1(T)$ e $\delta_2(T)$ sejam duas funções não viesadas de $T$ para $\tau(\theta)$. Então
+
+$$
+E_\theta[\delta_1(T)-\delta_2(T)]=0
+$$
+
+para todo $\theta$. Pela completude,
+
+$$
+\delta_1(T)=\delta_2(T)
+$$
+
+quase certamente. $\square$
+
+## Identidades de Bartlett e informação de Fisher
+
+As identidades e sua conexão com a informação esperada são tratadas em Lauritzen (2023).
+
+Considere uma observação com densidade $f(x;\theta)$ e log-densidade
+
+$$
+\ell(\theta;x)=\log f(x;\theta).
+$$
+
+A função escore é
+
+$$
+U(\theta;X)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;X).
+$$
+
+::: {.callout-important title="Primeira identidade de Bartlett"}
+Sob condições que permitem diferenciar sob o sinal de integração e com suporte independente de $\theta$,
+
+$$
+E_\theta[U(\theta;X)]=0.
+$$
+:::
+
+**Demonstração.** Como
+
+$$
+\int f(x;\theta)dx=1,
+$$
+
+diferenciando em relação a $\theta$,
+
+$$
+0
+=
+\int\frac{\partial}{\partial\theta}f(x;\theta)dx.
+$$
+
+Mas
+
+$$
+\frac{\partial}{\partial\theta}f(x;\theta)
+=
+f(x;\theta)
+\frac{\partial}{\partial\theta}\log f(x;\theta).
+$$
+
+Portanto,
+
+$$
+0
+=
+\int U(\theta;x)f(x;\theta)dx
+=
+E_\theta[U(\theta;X)].
+$$
+
+$\square$
+
+::: {.callout-important title="Segunda identidade de Bartlett"}
+Sob condições adicionais de regularidade,
+
+$$
+I(\theta)
+=
+E_\theta[U(\theta;X)^2]
+=
+-E_\theta\left[
+\frac{\partial^2}{\partial\theta^2}
+\ell(\theta;X)
+\right].
+$$
+:::
+
+**Demonstração.** Diferencie novamente a identidade
+
+$$
+\int f(x;\theta)dx=1.
+$$
+
+Temos
+
+$$
+0
+=
+\int\frac{\partial^2}{\partial\theta^2}f(x;\theta)dx.
+$$
+
+Como
+
+$$
+\frac{\partial^2 f}{\partial\theta^2}
+=
+f\left[
+\left(\frac{\partial\ell}{\partial\theta}\right)^2
++
+\frac{\partial^2\ell}{\partial\theta^2}
+\right],
+$$
+
+segue que
+
+$$
+E_\theta[U(\theta;X)^2]
++
+E_\theta\left[
+\frac{\partial^2\ell}{\partial\theta^2}
+\right]
+=0.
+$$
+
+Reorganizando,
+
+$$
+E_\theta[U(\theta;X)^2]
+=
+-E_\theta\left[
+\frac{\partial^2\ell}{\partial\theta^2}
+\right].
+$$
+
+$\square$
+
+## Limite inferior de Cramér--Rao
+
+A demonstração usa a covariância entre o estimador e o escore, seguida da desigualdade de Cauchy--Schwarz (LAURITZEN, 2023; RAMACHANDRAN; TSOKOS, 2009).
+
+::: {.callout-important title="Teorema: desigualdade de Cramér--Rao"}
+Se $T$ é não viesado para $\tau(\theta)$ e as condições regulares anteriores são satisfeitas, então
+
+$$
+\operatorname{Var}_\theta(T)
+\geq
+\frac{[\tau'(\theta)]^2}{I_n(\theta)},
+$$
+
+em que $I_n(\theta)$ é a informação de Fisher da amostra.
+:::
+
+**Demonstração.** Como $T$ é não viesado,
+
+$$
+E_\theta(T)=\tau(\theta).
+$$
+
+Diferenciando sob o sinal de integração,
+
+$$
+\begin{aligned}
+\tau'(\theta)
+&=
+\frac{d}{d\theta}
+\int T(x)f(x;\theta)dx\\
+&=
+\int T(x)
+\frac{\partial f(x;\theta)}{\partial\theta}dx\\
+&=
+\int T(x)U_n(\theta;x)f(x;\theta)dx\\
+&=
+E_\theta[TU_n].
+\end{aligned}
+$$
+
+Pela primeira identidade de Bartlett, $E_\theta(U_n)=0$. Logo,
+
+$$
+\tau'(\theta)
+=
+E_\theta[(T-E_\theta T)U_n]
+=
+\operatorname{Cov}_\theta(T,U_n).
+$$
+
+Pela desigualdade de Cauchy--Schwarz,
+
+$$
+[\tau'(\theta)]^2
+\leq
+\operatorname{Var}_\theta(T)
+\operatorname{Var}_\theta(U_n).
+$$
+
+Como
+
+$$
+\operatorname{Var}_\theta(U_n)
+=I_n(\theta),
+$$
+
+obtemos
+
+$$
+\operatorname{Var}_\theta(T)
+\geq
+\frac{[\tau'(\theta)]^2}{I_n(\theta)}.
+$$
+
+$\square$
+
+::: {.callout-note title="Condição de igualdade"}
+A igualdade em Cauchy--Schwarz ocorre se, e somente se, existem funções $a(\theta)$ e $b(\theta)$ tais que
+
+$$
+T(X)-\tau(\theta)
+=a(\theta)U_n(\theta;X)
+$$
+
+quase certamente. Essa condição caracteriza estimadores que atingem o limite de Cramér--Rao.
+:::
+
+# Máxima verossimilhança
+
+As demonstrações desta seção seguem a estrutura regular da teoria de máxima verossimilhança em Lauritzen (2023), com a consistência formulada como um argumento de contraste baseado na divergência de Kullback--Leibler.
+
+## Invariância do estimador de máxima verossimilhança
+
+::: {.callout-important title="Teorema: invariância do EMV"}
+Se $\widehat\theta$ maximiza $L(\theta;x)$ e $\eta=g(\theta)$, então um EMV de $\eta$ é
+
+$$
+\widehat\eta=g(\widehat\theta).
+$$
+:::
+
+**Demonstração.** Para cada valor $\eta$, defina a verossimilhança perfilada
+
+$$
+L^*(\eta;x)
+=
+\sup_{\theta:g(\theta)=\eta}L(\theta;x).
+$$
+
+Como $\widehat\theta$ maximiza $L(\theta;x)$ em todo o espaço paramétrico,
+
+$$
+L(\widehat\theta;x)
+\geq
+L(\theta;x)
+$$
+
+para todo $\theta$. Em particular,
+
+$$
+L^*(g(\widehat\theta);x)
+=
+L(\widehat\theta;x)
+\geq
+L^*(\eta;x)
+$$
+
+para todo $\eta$ no espaço transformado. Portanto, $g(\widehat\theta)$ maximiza a verossimilhança perfilada de $\eta$. $\square$
+
+::: {.callout-note title="Observação"}
+Quando $g$ não é injetora, o estimador transformado continua sendo um EMV, mas pode não ser único. A formulação por verossimilhança perfilada evita a suposição desnecessária de invertibilidade global.
+:::
+
+## Consistência do EMV em um modelo regular: argumento por contraste
+
+A consistência geral do EMV exige condições técnicas. O argumento central pode ser visto por meio da Lei dos Grandes Números.
+
+Se $X_1,\ldots,X_n$ são iid de $f(x;\theta_0)$, então a log-verossimilhança média é
+
+$$
+\frac{1}{n}\ell_n(\theta)
+=
+\frac{1}{n}\sum_{i=1}^n\log f(X_i;\theta).
+$$
+
+Para cada $\theta$ fixo, a Lei dos Grandes Números sugere
+
+$$
+\frac{1}{n}\ell_n(\theta)
+\xrightarrow{p}
+E_{\theta_0}[\log f(X;\theta)].
+$$
+
+Além disso,
+
+$$
+\begin{aligned}
+E_{\theta_0}[\log f(X;\theta_0)]
+-
+E_{\theta_0}[\log f(X;\theta)]
+&=
+E_{\theta_0}
+\left[
+\log\frac{f(X;\theta_0)}{f(X;\theta)}
+\right]\\
+&=
+D_{KL}(f_{\theta_0}\|f_\theta)
+\geq0.
+\end{aligned}
+$$
+
+A igualdade ocorre somente quando $f_\theta=f_{\theta_0}$ quase certamente. Sob identificabilidade, isso implica $\theta=\theta_0$. Portanto, o limite determinístico da log-verossimilhança média é unicamente maximizado em $\theta_0$.
+
+Para concluir rigorosamente que o maximizador amostral converge para $\theta_0$, é necessária convergência uniforme da log-verossimilhança média em relação a $\theta$, além de condições de compacidade ou controle das caudas do espaço paramétrico. Sob essas condições,
+
+$$
+\widehat\theta_{MV}\xrightarrow{p}\theta_0.
+$$
+
+::: {.callout-warning title="Limite da demonstração"}
+A convergência pontual fornecida pela Lei dos Grandes Números não basta, isoladamente, para garantir a consistência do argmax. A passagem do limite da função para o limite de seu maximizador requer um teorema de argmax ou uma Lei dos Grandes Números uniforme. Essa condição deve ser verificada em aplicações não regulares.
+:::
+
+## Normalidade assintótica do EMV
+
+::: {.callout-important title="Teorema: normalidade assintótica no caso unidimensional regular"}
+Suponha que o modelo seja regular, que $\widehat\theta_n$ seja consistente para $\theta_0$ e que a informação de Fisher $I(\theta_0)$ seja positiva e finita. Então
+
+$$
+\sqrt n(\widehat\theta_n-\theta_0)
+\xrightarrow{D}
+N\left(0,\frac{1}{I(\theta_0)}\right).
+$$
+:::
+
+**Demonstração.** A equação de verossimilhança é
+
+$$
+U_n(\widehat\theta_n)=0,
+$$
+
+em que
+
+$$
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell_n(\theta).
+$$
+
+Pelo teorema do valor médio, existe $\widetilde\theta_n$ entre $\widehat\theta_n$ e $\theta_0$ tal que
+
+$$
+0
+=
+U_n(\theta_0)
++
+\ell_n''(\widetilde\theta_n)
+(\widehat\theta_n-\theta_0).
+$$
+
+Logo,
+
+$$
+\sqrt n(\widehat\theta_n-\theta_0)
+=
+\frac{n^{-1/2}U_n(\theta_0)}
+{-n^{-1}\ell_n''(\widetilde\theta_n)}.
+$$
+
+O numerador é uma soma de escores iid com média zero e variância $I(\theta_0)$:
+
+$$
+\frac{1}{\sqrt n}U_n(\theta_0)
+=
+\frac{1}{\sqrt n}
+\sum_{i=1}^nU_i(\theta_0)
+\xrightarrow{D}
+N(0,I(\theta_0))
+$$
+
+pelo TCL.
+
+Pela consistência de $\widehat\theta_n$, também $\widetilde\theta_n\xrightarrow{p}\theta_0$. Sob regularidade e uma Lei dos Grandes Números uniforme local,
+
+$$
+-
+\frac{1}{n}
+\ell_n''(\widetilde\theta_n)
+\xrightarrow{p}
+I(\theta_0).
+$$
+
+Aplicando o lema de Slutsky,
+
+$$
+\sqrt n(\widehat\theta_n-\theta_0)
+\xrightarrow{D}
+\frac{N(0,I(\theta_0))}{I(\theta_0)}
+=
+N\left(0,\frac{1}{I(\theta_0)}\right).
+$$
+
+$\square$
+
+::: {.callout-warning title="Modelos irregulares"}
+A conclusão anterior pode falhar quando o suporte depende do parâmetro. No modelo $U(0,\theta)$, por exemplo, o EMV é $X_{(n)}$ e sua taxa de convergência é $n$, não $\sqrt n$. Portanto, a normalidade assintótica regular não deve ser aplicada automaticamente.
+:::
+
+# Mínimos quadrados e modelo linear
+
+A derivação algébrica e o teorema de Gauss--Markov são resultados centrais dos capítulos de modelos lineares de Rice (2007) e Lauritzen (2023).
+
+Considere o modelo linear
+
+$$
+y=X\beta+\varepsilon,
+$$
+
+com $X$ de dimensão $n\times p$ e posto completo $p$.
+
+## Equações normais
+
+::: {.callout-important title="Proposição: estimador de mínimos quadrados"}
+O minimizador de
+
+$$
+S(\beta)=\|y-X\beta\|^2
+$$
+
+é
+
+$$
+\widehat\beta
+=(X^\top X)^{-1}X^\top y.
+$$
+:::
+
+**Demonstração.** Expanda a soma de quadrados:
+
+$$
+S(\beta)
+=
+(y-X\beta)^\top(y-X\beta)
+=
+y^\top y-2\beta^\top X^\top y+\beta^\top X^\top X\beta.
+$$
+
+O gradiente é
+
+$$
+\nabla_\beta S(\beta)
+=
+-2X^\top y+2X^\top X\beta.
+$$
+
+Igualando a zero,
+
+$$
+X^\top X\widehat\beta
+=
+X^\top y.
+$$
+
+Como $X$ possui posto completo, $X^\top X$ é positiva definida e invertível. Assim,
+
+$$
+\widehat\beta
+=(X^\top X)^{-1}X^\top y.
+$$
+
+A Hessiana é
+
+$$
+\nabla^2_\beta S(\beta)=2X^\top X,
+$$
+
+que é positiva definida. Portanto, o ponto crítico é o único mínimo global. $\square$
+
+## Interpretação geométrica e ortogonalidade dos resíduos
+
+Defina
+
+$$
+\widehat y=X\widehat\beta
+$$
+
+e
+
+$$
+e=y-\widehat y.
+$$
+
+Das equações normais,
+
+$$
+X^\top e
+=
+X^\top(y-X\widehat\beta)
+=0.
+$$
+
+Assim, o vetor de resíduos é ortogonal a cada coluna de $X$. Portanto, $\widehat y$ é a projeção ortogonal de $y$ sobre o espaço coluna de $X$.
+
+A matriz de projeção é
+
+$$
+H=X(X^\top X)^{-1}X^\top,
+$$
+
+de modo que
+
+$$
+\widehat y=Hy
+\qquad\text{e}\qquad
+e=(I-H)y.
+$$
+
+Como $H^\top=H$ e $H^2=H$, $H$ é uma projeção ortogonal.
+
+## Teorema de Gauss--Markov
+
+::: {.callout-important title="Teorema de Gauss--Markov"}
+No modelo
+
+$$
+y=X\beta+\varepsilon,
+$$
+
+com
+
+$$
+E(\varepsilon)=0
+\qquad\text{e}\qquad
+\operatorname{Var}(\varepsilon)=\sigma^2I,
+$$
+
+o estimador de mínimos quadrados
+
+$$
+\widehat\beta=(X^\top X)^{-1}X^\top y
+$$
+
+é o melhor estimador linear não viesado de $\beta$, no sentido de que sua matriz de covariância é não maior, na ordem semidefinida positiva, que a de qualquer outro estimador linear não viesado.
+:::
+
+**Demonstração.** Seja
+
+$$
+C_0=(X^\top X)^{-1}X^\top,
+$$
+
+de modo que
+
+$$
+\widehat\beta=C_0y.
+$$
+
+Considere outro estimador linear
+
+$$
+\widetilde\beta=Cy.
+$$
+
+Para que seja não viesado para todo $\beta$,
+
+$$
+E(\widetilde\beta)
+=CX\beta
+=\beta,
+$$
+
+logo
+
+$$
+CX=I_p.
+$$
+
+Como também $C_0X=I_p$, escreva
+
+$$
+C=C_0+D,
+$$
+
+com
+
+$$
+DX=0.
+$$
+
+A covariância de $\widetilde\beta$ é
+
+$$
+\operatorname{Var}(\widetilde\beta)
+=
+\sigma^2CC^\top.
+$$
+
+Substituindo $C=C_0+D$,
+
+$$
+CC^\top
+=
+C_0C_0^\top
++C_0D^\top
++DC_0^\top
++DD^\top.
+$$
+
+Os termos cruzados desaparecem, pois
+
+$$
+DC_0^\top
+=
+DX(X^\top X)^{-1}
+=0.
+$$
+
+Portanto,
+
+$$
+\operatorname{Var}(\widetilde\beta)
+=
+\operatorname{Var}(\widehat\beta)
++
+\sigma^2DD^\top.
+$$
+
+Como $DD^\top$ é semidefinida positiva,
+
+$$
+\operatorname{Var}(\widetilde\beta)
+-
+\operatorname{Var}(\widehat\beta)
+\succeq0.
+$$
+
+Logo, $\widehat\beta$ é BLUE. $\square$
+
+::: {.callout-note title="Interpretação"}
+O teorema de Gauss--Markov não exige normalidade dos erros. A normalidade é necessária para obter distribuições exatas de estatísticas $t$ e $F$ e para identificar mínimos quadrados com máxima verossimilhança no modelo gaussiano.
+:::
+
+## Equivalência entre mínimos quadrados e máxima verossimilhança
+
+Suponha agora
+
+$$
+\varepsilon\sim N_n(0,\sigma^2I).
+$$
+
+Então
+
+$$
+y\sim N_n(X\beta,\sigma^2I).
+$$
+
+A log-verossimilhança é
+
+$$
+\ell(\beta,\sigma^2)
+=
+-\frac{n}{2}\log(2\pi)
+-\frac{n}{2}\log\sigma^2
+-\frac{1}{2\sigma^2}
+(y-X\beta)^\top(y-X\beta).
+$$
+
+Para $\sigma^2$ fixo, os dois primeiros termos não dependem de $\beta$. Portanto,
+
+$$
+\arg\max_\beta\ell(\beta,\sigma^2)
+=
+\arg\min_\beta
+(y-X\beta)^\top(y-X\beta).
+$$
+
+Assim, o EMV de $\beta$ coincide com o estimador de mínimos quadrados:
+
+$$
+\widehat\beta_{MV}
+=
+\widehat\beta_{MQ}
+=
+(X^\top X)^{-1}X^\top y.
+$$
+
+# Estimação intervalar
+
+A construção por quantidades pivotais é a base dos intervalos exatos apresentados por Ramachandran e Tsokos (2009).
+
+## Método pivotal
+
+::: {.callout-important title="Teorema: construção de intervalo por pivô"}
+Se $Q(X,\theta)$ possui distribuição que não depende de $\theta$ e existem constantes $a$ e $b$ tais que
+
+$$
+P_\theta(a\leq Q(X,\theta)\leq b)=1-\alpha,
+$$
+
+então, resolvendo as desigualdades em relação a $\theta$, obtém-se um conjunto aleatório $C(X)$ com cobertura
+
+$$
+P_\theta(\theta\in C(X))=1-\alpha.
+$$
+:::
+
+**Demonstração.** Por construção, para cada realização $x$,
+
+$$
+a\leq Q(x,\theta)\leq b
+$$
+
+é equivalente a
+
+$$
+\theta\in C(x).
+$$
+
+Portanto, os eventos são idênticos:
+
+$$
+\{a\leq Q(X,\theta)\leq b\}
+=
+\{\theta\in C(X)\}.
+$$
+
+Logo,
+
+$$
+P_\theta(\theta\in C(X))
+=
+P_\theta(a\leq Q(X,\theta)\leq b)
+=
+1-\alpha.
+$$
+
+$\square$
+
+## Intervalo exato para a média normal com variância conhecida
+
+Se
+
+$$
+\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right),
+$$
+
+o pivô
+
+$$
+Z
+=
+\frac{\overline X-\mu}{\sigma/\sqrt n}
+\sim N(0,1).
+$$
+
+Escolhendo $z_{1-\alpha/2}$ tal que
+
+$$
+P(-z_{1-\alpha/2}\leq Z\leq z_{1-\alpha/2})
+=1-\alpha,
+$$
+
+temos
+
+$$
+-z_{1-\alpha/2}
+\leq
+\frac{\overline X-\mu}{\sigma/\sqrt n}
+\leq
+z_{1-\alpha/2}.
+$$
+
+Isolando $\mu$,
+
+$$
+\overline X-z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
+\leq
+\mu
+\leq
+\overline X+z_{1-\alpha/2}\frac{\sigma}{\sqrt n}.
+$$
+
+## Intervalo exato para a média normal com variância desconhecida
+
+Como
+
+$$
+T
+=
+\frac{\overline X-\mu}{S/\sqrt n}
+\sim t_{n-1},
+$$
+
+o mesmo argumento produz
+
+$$
+\overline X
+\pm
+t_{n-1,1-\alpha/2}
+\frac{S}{\sqrt n}.
+$$
+
+## Intervalo exato para a variância normal
+
+Como
+
+$$
+W
+=
+\frac{(n-1)S^2}{\sigma^2}
+\sim\chi^2_{n-1},
+$$
+
+escolha quantis $\chi^2_{n-1,\alpha/2}$ e $\chi^2_{n-1,1-\alpha/2}$ tais que
+
+$$
+P\left(
+\chi^2_{n-1,\alpha/2}
+\leq W\leq
+\chi^2_{n-1,1-\alpha/2}
+\right)=1-\alpha.
+$$
+
+Substituindo $W$ e invertendo as desigualdades positivas,
+
+$$
+\frac{(n-1)S^2}{\chi^2_{n-1,1-\alpha/2}}
+\leq
+\sigma^2
+\leq
+\frac{(n-1)S^2}{\chi^2_{n-1,\alpha/2}}.
+$$
+
+## Dualidade entre testes e regiões de confiança
+
+::: {.callout-important title="Teorema: inversão de testes"}
+Para cada $\theta_0$, suponha que exista um teste de nível $\alpha$ de
+
+$$
+H_0:\theta=\theta_0.
+$$
+
+Defina
+
+$$
+C(X)
+=
+\{\theta_0:\text{o teste de }H_0:\theta=\theta_0
+\text{ não rejeita}\}.
+$$
+
+Então $C(X)$ é uma região de confiança com cobertura de pelo menos $1-\alpha$.
+:::
+
+**Demonstração.** Fixe o verdadeiro valor $\theta$. O evento $\theta\notin C(X)$ ocorre exatamente quando o teste da hipótese verdadeira $H_0:\theta=\theta$ rejeita. Portanto,
+
+$$
+P_\theta(\theta\notin C(X))
+=
+P_\theta(\text{rejeitar }H_0:\theta=\theta)
+\leq\alpha.
+$$
+
+Consequentemente,
+
+$$
+P_\theta(\theta\in C(X))
+\geq1-\alpha.
+$$
+
+Se cada teste possui tamanho exatamente $\alpha$, a cobertura é exatamente $1-\alpha$. $\square$
+
+# Testes de hipóteses
+
+## Validade do valor-$p$
+
+::: {.callout-important title="Proposição: valor-$p$ contínuo sob hipótese simples"}
+Se, sob $H_0$, a estatística $T$ possui função distribuição contínua $F_0$ e valores grandes de $T$ favorecem $H_1$, então
+
+$$
+p(X)=1-F_0(T(X))
+$$
+
+satisfaz
+
+$$
+p(X)\sim U(0,1)
+$$
+
+sob $H_0$.
+:::
+
+**Demonstração.** Para $0\leq u\leq1$,
+
+$$
+\begin{aligned}
+P_0(p(X)\leq u)
+&=
+P_0(1-F_0(T)\leq u)\\
+&=
+P_0(F_0(T)\geq1-u).
+\end{aligned}
+$$
+
+Pelo teorema da transformação integral de probabilidade, se $F_0$ é contínua,
+
+$$
+F_0(T)\sim U(0,1).
+$$
+
+Logo,
+
+$$
+P_0(F_0(T)\geq1-u)=u.
+$$
+
+Portanto, $p(X)\sim U(0,1)$. $\square$
+
+::: {.callout-note title="Caso discreto"}
+Quando a distribuição de $T$ é discreta, o valor-$p$ usual é conservador:
+
+$$
+P_0(p(X)\leq\alpha)\leq\alpha.
+$$
+
+A igualdade pode ser obtida por testes aleatorizados, mas esses procedimentos são pouco utilizados em aplicações introdutórias.
+:::
+
+## Lema de Neyman--Pearson
+
+A prova integral apresentada abaixo segue a forma clássica encontrada em Ramachandran e Tsokos (2009) e Rice (2007).
+
+::: {.callout-important title="Lema de Neyman--Pearson"}
+Considere o teste de duas hipóteses simples
+
+$$
+H_0:\theta=\theta_0
+\qquad\text{contra}\qquad
+H_1:\theta=\theta_1.
+$$
+
+Entre todos os testes de nível $\alpha$, o teste que rejeita $H_0$ para valores grandes de
+
+$$
+\frac{f_{\theta_1}(x)}{f_{\theta_0}(x)}
+$$
+
+é mais poderoso.
+:::
+
+**Demonstração.** Seja $\varphi^*$ o teste da razão de verossimilhanças, definido de modo que
+
+$$
+\varphi^*(x)=1
+$$
+
+quando
+
+$$
+f_{\theta_1}(x)>k f_{\theta_0}(x),
+$$
+
+$$
+\varphi^*(x)=0
+$$
+
+quando
+
+$$
+f_{\theta_1}(x)<k f_{\theta_0}(x),
+$$
+
+com eventual aleatorização na fronteira para obter tamanho $\alpha$.
+
+Se $\varphi$ é qualquer outro teste com
+
+$$
+E_{\theta_0}(\varphi)
+\leq
+E_{\theta_0}(\varphi^*)
+=\alpha,
+$$
+
+então, ponto a ponto,
+
+$$
+[\varphi^*(x)-\varphi(x)]
+[f_{\theta_1}(x)-k f_{\theta_0}(x)]
+\geq0.
+$$
+
+De fato, quando o segundo fator é positivo, $\varphi^*=1$; quando é negativo, $\varphi^*=0$. Integrando,
+
+$$
+\begin{aligned}
+0
+&\leq
+\int(\varphi^*-\varphi)
+(f_{\theta_1}-k f_{\theta_0})dx\\
+&=
+E_{\theta_1}(\varphi^*)
+-E_{\theta_1}(\varphi)\\
+&\quad-
+k\left[
+E_{\theta_0}(\varphi^*)
+-E_{\theta_0}(\varphi)
+\right].
+\end{aligned}
+$$
+
+Como o termo entre colchetes é não negativo,
+
+$$
+E_{\theta_1}(\varphi^*)
+-E_{\theta_1}(\varphi)
+\geq0.
+$$
+
+Portanto,
+
+$$
+E_{\theta_1}(\varphi^*)
+\geq
+E_{\theta_1}(\varphi),
+$$
+
+e $\varphi^*$ é mais poderoso. $\square$
+
+## Razão de verossimilhanças monótona e testes UMP
+
+::: {.callout-important title="Teorema de Karlin--Rubin: forma uniparamétrica"}
+Suponha que a família $\{f_\theta:\theta\in\Theta\}$ possua razão de verossimilhanças monótona crescente em uma estatística $T(X)$: para $\theta_1>\theta_0$,
+
+$$
+\frac{f_{\theta_1}(x)}{f_{\theta_0}(x)}
+$$
+
+é função não decrescente de $T(x)$. Então, para testar
+
+$$
+H_0:\theta\leq\theta_0
+\qquad\text{contra}\qquad
+H_1:\theta>\theta_0,
+$$
+
+o teste que rejeita para $T>c$ e possui tamanho $\alpha$ é uniformemente mais poderoso.
+:::
+
+**Demonstração.** Fixe qualquer $\theta_1>\theta_0$. Pela monotonicidade, a região em que
+
+$$
+\frac{f_{\theta_1}(x)}{f_{\theta_0}(x)}>k
+$$
+
+é da forma
+
+$$
+T(x)>c.
+$$
+
+Pelo lema de Neyman--Pearson, essa região fornece o teste mais poderoso de $H_0:\theta=\theta_0$ contra $H_1:\theta=\theta_1$. Como o ponto crítico $c$ é escolhido pela distribuição sob $\theta_0$, o mesmo teste é mais poderoso para cada $\theta_1>\theta_0$. Portanto, é UMP para a alternativa composta.
+
+Resta verificar o nível para todo $\theta\leq\theta_0$. A propriedade de razão monótona implica ordenação estocástica de $T$ em $\theta$, de modo que
+
+$$
+P_\theta(T>c)
+\leq
+P_{\theta_0}(T>c)
+=\alpha.
+$$
+
+Logo, o teste possui nível $\alpha$. $\square$
+
+::: {.callout-note title="Observação"}
+Para alternativas bilaterais, em geral, não existe teste UMP. A razão é que valores grandes e pequenos da estatística podem favorecer alternativas em direções opostas. Nesses casos, utilizam-se critérios adicionais, como não viés, invariância ou razão de verossimilhanças generalizada.
+:::
+
+## Teste da razão de verossimilhanças generalizada
+
+Para testar
+
+$$
+H_0:\theta\in\Theta_0
+\qquad\text{contra}\qquad
+H_1:\theta\in\Theta\setminus\Theta_0,
+$$
+
+defina
+
+$$
+\Lambda(X)
+=
+\frac{
+\sup_{\theta\in\Theta_0}L(\theta;X)
+}{
+\sup_{\theta\in\Theta}L(\theta;X)
+}.
+$$
+
+Como $0\leq\Lambda\leq1$, valores pequenos indicam que a melhor explicação dentro de $H_0$ é muito inferior à melhor explicação no modelo irrestrito. O teste rejeita para $\Lambda$ pequeno, ou, equivalentemente, para
+
+$$
+-2\log\Lambda
+$$
+
+grande.
+
+## Teorema de Wilks: demonstração regular unidimensional
+
+A versão geral para subfamílias exponenciais curvas e sua prova por expansão de Taylor são apresentadas por Lauritzen (2023). Aqui é isolado o caso de uma restrição, compatível com as ferramentas desenvolvidas no ebook.
+
+::: {.callout-important title="Teorema de Wilks: caso de uma restrição"}
+Sob condições regulares e sob $H_0:\theta=\theta_0$,
+
+$$
+-2\log\Lambda
+\xrightarrow{D}
+\chi^2_1.
+$$
+:::
+
+**Demonstração.** No caso de hipótese simples,
+
+$$
+-2\log\Lambda
+=
+2[\ell_n(\widehat\theta)-\ell_n(\theta_0)].
+$$
+
+Expanda a log-verossimilhança em torno de $\widehat\theta$. Como $\ell_n'(\widehat\theta)=0$, existe $\widetilde\theta$ entre $\widehat\theta$ e $\theta_0$ tal que
+
+$$
+\ell_n(\theta_0)
+=
+\ell_n(\widehat\theta)
++
+\frac{1}{2}
+\ell_n''(\widetilde\theta)
+(\theta_0-\widehat\theta)^2.
+$$
+
+Logo,
+
+$$
+-2\log\Lambda
+=
+-\ell_n''(\widetilde\theta)
+(\widehat\theta-\theta_0)^2.
+$$
+
+Reescrevendo,
+
+$$
+-2\log\Lambda
+=
+\left[
+-\frac{1}{n}
+\ell_n''(\widetilde\theta)
+\right]
+\left[
+\sqrt n(\widehat\theta-\theta_0)
+\right]^2.
+$$
+
+Sob $H_0$,
+
+$$
+-\frac{1}{n}
+\ell_n''(\widetilde\theta)
+\xrightarrow{p}
+I(\theta_0)
+$$
+
+e
+
+$$
+\sqrt n(\widehat\theta-\theta_0)
+\xrightarrow{D}
+N\left(0,I(\theta_0)^{-1}\right).
+$$
+
+Portanto,
+
+$$
+\sqrt{I(\theta_0)}
+\sqrt n(\widehat\theta-\theta_0)
+\xrightarrow{D}N(0,1).
+$$
+
+Elevando ao quadrado e aplicando Slutsky,
+
+$$
+-2\log\Lambda
+\xrightarrow{D}
+Z^2
+\sim\chi^2_1.
+$$
+
+$\square$
+
+::: {.callout-note title="Versão geral"}
+Se o modelo irrestrito possui dimensão $p$ e a hipótese nula impõe $r$ restrições regulares independentes, então
+
+$$
+-2\log\Lambda
+\xrightarrow{D}
+\chi^2_r.
+$$
+
+A prova geral interpreta a diferença entre os EMVs restrito e irrestrito como a projeção assintótica de um vetor normal sobre o complemento do espaço tangente da hipótese nula. Essa versão é apresentada em Lauritzen para famílias exponenciais curvas.
+:::
+
+# Análise de dados categóricos
+
+Os resultados desta seção conectam a verossimilhança multinomial, o teorema de Wilks e os testes de Pearson, conforme o tratamento de Lauritzen (2023) e Ramachandran e Tsokos (2009).
+
+## Frequências esperadas sob independência
+
+Considere uma tabela $r\times c$ com probabilidades de célula $\pi_{ij}$. Sob a hipótese de independência,
+
+$$
+\pi_{ij}=\pi_{i+}\pi_{+j}.
+$$
+
+Os EMVs das probabilidades marginais são
+
+$$
+\widehat\pi_{i+}=\frac{N_{i+}}{n}
+\qquad\text{e}\qquad
+\widehat\pi_{+j}=\frac{N_{+j}}{n}.
+$$
+
+Portanto,
+
+$$
+\widehat\pi_{ij}
+=
+\frac{N_{i+}}{n}
+\frac{N_{+j}}{n},
+$$
+
+e a frequência esperada é
+
+$$
+E_{ij}
+=n\widehat\pi_{ij}
+=
+\frac{N_{i+}N_{+j}}{n}.
+$$
+
+### Demonstração dos EMVs marginais
+
+A log-verossimilhança multinomial sob independência, ignorando constantes, é
+
+$$
+\ell
+=
+\sum_{i=1}^r\sum_{j=1}^c
+N_{ij}
+\log(\pi_{i+}\pi_{+j}).
+$$
+
+Logo,
+
+$$
+\ell
+=
+\sum_{i=1}^rN_{i+}\log\pi_{i+}
++
+\sum_{j=1}^cN_{+j}\log\pi_{+j}.
+$$
+
+Cada parcela é a log-verossimilhança de uma multinomial marginal. A maximização sob as restrições
+
+$$
+\sum_i\pi_{i+}=1
+\qquad\text{e}\qquad
+\sum_j\pi_{+j}=1
+$$
+
+fornece
+
+$$
+\widehat\pi_{i+}=N_{i+}/n
+$$
+
+e
+
+$$
+\widehat\pi_{+j}=N_{+j}/n.
+$$
+
+## Graus de liberdade em uma tabela de contingência
+
+Uma distribuição multinomial com $rc$ células possui
+
+$$
+rc-1
+$$
+
+parâmetros livres, pois as probabilidades somam um. Sob independência, há
+
+$$
+(r-1)+(c-1)
+$$
+
+parâmetros livres: $r-1$ probabilidades marginais das linhas e $c-1$ das colunas. Portanto, o número de restrições independentes é
+
+$$
+(rc-1)-[(r-1)+(c-1)]
+=
+(r-1)(c-1).
+$$
+
+Pelo teorema de Wilks, a estatística da razão de verossimilhanças possui, assintoticamente,
+
+$$
+(r-1)(c-1)
+$$
+
+graus de liberdade.
+
+## Equivalência assintótica entre Pearson e deviance
+
+A estatística de Pearson é
+
+$$
+X^2
+=
+\sum_{j=1}^k
+\frac{(O_j-E_j)^2}{E_j}.
+$$
+
+A deviance multinomial é
+
+$$
+G^2
+=
+2\sum_{j=1}^k
+O_j\log\left(\frac{O_j}{E_j}\right).
+$$
+
+Defina
+
+$$
+\delta_j=O_j-E_j.
+$$
+
+Então
+
+$$
+O_j=E_j+\delta_j
+$$
+
+e
+
+$$
+\log\left(\frac{O_j}{E_j}\right)
+=
+\log\left(1+\frac{\delta_j}{E_j}\right).
+$$
+
+Usando
+
+$$
+\log(1+x)
+=x-\frac{x^2}{2}+O(x^3),
+$$
+
+temos
+
+$$
+\begin{aligned}
+2O_j\log\left(\frac{O_j}{E_j}\right)
+&=
+2(E_j+\delta_j)
+\left[
+\frac{\delta_j}{E_j}
+-
+\frac{\delta_j^2}{2E_j^2}
++
+O\left(\frac{|\delta_j|^3}{E_j^3}\right)
+\right]\\
+&=
+2\delta_j
++
+\frac{\delta_j^2}{E_j}
++
+O\left(\frac{|\delta_j|^3}{E_j^2}\right).
+\end{aligned}
+$$
+
+Somando sobre as células e usando
+
+$$
+\sum_j\delta_j
+=
+\sum_jO_j-
+\sum_jE_j
+=0,
+$$
+
+obtemos
+
+$$
+G^2
+=
+\sum_j\frac{\delta_j^2}{E_j}
++
+o_p(1)
+=
+X^2+o_p(1),
+$$
+
+desde que as frequências esperadas cresçam de modo apropriado. Assim, $G^2$ e $X^2$ possuem a mesma distribuição assintótica qui-quadrado.
+
+::: {.callout-warning title="Condição assintótica"}
+A aproximação exige que as probabilidades de célula não se tornem excessivamente pequenas à medida que $n$ cresce. Regras como “frequências esperadas maiores que 5” são heurísticas práticas, não hipóteses matemáticas universais. A adequação da aproximação deve ser avaliada no contexto do desenho amostral e da esparsidade da tabela.
+:::
+
+## Distribuição hipergeométrica no teste exato de Fisher
+
+Considere uma tabela $2\times2$:
+
+$$
+\begin{array}{c|cc|c}
+&Y=1&Y=0&\text{Total}\\\hline
+X=1&A&B&n_1\\
+X=0&C&D&n_0\\\hline
+\text{Total}&m_1&m_0&n
+\end{array}
+$$
+
+Sob a hipótese de independência e condicionando aos totais marginais, a única célula livre é $A$. Para obter $P(A=a)$, escolha quais dos $m_1$ indivíduos com $Y=1$ pertencem ao grupo $X=1$ de tamanho $n_1$. O número total de subconjuntos de tamanho $n_1$ entre os $n$ indivíduos é
+
+$$
+\binom{n}{n_1}.
+$$
+
+Para obter $A=a$, devemos escolher $a$ entre os $m_1$ indivíduos com $Y=1$ e $n_1-a$ entre os $m_0$ indivíduos com $Y=0$. Logo,
+
+$$
+P(A=a\mid\text{margens})
+=
+\frac{
+\binom{m_1}{a}
+\binom{m_0}{n_1-a}
+}{
+\binom{n}{n_1}
+}.
+$$
+
+Essa é a distribuição hipergeométrica utilizada pelo teste exato de Fisher.
+
+# Algoritmo Expectation--Maximization
+
+A prova de monotonicidade segue o argumento por Jensen de Gupta e Chen (2011), incluindo a condição de que o suporte dos dados completos não dependa do parâmetro.
+
+## Função $Q$ e dados incompletos
+
+Seja $Y=y$ o dado observado e $Z$ o dado latente. A verossimilhança observada é
+
+$$
+p(y\mid\theta)
+=
+\int p(y,z\mid\theta)dz.
+$$
+
+Na iteração $m$, defina
+
+$$
+q_m(z)
+=
+p(z\mid y,\theta^{(m)}).
+$$
+
+A função $Q$ é
+
+$$
+Q(\theta\mid\theta^{(m)})
+=
+E_{\theta^{(m)}}
+[
+\log p(Y,Z\mid\theta)
+\mid Y=y
+].
+$$
+
+O passo E calcula essa esperança. O passo M escolhe
+
+$$
+\theta^{(m+1)}
+\in
+\arg\max_\theta
+Q(\theta\mid\theta^{(m)}).
+$$
+
+## Monotonicidade da verossimilhança
+
+::: {.callout-important title="Teorema: monotonicidade do algoritmo EM"}
+Suponha que o suporte dos dados completos não dependa de $\theta$ e que as densidades condicionais relevantes estejam bem definidas. Se
+
+$$
+Q(\theta^{(m+1)}\mid\theta^{(m)})
+\geq
+Q(\theta^{(m)}\mid\theta^{(m)}),
+$$
+
+então
+
+$$
+\ell(\theta^{(m+1)})
+\geq
+\ell(\theta^{(m)}),
+$$
+
+em que
+
+$$
+\ell(\theta)=\log p(y\mid\theta).
+$$
+:::
+
+**Demonstração por Jensen.** Para qualquer $\theta$,
+
+$$
+\begin{aligned}
+\ell(\theta)
+&=
+\log\int p(y,z\mid\theta)dz\\
+&=
+\log\int q_m(z)
+\frac{p(y,z\mid\theta)}{q_m(z)}dz\\
+&=
+\log E_{q_m}
+\left[
+\frac{p(y,Z\mid\theta)}{q_m(Z)}
+\right].
+\end{aligned}
+$$
+
+Como o logaritmo é côncavo, a desigualdade de Jensen fornece
+
+$$
+\ell(\theta)
+\geq
+E_{q_m}
+\left[
+\log p(y,Z\mid\theta)
+-
+\log q_m(Z)
+\right].
+$$
+
+Defina o limite inferior
+
+$$
+\mathcal F(q_m,\theta)
+=
+Q(\theta\mid\theta^{(m)})
+-
+E_{q_m}[\log q_m(Z)].
+$$
+
+Quando $\theta=\theta^{(m)}$, há igualdade em Jensen, pois
+
+$$
+\frac{p(y,z\mid\theta^{(m)})}{q_m(z)}
+=
+p(y\mid\theta^{(m)})
+$$
+
+não depende de $z$. Portanto,
+
+$$
+\ell(\theta^{(m)})
+=
+\mathcal F(q_m,\theta^{(m)}).
+$$
+
+Como o termo de entropia
+
+$$
+-E_{q_m}[\log q_m(Z)]
+$$
+
+não depende de $\theta$,
+
+$$
+Q(\theta^{(m+1)}\mid\theta^{(m)})
+\geq
+Q(\theta^{(m)}\mid\theta^{(m)})
+$$
+
+implica
+
+$$
+\mathcal F(q_m,\theta^{(m+1)})
+\geq
+\mathcal F(q_m,\theta^{(m)}).
+$$
+
+Finalmente,
+
+$$
+\begin{aligned}
+\ell(\theta^{(m+1)})
+&\geq
+\mathcal F(q_m,\theta^{(m+1)})\\
+&\geq
+\mathcal F(q_m,\theta^{(m)})\\
+&=
+\ell(\theta^{(m)}).
+\end{aligned}
+$$
+
+$\square$
+
+### Forma equivalente pela divergência de Kullback--Leibler
+
+A identidade
+
+$$
+\ell(\theta)-\ell(\theta^{(m)})
+=
+Q(\theta\mid\theta^{(m)})
+-
+Q(\theta^{(m)}\mid\theta^{(m)})
++
+D_{KL}
+\left[
+q_m(z)
+\,\|\,
+p(z\mid y,\theta)
+\right]
+$$
+
+mostra diretamente que
+
+$$
+\ell(\theta)-\ell(\theta^{(m)})
+\geq
+Q(\theta\mid\theta^{(m)})
+-
+Q(\theta^{(m)}\mid\theta^{(m)}),
+$$
+
+pois a divergência de Kullback--Leibler é não negativa.
+
+::: {.callout-warning title="O que a monotonicidade não garante"}
+A monotonicidade garante que a sequência de valores da log-verossimilhança não diminui. Ela não garante, por si só:
+
+- convergência da sequência de parâmetros;
+- convergência para o máximo global;
+- ausência de pontos de sela;
+- velocidade rápida de convergência.
+
+Em verossimilhanças não côncavas, diferentes inicializações podem conduzir a diferentes máximos locais. Além disso, se o suporte dos dados completos depender de $\theta$, a demonstração por Jensen pode deixar de ser válida.
+:::
+
+# Síntese das dependências lógicas
+
+Os principais resultados do ebook podem ser conectados pela seguinte cadeia:
+
+1. A desigualdade de Chebyshev conduz à Lei Fraca dos Grandes Números.
+2. A Lei dos Grandes Números justifica consistência de médias, momentos e vários estimadores de contraste.
+3. O Teorema Central do Limite fornece aproximações normais para estatísticas baseadas em somas.
+4. A decomposição ortogonal no modelo normal produz as distribuições $\chi^2$, $t$ e $F$.
+5. O critério de fatoração identifica estatísticas suficientes.
+6. Rao--Blackwell e Lehmann--Scheffé transformam suficiência e completude em resultados de otimalidade de estimadores.
+7. As identidades de Bartlett e Cramér--Rao relacionam curvatura da verossimilhança, informação e eficiência.
+8. A expansão do escore fornece a normalidade assintótica do EMV.
+9. A mesma aproximação quadrática da log-verossimilhança conduz ao teorema de Wilks.
+10. No modelo linear normal, a maximização da verossimilhança equivale à minimização da soma de quadrados.
+11. A inversão de pivôs e testes produz intervalos e regiões de confiança.
+12. O lema de Neyman--Pearson e a razão de verossimilhanças monótona fornecem testes ótimos.
+13. O TCL multinomial e Wilks justificam os testes qui-quadrado para dados categóricos.
+14. A desigualdade de Jensen estabelece a monotonicidade do algoritmo EM.
+
+# Exercícios de demonstração
+
+::: {.callout-tip title="Exercício 1: TCL"}
+Refaça a prova do TCL por FGM utilizando a forma de Taylor com resto de Lagrange. Identifique exatamente onde é utilizada a hipótese de existência da FGM em uma vizinhança de zero.
+:::
+
+::: {.callout-tip title="Exercício 2: variância amostral"}
+Demonstre que
+
+$$
+\sum_{i=1}^n(X_i-a)^2
+=
+\sum_{i=1}^n(X_i-\overline X)^2
++n(\overline X-a)^2
+$$
+
+para toda constante $a$. Interprete o resultado como uma propriedade de minimização da média amostral.
+:::
+
+::: {.callout-tip title="Exercício 3: Rao--Blackwell"}
+Considere $X_1,\ldots,X_n\overset{\text{iid}}{\sim}\operatorname{Poisson}(\theta)$ e o estimador $U=I_{\{X_1=0\}}$ de $e^{-\theta}$. Mostre que
+
+$$
+E(U\mid T)
+=
+\left(1-\frac{1}{n}\right)^T,
+\qquad
+T=\sum_{i=1}^nX_i.
+$$
+:::
+
+::: {.callout-tip title="Exercício 4: Cramér--Rao"}
+Para uma amostra de uma distribuição Poisson$(\theta)$, calcule a informação de Fisher e mostre que $\overline X$ atinge o limite de Cramér--Rao para estimar $\theta$.
+:::
+
+::: {.callout-tip title="Exercício 5: mínimos quadrados"}
+No modelo de regressão linear simples, derive
+
+$$
+\widehat\beta_1
+=
+\frac{\sum_{i=1}^n(x_i-\overline x)(y_i-\overline y)}
+{\sum_{i=1}^n(x_i-\overline x)^2}
+$$
+
+e
+
+$$
+\widehat\beta_0
+=
+\overline y-\widehat\beta_1\overline x.
+$$
+:::
+
+::: {.callout-tip title="Exercício 6: dualidade"}
+Mostre que a inversão do teste bilateral $Z$ para $H_0:\mu=\mu_0$ produz o intervalo normal para $\mu$ com variância conhecida.
+:::
+
+::: {.callout-tip title="Exercício 7: Neyman--Pearson"}
+Para $X_1,\ldots,X_n\overset{\text{iid}}{\sim}N(\mu,\sigma^2)$, com $\sigma^2$ conhecida, derive o teste mais poderoso de
+
+$$
+H_0:\mu=\mu_0
+\qquad\text{contra}\qquad
+H_1:\mu=\mu_1>\mu_0.
+$$
+:::
+
+::: {.callout-tip title="Exercício 8: deviance"}
+Complete a expansão de terceira ordem utilizada para mostrar que $G^2-X^2=o_p(1)$, explicitando uma condição suficiente sobre as menores frequências esperadas.
+:::
+
+::: {.callout-tip title="Exercício 9: EM"}
+Partindo da identidade com divergência de Kullback--Leibler, demonstre que um algoritmo GEM que apenas aumenta $Q$ também preserva a monotonicidade da log-verossimilhança.
+:::
