@@ -865,18 +865,22 @@ Quando a distribuição exata de uma estatística é difícil de obter, pode-se 
 O código abaixo compara as distribuições de médias de amostras exponenciais para diferentes tamanhos amostrais.
 
 ```{r}
-#| label: fig-tcl-exponencial
+#| label: fig-exponencial
 #| fig-cap: "Distribuições simuladas da média de amostras exponenciais."
+#| fig-subcap: 
+#|   - "n=2"
+#|   - "n=50"
+#|   - "n=100"
 #| layout-ncol: 3
 #| warning: false
 #| message: false
+#| out-width: "100%"
 
-set.seed(123)
+set.seed(20262)
 
 B <- 20000
-ns <- c(2, 10, 50)
+ns <- c(2, 50, 100)
 
-par(mfrow = c(1, 3))
 
 for (n in ns) {
   medias <- replicate(B, mean(rexp(n, rate = 1)))
@@ -885,19 +889,21 @@ for (n in ns) {
     medias,
     probability = TRUE,
     breaks = 40,
-    main = paste("n =", n),
-    xlab = expression(bar(X))
+    main = "",
+    xlab = expression(bar(X)),
+    ylab = "Densidade"
   )
-
+  
+  box()
+  
   curva_x <- seq(min(medias), max(medias), length.out = 400)
   lines(curva_x, dnorm(curva_x, mean = 1, sd = 1 / sqrt(n)), lwd = 2)
 }
 
-par(mfrow = c(1, 1))
 ```
 
 ::: {.callout-note title="Interpretação"}
-A distribuição exponencial é assimétrica, mas a distribuição de $\overline{X}$ torna-se progressivamente mais próxima da normal conforme $n$ aumenta. Ao mesmo tempo, sua dispersão diminui de acordo com $1/\sqrt{n}$.
+A distribuição exponencial é assimétrica, mas a distribuição de $\overline{X}$ torna-se progressivamente mais próxima da normal conforme $n$ aumenta (ver @fig-exponencial). Ao mesmo tempo, sua dispersão diminui de acordo com $1/\sqrt{n}$.
 :::
 
 ### Exemplo computacional: distribuição exata em população finita {.unnumbered}
