@@ -1,412 +1,377 @@
 # Métodos de Estimação Pontual
 
-## Método dos Momentos
+## Método dos Momentos {#sec-metodo-momentos}
 
-A estimação por máxima verossimilhança (MV), como veremos nesse capítulo, possui uma intuição bastante elegante, mas pode ser matematicamente trabalhosa de resolver. Vamos aprender inicialmente uma técnica para estimar parâmetros, chamada método dos momentos (MoM).
+O **método dos momentos** estima os parâmetros de um modelo igualando momentos populacionais, escritos como funções dos parâmetros, aos momentos correspondentes calculados na amostra. O procedimento costuma ser algebricamente simples e fornece estimadores úteis como valores iniciais para métodos numéricos. Sua definição não depende da Lei dos Grandes Números; essa lei, juntamente com condições de identificabilidade e continuidade, é utilizada para justificar a consistência dos estimadores obtidos [@rice2007mathematical, sec. 8.4; @ramachandran2021r, sec. 5.2.1; @chihara2022, sec. 6.2].
 
-As definições iniciais e a estratégia podem parecer confusas à primeira vista, mas apresentaremos vários exemplos que devem ajudar a tornar tudo mais claro.
+### Momentos populacionais e amostrais {.unnumbered}
 
-::: {.callout-note title="Momentos (Revisão)"}
-Seja $X$ uma variável aleatória e $c \in \mathbb{R}$ um escalar. Então, o $k$-ésimo momento de $X$ é:
+::: {.callout-important title="Definição — momentos populacionais"}
+Seja $X$ uma variável aleatória. Quando a esperança existe, o $k$-ésimo **momento em torno da origem** é
 
-$$E[X^k],$$ e o $k$-ésimo momento de $X$ em torno de $c$ é:
+$$\mu_k^{\prime}=E(X^k).$$
 
-$$E[(X - c)^k].$$ Em geral, temos interesse especial no **primeiro momento** (média) de $X$: $\mu = E[X]$, e no **segundo momento em torno da média** (variância): $\text{Var}(X) = E[(X - \mu)^2]$.
+O $k$-ésimo **momento em torno de** $c\in\mathbb{R}$ é
+
+$$E[(X-c)^k].$$
+
+Em particular,
+
+$$\mu=E(X)$$
+
+e
+
+$$\sigma^2=E[(X-\mu)^2].$$
 :::
 
-::: {.callout-important title="Momentos Amostrais"}
-Seja $X$ uma variável aleatória e $x_1, \ldots, x_n$ uma amostra i.i.d. de $X$. O $k$-ésimo momento amostral é: $$\frac{1}{n} \sum_{i=1}^{n} x_i^k.$$ O $k$-ésimo momento amostral em torno de $c$ é: $$\frac{1}{n} \sum_{i=1}^{n} (x_i - c)^k.$$
+::: {.callout-important title="Definição — momentos amostrais"}
+Para uma amostra $X_1,\ldots,X_n$, o $k$-ésimo momento amostral em torno da origem é
 
-Casos particulares importantes:
+$$m_k^{\prime}=\frac{1}{n}\sum_{i=1}^nX_i^k.$$
 
-- O primeiro momento amostral é a **média amostral**;
-- O segundo momento amostral em torno da média é a **variância amostral**.
+O momento amostral em torno de $c$ é
+
+$$\frac{1}{n}\sum_{i=1}^n(X_i-c)^k.$$
+
+Assim, $m_1^{\prime}=\overline X$. O segundo momento amostral em torno de $\overline X$ é
+
+$$\widetilde S_n^2
+=\frac{1}{n}\sum_{i=1}^n(X_i-\overline X)^2
+=m_2^{\prime}-(m_1^{\prime})^2.$$
 :::
 
-### Ideia por trás do método
+::: {.callout-warning title="Observação — duas noções de variância amostral"}
+A quantidade $\widetilde S_n^2$ utiliza divisor $n$ e é o segundo momento empírico central. Ela não deve ser confundida com a variância amostral não viesada
 
-A estimação pelo método dos momentos baseia-se exclusivamente na **Lei dos Grandes Números**, que relembramos a seguir:
+$$S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2.$$
 
-Sejam $Y_1, Y_2, \ldots$ variáveis aleatórias independentes com uma distribuição comum que possui média $\mu_{Y}$. Então, as médias amostrais convergem para a média da distribuição à medida que o número de observações aumenta:
+No método dos momentos, utiliza-se naturalmente $\widetilde S_n^2$, porque os momentos amostrais são definidos com divisor $n$ [@rice2007mathematical, sec. 8.4].
+:::
 
-$$\bar{Y}_{n} = \frac{1}{n} \sum_{i=1}^{n} Y_i \to \mu_{Y} \quad \text{quando } n \to \infty.$$
+### Fundamentação probabilística {.unnumbered}
 
-Para mostrar como o método dos momentos determina um estimador, consideramos inicialmente o caso de **um único parâmetro**.
+Se $E(|X|^k)<\infty$, a Lei dos Grandes Números implica
 
-Começamos com variáveis aleatórias independentes $X_1, X_2, \ldots$, geradas segundo a função densidade de probabilidade $f_X(x \mid \theta)$, associada a um parâmetro desconhecido $\theta$. A média comum das variáveis $X_i$, denotada por $\mu_X$, é uma função $k(\theta)$ de $\theta$. Por exemplo, se as $X_i$ são variáveis aleatórias contínuas, então:
+$$m_k^{\prime}=\frac{1}{n}\sum_{i=1}^nX_i^k\xrightarrow{p}E(X^k)=\mu_k^{\prime}.$$
 
-$$\mu_X = \int_{-\infty}^{\infty} x f_X(x \mid \theta)\, dx = k(\theta).$$
+Portanto, os momentos amostrais aproximam os momentos populacionais para amostras grandes. Essa convergência fornece a principal justificativa assintótica do método, mas a consistência também exige que o sistema de equações identifique local ou globalmente o parâmetro de interesse [@rice2007mathematical, secs. 5.2 e 8.4; @lauritzen2023fundamentals, sec. 5.2].
 
-A Lei dos Grandes Números afirma que:
+### Procedimento geral {.unnumbered}
 
-$$\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i \to \mu_X \quad \text{quando } n \to \infty.$$
+Considere um modelo com vetor paramétrico
 
-Assim, quando o número de observações $n$ é grande, a média da distribuição $\mu = k(\theta)$ pode ser bem aproximada pela média amostral, isto é:
+$$\boldsymbol\theta=(\theta_1,\ldots,\theta_d)\in\Theta.$$
 
-$$\bar{X} \approx k(\theta).$$
+Suponha que os primeiros $d$ momentos populacionais existam e possam ser escritos como
 
-Essa relação pode ser transformada em um estimador $\hat{\theta}$, definindo:
+$$\mu_j^{\prime}=k_j(\boldsymbol\theta),
+\qquad j=1,\ldots,d.$$
 
-$$\bar{X} = k(\hat{\theta}),$$
+O método dos momentos pode ser descrito em quatro etapas:
 
-e resolvendo essa equação em relação a $\hat{\theta}$.
+1. calcular $d$ momentos populacionais como funções de $\boldsymbol\theta$;
+2. resolver, quando possível, o sistema
 
-Na sequência, descreveremos o procedimento no caso de um **vetor de parâmetros** e apresentaremos diversos exemplos. Veremos também que o **método delta** pode ser utilizado para estimar a variância dos estimadores obtidos pelo método dos momentos.
+   $$\mu_j^{\prime}=k_j(\boldsymbol\theta),
+   \qquad j=1,\ldots,d,$$
 
-### Procedimento Geral do Método dos Momentos
+   obtendo
 
-De forma mais geral, para variáveis aleatórias independentes $X_1, X_2, \ldots$, geradas segundo uma distribuição associada ao parâmetro $\theta$, e sendo $m$ uma função real, se $k(\theta) =E_{\theta}[m(X_1)],$ então
+   $$\theta_j=g_j(\mu_1^{\prime},\ldots,\mu_d^{\prime});$$
 
-$$\frac{1}{n} \sum_{i=1}^{n} m(X_i) \to k(\theta) \quad \text{quando } n \to \infty.$$
+3. calcular os momentos amostrais $m_1^{\prime},\ldots,m_d^{\prime}$;
+4. substituir $\mu_j^{\prime}$ por $m_j^{\prime}$:
 
-O método dos momentos resulta das escolhas $m(x) = x^m$. Denotamos
+   $$\widehat\theta_j^{\mathrm{MM}}
+   =g_j(m_1^{\prime},\ldots,m_d^{\prime}),
+   \qquad j=1,\ldots,d.$$
 
-$$\mu_m = E[X^m] = k_m(\theta). \tag{1}$$
+De modo equivalente, os estimadores são soluções do sistema
 
-para o $m$-ésimo momento.
+$$m_j^{\prime}=k_j(\widehat{\boldsymbol\theta}^{\mathrm{MM}}),
+\qquad j=1,\ldots,d.$$
 
-Nosso procedimento de estimação segue os **4 passos** abaixo, que conectam os momentos amostrais aos parâmetros do modelo:
+O sistema pode não possuir solução, pode possuir várias soluções ou pode produzir valores fora do espaço paramétrico. Nesses casos, a regra de seleção ou projeção deve ser declarada explicitamente [@rice2007mathematical, sec. 8.4; @larsen2012, sec. 5.6; @ramachandran2021r, sec. 5.2.1].
 
-### Passo 1 {.unnumbered}
+### Exemplo — distribuição de Pareto {.unnumbered}
 
-Se o modelo possui $d$ parâmetros, calculamos as funções $k_m$ na equação (1) para os primeiros $d$ momentos:
+Considere
 
-$$\mu_1 = k_1(\theta_1, \theta_2, \ldots, \theta_d), \quad
-\mu_2 = k_2(\theta_1, \theta_2, \ldots, \theta_d), \quad \ldots \quad
-\mu_d = k_d(\theta_1, \theta_2, \ldots, \theta_d),$$
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Pareto}(1,\theta),
+\qquad \theta>0,$$
 
-obtendo assim $d$ equações em $d$ incógnitas.
+com densidade
 
-### Passo 2 {.unnumbered}
+$$f(x\mid\theta)=\theta x^{-(\theta+1)},
+\qquad x\geq1.$$
 
-Resolvemos esse sistema para os $d$ parâmetros como funções dos momentos:
+Para $\theta>1$,
 
-$$\theta_1 = g_1(\mu_1, \mu_2, \dots, \mu_d), \quad
-\theta_2 = g_2(\mu_1, \mu_2, \dots, \mu_d), \quad \dots \quad
-\theta_d = g_d(\mu_1, \mu_2, \dots, \mu_d). \tag{2}$$
+$$E(X)=\frac{\theta}{\theta-1}.$$
 
-### Passo 3 {.unnumbered}
+Igualando $E(X)$ a $\overline X$,
 
-Com base nos dados $\mathbf{x} = (x_1, x_2, \ldots, x_n)$, calculamos os primeiros $d$ momentos amostrais:
+$$\overline X=\frac{\widehat\theta}{\widehat\theta-1},$$
 
-$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i, \quad
-\overline{x^2} = \frac{1}{n} \sum_{i=1}^{n} x_i^2, \quad \ldots \quad
-\overline{x^d} = \frac{1}{n} \sum_{i=1}^{n} x_i^d.$$
+e, portanto,
 
-Pela Lei dos Grandes Números, para cada momento $m = 1, \ldots, d$, temos: $\mu_m \approx \overline{x^m}.$
+$$\boxed{
+\widehat\theta^{\mathrm{MM}}
+=\frac{\overline X}{\overline X-1}
+}.$$
 
-### Passo 4 {.unnumbered}
+Como $\overline X>1$ quase certamente, a expressão está bem definida. Além disso, $\overline X\xrightarrow{p}\theta/(\theta-1)$ e a função $g(u)=u/(u-1)$ é contínua para $u>1$; logo,
 
-Substituímos os momentos populacionais $\mu_m$ pelos momentos amostrais $\overline{x^m}$. Assim, as soluções em (2) fornecem as fórmulas dos estimadores de momentos $(\hat{\theta}_1, \hat{\theta}_2, \ldots, \hat{\theta}_d)$. Para os dados $\mathbf{x}$, esses estimadores são dados por:
+$$\widehat\theta^{\mathrm{MM}}\xrightarrow{p}\theta.$$
 
-$$\hat{\theta}_1(\mathbf{x}) = g_1(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad
-\hat{\theta}_2(\mathbf{x}) = g_2(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}), \quad \ldots \quad
-\hat{\theta}_d(\mathbf{x}) = g_d(\bar{x}, \overline{x^2}, \cdots, \overline{x^d}).$$
+#### Variância assintótica pelo método delta {.unnumbered}
 
-A forma como essa descrição abstrata funciona na prática é melhor compreendida por meio de exemplos.
+Se $\theta>2$, então
 
-## Exemplo: Distribuição de Pareto {.unnumbered}
+$$\operatorname{Var}(X)
+=\frac{\theta}{(\theta-1)^2(\theta-2)}.$$
 
-Sejam $X_1, X_2, \dots, X_n$ uma amostra aleatória simples de variáveis aleatórias com distribuição de Pareto, cuja densidade é dada por:
+Como
 
-$$f_X(x \mid \theta) = \theta x^{-(\theta+1)}, \quad x > 1.$$
+$$g'(u)=-\frac{1}{(u-1)^2},$$
 
-A função de distribuição acumulada é:
+temos
 
-$$F_X(x) = 1 - x^{-\theta}, \quad x > 1.$$
+$$g'\left(\frac{\theta}{\theta-1}\right)=-(\theta-1)^2.$$
 
-A média e a variância são, respectivamente:
+Pelo método delta,
 
-$$\mu = \frac{\theta}{\theta - 1}, \quad \sigma^2 = \frac{\theta}{(\theta - 1)^2(\theta - 2)}.$$
+$$\sqrt n
+(\widehat\theta^{\mathrm{MM}}-\theta)
+\xrightarrow{d}
+N\left(
+0,
+\frac{\theta(\theta-1)^2}{\theta-2}
+\right),$$
 
-Neste caso, temos apenas **um parâmetro**, $\theta$. Assim, no **Passo 1**, precisamos apenas do primeiro momento:
+e, consequentemente,
 
-$$\mu_1 = \mu = k_1(\theta) = \frac{\theta}{\theta - 1}.$$
+$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
+\approx
+\frac{\theta(\theta-1)^2}{n(\theta-2)}.$$
 
-### Passo 2 {.unnumbered}
+O requisito $\theta>2$ é essencial para esta aplicação, pois a variância da população é infinita quando $1<\theta\leq2$ [@lauritzen2023fundamentals, app. A.2.3; @chihara2022, sec. 7.7].
 
-Resolvendo para $\theta$ em função da média $\mu$:
+Para $\theta=3$ e $n=100$,
 
-$$\theta = g_1(\mu) = \frac{\mu}{\mu - 1}.$$
+$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
+\approx\frac{3(3-1)^2}{100(3-2)}=0{,}12,$$
 
-### Passos 3 e 4 {.unnumbered}
+de modo que o desvio-padrão assintótico é aproximadamente $0{,}346$.
 
-Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
+#### Simulação em R {.unnumbered}
 
-$$\hat{\theta} = \frac{\bar{X}}{\bar{X} - 1}.$$
-
-### Variância via Método Delta {.unnumbered}
-
-Um bom estimador deve ter variância pequena. Para estimar a variância de $\hat{\theta}$, utilizamos o **método delta**:
-
-$$\sigma^2_{\hat{\theta}} \approx \left[g_1'(\mu)\right]^2 \frac{\sigma^2}{n}.$$
-
-Calculamos a derivada:
-
-$$g_1'(\mu) = -\frac{1}{(\mu - 1)^2}.$$
-
-Substituindo $\mu = \frac{\theta}{\theta - 1}$, obtemos:
-
-$$g_1'(\mu) = -(\theta - 1)^2.$$
-
-Assim, a variância aproximada é:
-
-$$\sigma^2_{\hat{\theta}} \approx \frac{(\theta - 1)^4}{n} \cdot \frac{\theta}{(\theta - 1)^2(\theta - 2)} = \frac{\theta(\theta - 1)^2}{n(\theta - 2)}.$$
-
-### Exemplo Numérico {.unnumbered}
-
-Considere $\theta = 3$ e $n = 100$:
-
-$$\sigma^2_{\hat{\theta}} \approx \frac{3(3 - 1)^2}{100(3 - 2)} = \frac{12}{100} = \frac{3}{25}.$$
-
-Logo, o desvio padrão aproximado é:
-
-$$\sigma_{\hat{\theta}} \approx \sqrt{\frac{3}{25}} = 0{,}346.$$
-
-### Simulação em R {.unnumbered}
-
-Para simular uma variável aleatória com distribuição de Pareto, usamos o método da transformação inversa. Se $U \sim \text{Uniforme}(0,1)$, então:
-
-$$X = (1 - U)^{-1/\theta}.$$
-
-Código em `R`:
+O exemplo numérico e o código abaixo são autorais. A geração utiliza a transformação inversa: se $U\sim\operatorname{Unif}(0,1)$, então $U^{-1/\theta}$ possui a distribuição de Pareto adotada.
 
 ```{r}
-paretobar <- rep(0, 1000)
-
+#| label: sim-momentos-pareto
+#| warning: false
+#| message: false
 
 set.seed(14)
-for (i in 1:1000){
-  v <- runif(100)
-  pareto <- 1 / v^(1/3)
-  paretobar[i] <- mean(pareto)
-}
 
-hist(paretobar, xlab = expression(bar(X)), probability = TRUE, main = "")
+B <- 1000
+n <- 100
+theta <- 3
 
-betahat <- paretobar / (paretobar - 1)
-hist(betahat, xlab = expression(hat(beta)), probability = TRUE, main = "")
+estimativas <- replicate(B, {
+  x <- runif(n)^(-1 / theta)
+  x_barra <- mean(x)
+  x_barra / (x_barra - 1)
+})
 
-mean(betahat)
-sd(betahat)
+hist(
+  estimativas,
+  probability = TRUE,
+  breaks = 35,
+  xlab = expression(hat(theta)[MM]),
+  main = ""
+)
 
+mean(estimativas)
+sd(estimativas)
 ```
 
-A média amostral do estimador de $\theta$, igual a `r round(mean(betahat),4)`, está próxima do valor verdadeiro do parâmetro considerado na simulação que foi $3$. Neste exemplo, o estimador $\hat{\theta}$ apresenta **viés positivo**. Em outras palavras, em média, a estimativa é maior que o verdadeiro valor do parâmetro, isto é: $E[\hat{\theta}] > \theta$. O desvio padrão amostral, igual a `r round(sd(betahat),4)`, é próximo do valor **0.346** estimado pelo método delta. Quando estudarmos **estimadores não viesados**, veremos que esse viés já poderia ter sido antecipado.
-
-## Exemplo: Distribuição Uniforme Contínua {.unnumbered}
-
-Considere $X \sim U(0, \theta)$. Sabemos que:
-
-$$\mu = \frac{\theta}{2} \quad \text{e} \quad \sigma^2 = \frac{\theta^2}{12}.$$
-
-### Passo 1 {.unnumbered}
-
-Neste caso, também temos apenas **um parâmetro**, $\theta$. Assim, no **Passo 1**, precisamos apenas do primeiro momento:
-
-$$\mu_1 = \mu = k_1(\theta) = \frac{\theta}{2}.$$
-
-### Passo 2 {.unnumbered}
-
-Resolvendo para $\theta$ em função da média $\mu$:
-
-$$\theta = g_1(\mu) = 2\mu.$$
-
-### Passos 3 e 4 {.unnumbered}
-
-Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
-
-$$\hat{\theta} = 2\bar{X}.$$
-
-### Esperança e Variância {.unnumbered}
-
-Como o estimador obtido pelo MoM é função linear da média amostral, então é fácil obter seu valor esperado, basta usar propriedades de valores esperado e o fato de $E(\bar{X}) = \mu$. Assim, temos que
-
-$$E(\hat{\theta})  = 2E(\bar{X}) = 2\left(\frac{\theta}{2}\right) = \theta.$$
-
-portanto, $\hat{\theta}$ é um estimador não viciado. De maneira similar, podemos obter a expressão da variância de $\hat{\theta}$, usando propriedades de variância e o fato de $Var(\bar{X}) = \sigma^2/n$. Desta forma, temos que:
-
-$$Var(\hat{\theta}) = 4Var(\bar{X}) = 4\left(\frac{\theta^2/12}{n}\right) = \frac{\theta^2}{3n}.$$ Além disso, pela Lei dos Grandes Números, temos que $\bar{X} \xrightarrow{p} \mu$ quando $n \to \infty$. Agora, usamos o fato de que a convergência em probabilidade é preservada por funções contínuas (no caso, multiplicar por 2):
-
-$$\hat{\theta} = 2\bar{X} \xrightarrow{p} \theta,$$
-
-mostrando que o estimador também é **consistente**.
-
-> **Observação:** Neste caso específico, o estimador de momentos coincide com um estimador simples baseado na média. No entanto, para a distribuição uniforme, o estimador de máxima verossimilhança é $\hat{\theta}_{MV} = \max(X_1, \dots, X_n)$, o que levanta uma interessante comparação entre métodos de estimação.
-
-## Exemplo: Distribuição Uniforme Discreta {.unnumbered}
-
-Considere $X \sim U_d(A)$ com $A = {1, 2, \ldots, \theta}$ e $\theta \in \Theta = \{1, 2, \ldots\}$. Sabemos que:
-
-$$\mu = E_{\theta}(X) = \frac{1+\theta}{2} \quad \text{e} \quad \sigma^2 = V(X) = \frac{\theta^2 - 1}{12}.$$
-
-### Passo 1 {.unnumbered}
-
-Neste caso, temos apenas um parâmetro, $\theta$. Assim, utilizamos o primeiro momento:
-
-$$\mu_1 = \mu = k_1(\theta) = \frac{1+\theta}{2}.$$
-
-### Passo 2 {.unnumbered}
-
-Resolvendo para $\theta$ em função da média $\mu$:
-
-$$\theta = g_1(\mu) = 2\mu -1.$$
-
-### Passos 3 e 4 {.unnumbered}
-
-Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
-
-$$\hat{\theta} = 2\bar{X} - 1.$$
-
-### Esperança e Variância {.unnumbered}
-
-Como o estimador obtido pelo método dos momentos é uma função linear da média amostral, podemos utilizar propriedades do valor esperado. Sabendo que $E(\bar{X}) = \mu$, temos:
-
-$$E(\hat{\theta}) = 2E(\bar{X}) - 1 = 2\left(\frac{1+\theta}{2}\right) - 1 = \theta.$$ Portanto, $\hat{\theta}$ é um estimador não viesado.
-
-De maneira similar, utilizando o fato de que $Var(\bar{X}) = \sigma^2/n$, obtemos:
-
-$$Var(\hat{\theta}) = 4Var(\bar{X}) = \frac{\theta^2-1}{3n}.$$ Além disso, como $\hat{\theta}$ é um estimador não viesado e sua variância é igual a zero, quando $n \to \infty$, logo $\hat{\theta}$ é um estimador consistente.
-
-### Comparação com o Estimador de Máxima Verossimilhança {.unnumbered}
-
-Para a distribuição uniforme discreta, o estimador de máxima verossimilhança é dado por:
-
-$$\hat{\theta}_{MV} = \max(X_1, X_2, \dots, X_n).$$ Esse resultado decorre do fato de que a função de verossimilhança é constante para $\theta \geq \max(X_i)$ e nula caso contrário, sendo maximizada no menor valor possível de $\theta$ que ainda torna a amostra observável.
-
-**Comparação entre os estimadores**
-
-- O estimador de momentos, $\hat{\theta}_{\text{MoM}} = 2\bar{X} - 1$, utiliza toda a informação da amostra, mas pode assumir valores não inteiros.
-
-- O estimador de máxima verossimilhança, $\hat{\theta}_{\text{MV}} = \max(X_1, X_2, \dots, X_n)$, depende apenas do maior valor observado, mas sempre pertence ao espaço paramétrico.
-
-Além disso:
-
-- $\hat{\theta}_{\text{MoM}}$ é não viesado.
-
-- $\hat{\theta}_{\text{MV}}$ é viesado (subestima o valor verdadeiro), pois $E(\max(X_1, X_2, \dots, X_n)) < \theta$, embora seja consistente.
-
-Essa comparação ilustra uma diferença fundamental entre métodos de estimação: enquanto o método dos momentos busca reproduzir características médias da distribuição, o método de máxima verossimilhança está diretamente ligado à plausibilidade dos dados observados.
-
-## Exemplo: Distribuição Exponencial {.unnumbered}
-
-Considere $X \sim \text{Exp}(\theta)$. Sabemos que:
-
-$$\mu = E(X) = \frac{1}{\theta}\quad \text{e} \quad \sigma^2 = V(X) = \frac{1}{\theta^2}.$$
-
-### Passo 1 {.unnumbered}
-
-Neste caso, temos apenas um parâmetro, $\lambda$. Assim, utilizamos o primeiro momento:
-
-$$\mu_1 = \mu = k_1(\theta) = \frac{1}{\theta}.$$
-
-### Passo 2 {.unnumbered}
-
-Resolvendo para $\theta$ em função da média $\mu$:
-
-$$\theta = g_1(\mu) = \frac{1}{\mu}.$$
-
-### Passos 3 e 4 {.unnumbered}
-
-Substituindo a média populacional pela média amostral $\bar{X}$, obtemos o estimador de momentos:
-
-$$\hat{\theta} = \frac{1}{\bar{X}}.$$
-
-### Esperança e Variância {.unnumbered}
-
-Note que o estimador $\hat{\theta}$ não é uma função linear da média amostral, o que torna a análise de suas propriedades um pouco mais envolvida. Sabemos que $S = \sum_{i=1}^n X_i \sim \text{Gama}(n, \theta)$, o que implica que:
-
-$$\bar{X} \sim \text{Gama}(n, n\theta).$$ Além disso, é possível mostrar que $\hat{\theta} = 1/\bar{X}$ segue uma distribuição gama inversa (GI) de parâmetros $n$ e $n\theta$, ou seja
-
-$$\frac{1}{\bar{X}} \sim \text{GI}(n, n\theta).$$ Consequentemente, a média e a variância são:
-
-$$E(\hat{\theta}) = \frac{n\theta}{n-1}\; (n>1) \quad \text{e} \quad Var(\hat{\theta}) = \frac{n^2\theta^2}{(n-1)^2(n-2)}\; (n>2).$$
-
-Além disso, como $\bar{X} \xrightarrow{p} \mu = \frac{1}{\theta}$ quando $n \to \infty$, segue que:
-
-$$\hat{\theta} = \frac{1}{\bar{X}} \xrightarrow{p} \theta,$$ pois a função $g(x)=1/x$ é quase-certamente contínua, i.e., é contínua no suporte considerado, mostrando que o estimador é consistente.
-
-## Exemplo: Distribuição Gama {.unnumbered}
-
-Considere $X \sim \text{Gama}(\theta_1, \theta_2)$, em que:
-
-$$\mu = E[X] = \frac{\theta_1}{\theta_2}, \quad \text{e}\quad \sigma^2 = Var(X) = \frac{\theta_1}{\theta_2^2}.$$
-
-### Passo 1 {.unnumbered}
-
-Neste caso, temos dois parâmetros, $\alpha$ e $\beta$. Assim, utilizamos o primeiro e o segundo momento:
-
-$$\mu_1 = k_1(\theta_1, \theta_2) = \frac{\theta_1}{\theta_2} \quad \text{e}\quad \mu_2 = k_2(\theta_1, \theta_2) = \frac{\theta_1(1 + \theta_1)}{\theta_2^2}.$$
-
-### Passo 2 {.unnumbered}
-
-Resolvendo para $\theta_1$ e $\theta_2$ em função de $\mu_1$ e $\mu_2$:
-
-$$\theta_1 = g(\mu_1, \mu_2) = \frac{\mu_1^2}{\mu_2 - \mu_1^2} \quad \text{e} \quad \theta_2 = g(\mu_1, \mu_2) = \frac{\mu_1}{\mu_2 - \mu_1^2}.$$
-
-### Passos 3 e 4 {.unnumbered}
-
-Substituindo a média populacional pela média amostral $\bar{X}$ e segundo momento populacional pelo segundo momento amostral, obtemos os seguintes estimadores de momentos:
-
-$$\widehat{\theta}_1 = \frac{\bar{X}^2}{\widehat{\sigma}^2} \quad \text{e} \quad \widehat{\theta}_2 = \frac{\bar{X}}{\widehat{\sigma}^2} $$
-
-em que:
-
-$$\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2.$$
-
-::: {.callout-caution title="Exercícios"}
-1.  O **múon** é uma partícula elementar com carga elétrica $-1$ e spin (momento angular intrínseco) igual a $\frac{1}{2}$. Trata-se de uma partícula subatômica instável com tempo de vida médio de $2{,}2 \, \mu s$.
-
-Os múons possuem massa aproximadamente **200 vezes maior** que a massa do elétron. Como o múon tem a mesma carga e spin que o elétron, ele pode ser visto como uma versão muito mais pesada do elétron.
-
-A colisão de um feixe de prótons ($p$) acelerados, com energia de $600 \, \text{MeV}$ (milhões de elétron-volts), com os núcleos de um alvo de produção gera píons positivos ($\pi^+$) por meio de uma das seguintes reações:
-
-$$p + p \rightarrow p + n + \pi^+ \quad \text{ou} \quad p + n \rightarrow n + n + \pi^+.$$
-
-A partir do decaimento subsequente dos píons (tempo de vida médio de $26{,}03 \, \text{ns}$), múons positivos ($\mu^+$) são formados via o decaimento de dois corpos:
-
-$$\pi^+ \rightarrow \mu^+ + \nu_\mu,$$
-
-em que $\nu_\mu$ representa o **neutrino do múon**.
-
-O decaimento do múon em um pósitron ($e^+$), um neutrino do elétron ($\nu_e$) e um antineutrino do múon ($\bar{\nu}_\mu$):
-
-$$\mu^+ \rightarrow e^+ + \nu_e + \bar{\nu}_\mu,$$
-
-possui uma distribuição angular $t$ com densidade dada por:
-
-$$f(t \mid \alpha) = \frac{1}{2\pi} (1 + \alpha \cos t), \quad 0 \leq t \leq 2\pi,$$
-
-em que $t$ é o ângulo entre a trajetória do pósitron e o spin do $\mu^+$, e o parâmetro de anisotropia $\alpha \in [-1/3, 1/3]$ depende da polarização do feixe de múons e da energia do pósitron. Com base nas observações $t_1, \ldots, t_n$, obtenha o estimador de momentos $\hat{\alpha}$ para $\alpha$.
-
-**Observação:** Neste caso, a média é igual a $\pi$ para todos os valores de $\alpha$. Portanto, será necessário utilizar o **segundo momento** para obter um estimador.
-
-2.  Sejam $x_1, x_2, \ldots, x_n$ uma amostra i.i.d. de $X \sim N(\theta_1, \theta_2)$, em que $\theta_1$ é a média e $\theta_2$ é a variância. Queremos obter o estimador de momentos para o vetor de parâmetros: $\theta = (\theta_1, \theta_2)$. Verifique se o estimador é viesado e obtenha sua variância.
-
-3.  Verifique se os estimadores de momentos dos parâmetros que indexam a distribuição gama são consistentes.
+::: {.callout-note title="Interpretação"}
+A função $g(u)=u/(u-1)$ é estritamente convexa para $u>1$. Assim, quando as esperanças relevantes existem, a desigualdade de Jensen ajuda a explicar o viés positivo observado em amostras finitas. Esse viés não impede a consistência do estimador.
 :::
+
+### Exemplo — distribuição uniforme contínua {.unnumbered}
+
+Se
+
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Unif}(0,\theta),
+\qquad\theta>0,$$
+
+então
+
+$$E(X)=\frac{\theta}{2},
+\qquad
+\operatorname{Var}(X)=\frac{\theta^2}{12}.$$
+
+Igualando o primeiro momento,
+
+$$\boxed{
+\widehat\theta^{\mathrm{MM}}=2\overline X
+}.$$
+
+O estimador é não viesado,
+
+$$E(\widehat\theta^{\mathrm{MM}})=\theta,$$
+
+possui variância
+
+$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
+=\frac{\theta^2}{3n},$$
+
+e é consistente pela Lei dos Grandes Números. O estimador de máxima verossimilhança, estudado adiante, é $X_{(n)}$; os dois métodos produzem estimadores distintos neste modelo não regular [@chihara2022, secs. 6.1.2 e 6.2].
+
+### Exemplo — distribuição uniforme discreta {.unnumbered}
+
+Considere
+
+$$P_\theta(X=x)=\frac{1}{\theta},
+\qquad x\in\{1,\ldots,\theta\},
+\qquad\theta\in\mathbb{N}.$$
+
+Como
+
+$$E_\theta(X)=\frac{\theta+1}{2},$$
+
+a solução formal da equação de momentos é
+
+$$\widetilde\theta^{\mathrm{MM}}=2\overline X-1.$$
+
+Ela é não viesada e possui
+
+$$\operatorname{Var}(\widetilde\theta^{\mathrm{MM}})
+=\frac{\theta^2-1}{3n}.$$
+
+Entretanto, $2\overline X-1$ pode não ser inteiro e pode ser menor que $X_{(n)}$. Portanto, ele é uma **solução irrestrita da equação de momentos**, mas não necessariamente uma estimativa admissível em $\Theta$. Uma versão ajustada requer uma regra explícita de projeção para os inteiros compatíveis com a amostra; essa projeção altera, em geral, o viés e a variância.
+
+A verossimilhança é
+
+$$L(\theta;\boldsymbol x)
+=\theta^{-n}I\{\theta\geq x_{(n)}\},$$
+
+e o estimador de máxima verossimilhança é
+
+$$\widehat\theta^{\mathrm{MV}}=X_{(n)}.$$
+
+Este exemplo mostra que uma equação de momentos pode produzir uma solução fora do espaço paramétrico, enquanto a maximização da verossimilhança incorpora diretamente as restrições do modelo.
+
+### Exemplo — distribuição exponencial {.unnumbered}
+
+Adote a parametrização pela taxa:
+
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\theta),
+\qquad
+f(x;\theta)=\theta e^{-\theta x}I(x\geq0).$$
+
+Como
+
+$$E(X)=\frac{1}{\theta},$$
+
+o estimador de momentos é
+
+$$\boxed{
+\widehat\theta^{\mathrm{MM}}=\frac{1}{\overline X}
+}.$$
+
+Se $S=\sum_iX_i$, então
+
+$$S\sim\operatorname{Gama}(n,\text{taxa }\theta),$$
+
+e $\widehat\theta^{\mathrm{MM}}=n/S$ possui distribuição gama inversa, na parametrização por forma $n$ e escala $n\theta$. Para $n>1$,
+
+$$E(\widehat\theta^{\mathrm{MM}})
+=\frac{n\theta}{n-1},$$
+
+e, para $n>2$,
+
+$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
+=\frac{n^2\theta^2}{(n-1)^2(n-2)}.$$
+
+O estimador é viesado para cima, mas consistente, pois $\overline X\xrightarrow{p}1/\theta$ e $u\mapsto1/u$ é contínua em $1/\theta>0$ [@chihara2022, secs. 6.1.2 e 6.2].
+
+### Exemplo — distribuição gama {.unnumbered}
+
+Considere a parametrização por forma $\alpha>0$ e taxa $\beta>0$:
+
+$$X\sim\operatorname{Gama}(\alpha,\beta),$$
+
+com
+
+$$E(X)=\frac{\alpha}{\beta},
+\qquad
+E(X^2)=\frac{\alpha(\alpha+1)}{\beta^2}.$$
+
+Resolvendo em função dos dois primeiros momentos,
+
+$$\alpha=\frac{(\mu_1^{\prime})^2}{\mu_2'-(\mu_1^{\prime})^2},
+\qquad
+\beta=\frac{\mu_1'}{\mu_2'-(\mu_1^{\prime})^2}.$$
+
+Substituindo $\mu_1^{\prime}$ e $\mu_2^{\prime}$ pelos momentos amostrais,
+
+$$\boxed{
+\widehat\alpha^{\mathrm{MM}}
+=\frac{\overline X^2}{\widetilde S_n^2}
+}$$
+
+e
+
+$$\boxed{
+\widehat\beta^{\mathrm{MM}}
+=\frac{\overline X}{\widetilde S_n^2}
+},$$
+
+em que
+
+$$\widetilde S_n^2
+=\frac{1}{n}\sum_{i=1}^n(X_i-\overline X)^2.$$
+
+Essas fórmulas correspondem ao exemplo clássico de estimação dos parâmetros da distribuição gama pelo método dos momentos [@rice2007mathematical, sec. 8.4, exemplo C].
+
+### Exercícios {.unnumbered}
+
+1. **Distribuição angular.** Considere uma variável angular $T$ com densidade
+
+   $$f(t\mid\alpha)=\frac{1}{2\pi}(1+\alpha\cos t),
+   \qquad0\leq t\leq2\pi,$$
+
+   em que $\alpha\in[-1/3,1/3]$. Como $E(T)=\pi$ para todo $\alpha$, utilize o segundo momento para obter um estimador de momentos de $\alpha$.
+
+2. **Modelo normal.** Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2)$, obtenha os estimadores de momentos de $\mu$ e $\sigma^2$. Determine o viés e a variância de cada estimador.
+
+3. **Consistência no modelo gama.** Demonstre, utilizando a Lei dos Grandes Números e o teorema da aplicação contínua, que $\widehat\alpha^{\mathrm{MM}}$ e $\widehat\beta^{\mathrm{MM}}$ são consistentes quando $\operatorname{Var}(X)>0$.
 
 ## Máxima Verossimilhança {#sec-maxima-verossimilhanca}
 
-A estimação por máxima verossimilhança constitui um dos métodos mais gerais de estimação pontual em modelos paramétricos. Sua ideia fundamental é selecionar, entre os valores admissíveis do parâmetro, aquele para o qual os dados efetivamente observados apresentam maior verossimilhança. O método pode ser empregado em modelos discretos, contínuos e multiparamétricos, inclusive quando a solução requer procedimentos numéricos de otimização [@larsen2012; @ramachandran2009].
+A estimação por máxima verossimilhança seleciona, entre os valores admissíveis do parâmetro, aqueles que tornam os dados observados mais verossímeis. O método aplica-se a modelos discretos, contínuos e multiparamétricos, mas a existência, a unicidade e a forma do maximizador devem ser verificadas em cada problema [@rice2007mathematical, sec. 8.5; @larsen2012, sec. 5.2; @ramachandran2009, sec. 5.2.2; @chihara2022, sec. 6.1].
 
-Além de fornecer estimadores de forma sistemática, o método de máxima verossimilhança possui propriedades assintóticas que fundamentam a construção de erros-padrão, intervalos de confiança e testes de hipóteses. Essas propriedades, entretanto, dependem de condições de regularidade e podem falhar em modelos com suporte dependente do parâmetro, parâmetros na fronteira ou problemas de identificabilidade [@chihara2022].
+As propriedades assintóticas usuais — consistência, normalidade e eficiência — não decorrem apenas da maximização. Elas exigem hipóteses específicas sobre identificabilidade, suavidade, comportamento do suporte, informação e convergência da função objetivo. Em modelos não regulares, a taxa ou a distribuição limite pode ser diferente da teoria padrão [@lauritzen2023fundamentals, secs. 5.3.1--5.3.2; @chihara2022, sec. 6.3.6].
 
 Ao final desta seção, o leitor deverá ser capaz de:
 
-1. construir a função de verossimilhança de um modelo paramétrico;
+1.  construir a função de verossimilhança de um modelo paramétrico;
 
-2. distinguir probabilidade, densidade e verossimilhança;
-obter estimadores de máxima verossimilhança analítica ou numericamente;
+2.  distinguir probabilidade, densidade e verossimilhança; obter estimadores de máxima verossimilhança analítica ou numericamente;
 
-3. calcular a função escore e a informação de Fisher;
-reconhecer as principais condições de regularidade;
+3.  calcular a função escore e a informação de Fisher; reconhecer as principais condições de regularidade;
 
-4. utilizar as propriedades assintóticas dos estimadores de máxima verossimilhança;
+4.  utilizar as propriedades assintóticas dos estimadores de máxima verossimilhança;
 
-5. identificar modelos nos quais a teoria assintótica regular não se aplica diretamente.
+5.  identificar modelos nos quais a teoria assintótica regular não se aplica diretamente.
 
-### Exemplo motivacional: uma moeda com probabilidade desconhecida (Adaptado de @chihara2022[p. 148–149])
+### Exemplo motivacional — moeda com probabilidade desconhecida {.unnumbered}
+
+O exemplo é adaptado de @chihara2022 [pp. 148--149].
 
 Considere uma moeda cuja probabilidade de produzir cara é desconhecida e denotada por $p$. A moeda é lançada oito vezes, produzindo a sequência
 
@@ -424,52 +389,40 @@ Essa função mede a verossimilhança dos diferentes valores de $p$ em relação
 
 Como o logaritmo é uma função estritamente crescente, maximizar $L(p)$ é equivalente a maximizar a log-verossimilhança
 
-
 $$\ell(p) = \log(L(p)) = 5 \log(p) + 3\log(1-p).$$
-
 
 Derivando em relação a $p$,
 
-$$
-\ell'(p)
+$$\ell'(p)
 =
 \frac{5}{p}
 -
-\frac{3}{1-p}.
-$$
+\frac{3}{1-p}.$$
 
 A equação $\ell'(p)=0$ implica
 
-$$
-\frac{5}{p}
+$$\frac{5}{p}
 =
-\frac{3}{1-p},
-$$
+\frac{3}{1-p},$$
 
 de modo que
 
-$$
-5(1-p)=3p
-$$
+$$5(1-p)=3p$$
 
 e, consequentemente,
 
-$$
-\widehat p
+$$\widehat p
 =
-\frac{5}{8}.
-$$
+\frac{5}{8}.$$
 
 Além disso,
 
-$$
-\ell''(p)
+$$\ell''(p)
 =
 -\frac{5}{p^2}
 -\frac{3}{(1-p)^2}
 <0,
-\qquad 0<p<1.
-$$
+\qquad 0<p<1.$$
 
 Logo, $\widehat p=5/8$ é o ponto de máximo da log-verossimilhança e, portanto, da própria verossimilhança.
 
@@ -484,68 +437,56 @@ Na função de probabilidade ou densidade $f(x;\theta)$, considera-se o parâmet
 
 Consequentemente, a função de verossimilhança não é, em geral, uma distribuição de probabilidade sobre o parâmetro. Em particular, não é necessário que
 
-$$
-\int_\Theta L(\theta;\mathbf{x})\,d\theta=1.
-$$
+$$\int_\Theta L(\theta;\mathbf{x})\,d\theta=1.$$
 :::
 
 ### Definição formal
 
 Considere um modelo estatístico paramétrico
 
-$$
-\mathcal{P}
+$$\mathcal{P}
 =
 \left\{
 P_{\boldsymbol\theta}:
 \boldsymbol\theta\in\Theta
-\right\},
-$$
+\right\},$$
 
 em que $\Theta\subseteq\mathbb{R}^q$ é o espaço paramétrico. Suponha que as distribuições do modelo possuam funções de probabilidade ou densidades $f(\mathbf{x};\boldsymbol\theta)$ relativamente a uma medida dominante comum.
 
 ::: {.callout-important title="Definição: função de verossimilhança"}
 Para uma realização observada $\mathbf{x}$, a função de verossimilhança é definida por
 
-$$
-L(\boldsymbol\theta;\mathbf{x})
+$$L(\boldsymbol\theta;\mathbf{x})
 =
 f(\mathbf{x};\boldsymbol\theta),
 \qquad
-\boldsymbol\theta\in\Theta,
-$$
+\boldsymbol\theta\in\Theta,$$
 
 considerada como uma função de $\boldsymbol\theta$, com os dados $\mathbf{x}$ mantidos fixos.
 :::
 
 Se $X_1,\ldots,X_n$ constituem uma amostra aleatória de uma distribuição com função de probabilidade ou densidade $f(x;\boldsymbol\theta)$, então, pela independência,
 
-$$
-L_n(\boldsymbol\theta;\mathbf{x})
+$$L_n(\boldsymbol\theta;\mathbf{x})
 =
 \prod_{i=1}^n
-f(x_i;\boldsymbol\theta).
-$$
+f(x_i;\boldsymbol\theta).$$
 
-Em modelos discretos, essa expressão representa a probabilidade conjunta dos valores observados. Em modelos contínuos, ela é construída a partir do produto das densidades avaliadas nos dados. A interpretação, entretanto, é a mesma: a expressão é examinada como uma função do parâmetro, e não dos dados [@larsen2012; ramachandran2009].
+Em modelos discretos, essa expressão representa a probabilidade conjunta dos valores observados. Em modelos contínuos, ela é construída a partir do produto das densidades avaliadas nos dados. A interpretação, entretanto, é a mesma: a expressão é examinada como uma função do parâmetro, e não dos dados [@larsen2012, sec. 5.2; @ramachandran2009, sec. 5.2.2].
 
 ::: {.callout-important title="Definição: estimador de máxima verossimilhança"}
 Um estimador de máxima verossimilhança de $\boldsymbol\theta$ é uma estatística $\widehat{\boldsymbol\theta}_n$ que satisfaz
 
-$$
-\widehat{\boldsymbol\theta}_n
+$$\widehat{\boldsymbol\theta}_n
 \in
 \operatorname*{arg\,max}_{\boldsymbol\theta\in\Theta}
-L_n(\boldsymbol\theta).
-$$
+L_n(\boldsymbol\theta).$$
 
 Equivalentemente,
 
-$$
-L_n(\widehat{\boldsymbol\theta}_n)
+$$L_n(\widehat{\boldsymbol\theta}_n)
 \geq
-L_n(\boldsymbol\theta)
-$$
+L_n(\boldsymbol\theta)$$
 
 para todo $\boldsymbol\theta\in\Theta$.
 :::
@@ -557,12 +498,10 @@ O **estimador** $\widehat{\boldsymbol\theta}_n$ é uma função das variáveis a
 
 Por exemplo,
 
-$$
-\widehat p
+$$\widehat p
 =
 \frac{1}{n}
-\sum_{i=1}^n X_i
-$$
+\sum_{i=1}^n X_i$$
 
 é um estimador, enquanto $5/8$ é a estimativa obtida para a sequência do exemplo motivacional.
 :::
@@ -584,42 +523,34 @@ Portanto, resolver uma equação obtida por diferenciação não é suficiente p
 
 A log-verossimilhança é definida por
 
-$$
-\ell_n(\boldsymbol\theta)
+$$\ell_n(\boldsymbol\theta)
 =
-\log L_n(\boldsymbol\theta).
-$$
+\log L_n(\boldsymbol\theta).$$
 
 Para uma amostra aleatória,
 
-$$
-\ell_n(\boldsymbol\theta)
+$$\ell_n(\boldsymbol\theta)
 =
 \sum_{i=1}^n
-\log f(X_i;\boldsymbol\theta).
-$$
+\log f(X_i;\boldsymbol\theta).$$
 
 Como o logaritmo é estritamente crescente,
 
-$$
-\operatorname*{arg\,max}_{\boldsymbol\theta\in\Theta}
+$$\operatorname*{arg\,max}_{\boldsymbol\theta\in\Theta}
 L_n(\boldsymbol\theta)
 =
 \operatorname*{arg\,max}_{\boldsymbol\theta\in\Theta}
-\ell_n(\boldsymbol\theta).
-$$
+\ell_n(\boldsymbol\theta).$$
 
-A log-verossimilhança é geralmente mais conveniente, pois transforma produtos em somas e reduz problemas numéricos causados pelo produto de probabilidades ou densidades muito pequenas [@ramachandran2009; @chihara2022].
+A log-verossimilhança é geralmente mais conveniente, pois transforma produtos em somas e reduz problemas numéricos causados pelo produto de probabilidades ou densidades muito pequenas [@ramachandran2009, sec. 5.2.2; @chihara2022, sec. 6.1].
 
 ::: {.callout-note title="Observação"}
 A função de verossimilhança é definida a menos de um fator positivo que não dependa do parâmetro. Se
 
-$$
-\widetilde L_n(\boldsymbol\theta)
+$$\widetilde L_n(\boldsymbol\theta)
 =
 c(\mathbf{x})L_n(\boldsymbol\theta),
-\qquad c(\mathbf{x})>0,
-$$
+\qquad c(\mathbf{x})>0,$$
 
 então $L_n$ e $\widetilde L_n$ possuem os mesmos maximizadores.
 :::
@@ -630,32 +561,26 @@ então $L_n$ e $\widetilde L_n$ possuem os mesmos maximizadores.
 
 Supondo que a log-verossimilhança seja diferenciável, define-se o vetor escore por
 
-$$
-\mathbf{U}_n(\boldsymbol\theta)
+$$\mathbf{U}_n(\boldsymbol\theta)
 =
 \nabla_{\boldsymbol\theta}
-\ell_n(\boldsymbol\theta).
-$$
+\ell_n(\boldsymbol\theta).$$
 
 Se o parâmetro for escalar,
 
-$$
-U_n(\theta)
+$$U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
-\ell_n(\theta).
-$$
+\ell_n(\theta).$$
 
 Quando o máximo ocorre no interior do espaço paramétrico, uma condição necessária para um máximo diferenciável é
 
-$$
-\mathbf{U}_n
+$$\mathbf{U}_n
 \left(
 \widehat{\boldsymbol\theta}_n
 \right)
 =
-\mathbf{0}.
-$$
+\mathbf{0}.$$
 
 Essa expressão é denominada **equação de verossimilhança**.
 
@@ -669,23 +594,19 @@ A classificação da solução pode exigir o exame da matriz Hessiana ou a compa
 
 A matriz de informação observada é definida por
 
-$$
-\mathbf{J}_n(\boldsymbol\theta)
+$$\mathbf{J}_n(\boldsymbol\theta)
 =
 -
 \nabla_{\boldsymbol\theta}^2
-\ell_n(\boldsymbol\theta).
-$$
+\ell_n(\boldsymbol\theta).$$
 
 No caso escalar,
 
-$$
-J_n(\theta)
+$$J_n(\theta)
 =
 -
 \frac{\partial^2}{\partial\theta^2}
-\ell_n(\theta).
-$$
+\ell_n(\theta).$$
 
 A informação observada descreve a curvatura local da log-verossimilhança. Uma log-verossimilhança fortemente curvada em torno do máximo tende a produzir uma estimativa mais precisa do que uma log-verossimilhança relativamente plana.
 
@@ -693,20 +614,17 @@ A informação observada descreve a curvatura local da log-verossimilhança. Uma
 
 Para uma única observação, a matriz de informação de Fisher é
 
-$$
-\mathbf{I}_1(\boldsymbol\theta)
+$$\mathbf{I}_1(\boldsymbol\theta)
 =
 \operatorname{E}_{\boldsymbol\theta}
 \left[
 \mathbf{U}_1(\boldsymbol\theta)
 \mathbf{U}_1(\boldsymbol\theta)^\mathsf{T}
-\right].
-$$
+\right].$$
 
 No caso escalar,
 
-$$
-I_1(\theta)
+$$I_1(\theta)
 =
 \operatorname{E}_\theta
 \left[
@@ -714,64 +632,53 @@ I_1(\theta)
 \frac{\partial}{\partial\theta}
 \log f(X;\theta)
 \right\}^2
-\right].
-$$
+\right].$$
 
 Sob condições que permitem a diferenciação sob o sinal de integração,
 
-$$
-\operatorname{E}_\theta
+$$\operatorname{E}_\theta
 [U_1(\theta)]
 =
-0
-$$
+0$$
 
 e
 
-$$
-I_1(\theta)
+$$I_1(\theta)
 =
 -
 \operatorname{E}_\theta
 \left[
 \frac{\partial^2}{\partial\theta^2}
 \log f(X;\theta)
-\right].
-$$
+\right].$$
 
 Para uma amostra aleatória de tamanho $n$,
 
-$$
-\mathbf{I}_n(\boldsymbol\theta)
+$$\mathbf{I}_n(\boldsymbol\theta)
 =
-n\mathbf{I}_1(\boldsymbol\theta).
-$$
+n\mathbf{I}_1(\boldsymbol\theta).$$
 
-A informação de Fisher aparece tanto na desigualdade de Cramér--Rao quanto na distribuição assintótica dos estimadores de máxima verossimilhança [@ramachandran2009;@chihara2022].
+A informação de Fisher aparece tanto na desigualdade de Cramér--Rao quanto na distribuição assintótica dos estimadores de máxima verossimilhança [@ramachandran2009, sec. 5.2.2; @chihara2022, sec. 6.1].
 
 #### Condições de regularidade
 
 As propriedades assintóticas dos estimadores de máxima verossimilhança não são consequências automáticas da maximização da verossimilhança. Elas dependem de hipóteses sobre a estrutura e a suavidade do modelo.
 
-::: {.callout-warning title="Verificação bibliográfica necessária"}
-Os textos introdutórios utilizados nesta seção afirmam a normalidade e a eficiência assintóticas “sob certas condições de regularidade”, mas não apresentam uma lista completa dessas condições [@ramachandran2009;@chihara2022].
-
-A lista a seguir é uma síntese didática de condições suficientes frequentemente utilizadas. Antes da publicação definitiva, sua formulação deve ser confrontada com o teorema assintótico específico adotado como referência principal.
+::: {.callout-warning title="Observação — não existe uma lista universal de condições"}
+As condições de regularidade dependem do teorema e da classe de modelos considerados. A lista a seguir reúne hipóteses suficientes recorrentes e deve ser interpretada como um roteiro de verificação, não como um enunciado universal. O resultado formal adotado como referência deve sempre ser declarado; por exemplo, @lauritzen2023fundamentals [thm. 5.11] estabelece a normalidade assintótica em famílias exponenciais mínimas e regulares.
 :::
 
 #### Identificabilidade
 
 O modelo deve ser identificável:
 
-$$
-P_{\boldsymbol\theta_1}
+$$P_{\boldsymbol\theta_1}
 =
 P_{\boldsymbol\theta_2}
 \quad\Longrightarrow\quad
 \boldsymbol\theta_1
 =
-\boldsymbol\theta_2.
-$$
+\boldsymbol\theta_2.$$
 
 Equivalentemente, valores paramétricos distintos devem produzir distribuições distintas.
 
@@ -787,21 +694,17 @@ Quando o parâmetro verdadeiro está na fronteira, a distribuição limite do es
 
 Uma condição suficiente frequentemente adotada é que o suporte
 
-$$
-\mathcal{X}_{\boldsymbol\theta}
+$$\mathcal{X}_{\boldsymbol\theta}
 =
 \left\{
 x:f(x;\boldsymbol\theta)>0
-\right\}
-$$
+\right\}$$
 
 não dependa de $\boldsymbol\theta$ em uma vizinhança do verdadeiro valor.
 
 Quando o suporte depende do parâmetro, a diferenciação de
 
-$$
-\int f(x;\boldsymbol\theta)\,dx=1
-$$
+$$\int f(x;\boldsymbol\theta)\,dx=1$$
 
 pode produzir termos adicionais de fronteira. Nesses casos, identidades envolvendo o escore e a informação de Fisher podem não ser válidas.
 
@@ -809,11 +712,9 @@ pode produzir termos adicionais de fronteira. Nesses casos, identidades envolven
 
 A função
 
-$$
-\boldsymbol\theta
+$$\boldsymbol\theta
 \longmapsto
-\log f(x;\boldsymbol\theta)
-$$
+\log f(x;\boldsymbol\theta)$$
 
 deve possuir derivadas de ordem suficiente em uma vizinhança de $\boldsymbol\theta_0$. A demonstração usual da normalidade assintótica emprega uma expansão de Taylor da função escore e requer controle das derivadas de segunda e, frequentemente, de terceira ordem.
 
@@ -821,14 +722,12 @@ deve possuir derivadas de ordem suficiente em uma vizinhança de $\boldsymbol\th
 
 Deve ser possível permutar diferenciação e integração, por exemplo,
 
-$$
-\frac{\partial}{\partial\theta}
+$$\frac{\partial}{\partial\theta}
 \int f(x;\theta)\,dx
 =
 \int
 \frac{\partial}{\partial\theta}
-f(x;\theta)\,dx.
-$$
+f(x;\theta)\,dx.$$
 
 Uma condição suficiente consiste na existência de funções integráveis que dominem as derivadas de $f(x;\theta)$ em uma vizinhança do verdadeiro parâmetro.
 
@@ -836,15 +735,11 @@ Uma condição suficiente consiste na existência de funções integráveis que 
 
 A matriz
 
-$$
-\mathbf{I}_1(\boldsymbol\theta_0)
-$$
+$$\mathbf{I}_1(\boldsymbol\theta_0)$$
 
 deve existir, possuir elementos finitos e ser positiva definida. Para um parâmetro escalar,
 
-$$
-0<I_1(\theta_0)<\infty.
-$$
+$$0<I_1(\theta_0)<\infty.$$
 
 Se a informação for nula ou singular, algumas componentes do parâmetro podem não ser estimáveis à taxa usual $\sqrt n$.
 
@@ -852,9 +747,7 @@ Se a informação for nula ou singular, algumas componentes do parâmetro podem 
 
 Para demonstrar a consistência do estimador como um maximizador, é usual exigir que a log-verossimilhança média
 
-$$
-\frac{1}{n}\ell_n(\boldsymbol\theta)
-$$
+$$\frac{1}{n}\ell_n(\boldsymbol\theta)$$
 
 convirja uniformemente para uma função determinística que tenha máximo único em $\boldsymbol\theta_0$.
 
@@ -884,28 +777,23 @@ Considere uma amostra aleatória $X_1,\ldots,X_n$ proveniente de uma distribuiç
 ::: {.callout-important title="Propriedade: consistência"}
 Sob condições de identificabilidade, convergência uniforme e existência de um máximo adequadamente comportado,
 
-$$
-\widehat{\boldsymbol\theta}_n
+$$\widehat{\boldsymbol\theta}_n
 \xrightarrow{p}
-\boldsymbol\theta_0.
-$$
+\boldsymbol\theta_0.$$
 :::
 
 Uma justificativa conceitual pode ser obtida por meio da divergência de Kullback--Leibler. Defina
 
-$$
-M(\boldsymbol\theta)
+$$M(\boldsymbol\theta)
 =
 \operatorname{E}_{\boldsymbol\theta_0}
 \left[
 \log f(X;\boldsymbol\theta)
-\right].
-$$
+\right].$$
 
 Então,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 M(\boldsymbol\theta)
 -
 M(\boldsymbol\theta_0)
@@ -928,96 +816,82 @@ f_{\boldsymbol\theta_0}
 f_{\boldsymbol\theta}
 \right)
 \leq 0.
-\end{aligned}
-$$
+\end{aligned}$$
 
 Portanto, a log-verossimilhança média populacional é maximizada em $\boldsymbol\theta_0$. Quando o modelo é identificável, esse máximo é único. A convergência uniforme permite transferir essa propriedade para o máximo da log-verossimilhança amostral.
 
-::: {.callout-warning title="Verificação bibliográfica necessária"}
-O argumento pela divergência de Kullback--Leibler apresenta a ideia central da consistência, mas não substitui uma demonstração completa. A versão definitiva do teorema deve especificar as condições de convergência uniforme e de existência do maximizador.
+::: {.callout-warning title="Observação — alcance do argumento"}
+A identidade com a divergência de Kullback--Leibler identifica o máximo da função objetivo populacional. A consistência do maximizador amostral requer ainda uma lei uniforme dos grandes números, separação ou unicidade do máximo e controle da existência do estimador [@lauritzen2023fundamentals, sec. 5.3.1].
 :::
 
 #### Normalidade assintótica: parâmetro escalar
 
 Suponha que $\widehat\theta_n$ seja uma solução consistente da equação de verossimilhança. Expandindo $U_n(\widehat\theta_n)$ em torno de $\theta_0$,
 
-$$
-0
+$$0
 =
 U_n(\widehat\theta_n)
 =
 U_n(\theta_0)
 +
 \ell_n''(\widetilde\theta_n)
-(\widehat\theta_n-\theta_0),
-$$
+(\widehat\theta_n-\theta_0),$$
 
 em que $\widetilde\theta_n$ está entre $\widehat\theta_n$ e $\theta_0$. Logo,
 
-$$
-\sqrt n
+$$\sqrt n
 (\widehat\theta_n-\theta_0)
 =
 \left[
 -\frac{1}{n}
 \ell_n''(\widetilde\theta_n)
 \right]^{-1}
-\frac{U_n(\theta_0)}{\sqrt n}.
-$$
+\frac{U_n(\theta_0)}{\sqrt n}.$$
 
 Sob as condições de regularidade, o teorema central do limite fornece
 
-$$
-\frac{U_n(\theta_0)}{\sqrt n}
+$$\frac{U_n(\theta_0)}{\sqrt n}
 \xrightarrow{d}
 N
 \left(
 0,I_1(\theta_0)
-\right),
-$$
+\right),$$
 
 enquanto a lei dos grandes números implica
 
-$$
--\frac{1}{n}
+$$-\frac{1}{n}
 \ell_n''(\widetilde\theta_n)
 \xrightarrow{p}
-I_1(\theta_0).
-$$
+I_1(\theta_0).$$
 
-Pelo teorema de Slutsky,
+Pelo teorema de Slutsky [@lauritzen2023fundamentals, app. A.2.2],
 
-$$
-\sqrt n
+$$\sqrt n
 (\widehat\theta_n-\theta_0)
 \xrightarrow{d}
 N
 \left(
 0,
 I_1(\theta_0)^{-1}
-\right).
-$$
+\right).$$
 
 Equivalentemente, para $n$ suficientemente grande,
 
-$$
-\widehat\theta_n
+$$\widehat\theta_n
 \overset{\cdot}{\sim}
 N
 \left(
 \theta_0,
 \frac{1}{nI_1(\theta_0)}
-\right).
-$$
+\right).$$
 
-Essa aproximação e sua relação com a informação de Fisher são apresentadas por Chihara e Hesterberg (2022, p. 173–174) e utilizadas por Ramachandran e Tsokos (2009, p. 334–336) na construção de intervalos de confiança para grandes amostras.
+Essa aproximação e sua relação com a informação de Fisher são apresentadas por @chihara2022 [pp. 173--174], @lauritzen2023fundamentals [thm. 5.11] e @ramachandran2009 [pp. 334--336].
 
 #### Normalidade assintótica: parâmetro vetorial
 
 Se $\boldsymbol\theta\in\mathbb{R}^q$, então, sob condições análogas,
 
-$$
-\sqrt n
+$$\sqrt n
 \left(
 \widehat{\boldsymbol\theta}_n
 -
@@ -1028,46 +902,38 @@ N_q
 \left(
 \mathbf{0},
 \mathbf{I}_1(\boldsymbol\theta_0)^{-1}
-\right).
-$$
+\right).$$
 
 Consequentemente,
 
-$$
-\operatorname{Cov}
+$$\operatorname{Cov}
 \left(
 \widehat{\boldsymbol\theta}_n
 \right)
 \approx
 \frac{1}{n}
-\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.
-$$
+\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.$$
 
 Como
 
-$$
-\mathbf{I}_n(\boldsymbol\theta_0)
+$$\mathbf{I}_n(\boldsymbol\theta_0)
 =
-n\mathbf{I}_1(\boldsymbol\theta_0),
-$$
+n\mathbf{I}_1(\boldsymbol\theta_0),$$
 
 também se pode escrever
 
-$$
-\operatorname{Cov}
+$$\operatorname{Cov}
 \left(
 \widehat{\boldsymbol\theta}_n
 \right)
 \approx
-\mathbf{I}_n(\boldsymbol\theta_0)^{-1}.
-$$
+\mathbf{I}_n(\boldsymbol\theta_0)^{-1}.$$
 
 #### Eficiência assintótica
 
 Em modelos paramétricos regulares, o estimador de máxima verossimilhança atinge assintoticamente o limite determinado pela informação de Fisher:
 
-$$
-\operatorname{Avar}
+$$\operatorname{Avar}
 \left[
 \sqrt n
 \left(
@@ -1077,10 +943,9 @@ $$
 \right)
 \right]
 =
-\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.
-$$
+\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.$$
 
-Nesse sentido, o estimador é assintoticamente eficiente na classe de estimadores regulares. A relação entre informação de Fisher, limite de Cramér--Rao e eficiência é discutida por @ramachandran2009[p. 273–276].
+Nesse sentido, o estimador é assintoticamente eficiente na classe de estimadores regulares. A relação entre informação de Fisher, limite de Cramér--Rao e eficiência é discutida por @ramachandran2009 [pp. 273--276].
 
 ::: {.callout-warning title="Interpretação"}
 Eficiência assintótica não implica que o estimador de máxima verossimilhança:
@@ -1091,15 +956,14 @@ Eficiência assintótica não implica que o estimador de máxima verossimilhanç
 - seja robusto contra valores atípicos;
 - seja robusto contra erros de especificação do modelo.
 
-@chihara2022[p. 173] observam explicitamente que, em amostras finitas, a variância pode ser maior do que a aproximação assintótica e a distribuição pode ser não normal.
+@chihara2022 [p. 173] observam explicitamente que, em amostras finitas, a variância pode ser maior do que a aproximação assintótica e a distribuição pode ser não normal.
 :::
 
 #### Estimação do erro-padrão
 
 A matriz de covariâncias assintótica pode ser estimada pela inversa da informação observada:
 
-$$
-\widehat{\operatorname{Cov}}
+$$\widehat{\operatorname{Cov}}
 \left(
 \widehat{\boldsymbol\theta}_n
 \right)
@@ -1107,42 +971,35 @@ $$
 \mathbf{J}_n
 \left(
 \widehat{\boldsymbol\theta}_n
-\right)^{-1}.
-$$
+\right)^{-1}.$$
 
 Alternativamente, pode-se utilizar
 
-$$
-\left[
+$$\left[
 n\mathbf{I}_1
 \left(
 \widehat{\boldsymbol\theta}_n
 \right)
-\right]^{-1}.
-$$
+\right]^{-1}.$$
 
 Para um parâmetro escalar,
 
-$$
-\widehat{\operatorname{EP}}
+$$\widehat{\operatorname{EP}}
 (\widehat\theta_n)
 =
 \left[
 J_n(\widehat\theta_n)
-\right]^{-1/2}.
-$$
+\right]^{-1/2}.$$
 
 #### Intervalo de Wald
 
 A normalidade assintótica conduz ao intervalo aproximado
 
-$$
-\widehat\theta_n
+$$\widehat\theta_n
 \pm
 z_{1-\alpha/2}
 \widehat{\operatorname{EP}}
-(\widehat\theta_n),
-$$
+(\widehat\theta_n),$$
 
 com nível de confiança assintótico $1-\alpha$.
 
@@ -1161,73 +1018,56 @@ Nessas situações, intervalos baseados no escore, na razão de verossimilhança
 
 #### Invariância
 
-::: {.callout-important title="Propriedade: invariância"}
-Se $\widehat{\boldsymbol\theta}$ é o estimador de máxima verossimilhança de $\boldsymbol\theta$ e
+::: {.callout-important title="Propriedade — invariância"}
+Se $\widehat{\boldsymbol\theta}$ maximiza $L(\boldsymbol\theta)$ e $\boldsymbol\eta=g(\boldsymbol\theta)$, então
 
-$$
-\boldsymbol\eta
-=
-g(\boldsymbol\theta)
-$$
+$$\widehat{\boldsymbol\eta}
+=g(\widehat{\boldsymbol\theta})$$
 
-é uma transformação biunívoca, então
+é um estimador de máxima verossimilhança de $\boldsymbol\eta$. Quando $g$ não é injetiva, a verossimilhança induzida de $\boldsymbol\eta$ é definida por
 
-$$
-\widehat{\boldsymbol\eta}
-=
-g
-\left(
-\widehat{\boldsymbol\theta}
-\right)
-$$
-
-é o estimador de máxima verossimilhança de $\boldsymbol\eta$.
+$$L^*(\boldsymbol\eta)
+=\sup_{\boldsymbol\theta:g(\boldsymbol\theta)=\boldsymbol\eta}
+L(\boldsymbol\theta).$$
 :::
 
 Por exemplo, se $\widehat\lambda$ é o estimador da taxa de uma distribuição exponencial, o estimador de máxima verossimilhança da escala
 
-$$
-\beta
+$$\beta
 =
-\frac{1}{\lambda}
-$$
+\frac{1}{\lambda}$$
 
 é
 
-$$
-\widehat\beta
+$$\widehat\beta
 =
-\frac{1}{\widehat\lambda}.
-$$
+\frac{1}{\widehat\lambda}.$$
 
-A propriedade de invariância é apresentada por @chihara2022[p. 171–173] e por @ramachandran2009[p. 243–244].
+A propriedade de invariância é apresentada por @chihara2022 [pp. 171--173] e @ramachandran2009 [pp. 243--244].
 
-### Exemplos (Adaptados de @larsen2012, @chihara2022,  e @ramachandran2009)
+### Exemplos {.unnumbered}
 
-#### Exemplo: distribuição Bernoulli 
+Os exemplos desta subseção são adaptados de @larsen2012 [sec. 5.2], @chihara2022 [sec. 6.1] e @ramachandran2009 [sec. 5.2.2].
+
+#### Exemplo: distribuição Bernoulli
 
 Sejam
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Bernoulli}(p),
-\qquad 0\leq p\leq 1.
-$$
+\qquad 0\leq p\leq 1.$$
 
 A função de probabilidade é
 
-$$
-f(x;p)
+$$f(x;p)
 =
 p^x(1-p)^{1-x},
-\qquad x\in\{0,1\}.
-$$
+\qquad x\in\{0,1\}.$$
 
 A função de verossimilhança é
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 L(p)
 &=
 \prod_{i=1}^n
@@ -1237,125 +1077,100 @@ p^{\sum_{i=1}^n x_i}
 (1-p)^{
 n-\sum_{i=1}^n x_i
 }.
-\end{aligned}
-$$
+\end{aligned}$$
 
 Definindo
 
-$$
-T
+$$T
 =
-\sum_{i=1}^n x_i,
-$$
+\sum_{i=1}^n x_i,$$
 
 obtém-se
 
-$$
-L(p)
+$$L(p)
 =
-p^T(1-p)^{n-T}.
-$$
+p^T(1-p)^{n-T}.$$
 
 A log-verossimilhança é
 
-$$
-\ell(p)
+$$\ell(p)
 =
 T\log p
 +
-(n-T)\log(1-p).
-$$
+(n-T)\log(1-p).$$
 
 O escore é
 
-$$
-U(p)
+$$U(p)
 =
 \frac{T}{p}
 -
-\frac{n-T}{1-p}.
-$$
+\frac{n-T}{1-p}.$$
 
 Para $0<T<n$, a equação $U(p)=0$ fornece
 
-$$
-\widehat p
+$$\widehat p
 =
 \frac{T}{n}
 =
-\overline X.
-$$
+\overline X.$$
 
 Se $T=0$, o máximo ocorre em $\widehat p=0$. Se $T=n$, o máximo ocorre em $\widehat p=1$.
 
 A informação de Fisher por observação é
 
-$$
-I_1(p)
+$$I_1(p)
 =
-\frac{1}{p(1-p)}.
-$$
+\frac{1}{p(1-p)}.$$
 
 Portanto,
 
-$$
-\sqrt n
+$$\sqrt n
 (\widehat p-p)
 \xrightarrow{d}
 N
 \left(
 0,
 p(1-p)
-\right),
-$$
+\right),$$
 
 ou, aproximadamente,
 
-$$
-\widehat p
+$$\widehat p
 \overset{\cdot}{\sim}
 N
 \left(
 p,
 \frac{p(1-p)}{n}
-\right).
-$$
+\right).$$
 
 Além disso,
 
-$$
-\operatorname{Var}(\widehat p)
+$$\operatorname{Var}(\widehat p)
 =
-\frac{p(1-p)}{n},
-$$
+\frac{p(1-p)}{n},$$
 
-que coincide com o limite de Cramér--Rao nesse modelo regular.
-
+que coincide com o limite de Cramér--Rao para $0<p<1$. Nos pontos de fronteira $p=0$ e $p=1$, a formulação regular baseada em informação interior não se aplica diretamente.
 
 #### Exemplo: distribuição de Poisson
 
 Sejam
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Poisson}(\lambda),
-\qquad \lambda>0.
-$$
+\qquad \lambda>0.$$
 
 A função de probabilidade é
 
-$$
-f(x;\lambda)
+$$f(x;\lambda)
 =
 \frac{e^{-\lambda}\lambda^x}{x!},
-\qquad x=0,1,2,\ldots.
-$$
+\qquad x=0,1,2,\ldots.$$
 
 A verossimilhança é
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 L(\lambda)
 &=
 \prod_{i=1}^n
@@ -1369,13 +1184,11 @@ e^{-n\lambda}
 \lambda^{\sum_{i=1}^n x_i}
 \prod_{i=1}^n
 \frac{1}{x_i!}.
-\end{aligned}
-$$
+\end{aligned}$$
 
 A log-verossimilhança é
 
-$$
-\ell(\lambda)
+$$\ell(\lambda)
 =
 -n\lambda
 +
@@ -1385,13 +1198,11 @@ $$
 \log\lambda
 -
 \sum_{i=1}^n
-\log(x_i!).
-$$
+\log(x_i!).$$
 
 O escore é
 
-$$
-U(\lambda)
+$$U(\lambda)
 =
 -n
 +
@@ -1399,64 +1210,51 @@ U(\lambda)
 \sum_{i=1}^n x_i
 }{
 \lambda
-}.
-$$
+}.$$
 
 A equação de verossimilhança fornece
 
-$$
-\widehat\lambda
+$$\widehat\lambda
 =
 \frac{1}{n}
 \sum_{i=1}^n X_i
 =
-\overline X.
-$$
+\overline X.$$
 
 A informação de Fisher por observação é
 
-$$
-I_1(\lambda)
+$$I_1(\lambda)
 =
-\frac{1}{\lambda}.
-$$
+\frac{1}{\lambda}.$$
 
 Logo,
 
-$$
-\sqrt n
+$$\sqrt n
 (\widehat\lambda-\lambda)
 \xrightarrow{d}
-N(0,\lambda),
-$$
+N(0,\lambda),$$
 
 e o erro-padrão assintótico pode ser estimado por
 
-$$
-\widehat{\operatorname{EP}}
+$$\widehat{\operatorname{EP}}
 (\widehat\lambda)
 =
 \sqrt{
 \frac{\widehat\lambda}{n}
-}.
-$$
-
+}.$$
 
 #### Exemplo: distribuição exponencial
 
 Considere a parametrização da distribuição exponencial pela taxa:
 
-$$
-f(x;\lambda)
+$$f(x;\lambda)
 =
 \lambda e^{-\lambda x},
-\qquad x\geq 0,\quad\lambda>0.
-$$
+\qquad x\geq 0,\quad\lambda>0.$$
 
 Para uma amostra aleatória,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 L(\lambda)
 &=
 \prod_{i=1}^n
@@ -1468,109 +1266,86 @@ L(\lambda)
 -\lambda
 \sum_{i=1}^n x_i
 \right).
-\end{aligned}
-$$
+\end{aligned}$$
 
 A log-verossimilhança é
 
-$$
-\ell(\lambda)
+$$\ell(\lambda)
 =
 n\log\lambda
 -
 \lambda
-\sum_{i=1}^n x_i.
-$$
+\sum_{i=1}^n x_i.$$
 
 O escore é
 
-$$
-U(\lambda)
+$$U(\lambda)
 =
 \frac{n}{\lambda}
 -
-\sum_{i=1}^n x_i.
-$$
+\sum_{i=1}^n x_i.$$
 
 Portanto,
 
-$$
-\widehat\lambda
+$$\widehat\lambda
 =
 \frac{n}{
 \sum_{i=1}^n X_i
 }
 =
-\frac{1}{\overline X}.
-$$
+\frac{1}{\overline X}.$$
 
 A informação de Fisher por observação é
 
-$$
-I_1(\lambda)
+$$I_1(\lambda)
 =
-\frac{1}{\lambda^2}.
-$$
+\frac{1}{\lambda^2}.$$
 
 Consequentemente,
 
-$$
-\sqrt n
+$$\sqrt n
 (\widehat\lambda-\lambda)
 \xrightarrow{d}
-N(0,\lambda^2),
-$$
+N(0,\lambda^2),$$
 
 e
 
-$$
-\widehat{\operatorname{EP}}
+$$\widehat{\operatorname{EP}}
 (\widehat\lambda)
 =
-\frac{\widehat\lambda}{\sqrt n}.
-$$
+\frac{\widehat\lambda}{\sqrt n}.$$
 
 Se a distribuição for parametrizada pela escala
 
-$$
-\beta
+$$\beta
 =
-\frac{1}{\lambda},
-$$
+\frac{1}{\lambda},$$
 
 a propriedade de invariância fornece
 
-$$
-\widehat\beta
+$$\widehat\beta
 =
 \frac{1}{\widehat\lambda}
 =
-\overline X.
-$$
-
+\overline X.$$
 
 #### Exemplo: distribuição normal com média e variância desconhecidas
 
 Sejam
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
-N(\mu,\sigma^2),
-$$
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
+N(\mu,\sigma^2),$$
 
 em que
 
-$$
--\infty<\mu<\infty
+$$-\infty<\mu<\infty
 \qquad\text{e}\qquad
-\sigma^2>0.
-$$
+\sigma^2>0.$$
 
 A função de verossimilhança é
 
-$$
-L(\mu,\sigma^2)
+$$L(\mu,\sigma^2)
 =
 (2\pi\sigma^2)^{-n/2}
 \exp
@@ -1578,110 +1353,90 @@ L(\mu,\sigma^2)
 -\frac{1}{2\sigma^2}
 \sum_{i=1}^n
 (x_i-\mu)^2
-\right].
-$$
+\right].$$
 
 A log-verossimilhança é
 
-$$
-\ell(\mu,\sigma^2)
+$$\ell(\mu,\sigma^2)
 =
 -\frac{n}{2}\log(2\pi)
 -\frac{n}{2}\log(\sigma^2)
 -\frac{1}{2\sigma^2}
 \sum_{i=1}^n
-(x_i-\mu)^2.
-$$
+(x_i-\mu)^2.$$
 
 Derivando em relação a $\mu$,
 
-$$
-\frac{\partial\ell}{\partial\mu}
+$$\frac{\partial\ell}{\partial\mu}
 =
 \frac{1}{\sigma^2}
 \sum_{i=1}^n
-(x_i-\mu).
-$$
+(x_i-\mu).$$
 
 Assim,
 
-$$
-\widehat\mu
+$$\widehat\mu
 =
-\overline X.
-$$
+\overline X.$$
 
 Derivando em relação a $\sigma^2$,
 
-$$
-\frac{\partial\ell}{\partial\sigma^2}
+$$\frac{\partial\ell}{\partial\sigma^2}
 =
 -\frac{n}{2\sigma^2}
 +
 \frac{1}{2\sigma^4}
 \sum_{i=1}^n
-(x_i-\mu)^2.
-$$
+(x_i-\mu)^2.$$
 
-Substituindo $\widehat\mu=\overline X$,
+Substituindo $\widehat\mu=\overline X$ e supondo que $\sum_i(X_i-\overline X)^2>0$,
 
-$$
-\widehat{\sigma}^2_{\mathrm{MV}}
+$$\widehat{\sigma}^2_{\mathrm{MV}}
 =
 \frac{1}{n}
 \sum_{i=1}^n
-(X_i-\overline X)^2.
-$$
+(X_i-\overline X)^2.$$
 
-::: {.callout-note title="Observação"}
-O estimador de máxima verossimilhança de $\sigma^2$ utiliza o divisor $n$, e não $n-1$. Em amostras finitas,
+::: {.callout-note title="Observação — existência e viés"}
+Se todas as observações forem iguais, a verossimilhança cresce quando $\mu$ se aproxima desse valor e $\sigma^2\downarrow0$; como o espaço paramétrico exige $\sigma^2>0$, o supremo não é atingido. Fora desse caso degenerado, o estimador de máxima verossimilhança de $\sigma^2$ utiliza o divisor $n$, e não $n-1$. Em amostras finitas,
 
-$$
-\operatorname{E}
+$$\operatorname{E}
 \left[
 \widehat{\sigma}^2_{\mathrm{MV}}
 \right]
 =
-\frac{n-1}{n}\sigma^2.
-$$
+\frac{n-1}{n}\sigma^2.$$
 
 Portanto, ele é viesado. Entretanto,
 
-$$
-\widehat{\sigma}^2_{\mathrm{MV}}
+$$\widehat{\sigma}^2_{\mathrm{MV}}
 \xrightarrow{p}
-\sigma^2,
-$$
+\sigma^2,$$
 
 de modo que o estimador é consistente.
 :::
 
 Para
 
-$$
-\boldsymbol\theta
+$$\boldsymbol\theta
 =
 \begin{pmatrix}
 \mu\\
 \sigma^2
-\end{pmatrix},
-$$
+\end{pmatrix},$$
 
 a informação de Fisher por observação é
 
-$$
-\mathbf{I}_1(\boldsymbol\theta)
+$$\mathbf{I}_1(\boldsymbol\theta)
 =
 \begin{pmatrix}
 1/\sigma^2 & 0\\
 0 & 1/(2\sigma^4)
-\end{pmatrix}.
-$$
+\end{pmatrix}.$$
 
 Logo,
 
-$$
-\sqrt n
+$$\sqrt n
 \begin{pmatrix}
 \widehat\mu-\mu\\
 \widehat{\sigma}^2_{\mathrm{MV}}-\sigma^2
@@ -1697,83 +1452,66 @@ N_2
 \sigma^2 & 0\\
 0 & 2\sigma^4
 \end{pmatrix}
-\right].
-$$
-
+\right].$$
 
 #### Exemplo não regular: distribuição uniforme
 
 Considere
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Uniforme}(0,\theta),
-\qquad \theta>0.
-$$
+\qquad \theta>0.$$
 
 A densidade é
 
-$$
-f(x;\theta)
+$$f(x;\theta)
 =
 \frac{1}{\theta}
-\mathbb{I}(0\leq x\leq\theta).
-$$
+\mathbb{I}(0\leq x\leq\theta).$$
 
 A verossimilhança é
 
-$$
-L(\theta)
+$$L(\theta)
 =
 \theta^{-n}
 \mathbb{I}
 \left(
 \theta\geq X_{(n)}
-\right),
-$$
+\right),$$
 
 em que
 
-$$
-X_{(n)}
+$$X_{(n)}
 =
 \max
-\{X_1,\ldots,X_n\}.
-$$
+\{X_1,\ldots,X_n\}.$$
 
 Para $\theta\geq X_{(n)}$, a função $\theta^{-n}$ é decrescente. Portanto, seu maior valor é obtido no menor valor admissível de $\theta$:
 
-$$
-\widehat\theta
+$$\widehat\theta
 =
-X_{(n)}.
-$$
+X_{(n)}.$$
 
 Nesse modelo, o suporte
 
-$$
-[0,\theta]
-$$
+$$[0,\theta]$$
 
 depende do parâmetro. Portanto, não se deve aplicar mecanicamente a teoria regular baseada na diferenciação da log-verossimilhança.
 
 Apesar disso, o estimador é consistente. Além disso, sua distribuição limite não é normal à taxa $\sqrt n$. De fato,
 
-$$
-\frac{
+$$\frac{
 n(\theta-X_{(n)})
 }{
 \theta
 }
 \xrightarrow{d}
-\operatorname{Exponencial}(1).
-$$
+\operatorname{Exponencial}(1).$$
 
 Para verificar esse resultado, considere $t>0$. Então,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 P_\theta
 \left[
 \frac{
@@ -1799,27 +1537,25 @@ X_{(n)}
 \right)^n\\
 &\longrightarrow
 e^{-t}.
-\end{aligned}
-$$
+\end{aligned}$$
 
 ::: {.callout-note title="Interpretação"}
 Neste exemplo, o erro do estimador possui ordem $1/n$, e não $1/\sqrt n$. Portanto, o estimador converge mais rapidamente do que em modelos regulares, mas sua distribuição limite é exponencial, e não normal.
 :::
 
-
 ### Procedimento geral de obtenção do estimador
 
 Em problemas regulares, o seguinte roteiro pode ser utilizado:
 
-1. especificar o modelo estatístico e o espaço paramétrico $\Theta$;
-2. escrever a função de verossimilhança;
-3. eliminar fatores positivos que não dependem do parâmetro;
-4. calcular a log-verossimilhança;
-5. obter a função escore;
-6. resolver a equação de verossimilhança;
-7. verificar se as soluções pertencem ao espaço paramétrico;
-8. examinar a matriz Hessiana e os pontos de fronteira;
-9. comparar eventuais máximos locais;
+1.  especificar o modelo estatístico e o espaço paramétrico $\Theta$;
+2.  escrever a função de verossimilhança;
+3.  eliminar fatores positivos que não dependem do parâmetro;
+4.  calcular a log-verossimilhança;
+5.  obter a função escore;
+6.  resolver a equação de verossimilhança;
+7.  verificar se as soluções pertencem ao espaço paramétrico;
+8.  examinar a matriz Hessiana e os pontos de fronteira;
+9.  comparar eventuais máximos locais;
 10. verificar as condições de regularidade;
 11. calcular a informação observada ou esperada;
 12. obter erros-padrão e intervalos assintóticos, quando justificável.
@@ -1831,173 +1567,167 @@ Quando a equação de verossimilhança não possui solução analítica, podem s
 ::: {.callout-tip title="Exercício 1 — Modelo Bernoulli"}
 Sejam
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
-$$
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
+\operatorname{Bernoulli}(p).$$
 
-1. Obtenha a função de verossimilhança.
-2. Mostre que
+1.  Obtenha a função de verossimilhança.
 
-   $$
-   \widehat p
-   =
-   \overline X.
-   $$
+2.  Mostre que
 
-3. Examine separadamente os casos $\sum X_i=0$ e $\sum X_i=n$.
-4. Calcule a informação de Fisher.
-5. Mostre que $\widehat p$ atinge o limite de Cramér--Rao.
-6. Obtenha a distribuição assintótica de $\widehat p$.
+    $$\widehat p
+    =
+    \overline X.$$
 
-*Fonte: exercício adaptado de Chihara e Hesterberg (2022, p. 176) e Ramachandran e Tsokos (2009, p. 244, 275–276).*
+3.  Examine separadamente os casos $\sum X_i=0$ e $\sum X_i=n$.
+
+4.  Calcule a informação de Fisher.
+
+5.  Mostre que $\widehat p$ atinge o limite de Cramér--Rao.
+
+6.  Obtenha a distribuição assintótica de $\widehat p$.
+
+*Fonte: exercício adaptado de @chihara2022 [p. 176] e @ramachandran2009 [pp. 244, 275--276].*
 :::
 
 ::: {.callout-tip title="Exercício 2 — Contagens de Poisson"}
 O número diário de falhas de um equipamento é modelado por uma distribuição de Poisson com parâmetro $\lambda$. Em dez dias, foram observadas as contagens
 
-$$
-2,\;0,\;1,\;3,\;2,\;4,\;1,\;0,\;2,\;5.
-$$
+$$2,\;0,\;1,\;3,\;2,\;4,\;1,\;0,\;2,\;5.$$
 
-1. Obtenha o estimador de máxima verossimilhança de $\lambda$.
-2. Calcule a estimativa correspondente.
-3. Calcule a informação de Fisher.
-4. Estime o erro-padrão assintótico de $\widehat\lambda$.
-5. Construa um intervalo de Wald com nível de confiança de $95\%$.
-6. Discuta a possibilidade de o intervalo apresentar limite inferior negativo.
+1.  Obtenha o estimador de máxima verossimilhança de $\lambda$.
+2.  Calcule a estimativa correspondente.
+3.  Calcule a informação de Fisher.
+4.  Estime o erro-padrão assintótico de $\widehat\lambda$.
+5.  Construa um intervalo de Wald com nível de confiança de $95\%$.
+6.  Discuta a possibilidade de o intervalo apresentar limite inferior negativo.
 
-*Fonte: elaboração própria, com base nos exemplos de Chihara e Hesterberg (2022, p. 150–151) e Ramachandran e Tsokos (2009, p. 238–239, 275).*
+*Fonte: elaboração própria, com base em @chihara2022 [pp. 150--151] e @ramachandran2009 [pp. 238--239, 275].*
 :::
 
 ::: {.callout-tip title="Exercício 3 — Distribuição exponencial"}
 Sejam
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda),
-$$
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
+\operatorname{Exponencial}(\lambda),$$
 
 na parametrização pela taxa.
 
-1. Mostre que
+1.  Mostre que
 
-   $$
-   \widehat\lambda
-   =
-   \frac{1}{\overline X}.
-   $$
+    $$\widehat\lambda
+    =
+    \frac{1}{\overline X}.$$
 
-2. Determine o viés exato de $\widehat\lambda$, supondo $n>1$.
-3. Verifique que $\widehat\lambda$ é consistente.
-4. Calcule a informação de Fisher.
-5. Obtenha a distribuição assintótica de $\widehat\lambda$.
-6. Use a propriedade de invariância para obter o estimador da média da distribuição.
+2.  Determine o viés exato de $\widehat\lambda$, supondo $n>1$.
 
-*Fonte: exercício adaptado de Chihara e Hesterberg (2022, p. 151–152) e Ramachandran e Tsokos (2009, p. 244).*
+3.  Verifique que $\widehat\lambda$ é consistente.
+
+4.  Calcule a informação de Fisher.
+
+5.  Obtenha a distribuição assintótica de $\widehat\lambda$.
+
+6.  Use a propriedade de invariância para obter o estimador da média da distribuição.
+
+*Fonte: exercício adaptado de @chihara2022 [pp. 151--152] e @ramachandran2009 [p. 244].*
 :::
 
 ::: {.callout-tip title="Exercício 4 — Família de potências"}
 Considere a família de densidades
 
-$$
-f(x;\theta)
+$$f(x;\theta)
 =
 \theta x^{\theta-1},
 \qquad
-0<x<1,\quad\theta>0.
-$$
+0<x<1,\quad\theta>0.$$
 
-1. Obtenha a função de verossimilhança.
-2. Mostre que
+1.  Obtenha a função de verossimilhança.
 
-   $$
-   \widehat\theta
-   =
-   -\frac{n}{
-   \sum_{i=1}^n\log X_i
-   }.
-   $$
+2.  Mostre que
 
-3. Verifique que a solução corresponde a um máximo.
-4. Calcule $I_1(\theta)$.
-5. Determine a distribuição assintótica de $\widehat\theta$.
-6. Construa um intervalo de Wald para $\theta$.
+    $$\widehat\theta
+    =
+    -\frac{n}{
+    \sum_{i=1}^n\log X_i
+    }.$$
 
-*Fonte: exercício adaptado de Chihara e Hesterberg (2022, p. 152, 173–174) e Larsen e Marx (2012, p. 292).*
+3.  Verifique que a solução corresponde a um máximo.
+
+4.  Calcule $I_1(\theta)$.
+
+5.  Determine a distribuição assintótica de $\widehat\theta$.
+
+6.  Construa um intervalo de Wald para $\theta$.
+
+*Fonte: exercício adaptado de @chihara2022 [pp. 152, 173--174] e @larsen2012 [p. 292].*
 :::
 
 ::: {.callout-tip title="Exercício 5 — Modelo normal"}
 Sejam
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
-N(\mu,\sigma^2),
-$$
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
+N(\mu,\sigma^2),$$
 
 com ambos os parâmetros desconhecidos.
 
-1. Derive os estimadores de máxima verossimilhança de $\mu$ e $\sigma^2$.
-2. Mostre que o estimador de $\sigma^2$ é viesado.
-3. Demonstre que ele é consistente.
-4. Calcule a matriz de informação de Fisher.
-5. Obtenha a matriz de covariâncias assintótica dos estimadores.
-6. Utilize a propriedade de invariância para obter o estimador de máxima verossimilhança de $\sigma$.
-7. Compare o estimador de $\sigma^2$ com a variância amostral não viesada.
+1.  Derive os estimadores de máxima verossimilhança de $\mu$ e $\sigma^2$.
+2.  Mostre que o estimador de $\sigma^2$ é viesado.
+3.  Demonstre que ele é consistente.
+4.  Calcule a matriz de informação de Fisher.
+5.  Obtenha a matriz de covariâncias assintótica dos estimadores.
+6.  Utilize a propriedade de invariância para obter o estimador de máxima verossimilhança de $\sigma$.
+7.  Compare o estimador de $\sigma^2$ com a variância amostral não viesada.
 
-*Fonte: exercício adaptado de Chihara e Hesterberg (2022, p. 155–157, 176–177) e Larsen e Marx (2012, p. 290–291).*
+*Fonte: exercício adaptado de @chihara2022 [pp. 155--157, 176--177] e @larsen2012 [pp. 290--291].*
 :::
 
 ::: {.callout-tip title="Exercício 6 — Suporte dependente do parâmetro"}
 Sejam
 
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
+$$X_1,\ldots,X_n
+\overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Uniforme}(\theta,\theta+1),
-\qquad \theta\in\mathbb{R}.
-$$
+\qquad \theta\in\mathbb{R}.$$
 
-1. Escreva a função de verossimilhança.
-2. Mostre que a verossimilhança é positiva se, e somente se,
+1.  Escreva a função de verossimilhança.
 
-   $$
-   X_{(n)}-1
-   \leq
-   \theta
-   \leq
-   X_{(1)}.
-   $$
+2.  Mostre que a verossimilhança é positiva se, e somente se,
 
-3. Determine o conjunto dos estimadores de máxima verossimilhança.
-4. Verifique se o estimador é único.
-5. Identifique as condições de regularidade que não são satisfeitas.
-6. Explique por que a diferenciação da log-verossimilhança não resolve o problema.
+    $$X_{(n)}-1
+    \leq
+    \theta
+    \leq
+    X_{(1)}.$$
 
-*Fonte: elaboração própria, com base na discussão de modelos uniformes não regulares de Chihara e Hesterberg (2022, p. 152–154).*
+3.  Determine o conjunto dos estimadores de máxima verossimilhança.
+
+4.  Verifique se o estimador é único.
+
+5.  Identifique as condições de regularidade que não são satisfeitas.
+
+6.  Explique por que a diferenciação da log-verossimilhança não resolve o problema.
+
+*Fonte: elaboração própria, com base em @chihara2022 [pp. 152--154].*
 :::
 
 ::: {.callout-tip title="Exercício 7 — Existência do estimador"}
 Considere a densidade
 
-$$
-f(x;\theta)
+$$f(x;\theta)
 =
 e^{\theta-x},
-\qquad x>\theta>0.
-$$
+\qquad x>\theta>0.$$
 
-1. Escreva a função de verossimilhança.
-2. Determine os valores de $\theta$ para os quais a verossimilhança é positiva.
-3. Mostre que, se o suporte for definido por $x>\theta$, o supremo da verossimilhança não é atingido.
-4. Conclua que o estimador de máxima verossimilhança não existe.
-5. Repita a análise substituindo a restrição $x>\theta$ por $x\geq\theta$.
-6. Explique a diferença entre máximo e supremo nesse problema.
+1.  Escreva a função de verossimilhança.
+2.  Determine os valores de $\theta$ para os quais a verossimilhança é positiva.
+3.  Mostre que, se o suporte for definido por $x>\theta$, o supremo da verossimilhança não é atingido.
+4.  Conclua que o estimador de máxima verossimilhança não existe.
+5.  Repita a análise substituindo a restrição $x>\theta$ por $x\geq\theta$.
+6.  Explique a diferença entre máximo e supremo nesse problema.
 
-*Fonte: exercício adaptado de Chihara e Hesterberg (2022, p. 177).*
+*Fonte: exercício adaptado de @chihara2022 [p. 177].*
 :::
 
 ::: {.callout-tip title="Exercício 8 — Invariância"}
@@ -2005,93 +1735,84 @@ Suponha que $\widehat\lambda$ seja o estimador de máxima verossimilhança da ta
 
 Obtenha os estimadores de máxima verossimilhança de:
 
-$$
-\beta
+$$\beta
 =
-\frac{1}{\lambda},
-$$
+\frac{1}{\lambda},$$
 
-$$
-m
+$$m
 =
-\frac{\log 2}{\lambda},
-$$
+\frac{\log 2}{\lambda},$$
 
 e
 
-$$
-v
+$$v
 =
-\frac{1}{\lambda^2},
-$$
+\frac{1}{\lambda^2},$$
 
 em que $\beta$ é a escala, $m$ é a mediana e $v$ é a variância da distribuição.
 
 Em seguida, utilize o método delta para obter as distribuições assintóticas dos três estimadores.
 
-*Fonte: elaboração própria, com base na propriedade de invariância apresentada por Chihara e Hesterberg (2022, p. 171–173) e Ramachandran e Tsokos (2009, p. 243–244).*
+*Fonte: elaboração própria, com base em @chihara2022 [pp. 171--173] e @ramachandran2009 [pp. 243--244].*
 :::
 
 ::: {.callout-tip title="Exercício 9 — Intervalos assintóticos"}
 Seja $\widehat\theta_n$ o estimador de máxima verossimilhança de um parâmetro escalar $\theta$, e suponha que
 
-$$
-\sqrt n
+$$\sqrt n
 (\widehat\theta_n-\theta)
 \xrightarrow{d}
 N
 \left(
 0,
 I_1(\theta)^{-1}
-\right).
-$$
+\right).$$
 
-1. Mostre que
+1.  Mostre que
 
-   $$
-   \frac{
-   \widehat\theta_n-\theta
-   }{
-   \sqrt{
-   1/[nI_1(\widehat\theta_n)]
-   }
-   }
-   \xrightarrow{d}
-   N(0,1).
-   $$
+    $$\frac{
+    \widehat\theta_n-\theta
+    }{
+    \sqrt{
+    1/[nI_1(\widehat\theta_n)]
+    }
+    }
+    \xrightarrow{d}
+    N(0,1).$$
 
-2. Obtenha o intervalo de Wald com nível assintótico $1-\alpha$.
-3. Aplique o resultado ao parâmetro $p$ de uma distribuição Bernoulli.
-4. Aplique o resultado ao parâmetro de escala de uma distribuição exponencial.
-5. Discuta as limitações dos intervalos obtidos.
+2.  Obtenha o intervalo de Wald com nível assintótico $1-\alpha$.
 
-*Fonte: exercício adaptado de Ramachandran e Tsokos (2009, p. 334–336).*
+3.  Aplique o resultado ao parâmetro $p$ de uma distribuição Bernoulli.
+
+4.  Aplique o resultado ao parâmetro de escala de uma distribuição exponencial.
+
+5.  Discuta as limitações dos intervalos obtidos.
+
+*Fonte: exercício adaptado de @ramachandran2009 [pp. 334--336].*
 :::
 
 ::: {.callout-tip title="Exercício 10 — Otimização numérica"}
 Considere uma amostra $X_1,\ldots,X_n$ de uma distribuição gama com densidade
 
-$$
-f(x;\alpha,\beta)
+$$f(x;\alpha,\beta)
 =
 \frac{
 x^{\alpha-1}e^{-x/\beta}
 }{
 \Gamma(\alpha)\beta^\alpha
 },
-\qquad x>0,
-$$
+\qquad x>0,$$
 
 em que $\alpha>0$ e $\beta>0$ são desconhecidos.
 
-1. Escreva a log-verossimilhança.
-2. Obtenha as duas equações de verossimilhança.
-3. Mostre que a equação referente a $\alpha$ envolve a função digama.
-4. Explique por que não há, em geral, solução algébrica fechada.
-5. Descreva como o método de Newton--Raphson poderia ser empregado.
-6. Indique quais verificações devem ser realizadas para confirmar que a solução numérica é um máximo global.
+1.  Escreva a log-verossimilhança.
+2.  Obtenha as duas equações de verossimilhança.
+3.  Mostre que a equação referente a $\alpha$ envolve a função digama.
+4.  Explique por que não há, em geral, solução algébrica fechada.
+5.  Descreva como o método de Newton--Raphson poderia ser empregado.
+6.  Indique quais verificações devem ser realizadas para confirmar que a solução numérica é um máximo global.
 
-*Fonte: elaboração própria, com base na discussão de otimização numérica de Ramachandran e Tsokos (2009, p. 243, 285–289) e nos exercícios sobre equações de verossimilhança de Shao (2005, p. 175–182).*
+*Fonte: elaboração própria, com base em @ramachandran2009 [pp. 243, 285--289] e @shao2005 [pp. 175--182].*
 :::
 
 ### Síntese
@@ -2099,17 +1820,14 @@ em que $\alpha>0$ e $\beta>0$ são desconhecidos.
 ::: {.callout-note title="Síntese da seção"}
 A estimação por máxima verossimilhança seleciona os valores paramétricos que maximizam a função de verossimilhança associada aos dados observados:
 
-$$
-\widehat{\boldsymbol\theta}_n
+$$\widehat{\boldsymbol\theta}_n
 \in
 \operatorname*{arg\,max}_{\boldsymbol\theta\in\Theta}
-L_n(\boldsymbol\theta).
-$$
+L_n(\boldsymbol\theta).$$
 
 Em modelos regulares, os estimadores de máxima verossimilhança são, sob condições adequadas, consistentes, assintoticamente normais e assintoticamente eficientes:
 
-$$
-\sqrt n
+$$\sqrt n
 \left(
 \widehat{\boldsymbol\theta}_n
 -
@@ -2120,18 +1838,16 @@ N_q
 \left(
 \mathbf{0},
 \mathbf{I}_1(\boldsymbol\theta_0)^{-1}
-\right).
-$$
+\right).$$
 
 Essas propriedades justificam o uso da informação de Fisher para estimar erros-padrão e construir procedimentos inferenciais. Contudo, a teoria não deve ser aplicada mecanicamente em modelos com fronteiras, suportes dependentes do parâmetro, falta de identificabilidade ou outras irregularidades.
 :::
 
-
 ## Mínimos Quadrados {#sec-minimos-quadrados}
 
-O método dos mínimos quadrados é um procedimento de estimação baseado na minimização das discrepâncias quadráticas entre os valores observados e os valores previstos por um modelo. Embora seja especialmente associado à regressão linear, o princípio pode ser empregado em modelos lineares, polinomiais e não lineares.
+O método dos mínimos quadrados estima parâmetros minimizando a soma dos quadrados das discrepâncias entre valores observados e valores previstos. O critério aparece naturalmente em regressão linear, modelos polinomiais e problemas não lineares; sua interpretação inferencial depende de hipóteses adicionais sobre os erros [@rice2007mathematical, chap. 14; @ramachandran2021r, sec. 7.2.1].
 
-A escolha da perda quadrática penaliza mais intensamente resíduos de grande magnitude. Por exemplo, um resíduo igual a $4$ contribui com $16$ para a função objetivo, enquanto um resíduo igual a $2$ contribui com apenas $4$. Essa característica facilita o tratamento matemático do problema, mas também torna o método sensível a observações atípicas (DIEZ; BARR; ÇETINKAYA-RUNDEL, 2014, p. 229; RICE, 2007, p. 556).
+A escolha da perda quadrática penaliza mais intensamente resíduos de grande magnitude. Por exemplo, um resíduo igual a $4$ contribui com $16$ para a função objetivo, enquanto um resíduo igual a $2$ contribui com apenas $4$. Essa característica facilita o tratamento matemático do problema, mas também torna o método sensível a observações atípicas [@diez2014introductory, p. 229; @rice2007mathematical, p. 556].
 
 ::: {.callout-note title="Observação"}
 O critério de mínimos quadrados, isoladamente, é um problema de otimização. Para interpretar os estimadores probabilisticamente, calcular erros-padrão ou realizar testes de hipóteses, é necessário especificar um modelo estatístico para os erros.
@@ -2139,12 +1855,12 @@ O critério de mínimos quadrados, isoladamente, é um problema de otimização.
 
 Ao final desta seção, o leitor deverá ser capaz de:
 
-1. definir formalmente um estimador de mínimos quadrados;
-2. obter as equações normais de um modelo linear;
-3. interpretar geometricamente o ajuste de mínimos quadrados;
-4. derivar os estimadores da regressão linear simples;
-5. estabelecer a relação entre mínimos quadrados e máxima verossimilhança;
-6. reconhecer situações em que mínimos quadrados ponderados são apropriados.
+1.  definir formalmente um estimador de mínimos quadrados;
+2.  obter as equações normais de um modelo linear;
+3.  interpretar geometricamente o ajuste de mínimos quadrados;
+4.  derivar os estimadores da regressão linear simples;
+5.  estabelecer a relação entre mínimos quadrados e máxima verossimilhança;
+6.  reconhecer situações em que mínimos quadrados ponderados são apropriados.
 
 ### Exemplo motivacional: renda familiar e auxílio financeiro
 
@@ -2157,69 +1873,52 @@ Para uma amostra de $50$ estudantes, sejam:
 
 As estatísticas amostrais foram:
 
-$$
-\overline{x}=101{,}8,
+$$\overline{x}=101{,}8,
 \qquad
-s_x=63{,}2,
-$$
+s_x=63{,}2,$$
 
-$$
-\overline{y}=19{,}94,
+$$\overline{y}=19{,}94,
 \qquad
-s_y=5{,}46,
-$$
+s_y=5{,}46,$$
 
 e
 
-$$
-r=-0{,}499,
-$$
+$$r=-0{,}499,$$
 
 em que $r$ é o coeficiente de correlação amostral.
 
 O objetivo é construir uma reta
 
-$$
-\widehat y=b_0+b_1x
-$$
+$$\widehat y=b_0+b_1x$$
 
 que represente a tendência linear dos dados. Para cada observação $(x_i,y_i)$, define-se o valor ajustado
 
-$$
-\widehat y_i=b_0+b_1x_i
-$$
+$$\widehat y_i=b_0+b_1x_i$$
 
 e o respectivo resíduo
 
-$$
-e_i
+$$e_i
 =
-y_i-\widehat y_i.
-$$
+y_i-\widehat y_i.$$
 
 O método dos mínimos quadrados escolhe $b_0$ e $b_1$ de modo a minimizar
 
-$$
-\operatorname{SQRes}(b_0,b_1)
+$$\operatorname{SQRes}(b_0,b_1)
 =
 \sum_{i=1}^n
 \left[
 y_i-(b_0+b_1x_i)
-\right]^2.
-$$
+\right]^2.$$
 
 Na regressão linear simples, o coeficiente angular pode ser calculado por
 
-$$
-b_1
+$$b_1
 =
-r\frac{s_y}{s_x}.
-$$
+r\frac{s_y}{s_x}.$$
 
 Portanto,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 b_1
 &=
 -0{,}499
@@ -2228,21 +1927,17 @@ b_1
 \right)\\
 &\approx
 -0{,}0431.
-\end{aligned}
-$$
+\end{aligned}$$
 
 Como a reta de mínimos quadrados passa pelo ponto $(\overline{x},\overline{y})$,
 
-$$
-b_0
+$$b_0
 =
-\overline y-b_1\overline x.
-$$
+\overline y-b_1\overline x.$$
 
 Assim,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 b_0
 &=
 19{,}94
@@ -2250,25 +1945,20 @@ b_0
 (-0{,}0431)(101{,}8)\\
 &\approx
 24{,}3.
-\end{aligned}
-$$
+\end{aligned}$$
 
 A reta ajustada é, portanto,
 
-$$
-\widehat y
+$$\widehat y
 =
-24{,}3-0{,}0431x.
-$$
+24{,}3-0{,}0431x.$$
 
 ::: {.callout-note title="Interpretação"}
 Como as duas variáveis estão expressas em milhares de dólares, um aumento de mil dólares na renda familiar está associado, segundo o modelo ajustado, a uma redução média estimada de aproximadamente
 
-$$
-0{,}0431\times 1000
+$$0{,}0431\times 1000
 =
-43{,}10
-$$
+43{,}10$$
 
 dólares no auxílio financeiro.
 
@@ -2281,7 +1971,7 @@ A equação ajustada deve ser utilizada principalmente no intervalo de rendas re
 A adequação de um modelo linear dentro da região observada não garante sua validade fora dessa região.
 :::
 
-*Fonte: exemplo adaptado de Diez, Barr e Çetinkaya-Rundel (2014, p. 227–233).*
+*Fonte: exemplo adaptado de @diez2014introductory [pp. 227--233].*
 
 ### Definição formal
 
@@ -2289,20 +1979,16 @@ A adequação de um modelo linear dentro da região observada não garante sua v
 
 Considere observações
 
-$$
-(x_1,y_1),\ldots,(x_n,y_n)
-$$
+$$(x_1,y_1),\ldots,(x_n,y_n)$$
 
 e um modelo paramétrico para a resposta dado por
 
-$$
-y_i
+$$y_i
 =
 m(x_i;\boldsymbol\theta)
 +
 \varepsilon_i,
-\qquad i=1,\ldots,n,
-$$
+\qquad i=1,\ldots,n,$$
 
 em que:
 
@@ -2312,34 +1998,28 @@ em que:
 
 Para um valor particular de $\boldsymbol\theta$, define-se o resíduo
 
-$$
-e_i(\boldsymbol\theta)
+$$e_i(\boldsymbol\theta)
 =
-y_i-m(x_i;\boldsymbol\theta).
-$$
+y_i-m(x_i;\boldsymbol\theta).$$
 
 ::: {.callout-important title="Definição: estimador de mínimos quadrados"}
 Um estimador de mínimos quadrados de $\boldsymbol\theta$ é qualquer solução de
 
-$$
-\widehat{\boldsymbol\theta}_{\mathrm{MQ}}
+$$\widehat{\boldsymbol\theta}_{\mathrm{MQ}}
 \in
 \operatorname*{arg\,min}_{\boldsymbol\theta\in\Theta}
-Q_n(\boldsymbol\theta),
-$$
+Q_n(\boldsymbol\theta),$$
 
 em que
 
-$$
-Q_n(\boldsymbol\theta)
+$$Q_n(\boldsymbol\theta)
 =
 \sum_{i=1}^n
 \left[
 y_i-m(x_i;\boldsymbol\theta)
-\right]^2.
-$$
+\right]^2.$$
 
-A função $Q_n(\boldsymbol\theta)$ é denominada soma de quadrados dos resíduos.
+A função $Q_n(\boldsymbol\theta)$ é denominada soma de quadrados dos resíduos [@rice2007mathematical, chap. 14; @ramachandran2021r, sec. 7.2.1].
 :::
 
 A definição não exige que o modelo seja linear nos valores de $x_i$. O aspecto relevante é a forma como o vetor de parâmetros aparece em $m(x_i;\boldsymbol\theta)$.
@@ -2348,8 +2028,7 @@ A definição não exige que o modelo seja linear nos valores de $x_i$. O aspect
 
 Um modelo é linear nos parâmetros quando pode ser escrito como
 
-$$
-Y_i
+$$Y_i
 =
 \beta_0
 +
@@ -2359,23 +2038,19 @@ Y_i
 +
 \beta_{p-1}x_{i,p-1}
 +
-\varepsilon_i.
-$$
+\varepsilon_i.$$
 
 Em notação matricial,
 
-$$
-\mathbf{Y}
+$$\mathbf{Y}
 =
 \mathbf{X}\boldsymbol\beta
 +
-\boldsymbol\varepsilon,
-$$
+\boldsymbol\varepsilon,$$
 
 em que
 
-$$
-\mathbf{Y}
+$$\mathbf{Y}
 =
 \begin{pmatrix}
 Y_1\\
@@ -2389,97 +2064,78 @@ Y_n
 \beta_0\\
 \vdots\\
 \beta_{p-1}
-\end{pmatrix},
-$$
+\end{pmatrix},$$
 
 e $\mathbf{X}$ é a matriz de planejamento de dimensão $n\times p$.
 
 O critério de mínimos quadrados ordinários é
 
-$$
-Q(\boldsymbol\beta)
+$$Q(\boldsymbol\beta)
 =
 \left\|
 \mathbf{Y}-\mathbf{X}\boldsymbol\beta
-\right\|^2.
-$$
+\right\|^2.$$
 
 Equivalentemente,
 
-$$
-Q(\boldsymbol\beta)
+$$Q(\boldsymbol\beta)
 =
 (\mathbf{Y}-\mathbf{X}\boldsymbol\beta)^\mathsf{T}
-(\mathbf{Y}-\mathbf{X}\boldsymbol\beta).
-$$
+(\mathbf{Y}-\mathbf{X}\boldsymbol\beta).$$
 
 Derivando em relação a $\boldsymbol\beta$,
 
-$$
-\nabla_{\boldsymbol\beta}
+$$\nabla_{\boldsymbol\beta}
 Q(\boldsymbol\beta)
 =
 -2\mathbf{X}^\mathsf{T}
-(\mathbf{Y}-\mathbf{X}\boldsymbol\beta).
-$$
+(\mathbf{Y}-\mathbf{X}\boldsymbol\beta).$$
 
 A condição de primeira ordem é
 
-$$
-\mathbf{X}^\mathsf{T}
+$$\mathbf{X}^\mathsf{T}
 (\mathbf{Y}-\mathbf{X}\widehat{\boldsymbol\beta})
 =
-\mathbf{0}.
-$$
+\mathbf{0}.$$
 
 Portanto,
 
-$$
-\mathbf{X}^\mathsf{T}\mathbf{X}
+$$\mathbf{X}^\mathsf{T}\mathbf{X}
 \widehat{\boldsymbol\beta}
 =
-\mathbf{X}^\mathsf{T}\mathbf{Y}.
-$$
+\mathbf{X}^\mathsf{T}\mathbf{Y}.$$
 
 ::: {.callout-important title="Definição: equações normais"}
 As equações
 
-$$
-\mathbf{X}^\mathsf{T}\mathbf{X}
+$$\mathbf{X}^\mathsf{T}\mathbf{X}
 \widehat{\boldsymbol\beta}
 =
-\mathbf{X}^\mathsf{T}\mathbf{Y}
-$$
+\mathbf{X}^\mathsf{T}\mathbf{Y}$$
 
 são denominadas **equações normais** do problema de mínimos quadrados.
 :::
 
 Se $\mathbf{X}$ possui posto completo, isto é,
 
-$$
-\operatorname{posto}(\mathbf{X})=p,
-$$
+$$\operatorname{posto}(\mathbf{X})=p,$$
 
 então $\mathbf{X}^\mathsf{T}\mathbf{X}$ é não singular e a solução é única:
 
-$$
-\boxed{
+$$\boxed{
 \widehat{\boldsymbol\beta}
 =
 (\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}
 \mathbf{X}^\mathsf{T}\mathbf{Y}
-}.
-$$
+}.$$
 
-Essa é a expressão matricial do estimador de mínimos quadrados ordinários (RICE, 2007, p. 565–567).
+Essa é a expressão matricial do estimador de mínimos quadrados ordinários [@rice2007mathematical, pp. 565--567].
 
 ::: {.callout-warning title="Observação computacional"}
 A expressão
 
-$$
-(\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}
-\mathbf{X}^\mathsf{T}\mathbf{Y}
-$$
+$$(\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}
+\mathbf{X}^\mathsf{T}\mathbf{Y}$$
 
 é útil para o desenvolvimento teórico. Em aplicações computacionais, não se recomenda calcular explicitamente a inversa de $\mathbf{X}^\mathsf{T}\mathbf{X}$.
 
@@ -2490,177 +2146,139 @@ Métodos baseados nas decomposições QR ou de Cholesky tendem a apresentar maio
 
 O vetor ajustado é
 
-$$
-\widehat{\mathbf{Y}}
+$$\widehat{\mathbf{Y}}
 =
-\mathbf{X}\widehat{\boldsymbol\beta}.
-$$
+\mathbf{X}\widehat{\boldsymbol\beta}.$$
 
 Quando $\mathbf{X}$ possui posto completo,
 
-$$
-\widehat{\mathbf{Y}}
+$$\widehat{\mathbf{Y}}
 =
-\mathbf{P}_X\mathbf{Y},
-$$
+\mathbf{P}_X\mathbf{Y},$$
 
 em que
 
-$$
-\mathbf{P}_X
+$$\mathbf{P}_X
 =
 \mathbf{X}
 (\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}
-\mathbf{X}^\mathsf{T}
-$$
+\mathbf{X}^\mathsf{T}$$
 
 é a matriz de projeção sobre o espaço gerado pelas colunas de $\mathbf{X}$.
 
 O vetor de resíduos é
 
-$$
-\widehat{\boldsymbol\varepsilon}
+$$\widehat{\boldsymbol\varepsilon}
 =
-\mathbf{Y}-\widehat{\mathbf{Y}}.
-$$
+\mathbf{Y}-\widehat{\mathbf{Y}}.$$
 
 Das equações normais,
 
-$$
-\mathbf{X}^\mathsf{T}
+$$\mathbf{X}^\mathsf{T}
 \widehat{\boldsymbol\varepsilon}
 =
-\mathbf{0}.
-$$
+\mathbf{0}.$$
 
-Logo, o vetor de resíduos é ortogonal a todas as colunas de $\mathbf{X}$. Geometricamente, $\widehat{\mathbf{Y}}$ é a projeção ortogonal de $\mathbf{Y}$ no espaço dos valores que podem ser produzidos pelo modelo linear (COX, 2006, p. 10–11; RICE, 2007, p. 565–567).
+Logo, o vetor de resíduos é ortogonal a todas as colunas de $\mathbf{X}$. Geometricamente, $\widehat{\mathbf{Y}}$ é a projeção ortogonal de $\mathbf{Y}$ no espaço dos valores que podem ser produzidos pelo modelo linear [@cox2006principles, pp. 10--11; @rice2007mathematical, pp. 565--567].
 
 ::: {.callout-note title="Consequência"}
 Quando o modelo contém intercepto, uma das colunas de $\mathbf{X}$ é formada exclusivamente por valores iguais a $1$. Nesse caso,
 
-$$
-\sum_{i=1}^n \widehat\varepsilon_i=0.
-$$
+$$\sum_{i=1}^n \widehat\varepsilon_i=0.$$
 
 Consequentemente,
 
-$$
-\overline{\widehat Y}
+$$\overline{\widehat Y}
 =
-\overline Y.
-$$
+\overline Y.$$
 :::
 
 #### Regressão linear simples
 
 Considere o modelo
 
-$$
-Y_i
+$$Y_i
 =
-\beta_0+\beta_1x_i+\varepsilon_i.
-$$
+\beta_0+\beta_1x_i+\varepsilon_i.$$
 
 O critério é
 
-$$
-Q(\beta_0,\beta_1)
+$$Q(\beta_0,\beta_1)
 =
 \sum_{i=1}^n
-(Y_i-\beta_0-\beta_1x_i)^2.
-$$
+(Y_i-\beta_0-\beta_1x_i)^2.$$
 
 As equações normais são
 
-$$
-\sum_{i=1}^nY_i
+$$\sum_{i=1}^nY_i
 =
 n\widehat\beta_0
 +
 \widehat\beta_1
-\sum_{i=1}^nx_i
-$$
+\sum_{i=1}^nx_i$$
 
 e
 
-$$
-\sum_{i=1}^nx_iY_i
+$$\sum_{i=1}^nx_iY_i
 =
 \widehat\beta_0
 \sum_{i=1}^nx_i
 +
 \widehat\beta_1
-\sum_{i=1}^nx_i^2.
-$$
+\sum_{i=1}^nx_i^2.$$
 
 Defina
 
-$$
-S_{xx}
+$$S_{xx}
 =
 \sum_{i=1}^n
-(x_i-\overline x)^2
-$$
+(x_i-\overline x)^2$$
 
 e
 
-$$
-S_{xy}
+$$S_{xy}
 =
 \sum_{i=1}^n
-(x_i-\overline x)(Y_i-\overline Y).
-$$
+(x_i-\overline x)(Y_i-\overline Y).$$
 
 Se $S_{xx}>0$, os estimadores são
 
-$$
-\boxed{
+$$\boxed{
 \widehat\beta_1
 =
 \frac{S_{xy}}{S_{xx}}
-}
-$$
+}$$
 
 e
 
-$$
-\boxed{
+$$\boxed{
 \widehat\beta_0
 =
 \overline Y-\widehat\beta_1\overline x
-}.
-$$
+}.$$
 
 Utilizando o coeficiente de correlação amostral,
 
-$$
-r
+$$r
 =
 \frac{S_{xy}}
-{\sqrt{S_{xx}S_{yy}}},
-$$
+{\sqrt{S_{xx}S_{yy}}},$$
 
 também se obtém
 
-$$
-\widehat\beta_1
+$$\widehat\beta_1
 =
-r\frac{s_Y}{s_X}.
-$$
+r\frac{s_Y}{s_X}.$$
 
 A identidade
 
-$$
-\widehat\beta_0
+$$\widehat\beta_0
 =
-\overline Y-\widehat\beta_1\overline x
-$$
+\overline Y-\widehat\beta_1\overline x$$
 
 mostra que a reta de mínimos quadrados sempre passa pelo ponto
 
-$$
-(\overline x,\overline Y).
-$$
+$$(\overline x,\overline Y).$$
 
 ### Relação com o método de máxima verossimilhança
 
@@ -2668,44 +2286,37 @@ $$
 
 Considere o modelo linear
 
-$$
-\mathbf{Y}
+$$\mathbf{Y}
 =
 \mathbf{X}\boldsymbol\beta
 +
-\boldsymbol\varepsilon
-$$
+\boldsymbol\varepsilon$$
 
 com
 
-$$
-\boldsymbol\varepsilon
+$$\boldsymbol\varepsilon
 \sim
 N_n
 \left(
 \mathbf{0},
 \sigma^2\mathbf{I}_n
-\right).
-$$
+\right).$$
 
 Equivalentemente,
 
-$$
-Y_i\mid\mathbf{x}_i
+$$Y_i\mid\mathbf{x}_i
 \sim
 N
 \left(
 \mathbf{x}_i^\mathsf{T}\boldsymbol\beta,
 \sigma^2
-\right),
-$$
+\right),$$
 
 independentemente para $i=1,\ldots,n$.
 
 A função de verossimilhança é
 
-$$
-L(\boldsymbol\beta,\sigma^2)
+$$L(\boldsymbol\beta,\sigma^2)
 =
 (2\pi\sigma^2)^{-n/2}
 \exp
@@ -2713,125 +2324,100 @@ L(\boldsymbol\beta,\sigma^2)
 -\frac{1}{2\sigma^2}
 (\mathbf{Y}-\mathbf{X}\boldsymbol\beta)^\mathsf{T}
 (\mathbf{Y}-\mathbf{X}\boldsymbol\beta)
-\right].
-$$
+\right].$$
 
 A log-verossimilhança é
 
-$$
-\ell(\boldsymbol\beta,\sigma^2)
+$$\ell(\boldsymbol\beta,\sigma^2)
 =
 -\frac{n}{2}\log(2\pi)
 -\frac{n}{2}\log(\sigma^2)
 -\frac{1}{2\sigma^2}
-Q(\boldsymbol\beta),
-$$
+Q(\boldsymbol\beta),$$
 
 em que
 
-$$
-Q(\boldsymbol\beta)
+$$Q(\boldsymbol\beta)
 =
 (\mathbf{Y}-\mathbf{X}\boldsymbol\beta)^\mathsf{T}
-(\mathbf{Y}-\mathbf{X}\boldsymbol\beta).
-$$
+(\mathbf{Y}-\mathbf{X}\boldsymbol\beta).$$
 
 Para um valor fixado de $\sigma^2$, os dois primeiros termos não dependem de $\boldsymbol\beta$. Além disso,
 
-$$
--\frac{1}{2\sigma^2}<0.
-$$
+$$-\frac{1}{2\sigma^2}<0.$$
 
 Portanto,
 
-$$
-\operatorname*{arg\,max}_{\boldsymbol\beta}
+$$\operatorname*{arg\,max}_{\boldsymbol\beta}
 \ell(\boldsymbol\beta,\sigma^2)
 =
 \operatorname*{arg\,min}_{\boldsymbol\beta}
-Q(\boldsymbol\beta).
-$$
+Q(\boldsymbol\beta).$$
 
 Assim,
 
-$$
-\boxed{
+$$\boxed{
 \widehat{\boldsymbol\beta}_{\mathrm{MV}}
 =
 \widehat{\boldsymbol\beta}_{\mathrm{MQ}}
-}.
-$$
+}.$$
 
-Em um modelo com erros normais, independentes e de variância constante, os estimadores de máxima verossimilhança dos coeficientes de regressão coincidem com os estimadores de mínimos quadrados ordinários (HASTIE; TIBSHIRANI; FRIEDMAN, 2009, p. 30–31).
+Em um modelo com erros normais, independentes e de variância constante, os estimadores de máxima verossimilhança dos coeficientes de regressão coincidem com os estimadores de mínimos quadrados ordinários [@hastie2009elements, pp. 30--31].
 
 ::: {.callout-important title="Resultado"}
 A equivalência ocorre porque, no modelo normal, maximizar a verossimilhança em relação aos parâmetros da média é equivalente a minimizar
 
-$$
-\sum_{i=1}^n
+$$\sum_{i=1}^n
 \left[
 Y_i-m(x_i;\boldsymbol\theta)
-\right]^2.
-$$
+\right]^2.$$
 :::
 
 #### Estimação da variância
 
 Substituindo $\widehat{\boldsymbol\beta}$ na log-verossimilhança e maximizando em relação a $\sigma^2$, obtém-se
 
-$$
-\widehat{\sigma}_{\mathrm{MV}}^2
+$$\widehat{\sigma}_{\mathrm{MV}}^2
 =
-\frac{\operatorname{SQRes}}{n},
-$$
+\frac{\operatorname{SQRes}}{n},$$
 
 em que
 
-$$
-\operatorname{SQRes}
+$$\operatorname{SQRes}
 =
 \left\|
 \mathbf{Y}
 -
 \mathbf{X}\widehat{\boldsymbol\beta}
-\right\|^2.
-$$
+\right\|^2.$$
 
 Entretanto,
 
-$$
-\operatorname{E}(\operatorname{SQRes})
+$$\operatorname{E}(\operatorname{SQRes})
 =
-(n-p)\sigma^2.
-$$
+(n-p)\sigma^2.$$
 
 Consequentemente,
 
-$$
-\widehat{\sigma}_{\mathrm{MV}}^2
+$$\widehat{\sigma}_{\mathrm{MV}}^2
 =
-\frac{\operatorname{SQRes}}{n}
-$$
+\frac{\operatorname{SQRes}}{n}$$
 
 é viesado em amostras finitas. O estimador não viesado usual é
 
-$$
-s^2
+$$s^2
 =
-\frac{\operatorname{SQRes}}{n-p}.
-$$
+\frac{\operatorname{SQRes}}{n-p}.$$
 
 ::: {.callout-note title="Observação"}
 No modelo de regressão linear simples com intercepto e inclinação, $p=2$. Portanto,
 
-$$
-s^2
+$$s^2
 =
-\frac{\operatorname{SQRes}}{n-2}.
-$$
+\frac{\operatorname{SQRes}}{n-2}.$$
 :::
 
-A diferença entre os divisores $n$ e $n-p$ ilustra que a estimação por máxima verossimilhança não produz necessariamente estimadores não viesados em amostras finitas (COX, 2006, p. 145–146; RICE, 2007, p. 575–576).
+A diferença entre os divisores $n$ e $n-p$ ilustra que a estimação por máxima verossimilhança não produz necessariamente estimadores não viesados em amostras finitas [@cox2006principles, pp. 145--146; @rice2007mathematical, pp. 575--576].
 
 #### Quando a equivalência não ocorre
 
@@ -2845,103 +2431,87 @@ Por exemplo, para determinados modelos com erros de caudas mais pesadas, o crit�
 
 A normalidade não é necessária para calcular o estimador de mínimos quadrados. Sob as condições
 
-$$
-\operatorname{E}
+$$\operatorname{E}
 (\boldsymbol\varepsilon\mid\mathbf{X})
 =
-\mathbf{0}
-$$
+\mathbf{0}$$
 
 e
 
-$$
-\operatorname{Var}
+$$\operatorname{Var}
 (\boldsymbol\varepsilon\mid\mathbf{X})
 =
-\sigma^2\mathbf{I}_n,
-$$
+\sigma^2\mathbf{I}_n,$$
 
-o teorema de Gauss--Markov estabelece que $\widehat{\boldsymbol\beta}$ é o estimador linear não viesado de variância mínima. A normalidade é necessária, contudo, para determinadas distribuições amostrais exatas e para a equivalência direta com máxima verossimilhança.
+e supondo que $\mathbf X$ tenha posto completo, o teorema de Gauss--Markov estabelece que $\widehat{\boldsymbol\beta}$ é o melhor estimador linear não viesado: para qualquer outro estimador linear não viesado $\widetilde{\boldsymbol\beta}$,
+
+$$\operatorname{Cov}(\widetilde{\boldsymbol\beta}\mid\mathbf X) -\operatorname{Cov}(\widehat{\boldsymbol\beta}\mid\mathbf X),$$
+
+é positiva semidefinida. A normalidade não é necessária para esse resultado, mas é necessária para certas distribuições amostrais exatas e para a equivalência direta com máxima verossimilhança [@rice2007mathematical, sec. 14.4].
 
 #### Mínimos quadrados ponderados
 
 Considere erros independentes com variâncias conhecidas e não constantes:
 
-$$
-\operatorname{Var}(\varepsilon_i)
+$$\operatorname{Var}(\varepsilon_i)
 =
-\sigma_i^2.
-$$
+\sigma_i^2.$$
 
 Se
 
-$$
-\varepsilon_i
+$$\varepsilon_i
 \sim
-N(0,\sigma_i^2),
-$$
+N(0,\sigma_i^2),$$
 
 a log-verossimilhança contém o termo
 
-$$
--\frac{1}{2}
+$$-\frac{1}{2}
 \sum_{i=1}^n
 \frac{
 (Y_i-\mathbf{x}_i^\mathsf{T}\boldsymbol\beta)^2
 }{
 \sigma_i^2
-}.
-$$
+}.$$
 
 Portanto, a maximização da verossimilhança equivale à minimização de
 
-$$
-Q_P(\boldsymbol\beta)
+$$Q_P(\boldsymbol\beta)
 =
 \sum_{i=1}^n
 w_i
-(Y_i-\mathbf{x}_i^\mathsf{T}\boldsymbol\beta)^2,
-$$
+(Y_i-\mathbf{x}_i^\mathsf{T}\boldsymbol\beta)^2,$$
 
 em que
 
-$$
-w_i
+$$w_i
 =
-\frac{1}{\sigma_i^2}.
-$$
+\frac{1}{\sigma_i^2}.$$
 
 ::: {.callout-important title="Definição: mínimos quadrados ponderados"}
 O estimador de mínimos quadrados ponderados é
 
-$$
-\widehat{\boldsymbol\beta}_{\mathrm{MQP}}
+$$\widehat{\boldsymbol\beta}_{\mathrm{MQP}}
 \in
 \operatorname*{arg\,min}_{\boldsymbol\beta}
 (\mathbf{Y}-\mathbf{X}\boldsymbol\beta)^\mathsf{T}
 \mathbf{W}
-(\mathbf{Y}-\mathbf{X}\boldsymbol\beta),
-$$
+(\mathbf{Y}-\mathbf{X}\boldsymbol\beta),$$
 
 em que
 
-$$
-\mathbf{W}
+$$\mathbf{W}
 =
-\operatorname{diag}(w_1,\ldots,w_n).
-$$
+\operatorname{diag}(w_1,\ldots,w_n).$$
 :::
 
 Se $\mathbf{X}^\mathsf{T}\mathbf{W}\mathbf{X}$ é não singular,
 
-$$
-\widehat{\boldsymbol\beta}_{\mathrm{MQP}}
+$$\widehat{\boldsymbol\beta}_{\mathrm{MQP}}
 =
 (\mathbf{X}^\mathsf{T}\mathbf{W}\mathbf{X})^{-1}
-\mathbf{X}^\mathsf{T}\mathbf{W}\mathbf{Y}.
-$$
+\mathbf{X}^\mathsf{T}\mathbf{W}\mathbf{Y}.$$
 
-Observações com maior variância recebem menor peso. A formulação é denominada mínimos quadrados generalizados quando a matriz de covariâncias dos erros possui forma não diagonal (RICE, 2007, p. 593–594; COX, 2006, p. 157–158).
+Observações com maior variância recebem menor peso. A formulação é denominada mínimos quadrados generalizados quando a matriz de covariâncias dos erros possui forma não diagonal [@rice2007mathematical, pp. 593--594; @cox2006principles, pp. 157--158].
 
 ### Exemplos
 
@@ -2949,66 +2519,41 @@ Observações com maior variância recebem menor peso. A formulação é denomin
 
 Considere o modelo
 
-$$
-Y_i
+$$Y_i
 =
 \mu+\varepsilon_i,
-\qquad i=1,\ldots,n.
-$$
+\qquad i=1,\ldots,n.$$
 
 Nesse caso, todos os valores são aproximados por uma mesma constante $\mu$. O critério de mínimos quadrados é
 
-$$
-Q(\mu)
+$$Q(\mu)
 =
 \sum_{i=1}^n
-(Y_i-\mu)^2.
-$$
+(Y_i-\mu)^2.$$
 
 Derivando,
 
-$$
-Q'(\mu)
+$$Q'(\mu)
 =
 -2
 \sum_{i=1}^n
-(Y_i-\mu).
-$$
+(Y_i-\mu).$$
 
 A condição $Q'(\widehat\mu)=0$ fornece
 
-$$
-\sum_{i=1}^n
-(Y_i-\widehat\mu)
-=
-0.
-$$
+$$\sum_{i=1}^n(Y_i-\widehat\mu)=0.$$
 
 Logo,
 
-$$
-\sum_{i=1}^nY_i
--
-n\widehat\mu
-=
-0
-$$
+$$\sum_{i=1}^nY_i-n\widehat\mu=0$$
 
 e
 
-$$
-\boxed{
-\widehat\mu_{\mathrm{MQ}}
-=
-\overline Y
-}.
-$$
+$$\boxed{\widehat\mu_{\mathrm{MQ}}=\overline Y}.$$
 
 A segunda derivada é
 
-$$
-Q''(\mu)=2n>0,
-$$
+$$Q''(\mu)=2n>0,$$
 
 confirmando que a solução corresponde ao mínimo global.
 
@@ -3018,43 +2563,38 @@ A média amostral é a constante que minimiza a soma dos quadrados das distânci
 Essa caracterização é específica da perda quadrática. A mediana, por sua vez, minimiza a soma dos valores absolutos dos desvios.
 :::
 
-*Fonte: elaboração própria, com base na definição de mínimos quadrados de Ramachandran e Tsokos (2021, p. 303–305).*
+*Fonte: elaboração própria, com base em @ramachandran2021r [sec. 7.2.1].*
 
 #### Exemplo: ajuste de uma reta
 
 Considere os dados:
 
 | $x_i$ | $y_i$ |
-|---:|---:|
-| 1 | 2 |
-| 2 | 3 |
-| 3 | 5 |
-| 4 | 4 |
+|------:|------:|
+|     1 |     2 |
+|     2 |     3 |
+|     3 |     5 |
+|     4 |     4 |
 
 As médias são
 
-$$
-\overline x
+$$\overline x
 =
 \frac{1+2+3+4}{4}
 =
-2{,}5
-$$
+2{,}5$$
 
 e
 
-$$
-\overline y
+$$\overline y
 =
 \frac{2+3+5+4}{4}
 =
-3{,}5.
-$$
+3{,}5.$$
 
 Calculando $S_{xx}$,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 S_{xx}
 &=
 (1-2{,}5)^2
@@ -3066,13 +2606,11 @@ S_{xx}
 (4-2{,}5)^2\\
 &=
 5.
-\end{aligned}
-$$
+\end{aligned}$$
 
 Calculando $S_{xy}$,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 S_{xy}
 &=
 (1-2{,}5)(2-3{,}5)
@@ -3084,52 +2622,44 @@ S_{xy}
 (4-2{,}5)(4-3{,}5)\\
 &=
 4.
-\end{aligned}
-$$
+\end{aligned}$$
 
 Portanto,
 
-$$
-\widehat\beta_1
+$$\widehat\beta_1
 =
 \frac{4}{5}
 =
-0{,}8
-$$
+0{,}8$$
 
 e
 
-$$
-\widehat\beta_0
+$$\widehat\beta_0
 =
 3{,}5-(0{,}8)(2{,}5)
 =
-1{,}5.
-$$
+1{,}5.$$
 
 A reta ajustada é
 
-$$
-\boxed{
+$$\boxed{
 \widehat y
 =
 1{,}5+0{,}8x
-}.
-$$
+}.$$
 
 Os valores ajustados e resíduos são:
 
 | $x_i$ | $y_i$ | $\widehat y_i$ | $e_i=y_i-\widehat y_i$ |
-|---:|---:|---:|---:|
-| 1 | 2 | 2,3 | -0,3 |
-| 2 | 3 | 3,1 | -0,1 |
-| 3 | 5 | 3,9 | 1,1 |
-| 4 | 4 | 4,7 | -0,7 |
+|------:|------:|---------------:|-----------------------:|
+|     1 |     2 |            2,3 |                   -0,3 |
+|     2 |     3 |            3,1 |                   -0,1 |
+|     3 |     5 |            3,9 |                    1,1 |
+|     4 |     4 |            4,7 |                   -0,7 |
 
 A soma de quadrados dos resíduos é
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 \operatorname{SQRes}
 &=
 (-0{,}3)^2
@@ -3141,153 +2671,129 @@ $$
 (-0{,}7)^2\\
 &=
 1{,}8.
-\end{aligned}
-$$
+\end{aligned}$$
 
 Além disso,
 
-$$
-\sum_{i=1}^4e_i=0,
-$$
+$$\sum_{i=1}^4e_i=0,$$
 
 como esperado para um modelo que contém intercepto.
 
-*Fonte: elaboração própria, com base em Rice (2007, p. 565–567) e Ramachandran e Tsokos (2021, p. 303–305).*
+*Fonte: elaboração própria, com base em @rice2007mathematical [pp. 565--567] e @ramachandran2021r [sec. 7.2.1].*
 
 #### Exemplo: regressão polinomial
 
 Considere o modelo quadrático
 
-$$
-Y_i
+$$Y_i
 =
-\beta_0+\beta_1x_i+\beta_2x_i^2+\varepsilon_i.
-$$
+\beta_0+\beta_1x_i+\beta_2x_i^2+\varepsilon_i.$$
 
 Embora a resposta seja uma função quadrática de $x_i$, o modelo é linear nos parâmetros $\beta_0$, $\beta_1$ e $\beta_2$.
 
 Para os dados
 
 | $x_i$ | $y_i$ |
-|---:|---:|
-| -1 | 2 |
-| 0 | 1 |
-| 1 | 2 |
-| 2 | 5 |
+|------:|------:|
+|    -1 |     2 |
+|     0 |     1 |
+|     1 |     2 |
+|     2 |     5 |
 
 a matriz de planejamento é
 
-$$
-\mathbf{X}
+$$\mathbf{X}
 =
 \begin{pmatrix}
 1&-1&1\\
 1&0&0\\
 1&1&1\\
 1&2&4
-\end{pmatrix},
-$$
+\end{pmatrix},$$
 
 e
 
-$$
-\mathbf{Y}
+$$\mathbf{Y}
 =
 \begin{pmatrix}
 2\\
 1\\
 2\\
 5
-\end{pmatrix}.
-$$
+\end{pmatrix}.$$
 
 Observa-se que
 
-$$
-\mathbf{Y}
+$$\mathbf{Y}
 =
 \mathbf{X}
 \begin{pmatrix}
 1\\
 0\\
 1
-\end{pmatrix}.
-$$
+\end{pmatrix}.$$
 
 Consequentemente,
 
-$$
-\widehat{\boldsymbol\beta}
+$$\widehat{\boldsymbol\beta}
 =
 \begin{pmatrix}
 1\\
 0\\
 1
-\end{pmatrix}
-$$
+\end{pmatrix}$$
 
 e a curva ajustada é
 
-$$
-\widehat y
+$$\widehat y
 =
-1+x^2.
-$$
+1+x^2.$$
 
 Nesse exemplo,
 
-$$
-\operatorname{SQRes}=0.
-$$
+$$\operatorname{SQRes}=0.$$
 
 ::: {.callout-note title="Observação"}
 Um modelo polinomial é um modelo linear quando é linear nos parâmetros, mesmo que seja não linear na variável explicativa.
 
 Em contraste, um modelo como
 
-$$
-m(x;\theta_1,\theta_2)
+$$m(x;\theta_1,\theta_2)
 =
-\theta_1e^{-\theta_2x}
-$$
+\theta_1e^{-\theta_2x}$$
 
 é não linear nos parâmetros e, em geral, requer métodos numéricos.
 :::
 
-*Fonte: elaboração própria, com base na formulação matricial de Rice (2007, p. 565–567) e na discussão de mínimos quadrados não lineares de Cox (2006, p. 10–12).*
+*Fonte: elaboração própria, com base na formulação matricial de @rice2007mathematical [pp. 565--567].*
 
 #### Exemplo: mínimos quadrados ponderados
 
 Considere os dados
 
 | $x_i$ | $y_i$ | $\operatorname{Var}(\varepsilon_i)$ |
-|---:|---:|---:|
-| 0 | 1 | 1 |
-| 1 | 2 | 1 |
-| 2 | 2 | $1/4$ |
+|------:|------:|------------------------------------:|
+|     0 |     1 |                                   1 |
+|     1 |     2 |                                   1 |
+|     2 |     2 |                               $1/4$ |
 
 Como a terceira observação possui menor variância, ela deve receber maior peso. Os pesos são
 
-$$
-w_i
+$$w_i
 =
 \frac{1}{
 \operatorname{Var}(\varepsilon_i)
-},
-$$
+},$$
 
 de modo que
 
-$$
-(w_1,w_2,w_3)
+$$(w_1,w_2,w_3)
 =
-(1,1,4).
-$$
+(1,1,4).$$
 
 O critério ponderado é
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 Q_P(\beta_0,\beta_1)
 &=
 (1-\beta_0)^2\\
@@ -3295,314 +2801,284 @@ Q_P(\beta_0,\beta_1)
 (2-\beta_0-\beta_1)^2\\
 &\quad+
 4(2-\beta_0-2\beta_1)^2.
-\end{aligned}
-$$
+\end{aligned}$$
 
 A solução das equações ponderadas fornece
 
-$$
-\widehat\beta_0
+$$\widehat\beta_0
 =
-\frac{25}{21}
-$$
+\frac{25}{21}$$
 
 e
 
-$$
-\widehat\beta_1
+$$\widehat\beta_1
 =
-\frac{3}{7}.
-$$
+\frac{3}{7}.$$
 
 Portanto,
 
-$$
-\widehat y
+$$\widehat y
 =
 \frac{25}{21}
 +
-\frac{3}{7}x.
-$$
+\frac{3}{7}x.$$
 
 A terceira observação exerce maior influência sobre o ajuste porque é considerada mais precisa.
 
-*Fonte: elaboração própria, com base na formulação de mínimos quadrados ponderados de Rice (2007, p. 593–594).*
+*Fonte: elaboração própria, com base em @rice2007mathematical [pp. 593--594].*
 
 ### Exercícios
 
 ::: {.callout-tip title="Exercício 1 — Derivação da reta de mínimos quadrados"}
 Considere o modelo
 
-$$
-Y_i
+$$Y_i
 =
-\beta_0+\beta_1x_i+\varepsilon_i.
-$$
+\beta_0+\beta_1x_i+\varepsilon_i.$$
 
-1. Escreva a soma de quadrados dos resíduos.
-2. Diferencie-a em relação a $\beta_0$ e $\beta_1$.
-3. Obtenha as duas equações normais.
-4. Mostre que
+1.  Escreva a soma de quadrados dos resíduos.
 
-   $$
-   \widehat\beta_1
-   =
-   \frac{
-   \sum_{i=1}^n
-   (x_i-\overline x)(Y_i-\overline Y)
-   }{
-   \sum_{i=1}^n
-   (x_i-\overline x)^2
-   }.
-   $$
+2.  Diferencie-a em relação a $\beta_0$ e $\beta_1$.
 
-5. Mostre que
+3.  Obtenha as duas equações normais.
 
-   $$
-   \widehat\beta_0
-   =
-   \overline Y-\widehat\beta_1\overline x.
-   $$
+4.  Mostre que
 
-6. Conclua que a reta ajustada passa pelo ponto $(\overline x,\overline Y)$.
+    $$\widehat\beta_1
+    =
+    \frac{
+    \sum_{i=1}^n
+    (x_i-\overline x)(Y_i-\overline Y)
+    }{
+    \sum_{i=1}^n
+    (x_i-\overline x)^2
+    }.$$
 
-*Fonte: exercício adaptado de Ramachandran e Tsokos (2021, p. 304–305) e Rice (2007, p. 594).*
+5.  Mostre que
+
+    $$\widehat\beta_0
+    =
+    \overline Y-\widehat\beta_1\overline x.$$
+
+6.  Conclua que a reta ajustada passa pelo ponto $(\overline x,\overline Y)$.
+
+*Fonte: exercício adaptado de @ramachandran2021r [sec. 7.2.1] e @rice2007mathematical [p. 594].*
 :::
 
 ::: {.callout-tip title="Exercício 2 — Ajuste numérico"}
 Considere os dados:
 
-| $x_i$ | 0 | 1 | 2 | 3 | 4 |
-|---|---:|---:|---:|---:|---:|
-| $y_i$ | 1 | 2 | 2 | 4 | 5 |
+| $x_i$ |   0 |   1 |   2 |   3 |   4 |
+|-------|----:|----:|----:|----:|----:|
+| $y_i$ |   1 |   2 |   2 |   4 |   5 |
 
-1. Calcule $\overline x$ e $\overline y$.
-2. Calcule $S_{xx}$ e $S_{xy}$.
-3. Obtenha $\widehat\beta_0$ e $\widehat\beta_1$.
-4. Calcule os valores ajustados.
-5. Calcule os resíduos.
-6. Verifique que a soma dos resíduos é zero.
-7. Calcule a soma de quadrados dos resíduos.
-8. Interprete o coeficiente angular.
+1.  Calcule $\overline x$ e $\overline y$.
+2.  Calcule $S_{xx}$ e $S_{xy}$.
+3.  Obtenha $\widehat\beta_0$ e $\widehat\beta_1$.
+4.  Calcule os valores ajustados.
+5.  Calcule os resíduos.
+6.  Verifique que a soma dos resíduos é zero.
+7.  Calcule a soma de quadrados dos resíduos.
+8.  Interprete o coeficiente angular.
 
-*Fonte: elaboração própria, com base nos exercícios de regressão de Diez, Barr e Çetinkaya-Rundel (2014, p. 244–249).*
+*Fonte: elaboração própria, com base nos exercícios de regressão de @diez2014introductory [pp. 244--249].*
 :::
 
 ::: {.callout-tip title="Exercício 3 — Mínimos quadrados como estimador de localização"}
 Considere
 
-$$
-Q(a)
+$$Q(a)
 =
 \sum_{i=1}^n
-(Y_i-a)^2.
-$$
+(Y_i-a)^2.$$
 
-1. Mostre que o valor de $a$ que minimiza $Q(a)$ é $\overline Y$.
-2. Mostre que
+1.  Mostre que o valor de $a$ que minimiza $Q(a)$ é $\overline Y$.
 
-   $$
-   \sum_{i=1}^n
-   (Y_i-a)^2
-   =
-   \sum_{i=1}^n
-   (Y_i-\overline Y)^2
-   +
-   n(\overline Y-a)^2.
-   $$
+2.  Mostre que
 
-3. Utilize a identidade anterior para provar que o mínimo é global e único.
-4. Compare esse resultado com o estimador que minimiza
+    $$\sum_{i=1}^n
+    (Y_i-a)^2
+    =
+    \sum_{i=1}^n
+    (Y_i-\overline Y)^2
+    +
+    n(\overline Y-a)^2.$$
 
-   $$
-   \sum_{i=1}^n|Y_i-a|.
-   $$
+3.  Utilize a identidade anterior para provar que o mínimo é global e único.
 
-*Fonte: elaboração própria, com base no princípio de projeção apresentado por Cox (2006, p. 10–11).*
+4.  Compare esse resultado com o estimador que minimiza
+
+    $$\sum_{i=1}^n|Y_i-a|.$$
+
+*Fonte: elaboração própria, com base no princípio de projeção apresentado por @cox2006principles [pp. 10--11].*
 :::
 
 ::: {.callout-tip title="Exercício 4 — Equivalência com máxima verossimilhança"}
 Suponha que
 
-$$
-Y_i
+$$Y_i
 =
-\beta_0+\beta_1x_i+\varepsilon_i,
-$$
+\beta_0+\beta_1x_i+\varepsilon_i,$$
 
 com
 
-$$
-\varepsilon_i
-\overset{\mathrm{iid}}{\sim}
-N(0,\sigma^2).
-$$
+$$\varepsilon_i
+\overset{\mathrm{i.i.d.}}{\sim}
+N(0,\sigma^2).$$
 
-1. Escreva a função de verossimilhança de $(\beta_0,\beta_1,\sigma^2)$.
-2. Obtenha a log-verossimilhança.
-3. Mostre que, para $\sigma^2$ fixado, maximizar a log-verossimilhança em relação a $\beta_0$ e $\beta_1$ equivale a minimizar a soma de quadrados dos resíduos.
-4. Obtenha os estimadores de máxima verossimilhança de $\beta_0$ e $\beta_1$.
-5. Obtenha o estimador de máxima verossimilhança de $\sigma^2$.
-6. Compare esse estimador com o estimador não viesado da variância.
+1.  Escreva a função de verossimilhança de $(\beta_0,\beta_1,\sigma^2)$.
+2.  Obtenha a log-verossimilhança.
+3.  Mostre que, para $\sigma^2$ fixado, maximizar a log-verossimilhança em relação a $\beta_0$ e $\beta_1$ equivale a minimizar a soma de quadrados dos resíduos.
+4.  Obtenha os estimadores de máxima verossimilhança de $\beta_0$ e $\beta_1$.
+5.  Obtenha o estimador de máxima verossimilhança de $\sigma^2$.
+6.  Compare esse estimador com o estimador não viesado da variância.
 
-*Fonte: exercício adaptado de Rice (2007, p. 595–596) e Hastie, Tibshirani e Friedman (2009, p. 30–31).*
+*Fonte: exercício adaptado de @rice2007mathematical [pp. 595--596] e @hastie2009elements [pp. 30--31].*
 :::
 
 ::: {.callout-tip title="Exercício 5 — Formulação matricial"}
 Considere o modelo
 
-$$
-\mathbf{Y}
+$$\mathbf{Y}
 =
 \mathbf{X}\boldsymbol\beta
 +
-\boldsymbol\varepsilon.
-$$
+\boldsymbol\varepsilon.$$
 
-1. Expanda
+1.  Expanda
 
-   $$
-   Q(\boldsymbol\beta)
-   =
-   (\mathbf{Y}-\mathbf{X}\boldsymbol\beta)^\mathsf{T}
-   (\mathbf{Y}-\mathbf{X}\boldsymbol\beta).
-   $$
+    $$Q(\boldsymbol\beta)
+    =
+    (\mathbf{Y}-\mathbf{X}\boldsymbol\beta)^\mathsf{T}
+    (\mathbf{Y}-\mathbf{X}\boldsymbol\beta).$$
 
-2. Calcule o gradiente de $Q(\boldsymbol\beta)$.
-3. Obtenha as equações normais.
-4. Mostre que, se $\mathbf{X}$ possui posto completo,
+2.  Calcule o gradiente de $Q(\boldsymbol\beta)$.
 
-   $$
-   \widehat{\boldsymbol\beta}
-   =
-   (\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}
-   \mathbf{X}^\mathsf{T}\mathbf{Y}.
-   $$
+3.  Obtenha as equações normais.
 
-5. Mostre que
+4.  Mostre que, se $\mathbf{X}$ possui posto completo,
 
-   $$
-   \mathbf{X}^\mathsf{T}
-   \widehat{\boldsymbol\varepsilon}
-   =
-   \mathbf{0}.
-   $$
+    $$\widehat{\boldsymbol\beta}
+    =
+    (\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}
+    \mathbf{X}^\mathsf{T}\mathbf{Y}.$$
 
-6. Interprete geometricamente o resultado.
+5.  Mostre que
 
-*Fonte: exercício adaptado de Rice (2007, p. 565–567, 595–596).*
+    $$\mathbf{X}^\mathsf{T}
+    \widehat{\boldsymbol\varepsilon}
+    =
+    \mathbf{0}.$$
+
+6.  Interprete geometricamente o resultado.
+
+*Fonte: exercício adaptado de @rice2007mathematical [pp. 565--567, 595--596].*
 :::
 
 ::: {.callout-tip title="Exercício 6 — Falta de posto completo"}
 Considere a matriz
 
-$$
-\mathbf{X}
+$$\mathbf{X}
 =
 \begin{pmatrix}
 1&2&4\\
 1&3&6\\
 1&4&8\\
 1&5&10
-\end{pmatrix}.
-$$
+\end{pmatrix}.$$
 
-1. Determine o posto de $\mathbf{X}$.
-2. Explique por que $\mathbf{X}^\mathsf{T}\mathbf{X}$ é singular.
-3. Identifique a relação linear entre as colunas de $\mathbf{X}$.
-4. Discuta a unicidade de $\widehat{\boldsymbol\beta}$.
-5. Verifique se o vetor de valores ajustados pode ser único mesmo quando o vetor de coeficientes não é.
-6. Relacione o problema ao conceito de multicolinearidade perfeita.
+1.  Determine o posto de $\mathbf{X}$.
+2.  Explique por que $\mathbf{X}^\mathsf{T}\mathbf{X}$ é singular.
+3.  Identifique a relação linear entre as colunas de $\mathbf{X}$.
+4.  Discuta a unicidade de $\widehat{\boldsymbol\beta}$.
+5.  Verifique se o vetor de valores ajustados pode ser único mesmo quando o vetor de coeficientes não é.
+6.  Relacione o problema ao conceito de multicolinearidade perfeita.
 
-*Fonte: elaboração própria, com base no critério de existência e unicidade de Rice (2007, p. 566–567).*
+*Fonte: elaboração própria, com base no critério de existência e unicidade de @rice2007mathematical [pp. 566--567].*
 :::
 
 ::: {.callout-tip title="Exercício 7 — Mínimos quadrados ponderados"}
 Considere o modelo
 
-$$
-Y_i
+$$Y_i
 =
-\beta_0+\beta_1x_i+\varepsilon_i,
-$$
+\beta_0+\beta_1x_i+\varepsilon_i,$$
 
 em que os erros são independentes e
 
-$$
-\operatorname{Var}(\varepsilon_i)
+$$\operatorname{Var}(\varepsilon_i)
 =
-\rho_i^2\sigma^2,
-$$
+\rho_i^2\sigma^2,$$
 
 com $\rho_i$ conhecido.
 
-1. Defina
+1.  Defina
 
-   $$
-   Z_i
-   =
-   \frac{Y_i}{\rho_i},
-   \qquad
-   u_i
-   =
-   \frac{1}{\rho_i},
-   \qquad
-   v_i
-   =
-   \frac{x_i}{\rho_i}.
-   $$
+    $$Z_i
+    =
+    \frac{Y_i}{\rho_i},
+    \qquad
+    u_i
+    =
+    \frac{1}{\rho_i},
+    \qquad
+    v_i
+    =
+    \frac{x_i}{\rho_i}.$$
 
-2. Mostre que o modelo transformado possui erros com variância constante.
-3. Mostre que aplicar mínimos quadrados ordinários ao modelo transformado equivale a minimizar
+2.  Mostre que o modelo transformado possui erros com variância constante.
 
-   $$
-   \sum_{i=1}^n
-   \frac{
-   (Y_i-\beta_0-\beta_1x_i)^2
-   }{
-   \rho_i^2
-   }.
-   $$
+3.  Mostre que aplicar mínimos quadrados ordinários ao modelo transformado equivale a minimizar
 
-4. Identifique os pesos das observações.
-5. Explique por que observações de maior variância recebem menor peso.
-6. Relacione o estimador obtido ao método de máxima verossimilhança sob normalidade.
+    $$\sum_{i=1}^n
+    \frac{
+    (Y_i-\beta_0-\beta_1x_i)^2
+    }{
+    \rho_i^2
+    }.$$
 
-*Fonte: exercício adaptado de Rice (2007, p. 593–594).*
+4.  Identifique os pesos das observações.
+
+5.  Explique por que observações de maior variância recebem menor peso.
+
+6.  Relacione o estimador obtido ao método de máxima verossimilhança sob normalidade.
+
+*Fonte: exercício adaptado de @rice2007mathematical [pp. 593--594].*
 :::
 
 ::: {.callout-tip title="Exercício 8 — Mínimos quadrados não lineares"}
 Considere o modelo
 
-$$
-Y_i
+$$Y_i
 =
 \alpha e^{-\beta x_i}
 +
 \varepsilon_i,
 \qquad
-\alpha>0,\quad\beta>0.
-$$
+\alpha>0,\quad\beta>0.$$
 
-1. Escreva a função de mínimos quadrados
+1.  Escreva a função de mínimos quadrados
 
-   $$
-   Q(\alpha,\beta)
-   =
-   \sum_{i=1}^n
-   \left(
-   Y_i-\alpha e^{-\beta x_i}
-   \right)^2.
-   $$
+    $$Q(\alpha,\beta)
+    =
+    \sum_{i=1}^n
+    \left(
+    Y_i-\alpha e^{-\beta x_i}
+    \right)^2.$$
 
-2. Calcule as derivadas parciais de $Q$.
-3. Obtenha as equações de mínimos quadrados não lineares.
-4. Explique por que essas equações não possuem, em geral, solução algébrica fechada.
-5. Descreva como um método iterativo poderia ser utilizado.
-6. Mostre que, sob erros normais independentes com variância constante, o estimador de mínimos quadrados não lineares também é um estimador de máxima verossimilhança.
-7. Discuta a possibilidade de existirem mínimos locais.
+2.  Calcule as derivadas parciais de $Q$.
 
-*Fonte: exercício adaptado da discussão de regressão não linear de Cox (2006, p. 10–12) e Hastie, Tibshirani e Friedman (2009, p. 30–31).*
+3.  Obtenha as equações de mínimos quadrados não lineares.
+
+4.  Explique por que essas equações não possuem, em geral, solução algébrica fechada.
+
+5.  Descreva como um método iterativo poderia ser utilizado.
+
+6.  Mostre que, sob erros normais independentes com variância constante, o estimador de mínimos quadrados não lineares também é um estimador de máxima verossimilhança.
+
+7.  Discuta a possibilidade de existirem mínimos locais.
+
+*Fonte: exercício adaptado da discussão de regressão não linear de @cox2006principles [pp. 10--12] e @hastie2009elements [pp. 30--31].*
 :::
 
 ### Síntese
@@ -3610,140 +3086,104 @@ $$
 ::: {.callout-note title="Síntese da seção"}
 O método dos mínimos quadrados estima os parâmetros minimizando a soma dos quadrados dos resíduos:
 
-$$
-\widehat{\boldsymbol\theta}_{\mathrm{MQ}}
+$$\widehat{\boldsymbol\theta}_{\mathrm{MQ}}
 \in
 \operatorname*{arg\,min}_{\boldsymbol\theta}
 \sum_{i=1}^n
 \left[
 Y_i-m(x_i;\boldsymbol\theta)
-\right]^2.
-$$
+\right]^2.$$
 
 No modelo linear,
 
-$$
-\mathbf{Y}
+$$\mathbf{Y}
 =
 \mathbf{X}\boldsymbol\beta
 +
-\boldsymbol\varepsilon,
-$$
+\boldsymbol\varepsilon,$$
 
 as equações normais são
 
-$$
-\mathbf{X}^\mathsf{T}\mathbf{X}
+$$\mathbf{X}^\mathsf{T}\mathbf{X}
 \widehat{\boldsymbol\beta}
 =
-\mathbf{X}^\mathsf{T}\mathbf{Y}.
-$$
+\mathbf{X}^\mathsf{T}\mathbf{Y}.$$
 
 Quando $\mathbf{X}$ possui posto completo,
 
-$$
-\widehat{\boldsymbol\beta}
+$$\widehat{\boldsymbol\beta}
 =
 (\mathbf{X}^\mathsf{T}\mathbf{X})^{-1}
-\mathbf{X}^\mathsf{T}\mathbf{Y}.
-$$
+\mathbf{X}^\mathsf{T}\mathbf{Y}.$$
 
 Geometricamente, o vetor ajustado é a projeção ortogonal de $\mathbf{Y}$ no espaço gerado pelas colunas de $\mathbf{X}$.
 
 Sob erros normais, independentes e homoscedásticos, os estimadores dos coeficientes obtidos por mínimos quadrados coincidem com os estimadores de máxima verossimilhança. Se as variâncias são diferentes e conhecidas, a máxima verossimilhança conduz ao método dos mínimos quadrados ponderados.
 :::
 
-
 ## Algoritmo Expectation-Maximization (EM) {#sec-algoritmo-em}
 
-O algoritmo *Expectation-Maximization* (EM) é um procedimento iterativo para a obtenção de estimadores de máxima verossimilhança, ou de máxima verossimilhança penalizada, em modelos nos quais a maximização direta da verossimilhança observada é dificultada pela presença de dados ausentes, censura, variáveis latentes ou outra forma de informação incompleta. A formulação moderna do método foi sistematizada por Dempster, Laird e Rubin (1977). Apresentações posteriores enfatizam tanto sua estrutura probabilística quanto seus aspectos computacionais e suas limitações práticas (HASTIE; TIBSHIRANI; FRIEDMAN, 2009; GUPTA; CHEN, 2011; RAMACHANDRAN; TSOKOS, 2021; CHIHARA; HESTERBERG, 2022).
+O algoritmo *Expectation-Maximization* (EM) é um procedimento iterativo para maximização da verossimilhança — ou de uma versão penalizada/MAP — em problemas com dados ausentes, censura, variáveis latentes ou outra representação por dados incompletos. A apresentação adotada combina a formulação rigorosa e as propriedades computacionais de @gupta2011em [secs. 1--2], as aplicações a misturas de @hastie2009elements [secs. 6.8 e 8.5], a exposição de dados incompletos de @ramachandran2021r [sec. 13.4] e o tratamento didático de @chihara2022 [sec. 13.8].
 
-::: {.callout-note title="Síntese das contribuições utilizadas"}
-
-A exposição desta seção combina cinco contribuições complementares:
-
-1. a formulação original do EM para máxima verossimilhança com dados incompletos, de Dempster, Laird e Rubin (1977);
-2. a interpretação por dados aumentados, a aplicação a misturas gaussianas e a leitura do EM como procedimento de maximização sucessiva, apresentadas por Hastie, Tibshirani e Friedman (2009);
-3. as condições de monotonicidade, a relação de Markov entre parâmetro, dados completos e dados observados, as variantes GEM, MAP-EM e MCEM e os problemas de inicialização e singularidade discutidos por Gupta e Chen (2011);
-4. os exemplos de dados ausentes e censurados, os critérios de parada e a implementação em R discutidos por Ramachandran e Tsokos (2021);
-5. o exemplo multinomial clássico e sua apresentação computacional e didática em Chihara e Hesterberg (2022).
-
-As propriedades assintóticas atribuídas ao estimador final, quando o algoritmo efetivamente alcança um estimador regular de máxima verossimilhança, são apresentadas com base em Lauritzen (2023).
-
-:::
+A exposição técnica desta seção segue @gupta2011em, @hastie2009elements, @ramachandran2021r e @chihara2022. As propriedades assintóticas do estimador de máxima verossimilhança eventualmente alcançado pelo algoritmo são tratadas com base em @lauritzen2023fundamentals.
 
 ### Exemplo motivacional: mistura de duas populações normais
 
 Considere uma amostra $Y_1,\ldots,Y_n$ obtida de uma população heterogênea formada por duas subpopulações. Condicionalmente à subpopulação de origem, suponha que
 
-$$
-Y_i\mid Z_i=1\sim N(\mu_1,\sigma_1^2)
-$$
+$$Y_i\mid Z_i=1\sim N(\mu_1,\sigma_1^2)$$
 
 e
 
-$$
-Y_i\mid Z_i=2\sim N(\mu_2,\sigma_2^2),
-$$
+$$Y_i\mid Z_i=2\sim N(\mu_2,\sigma_2^2),$$
 
 em que $Z_i\in\{1,2\}$ identifica o componente responsável pela geração da observação. Se
 
-$$
-P(Z_i=1)=\pi
+$$P(Z_i=1)=\pi
 \qquad\text{e}\qquad
-P(Z_i=2)=1-\pi,
-$$
+P(Z_i=2)=1-\pi,$$
 
 a densidade marginal de $Y_i$ é
 
-$$
-f(y_i\mid\boldsymbol{\theta})
+$$f(y_i\mid\boldsymbol{\theta})
 =
 \pi\phi(y_i;\mu_1,\sigma_1^2)
 +
-(1-\pi)\phi(y_i;\mu_2,\sigma_2^2),
-$$
+(1-\pi)\phi(y_i;\mu_2,\sigma_2^2),$$
 
 onde
 
-$$
-\boldsymbol{\theta}
+$$\boldsymbol{\theta}
 =
-(\pi,\mu_1,\mu_2,\sigma_1^2,\sigma_2^2)
-$$
+(\pi,\mu_1,\mu_2,\sigma_1^2,\sigma_2^2)$$
 
 e $\phi(y;\mu,\sigma^2)$ denota a densidade normal com média $\mu$ e variância $\sigma^2$.
 
 A log-verossimilhança observada é
 
-$$
-\ell(\boldsymbol{\theta};\boldsymbol{y})
+$$\ell(\boldsymbol{\theta};\boldsymbol{y})
 =
 \sum_{i=1}^n
 \log\left[
 \pi\phi(y_i;\mu_1,\sigma_1^2)
 +
 (1-\pi)\phi(y_i;\mu_2,\sigma_2^2)
-\right].
-$$
+\right].$$
 
 A presença do logaritmo de uma soma impede a separação imediata dos termos associados aos dois componentes. Em geral, as equações de máxima verossimilhança não fornecem expressões fechadas simultâneas para todos os parâmetros.
 
 Suponha, porém, que os indicadores de pertencimento fossem observados. Defina
 
-$$
-Z_{ij}
+$$Z_{ij}
 =
 \begin{cases}
 1, & \text{se a observação }i\text{ pertence ao componente }j,\\
 0, & \text{caso contrário},
-\end{cases}
-$$
+\end{cases}$$
 
 com $Z_{i1}+Z_{i2}=1$. A log-verossimilhança dos dados completos seria
 
-$$
-\ell_c(\boldsymbol{\theta})
+$$\ell_c(\boldsymbol{\theta})
 =
 \sum_{i=1}^n\sum_{j=1}^2
 Z_{ij}
@@ -3751,17 +3191,14 @@ Z_{ij}
 \log(\pi_j)
 +
 \log\phi(y_i;\mu_j,\sigma_j^2)
-\right],
-$$
+\right],$$
 
 onde $\pi_1=\pi$ e $\pi_2=1-\pi$.
 
-Essa expressão é simples de maximizar quando $Z_{ij}$ é conhecido. O EM explora exatamente essa diferença: em cada iteração, substitui os indicadores não observados por suas esperanças condicionais, isto é, pelas probabilidades atuais de pertencimento aos componentes, e atualiza os parâmetros por médias e variâncias ponderadas (HASTIE; TIBSHIRANI; FRIEDMAN, 2009; GUPTA; CHEN, 2011).
+Essa expressão é simples de maximizar quando $Z_{ij}$ é conhecido. O EM explora exatamente essa diferença: em cada iteração, substitui os indicadores não observados por suas esperanças condicionais, isto é, pelas probabilidades atuais de pertencimento aos componentes, e atualiza os parâmetros por médias e variâncias ponderadas [@hastie2009elements; @gupta2011em].
 
 ::: {.callout-note title="Interpretação"}
-
-O EM não realiza uma classificação rígida das observações durante as iterações. Cada observação recebe uma responsabilidade probabilística para cada componente. Essa característica distingue o ajuste de misturas gaussianas por EM de métodos de agrupamento com atribuição exclusiva, como o $k$-means (GUPTA; CHEN, 2011).
-
+O EM não realiza uma classificação rígida das observações durante as iterações. Cada observação recebe uma responsabilidade probabilística para cada componente. Essa característica distingue o ajuste de misturas gaussianas por EM de métodos de agrupamento com atribuição exclusiva, como o $k$-means [@gupta2011em, sec. 3.2].
 :::
 
 ### Definição formal
@@ -3770,174 +3207,139 @@ O EM não realiza uma classificação rígida das observações durante as itera
 
 Seja $\boldsymbol{Y}$ o vetor de dados observados e seja $\boldsymbol{Z}$ um vetor de variáveis não observadas, ausentes ou latentes. O vetor
 
-$$
-\boldsymbol{X}=(\boldsymbol{Y},\boldsymbol{Z})
-$$
+$$\boldsymbol{X}=(\boldsymbol{Y},\boldsymbol{Z})$$
 
 é denominado vetor de **dados completos**.
 
 Considere um modelo paramétrico indexado por
 
-$$
-\boldsymbol{\theta}\in\Theta.
-$$
+$$\boldsymbol{\theta}\in\Theta.$$
 
 A densidade conjunta dos dados completos é
 
-$$
-f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta}),
-$$
+$$f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta}),$$
 
 enquanto a densidade observada é obtida por marginalização:
 
-$$
-f(\boldsymbol{y}\mid\boldsymbol{\theta})
+$$f(\boldsymbol{y}\mid\boldsymbol{\theta})
 =
 \int_{\mathcal{Z}}
 f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta})
-\,d\boldsymbol{z}.
-$$
+\,d\boldsymbol{z}.$$
 
 No caso discreto,
 
-$$
-f(\boldsymbol{y}\mid\boldsymbol{\theta})
+$$f(\boldsymbol{y}\mid\boldsymbol{\theta})
 =
 \sum_{\boldsymbol{z}\in\mathcal{Z}}
-f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta}).
-$$
+f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta}).$$
 
 O objetivo é maximizar a log-verossimilhança observada
 
-$$
-\ell(\boldsymbol{\theta})
+$$\ell(\boldsymbol{\theta})
 =
-\log f(\boldsymbol{y}\mid\boldsymbol{\theta}).
-$$
+\log f(\boldsymbol{y}\mid\boldsymbol{\theta}).$$
 
 O princípio do EM consiste em escolher uma representação por dados completos para a qual
 
-$$
-\ell_c(\boldsymbol{\theta};\boldsymbol{y},\boldsymbol{z})
+$$\ell_c(\boldsymbol{\theta};\boldsymbol{y},\boldsymbol{z})
 =
-\log f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta})
-$$
+\log f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta})$$
 
-seja mais simples de trabalhar do que $\ell(\boldsymbol{\theta})$ (DEMPSTER; LAIRD; RUBIN, 1977; GUPTA; CHEN, 2011).
+seja mais simples de trabalhar do que $\ell(\boldsymbol{\theta})$ [@gupta2011em, secs. 1.1 e 2.1].
 
 #### Relação entre dados completos e dados observados
 
-Gupta e Chen (2011) formulam a relação estrutural do EM pela cadeia de Markov
+@gupta2011em formulam a relação estrutural do EM pela cadeia de Markov
 
-$$
-\boldsymbol{\theta}\longrightarrow\boldsymbol{X}\longrightarrow\boldsymbol{Y},
-$$
+$$\boldsymbol{\theta}\longrightarrow\boldsymbol{X}\longrightarrow\boldsymbol{Y},$$
 
 o que equivale a exigir
 
-$$
-f(\boldsymbol{y}\mid\boldsymbol{x},\boldsymbol{\theta})
+$$f(\boldsymbol{y}\mid\boldsymbol{x},\boldsymbol{\theta})
 =
-f(\boldsymbol{y}\mid\boldsymbol{x}).
-$$
+f(\boldsymbol{y}\mid\boldsymbol{x}).$$
 
 Essa condição afirma que, conhecidos os dados completos, o mecanismo que produz os dados observados não contém informação adicional sobre $\boldsymbol{\theta}$. Quando $\boldsymbol{Y}=T(\boldsymbol{X})$ para alguma transformação determinística $T$, a condição é automaticamente satisfeita.
 
 #### Função auxiliar
 
 ::: {.callout-important title="Definição — função $Q$"}
-
 Dado o valor corrente $\boldsymbol{\theta}^{(t)}$, define-se
 
-$$
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
+$$Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
 =
 E_{\boldsymbol{\theta}^{(t)}}
 \left[
 \ell_c(\boldsymbol{\theta};\boldsymbol{Y},\boldsymbol{Z})
 \mid
 \boldsymbol{Y}=\boldsymbol{y}
-\right].
-$$
+\right].$$
 
 Equivalentemente,
 
-$$
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
+$$Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
 =
 \int_{\mathcal{Z}}
 \log f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta})
 \,
  f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)})
-\,d\boldsymbol{z}.
-$$
-
+\,d\boldsymbol{z}.$$
 :::
 
-A esperança é calculada com respeito à distribuição condicional das variáveis latentes sob o valor corrente $\boldsymbol{\theta}^{(t)}$. O argumento $\boldsymbol{\theta}$ permanece livre dentro da log-verossimilhança completa; o valor corrente é utilizado somente para determinar a distribuição condicional empregada na esperança (RAMACHANDRAN; TSOKOS, 2021).
+A esperança é calculada com respeito à distribuição condicional das variáveis latentes sob o valor corrente $\boldsymbol{\theta}^{(t)}$. O argumento $\boldsymbol{\theta}$ permanece livre dentro da log-verossimilhança completa; o valor corrente é utilizado somente para determinar a distribuição condicional empregada na esperança [@ramachandran2021r, sec. 13.4].
 
 #### Etapas do algoritmo
 
 ::: {.callout-important title="Definição — algoritmo EM"}
-
 Escolha um valor inicial $\boldsymbol{\theta}^{(0)}$. Para $t=0,1,2,\ldots$, execute:
 
 **Etapa E — Expectation**
 
 Calcule
 
-$$
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
+$$Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
 =
 E_{\boldsymbol{\theta}^{(t)}}
 \left[
 \ell_c(\boldsymbol{\theta};\boldsymbol{Y},\boldsymbol{Z})
 \mid
 \boldsymbol{Y}=\boldsymbol{y}
-\right].
-$$
+\right].$$
 
 **Etapa M — Maximization**
 
 Determine
 
-$$
-\boldsymbol{\theta}^{(t+1)}
+$$\boldsymbol{\theta}^{(t+1)}
 \in
 \arg\max_{\boldsymbol{\theta}\in\Theta}
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)}).
-$$
+Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)}).$$
 
-Repita as duas etapas até que um critério de convergência seja satisfeito.
-
+Repita as duas etapas até que um critério de convergência seja satisfeito [@gupta2011em, sec. 1.1; @ramachandran2021r, sec. 13.4].
 :::
 
 Critérios usuais de parada incluem
 
-$$
-\left|
+$$\left|
 \ell(\boldsymbol{\theta}^{(t+1)})
 -
 \ell(\boldsymbol{\theta}^{(t)})
 \right|
-<\varepsilon
-$$
+<\varepsilon$$
 
 ou
 
-$$
-\left\|
+$$\left\|
 \boldsymbol{\theta}^{(t+1)}
 -
 \boldsymbol{\theta}^{(t)}
 \right\|
-<\varepsilon.
-$$
+<\varepsilon.$$
 
 Uma forma relativa, mais estável quando a escala da log-verossimilhança é grande, é
 
-$$
-\frac{
+$$\frac{
 \left|
 \ell(\boldsymbol{\theta}^{(t+1)})
 -
@@ -3946,25 +3348,21 @@ $$
 }{
 1+\left|\ell(\boldsymbol{\theta}^{(t)})\right|
 }
-<\varepsilon.
-$$
+<\varepsilon.$$
 
-Gupta e Chen (2011) e Ramachandran e Tsokos (2021) ressaltam que o critério de parada não faz parte da definição matemática essencial do EM e deve ser escolhido de acordo com a precisão e o custo computacional desejados.
+O critério de parada não faz parte da definição matemática essencial do EM e deve ser escolhido de acordo com a precisão e o custo computacional desejados [@gupta2011em; @ramachandran2021r].
 
 #### Interpretação por limite inferior
 
 Defina
 
-$$
-q_t(\boldsymbol{z})
+$$q_t(\boldsymbol{z})
 =
-f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)}).
-$$
+f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)}).$$
 
 Para qualquer densidade $q(\boldsymbol{z})$,
 
-$$
-\ell(\boldsymbol{\theta})
+$$\ell(\boldsymbol{\theta})
 =
 \mathcal{F}(q,\boldsymbol{\theta})
 +
@@ -3973,41 +3371,34 @@ D_{\mathrm{KL}}
 q(\boldsymbol{z})
 \parallel
 f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta})
-\right],
-$$
+\right],$$
 
 onde
 
-$$
-\mathcal{F}(q,\boldsymbol{\theta})
+$$\mathcal{F}(q,\boldsymbol{\theta})
 =
 E_q\left[
 \log f_c(\boldsymbol{y},\boldsymbol{Z}\mid\boldsymbol{\theta})
 \right]
 +
-\mathcal{H}(q),
-$$
+\mathcal{H}(q),$$
 
 $\mathcal{H}(q)$ é a entropia de $q$ e
 
-$$
-D_{\mathrm{KL}}(q\parallel p)
+$$D_{\mathrm{KL}}(q\parallel p)
 =
 E_q\left[
 \log\frac{q(\boldsymbol{Z})}{p(\boldsymbol{Z})}
 \right]
-\geq 0.
-$$
+\geq 0.$$
 
 Portanto,
 
-$$
-\mathcal{F}(q,\boldsymbol{\theta})
+$$\mathcal{F}(q,\boldsymbol{\theta})
 \leq
-\ell(\boldsymbol{\theta}).
-$$
+\ell(\boldsymbol{\theta}).$$
 
-Na etapa E, escolhe-se a distribuição condicional corrente das variáveis latentes, fazendo com que o limite inferior toque a log-verossimilhança no valor atual. Na etapa M, maximiza-se esse limite inferior em relação a $\boldsymbol{\theta}$. Essa interpretação aproxima o EM dos procedimentos de *minorization-maximization* ou maximização sucessiva discutidos por Hastie, Tibshirani e Friedman (2009) e Gupta e Chen (2011).
+Na etapa E, escolhe-se a distribuição condicional corrente das variáveis latentes, fazendo com que o limite inferior toque a log-verossimilhança no valor atual. Na etapa M, maximiza-se esse limite inferior em relação a $\boldsymbol{\theta}$. Essa interpretação aproxima o EM dos procedimentos de *minorization-maximization* ou maximização sucessiva [@hastie2009elements; @gupta2011em].
 
 ### Condições de uso
 
@@ -4017,60 +3408,52 @@ Na etapa E, escolhe-se a distribuição condicional corrente das variáveis late
 
 Deve ser possível introduzir dados latentes $\boldsymbol{Z}$ tais que
 
-$$
-f(\boldsymbol{y}\mid\boldsymbol{\theta})
+$$f(\boldsymbol{y}\mid\boldsymbol{\theta})
 =
 \int
 f_c(\boldsymbol{y},\boldsymbol{z}\mid\boldsymbol{\theta})
-\,d\boldsymbol{z}.
-$$
+\,d\boldsymbol{z}.$$
 
-A ampliação dos dados não é única. Duas representações corretas podem produzir algoritmos com custos e velocidades de convergência diferentes. Na prática, a escolha deve tornar a etapa E e, principalmente, a etapa M mais simples do que a maximização direta da verossimilhança observada (GUPTA; CHEN, 2011).
+A ampliação dos dados não é única. Duas representações corretas podem produzir algoritmos com custos e velocidades de convergência diferentes. Na prática, a escolha deve tornar a etapa E e, principalmente, a etapa M mais simples do que a maximização direta da verossimilhança observada [@gupta2011em].
 
 #### Etapa E calculável
 
 Deve ser possível calcular
 
-$$
-f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)})
-$$
+$$f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)})$$
 
 ou, ao menos, as esperanças condicionais das estatísticas que aparecem na log-verossimilhança completa.
 
-Quando o modelo completo pertence a uma família exponencial, a etapa E frequentemente se reduz ao cálculo da esperança condicional de estatísticas suficientes. Essa simplificação é destacada por Ramachandran e Tsokos (2021).
+Quando o modelo completo pertence a uma família exponencial, a etapa E frequentemente se reduz ao cálculo da esperança condicional de estatísticas suficientes [@ramachandran2021r, sec. 13.4].
 
-Se a esperança condicional não puder ser calculada analiticamente, uma possibilidade é aproximá-la por simulação, originando o algoritmo Monte Carlo EM, ou MCEM (GUPTA; CHEN, 2011; RAMACHANDRAN; TSOKOS, 2021).
+Se a esperança condicional não puder ser calculada analiticamente, uma possibilidade é aproximá-la por simulação, originando o algoritmo Monte Carlo EM, ou MCEM [@gupta2011em, sec. 5; @ramachandran2021r, sec. 13.4].
 
 #### Etapa M calculável
 
 O problema
 
-$$
-\max_{\boldsymbol{\theta}\in\Theta}
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
-$$
+$$\max_{\boldsymbol{\theta}\in\Theta}
+Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})$$
 
 deve possuir solução fechada ou ser numericamente mais simples do que a maximização da log-verossimilhança observada.
 
 Quando a maximização exata é difícil, pode-se empregar o **EM generalizado**. Nesse caso, basta obter $\boldsymbol{\theta}^{(t+1)}$ tal que
 
-$$
-Q(\boldsymbol{\theta}^{(t+1)}\mid\boldsymbol{\theta}^{(t)})
+$$Q(\boldsymbol{\theta}^{(t+1)}\mid\boldsymbol{\theta}^{(t)})
 \geq
-Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)}).
-$$
+Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)}).$$
 
-Essa modificação preserva a propriedade de monotonicidade, embora a etapa M não seja resolvida exatamente (HASTIE; TIBSHIRANI; FRIEDMAN, 2009; GUPTA; CHEN, 2011).
+Essa modificação preserva a propriedade de monotonicidade, embora a etapa M não seja resolvida exatamente [@hastie2009elements; @gupta2011em].
 
 #### Suporte independente do parâmetro
 
-Uma condição suficiente importante na demonstração usual da monotonicidade é que o suporte dos dados completos não dependa de $\boldsymbol{\theta}$. Se o suporte variar com o parâmetro, como em modelos uniformes cujo limite depende de $\theta$, o argumento padrão pode falhar (GUPTA; CHEN, 2011).
+Uma condição suficiente importante na demonstração usual da monotonicidade é que o suporte dos dados completos não dependa de $\boldsymbol{\theta}$. Se o suporte variar com o parâmetro, como em modelos uniformes cujo limite depende de $\theta$, o argumento padrão pode falhar [@gupta2011em].
 
 #### Identificabilidade e existência do máximo
 
 O modelo deve ser identificável, ao menos após a imposição das restrições necessárias. Em misturas, a permutação dos rótulos dos componentes produz a mesma densidade, fenômeno conhecido como invariância por troca de rótulos.
 
-Além disso, a verossimilhança pode ser ilimitada. Em uma mistura gaussiana irrestrita, um componente pode concentrar-se em uma única observação com variância tendendo a zero, fazendo a log-verossimilhança divergir para infinito. Nessa situação, o problema de máxima verossimilhança não possui um máximo finito no espaço paramétrico irrestrito (GUPTA; CHEN, 2011).
+Além disso, a verossimilhança pode ser ilimitada. Em uma mistura gaussiana irrestrita, um componente pode concentrar-se em uma única observação com variância tendendo a zero, fazendo a log-verossimilhança divergir para infinito. Nessa situação, o problema de máxima verossimilhança não possui um máximo finito no espaço paramétrico irrestrito [@gupta2011em].
 
 Estratégias práticas incluem:
 
@@ -4082,12 +3465,10 @@ Estratégias práticas incluem:
 
 #### Valores iniciais
 
-Como a log-verossimilhança observada pode ser não côncava, diferentes valores iniciais podem conduzir a diferentes pontos estacionários. Para misturas gaussianas, inicializações baseadas em $k$-means, quantis, partições aleatórias ou conhecimento prévio são alternativas usuais (HASTIE; TIBSHIRANI; FRIEDMAN, 2009; GUPTA; CHEN, 2011).
+Como a log-verossimilhança observada pode ser não côncava, diferentes valores iniciais podem conduzir a diferentes pontos estacionários. Para misturas gaussianas, inicializações baseadas em $k$-means, quantis, partições aleatórias ou conhecimento prévio são alternativas usuais [@hastie2009elements; @gupta2011em].
 
 ::: {.callout-warning title="Observação — escopo das garantias"}
-
 A monotonicidade da log-verossimilhança não garante convergência ao máximo global. Também não garante, por si só, a convergência da sequência de parâmetros. Teoremas mais fortes exigem hipóteses adicionais sobre continuidade, compacidade de conjuntos de nível, regularidade da aplicação de atualização e comportamento na fronteira do espaço paramétrico. A formulação precisa dessas hipóteses deve ser verificada em uma referência especializada para o modelo considerado.
-
 :::
 
 ### Propriedades importantes
@@ -4095,113 +3476,79 @@ A monotonicidade da log-verossimilhança não garante convergência ao máximo g
 #### Monotonicidade da log-verossimilhança
 
 ::: {.callout-important title="Propriedade — monotonicidade"}
-
 Sob as condições usuais do EM, se
 
-$$
-Q(\boldsymbol{\theta}^{(t+1)}\mid\boldsymbol{\theta}^{(t)})
+$$Q(\boldsymbol{\theta}^{(t+1)}\mid\boldsymbol{\theta}^{(t)})
 \geq
-Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)}),
-$$
+Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)}),$$
 
 então
 
-$$
-\ell(\boldsymbol{\theta}^{(t+1)})
+$$\ell(\boldsymbol{\theta}^{(t+1)})
 \geq
-\ell(\boldsymbol{\theta}^{(t)}).
-$$
-
+\ell(\boldsymbol{\theta}^{(t)}).$$
 :::
 
 Para demonstrar a propriedade, seja
 
-$$
-q_t(\boldsymbol{z})
+$$q_t(\boldsymbol{z})
 =
-f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)}).
-$$
+f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)}).$$
 
 Então,
 
-$$
-\ell(\boldsymbol{\theta})
--
-\ell(\boldsymbol{\theta}^{(t)})
-=
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
--
-Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)})
-+
-D_{\mathrm{KL}}
-\left[
-q_t
-\parallel
-f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta})
-\right].
-$$
+$$\ell(\boldsymbol{\theta})-\ell(\boldsymbol{\theta}^{(t)})
+=Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
+-Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)})
++D_{\mathrm{KL}}\left[q_t\parallel f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta})
+\right].$$
 
 Como a divergência de Kullback--Leibler é não negativa,
 
-$$
-\ell(\boldsymbol{\theta})
--
-\ell(\boldsymbol{\theta}^{(t)})
-\geq
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
--
-Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)}).
-$$
+$$\ell(\boldsymbol{\theta})-\ell(\boldsymbol{\theta}^{(t)})
+\geq Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)}) -Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)}).$$
 
-Tomando $\boldsymbol{\theta}=\boldsymbol{\theta}^{(t+1)}$, obtém-se a monotonicidade. Essa é a principal garantia geral do algoritmo (DEMPSTER; LAIRD; RUBIN, 1977; GUPTA; CHEN, 2011).
+Tomando $\boldsymbol{\theta}=\boldsymbol{\theta}^{(t+1)}$, obtém-se a monotonicidade. Essa é a principal garantia geral do algoritmo [@gupta2011em, secs. 1.1 e 2.1].
 
 #### Convergência dos valores da log-verossimilhança
 
 Se a sequência
 
-$$
-\ell(\boldsymbol{\theta}^{(0)}),
+$$\ell(\boldsymbol{\theta}^{(0)}),
 \ell(\boldsymbol{\theta}^{(1)}),
-\ldots
-$$
+\ldots$$
 
 for limitada superiormente, sua monotonicidade implica a existência de $\ell^\star$ tal que
 
-$$
-\ell(\boldsymbol{\theta}^{(t)})
+$$\ell(\boldsymbol{\theta}^{(t)})
 \longrightarrow
-\ell^\star.
-$$
+\ell^\star.$$
 
 Isso não implica necessariamente
 
-$$
-\boldsymbol{\theta}^{(t)}
+$$\boldsymbol{\theta}^{(t)}
 \longrightarrow
-\boldsymbol{\theta}^\star.
-$$
+\boldsymbol{\theta}^\star.$$
 
-A sequência de parâmetros pode possuir múltiplos pontos de acumulação associados ao mesmo valor da log-verossimilhança (GUPTA; CHEN, 2011).
+A sequência de parâmetros pode possuir múltiplos pontos de acumulação associados ao mesmo valor da log-verossimilhança [@gupta2011em].
 
 #### Pontos estacionários
 
 Sob condições adicionais de regularidade, os pontos limites do EM são pontos estacionários da log-verossimilhança observada:
 
-$$
-\nabla\ell(\boldsymbol{\theta}^\star)
+$$\nabla\ell(\boldsymbol{\theta}^\star)
 =
-\boldsymbol{0}.
-$$
+\boldsymbol{0}.$$
 
-Um ponto estacionário pode ser um máximo local, um máximo global ou um ponto de sela. Portanto, a convergência numérica do algoritmo não prova que o máximo global foi encontrado (GUPTA; CHEN, 2011).
+Um ponto estacionário pode ser um máximo local, um máximo global ou um ponto de sela. Portanto, a convergência numérica do algoritmo não prova que o máximo global foi encontrado [@gupta2011em].
 
 #### Dependência da inicialização
 
-Em problemas não côncavos, especialmente misturas gaussianas e modelos ocultos de Markov, o resultado pode depender fortemente de $\boldsymbol{\theta}^{(0)}$. Recomenda-se executar o algoritmo a partir de diferentes valores iniciais e comparar as log-verossimilhanças finais (GUPTA; CHEN, 2011).
+Em problemas não côncavos, especialmente misturas gaussianas e modelos ocultos de Markov, o resultado pode depender fortemente de $\boldsymbol{\theta}^{(0)}$. Recomenda-se executar o algoritmo a partir de diferentes valores iniciais e comparar as log-verossimilhanças finais [@gupta2011em].
 
 #### Velocidade de convergência
 
-O EM pode convergir lentamente em comparação com métodos que utilizam derivadas de segunda ordem, como Newton--Raphson. A lentidão tende a ser mais pronunciada quando os dados observados contêm pouca informação sobre as variáveis latentes, por exemplo, quando componentes de uma mistura apresentam forte sobreposição. Variantes aceleradas podem reduzir o número de iterações, mas frequentemente aumentam o custo e a complexidade de cada passo (GUPTA; CHEN, 2011).
+O EM pode convergir lentamente em comparação com métodos que utilizam derivadas de segunda ordem, como Newton--Raphson. A lentidão tende a ser mais pronunciada quando os dados observados contêm pouca informação sobre as variáveis latentes, por exemplo, quando componentes de uma mistura apresentam forte sobreposição. Variantes aceleradas podem reduzir o número de iterações, mas frequentemente aumentam o custo e a complexidade de cada passo [@gupta2011em].
 
 #### Propriedades do estimador final
 
@@ -4209,16 +3556,13 @@ O EM é um algoritmo de otimização, não uma definição distinta de estimador
 
 Em famílias exponenciais regulares e sob as condições pertinentes,
 
-$$
-\widehat{\boldsymbol{\theta}}_{\mathrm{MV}}
+$$\widehat{\boldsymbol{\theta}}_{\mathrm{MV}}
 \xrightarrow{P}
-\boldsymbol{\theta}_0
-$$
+\boldsymbol{\theta}_0$$
 
 e
 
-$$
-\sqrt{n}
+$$\sqrt{n}
 \left(
 \widehat{\boldsymbol{\theta}}_{\mathrm{MV}}
 -
@@ -4228,18 +3572,15 @@ $$
 N\left(
 \boldsymbol{0},
 \mathcal{I}(\boldsymbol{\theta}_0)^{-1}
-\right),
-$$
+\right),$$
 
-onde $\mathcal{I}(\boldsymbol{\theta}_0)$ é a informação de Fisher por observação. Essa conclusão não se aplica automaticamente quando o algoritmo converge para um máximo local inadequado, quando o modelo não é identificável, quando o máximo ocorre na fronteira ou quando a verossimilhança é ilimitada (LAURITZEN, 2023).
+onde $\mathcal{I}(\boldsymbol{\theta}_0)$ é a informação de Fisher por observação. Essa conclusão não se aplica automaticamente quando o algoritmo converge para um máximo local inadequado, quando o modelo não é identificável, quando o máximo ocorre na fronteira ou quando a verossimilhança é ilimitada [@lauritzen2023fundamentals, secs. 5.3.1--5.3.2].
 
 ::: {.callout-note title="Distinção conceitual"}
-
 - **Convergência computacional:** comportamento de $\boldsymbol{\theta}^{(t)}$ quando $t\to\infty$ para uma amostra fixa.
 - **Convergência estatística:** comportamento de $\widehat{\boldsymbol{\theta}}_n$ quando $n\to\infty$ sob repetição amostral.
 
 Essas duas noções não devem ser confundidas.
-
 :::
 
 #### Variantes relevantes
@@ -4248,8 +3589,7 @@ Essas duas noções não devem ser confundidas.
 
 **MAP-EM:** acrescenta o logaritmo de uma densidade a priori à etapa M:
 
-$$
-\boldsymbol{\theta}^{(t+1)}
+$$\boldsymbol{\theta}^{(t+1)}
 \in
 \arg\max_{\boldsymbol{\theta}}
 \left
@@ -4257,21 +3597,17 @@ $$
 Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
 +
 \log p(\boldsymbol{\theta})
-\right\}.
-$$
+\right\}.$$
 
 **MCEM:** aproxima a etapa E por simulação. Se
 
-$$
-\boldsymbol{Z}^{(t,1)},\ldots,\boldsymbol{Z}^{(t,M)}
+$$\boldsymbol{Z}^{(t,1)},\ldots,\boldsymbol{Z}^{(t,M)}
 \sim
-f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)}),
-$$
+f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)}),$$
 
 então
 
-$$
-\widehat{Q}_M(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
+$$\widehat{Q}_M(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
 =
 \frac{1}{M}
 \sum_{m=1}^M
@@ -4280,25 +3616,21 @@ $$
 \boldsymbol{y},\boldsymbol{Z}^{(t,m)}
 \mid
 \boldsymbol{\theta}
-\right).
-$$
+\right).$$
 
-Essas variantes são discutidas por Gupta e Chen (2011), e o MCEM também é apresentado por Ramachandran e Tsokos (2021).
+Essas variantes são discutidas por @gupta2011em, e o MCEM também é apresentado por @ramachandran2021r [sec. 13.4].
 
 ### Exemplos
 
 #### Exemplo multinomial com informação agregada
 
 ::: {.callout-tip title="Exemplo 1 — informação incompleta em uma distribuição multinomial"}
-
-Este exemplo é adaptado do exemplo clássico de Dempster, Laird e Rubin (1977), na apresentação de Chihara e Hesterberg (2022) e Gupta e Chen (2011).
-
+Este exemplo é adaptado da apresentação de @chihara2022 [sec. 13.8] e @gupta2011em [sec. 1.5], que discutem o exemplo clássico de dados multinomiais incompletos.
 :::
 
 Considere
 
-$$
-(X_1,X_2,X_3,X_4,X_5)
+$$(X_1,X_2,X_3,X_4,X_5)
 \sim
 \operatorname{Multinomial}
 \left[
@@ -4310,73 +3642,58 @@ $$
 \frac{1-\theta}{4},
 \frac{\theta}{4}
 \right)
-\right],
-$$
+\right],$$
 
 com $0<\theta<1$. Suponha que $X_1$ e $X_2$ não sejam observados separadamente; observa-se apenas
 
-$$
-Y_1=X_1+X_2,
-$$
+$$Y_1=X_1+X_2,$$
 
 além de $Y_2=X_3$, $Y_3=X_4$ e $Y_4=X_5$.
 
 Condicionalmente a $Y_1=y_1$ e ao valor corrente $\theta^{(t)}$,
 
-$$
-E(X_2\mid Y_1=y_1,\theta^{(t)})
+$$E(X_2\mid Y_1=y_1,\theta^{(t)})
 =
-\frac{\theta^{(t)}}{2+\theta^{(t)}}y_1
-$$
+\frac{\theta^{(t)}}{2+\theta^{(t)}}y_1$$
 
 e
 
-$$
-E(X_1\mid Y_1=y_1,\theta^{(t)})
+$$E(X_1\mid Y_1=y_1,\theta^{(t)})
 =
-\frac{2}{2+\theta^{(t)}}y_1.
-$$
+\frac{2}{2+\theta^{(t)}}y_1.$$
 
 A etapa M produz
 
-$$
-\theta^{(t+1)}
+$$\theta^{(t+1)}
 =
 \frac{
 \dfrac{\theta^{(t)}}{2+\theta^{(t)}}y_1+y_4
 }{
 \dfrac{\theta^{(t)}}{2+\theta^{(t)}}y_1+y_2+y_3+y_4
-}.
-$$
+}.$$
 
 O exemplo ilustra que a etapa E não precisa reconstruir valores individuais dos dados ausentes. Basta calcular as esperanças condicionais das contagens necessárias para a maximização.
 
 #### Mistura gaussiana
 
 ::: {.callout-tip title="Exemplo 2 — mistura de $k$ distribuições normais"}
-
-A derivação segue Hastie, Tibshirani e Friedman (2009) e Gupta e Chen (2011).
-
+A derivação segue @hastie2009elements [sec. 8.5] e @gupta2011em [sec. 3.2].
 :::
 
 Considere observações independentes $\boldsymbol{y}_1,\ldots,\boldsymbol{y}_n\in\mathbb{R}^p$ provenientes de
 
-$$
-f(\boldsymbol{y}_i\mid\boldsymbol{\theta})
+$$f(\boldsymbol{y}_i\mid\boldsymbol{\theta})
 =
 \sum_{j=1}^k
 \pi_j
 \phi_p
-(\boldsymbol{y}_i;\boldsymbol{\mu}_j,\boldsymbol{\Sigma}_j),
-$$
+(\boldsymbol{y}_i;\boldsymbol{\mu}_j,\boldsymbol{\Sigma}_j),$$
 
 com
 
-$$
-\pi_j>0,
+$$\pi_j>0,
 \qquad
-\sum_{j=1}^k\pi_j=1.
-$$
+\sum_{j=1}^k\pi_j=1.$$
 
 Introduza $Z_{ij}$ como indicador de pertencimento ao componente $j$.
 
@@ -4384,16 +3701,13 @@ Introduza $Z_{ij}$ como indicador de pertencimento ao componente $j$.
 
 As responsabilidades são
 
-$$
-\gamma_{ij}^{(t)}
+$$\gamma_{ij}^{(t)}
 =
-P(Z_{ij}=1\mid\boldsymbol{Y}_i=\boldsymbol{y}_i,\boldsymbol{\theta}^{(t)})
-$$
+P(Z_{ij}=1\mid\boldsymbol{Y}_i=\boldsymbol{y}_i,\boldsymbol{\theta}^{(t)})$$
 
 com
 
-$$
-\gamma_{ij}^{(t)}
+$$\gamma_{ij}^{(t)}
 =
 \frac{
 \pi_j^{(t)}
@@ -4405,29 +3719,23 @@ $$
 \pi_\ell^{(t)}
 \phi_p
 (\boldsymbol{y}_i;\boldsymbol{\mu}_\ell^{(t)},\boldsymbol{\Sigma}_\ell^{(t)})
-}.
-$$
+}.$$
 
 ##### Etapa M
 
 Defina
 
-$$
-n_j^{(t)}
+$$n_j^{(t)}
 =
-\sum_{i=1}^n\gamma_{ij}^{(t)}.
-$$
+\sum_{i=1}^n\gamma_{ij}^{(t)}.$$
 
 As atualizações são
 
-$$
-\pi_j^{(t+1)}
+$$\pi_j^{(t+1)}
 =
-\frac{n_j^{(t)}}{n},
-$$
+\frac{n_j^{(t)}}{n},$$
 
-$$
-\boldsymbol{\mu}_j^{(t+1)}
+$$\boldsymbol{\mu}_j^{(t+1)}
 =
 \frac{
 \displaystyle
@@ -4435,13 +3743,11 @@ $$
 \gamma_{ij}^{(t)}\boldsymbol{y}_i
 }{
 n_j^{(t)}
-},
-$$
+},$$
 
 e
 
-$$
-\boldsymbol{\Sigma}_j^{(t+1)}
+$$\boldsymbol{\Sigma}_j^{(t+1)}
 =
 \frac{
 \displaystyle
@@ -4451,8 +3757,7 @@ $$
 (\boldsymbol{y}_i-\boldsymbol{\mu}_j^{(t+1)})^\top
 }{
 n_j^{(t)}
-}.
-$$
+}.$$
 
 ##### Implementação em R
 
@@ -4550,69 +3855,52 @@ em_normal_1d <- function(y,
 ```
 
 ::: {.callout-note title="Observação computacional"}
-
 O cálculo das responsabilidades foi realizado na escala logarítmica, com centralização pelo maior logaritmo em cada linha. Essa transformação reduz problemas de subfluxo numérico quando densidades gaussianas são muito pequenas. Trata-se de uma decisão de implementação autoral baseada na forma matemática das responsabilidades.
-
 :::
 
 #### Distribuição exponencial com censura à direita
 
 ::: {.callout-tip title="Exemplo 3 — tempos censurados"}
-
-O exemplo é baseado na apresentação de dados de sobrevivência censurados de Ramachandran e Tsokos (2021).
-
+O exemplo é baseado em @ramachandran2021r [sec. 13.4].
 :::
 
 Sejam $X_1,\ldots,X_n$ tempos independentes com distribuição exponencial de taxa $\lambda>0$:
 
-$$
-f(x_i\mid\lambda)
+$$f(x_i\mid\lambda)
 =
 \lambda e^{-\lambda x_i},
-\qquad x_i>0.
-$$
+\qquad x_i>0.$$
 
 Para cada indivíduo, observam-se
 
-$$
-Y_i=\min(X_i,c_i)
-$$
+$$Y_i=\min(X_i,c_i)$$
 
 e
 
-$$
-\Delta_i=I(X_i\leq c_i).
-$$
+$$\Delta_i=I(X_i\leq c_i).$$
 
 Se todos os tempos fossem observados,
 
-$$
-\ell_c(\lambda)
+$$\ell_c(\lambda)
 =
 n\log\lambda
 -
-\lambda\sum_{i=1}^nX_i.
-$$
+\lambda\sum_{i=1}^nX_i.$$
 
 Na etapa E,
 
-$$
-E(X_i\mid Y_i,\Delta_i=1,\lambda^{(t)})
-=Y_i,
-$$
+$$E(X_i\mid Y_i,\Delta_i=1,\lambda^{(t)})
+=Y_i,$$
 
 enquanto a falta de memória da distribuição exponencial fornece
 
-$$
-E(X_i\mid X_i>c_i,\lambda^{(t)})
+$$E(X_i\mid X_i>c_i,\lambda^{(t)})
 =
-c_i+\frac{1}{\lambda^{(t)}}.
-$$
+c_i+\frac{1}{\lambda^{(t)}}.$$
 
 Logo,
 
-$$
-\widetilde{T}^{(t)}
+$$\widetilde{T}^{(t)}
 =
 \sum_{i=1}^n
 \left[
@@ -4620,76 +3908,59 @@ $$
 +
 (1-\Delta_i)
 \left(c_i+\frac{1}{\lambda^{(t)}}\right)
-\right].
-$$
+\right].$$
 
 A etapa M produz
 
-$$
-\lambda^{(t+1)}
+$$\lambda^{(t+1)}
 =
-\frac{n}{\widetilde{T}^{(t)}}.
-$$
+\frac{n}{\widetilde{T}^{(t)}}.$$
 
 No ponto fixo, se $d=\sum_i\Delta_i$ é o número de falhas observadas,
 
-$$
-\widehat{\lambda}
+$$\widehat{\lambda}
 =
-\frac{d}{\sum_{i=1}^nY_i},
-$$
+\frac{d}{\sum_{i=1}^nY_i},$$
 
 que coincide com o estimador obtido diretamente da verossimilhança observada.
 
 #### Dados normais ausentes e estatísticas suficientes
 
 ::: {.callout-tip title="Exemplo 4 — média e variância com observações ausentes"}
-
-O exemplo computacional é adaptado da formulação e do código de Ramachandran e Tsokos (2021). A função abaixo foi reescrita para corrigir a sintaxe, tornar o retorno explícito e registrar o histórico das iterações.
-
+O exemplo computacional é adaptado da formulação de @ramachandran2021r [sec. 13.4]. 
 :::
 
 Se $X_i\sim N(\mu,\sigma^2)$ e algumas observações estão ausentes, as estatísticas completas relevantes são
 
-$$
-T_1=\sum_{i=1}^nX_i
+$$T_1=\sum_{i=1}^nX_i
 \qquad\text{e}\qquad
-T_2=\sum_{i=1}^nX_i^2.
-$$
+T_2=\sum_{i=1}^nX_i^2.$$
 
 Na iteração $t$, para cada observação ausente,
 
-$$
-E(X_i\mid\mu^{(t)},\sigma^{2(t)})
+$$E(X_i\mid\mu^{(t)},\sigma^{2(t)})
 =
-\mu^{(t)}
-$$
+\mu^{(t)}$$
 
 e
 
-$$
-E(X_i^2\mid\mu^{(t)},\sigma^{2(t)})
+$$E(X_i^2\mid\mu^{(t)},\sigma^{2(t)})
 =
-\mu^{2(t)}+\sigma^{2(t)}.
-$$
+\mu^{2(t)}+\sigma^{2(t)}.$$
 
 As atualizações são
 
-$$
-\mu^{(t+1)}
+$$\mu^{(t+1)}
 =
-\frac{E(T_1\mid\boldsymbol{Y},\boldsymbol{\theta}^{(t)})}{n}
-$$
+\frac{E(T_1\mid\boldsymbol{Y},\boldsymbol{\theta}^{(t)})}{n}$$
 
 e
 
-$$
-\sigma^{2(t+1)}
+$$\sigma^{2(t+1)}
 =
 \frac{E(T_2\mid\boldsymbol{Y},\boldsymbol{\theta}^{(t)})}{n}
 -
-\left(\mu^{(t+1)}\right)^2.
-$$
+\left(\mu^{(t+1)}\right)^2.$$
 
 ```{r}
 #| label: em-normal-ausentes
@@ -4784,9 +4055,7 @@ em_normal_ausentes <- function(y,
 ```
 
 ::: {.callout-warning title="Interpretação do exemplo"}
-
 O exemplo acima considera um mecanismo de ausência compatível com a formulação utilizada pela fonte. Em aplicações reais, a validade da análise depende da modelagem do processo que gerou os dados ausentes. Uma discussão completa dos mecanismos de ausência exige bibliografia específica e não é desenvolvida nesta seção.
-
 :::
 
 ### Exercícios
@@ -4794,215 +4063,158 @@ O exemplo acima considera um mecanismo de ausência compatível com a formulaç�
 Os exercícios são autorais ou adaptados das estruturas de problemas apresentadas nas fontes indicadas. Quando um enunciado deriva diretamente de uma fonte, isso é explicitado.
 
 ::: {.callout-note title="Exercício 1 — dados observados e dados completos"}
-
 Considere
 
-$$
-f(y\mid\theta)
+$$f(y\mid\theta)
 =
 \pi f_1(y;\eta_1)
 +
-(1-\pi)f_2(y;\eta_2).
-$$
+(1-\pi)f_2(y;\eta_2).$$
 
-1. Defina uma variável latente que identifique o componente de origem.
-2. Escreva a densidade conjunta dos dados completos.
-3. Obtenha a log-verossimilhança completa.
-4. Explique por que essa expressão pode ser mais simples de maximizar do que a log-verossimilhança observada.
+1.  Defina uma variável latente que identifique o componente de origem.
+2.  Escreva a densidade conjunta dos dados completos.
+3.  Obtenha a log-verossimilhança completa.
+4.  Explique por que essa expressão pode ser mais simples de maximizar do que a log-verossimilhança observada.
 
-**Fonte:** elaborado com base em Hastie, Tibshirani e Friedman (2009) e Gupta e Chen (2011).
-
+**Fonte:** elaborado com base em @hastie2009elements e @gupta2011em.
 :::
 
 ::: {.callout-note title="Exercício 2 — uma iteração para mistura normal"}
-
 Considere
 
-$$
-y=(0,1,4,5)
-$$
+$$y=(0,1,4,5)$$
 
 e uma mistura de duas normais com variâncias conhecidas e iguais a $1$. Utilize
 
-$$
-\pi^{(0)}=0{,}5,
+$$\pi^{(0)}=0{,}5,
 \qquad
 \mu_1^{(0)}=0,
 \qquad
-\mu_2^{(0)}=5.
-$$
+\mu_2^{(0)}=5.$$
 
-1. Calcule as responsabilidades $\gamma_{i1}^{(0)}$ e $\gamma_{i2}^{(0)}$.
-2. Calcule $\pi^{(1)}$, $\mu_1^{(1)}$ e $\mu_2^{(1)}$.
-3. Interprete os valores obtidos.
+1.  Calcule as responsabilidades $\gamma_{i1}^{(0)}$ e $\gamma_{i2}^{(0)}$.
+2.  Calcule $\pi^{(1)}$, $\mu_1^{(1)}$ e $\mu_2^{(1)}$.
+3.  Interprete os valores obtidos.
 
-**Fonte:** exercício autoral baseado nas atualizações de Hastie, Tibshirani e Friedman (2009) e Gupta e Chen (2011).
-
+**Fonte:** exercício autoral baseado nas atualizações de @hastie2009elements e @gupta2011em.
 :::
 
 ::: {.callout-note title="Exercício 3 — restrição sobre os pesos"}
-
 Mostre que
 
-$$
-\pi_j^{(t+1)}
+$$\pi_j^{(t+1)}
 =
 \frac{1}{n}
-\sum_{i=1}^n\gamma_{ij}^{(t)}
-$$
+\sum_{i=1}^n\gamma_{ij}^{(t)}$$
 
 satisfaz
 
-$$
-\sum_{j=1}^k\pi_j^{(t+1)}=1.
-$$
+$$\sum_{j=1}^k\pi_j^{(t+1)}=1.$$
 
 Em seguida, derive a atualização por multiplicadores de Lagrange, maximizando
 
-$$
-\sum_{j=1}^k n_j^{(t)}\log\pi_j
-$$
+$$\sum_{j=1}^k n_j^{(t)}\log\pi_j$$
 
 sob a restrição $\sum_j\pi_j=1$.
 
-**Fonte:** elaborado com base em Gupta e Chen (2011).
-
+**Fonte:** elaborado com base em @gupta2011em.
 :::
 
 ::: {.callout-note title="Exercício 4 — monotonicidade"}
-
 Demonstre que
 
-$$
-\ell(\boldsymbol{\theta})
--
-\ell(\boldsymbol{\theta}^{(t)})
-=
-Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
--
-Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)})
-+
-D_{\mathrm{KL}}
-\left[
-q_t
-\parallel
-f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta})
-\right].
-$$
+$$\ell(\boldsymbol{\theta})-\ell(\boldsymbol{\theta}^{(t)})=
+Q(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})-
+Q(\boldsymbol{\theta}^{(t)}\mid\boldsymbol{\theta}^{(t)})+D_{\mathrm{KL}}\left[q_t\parallel f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta})\right].$$
 
 Conclua que uma atualização que não diminui $Q$ também não diminui a log-verossimilhança observada.
 
-**Fonte:** adaptado da demonstração de Gupta e Chen (2011).
-
+**Fonte:** adaptado da demonstração de @gupta2011em.
 :::
 
 ::: {.callout-note title="Exercício 5 — exemplo multinomial clássico"}
-
 Considere o modelo multinomial da Seção 5.1 e os dados observados
 
-$$
-(y_1,y_2,y_3,y_4)=(125,18,20,34).
-$$
+$$(y_1,y_2,y_3,y_4)=(125,18,20,34).$$
 
-1. Inicie o algoritmo em $\theta^{(0)}=0{,}5$.
-2. Calcule as cinco primeiras atualizações.
-3. Obtenha numericamente o máximo direto da log-verossimilhança observada.
-4. Compare o resultado direto com o limite do EM.
+1.  Inicie o algoritmo em $\theta^{(0)}=0{,}5$.
+2.  Calcule as cinco primeiras atualizações.
+3.  Obtenha numericamente o máximo direto da log-verossimilhança observada.
+4.  Compare o resultado direto com o limite do EM.
 
-**Fonte:** adaptado de Dempster, Laird e Rubin (1977), Chihara e Hesterberg (2022) e Gupta e Chen (2011).
-
+**Fonte:** adaptado das apresentações de @chihara2022 [sec. 13.8] e @gupta2011em [sec. 1.5].
 :::
 
 ::: {.callout-note title="Exercício 6 — censura exponencial"}
-
 Considere
 
-$$
-(y_i,\delta_i)
+$$(y_i,\delta_i)
 =
-(2,1),(3,0),(4,1),(5,0),(6,1).
-$$
+(2,1),(3,0),(4,1),(5,0),(6,1).$$
 
-1. Inicie em $\lambda^{(0)}=0{,}5$.
-2. Calcule $\lambda^{(1)}$, $\lambda^{(2)}$ e $\lambda^{(3)}$.
-3. Determine diretamente o estimador de máxima verossimilhança.
-4. Compare o limite das iterações com o resultado analítico.
+1.  Inicie em $\lambda^{(0)}=0{,}5$.
+2.  Calcule $\lambda^{(1)}$, $\lambda^{(2)}$ e $\lambda^{(3)}$.
+3.  Determine diretamente o estimador de máxima verossimilhança.
+4.  Compare o limite das iterações com o resultado analítico.
 
-**Fonte:** exercício autoral baseado no exemplo de censura de Ramachandran e Tsokos (2021).
-
+**Fonte:** exercício autoral baseado no exemplo de censura de @ramachandran2021r [sec. 13.4].
 :::
 
 ::: {.callout-note title="Exercício 7 — inicializações múltiplas"}
-
 Simule uma amostra de uma mistura de duas normais e execute o EM com pelo menos vinte inicializações.
 
-1. Registre a log-verossimilhança final de cada execução.
-2. Verifique se todas as execuções convergem para a mesma solução.
-3. Compare médias, variâncias e pesos estimados.
-4. Discuta por que a maior log-verossimilhança encontrada não constitui prova de otimalidade global.
+1.  Registre a log-verossimilhança final de cada execução.
+2.  Verifique se todas as execuções convergem para a mesma solução.
+3.  Compare médias, variâncias e pesos estimados.
+4.  Discuta por que a maior log-verossimilhança encontrada não constitui prova de otimalidade global.
 
-**Fonte:** elaborado com base nas recomendações práticas de Gupta e Chen (2011).
-
+**Fonte:** elaborado com base nas recomendações práticas de @gupta2011em.
 :::
 
 ::: {.callout-note title="Exercício 8 — singularidade em misturas gaussianas"}
-
 Fixe $\mu_1=y_r$, mantenha $\pi_1>0$ e faça
 
-$$
-\sigma_1^2\longrightarrow 0.
-$$
+$$\sigma_1^2\longrightarrow 0.$$
 
 Mostre que a contribuição da observação $y_r$ para a log-verossimilhança tende ao infinito. Explique por que esse resultado implica que o problema irrestrito pode não possuir estimador de máxima verossimilhança finito.
 
-**Fonte:** adaptado da demonstração de Gupta e Chen (2011).
-
+**Fonte:** adaptado da demonstração de @gupta2011em.
 :::
 
 ::: {.callout-note title="Exercício 9 — GEM e MCEM"}
+1.  Mostre que o GEM preserva a monotonicidade quando aumenta a função $Q$ em cada iteração.
+2.  Descreva como aproximar a etapa E por uma média de Monte Carlo.
+3.  Explique por que uma aproximação Monte Carlo com tamanho fixo pode introduzir oscilações na sequência de log-verossimilhanças.
+4.  Proponha uma estratégia em que o número de simulações aumente ao longo das iterações.
 
-1. Mostre que o GEM preserva a monotonicidade quando aumenta a função $Q$ em cada iteração.
-2. Descreva como aproximar a etapa E por uma média de Monte Carlo.
-3. Explique por que uma aproximação Monte Carlo com tamanho fixo pode introduzir oscilações na sequência de log-verossimilhanças.
-4. Proponha uma estratégia em que o número de simulações aumente ao longo das iterações.
-
-**Fonte:** elaborado com base em Gupta e Chen (2011) e Ramachandran e Tsokos (2021).
-
+**Fonte:** elaborado com base em @gupta2011em e @ramachandran2021r.
 :::
 
 ::: {.callout-note title="Exercício 10 — propriedades do estimador e do algoritmo"}
-
 Avalie as afirmações seguintes.
 
-1. Se a log-verossimilhança aumenta em todas as iterações, o EM converge necessariamente para o máximo global.
-2. Se a sequência de log-verossimilhanças converge, a sequência de parâmetros também converge.
-3. Se o EM alcança um estimador regular de máxima verossimilhança, aplicam-se as propriedades assintóticas usuais desse estimador.
-4. Duas inicializações diferentes sempre produzem a mesma estimativa.
-5. A convergência computacional do EM implica consistência estatística.
+1.  Se a log-verossimilhança aumenta em todas as iterações, o EM converge necessariamente para o máximo global.
+2.  Se a sequência de log-verossimilhanças converge, a sequência de parâmetros também converge.
+3.  Se o EM alcança um estimador regular de máxima verossimilhança, aplicam-se as propriedades assintóticas usuais desse estimador.
+4.  Duas inicializações diferentes sempre produzem a mesma estimativa.
+5.  A convergência computacional do EM implica consistência estatística.
 
-**Fonte:** elaborado com base em Gupta e Chen (2011) e Lauritzen (2023).
-
+**Fonte:** elaborado com base em @gupta2011em e @lauritzen2023fundamentals.
 :::
 
 ### Síntese
 
 O algoritmo EM reorganiza um problema de máxima verossimilhança com dados incompletos em duas operações alternadas:
 
-$$
-\text{calcular esperanças condicionais associadas aos dados latentes}
-$$
+$$\text{calcular esperanças condicionais associadas aos dados latentes}$$
 
 e
 
-$$
-\text{maximizar a log-verossimilhança completa esperada}.
-$$
+$$\text{maximizar a log-verossimilhança completa esperada}.$$
 
 Sua principal garantia geral é a monotonicidade da log-verossimilhança observada. Suas principais vantagens são a simplicidade de muitas atualizações, o tratamento natural de restrições probabilísticas e a aplicabilidade a modelos de mistura, censura, dados ausentes e estados latentes. Suas limitações incluem dependência da inicialização, convergência potencialmente lenta, ausência de garantia de máximo global e possibilidade de degenerescência da verossimilhança.
 
 O EM deve ser interpretado simultaneamente como um método de estimação por máxima verossimilhança com dados aumentados e como um algoritmo local de otimização.
-
-
 
 # Exercícios Complementares {.unnumbered}
 
@@ -5042,7 +4254,7 @@ são estimadores não viesados de $\beta$ e $\alpha$, respectivamente.
 
 4.  Sejam $X_1, \ldots, X_n$ uma amostra aleatória de uma variável com distribuição Rayleigh, cuja densidade é dada por:
 
-$$f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) \mathbb{1}_{(0,\infty)}(x), \quad \theta > 0.$$
+$$f_X(x) = \frac{x}{\theta} \exp\left(-\frac{x^2}{2\theta}\right) I_{(0,\infty)}(x), \quad \theta > 0.$$
 
 a.  Determine um estimador não viesado e consistente para $\theta$.
 
@@ -5052,11 +4264,11 @@ $$16.88,\ 10.23,\ 4.59,\ 6.66,\ 13.68,\ 14.23,\ 19.87,\ 9.40,\ 6.51,\ 9.24,\ 12.
 
 5.  Considere $X_1, \ldots, X_n$ uma amostra aleatória de uma variável $X$ com função densidade de probabilidade dada por:
 
-$$f_X(x) = e^{-(x - \theta)} \mathbb{1}_{[\theta, \infty)}(x).$$
+$$f_X(x) = e^{-(x - \theta)} I_{[\theta, \infty)}(x).$$
 
 a.  Determine um estimador não viesado de $\theta$ que seja função de $X_{(1)} = \min\{X_1, \ldots, X_n\}$.
 
 b.  Mostre que $X_{(1)}$ é um estimador consistente de $\theta$.
 
+## Referências {.unnumbered}
 
-# Referências {.unnumbered}

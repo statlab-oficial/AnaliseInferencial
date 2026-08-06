@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -239,7 +259,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./demo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Apresentação</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Demonstrações</span></span></a>
   </div>
 </li>
     </ul>
@@ -252,7 +272,8 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#definição-formal" id="toc-definição-formal" class="nav-link active" data-scroll-target="#definição-formal"><span class="header-section-number">6.1</span> Definição formal</a></li>
+  <li><a href="#objetivos-do-capítulo" id="toc-objetivos-do-capítulo" class="nav-link active" data-scroll-target="#objetivos-do-capítulo">Objetivos do capítulo</a></li>
+  <li><a href="#definição-formal" id="toc-definição-formal" class="nav-link" data-scroll-target="#definição-formal"><span class="header-section-number">6.1</span> Definição formal</a></li>
   <li><a href="#interpretação-frequentista" id="toc-interpretação-frequentista" class="nav-link" data-scroll-target="#interpretação-frequentista"><span class="header-section-number">6.2</span> Interpretação frequentista</a></li>
   <li><a href="#quantis-e-valores-críticos" id="toc-quantis-e-valores-críticos" class="nav-link" data-scroll-target="#quantis-e-valores-críticos"><span class="header-section-number">6.3</span> Quantis e valores críticos</a></li>
   <li><a href="#construção-por-quantidade-pivotal" id="toc-construção-por-quantidade-pivotal" class="nav-link" data-scroll-target="#construção-por-quantidade-pivotal"><span class="header-section-number">6.4</span> Construção por quantidade pivotal</a>
@@ -286,6 +307,7 @@ window.Quarto = {
   <li><a href="#síntese-dos-principais-procedimentos" id="toc-síntese-dos-principais-procedimentos" class="nav-link" data-scroll-target="#síntese-dos-principais-procedimentos"><span class="header-section-number">6.16</span> Síntese dos principais procedimentos</a></li>
   <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">6.17</span> Exercícios</a></li>
   <li><a href="#gabarito-sucinto" id="toc-gabarito-sucinto" class="nav-link" data-scroll-target="#gabarito-sucinto"><span class="header-section-number">6.18</span> Gabarito sucinto</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
     </div>
@@ -311,8 +333,8 @@ window.Quarto = {
 </header>
 
 
-<p>A estimação pontual associa a uma amostra um único valor para representar um parâmetro desconhecido. Embora esse valor seja informativo, ele não expressa, por si só, a variabilidade amostral nem a precisão do procedimento de estimação. A estimação intervalar complementa a estimativa pontual por meio de um conjunto de valores compatíveis com os dados e com o modelo estatístico adotado.</p>
-<p>No paradigma frequentista, o parâmetro é considerado fixo e desconhecido, enquanto os limites do intervalo são estatísticas e, portanto, variam de amostra para amostra. Essa distinção é essencial para a definição e a interpretação de intervalos de confiança (COX, 2006, p.&nbsp;66-69; RICE, 2007, p.&nbsp;279-281).</p>
+<p>A estimação pontual associa a cada amostra um único valor para representar um parâmetro desconhecido. Embora esse valor seja informativo, ele não expressa, por si só, a variabilidade amostral nem a precisão do procedimento de estimação. A estimação intervalar complementa a estimativa pontual por meio de um conjunto de valores compatíveis com os dados e com o modelo estatístico adotado.</p>
+<p>No paradigma frequentista, o parâmetro é considerado fixo e desconhecido, enquanto os limites do intervalo são estatísticas e, portanto, variam de amostra para amostra. Essa distinção é essencial para a definição e a interpretação de intervalos de confiança <span class="citation" data-cites="cox2006principles rice2007mathematical">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006, pp. 66–69</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, sec. 8.5.3</a>)</span>.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Observação — por que a estimativa pontual não é suficiente?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -326,6 +348,19 @@ Observação — por que a estimativa pontual não é suficiente?
 <p>Em modelos contínuos, frequentemente ocorre <span class="math inline">\(P_\theta(\widehat\theta=\theta)=0\)</span>. Essa afirmação, contudo, não é universal: em problemas discretos, um estimador pode coincidir com o parâmetro com probabilidade positiva. A motivação geral para a estimação intervalar não é a impossibilidade de acerto exato, mas a necessidade de quantificar a incerteza associada ao procedimento de estimação.</p>
 </div>
 </div>
+<section id="objetivos-do-capítulo" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="objetivos-do-capítulo">Objetivos do capítulo</h3>
+<p>Ao final deste capítulo, o leitor deverá ser capaz de:</p>
+<ol type="1">
+<li>definir conjuntos e intervalos de confiança por meio de sua função de cobertura;</li>
+<li>interpretar corretamente o nível de confiança no paradigma frequentista;</li>
+<li>construir intervalos exatos a partir de quantidades pivotais;</li>
+<li>distinguir procedimentos exatos, conservadores e assintóticos;</li>
+<li>aplicar intervalos normais, <span class="math inline">\(t\)</span>, qui-quadrado, de Wilson e de Clopper–Pearson;</li>
+<li>reconhecer as limitações dos intervalos de Wald e dos métodos bootstrap;</li>
+<li>relacionar intervalos de confiança, testes de hipóteses, precisão e tamanho amostral.</li>
+</ol>
+</section>
 <section id="definição-formal" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="definição-formal"><span class="header-section-number">6.1</span> Definição formal</h2>
 <p>Considere uma amostra aleatória <span class="math inline">\(\mathbf{X}=(X_1,\ldots,X_n)\)</span> cuja distribuição pertence a uma família <span class="math inline">\(\{P_\theta:\theta\in\Theta\}\)</span>. Um <strong>conjunto de confiança</strong> é uma função <span class="math inline">\(C(\mathbf{X})\)</span> que associa a cada amostra um subconjunto aleatório de <span class="math inline">\(\Theta\)</span>.</p>
@@ -339,23 +374,17 @@ Definição — conjunto de confiança
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O conjunto <span class="math inline">\(C(\mathbf{X})\)</span> é um conjunto de confiança de nível <span class="math inline">\(1-\alpha\)</span> para <span class="math inline">\(\theta\)</span> quando</p>
-<p><span class="math display">\[
-P_\theta\{\theta\in C(\mathbf{X})\}\geq 1-\alpha,
-\qquad \text{para todo }\theta\in\Theta.
-\]</span></p>
-<p>Quando a igualdade vale para todo <span class="math inline">\(\theta\in\Theta\)</span>, diz-se que o procedimento possui <strong>cobertura exata</strong>. Quando a cobertura é apenas aproximadamente igual a <span class="math inline">\(1-\alpha\)</span>, o intervalo é denominado <strong>aproximado</strong> ou <strong>assintótico</strong>. Se a cobertura é maior ou igual ao nível nominal, mas não necessariamente igual, o procedimento é chamado <strong>conservador</strong>.</p>
+<p>O conjunto <span class="math inline">\(C(\mathbf{X})\)</span> é um conjunto de confiança de nível <strong>pelo menos</strong> <span class="math inline">\(1-\alpha\)</span> para <span class="math inline">\(\theta\)</span> quando</p>
+<p><span class="math display">\[P_\theta\{\theta\in C(\mathbf{X})\}\geq 1-\alpha,
+\qquad \text{para todo }\theta\in\Theta.\]</span></p>
+<p>Quando a igualdade vale para todo <span class="math inline">\(\theta\in\Theta\)</span>, diz-se que o procedimento possui <strong>cobertura exata</strong>. Quando a igualdade vale apenas assintoticamente ou por aproximação, o intervalo é denominado <strong>aproximado</strong> ou <strong>assintótico</strong>. Se a cobertura é maior ou igual ao nível nominal, mas não necessariamente igual, o procedimento é chamado <strong>conservador</strong> <span class="citation" data-cites="lauritzen2023fundamentals cox2006principles">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006, sec. 5.4</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023, sec. 6.2</a>)</span>.</p>
 </div>
 </div>
 <p>Para um parâmetro escalar, é comum escrever</p>
-<p><span class="math display">\[
-C(\mathbf{X})=[L(\mathbf{X}),U(\mathbf{X})],
-\]</span></p>
+<p><span class="math display">\[C(\mathbf{X})=[L(\mathbf{X}),U(\mathbf{X})],\]</span></p>
 <p>em que <span class="math inline">\(L\)</span> e <span class="math inline">\(U\)</span> são, respectivamente, os limites inferior e superior de confiança. A função</p>
-<p><span class="math display">\[
-c(\theta)=P_\theta\{L(\mathbf{X})\leq \theta\leq U(\mathbf{X})\}
-\]</span></p>
-<p>é denominada <strong>função de cobertura</strong> do procedimento. Em problemas discretos, pode ser impossível construir intervalos não aleatorizados com cobertura exatamente constante; nesses casos, intervalos exatos costumam ser conservadores (RASCH; SCHOTT, 2018, p.&nbsp;144-145).</p>
+<p><span class="math display">\[c(\theta)=P_\theta\{L(\mathbf{X})\leq \theta\leq U(\mathbf{X})\}\]</span></p>
+<p>é denominada <strong>função de cobertura</strong> do procedimento. Em problemas discretos, pode ser impossível construir intervalos não aleatorizados com cobertura exatamente constante; nesses casos, intervalos denominados exatos são usualmente construídos para garantir cobertura de pelo menos <span class="math inline">\(1-\alpha\)</span> e tendem a ser conservadores <span class="citation" data-cites="rasch2018">(<a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018, pp. 144–146</a>)</span>.</p>
 </section>
 <section id="interpretação-frequentista" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="interpretação-frequentista"><span class="header-section-number">6.2</span> Interpretação frequentista</h2>
@@ -370,14 +399,14 @@ Interpretação correta
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Um procedimento com nível de confiança de <span class="math inline">\(95\%\)</span> produz intervalos que contêm o verdadeiro parâmetro em <span class="math inline">\(95\%\)</span> das repetições, no longo prazo, desde que o modelo e o plano amostral estejam corretamente especificados.</p>
+<p>Um procedimento com cobertura exata de <span class="math inline">\(95\%\)</span> produz intervalos que contêm o verdadeiro parâmetro em <span class="math inline">\(95\%\)</span> das repetições, no longo prazo. Em um procedimento conservador de nível <span class="math inline">\(95\%\)</span>, essa proporção é de pelo menos <span class="math inline">\(95\%\)</span>. Em ambos os casos, a interpretação pressupõe que o modelo e o plano amostral estejam corretamente especificados.</p>
 </div>
 </div>
 <p>Depois de observados os dados, obtém-se um intervalo numérico <span class="math inline">\([l,u]\)</span>. Nesse momento, tanto <span class="math inline">\(\theta\)</span> quanto <span class="math inline">\([l,u]\)</span> são fixos: o parâmetro pertence ou não pertence ao intervalo. Assim, no sentido frequentista estrito, não se deve afirmar</p>
 <blockquote class="blockquote">
 <p>“A probabilidade de <span class="math inline">\(\theta\)</span> pertencer ao intervalo observado é <span class="math inline">\(0{,}95\)</span>.”</p>
 </blockquote>
-<p>A expressão “estamos <span class="math inline">\(95\%\)</span> confiantes” é uma forma abreviada de se referir à propriedade de cobertura do método empregado, e não a uma distribuição de probabilidade atribuída ao parâmetro (COX, 2006, p.&nbsp;66-68; CHIHARA; HESTERBERG, 2022, p.&nbsp;201-205).</p>
+<p>A expressão “estamos <span class="math inline">\(95\%\)</span> confiantes” é uma forma abreviada de se referir à propriedade de cobertura do método empregado, e não a uma distribuição de probabilidade atribuída ao parâmetro <span class="citation" data-cites="cox2006principles chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 201–205</a>; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006, secs. 5.3–5.4</a>)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Intervalo de confiança e intervalo de credibilidade">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -395,17 +424,11 @@ Intervalo de confiança e intervalo de credibilidade
 <section id="quantis-e-valores-críticos" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="quantis-e-valores-críticos"><span class="header-section-number">6.3</span> Quantis e valores críticos</h2>
 <p>Se <span class="math inline">\(Z\sim N(0,1)\)</span> e <span class="math inline">\(z_q\)</span> denota o quantil de ordem <span class="math inline">\(q\)</span>, então</p>
-<p><span class="math display">\[
-P(Z\leq z_q)=q.
-\]</span></p>
+<p><span class="math display">\[P(Z\leq z_q)=q.\]</span></p>
 <p>Pela simetria da distribuição normal padrão,</p>
-<p><span class="math display">\[
-z_{\alpha/2}=-z_{1-\alpha/2}
-\]</span></p>
+<p><span class="math display">\[z_{\alpha/2}=-z_{1-\alpha/2}\]</span></p>
 <p>e, portanto,</p>
-<p><span class="math display">\[
-P\left(-z_{1-\alpha/2}\leq Z\leq z_{1-\alpha/2}\right)=1-\alpha.
-\]</span></p>
+<p><span class="math display">\[P\left(-z_{1-\alpha/2}\leq Z\leq z_{1-\alpha/2}\right)=1-\alpha.\]</span></p>
 <p>Para <span class="math inline">\(1-\alpha=0{,}95\)</span>, tem-se <span class="math inline">\(z_{0{,}975}\approx1{,}96\)</span>.</p>
 <div id="cell-fig-normal-central" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
@@ -435,19 +458,15 @@ Definição — quantidade pivotal
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uma estatística</p>
-<p><span class="math display">\[
-Q=Q(\mathbf{X},\theta)
-\]</span></p>
-<p>é uma <strong>quantidade pivotal</strong> quando sua distribuição não depende de <span class="math inline">\(\theta\)</span> nem de outros parâmetros desconhecidos.</p>
+<p>Uma função dos dados e do parâmetro</p>
+<p><span class="math display">\[Q=Q(\mathbf{X},\theta)\]</span></p>
+<p>é uma <strong>quantidade pivotal</strong> quando sua distribuição, sob <span class="math inline">\(P_\theta\)</span>, não depende de <span class="math inline">\(\theta\)</span> nem de outros parâmetros desconhecidos. Como <span class="math inline">\(Q\)</span> depende de <span class="math inline">\(\theta\)</span>, ela não é, em geral, uma estatística no sentido estrito.</p>
 </div>
 </div>
 <p>Se <span class="math inline">\(q_{\alpha/2}\)</span> e <span class="math inline">\(q_{1-\alpha/2}\)</span> são quantis da distribuição de <span class="math inline">\(Q\)</span>, então</p>
-<p><span class="math display">\[
-P_\theta\left(q_{\alpha/2}\leq Q(\mathbf{X},\theta)
-\leq q_{1-\alpha/2}\right)=1-\alpha.
-\]</span></p>
-<p>Resolvendo as desigualdades em relação a <span class="math inline">\(\theta\)</span>, obtêm-se os limites de confiança. O intervalo resultante não precisa ser simétrico, não precisa estar centrado em <span class="math inline">\(\widehat\theta\)</span> e, em certos problemas, nem sequer precisa conter o estimador de máxima verossimilhança (RAMACHANDRAN; TSOKOS, 2021, p.&nbsp;215-219; CHIHARA; HESTERBERG, 2022, p.&nbsp;201-205).</p>
+<p><span class="math display">\[P_\theta\left(q_{\alpha/2}\leq Q(\mathbf{X},\theta)
+\leq q_{1-\alpha/2}\right)=1-\alpha.\]</span></p>
+<p>Resolvendo as desigualdades em relação a <span class="math inline">\(\theta\)</span>, obtêm-se os limites de confiança. O intervalo resultante não precisa ser simétrico, não precisa estar centrado em <span class="math inline">\(\widehat\theta\)</span> e, em certos problemas, nem sequer precisa conter o estimador de máxima verossimilhança <span class="citation" data-cites="lauritzen2023fundamentals ramachandran2021r">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023, sec. 6.2</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, pp. 215–219</a>)</span>.</p>
 <section id="procedimento-geral" class="level3" data-number="6.4.1">
 <h3 data-number="6.4.1" class="anchored" data-anchor-id="procedimento-geral"><span class="header-section-number">6.4.1</span> Procedimento geral</h3>
 <ol type="1">
@@ -465,24 +484,16 @@ P_\theta\left(q_{\alpha/2}\leq Q(\mathbf{X},\theta)
 <section id="média-com-variância-conhecida" class="level3" data-number="6.5.1">
 <h3 data-number="6.5.1" class="anchored" data-anchor-id="média-com-variância-conhecida"><span class="header-section-number">6.5.1</span> Média com variância conhecida</h3>
 <p>Suponha que</p>
-<p><span class="math display">\[
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}N(\mu,\sigma^2),
-\]</span></p>
+<p><span class="math display">\[X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2),\]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida. Como</p>
-<p><span class="math display">\[
-\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right),
-\]</span></p>
+<p><span class="math display">\[\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right),\]</span></p>
 <p>segue que</p>
-<p><span class="math display">\[
-Z=\frac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1).
-\]</span></p>
+<p><span class="math display">\[Z=\frac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1).\]</span></p>
 <p>Logo, um intervalo exato de nível <span class="math inline">\(1-\alpha\)</span> para <span class="math inline">\(\mu\)</span> é</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \overline X\pm z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
-}.
-\]</span></p>
-<p>Esse intervalo é exato sob normalidade. Se a população não for normal, a mesma expressão pode ser usada como aproximação quando a distribuição de <span class="math inline">\(\overline X\)</span> for adequadamente aproximada pela normal. Não existe um valor universal de <span class="math inline">\(n\)</span> que garanta essa aproximação: a qualidade depende, entre outros fatores, da assimetria, das caudas da população e da independência das observações.</p>
+}.\]</span></p>
+<p>Esse intervalo é exato sob normalidade. Se a população não for normal, a mesma expressão pode ser usada como aproximação quando a distribuição de <span class="math inline">\(\overline X\)</span> for adequadamente aproximada pela normal. Não existe um valor universal de <span class="math inline">\(n\)</span> que garanta essa aproximação: a qualidade depende, entre outros fatores, da assimetria, do peso das caudas e da independência das observações <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, sec. 4.3.3</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, sec. 8.5.3</a>)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Exemplo — média com variância conhecida">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -494,23 +505,17 @@ Exemplo — média com variância conhecida
 </div>
 <div class="callout-body-container callout-body">
 <p>Considere os dados</p>
-<p><span class="math display">\[
-12,15,14,10,13,16,14,15
-\]</span></p>
+<p><span class="math display">\[12,15,14,10,13,16,14,15\]</span></p>
 <p>provenientes de uma população normal com desvio-padrão conhecido <span class="math inline">\(\sigma=2{,}5\)</span>. Tem-se <span class="math inline">\(n=8\)</span> e <span class="math inline">\(\overline x=13{,}625\)</span>. Para um intervalo de <span class="math inline">\(95\%\)</span>,</p>
-<p><span class="math display">\[
-13{,}625\pm1{,}96\frac{2{,}5}{\sqrt 8}
-=13{,}625\pm1{,}732.
-\]</span></p>
+<p><span class="math display">\[13{,}625\pm1{,}96\frac{2{,}5}{\sqrt 8}
+=13{,}625\pm1{,}732.\]</span></p>
 <p>Portanto,</p>
-<p><span class="math display">\[
-IC_{95\%}(\mu)=[11{,}893;15{,}357].
-\]</span></p>
+<p><span class="math display">\[IC_{95\%}(\mu)=[11{,}893;15{,}357].\]</span></p>
 <p><strong>Interpretação:</strong> o método utilizado tem cobertura de <span class="math inline">\(95\%\)</span> sob o modelo normal com <span class="math inline">\(\sigma=2{,}5\)</span>.</p>
-<p><strong>Fonte metodológica:</strong> Rice (2007, p.&nbsp;279-281) e Larsen e Marx (2012, p.&nbsp;297-311).</p>
+<p><strong>Base metodológica:</strong> <span class="citation" data-cites="rice2007mathematical larsen2012">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, pp. 297–311</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 279–281</a>)</span>.</p>
 </div>
 </div>
-<div id="ce95ec13" class="cell" data-execution_count="2">
+<div id="42533fae" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -535,24 +540,16 @@ IC 95% = (11.893, 15.357)</code></pre>
 <section id="média-com-variância-desconhecida" class="level3" data-number="6.5.2">
 <h3 data-number="6.5.2" class="anchored" data-anchor-id="média-com-variância-desconhecida"><span class="header-section-number">6.5.2</span> Média com variância desconhecida</h3>
 <p>Se</p>
-<p><span class="math display">\[
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}N(\mu,\sigma^2)
-\]</span></p>
+<p><span class="math display">\[X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2)\]</span></p>
 <p>com <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma^2\)</span> desconhecidos, então</p>
-<p><span class="math display">\[
-T=\frac{\overline X-\mu}{S/\sqrt n}\sim t_{n-1},
-\]</span></p>
+<p><span class="math display">\[T=\frac{\overline X-\mu}{S/\sqrt n}\sim t_{n-1},\]</span></p>
 <p>em que</p>
-<p><span class="math display">\[
-S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2.
-\]</span></p>
+<p><span class="math display">\[S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2.\]</span></p>
 <p>Assim,</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \overline X\pm t_{1-\alpha/2,n-1}\frac{S}{\sqrt n}
-}
-\]</span></p>
-<p>é um intervalo exato para <span class="math inline">\(\mu\)</span> sob normalidade (LAURITZEN, 2023, p.&nbsp;136-138; RICE, 2007, p.&nbsp;279-280).</p>
+}\]</span></p>
+<p>é um intervalo exato para <span class="math inline">\(\mu\)</span> sob normalidade <span class="citation" data-cites="lauritzen2023fundamentals rice2007mathematical">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ex. 6.5; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 279–280</a>)</span>.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Observação — não há regra universal como $n>30$ ou $n>200$">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -577,15 +574,13 @@ Exemplo — média com variância desconhecida
 </div>
 <div class="callout-body-container callout-body">
 <p>Para os mesmos oito valores, <span class="math inline">\(\overline x=13{,}625\)</span>, <span class="math inline">\(s=1{,}923\)</span> e <span class="math inline">\(t_{0{,}975;7}=2{,}365\)</span>. Logo,</p>
-<p><span class="math display">\[
-IC_{95\%}(\mu)
+<p><span class="math display">\[IC_{95\%}(\mu)
 =13{,}625\pm2{,}365\frac{1{,}923}{\sqrt8}
-=[12{,}018;15{,}232].
-\]</span></p>
-<p><strong>Fonte metodológica:</strong> Lauritzen (2023, p.&nbsp;136-138).</p>
+=[12{,}018;15{,}232].\]</span></p>
+<p><strong>Base metodológica:</strong> <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ex. 6.5)</span>.</p>
 </div>
 </div>
-<div id="bfa2027d" class="cell" data-execution_count="3">
+<div id="d23ea922" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> t</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -607,19 +602,15 @@ IC_{95\%}(\mu)
 <section id="variância-de-uma-população-normal" class="level3" data-number="6.5.3">
 <h3 data-number="6.5.3" class="anchored" data-anchor-id="variância-de-uma-população-normal"><span class="header-section-number">6.5.3</span> Variância de uma população normal</h3>
 <p>Sob normalidade,</p>
-<p><span class="math display">\[
-\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.
-\]</span></p>
+<p><span class="math display">\[\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.\]</span></p>
 <p>Consequentemente, um intervalo exato de nível <span class="math inline">\(1-\alpha\)</span> para <span class="math inline">\(\sigma^2\)</span> é</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \left[
 \frac{(n-1)S^2}{\chi^2_{1-\alpha/2,n-1}},
 \frac{(n-1)S^2}{\chi^2_{\alpha/2,n-1}}
 \right]
-}.
-\]</span></p>
-<p>O intervalo para <span class="math inline">\(\sigma\)</span> é obtido pela raiz quadrada dos limites. Como a distribuição qui-quadrado é assimétrica, o intervalo não é simétrico em torno de <span class="math inline">\(S^2\)</span> (RICE, 2007, p.&nbsp;280-281).</p>
+}.\]</span></p>
+<p>O intervalo para <span class="math inline">\(\sigma\)</span> é obtido pela raiz quadrada dos limites. Como a distribuição qui-quadrado é assimétrica, o intervalo não é simétrico em torno de <span class="math inline">\(S^2\)</span> <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 280–281</a>)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Condição de uso">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -644,18 +635,14 @@ Exemplo — intervalo para a variância
 </div>
 <div class="callout-body-container callout-body">
 <p>Para os oito valores anteriores, <span class="math inline">\(s^2=3{,}696\)</span> e <span class="math inline">\(n-1=7\)</span>. O intervalo de <span class="math inline">\(95\%\)</span> para <span class="math inline">\(\sigma^2\)</span> é</p>
-<p><span class="math display">\[
-IC_{95\%}(\sigma^2)=[1{,}616;15{,}312].
-\]</span></p>
+<p><span class="math display">\[IC_{95\%}(\sigma^2)=[1{,}616;15{,}312].\]</span></p>
 <p>Assim,</p>
-<p><span class="math display">\[
-IC_{95\%}(\sigma)=[1{,}271;3{,}913].
-\]</span></p>
+<p><span class="math display">\[IC_{95\%}(\sigma)=[1{,}271;3{,}913].\]</span></p>
 <p>A assimetria dos limites reflete a assimetria da distribuição qui-quadrado.</p>
-<p><strong>Fonte metodológica:</strong> Rice (2007, p.&nbsp;280-281).</p>
+<p><strong>Base metodológica:</strong> <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 280–281</a>)</span>.</p>
 </div>
 </div>
-<div id="fa45542a" class="cell" data-execution_count="4">
+<div id="80e9c617" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -681,69 +668,51 @@ IC 95% para sigma   = (1.271, 3.913)</code></pre>
 <section id="exemplo-de-intervalo-exato-por-pivô-distribuição-exponencial" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="exemplo-de-intervalo-exato-por-pivô-distribuição-exponencial"><span class="header-section-number">6.6</span> Exemplo de intervalo exato por pivô: distribuição exponencial</h2>
 <p>Considere</p>
-<p><span class="math display">\[
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\operatorname{Exp}(\lambda),
-\]</span></p>
+<p><span class="math display">\[X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\lambda),\]</span></p>
 <p>na parametrização por taxa, com densidade</p>
-<p><span class="math display">\[
-f(x\mid\lambda)=\lambda e^{-\lambda x},\qquad x&gt;0.
-\]</span></p>
+<p><span class="math display">\[f(x\mid\lambda)=\lambda e^{-\lambda x},\qquad x&gt;0.\]</span></p>
 <p>Como</p>
-<p><span class="math display">\[
-2\lambda\sum_{i=1}^nX_i\sim\chi^2_{2n},
-\]</span></p>
+<p><span class="math display">\[2\lambda\sum_{i=1}^nX_i\sim\chi^2_{2n},\]</span></p>
 <p>um intervalo exato de nível <span class="math inline">\(1-\alpha\)</span> para <span class="math inline">\(\lambda\)</span> é</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \left[
 \frac{\chi^2_{\alpha/2,2n}}{2\sum_{i=1}^nX_i},
 \frac{\chi^2_{1-\alpha/2,2n}}{2\sum_{i=1}^nX_i}
 \right]
-}.
-\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Exemplo — taxa exponencial">
+}.\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Exemplo adaptado — taxa exponencial">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exemplo — taxa exponencial
+Exemplo adaptado — taxa exponencial
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Para a amostra <span class="math inline">\(2\)</span>, <span class="math inline">\(2{,}5\)</span>, <span class="math inline">\(3\)</span>, <span class="math inline">\(4\)</span> e <span class="math inline">\(9\)</span>, tem-se <span class="math inline">\(n=5\)</span> e <span class="math inline">\(\sum x_i=20{,}5\)</span>. O intervalo exato de <span class="math inline">\(95\%\)</span> é</p>
-<p><span class="math display">\[
-IC_{95\%}(\lambda)=[0{,}079;0{,}500].
-\]</span></p>
+<p><span class="math display">\[IC_{95\%}(\lambda)=[0{,}079;0{,}500].\]</span></p>
 <p>Se o parâmetro de interesse for a média <span class="math inline">\(\theta=1/\lambda\)</span>, basta inverter os limites e trocar sua ordem:</p>
-<p><span class="math display">\[
-IC_{95\%}(\theta)=\left[\frac{1}{0{,}500},\frac{1}{0{,}079}\right]
-\approx[2{,}002;12{,}627].
-\]</span></p>
-<p><strong>Fonte metodológica:</strong> Chihara e Hesterberg (2022, p.&nbsp;202-203) e Ramachandran e Tsokos (2021, p.&nbsp;215-219).</p>
+<p><span class="math display">\[IC_{95\%}(\theta)=\left[\frac{1}{0{,}500},\frac{1}{0{,}079}\right]
+\approx[2{,}002;12{,}627].\]</span></p>
+<p><strong>Fonte do exemplo e base metodológica:</strong> <span class="citation" data-cites="chihara2022 lauritzen2023fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 202–204</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ex. 6.7)</span>.</p>
 </div>
 </div>
 </section>
 <section id="intervalos-assintóticos-e-método-de-wald" class="level2" data-number="6.7">
 <h2 data-number="6.7" class="anchored" data-anchor-id="intervalos-assintóticos-e-método-de-wald"><span class="header-section-number">6.7</span> Intervalos assintóticos e método de Wald</h2>
 <p>Suponha que um estimador satisfaça</p>
-<p><span class="math display">\[
-\frac{\widehat\theta-\theta}{\widehat{\operatorname{se}}(\widehat\theta)}
-\overset{d}{\longrightarrow}N(0,1).
-\]</span></p>
+<p><span class="math display">\[\frac{\widehat\theta-\theta}{\widehat{\operatorname{EP}}(\widehat\theta)}
+\overset{d}{\longrightarrow}N(0,1).\]</span></p>
 <p>Então, um intervalo de Wald de nível aproximadamente <span class="math inline">\(1-\alpha\)</span> é</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \widehat\theta\pm z_{1-\alpha/2}
-\widehat{\operatorname{se}}(\widehat\theta)
-}.
-\]</span></p>
+\widehat{\operatorname{EP}}(\widehat\theta)
+}.\]</span></p>
 <p>Para estimadores de máxima verossimilhança regulares,</p>
-<p><span class="math display">\[
-\widehat{\operatorname{se}}(\widehat\theta)
-\approx\frac{1}{\sqrt{nI(\widehat\theta)}},
-\]</span></p>
-<p>em que <span class="math inline">\(I(\theta)\)</span> é a informação de Fisher por observação. A validade dessa aproximação depende das condições de regularidade: o parâmetro deve estar no interior do espaço paramétrico, o suporte não deve variar de forma problemática com o parâmetro e a aproximação normal deve ser adequada (RICE, 2007, p.&nbsp;274-283; LAURITZEN, 2023, p.&nbsp;140-150).</p>
+<p><span class="math display">\[\widehat{\operatorname{EP}}(\widehat\theta)
+\approx\frac{1}{\sqrt{nI(\widehat\theta)}},\]</span></p>
+<p>em que <span class="math inline">\(I(\theta)\)</span> é a informação de Fisher por observação. A validade dessa aproximação depende das condições de regularidade: o parâmetro deve estar no interior do espaço paramétrico, o modelo deve ser identificável, a informação deve ser finita e positiva e a aproximação normal deve ser adequada <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023, sec. 6.4.3</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, secs. 8.5.2–8.5.3</a>)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Limitações do intervalo de Wald">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -760,44 +729,33 @@ Limitações do intervalo de Wald
 <section id="exemplo-média-de-uma-distribuição-de-poisson" class="level3" data-number="6.7.1">
 <h3 data-number="6.7.1" class="anchored" data-anchor-id="exemplo-média-de-uma-distribuição-de-poisson"><span class="header-section-number">6.7.1</span> Exemplo: média de uma distribuição de Poisson</h3>
 <p>Se</p>
-<p><span class="math display">\[
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\operatorname{Poisson}(\lambda),
-\]</span></p>
+<p><span class="math display">\[X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Poisson}(\lambda),\]</span></p>
 <p>então <span class="math inline">\(\widehat\lambda=\overline X\)</span> e</p>
-<p><span class="math display">\[
-\operatorname{Var}(\widehat\lambda)=\frac{\lambda}{n}.
-\]</span></p>
+<p><span class="math display">\[\operatorname{Var}(\widehat\lambda)=\frac{\lambda}{n}.\]</span></p>
 <p>Substituindo <span class="math inline">\(\lambda\)</span> por <span class="math inline">\(\widehat\lambda\)</span>, obtém-se</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \overline X\pm z_{1-\alpha/2}\sqrt{\frac{\overline X}{n}}
-}.
-\]</span></p>
-<p>Esse intervalo é aproximado. Se o limite inferior for negativo, truncá-lo em zero respeita o espaço paramétrico, mas não corrige necessariamente a função de cobertura. Para contagens pequenas, métodos exatos ou baseados na razão de verossimilhanças são mais apropriados (RICE, 2007, p.&nbsp;282-283).</p>
+}.\]</span></p>
+<p>Esse intervalo é aproximado. Se o limite inferior for negativo, truncá-lo em zero respeita o espaço paramétrico, mas não corrige necessariamente a função de cobertura. Para contagens pequenas, métodos exatos ou baseados na razão de verossimilhanças são mais apropriados <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 282–283</a>)</span>.</p>
 </section>
 </section>
 <section id="intervalos-para-uma-proporção-binomial" class="level2" data-number="6.8">
 <h2 data-number="6.8" class="anchored" data-anchor-id="intervalos-para-uma-proporção-binomial"><span class="header-section-number">6.8</span> Intervalos para uma proporção binomial</h2>
 <p>Se <span class="math inline">\(X\sim\operatorname{Binomial}(n,p)\)</span>, então</p>
-<p><span class="math display">\[
-\widehat p=\frac{X}{n}.
-\]</span></p>
+<p><span class="math display">\[\widehat p=\frac{X}{n}.\]</span></p>
 <section id="intervalo-de-wald" class="level3" data-number="6.8.1">
 <h3 data-number="6.8.1" class="anchored" data-anchor-id="intervalo-de-wald"><span class="header-section-number">6.8.1</span> Intervalo de Wald</h3>
 <p>A substituição de <span class="math inline">\(p\)</span> por <span class="math inline">\(\widehat p\)</span> no erro-padrão produz</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \widehat p\pm z_{1-\alpha/2}
 \sqrt{\frac{\widehat p(1-\widehat p)}{n}}
-}.
-\]</span></p>
-<p>Embora simples, esse intervalo pode apresentar cobertura muito inferior à nominal, produzir limites fora de <span class="math inline">\([0,1]\)</span> e degenerar quando <span class="math inline">\(x=0\)</span> ou <span class="math inline">\(x=n\)</span>. Regras como <span class="math inline">\(n\widehat p\geq5\)</span> e <span class="math inline">\(n(1-\widehat p)\geq5\)</span> são apenas diagnósticos aproximados e não garantem boa cobertura, sobretudo quando <span class="math inline">\(p\)</span> está próximo de <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span> (RAMACHANDRAN; TSOKOS, 2009, p.&nbsp;302-304; CHIHARA; HESTERBERG, 2022, p.&nbsp;211-215).</p>
+}.\]</span></p>
+<p>Embora simples, esse intervalo pode apresentar cobertura muito inferior à nominal, produzir limites fora de <span class="math inline">\([0,1]\)</span> e degenerar quando <span class="math inline">\(x=0\)</span> ou <span class="math inline">\(x=n\)</span>. Regras como <span class="math inline">\(n\widehat p\geq5\)</span> e <span class="math inline">\(n(1-\widehat p)\geq5\)</span> são apenas diagnósticos aproximados e não garantem boa cobertura, sobretudo quando <span class="math inline">\(p\)</span> está próximo de <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span> <span class="citation" data-cites="ramachandran2009 chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 211–215</a>; <a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009, pp. 302–304</a>)</span>.</p>
 </section>
 <section id="intervalo-de-wilson-ou-de-escore" class="level3" data-number="6.8.2">
 <h3 data-number="6.8.2" class="anchored" data-anchor-id="intervalo-de-wilson-ou-de-escore"><span class="header-section-number">6.8.2</span> Intervalo de Wilson ou de escore</h3>
 <p>Se <span class="math inline">\(z=z_{1-\alpha/2}\)</span>, o intervalo de Wilson é</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 \frac{
 \widehat p+\dfrac{z^2}{2n}
 \pm
@@ -806,22 +764,17 @@ z\sqrt{
 +\dfrac{z^2}{4n^2}
 }
 }{1+\dfrac{z^2}{n}}
-}.
-\]</span></p>
-<p>Esse intervalo resulta da inversão do teste de escore e, em geral, apresenta desempenho de cobertura superior ao intervalo de Wald. Seu centro não é exatamente <span class="math inline">\(\widehat p\)</span>, especialmente em amostras pequenas (CHIHARA; HESTERBERG, 2022, p.&nbsp;211-215).</p>
+}.\]</span></p>
+<p>Esse intervalo resulta da inversão do teste de escore e, em geral, apresenta desempenho de cobertura superior ao intervalo de Wald. Seu centro não é exatamente <span class="math inline">\(\widehat p\)</span>, especialmente em amostras pequenas <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, secs. 7.4–7.4.1</a>)</span>.</p>
 </section>
 <section id="intervalo-exato-de-clopperpearson" class="level3" data-number="6.8.3">
 <h3 data-number="6.8.3" class="anchored" data-anchor-id="intervalo-exato-de-clopperpearson"><span class="header-section-number">6.8.3</span> Intervalo exato de Clopper–Pearson</h3>
 <p>Para <span class="math inline">\(0&lt;x&lt;n\)</span>, o intervalo bilateral de caudas iguais pode ser escrito por quantis beta:</p>
-<p><span class="math display">\[
-L=B^{-1}_{\alpha/2}(x,n-x+1)
-\]</span></p>
+<p><span class="math display">\[L=B^{-1}_{\alpha/2}(x,n-x+1)\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-U=B^{-1}_{1-\alpha/2}(x+1,n-x),
-\]</span></p>
+<p><span class="math display">\[U=B^{-1}_{1-\alpha/2}(x+1,n-x),\]</span></p>
 <p>em que <span class="math inline">\(B^{-1}_q(a,b)\)</span> é o quantil de ordem <span class="math inline">\(q\)</span> da distribuição beta com parâmetros <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>. Para <span class="math inline">\(x=0\)</span>, define-se <span class="math inline">\(L=0\)</span>; para <span class="math inline">\(x=n\)</span>, define-se <span class="math inline">\(U=1\)</span>.</p>
-<p>O método garante cobertura de pelo menos <span class="math inline">\(1-\alpha\)</span>, mas, por causa da natureza discreta da distribuição binomial, costuma ser conservador e produzir intervalos mais longos (RASCH; SCHOTT, 2018, p.&nbsp;144-145; ROSNER, 2011, p.&nbsp;186-188).</p>
+<p>O método garante cobertura de pelo menos <span class="math inline">\(1-\alpha\)</span>, mas, por causa da natureza discreta da distribuição binomial, costuma ser conservador e produzir intervalos mais longos <span class="citation" data-cites="rasch2018 rosner2011fundamentals">(<a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018, pp. 145–146</a>; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, pp. 186–188</a>)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Exemplo — comparação de intervalos para uma proporção">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -839,10 +792,10 @@ Exemplo — comparação de intervalos para uma proporção
 <li>Clopper–Pearson: <span class="math inline">\([0{,}131;0{,}382]\)</span>.</li>
 </ul>
 <p>Os resultados ilustram que métodos diferentes podem ter centros, amplitudes e propriedades de cobertura distintos.</p>
-<p><strong>Fonte metodológica:</strong> Chihara e Hesterberg (2022, p.&nbsp;211-215), Rasch e Schott (2018, p.&nbsp;144-145) e Rosner (2011, p.&nbsp;186-188).</p>
+<p><strong>Base metodológica:</strong> <span class="citation" data-cites="chihara2022 rasch2018 rosner2011fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, secs. 7.4–7.4.1</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018, pp. 145–146</a>; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, pp. 186–188</a>)</span>.</p>
 </div>
 </div>
-<div id="7f5dcd49" class="cell" data-execution_count="5">
+<div id="3ad44213" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.proportion <span class="im">import</span> proportion_confint</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">12</span></span>
@@ -864,52 +817,36 @@ agresti_coull : (0.142, 0.376)</code></pre>
 <section id="intervalos-unilaterais" class="level2" data-number="6.9">
 <h2 data-number="6.9" class="anchored" data-anchor-id="intervalos-unilaterais"><span class="header-section-number">6.9</span> Intervalos unilaterais</h2>
 <p>Em algumas aplicações, interessa apenas estabelecer um limite superior ou inferior. Um limite inferior de confiança de nível <span class="math inline">\(1-\alpha\)</span> é uma estatística <span class="math inline">\(L(\mathbf{X})\)</span> tal que</p>
-<p><span class="math display">\[
-P_\theta\{L(\mathbf{X})\leq\theta\}\geq1-\alpha.
-\]</span></p>
+<p><span class="math display">\[P_\theta\{L(\mathbf{X})\leq\theta\}\geq1-\alpha.\]</span></p>
 <p>Analogamente, um limite superior <span class="math inline">\(U(\mathbf{X})\)</span> satisfaz</p>
-<p><span class="math display">\[
-P_\theta\{\theta\leq U(\mathbf{X})\}\geq1-\alpha.
-\]</span></p>
+<p><span class="math display">\[P_\theta\{\theta\leq U(\mathbf{X})\}\geq1-\alpha.\]</span></p>
 <p>Para a média normal com variância desconhecida, os intervalos unilaterais são</p>
-<p><span class="math display">\[
-\left[
+<p><span class="math display">\[\left[
 \overline X-t_{1-\alpha,n-1}\frac{S}{\sqrt n},\infty
-\right)
-\]</span></p>
+\right)\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\left(
+<p><span class="math display">\[\left(
 -\infty,
 \overline X+t_{1-\alpha,n-1}\frac{S}{\sqrt n}
-\right].
-\]</span></p>
-<p>Intervalos unilaterais devem ser escolhidos antes da inspeção dos dados, em consonância com a pergunta científica (CHIHARA; HESTERBERG, 2022, p.&nbsp;209-211).</p>
+\right].\]</span></p>
+<p>Intervalos unilaterais devem ser escolhidos antes da inspeção dos dados, em consonância com a pergunta científica <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 209–211</a>)</span>.</p>
 </section>
 <section id="dualidade-entre-intervalos-de-confiança-e-testes-de-hipóteses" class="level2" data-number="6.10">
 <h2 data-number="6.10" class="anchored" data-anchor-id="dualidade-entre-intervalos-de-confiança-e-testes-de-hipóteses"><span class="header-section-number">6.10</span> Dualidade entre intervalos de confiança e testes de hipóteses</h2>
 <p>Considere uma família de testes bilaterais de nível <span class="math inline">\(\alpha\)</span> para</p>
-<p><span class="math display">\[
-H_0:\theta=\theta_0.
-\]</span></p>
+<p><span class="math display">\[H_0:\theta=\theta_0.\]</span></p>
 <p>O conjunto de todos os valores de <span class="math inline">\(\theta_0\)</span> que não são rejeitados constitui um conjunto de confiança de nível <span class="math inline">\(1-\alpha\)</span>:</p>
-<p><span class="math display">\[
-C(\mathbf{x})=
-\{\theta_0:\text{$H_0:\theta=\theta_0$ não é rejeitada}\}.
-\]</span></p>
+<p><span class="math display">\[C(\mathbf{x})=
+\{\theta_0:\text{$H_0:\theta=\theta_0$ não é rejeitada}\}.\]</span></p>
 <p>Essa operação é denominada <strong>inversão de testes</strong>. No caso da média normal com variância conhecida, o teste bilateral rejeita <span class="math inline">\(H_0:\mu=\mu_0\)</span> quando</p>
-<p><span class="math display">\[
-\left|
+<p><span class="math display">\[\left|
 \frac{\overline X-\mu_0}{\sigma/\sqrt n}
-\right|&gt;z_{1-\alpha/2}.
-\]</span></p>
+\right|&gt;z_{1-\alpha/2}.\]</span></p>
 <p>Os valores não rejeitados de <span class="math inline">\(\mu_0\)</span> satisfazem</p>
-<p><span class="math display">\[
-\overline X-z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
+<p><span class="math display">\[\overline X-z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
 \leq \mu_0\leq
-\overline X+z_{1-\alpha/2}\frac{\sigma}{\sqrt n},
-\]</span></p>
-<p>que é precisamente o intervalo de confiança correspondente (RICE, 2007, p.&nbsp;337-338).</p>
+\overline X+z_{1-\alpha/2}\frac{\sigma}{\sqrt n},\]</span></p>
+<p>que é precisamente o intervalo de confiança correspondente <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, sec. 9.3</a>)</span>.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Consequência">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -920,20 +857,16 @@ Consequência
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Para um teste bilateral e um intervalo construídos pelo mesmo método e pelo mesmo nível, <span class="math inline">\(H_0:\theta=\theta_0\)</span> é rejeitada a nível <span class="math inline">\(\alpha\)</span> se, e somente se, <span class="math inline">\(\theta_0\)</span> não pertence ao intervalo de confiança de nível <span class="math inline">\(1-\alpha\)</span>.</p>
+<p>Para um teste bilateral e um intervalo obtidos pela inversão da mesma família de testes, <span class="math inline">\(H_0:\theta=\theta_0\)</span> é rejeitada ao nível <span class="math inline">\(\alpha\)</span> se, e somente se, <span class="math inline">\(\theta_0\)</span> não pertence ao conjunto de confiança de nível <span class="math inline">\(1-\alpha\)</span>.</p>
 </div>
 </div>
 </section>
 <section id="amplitude-precisão-e-tamanho-amostral" class="level2" data-number="6.11">
 <h2 data-number="6.11" class="anchored" data-anchor-id="amplitude-precisão-e-tamanho-amostral"><span class="header-section-number">6.11</span> Amplitude, precisão e tamanho amostral</h2>
 <p>Para um intervalo simétrico da forma</p>
-<p><span class="math display">\[
-\widehat\theta\pm c\,\widehat{\operatorname{se}}(\widehat\theta),
-\]</span></p>
+<p><span class="math display">\[\widehat\theta\pm c\,\widehat{\operatorname{EP}}(\widehat\theta),\]</span></p>
 <p>sua amplitude é</p>
-<p><span class="math display">\[
-2c\,\widehat{\operatorname{se}}(\widehat\theta).
-\]</span></p>
+<p><span class="math display">\[2c\,\widehat{\operatorname{EP}}(\widehat\theta).\]</span></p>
 <p>Três relações gerais são importantes:</p>
 <ul>
 <li>aumentando o nível de confiança, aumenta-se o valor crítico e, em geral, a amplitude;</li>
@@ -941,25 +874,19 @@ Consequência
 <li>aumentando o tamanho da amostra, o erro-padrão frequentemente diminui na ordem de <span class="math inline">\(n^{-1/2}\)</span>.</li>
 </ul>
 <p>Para a média com <span class="math inline">\(\sigma\)</span> conhecida, se a margem de erro desejada é no máximo <span class="math inline">\(E\)</span>, então</p>
-<p><span class="math display">\[
-E\geq z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
-\]</span></p>
+<p><span class="math display">\[E\geq z_{1-\alpha/2}\frac{\sigma}{\sqrt n}\]</span></p>
 <p>implica</p>
-<p><span class="math display">\[
-\boxed{
+<p><span class="math display">\[\boxed{
 n\geq
 \left(
 \frac{z_{1-\alpha/2}\sigma}{E}
 \right)^2
-}.
-\]</span></p>
-<p>O resultado deve ser arredondado para o inteiro imediatamente superior.</p>
+}.\]</span></p>
+<p>O resultado deve ser arredondado para o inteiro imediatamente superior <span class="citation" data-cites="chihara2022 larsen2012">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, p. 215</a>; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, pp. 310–311</a>)</span>.</p>
 <p>Para uma proporção, usando a aproximação de Wald,</p>
-<p><span class="math display">\[
-n\geq
-\frac{z_{1-\alpha/2}^2p(1-p)}{E^2}.
-\]</span></p>
-<p>Quando não existe estimativa preliminar de <span class="math inline">\(p\)</span>, utiliza-se <span class="math inline">\(p=0{,}5\)</span>, que maximiza <span class="math inline">\(p(1-p)\)</span> e fornece o tamanho amostral mais conservador dentro dessa aproximação.</p>
+<p><span class="math display">\[n\geq
+\frac{z_{1-\alpha/2}^2p(1-p)}{E^2}.\]</span></p>
+<p>Quando não existe estimativa preliminar de <span class="math inline">\(p\)</span>, utiliza-se <span class="math inline">\(p=0{,}5\)</span>, que maximiza <span class="math inline">\(p(1-p)\)</span> e fornece o tamanho amostral mais conservador <strong>dentro da aproximação de Wald</strong> <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, p. 215</a>)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Precisão não elimina viés">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -976,7 +903,7 @@ Precisão não elimina viés
 </section>
 <section id="cobertura-por-simulação" class="level2" data-number="6.12">
 <h2 data-number="6.12" class="anchored" data-anchor-id="cobertura-por-simulação"><span class="header-section-number">6.12</span> Cobertura por simulação</h2>
-<p>A interpretação frequentista pode ser visualizada repetindo-se a amostragem e a construção do intervalo. Na figura a seguir, são gerados <span class="math inline">\(100\)</span> intervalos de <span class="math inline">\(95\%\)</span> para a média de uma população normal. Em uma repetição particular, a proporção de cobertura não precisa ser exatamente <span class="math inline">\(0{,}95\)</span>, mas tende a se aproximar desse valor quando o número de repetições aumenta.</p>
+<p>A interpretação frequentista pode ser visualizada repetindo-se a amostragem e a construção do intervalo. Na figura a seguir, são gerados <span class="math inline">\(100\)</span> intervalos de <span class="math inline">\(95\%\)</span> para a média de uma população normal. Em uma repetição particular, a proporção de cobertura não precisa ser exatamente <span class="math inline">\(0{,}95\)</span>, mas tende a se aproximar desse valor quando o número de repetições aumenta <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 223–224</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, p. 281</a>)</span>.</p>
 <div id="cell-fig-cobertura" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div id="fig-cobertura" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -1000,7 +927,7 @@ Figure&nbsp;6.2: Simulação de intervalos de 95% para uma média normal.
 <li>o intervalo baseado em erro-padrão bootstrap;</li>
 <li>o intervalo bootstrap-<span class="math inline">\(t\)</span>, que aproxima a distribuição de uma estatística studentizada.</li>
 </ul>
-<p>O intervalo percentil é simples, mas pode apresentar problemas em presença de viés ou assimetria. O bootstrap-<span class="math inline">\(t\)</span> tende a lidar melhor com assimetria, embora exija o cálculo de erros-padrão em cada reamostra e possa ser computacionalmente mais oneroso. Em amostras muito pequenas, a distribuição empírica pode representar de forma inadequada a população; o bootstrap não substitui condições de identificação, independência ou qualidade do plano amostral (CHIHARA; HESTERBERG, 2022, p.&nbsp;216-224; RICE, 2007, p.&nbsp;279-283).</p>
+<p>O intervalo percentil é simples, mas pode apresentar problemas em presença de viés ou assimetria. Em muitos problemas regulares, o bootstrap-<span class="math inline">\(t\)</span> apresenta melhor acurácia de cobertura, embora exija a estimação do erro-padrão em cada reamostra e possa ser computacionalmente mais oneroso. Essa superioridade não é universal. Em amostras muito pequenas, a distribuição empírica pode representar inadequadamente a população; o bootstrap não substitui condições de identificação, independência ou qualidade do plano amostral <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, secs. 7.5.1–7.5.3</a>)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Algoritmo — intervalo percentil bootstrap">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1019,7 +946,7 @@ Algoritmo — intervalo percentil bootstrap
 </ol>
 </div>
 </div>
-<div id="b2cb25d7" class="cell" data-execution_count="7">
+<div id="30effcd0" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">2026</span>)</span>
@@ -1043,14 +970,10 @@ Algoritmo — intervalo percentil bootstrap
 <h2 data-number="6.14" class="anchored" data-anchor-id="intervalo-de-confiança-não-é-intervalo-de-predição"><span class="header-section-number">6.14</span> Intervalo de confiança não é intervalo de predição</h2>
 <p>Um intervalo de confiança para uma média descreve a incerteza sobre o parâmetro <span class="math inline">\(\mu\)</span>. Um intervalo de predição descreve a incerteza sobre uma nova observação <span class="math inline">\(X_{n+1}\)</span> e, portanto, inclui tanto a incerteza na estimação de <span class="math inline">\(\mu\)</span> quanto a variabilidade individual.</p>
 <p>Para uma amostra normal com <span class="math inline">\(\sigma^2\)</span> desconhecida, um intervalo de predição para uma nova observação é</p>
-<p><span class="math display">\[
-\overline X\pm t_{1-\alpha/2,n-1}S\sqrt{1+\frac{1}{n}},
-\]</span></p>
+<p><span class="math display">\[\overline X\pm t_{1-\alpha/2,n-1}S\sqrt{1+\frac{1}{n}},\]</span></p>
 <p>que é mais amplo do que o intervalo de confiança para <span class="math inline">\(\mu\)</span>:</p>
-<p><span class="math display">\[
-\overline X\pm t_{1-\alpha/2,n-1}\frac{S}{\sqrt n}.
-\]</span></p>
-<p>Confundir os dois intervalos leva a subestimar a variabilidade de observações futuras.</p>
+<p><span class="math display">\[\overline X\pm t_{1-\alpha/2,n-1}\frac{S}{\sqrt n}.\]</span></p>
+<p>Confundir os dois intervalos leva a subestimar a variabilidade de observações futuras <span class="citation" data-cites="larsen2012">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, sec. 11.3.8</a>)</span>.</p>
 </section>
 <section id="roteiro-para-construção-e-apresentação" class="level2" data-number="6.15">
 <h2 data-number="6.15" class="anchored" data-anchor-id="roteiro-para-construção-e-apresentação"><span class="header-section-number">6.15</span> Roteiro para construção e apresentação</h2>
@@ -1165,7 +1088,7 @@ Exercício 1 — interpretação
 <li>Escreva uma interpretação adequada do procedimento.</li>
 <li>Explique quais aspectos da conclusão dependem do modelo e do plano amostral.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Cox (2006, p.&nbsp;66-69) e Chihara e Hesterberg (2022, p.&nbsp;201-205).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="cox2006principles chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 201–205</a>; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006, pp. 66–69</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 2 — média com variância conhecida">
@@ -1184,7 +1107,7 @@ Exercício 2 — média com variância conhecida
 <li>Compare suas amplitudes.</li>
 <li>Determine o tamanho amostral necessário para uma margem de erro máxima de <span class="math inline">\(2\)</span> unidades em um intervalo de <span class="math inline">\(95\%\)</span>.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Larsen e Marx (2012, p.&nbsp;297-311).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="larsen2012">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, pp. 297–311</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 3 — média com variância desconhecida">
@@ -1203,7 +1126,7 @@ Exercício 3 — média com variância desconhecida
 <li>Compare-o com o intervalo que seria obtido substituindo o quantil <span class="math inline">\(t\)</span> por <span class="math inline">\(1{,}96\)</span>.</li>
 <li>Explique por que o intervalo normal é mais estreito.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Lauritzen (2023, p.&nbsp;136-138) e Rice (2007, p.&nbsp;279-280).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="lauritzen2023fundamentals rice2007mathematical">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ex. 6.5; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 279–280</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 4 — variância normal">
@@ -1223,7 +1146,7 @@ Exercício 4 — variância normal
 <li>Verifique que o intervalo para <span class="math inline">\(\sigma^2\)</span> não é simétrico em torno de <span class="math inline">\(s^2\)</span>.</li>
 <li>Discuta a sensibilidade do procedimento à hipótese de normalidade.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Rice (2007, p.&nbsp;280-281).</p>
+<p><strong>Base metodológica:</strong> <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 280–281</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 5 — quantidade pivotal exponencial">
@@ -1243,7 +1166,7 @@ Exercício 5 — quantidade pivotal exponencial
 <li>Transforme o intervalo para a média <span class="math inline">\(\theta=1/\lambda\)</span>.</li>
 <li>Aplique o resultado à amostra <span class="math inline">\(1{,}1\)</span>, <span class="math inline">\(0{,}8\)</span>, <span class="math inline">\(2{,}4\)</span>, <span class="math inline">\(0{,}6\)</span>, <span class="math inline">\(1{,}5\)</span> e <span class="math inline">\(3{,}0\)</span>.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Chihara e Hesterberg (2022, p.&nbsp;202-203).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ex. 6.7)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 6 — intervalo de Wald para Poisson">
@@ -1263,7 +1186,7 @@ Exercício 6 — intervalo de Wald para Poisson
 <li>Discuta se a aproximação normal parece razoável.</li>
 <li>Explique por que a simples truncagem de um limite negativo em zero não garante cobertura nominal.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Rice (2007, p.&nbsp;282-283).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, pp. 282–283</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 7 — proporção binomial">
@@ -1283,7 +1206,7 @@ Exercício 7 — proporção binomial
 <li>Compare os limites e as amplitudes.</li>
 <li>Justifique qual método você reportaria e quais limitações registraria.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Chihara e Hesterberg (2022, p.&nbsp;211-215), Rasch e Schott (2018, p.&nbsp;144-145) e Rosner (2011, p.&nbsp;186-188).</p>
+<p><strong>Base metodológica:</strong> <span class="citation" data-cites="chihara2022 rasch2018 rosner2011fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, secs. 7.4–7.4.1</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018, pp. 145–146</a>; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, pp. 186–188</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 8 — intervalo unilateral">
@@ -1297,7 +1220,7 @@ Exercício 8 — intervalo unilateral
 </div>
 <div class="callout-body-container callout-body">
 <p>Uma amostra normal de tamanho <span class="math inline">\(n=15\)</span> apresentou <span class="math inline">\(\overline x=120\)</span> e <span class="math inline">\(s=18\)</span>. Construa um limite superior de confiança de <span class="math inline">\(99\%\)</span> para <span class="math inline">\(\mu\)</span>. Explique em que tipo de pergunta científica um limite unilateral seria mais apropriado que um intervalo bilateral.</p>
-<p><strong>Fonte metodológica:</strong> Chihara e Hesterberg (2022, p.&nbsp;209-211).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 209–211</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 9 — dualidade">
@@ -1316,7 +1239,7 @@ Exercício 9 — dualidade
 <li>Inverta a região para obter o conjunto dos valores de <span class="math inline">\(\mu_0\)</span> não rejeitados.</li>
 <li>Mostre que o conjunto coincide com o intervalo normal de nível <span class="math inline">\(1-\alpha\)</span>.</li>
 </ol>
-<p><strong>Fonte metodológica:</strong> Rice (2007, p.&nbsp;337-338).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, sec. 9.3</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 10 — cobertura por simulação">
@@ -1336,7 +1259,7 @@ Exercício 10 — cobertura por simulação
 <li>intervalos de Wald e Wilson para uma proporção com <span class="math inline">\(n=20\)</span> e <span class="math inline">\(p\in\{0{,}05,0{,}20,0{,}50\}\)</span>.</li>
 </ol>
 <p>Compare a cobertura estimada com o nível nominal de <span class="math inline">\(95\%\)</span> e interprete os resultados.</p>
-<p><strong>Fonte metodológica:</strong> Chihara e Hesterberg (2022, p.&nbsp;223-224) e Ramachandran e Tsokos (2021, p.&nbsp;248-250).</p>
+<p><strong>Exercício baseado em:</strong> <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, pp. 223–224</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, pp. 248–250</a>)</span>.</p>
 </div>
 </div>
 </section>
@@ -1348,14 +1271,46 @@ Exercício 10 — cobertura por simulação
 <li>Use <span class="math inline">\(t_{0{,}975;24}\)</span> e <span class="math inline">\(s=1{,}2\)</span>; o intervalo <span class="math inline">\(z\)</span> ignora a incerteza adicional da estimação de <span class="math inline">\(\sigma\)</span>.</li>
 <li>Use os quantis <span class="math inline">\(\chi^2_{0{,}025;19}\)</span> e <span class="math inline">\(\chi^2_{0{,}975;19}\)</span>; obtenha o intervalo para <span class="math inline">\(\sigma\)</span> tomando raízes quadradas.</li>
 <li>Use <span class="math inline">\(2\lambda\sum_iX_i\sim\chi^2_{2n}\)</span> e inverta os limites para <span class="math inline">\(\theta=1/\lambda\)</span>.</li>
-<li><span class="math inline">\(\widehat\lambda=\overline x\)</span> e <span class="math inline">\(\widehat{\operatorname{se}}=\sqrt{\overline x/n}\)</span>.</li>
+<li><span class="math inline">\(\widehat\lambda=\overline x\)</span> e <span class="math inline">\(\widehat{\operatorname{EP}}=\sqrt{\overline x/n}\)</span>.</li>
 <li>O Wald tende a ser inadequado com poucos sucessos; Wilson e Clopper–Pearson respeitam melhor a estrutura binomial, com o último geralmente mais conservador.</li>
 <li>Use <span class="math inline">\(\overline x+t_{0{,}99;14}s/\sqrt n\)</span> como limite superior.</li>
 <li>A inversão produz <span class="math inline">\(\overline X\pm z_{1-\alpha/2}\sigma/\sqrt n\)</span>.</li>
 <li>Espera-se boa cobertura do intervalo <span class="math inline">\(t\)</span> sob normalidade; assimetria e fronteiras podem degradar a cobertura de métodos aproximados, especialmente para amostras pequenas.</li>
 </ol>
+</section>
+<section id="referências" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
 
 
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-chihara2022" class="csl-entry" role="listitem">
+CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical statistics with resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.
+</div>
+<div id="ref-cox2006principles" class="csl-entry" role="listitem">
+COX, D. R. <strong>Principles of statistical inference</strong>. Cambridge: Cambridge University Press, 2006.
+</div>
+<div id="ref-larsen2012" class="csl-entry" role="listitem">
+LARSEN, Richard J.; MARX, Morris L. <strong>An introduction to mathematical statistics and its applications</strong>. 5. ed. Boston: Prentice Hall, 2012.
+</div>
+<div id="ref-lauritzen2023fundamentals" class="csl-entry" role="listitem">
+LAURITZEN, Steffen. <strong>Fundamentals of mathematical statistics</strong>. 1. ed. Boca Raton, FL: CRC Press, 2023.
+</div>
+<div id="ref-ramachandran2009" class="csl-entry" role="listitem">
+RAMACHANDRAN, Kandethody M.; TSOKOS, Chris P. <strong>Mathematical statistics with applications</strong>. Burlington, MA: Academic Press, 2009.
+</div>
+<div id="ref-ramachandran2021r" class="csl-entry" role="listitem">
+RAMACHANDRAN, Kandethody M.; TSOKOS, Chris P. <strong>Mathematical statistics with applications in <span>R</span></strong>. 3. ed. London: Academic Press, 2021.
+</div>
+<div id="ref-rasch2018" class="csl-entry" role="listitem">
+RASCH, Dieter; SCHOTT, Dieter. <strong>Mathematical statistics</strong>. Chichester: John Wiley &amp; Sons, 2018.
+</div>
+<div id="ref-rice2007mathematical" class="csl-entry" role="listitem">
+RICE, John A. <strong>Mathematical statistics and data analysis</strong>. 3. ed. Belmont, CA: Duxbury Press, 2007.
+</div>
+<div id="ref-rosner2011fundamentals" class="csl-entry" role="listitem">
+ROSNER, Bernard. <strong>Fundamentals of biostatistics</strong>. 7. ed. Boston: Brooks/Cole, Cengage Learning, 2011.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

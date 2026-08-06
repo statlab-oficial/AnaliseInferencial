@@ -1,55 +1,61 @@
 # Estimação intervalar
 
-A estimação pontual associa a uma amostra um único valor para representar um parâmetro desconhecido. Embora esse valor seja informativo, ele não expressa, por si só, a variabilidade amostral nem a precisão do procedimento de estimação. A estimação intervalar complementa a estimativa pontual por meio de um conjunto de valores compatíveis com os dados e com o modelo estatístico adotado.
+A estimação pontual associa a cada amostra um único valor para representar um parâmetro desconhecido. Embora esse valor seja informativo, ele não expressa, por si só, a variabilidade amostral nem a precisão do procedimento de estimação. A estimação intervalar complementa a estimativa pontual por meio de um conjunto de valores compatíveis com os dados e com o modelo estatístico adotado.
 
-No paradigma frequentista, o parâmetro é considerado fixo e desconhecido, enquanto os limites do intervalo são estatísticas e, portanto, variam de amostra para amostra. Essa distinção é essencial para a definição e a interpretação de intervalos de confiança (COX, 2006, p. 66-69; RICE, 2007, p. 279-281).
+No paradigma frequentista, o parâmetro é considerado fixo e desconhecido, enquanto os limites do intervalo são estatísticas e, portanto, variam de amostra para amostra. Essa distinção é essencial para a definição e a interpretação de intervalos de confiança [@cox2006principles, pp. 66--69; @rice2007mathematical, sec. 8.5.3].
 
 ::: {.callout-important title="Observação — por que a estimativa pontual não é suficiente?"}
 Em modelos contínuos, frequentemente ocorre $P_\theta(\widehat\theta=\theta)=0$. Essa afirmação, contudo, não é universal: em problemas discretos, um estimador pode coincidir com o parâmetro com probabilidade positiva. A motivação geral para a estimação intervalar não é a impossibilidade de acerto exato, mas a necessidade de quantificar a incerteza associada ao procedimento de estimação.
 :::
+
+### Objetivos do capítulo {.unnumbered}
+
+Ao final deste capítulo, o leitor deverá ser capaz de:
+
+1. definir conjuntos e intervalos de confiança por meio de sua função de cobertura;
+2. interpretar corretamente o nível de confiança no paradigma frequentista;
+3. construir intervalos exatos a partir de quantidades pivotais;
+4. distinguir procedimentos exatos, conservadores e assintóticos;
+5. aplicar intervalos normais, $t$, qui-quadrado, de Wilson e de Clopper--Pearson;
+6. reconhecer as limitações dos intervalos de Wald e dos métodos bootstrap;
+7. relacionar intervalos de confiança, testes de hipóteses, precisão e tamanho amostral.
 
 ## Definição formal
 
 Considere uma amostra aleatória $\mathbf{X}=(X_1,\ldots,X_n)$ cuja distribuição pertence a uma família $\{P_\theta:\theta\in\Theta\}$. Um **conjunto de confiança** é uma função $C(\mathbf{X})$ que associa a cada amostra um subconjunto aleatório de $\Theta$.
 
 ::: {.callout-note title="Definição — conjunto de confiança"}
-O conjunto $C(\mathbf{X})$ é um conjunto de confiança de nível $1-\alpha$ para $\theta$ quando
+O conjunto $C(\mathbf{X})$ é um conjunto de confiança de nível **pelo menos** $1-\alpha$ para $\theta$ quando
 
-$$
-P_\theta\{\theta\in C(\mathbf{X})\}\geq 1-\alpha,
-\qquad \text{para todo }\theta\in\Theta.
-$$
+$$P_\theta\{\theta\in C(\mathbf{X})\}\geq 1-\alpha,
+\qquad \text{para todo }\theta\in\Theta.$$
 
-Quando a igualdade vale para todo $\theta\in\Theta$, diz-se que o procedimento possui **cobertura exata**. Quando a cobertura é apenas aproximadamente igual a $1-\alpha$, o intervalo é denominado **aproximado** ou **assintótico**. Se a cobertura é maior ou igual ao nível nominal, mas não necessariamente igual, o procedimento é chamado **conservador**.
+Quando a igualdade vale para todo $\theta\in\Theta$, diz-se que o procedimento possui **cobertura exata**. Quando a igualdade vale apenas assintoticamente ou por aproximação, o intervalo é denominado **aproximado** ou **assintótico**. Se a cobertura é maior ou igual ao nível nominal, mas não necessariamente igual, o procedimento é chamado **conservador** [@lauritzen2023fundamentals, sec. 6.2; @cox2006principles, sec. 5.4].
 :::
 
 Para um parâmetro escalar, é comum escrever
 
-$$
-C(\mathbf{X})=[L(\mathbf{X}),U(\mathbf{X})],
-$$
+$$C(\mathbf{X})=[L(\mathbf{X}),U(\mathbf{X})],$$
 
 em que $L$ e $U$ são, respectivamente, os limites inferior e superior de confiança. A função
 
-$$
-c(\theta)=P_\theta\{L(\mathbf{X})\leq \theta\leq U(\mathbf{X})\}
-$$
+$$c(\theta)=P_\theta\{L(\mathbf{X})\leq \theta\leq U(\mathbf{X})\}$$
 
-é denominada **função de cobertura** do procedimento. Em problemas discretos, pode ser impossível construir intervalos não aleatorizados com cobertura exatamente constante; nesses casos, intervalos exatos costumam ser conservadores (RASCH; SCHOTT, 2018, p. 144-145).
+é denominada **função de cobertura** do procedimento. Em problemas discretos, pode ser impossível construir intervalos não aleatorizados com cobertura exatamente constante; nesses casos, intervalos denominados exatos são usualmente construídos para garantir cobertura de pelo menos $1-\alpha$ e tendem a ser conservadores [@rasch2018, pp. 144--146].
 
 ## Interpretação frequentista
 
 Antes da observação da amostra, $L(\mathbf{X})$ e $U(\mathbf{X})$ são variáveis aleatórias. O nível de confiança descreve o desempenho do procedimento em repetições hipotéticas do experimento.
 
 ::: {.callout-tip title="Interpretação correta"}
-Um procedimento com nível de confiança de $95\%$ produz intervalos que contêm o verdadeiro parâmetro em $95\%$ das repetições, no longo prazo, desde que o modelo e o plano amostral estejam corretamente especificados.
+Um procedimento com cobertura exata de $95\%$ produz intervalos que contêm o verdadeiro parâmetro em $95\%$ das repetições, no longo prazo. Em um procedimento conservador de nível $95\%$, essa proporção é de pelo menos $95\%$. Em ambos os casos, a interpretação pressupõe que o modelo e o plano amostral estejam corretamente especificados.
 :::
 
 Depois de observados os dados, obtém-se um intervalo numérico $[l,u]$. Nesse momento, tanto $\theta$ quanto $[l,u]$ são fixos: o parâmetro pertence ou não pertence ao intervalo. Assim, no sentido frequentista estrito, não se deve afirmar
 
 > “A probabilidade de $\theta$ pertencer ao intervalo observado é $0{,}95$.”
 
-A expressão “estamos $95\%$ confiantes” é uma forma abreviada de se referir à propriedade de cobertura do método empregado, e não a uma distribuição de probabilidade atribuída ao parâmetro (COX, 2006, p. 66-68; CHIHARA; HESTERBERG, 2022, p. 201-205).
+A expressão “estamos $95\%$ confiantes” é uma forma abreviada de se referir à propriedade de cobertura do método empregado, e não a uma distribuição de probabilidade atribuída ao parâmetro [@cox2006principles, secs. 5.3--5.4; @chihara2022, pp. 201--205].
 
 ::: {.callout-warning title="Intervalo de confiança e intervalo de credibilidade"}
 Um intervalo de credibilidade bayesiano é construído a partir da distribuição posterior do parâmetro e admite uma interpretação probabilística condicional aos dados e ao modelo bayesiano. Um intervalo de confiança frequentista é definido por sua cobertura sob amostragens repetidas. Os dois conceitos não são intercambiáveis, ainda que possam produzir limites numericamente semelhantes em alguns modelos.
@@ -59,21 +65,15 @@ Um intervalo de credibilidade bayesiano é construído a partir da distribuiçã
 
 Se $Z\sim N(0,1)$ e $z_q$ denota o quantil de ordem $q$, então
 
-$$
-P(Z\leq z_q)=q.
-$$
+$$P(Z\leq z_q)=q.$$
 
 Pela simetria da distribuição normal padrão,
 
-$$
-z_{\alpha/2}=-z_{1-\alpha/2}
-$$
+$$z_{\alpha/2}=-z_{1-\alpha/2}$$
 
- e, portanto,
+e, portanto,
 
-$$
-P\left(-z_{1-\alpha/2}\leq Z\leq z_{1-\alpha/2}\right)=1-\alpha.
-$$
+$$P\left(-z_{1-\alpha/2}\leq Z\leq z_{1-\alpha/2}\right)=1-\alpha.$$
 
 Para $1-\alpha=0{,}95$, tem-se $z_{0{,}975}\approx1{,}96$.
 
@@ -106,32 +106,28 @@ plt.show()
 Uma das estratégias mais importantes para construir intervalos de confiança consiste em encontrar uma quantidade cuja distribuição não dependa de parâmetros desconhecidos.
 
 ::: {.callout-note title="Definição — quantidade pivotal"}
-Uma estatística
+Uma função dos dados e do parâmetro
 
-$$
-Q=Q(\mathbf{X},\theta)
-$$
+$$Q=Q(\mathbf{X},\theta)$$
 
-é uma **quantidade pivotal** quando sua distribuição não depende de $\theta$ nem de outros parâmetros desconhecidos.
+é uma **quantidade pivotal** quando sua distribuição, sob $P_\theta$, não depende de $\theta$ nem de outros parâmetros desconhecidos. Como $Q$ depende de $\theta$, ela não é, em geral, uma estatística no sentido estrito.
 :::
 
 Se $q_{\alpha/2}$ e $q_{1-\alpha/2}$ são quantis da distribuição de $Q$, então
 
-$$
-P_\theta\left(q_{\alpha/2}\leq Q(\mathbf{X},\theta)
-\leq q_{1-\alpha/2}\right)=1-\alpha.
-$$
+$$P_\theta\left(q_{\alpha/2}\leq Q(\mathbf{X},\theta)
+\leq q_{1-\alpha/2}\right)=1-\alpha.$$
 
-Resolvendo as desigualdades em relação a $\theta$, obtêm-se os limites de confiança. O intervalo resultante não precisa ser simétrico, não precisa estar centrado em $\widehat\theta$ e, em certos problemas, nem sequer precisa conter o estimador de máxima verossimilhança (RAMACHANDRAN; TSOKOS, 2021, p. 215-219; CHIHARA; HESTERBERG, 2022, p. 201-205).
+Resolvendo as desigualdades em relação a $\theta$, obtêm-se os limites de confiança. O intervalo resultante não precisa ser simétrico, não precisa estar centrado em $\widehat\theta$ e, em certos problemas, nem sequer precisa conter o estimador de máxima verossimilhança [@lauritzen2023fundamentals, sec. 6.2; @ramachandran2021r, pp. 215--219].
 
 ### Procedimento geral
 
-1. Identifique o parâmetro de interesse e um estimador adequado.
-2. Encontre uma quantidade pivotal $Q(\mathbf{X},\theta)$.
-3. Selecione quantis que concentrem probabilidade $1-\alpha$.
-4. Inverta as desigualdades para isolar $\theta$.
-5. Verifique se os limites pertencem ao espaço paramétrico.
-6. Declare as hipóteses necessárias e interprete o resultado em termos do problema.
+1.  Identifique o parâmetro de interesse e um estimador adequado.
+2.  Encontre uma quantidade pivotal $Q(\mathbf{X},\theta)$.
+3.  Selecione quantis que concentrem probabilidade $1-\alpha$.
+4.  Inverta as desigualdades para isolar $\theta$.
+5.  Verifique se os limites pertencem ao espaço paramétrico.
+6.  Declare as hipóteses necessárias e interprete o resultado em termos do problema.
 
 ## Intervalos para parâmetros da distribuição normal
 
@@ -139,55 +135,41 @@ Resolvendo as desigualdades em relação a $\theta$, obtêm-se os limites de con
 
 Suponha que
 
-$$
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}N(\mu,\sigma^2),
-$$
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2),$$
 
 com $\sigma^2$ conhecida. Como
 
-$$
-\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right),
-$$
+$$\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right),$$
 
 segue que
 
-$$
-Z=\frac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1).
-$$
+$$Z=\frac{\overline X-\mu}{\sigma/\sqrt n}\sim N(0,1).$$
 
 Logo, um intervalo exato de nível $1-\alpha$ para $\mu$ é
 
-$$
-\boxed{
+$$\boxed{
 \overline X\pm z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
-}.
-$$
+}.$$
 
-Esse intervalo é exato sob normalidade. Se a população não for normal, a mesma expressão pode ser usada como aproximação quando a distribuição de $\overline X$ for adequadamente aproximada pela normal. Não existe um valor universal de $n$ que garanta essa aproximação: a qualidade depende, entre outros fatores, da assimetria, das caudas da população e da independência das observações.
+Esse intervalo é exato sob normalidade. Se a população não for normal, a mesma expressão pode ser usada como aproximação quando a distribuição de $\overline X$ for adequadamente aproximada pela normal. Não existe um valor universal de $n$ que garanta essa aproximação: a qualidade depende, entre outros fatores, da assimetria, do peso das caudas e da independência das observações [@rice2007mathematical, sec. 8.5.3; @chihara2022, sec. 4.3.3].
 
 ::: {.callout-note title="Exemplo — média com variância conhecida"}
 Considere os dados
 
-$$
-12,15,14,10,13,16,14,15
-$$
+$$12,15,14,10,13,16,14,15$$
 
 provenientes de uma população normal com desvio-padrão conhecido $\sigma=2{,}5$. Tem-se $n=8$ e $\overline x=13{,}625$. Para um intervalo de $95\%$,
 
-$$
-13{,}625\pm1{,}96\frac{2{,}5}{\sqrt 8}
-=13{,}625\pm1{,}732.
-$$
+$$13{,}625\pm1{,}96\frac{2{,}5}{\sqrt 8}
+=13{,}625\pm1{,}732.$$
 
 Portanto,
 
-$$
-IC_{95\%}(\mu)=[11{,}893;15{,}357].
-$$
+$$IC_{95\%}(\mu)=[11{,}893;15{,}357].$$
 
 **Interpretação:** o método utilizado tem cobertura de $95\%$ sob o modelo normal com $\sigma=2{,}5$.
 
-**Fonte metodológica:** Rice (2007, p. 279-281) e Larsen e Marx (2012, p. 297-311).
+**Base metodológica:** [@rice2007mathematical, pp. 279--281; @larsen2012, pp. 297--311].
 :::
 
 ```{python}
@@ -212,31 +194,23 @@ print(f"IC 95% = ({intervalo[0]:.3f}, {intervalo[1]:.3f})")
 
 Se
 
-$$
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}N(\mu,\sigma^2)
-$$
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2)$$
 
 com $\mu$ e $\sigma^2$ desconhecidos, então
 
-$$
-T=\frac{\overline X-\mu}{S/\sqrt n}\sim t_{n-1},
-$$
+$$T=\frac{\overline X-\mu}{S/\sqrt n}\sim t_{n-1},$$
 
 em que
 
-$$
-S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2.
-$$
+$$S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2.$$
 
 Assim,
 
-$$
-\boxed{
+$$\boxed{
 \overline X\pm t_{1-\alpha/2,n-1}\frac{S}{\sqrt n}
-}
-$$
+}$$
 
-é um intervalo exato para $\mu$ sob normalidade (LAURITZEN, 2023, p. 136-138; RICE, 2007, p. 279-280).
+é um intervalo exato para $\mu$ sob normalidade [@lauritzen2023fundamentals, ex. 6.5; @rice2007mathematical, pp. 279--280].
 
 ::: {.callout-important title="Observação — não há regra universal como $n>30$ ou $n>200$"}
 Para dados normais, o intervalo $t$ é exato para qualquer $n\geq2$. Para dados não normais, sua validade é aproximada e depende da distribuição e do plano amostral. Amostras grandes melhoram a aproximação em muitas situações, mas não corrigem viés de seleção, dependência, heterogeneidade não modelada ou caudas extremamente pesadas.
@@ -245,13 +219,11 @@ Para dados normais, o intervalo $t$ é exato para qualquer $n\geq2$. Para dados 
 ::: {.callout-note title="Exemplo — média com variância desconhecida"}
 Para os mesmos oito valores, $\overline x=13{,}625$, $s=1{,}923$ e $t_{0{,}975;7}=2{,}365$. Logo,
 
-$$
-IC_{95\%}(\mu)
+$$IC_{95\%}(\mu)
 =13{,}625\pm2{,}365\frac{1{,}923}{\sqrt8}
-=[12{,}018;15{,}232].
-$$
+=[12{,}018;15{,}232].$$
 
-**Fonte metodológica:** Lauritzen (2023, p. 136-138).
+**Base metodológica:** [@lauritzen2023fundamentals, ex. 6.5].
 :::
 
 ```{python}
@@ -274,22 +246,18 @@ print(f"IC 95% = ({xbar - me:.3f}, {xbar + me:.3f})")
 
 Sob normalidade,
 
-$$
-\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.
-$$
+$$\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.$$
 
 Consequentemente, um intervalo exato de nível $1-\alpha$ para $\sigma^2$ é
 
-$$
-\boxed{
+$$\boxed{
 \left[
 \frac{(n-1)S^2}{\chi^2_{1-\alpha/2,n-1}},
 \frac{(n-1)S^2}{\chi^2_{\alpha/2,n-1}}
 \right]
-}.
-$$
+}.$$
 
-O intervalo para $\sigma$ é obtido pela raiz quadrada dos limites. Como a distribuição qui-quadrado é assimétrica, o intervalo não é simétrico em torno de $S^2$ (RICE, 2007, p. 280-281).
+O intervalo para $\sigma$ é obtido pela raiz quadrada dos limites. Como a distribuição qui-quadrado é assimétrica, o intervalo não é simétrico em torno de $S^2$ [@rice2007mathematical, pp. 280--281].
 
 ::: {.callout-warning title="Condição de uso"}
 O intervalo qui-quadrado para a variância é sensível a desvios de normalidade. Em aplicações, essa hipótese deve ser examinada com atenção; amostras grandes não tornam automaticamente esse procedimento robusto a caudas pesadas ou valores discrepantes.
@@ -298,19 +266,15 @@ O intervalo qui-quadrado para a variância é sensível a desvios de normalidade
 ::: {.callout-note title="Exemplo — intervalo para a variância"}
 Para os oito valores anteriores, $s^2=3{,}696$ e $n-1=7$. O intervalo de $95\%$ para $\sigma^2$ é
 
-$$
-IC_{95\%}(\sigma^2)=[1{,}616;15{,}312].
-$$
+$$IC_{95\%}(\sigma^2)=[1{,}616;15{,}312].$$
 
 Assim,
 
-$$
-IC_{95\%}(\sigma)=[1{,}271;3{,}913].
-$$
+$$IC_{95\%}(\sigma)=[1{,}271;3{,}913].$$
 
 A assimetria dos limites reflete a assimetria da distribuição qui-quadrado.
 
-**Fonte metodológica:** Rice (2007, p. 280-281).
+**Base metodológica:** [@rice2007mathematical, pp. 280--281].
 :::
 
 ```{python}
@@ -335,76 +299,58 @@ print(f"IC 95% para sigma   = ({np.sqrt(lim_inf):.3f}, {np.sqrt(lim_sup):.3f})")
 
 Considere
 
-$$
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\operatorname{Exp}(\lambda),
-$$
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\lambda),$$
 
 na parametrização por taxa, com densidade
 
-$$
-f(x\mid\lambda)=\lambda e^{-\lambda x},\qquad x>0.
-$$
+$$f(x\mid\lambda)=\lambda e^{-\lambda x},\qquad x>0.$$
 
 Como
 
-$$
-2\lambda\sum_{i=1}^nX_i\sim\chi^2_{2n},
-$$
+$$2\lambda\sum_{i=1}^nX_i\sim\chi^2_{2n},$$
 
 um intervalo exato de nível $1-\alpha$ para $\lambda$ é
 
-$$
-\boxed{
+$$\boxed{
 \left[
 \frac{\chi^2_{\alpha/2,2n}}{2\sum_{i=1}^nX_i},
 \frac{\chi^2_{1-\alpha/2,2n}}{2\sum_{i=1}^nX_i}
 \right]
-}.
-$$
+}.$$
 
-::: {.callout-note title="Exemplo — taxa exponencial"}
+::: {.callout-note title="Exemplo adaptado — taxa exponencial"}
 Para a amostra $2$, $2{,}5$, $3$, $4$ e $9$, tem-se $n=5$ e $\sum x_i=20{,}5$. O intervalo exato de $95\%$ é
 
-$$
-IC_{95\%}(\lambda)=[0{,}079;0{,}500].
-$$
+$$IC_{95\%}(\lambda)=[0{,}079;0{,}500].$$
 
 Se o parâmetro de interesse for a média $\theta=1/\lambda$, basta inverter os limites e trocar sua ordem:
 
-$$
-IC_{95\%}(\theta)=\left[\frac{1}{0{,}500},\frac{1}{0{,}079}\right]
-\approx[2{,}002;12{,}627].
-$$
+$$IC_{95\%}(\theta)=\left[\frac{1}{0{,}500},\frac{1}{0{,}079}\right]
+\approx[2{,}002;12{,}627].$$
 
-**Fonte metodológica:** Chihara e Hesterberg (2022, p. 202-203) e Ramachandran e Tsokos (2021, p. 215-219).
+**Fonte do exemplo e base metodológica:** [@chihara2022, pp. 202--204; @lauritzen2023fundamentals, ex. 6.7].
 :::
 
 ## Intervalos assintóticos e método de Wald
 
 Suponha que um estimador satisfaça
 
-$$
-\frac{\widehat\theta-\theta}{\widehat{\operatorname{se}}(\widehat\theta)}
-\overset{d}{\longrightarrow}N(0,1).
-$$
+$$\frac{\widehat\theta-\theta}{\widehat{\operatorname{EP}}(\widehat\theta)}
+\overset{d}{\longrightarrow}N(0,1).$$
 
 Então, um intervalo de Wald de nível aproximadamente $1-\alpha$ é
 
-$$
-\boxed{
+$$\boxed{
 \widehat\theta\pm z_{1-\alpha/2}
-\widehat{\operatorname{se}}(\widehat\theta)
-}.
-$$
+\widehat{\operatorname{EP}}(\widehat\theta)
+}.$$
 
 Para estimadores de máxima verossimilhança regulares,
 
-$$
-\widehat{\operatorname{se}}(\widehat\theta)
-\approx\frac{1}{\sqrt{nI(\widehat\theta)}},
-$$
+$$\widehat{\operatorname{EP}}(\widehat\theta)
+\approx\frac{1}{\sqrt{nI(\widehat\theta)}},$$
 
-em que $I(\theta)$ é a informação de Fisher por observação. A validade dessa aproximação depende das condições de regularidade: o parâmetro deve estar no interior do espaço paramétrico, o suporte não deve variar de forma problemática com o parâmetro e a aproximação normal deve ser adequada (RICE, 2007, p. 274-283; LAURITZEN, 2023, p. 140-150).
+em que $I(\theta)$ é a informação de Fisher por observação. A validade dessa aproximação depende das condições de regularidade: o parâmetro deve estar no interior do espaço paramétrico, o modelo deve ser identificável, a informação deve ser finita e positiva e a aproximação normal deve ser adequada [@rice2007mathematical, secs. 8.5.2--8.5.3; @lauritzen2023fundamentals, sec. 6.4.3].
 
 ::: {.callout-warning title="Limitações do intervalo de Wald"}
 O intervalo de Wald pode apresentar cobertura insatisfatória em amostras pequenas, perto das fronteiras do espaço paramétrico, para distribuições muito assimétricas ou quando o erro-padrão varia fortemente com o parâmetro. Além disso, ele não é invariável a reparametrizações não lineares: construir um intervalo para $\theta$ e transformá-lo pode produzir resultado diferente de construir diretamente um intervalo para $g(\theta)$. Intervalos de razão de verossimilhanças, de escore ou baseados em transformações podem ser preferíveis.
@@ -414,53 +360,42 @@ O intervalo de Wald pode apresentar cobertura insatisfatória em amostras pequen
 
 Se
 
-$$
-X_1,\ldots,X_n\stackrel{\text{iid}}{\sim}\operatorname{Poisson}(\lambda),
-$$
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Poisson}(\lambda),$$
 
 então $\widehat\lambda=\overline X$ e
 
-$$
-\operatorname{Var}(\widehat\lambda)=\frac{\lambda}{n}.
-$$
+$$\operatorname{Var}(\widehat\lambda)=\frac{\lambda}{n}.$$
 
 Substituindo $\lambda$ por $\widehat\lambda$, obtém-se
 
-$$
-\boxed{
+$$\boxed{
 \overline X\pm z_{1-\alpha/2}\sqrt{\frac{\overline X}{n}}
-}.
-$$
+}.$$
 
-Esse intervalo é aproximado. Se o limite inferior for negativo, truncá-lo em zero respeita o espaço paramétrico, mas não corrige necessariamente a função de cobertura. Para contagens pequenas, métodos exatos ou baseados na razão de verossimilhanças são mais apropriados (RICE, 2007, p. 282-283).
+Esse intervalo é aproximado. Se o limite inferior for negativo, truncá-lo em zero respeita o espaço paramétrico, mas não corrige necessariamente a função de cobertura. Para contagens pequenas, métodos exatos ou baseados na razão de verossimilhanças são mais apropriados [@rice2007mathematical, pp. 282--283].
 
 ## Intervalos para uma proporção binomial
 
 Se $X\sim\operatorname{Binomial}(n,p)$, então
 
-$$
-\widehat p=\frac{X}{n}.
-$$
+$$\widehat p=\frac{X}{n}.$$
 
 ### Intervalo de Wald
 
 A substituição de $p$ por $\widehat p$ no erro-padrão produz
 
-$$
-\boxed{
+$$\boxed{
 \widehat p\pm z_{1-\alpha/2}
 \sqrt{\frac{\widehat p(1-\widehat p)}{n}}
-}.
-$$
+}.$$
 
-Embora simples, esse intervalo pode apresentar cobertura muito inferior à nominal, produzir limites fora de $[0,1]$ e degenerar quando $x=0$ ou $x=n$. Regras como $n\widehat p\geq5$ e $n(1-\widehat p)\geq5$ são apenas diagnósticos aproximados e não garantem boa cobertura, sobretudo quando $p$ está próximo de $0$ ou $1$ (RAMACHANDRAN; TSOKOS, 2009, p. 302-304; CHIHARA; HESTERBERG, 2022, p. 211-215).
+Embora simples, esse intervalo pode apresentar cobertura muito inferior à nominal, produzir limites fora de $[0,1]$ e degenerar quando $x=0$ ou $x=n$. Regras como $n\widehat p\geq5$ e $n(1-\widehat p)\geq5$ são apenas diagnósticos aproximados e não garantem boa cobertura, sobretudo quando $p$ está próximo de $0$ ou $1$ [@ramachandran2009, pp. 302--304; @chihara2022, pp. 211--215].
 
 ### Intervalo de Wilson ou de escore
 
 Se $z=z_{1-\alpha/2}$, o intervalo de Wilson é
 
-$$
-\boxed{
+$$\boxed{
 \frac{
 \widehat p+\dfrac{z^2}{2n}
 \pm
@@ -469,28 +404,23 @@ z\sqrt{
 +\dfrac{z^2}{4n^2}
 }
 }{1+\dfrac{z^2}{n}}
-}.
-$$
+}.$$
 
-Esse intervalo resulta da inversão do teste de escore e, em geral, apresenta desempenho de cobertura superior ao intervalo de Wald. Seu centro não é exatamente $\widehat p$, especialmente em amostras pequenas (CHIHARA; HESTERBERG, 2022, p. 211-215).
+Esse intervalo resulta da inversão do teste de escore e, em geral, apresenta desempenho de cobertura superior ao intervalo de Wald. Seu centro não é exatamente $\widehat p$, especialmente em amostras pequenas [@chihara2022, secs. 7.4--7.4.1].
 
 ### Intervalo exato de Clopper--Pearson
 
 Para $0<x<n$, o intervalo bilateral de caudas iguais pode ser escrito por quantis beta:
 
-$$
-L=B^{-1}_{\alpha/2}(x,n-x+1)
-$$
+$$L=B^{-1}_{\alpha/2}(x,n-x+1)$$
 
- e
+e
 
-$$
-U=B^{-1}_{1-\alpha/2}(x+1,n-x),
-$$
+$$U=B^{-1}_{1-\alpha/2}(x+1,n-x),$$
 
 em que $B^{-1}_q(a,b)$ é o quantil de ordem $q$ da distribuição beta com parâmetros $a$ e $b$. Para $x=0$, define-se $L=0$; para $x=n$, define-se $U=1$.
 
-O método garante cobertura de pelo menos $1-\alpha$, mas, por causa da natureza discreta da distribuição binomial, costuma ser conservador e produzir intervalos mais longos (RASCH; SCHOTT, 2018, p. 144-145; ROSNER, 2011, p. 186-188).
+O método garante cobertura de pelo menos $1-\alpha$, mas, por causa da natureza discreta da distribuição binomial, costuma ser conservador e produzir intervalos mais longos [@rasch2018, pp. 145--146; @rosner2011fundamentals, pp. 186--188].
 
 ::: {.callout-note title="Exemplo — comparação de intervalos para uma proporção"}
 Considere $x=12$ sucessos em $n=50$ ensaios, de modo que $\widehat p=0{,}24$. Para $95\%$ de confiança:
@@ -501,7 +431,7 @@ Considere $x=12$ sucessos em $n=50$ ensaios, de modo que $\widehat p=0{,}24$. Pa
 
 Os resultados ilustram que métodos diferentes podem ter centros, amplitudes e propriedades de cobertura distintos.
 
-**Fonte metodológica:** Chihara e Hesterberg (2022, p. 211-215), Rasch e Schott (2018, p. 144-145) e Rosner (2011, p. 186-188).
+**Base metodológica:** [@chihara2022, secs. 7.4--7.4.1; @rasch2018, pp. 145--146; @rosner2011fundamentals, pp. 186--188].
 :::
 
 ```{python}
@@ -520,85 +450,65 @@ for metodo in ["normal", "wilson", "beta", "agresti_coull"]:
 
 Em algumas aplicações, interessa apenas estabelecer um limite superior ou inferior. Um limite inferior de confiança de nível $1-\alpha$ é uma estatística $L(\mathbf{X})$ tal que
 
-$$
-P_\theta\{L(\mathbf{X})\leq\theta\}\geq1-\alpha.
-$$
+$$P_\theta\{L(\mathbf{X})\leq\theta\}\geq1-\alpha.$$
 
 Analogamente, um limite superior $U(\mathbf{X})$ satisfaz
 
-$$
-P_\theta\{\theta\leq U(\mathbf{X})\}\geq1-\alpha.
-$$
+$$P_\theta\{\theta\leq U(\mathbf{X})\}\geq1-\alpha.$$
 
 Para a média normal com variância desconhecida, os intervalos unilaterais são
 
-$$
-\left[
+$$\left[
 \overline X-t_{1-\alpha,n-1}\frac{S}{\sqrt n},\infty
-\right)
-$$
+\right)$$
 
- e
+e
 
-$$
-\left(
+$$\left(
 -\infty,
 \overline X+t_{1-\alpha,n-1}\frac{S}{\sqrt n}
-\right].
-$$
+\right].$$
 
-Intervalos unilaterais devem ser escolhidos antes da inspeção dos dados, em consonância com a pergunta científica (CHIHARA; HESTERBERG, 2022, p. 209-211).
+Intervalos unilaterais devem ser escolhidos antes da inspeção dos dados, em consonância com a pergunta científica [@chihara2022, pp. 209--211].
 
 ## Dualidade entre intervalos de confiança e testes de hipóteses
 
 Considere uma família de testes bilaterais de nível $\alpha$ para
 
-$$
-H_0:\theta=\theta_0.
-$$
+$$H_0:\theta=\theta_0.$$
 
 O conjunto de todos os valores de $\theta_0$ que não são rejeitados constitui um conjunto de confiança de nível $1-\alpha$:
 
-$$
-C(\mathbf{x})=
-\{\theta_0:\text{$H_0:\theta=\theta_0$ não é rejeitada}\}.
-$$
+$$C(\mathbf{x})=
+\{\theta_0:\text{$H_0:\theta=\theta_0$ não é rejeitada}\}.$$
 
 Essa operação é denominada **inversão de testes**. No caso da média normal com variância conhecida, o teste bilateral rejeita $H_0:\mu=\mu_0$ quando
 
-$$
-\left|
+$$\left|
 \frac{\overline X-\mu_0}{\sigma/\sqrt n}
-\right|>z_{1-\alpha/2}.
-$$
+\right|>z_{1-\alpha/2}.$$
 
 Os valores não rejeitados de $\mu_0$ satisfazem
 
-$$
-\overline X-z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
+$$\overline X-z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
 \leq \mu_0\leq
-\overline X+z_{1-\alpha/2}\frac{\sigma}{\sqrt n},
-$$
+\overline X+z_{1-\alpha/2}\frac{\sigma}{\sqrt n},$$
 
-que é precisamente o intervalo de confiança correspondente (RICE, 2007, p. 337-338).
+que é precisamente o intervalo de confiança correspondente [@rice2007mathematical, sec. 9.3].
 
 ::: {.callout-important title="Consequência"}
-Para um teste bilateral e um intervalo construídos pelo mesmo método e pelo mesmo nível, $H_0:\theta=\theta_0$ é rejeitada a nível $\alpha$ se, e somente se, $\theta_0$ não pertence ao intervalo de confiança de nível $1-\alpha$.
+Para um teste bilateral e um intervalo obtidos pela inversão da mesma família de testes, $H_0:\theta=\theta_0$ é rejeitada ao nível $\alpha$ se, e somente se, $\theta_0$ não pertence ao conjunto de confiança de nível $1-\alpha$.
 :::
 
 ## Amplitude, precisão e tamanho amostral
 
 Para um intervalo simétrico da forma
 
-$$
-\widehat\theta\pm c\,\widehat{\operatorname{se}}(\widehat\theta),
-$$
+$$\widehat\theta\pm c\,\widehat{\operatorname{EP}}(\widehat\theta),$$
 
 sua amplitude é
 
-$$
-2c\,\widehat{\operatorname{se}}(\widehat\theta).
-$$
+$$2c\,\widehat{\operatorname{EP}}(\widehat\theta).$$
 
 Três relações gerais são importantes:
 
@@ -608,31 +518,25 @@ Três relações gerais são importantes:
 
 Para a média com $\sigma$ conhecida, se a margem de erro desejada é no máximo $E$, então
 
-$$
-E\geq z_{1-\alpha/2}\frac{\sigma}{\sqrt n}
-$$
+$$E\geq z_{1-\alpha/2}\frac{\sigma}{\sqrt n}$$
 
 implica
 
-$$
-\boxed{
+$$\boxed{
 n\geq
 \left(
 \frac{z_{1-\alpha/2}\sigma}{E}
 \right)^2
-}.
-$$
+}.$$
 
-O resultado deve ser arredondado para o inteiro imediatamente superior.
+O resultado deve ser arredondado para o inteiro imediatamente superior [@chihara2022, p. 215; @larsen2012, pp. 310--311].
 
 Para uma proporção, usando a aproximação de Wald,
 
-$$
-n\geq
-\frac{z_{1-\alpha/2}^2p(1-p)}{E^2}.
-$$
+$$n\geq
+\frac{z_{1-\alpha/2}^2p(1-p)}{E^2}.$$
 
-Quando não existe estimativa preliminar de $p$, utiliza-se $p=0{,}5$, que maximiza $p(1-p)$ e fornece o tamanho amostral mais conservador dentro dessa aproximação.
+Quando não existe estimativa preliminar de $p$, utiliza-se $p=0{,}5$, que maximiza $p(1-p)$ e fornece o tamanho amostral mais conservador **dentro da aproximação de Wald** [@chihara2022, p. 215].
 
 ::: {.callout-warning title="Precisão não elimina viés"}
 Aumentar $n$ reduz o erro aleatório, mas não corrige amostragem não representativa, não resposta informativa, mensuração enviesada, dependência ignorada ou especificação inadequada do modelo. Um intervalo estreito pode ser sistematicamente incorreto.
@@ -640,7 +544,7 @@ Aumentar $n$ reduz o erro aleatório, mas não corrige amostragem não represent
 
 ## Cobertura por simulação
 
-A interpretação frequentista pode ser visualizada repetindo-se a amostragem e a construção do intervalo. Na figura a seguir, são gerados $100$ intervalos de $95\%$ para a média de uma população normal. Em uma repetição particular, a proporção de cobertura não precisa ser exatamente $0{,}95$, mas tende a se aproximar desse valor quando o número de repetições aumenta.
+A interpretação frequentista pode ser visualizada repetindo-se a amostragem e a construção do intervalo. Na figura a seguir, são gerados $100$ intervalos de $95\%$ para a média de uma população normal. Em uma repetição particular, a proporção de cobertura não precisa ser exatamente $0{,}95$, mas tende a se aproximar desse valor quando o número de repetições aumenta [@rice2007mathematical, p. 281; @chihara2022, pp. 223--224].
 
 ```{python}
 #| label: fig-cobertura
@@ -691,14 +595,14 @@ Quando a distribuição amostral do estimador é difícil de obter, o bootstrap 
 - o intervalo baseado em erro-padrão bootstrap;
 - o intervalo bootstrap-$t$, que aproxima a distribuição de uma estatística studentizada.
 
-O intervalo percentil é simples, mas pode apresentar problemas em presença de viés ou assimetria. O bootstrap-$t$ tende a lidar melhor com assimetria, embora exija o cálculo de erros-padrão em cada reamostra e possa ser computacionalmente mais oneroso. Em amostras muito pequenas, a distribuição empírica pode representar de forma inadequada a população; o bootstrap não substitui condições de identificação, independência ou qualidade do plano amostral (CHIHARA; HESTERBERG, 2022, p. 216-224; RICE, 2007, p. 279-283).
+O intervalo percentil é simples, mas pode apresentar problemas em presença de viés ou assimetria. Em muitos problemas regulares, o bootstrap-$t$ apresenta melhor acurácia de cobertura, embora exija a estimação do erro-padrão em cada reamostra e possa ser computacionalmente mais oneroso. Essa superioridade não é universal. Em amostras muito pequenas, a distribuição empírica pode representar inadequadamente a população; o bootstrap não substitui condições de identificação, independência ou qualidade do plano amostral [@chihara2022, secs. 7.5.1--7.5.3].
 
 ::: {.callout-note title="Algoritmo — intervalo percentil bootstrap"}
 Para estimar um parâmetro $\theta$ por $\widehat\theta=s(\mathbf{X})$:
 
-1. obtenha $B$ amostras bootstrap de tamanho $n$ por reamostragem com reposição;
-2. calcule $\widehat\theta^{*(1)},\ldots,\widehat\theta^{*(B)}$;
-3. use os quantis empíricos de ordens $\alpha/2$ e $1-\alpha/2$ como limites.
+1.  obtenha $B$ amostras bootstrap de tamanho $n$ por reamostragem com reposição;
+2.  calcule $\widehat\theta^{*(1)},\ldots,\widehat\theta^{*(B)}$;
+3.  use os quantis empíricos de ordens $\alpha/2$ e $1-\alpha/2$ como limites.
 :::
 
 ```{python}
@@ -724,29 +628,25 @@ Um intervalo de confiança para uma média descreve a incerteza sobre o parâmet
 
 Para uma amostra normal com $\sigma^2$ desconhecida, um intervalo de predição para uma nova observação é
 
-$$
-\overline X\pm t_{1-\alpha/2,n-1}S\sqrt{1+\frac{1}{n}},
-$$
+$$\overline X\pm t_{1-\alpha/2,n-1}S\sqrt{1+\frac{1}{n}},$$
 
 que é mais amplo do que o intervalo de confiança para $\mu$:
 
-$$
-\overline X\pm t_{1-\alpha/2,n-1}\frac{S}{\sqrt n}.
-$$
+$$\overline X\pm t_{1-\alpha/2,n-1}\frac{S}{\sqrt n}.$$
 
-Confundir os dois intervalos leva a subestimar a variabilidade de observações futuras.
+Confundir os dois intervalos leva a subestimar a variabilidade de observações futuras [@larsen2012, sec. 11.3.8].
 
 ## Roteiro para construção e apresentação
 
 Ao apresentar um intervalo de confiança, recomenda-se informar:
 
-1. o parâmetro e a população de interesse;
-2. o estimador e o método de construção;
-3. o nível de confiança;
-4. as hipóteses do modelo e do plano amostral;
-5. os limites numéricos e, quando pertinente, a margem de erro;
-6. uma interpretação contextual;
-7. limitações relevantes, como pequena amostra, assimetria, dependência ou proximidade de fronteiras paramétricas.
+1.  o parâmetro e a população de interesse;
+2.  o estimador e o método de construção;
+3.  o nível de confiança;
+4.  as hipóteses do modelo e do plano amostral;
+5.  os limites numéricos e, quando pertinente, a margem de erro;
+6.  uma interpretação contextual;
+7.  limitações relevantes, como pequena amostra, assimetria, dependência ou proximidade de fronteiras paramétricas.
 
 ::: {.callout-tip title="Modelo de redação"}
 “Com base em um intervalo $t$ bilateral de $95\%$, estima-se que a média populacional esteja entre $12{,}02$ e $15{,}23$. Essa conclusão pressupõe observações independentes e uma população aproximadamente normal. O nível de $95\%$ refere-se à cobertura do procedimento em repetições do processo amostral.”
@@ -755,7 +655,7 @@ Ao apresentar um intervalo de confiança, recomenda-se informar:
 ## Síntese dos principais procedimentos
 
 | Parâmetro | Hipóteses principais | Procedimento | Natureza |
-|---|---|---|---|
+|------------------|------------------|------------------|------------------|
 | $\mu$, $\sigma$ conhecida | amostra normal | normal padrão | exato |
 | $\mu$, $\sigma$ desconhecida | amostra normal | $t$ de Student | exato |
 | $\sigma^2$ | amostra normal | qui-quadrado | exato |
@@ -770,115 +670,118 @@ Ao apresentar um intervalo de confiança, recomenda-se informar:
 ::: {.callout-note title="Exercício 1 — interpretação"}
 Um pesquisador obteve o intervalo $[18{,}4;22{,}7]$ para uma média populacional com nível de confiança de $95\%$.
 
-1. Explique por que a frase “há $95\%$ de probabilidade de a média estar no intervalo” não é uma interpretação frequentista estrita.
-2. Escreva uma interpretação adequada do procedimento.
-3. Explique quais aspectos da conclusão dependem do modelo e do plano amostral.
+1.  Explique por que a frase “há $95\%$ de probabilidade de a média estar no intervalo” não é uma interpretação frequentista estrita.
+2.  Escreva uma interpretação adequada do procedimento.
+3.  Explique quais aspectos da conclusão dependem do modelo e do plano amostral.
 
-**Fonte metodológica:** Cox (2006, p. 66-69) e Chihara e Hesterberg (2022, p. 201-205).
+**Exercício baseado em:** [@cox2006principles, pp. 66--69; @chihara2022, pp. 201--205].
 :::
 
 ::: {.callout-note title="Exercício 2 — média com variância conhecida"}
 Uma amostra normal de tamanho $n=36$ apresentou média $\overline x=50$. Suponha $\sigma=9$ conhecida.
 
-1. Construa intervalos de $90\%$, $95\%$ e $99\%$ para $\mu$.
-2. Compare suas amplitudes.
-3. Determine o tamanho amostral necessário para uma margem de erro máxima de $2$ unidades em um intervalo de $95\%$.
+1.  Construa intervalos de $90\%$, $95\%$ e $99\%$ para $\mu$.
+2.  Compare suas amplitudes.
+3.  Determine o tamanho amostral necessário para uma margem de erro máxima de $2$ unidades em um intervalo de $95\%$.
 
-**Fonte metodológica:** Larsen e Marx (2012, p. 297-311).
+**Exercício baseado em:** [@larsen2012, pp. 297--311].
 :::
 
 ::: {.callout-note title="Exercício 3 — média com variância desconhecida"}
 Considere uma amostra normal com $n=25$, $\overline x=4{,}2$ e $s^2=1{,}44$.
 
-1. Construa um intervalo de $95\%$ para $\mu$.
-2. Compare-o com o intervalo que seria obtido substituindo o quantil $t$ por $1{,}96$.
-3. Explique por que o intervalo normal é mais estreito.
+1.  Construa um intervalo de $95\%$ para $\mu$.
+2.  Compare-o com o intervalo que seria obtido substituindo o quantil $t$ por $1{,}96$.
+3.  Explique por que o intervalo normal é mais estreito.
 
-**Fonte metodológica:** Lauritzen (2023, p. 136-138) e Rice (2007, p. 279-280).
+**Exercício baseado em:** [@lauritzen2023fundamentals, ex. 6.5; @rice2007mathematical, pp. 279--280].
 :::
 
 ::: {.callout-note title="Exercício 4 — variância normal"}
 Uma amostra normal de tamanho $n=20$ apresentou variância amostral $s^2=16$.
 
-1. Construa um intervalo de $95\%$ para $\sigma^2$.
-2. Obtenha o intervalo correspondente para $\sigma$.
-3. Verifique que o intervalo para $\sigma^2$ não é simétrico em torno de $s^2$.
-4. Discuta a sensibilidade do procedimento à hipótese de normalidade.
+1.  Construa um intervalo de $95\%$ para $\sigma^2$.
+2.  Obtenha o intervalo correspondente para $\sigma$.
+3.  Verifique que o intervalo para $\sigma^2$ não é simétrico em torno de $s^2$.
+4.  Discuta a sensibilidade do procedimento à hipótese de normalidade.
 
-**Fonte metodológica:** Rice (2007, p. 280-281).
+**Base metodológica:** [@rice2007mathematical, pp. 280--281].
 :::
 
 ::: {.callout-note title="Exercício 5 — quantidade pivotal exponencial"}
 Sejam $X_1,\ldots,X_n$ iid com distribuição exponencial de taxa $\lambda$.
 
-1. Demonstre que $2\lambda\sum_iX_i$ é uma quantidade pivotal.
-2. Derive um intervalo bilateral de nível $1-\alpha$ para $\lambda$.
-3. Transforme o intervalo para a média $\theta=1/\lambda$.
-4. Aplique o resultado à amostra $1{,}1$, $0{,}8$, $2{,}4$, $0{,}6$, $1{,}5$ e $3{,}0$.
+1.  Demonstre que $2\lambda\sum_iX_i$ é uma quantidade pivotal.
+2.  Derive um intervalo bilateral de nível $1-\alpha$ para $\lambda$.
+3.  Transforme o intervalo para a média $\theta=1/\lambda$.
+4.  Aplique o resultado à amostra $1{,}1$, $0{,}8$, $2{,}4$, $0{,}6$, $1{,}5$ e $3{,}0$.
 
-**Fonte metodológica:** Chihara e Hesterberg (2022, p. 202-203).
+**Exercício baseado em:** [@lauritzen2023fundamentals, ex. 6.7].
 :::
 
 ::: {.callout-note title="Exercício 6 — intervalo de Wald para Poisson"}
 Considere as contagens $4$, $6$, $7$, $9$, $10$ e $13$, modeladas como iid Poisson$(\lambda)$.
 
-1. Calcule $\widehat\lambda$ e seu erro-padrão estimado.
-2. Construa um intervalo de Wald de $95\%$.
-3. Discuta se a aproximação normal parece razoável.
-4. Explique por que a simples truncagem de um limite negativo em zero não garante cobertura nominal.
+1.  Calcule $\widehat\lambda$ e seu erro-padrão estimado.
+2.  Construa um intervalo de Wald de $95\%$.
+3.  Discuta se a aproximação normal parece razoável.
+4.  Explique por que a simples truncagem de um limite negativo em zero não garante cobertura nominal.
 
-**Fonte metodológica:** Rice (2007, p. 282-283).
+**Exercício baseado em:** [@rice2007mathematical, pp. 282--283].
 :::
 
 ::: {.callout-note title="Exercício 7 — proporção binomial"}
 Em $n=40$ ensaios, foram observados $x=4$ sucessos.
 
-1. Calcule o intervalo de Wald de $95\%$.
-2. Calcule os intervalos de Wilson e Clopper--Pearson com auxílio de software.
-3. Compare os limites e as amplitudes.
-4. Justifique qual método você reportaria e quais limitações registraria.
+1.  Calcule o intervalo de Wald de $95\%$.
+2.  Calcule os intervalos de Wilson e Clopper--Pearson com auxílio de software.
+3.  Compare os limites e as amplitudes.
+4.  Justifique qual método você reportaria e quais limitações registraria.
 
-**Fonte metodológica:** Chihara e Hesterberg (2022, p. 211-215), Rasch e Schott (2018, p. 144-145) e Rosner (2011, p. 186-188).
+**Base metodológica:** [@chihara2022, secs. 7.4--7.4.1; @rasch2018, pp. 145--146; @rosner2011fundamentals, pp. 186--188].
 :::
 
 ::: {.callout-note title="Exercício 8 — intervalo unilateral"}
 Uma amostra normal de tamanho $n=15$ apresentou $\overline x=120$ e $s=18$. Construa um limite superior de confiança de $99\%$ para $\mu$. Explique em que tipo de pergunta científica um limite unilateral seria mais apropriado que um intervalo bilateral.
 
-**Fonte metodológica:** Chihara e Hesterberg (2022, p. 209-211).
+**Exercício baseado em:** [@chihara2022, pp. 209--211].
 :::
 
 ::: {.callout-note title="Exercício 9 — dualidade"}
 Considere o teste bilateral de $H_0:\mu=\mu_0$ para uma amostra normal com variância conhecida.
 
-1. Escreva a região de não rejeição a nível $\alpha$.
-2. Inverta a região para obter o conjunto dos valores de $\mu_0$ não rejeitados.
-3. Mostre que o conjunto coincide com o intervalo normal de nível $1-\alpha$.
+1.  Escreva a região de não rejeição a nível $\alpha$.
+2.  Inverta a região para obter o conjunto dos valores de $\mu_0$ não rejeitados.
+3.  Mostre que o conjunto coincide com o intervalo normal de nível $1-\alpha$.
 
-**Fonte metodológica:** Rice (2007, p. 337-338).
+**Exercício baseado em:** [@rice2007mathematical, sec. 9.3].
 :::
 
 ::: {.callout-note title="Exercício 10 — cobertura por simulação"}
 Implemente uma simulação com $10\,000$ repetições para estimar a cobertura dos seguintes procedimentos:
 
-1. intervalo $t$ para a média quando os dados são normais;
-2. intervalo $t$ para a média quando os dados são exponenciais, para $n=10$, $30$ e $100$;
-3. intervalos de Wald e Wilson para uma proporção com $n=20$ e $p\in\{0{,}05,0{,}20,0{,}50\}$.
+1.  intervalo $t$ para a média quando os dados são normais;
+2.  intervalo $t$ para a média quando os dados são exponenciais, para $n=10$, $30$ e $100$;
+3.  intervalos de Wald e Wilson para uma proporção com $n=20$ e $p\in\{0{,}05,0{,}20,0{,}50\}$.
 
 Compare a cobertura estimada com o nível nominal de $95\%$ e interprete os resultados.
 
-**Fonte metodológica:** Chihara e Hesterberg (2022, p. 223-224) e Ramachandran e Tsokos (2021, p. 248-250).
+**Exercício baseado em:** [@chihara2022, pp. 223--224; @ramachandran2021r, pp. 248--250].
 :::
 
 ## Gabarito sucinto
 
-1. O nível de confiança é propriedade do procedimento; após a amostra, o intervalo e o parâmetro são fixos.
-2. Use $\overline x\pm z_{1-\alpha/2}\sigma/\sqrt n$; para a parte 3, arredonde para cima $n\geq(z_{0{,}975}9/2)^2$.
-3. Use $t_{0{,}975;24}$ e $s=1{,}2$; o intervalo $z$ ignora a incerteza adicional da estimação de $\sigma$.
-4. Use os quantis $\chi^2_{0{,}025;19}$ e $\chi^2_{0{,}975;19}$; obtenha o intervalo para $\sigma$ tomando raízes quadradas.
-5. Use $2\lambda\sum_iX_i\sim\chi^2_{2n}$ e inverta os limites para $\theta=1/\lambda$.
-6. $\widehat\lambda=\overline x$ e $\widehat{\operatorname{se}}=\sqrt{\overline x/n}$.
-7. O Wald tende a ser inadequado com poucos sucessos; Wilson e Clopper--Pearson respeitam melhor a estrutura binomial, com o último geralmente mais conservador.
-8. Use $\overline x+t_{0{,}99;14}s/\sqrt n$ como limite superior.
-9. A inversão produz $\overline X\pm z_{1-\alpha/2}\sigma/\sqrt n$.
+1.  O nível de confiança é propriedade do procedimento; após a amostra, o intervalo e o parâmetro são fixos.
+2.  Use $\overline x\pm z_{1-\alpha/2}\sigma/\sqrt n$; para a parte 3, arredonde para cima $n\geq(z_{0{,}975}9/2)^2$.
+3.  Use $t_{0{,}975;24}$ e $s=1{,}2$; o intervalo $z$ ignora a incerteza adicional da estimação de $\sigma$.
+4.  Use os quantis $\chi^2_{0{,}025;19}$ e $\chi^2_{0{,}975;19}$; obtenha o intervalo para $\sigma$ tomando raízes quadradas.
+5.  Use $2\lambda\sum_iX_i\sim\chi^2_{2n}$ e inverta os limites para $\theta=1/\lambda$.
+6.  $\widehat\lambda=\overline x$ e $\widehat{\operatorname{EP}}=\sqrt{\overline x/n}$.
+7.  O Wald tende a ser inadequado com poucos sucessos; Wilson e Clopper--Pearson respeitam melhor a estrutura binomial, com o último geralmente mais conservador.
+8.  Use $\overline x+t_{0{,}99;14}s/\sqrt n$ como limite superior.
+9.  A inversão produz $\overline X\pm z_{1-\alpha/2}\sigma/\sqrt n$.
 10. Espera-se boa cobertura do intervalo $t$ sob normalidade; assimetria e fronteiras podem degradar a cobertura de métodos aproximados, especialmente para amostras pequenas.
+
+## Referências {.unnumbered}
+
 
