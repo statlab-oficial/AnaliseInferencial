@@ -1,6 +1,6 @@
 # Demonstrações
 
-Este capítulo reúne 26 demonstrações consideradas estruturantes para um livro de Inferência Estatística destinado à graduação avançada e ao mestrado. A organização segue seis blocos: resultados fundamentais de probabilidade; distribuições amostrais; redução de dados e estimação; verossimilhança e teoria assintótica; testes e intervalos; e inferência computacional e moderna.
+Este capítulo reúne 26 demonstrações consideradas estruturantes para um livro de Inferência Estatística destinado à graduação e ao mestrado. A organização segue seis blocos: resultados fundamentais de probabilidade; distribuições amostrais; redução de dados e estimação; verossimilhança e teoria assintótica; testes e intervalos; e inferência computacional e moderna.
 
 As demonstrações foram reescritas em notação uniforme e com nível de detalhe adequado ao texto didático. Cada resultado contém uma indicação explícita da fonte principal, da localização aproximada na obra e do grau de adaptação realizado.
 
@@ -8,11 +8,10 @@ As demonstrações foram reescritas em notação uniforme e com nível de detalh
 As provas abaixo são adaptações didáticas das fontes indicadas. Quando a fonte apresenta apenas uma versão restrita do resultado, o enunciado preserva essa restrição. Generalizações não demonstradas nas obras consultadas são identificadas como observações que exigem verificação bibliográfica adicional.
 :::
 
-
 ## Mapa das demonstrações e fontes {.unnumbered}
 
 | Nº | Demonstração | Fonte principal auditada |
-|---:|---|---|
+|----------------------------:|----------------------|----------------------|
 | 1 | Lei fraca dos grandes números | @ramachandran2009 [Seção 3.5, Teorema 3.5.2] |
 | 2 | Teorema Central do Limite por FGM | @larsen2012 [Apêndice 4.A.2] |
 | 3 | Distribuições de $\bar X$ e $S^2$ no modelo normal | @larsen2012 [Seções 7.1--7.3 e Apêndice 7.A.2] |
@@ -31,12 +30,12 @@ As provas abaixo são adaptações didáticas das fontes indicadas. Quando a fon
 | 16 | Consistência do EMV em famílias exponenciais regulares | @lauritzen2023fundamentals [Seção 5.3.1, Teorema 5.9] |
 | 17 | Normalidade assintótica do EMV | @lauritzen2023fundamentals [Seção 5.3.2, Teorema 5.11] |
 | 18 | Método delta univariado e multivariado | @lauritzen2023fundamentals [Apêndice A.2.3, Teorema A.19] |
-| 19 | Equivalência assintótica de Wald, escore e razão de verossimilhanças | @cox2006principles [Capítulo 6]; @lauritzen2023fundamentals [Seções 5.3.3 e 5.4.4] |
+| 19 | Equivalência assintótica de Wald, escore e razão de verossimilhanças | @cox2006principles \[Capítulo 6\]; @lauritzen2023fundamentals [Seções 5.3.3 e 5.4.4] |
 | 20 | Teorema de Wilks em famílias exponenciais curvas | @lauritzen2023fundamentals [Teorema 5.39] |
 | 21 | Monotonicidade do algoritmo EM | @gupta2011em [Seções 1.1 e 2.1] |
 | 22 | Estimadores de Bayes sob três perdas | @ramachandran2021r [Seção 10.2.1, para perdas quadrática e absoluta] |
 | 23 | Consistência de minimizadores convexos | @bickel2016volume2 [Proposição 9.2.1] |
-| 24 | Função de influência e eficiência semiparamétrica | @bickel2016volume2 [Seções 7.2.1 e 9.3, Proposição 9.3.3]; @wilcox2022 [Seções 2.1--2.2] |
+| 24 | Função de influência e eficiência semiparamétrica | @bickel2016volume2 \[Seções 7.2.1 e 9.3, Proposição 9.3.3\]; @wilcox2022 [Seções 2.1--2.2] |
 | 25 | Validade exata de testes de permutação | @chihara2022 [Seção 3.3] |
 | 26 | Princípio *plug-in* e bootstrap da média | @chihara2022 [Seção 5.2] |
 
@@ -48,18 +47,14 @@ As provas abaixo são adaptações didáticas das fontes indicadas. Quando a fon
 
 Sejam $X_1,\ldots,X_n$ variáveis aleatórias independentes, com
 
-$$
-E(X_i)=\mu
+$$E(X_i)=\mu
 \quad\text{e}\quad
-\operatorname{Var}(X_i)=\sigma^2<\infty.
-$$
+\operatorname{Var}(X_i)=\sigma^2<\infty.$$
 
 Então, para todo $\varepsilon>0$,
 
-$$
-P\left(\left|\bar X_n-\mu\right|\geq\varepsilon\right)
-\longrightarrow 0,
-$$
+$$P\left(\left|\bar X_n-\mu\right|\geq\varepsilon\right)
+\longrightarrow 0,$$
 
 isto é, $\bar X_n\xrightarrow{P}\mu$.
 
@@ -67,38 +62,30 @@ isto é, $\bar X_n\xrightarrow{P}\mu$.
 
 Pela independência,
 
-$$
-E(\bar X_n)=\mu
-$$
+$$E(\bar X_n)=\mu$$
 
 e
 
-$$
-\operatorname{Var}(\bar X_n)
+$$\operatorname{Var}(\bar X_n)
 =
 \operatorname{Var}\left(\frac{1}{n}\sum_{i=1}^nX_i\right)
 =
 \frac{1}{n^2}\sum_{i=1}^n\operatorname{Var}(X_i)
 =
-\frac{\sigma^2}{n}.
-$$
+\frac{\sigma^2}{n}.$$
 
 Aplicando a desigualdade de Chebyshev,
 
-$$
-P\left(\left|\bar X_n-\mu\right|\geq\varepsilon\right)
+$$P\left(\left|\bar X_n-\mu\right|\geq\varepsilon\right)
 \leq
 \frac{\operatorname{Var}(\bar X_n)}{\varepsilon^2}
 =
-\frac{\sigma^2}{n\varepsilon^2}.
-$$
+\frac{\sigma^2}{n\varepsilon^2}.$$
 
 Como $\sigma^2/(n\varepsilon^2)\to 0$, o teorema do confronto fornece
 
-$$
-P\left(\left|\bar X_n-\mu\right|\geq\varepsilon\right)
-\to 0.
-$$
+$$P\left(\left|\bar X_n-\mu\right|\geq\varepsilon\right)
+\to 0.$$
 
 Portanto, $\bar X_n\xrightarrow{P}\mu$.
 
@@ -107,7 +94,7 @@ A variância da média decresce à taxa $1/n$. A lei fraca não afirma que cada 
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @ramachandran2009 [Seção 3.5, Teorema 3.5.2].  
+**Fonte principal:** @ramachandran2009 [Seção 3.5, Teorema 3.5.2].\
 **Adaptação:** notação modernizada e formulação direta em termos de convergência em probabilidade.
 :::
 
@@ -117,73 +104,57 @@ A variância da média decresce à taxa $1/n$. A lei fraca não afirma que cada 
 
 Sejam $X_1,X_2,\ldots$ variáveis aleatórias i.i.d., com $E(X_i)=\mu$, $\operatorname{Var}(X_i)=\sigma^2>0$, e suponha que a função geradora de momentos exista em uma vizinhança de zero. Então
 
-$$
-Z_n=\frac{\sqrt n(\bar X_n-\mu)}{\sigma}
-\xrightarrow{d}N(0,1).
-$$
+$$Z_n=\frac{\sqrt n(\bar X_n-\mu)}{\sigma}
+\xrightarrow{d}N(0,1).$$
 
 ### Demonstração {.unnumbered}
 
 Defina
 
-$$
-Y_i=\frac{X_i-\mu}{\sigma}.
-$$
+$$Y_i=\frac{X_i-\mu}{\sigma}.$$
 
 Temos $E(Y_i)=0$, $\operatorname{Var}(Y_i)=1$ e
 
-$$
-Z_n=\frac{Y_1+\cdots+Y_n}{\sqrt n}.
-$$
+$$Z_n=\frac{Y_1+\cdots+Y_n}{\sqrt n}.$$
 
 Se $M_Y(t)$ é a FGM de $Y_i$, então, pela independência,
 
-$$
-M_{Z_n}(t)
+$$M_{Z_n}(t)
 =
-\left[M_Y\left(\frac{t}{\sqrt n}\right)\right]^n.
-$$
+\left[M_Y\left(\frac{t}{\sqrt n}\right)\right]^n.$$
 
 Como $M_Y(0)=1$, $M_Y'(0)=0$ e $M_Y''(0)=1$, a expansão de Taylor em torno de zero fornece
 
-$$
-M_Y(s)=1+\frac{s^2}{2}+o(s^2),
-\qquad s\to 0.
-$$
+$$M_Y(s)=1+\frac{s^2}{2}+o(s^2),
+\qquad s\to 0.$$
 
 Tomando $s=t/\sqrt n$,
 
-$$
-M_Y\left(\frac{t}{\sqrt n}\right)
+$$M_Y\left(\frac{t}{\sqrt n}\right)
 =
-1+\frac{t^2}{2n}+o\left(\frac{1}{n}\right).
-$$
+1+\frac{t^2}{2n}+o\left(\frac{1}{n}\right).$$
 
 Logo,
 
-$$
-M_{Z_n}(t)
+$$M_{Z_n}(t)
 =
 \left[
 1+\frac{t^2}{2n}+o\left(\frac{1}{n}\right)
 \right]^n
 \longrightarrow
-\exp\left(\frac{t^2}{2}\right).
-$$
+\exp\left(\frac{t^2}{2}\right).$$
 
 A função $\exp(t^2/2)$ é a FGM da distribuição normal padrão. Pelo teorema de continuidade para funções geradoras de momentos,
 
-$$
-Z_n\xrightarrow{d}N(0,1).
-$$
+$$Z_n\xrightarrow{d}N(0,1).$$
 
 ::: {.callout-warning title="Condição importante"}
 Esta demonstração exige a existência da FGM em uma vizinhança de zero. O Teorema Central do Limite de Lindeberg--Lévy requer apenas variância finita, mas sua prova geral não é esta. A extensão precisa deve ser verificada bibliograficamente antes de se retirar a hipótese sobre a FGM.
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @larsen2012 [Apêndice 4.A.2].  
-**Fonte complementar:** @rice2007mathematical [Seção 5.3].  
+**Fonte principal:** @larsen2012 [Apêndice 4.A.2].\
+**Fonte complementar:** @rice2007mathematical [Seção 5.3].\
 **Adaptação:** uso da notação $o(n^{-1})$ para condensar a expansão apresentada nas fontes.
 :::
 
@@ -195,104 +166,78 @@ Esta demonstração exige a existência da FGM em uma vizinhança de zero. O Teo
 
 Se $X_1,\ldots,X_n$ são i.i.d. $N(\mu,\sigma^2)$ e
 
-$$
-\bar X=\frac{1}{n}\sum_{i=1}^nX_i,
+$$\bar X=\frac{1}{n}\sum_{i=1}^nX_i,
 \qquad
-S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar X)^2,
-$$
+S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar X)^2,$$
 
 então
 
-$$
-\bar X\sim N\left(\mu,\frac{\sigma^2}{n}\right)
-$$
+$$\bar X\sim N\left(\mu,\frac{\sigma^2}{n}\right)$$
 
 e
 
-$$
-\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.
-$$
+$$\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.$$
 
 ### Demonstração {.unnumbered}
 
 A média amostral é uma combinação linear de variáveis normais independentes. Portanto, é normal, com
 
-$$
-E(\bar X)=\mu,
+$$E(\bar X)=\mu,
 \qquad
-\operatorname{Var}(\bar X)=\frac{\sigma^2}{n}.
-$$
+\operatorname{Var}(\bar X)=\frac{\sigma^2}{n}.$$
 
 Para a segunda afirmação, padronize as observações:
 
-$$
-Y_i=\frac{X_i-\mu}{\sigma}.
-$$
+$$Y_i=\frac{X_i-\mu}{\sigma}.$$
 
 O vetor $Y=(Y_1,\ldots,Y_n)^\top$ tem distribuição $N_n(0,I_n)$. Escolha uma matriz ortogonal $A$ cuja última linha seja
 
-$$
-\frac{1}{\sqrt n}(1,\ldots,1).
-$$
+$$\frac{1}{\sqrt n}(1,\ldots,1).$$
 
 Defina $Z=AY$. Como transformações ortogonais preservam a distribuição normal padrão multivariada,
 
-$$
-Z_1,\ldots,Z_n
-$$
+$$Z_1,\ldots,Z_n$$
 
 são independentes e $N(0,1)$. Além disso,
 
-$$
-Z_n=\sqrt n\,\bar Y
+$$Z_n=\sqrt n\,\bar Y
 =
-\frac{\sqrt n(\bar X-\mu)}{\sigma}.
-$$
+\frac{\sqrt n(\bar X-\mu)}{\sigma}.$$
 
 A preservação da norma pela transformação ortogonal implica
 
-$$
-\sum_{i=1}^nY_i^2
+$$\sum_{i=1}^nY_i^2
 =
-\sum_{j=1}^nZ_j^2.
-$$
+\sum_{j=1}^nZ_j^2.$$
 
 Usando a decomposição
 
-$$
-\sum_{i=1}^n(Y_i-\bar Y)^2
+$$\sum_{i=1}^n(Y_i-\bar Y)^2
 =
-\sum_{i=1}^nY_i^2-n\bar Y^2,
-$$
+\sum_{i=1}^nY_i^2-n\bar Y^2,$$
 
 obtemos
 
-$$
-\sum_{i=1}^n(Y_i-\bar Y)^2
+$$\sum_{i=1}^n(Y_i-\bar Y)^2
 =
-\sum_{j=1}^{n-1}Z_j^2.
-$$
+\sum_{j=1}^{n-1}Z_j^2.$$
 
 O lado direito é soma dos quadrados de $n-1$ normais padrão independentes. Assim,
 
-$$
-\sum_{i=1}^n(Y_i-\bar Y)^2\sim\chi^2_{n-1}.
-$$
+$$\sum_{i=1}^n(Y_i-\bar Y)^2\sim\chi^2_{n-1}.$$
 
 Como
 
-$$
-\sum_{i=1}^n(Y_i-\bar Y)^2
+$$\sum_{i=1}^n(Y_i-\bar Y)^2
 =
 \frac{1}{\sigma^2}\sum_{i=1}^n(X_i-\bar X)^2
 =
-\frac{(n-1)S^2}{\sigma^2},
-$$
+\frac{(n-1)S^2}{\sigma^2},$$
 
 segue o resultado.
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @larsen2012 [Seções 7.1--7.3 e Apêndice 7.A.2].  
+**Fonte principal:** @larsen2012 [Seções 7.1--7.3 e Apêndice 7.A.2].\
 **Adaptação:** a normalidade de $\bar X$ é obtida por fechamento da família normal sob combinações lineares; a parte referente a $S^2$ segue a transformação ortogonal do Apêndice 7.A.2.
 :::
 
@@ -306,23 +251,17 @@ Sob as condições da demonstração anterior, $\bar X$ e $S^2$ são independent
 
 Na transformação ortogonal anterior,
 
-$$
-Z_n=\frac{\sqrt n(\bar X-\mu)}{\sigma}
-$$
+$$Z_n=\frac{\sqrt n(\bar X-\mu)}{\sigma}$$
 
 e
 
-$$
-\frac{(n-1)S^2}{\sigma^2}
+$$\frac{(n-1)S^2}{\sigma^2}
 =
-\sum_{j=1}^{n-1}Z_j^2.
-$$
+\sum_{j=1}^{n-1}Z_j^2.$$
 
 O vetor $Z$ possui componentes normais padrão independentes. Portanto, $Z_n$ é independente do vetor
 
-$$
-(Z_1,\ldots,Z_{n-1}).
-$$
+$$(Z_1,\ldots,Z_{n-1}).$$
 
 Como $\bar X$ é função apenas de $Z_n$ e $S^2$ é função apenas de $(Z_1,\ldots,Z_{n-1})$, segue que $\bar X$ e $S^2$ são independentes.
 
@@ -331,7 +270,7 @@ No modelo normal, a informação amostral sobre posição, representada por $\ba
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @larsen2012 [Apêndice 7.A.2, Teorema 7.A.2.1].  
+**Fonte principal:** @larsen2012 [Apêndice 7.A.2, Teorema 7.A.2.1].\
 **Adaptação:** separação da conclusão de independência em uma demonstração própria para destacar sua função inferencial.
 :::
 
@@ -341,49 +280,37 @@ No modelo normal, a informação amostral sobre posição, representada por $\ba
 
 Se $X_1,\ldots,X_n$ são i.i.d. $N(\mu,\sigma^2)$, então
 
-$$
-T=\frac{\bar X-\mu}{S/\sqrt n}
-\sim t_{n-1}.
-$$
+$$T=\frac{\bar X-\mu}{S/\sqrt n}
+\sim t_{n-1}.$$
 
 ### Demonstração {.unnumbered}
 
 Pelos resultados anteriores,
 
-$$
-Z=\frac{\sqrt n(\bar X-\mu)}{\sigma}\sim N(0,1)
-$$
+$$Z=\frac{\sqrt n(\bar X-\mu)}{\sigma}\sim N(0,1)$$
 
 e
 
-$$
-U=\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1},
-$$
+$$U=\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1},$$
 
 com $Z$ e $U$ independentes. Reescrevendo $T$,
 
-$$
-T
+$$T
 =
 \frac{\sqrt n(\bar X-\mu)/\sigma}{S/\sigma}
 =
-\frac{Z}{\sqrt{U/(n-1)}}.
-$$
+\frac{Z}{\sqrt{U/(n-1)}}.$$
 
 Por definição, se $Z\sim N(0,1)$ e $U\sim\chi^2_\nu$ são independentes, então
 
-$$
-\frac{Z}{\sqrt{U/\nu}}\sim t_\nu.
-$$
+$$\frac{Z}{\sqrt{U/\nu}}\sim t_\nu.$$
 
 Tomando $\nu=n-1$, obtemos
 
-$$
-T\sim t_{n-1}.
-$$
+$$T\sim t_{n-1}.$$
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @larsen2012 [Seções 7.2--7.3 e Apêndice 7.A.2].  
+**Fonte principal:** @larsen2012 [Seções 7.2--7.3 e Apêndice 7.A.2].\
 **Adaptação:** derivação apresentada como consequência direta dos dois resultados normais fundamentais.
 :::
 
@@ -395,10 +322,8 @@ $$
 
 Considere uma família de funções de probabilidade $\{f_\theta:\theta\in\Theta\}$ em um espaço amostral contável, com suporte comum $\mathcal X_0$. Uma estatística $T(X)$ é suficiente para $\theta$ se, e somente se, existem funções não negativas $g_\theta$ e $h$ tais que
 
-$$
-f_\theta(x)=g_\theta\{T(x)\}h(x),
-\qquad x\in\mathcal X_0,
-$$
+$$f_\theta(x)=g_\theta\{T(x)\}h(x),
+\qquad x\in\mathcal X_0,$$
 
 em que $h$ não depende de $\theta$.
 
@@ -406,47 +331,37 @@ em que $h$ não depende de $\theta$.
 
 Suponha primeiro que a fatoração seja válida. Para qualquer $t$ pertencente à imagem de $T$ no suporte comum,
 
-$$
-P_\theta(T=t)
+$$P_\theta(T=t)
 =
 \sum_{x:T(x)=t}f_\theta(x)
 =
-g_\theta(t)\sum_{x:T(x)=t}h(x).
-$$
+g_\theta(t)\sum_{x:T(x)=t}h(x).$$
 
 Logo, para $T(x)=t$,
 
-$$
-P_\theta(X=x\mid T=t)
+$$P_\theta(X=x\mid T=t)
 =
 \frac{g_\theta(t)h(x)}{g_\theta(t)\sum_{u:T(u)=t}h(u)}
 =
-\frac{h(x)}{\sum_{u:T(u)=t}h(u)}.
-$$
+\frac{h(x)}{\sum_{u:T(u)=t}h(u)}.$$
 
 Essa distribuição condicional não depende de $\theta$. Portanto, $T$ é suficiente.
 
 Reciprocamente, suponha que $T$ seja suficiente. Então existe uma função condicional comum, independente de $\theta$, que denotaremos por
 
-$$
-h(x)=P_\theta\{X=x\mid T=T(x)\},
-$$
+$$h(x)=P_\theta\{X=x\mid T=T(x)\},$$
 
 bem definida no suporte comum pela suficiência. Defina ainda
 
-$$
-g_\theta(t)=P_\theta(T=t).
-$$
+$$g_\theta(t)=P_\theta(T=t).$$
 
 Pela regra do produto,
 
-$$
-f_\theta(x)
+$$f_\theta(x)
 =
 P_\theta(T=T(x))P(X=x\mid T=T(x))
 =
-g_\theta(T(x))h(x).
-$$
+g_\theta(T(x))h(x).$$
 
 Portanto, a fatoração é necessária e suficiente.
 
@@ -455,7 +370,7 @@ A forma geral do teorema vale para famílias dominadas por uma medida comum. A d
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @rice2007mathematical [Seção 8.8.1].  
+**Fonte principal:** @rice2007mathematical [Seção 8.8.1].\
 **Adaptação:** prova completa da versão discreta, com explicitação da hipótese de suporte comum; a versão dominada geral é apenas enunciada na observação.
 :::
 
@@ -465,57 +380,45 @@ A forma geral do teorema vale para famílias dominadas por uma medida comum. A d
 
 Se $T$ é suficiente para $\theta$ e $W$ é um estimador não viesado de $g(\theta)$ com $E_\theta(W^2)<\infty$, então
 
-$$
-W^*=E(W\mid T)
-$$
+$$W^*=E(W\mid T)$$
 
 é não viesado e satisfaz
 
-$$
-\operatorname{Var}_\theta(W^*)
+$$\operatorname{Var}_\theta(W^*)
 \leq
-\operatorname{Var}_\theta(W).
-$$
+\operatorname{Var}_\theta(W).$$
 
 ### Demonstração {.unnumbered}
 
 Pela propriedade da esperança iterada,
 
-$$
-E_\theta(W^*)
+$$E_\theta(W^*)
 =
 E_\theta\{E_\theta(W\mid T)\}
 =
 E_\theta(W)
 =
-g(\theta).
-$$
+g(\theta).$$
 
 Logo, $W^*$ é não viesado. Como $T$ é suficiente, a esperança condicional pode ser escolhida como uma função da amostra que não depende do parâmetro desconhecido.
 
 Pela decomposição da variância total,
 
-$$
-\operatorname{Var}_\theta(W)
+$$\operatorname{Var}_\theta(W)
 =
 \operatorname{Var}_\theta\{E_\theta(W\mid T)\}
 +
-E_\theta\{\operatorname{Var}_\theta(W\mid T)\}.
-$$
+E_\theta\{\operatorname{Var}_\theta(W\mid T)\}.$$
 
 O segundo termo é não negativo. Assim,
 
-$$
-\operatorname{Var}_\theta(W)
+$$\operatorname{Var}_\theta(W)
 \geq
-\operatorname{Var}_\theta(W^*).
-$$
+\operatorname{Var}_\theta(W^*).$$
 
 Além disso, há igualdade se, e somente se,
 
-$$
-W=E_\theta(W\mid T)
-$$
+$$W=E_\theta(W\mid T)$$
 
 quase certamente, isto é, se $W$ já é uma função de $T$ salvo em um conjunto nulo.
 
@@ -524,8 +427,8 @@ Condicionar em uma estatística suficiente remove a variabilidade de $W$ que nã
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @rice2007mathematical [Seção 8.8.2].  
-**Fonte complementar:** @hogg1978 [Seção 10.2].  
+**Fonte principal:** @rice2007mathematical [Seção 8.8.2].\
+**Fonte complementar:** @hogg1978 [Seção 10.2].\
 **Adaptação:** uso explícito da lei da variância total.
 :::
 
@@ -539,58 +442,44 @@ Se $T$ é suficiente e completa para $\theta$, e $\delta(T)$ é quadrado-integr�
 
 Seja $W$ qualquer estimador quadrado-integrável e não viesado de $g(\theta)$. Pelo teorema de Rao--Blackwell,
 
-$$
-W^*=E(W\mid T)
-$$
+$$W^*=E(W\mid T)$$
 
 é uma função de $T$, é não viesado e satisfaz
 
-$$
-\operatorname{Var}_\theta(W^*)
+$$\operatorname{Var}_\theta(W^*)
 \leq
-\operatorname{Var}_\theta(W).
-$$
+\operatorname{Var}_\theta(W).$$
 
 Como $W^*$ e $\delta(T)$ são ambos não viesados,
 
-$$
-E_\theta\{W^*-\delta(T)\}=0
-$$
+$$E_\theta\{W^*-\delta(T)\}=0$$
 
 para todo $\theta$. A completude de $T$ implica
 
-$$
-P_\theta\{W^*=\delta(T)\}=1
-$$
+$$P_\theta\{W^*=\delta(T)\}=1$$
 
 para todo $\theta$. Portanto,
 
-$$
-\operatorname{Var}_\theta\{\delta(T)\}
+$$\operatorname{Var}_\theta\{\delta(T)\}
 =
 \operatorname{Var}_\theta(W^*)
 \leq
-\operatorname{Var}_\theta(W).
-$$
+\operatorname{Var}_\theta(W).$$
 
 Como $W$ era arbitrário, $\delta(T)$ é ENVUM.
 
 Para provar unicidade, sejam $\delta_1(T)$ e $\delta_2(T)$ duas funções não viesadas de $T$ para o mesmo alvo. Então
 
-$$
-E_\theta\{\delta_1(T)-\delta_2(T)\}=0
-$$
+$$E_\theta\{\delta_1(T)-\delta_2(T)\}=0$$
 
 para todo $\theta$. Pela completude,
 
-$$
-\delta_1(T)=\delta_2(T)
-$$
+$$\delta_1(T)=\delta_2(T)$$
 
 quase certamente.
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @hogg1978 [Capítulo 10, sequência entre Rao--Blackwell, completude e Lehmann--Scheffé].  
+**Fonte principal:** @hogg1978 [Capítulo 10, sequência entre Rao--Blackwell, completude e Lehmann--Scheffé].\
 **Adaptação:** prova reorganizada na forma moderna “existência por Rao--Blackwell e unicidade por completude”.
 :::
 
@@ -600,102 +489,80 @@ quase certamente.
 
 Considere uma amostra i.i.d. de densidade $f(x;\theta)$ e um estimador quadrado-integrável $W$ tal que
 
-$$
-E_\theta(W)=g(\theta),
-$$
+$$E_\theta(W)=g(\theta),$$
 
 em que $g$ é diferenciável. Sob condições que permitem diferenciar sob o sinal de integral, com suporte independente de $\theta$ e informação de Fisher finita e positiva,
 
-$$
-\operatorname{Var}_\theta(W)
+$$\operatorname{Var}_\theta(W)
 \geq
-\frac{[g'(\theta)]^2}{I_n(\theta)},
-$$
+\frac{[g'(\theta)]^2}{I_n(\theta)},$$
 
 onde
 
-$$
-I_n(\theta)
+$$I_n(\theta)
 =
 E_\theta\left[
 \left(
 \frac{\partial}{\partial\theta}\ell_n(\theta)
 \right)^2
-\right].
-$$
+\right].$$
 
 ### Demonstração {.unnumbered}
 
 Defina o escore
 
-$$
-U_n(\theta)=\frac{\partial}{\partial\theta}\ell_n(\theta).
-$$
+$$U_n(\theta)=\frac{\partial}{\partial\theta}\ell_n(\theta).$$
 
 Pelas condições de regularidade,
 
-$$
-E_\theta\{U_n(\theta)\}=0.
-$$
+$$E_\theta\{U_n(\theta)\}=0.$$
 
 Diferenciando $E_\theta(W)=g(\theta)$ em relação a $\theta$,
 
-$$
-g'(\theta)
+$$g'(\theta)
 =
-\int W(x)\frac{\partial}{\partial\theta}f_\theta(x)\,dx.
-$$
+\int W(x)\frac{\partial}{\partial\theta}f_\theta(x)\,dx.$$
 
 Como
 
-$$
-\frac{\partial}{\partial\theta}f_\theta(x)
+$$\frac{\partial}{\partial\theta}f_\theta(x)
 =
-f_\theta(x)U_n(\theta;x),
-$$
+f_\theta(x)U_n(\theta;x),$$
 
 segue que
 
-$$
-g'(\theta)
+$$g'(\theta)
 =
-E_\theta\{WU_n(\theta)\}.
-$$
+E_\theta\{WU_n(\theta)\}.$$
 
 Usando $E(U_n)=0$,
 
-$$
-g'(\theta)
+$$g'(\theta)
 =
 E_\theta\{[W-g(\theta)]U_n(\theta)\}
 =
-\operatorname{Cov}_\theta(W,U_n).
-$$
+\operatorname{Cov}_\theta(W,U_n).$$
 
 Pela desigualdade de Cauchy--Schwarz,
 
-$$
-[g'(\theta)]^2
+$$[g'(\theta)]^2
 \leq
 \operatorname{Var}_\theta(W)
-\operatorname{Var}_\theta(U_n).
-$$
+\operatorname{Var}_\theta(U_n).$$
 
 Como $\operatorname{Var}(U_n)=I_n(\theta)$,
 
-$$
-\operatorname{Var}_\theta(W)
+$$\operatorname{Var}_\theta(W)
 \geq
-\frac{[g'(\theta)]^2}{I_n(\theta)}.
-$$
+\frac{[g'(\theta)]^2}{I_n(\theta)}.$$
 
 ::: {.callout-warning title="Regularidade"}
 A prova falha quando o suporte depende de $\theta$ ou quando não se pode permutar diferenciação e integração. Modelos uniformes com extremo desconhecido são exemplos clássicos em que a forma regular da desigualdade não deve ser aplicada mecanicamente.
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @hogg1978 [Seção 11.1].  
-**Fonte complementar:** @larsen2012 [Seção 5.5, para a interpretação como limite inferior].  
+**Fonte principal:** @hogg1978 [Seção 11.1].\
+**Fonte complementar:** @larsen2012 [Seção 5.5, para a interpretação como limite inferior].\
 **Adaptação:** formulação para um alvo geral $g(\theta)$.
 :::
 
@@ -705,31 +572,25 @@ A prova falha quando o suporte depende de $\theta$ ou quando não se pode permut
 
 Se $\widehat\theta$ maximiza $L(\theta;x)$ e $\eta=h(\theta)$ é uma transformação bijetiva, então o EMV de $\eta$ é
 
-$$
-\widehat\eta=h(\widehat\theta).
-$$
+$$\widehat\eta=h(\widehat\theta).$$
 
 ### Demonstração {.unnumbered}
 
 Escreva a verossimilhança na parametrização $\eta$ como
 
-$$
-L_\eta(\eta;x)
+$$L_\eta(\eta;x)
 =
-L_\theta(h^{-1}(\eta);x).
-$$
+L_\theta(h^{-1}(\eta);x).$$
 
 Como $h$ é bijetiva, maximizar sobre $\eta$ equivale a maximizar sobre $\theta$. Para qualquer $\eta$ existe exatamente um $\theta=h^{-1}(\eta)$ e
 
-$$
-L_\eta(\eta;x)
+$$L_\eta(\eta;x)
 =
 L_\theta(\theta;x)
 \leq
 L_\theta(\widehat\theta;x)
 =
-L_\eta(h(\widehat\theta);x).
-$$
+L_\eta(h(\widehat\theta);x).$$
 
 Portanto, $h(\widehat\theta)$ maximiza a verossimilhança na nova parametrização.
 
@@ -738,7 +599,7 @@ A fonte demonstra a propriedade para transformações invertíveis. A versão fr
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @chihara2022 [Seção 6.3.5, Proposição 6.6].  
+**Fonte principal:** @chihara2022 [Seção 6.3.5, Proposição 6.6].\
 **Adaptação:** escrita explícita da verossimilhança reparametrizada.
 :::
 
@@ -748,23 +609,17 @@ A fonte demonstra a propriedade para transformações invertíveis. A versão fr
 
 No modelo linear
 
-$$
-Y=X\beta+\varepsilon,
-$$
+$$Y=X\beta+\varepsilon,$$
 
 suponha que $X$ tenha posto completo, $E(\varepsilon)=0$ e
 
-$$
-\operatorname{Var}(\varepsilon)=\sigma^2I_n.
-$$
+$$\operatorname{Var}(\varepsilon)=\sigma^2I_n.$$
 
 Então, para qualquer combinação estimável $a^\top\beta$, o estimador de mínimos quadrados
 
-$$
-a^\top\widehat\beta,
+$$a^\top\widehat\beta,
 \qquad
-\widehat\beta=(X^\top X)^{-1}X^\top Y,
-$$
+\widehat\beta=(X^\top X)^{-1}X^\top Y,$$
 
 é o estimador linear não viesado de variância mínima.
 
@@ -772,71 +627,53 @@ $$
 
 Um estimador linear de $a^\top\beta$ tem a forma $c^\top Y$. Ele é não viesado se
 
-$$
-E(c^\top Y)=c^\top X\beta=a^\top\beta
-$$
+$$E(c^\top Y)=c^\top X\beta=a^\top\beta$$
 
 para todo $\beta$, ou seja,
 
-$$
-X^\top c=a.
-$$
+$$X^\top c=a.$$
 
 Defina
 
-$$
-c_0=X(X^\top X)^{-1}a.
-$$
+$$c_0=X(X^\top X)^{-1}a.$$
 
 Então $X^\top c_0=a$, e
 
-$$
-c_0^\top Y=a^\top\widehat\beta.
-$$
+$$c_0^\top Y=a^\top\widehat\beta.$$
 
 Qualquer outro vetor $c$ que satisfaça $X^\top c=a$ pode ser escrito como
 
-$$
-c=c_0+d,
-$$
+$$c=c_0+d,$$
 
 com
 
-$$
-X^\top d=0.
-$$
+$$X^\top d=0.$$
 
 Como $c_0$ pertence ao espaço coluna de $X$ e $d$ é ortogonal a esse espaço,
 
-$$
-c_0^\top d=0.
-$$
+$$c_0^\top d=0.$$
 
 Assim,
 
-$$
-\operatorname{Var}(c^\top Y)
+$$\operatorname{Var}(c^\top Y)
 =
 \sigma^2c^\top c
 =
 \sigma^2(c_0+d)^\top(c_0+d)
 =
 \sigma^2c_0^\top c_0+
-\sigma^2d^\top d.
-$$
+\sigma^2d^\top d.$$
 
 Logo,
 
-$$
-\operatorname{Var}(c^\top Y)
+$$\operatorname{Var}(c^\top Y)
 \geq
-\operatorname{Var}(c_0^\top Y),
-$$
+\operatorname{Var}(c_0^\top Y),$$
 
 com igualdade somente se $d=0$. Portanto, $a^\top\widehat\beta$ é BLUE.
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @rasch2018 [Teorema 4.3].  
+**Fonte principal:** @rasch2018 [Teorema 4.3].\
 **Adaptação:** prova reescrita na parametrização matricial usual $Y=X\beta+\varepsilon$ e em termos de projeções ortogonais.
 :::
 
@@ -844,9 +681,7 @@ com igualdade somente se $d=0$. Portanto, $a^\top\widehat\beta$ é BLUE.
 
 Seja $\pi(\theta\mid x)$ a distribuição posterior e
 
-$$
-r(a\mid x)=E\{L(\theta,a)\mid x\}
-$$
+$$r(a\mid x)=E\{L(\theta,a)\mid x\}$$
 
 o risco posterior de escolher a ação $a$.
 
@@ -854,65 +689,49 @@ o risco posterior de escolher a ação $a$.
 
 Para
 
-$$
-L(\theta,a)=(a-\theta)^2,
-$$
+$$L(\theta,a)=(a-\theta)^2,$$
 
 escreva $m=E(\theta\mid x)$. Então
 
-$$
-E\{(a-\theta)^2\mid x\}
+$$E\{(a-\theta)^2\mid x\}
 =
-E\{[(a-m)+(m-\theta)]^2\mid x\}.
-$$
+E\{[(a-m)+(m-\theta)]^2\mid x\}.$$
 
 O termo cruzado é zero, pois $E(m-\theta\mid x)=0$. Logo,
 
-$$
-r(a\mid x)
+$$r(a\mid x)
 =(a-m)^2+
-\operatorname{Var}(\theta\mid x),
-$$
+\operatorname{Var}(\theta\mid x),$$
 
 que é minimizado em
 
-$$
-a^*=E(\theta\mid x).
-$$
+$$a^*=E(\theta\mid x).$$
 
 ### Perda absoluta {.unnumbered}
 
 Para
 
-$$
-L(\theta,a)=|a-\theta|,
-$$
+$$L(\theta,a)=|a-\theta|,$$
 
 suponha uma posterior contínua. O risco pode ser escrito como
 
-$$
-r(a\mid x)
+$$r(a\mid x)
 =
 \int_{-\infty}^a(a-\theta)\pi(\theta\mid x)\,d\theta
 +
-\int_a^\infty(\theta-a)\pi(\theta\mid x)\,d\theta.
-$$
+\int_a^\infty(\theta-a)\pi(\theta\mid x)\,d\theta.$$
 
 Derivando em relação a $a$,
 
-$$
-\frac{d}{da}r(a\mid x)
+$$\frac{d}{da}r(a\mid x)
 =
 P(\theta\leq a\mid x)-P(\theta>a\mid x)
 =
-2F(a\mid x)-1.
-$$
+2F(a\mid x)-1.$$
 
 O mínimo ocorre quando
 
-$$
-F(a\mid x)=\frac12.
-$$
+$$F(a\mid x)=\frac12.$$
 
 Portanto, qualquer mediana posterior é uma ação de Bayes.
 
@@ -920,21 +739,17 @@ Portanto, qualquer mediana posterior é uma ação de Bayes.
 
 Se
 
-$$
-L(\theta,a)=
+$$L(\theta,a)=
 \begin{cases}
 0,&a=\theta,\\
 1,&a\neq\theta,
-\end{cases}
-$$
+\end{cases}$$
 
 então
 
-$$
-r(a\mid x)
+$$r(a\mid x)
 =P(\theta\neq a\mid x)
-=1-P(\theta=a\mid x).
-$$
+=1-P(\theta=a\mid x).$$
 
 Minimizar o risco equivale a maximizar $P(\theta=a\mid x)$. Logo, a ação de Bayes é uma moda posterior.
 
@@ -943,8 +758,8 @@ Para posteriores contínuas, $P(\theta=a\mid x)=0$ para todo ponto $a$, de modo 
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @ramachandran2021r [Seção 10.2.1] para as perdas quadrática e absoluta.  
-**Complemento autoral:** o argumento para a perda $0$--$1$ discreta é uma derivação direta do risco posterior e não foi localizado na seção citada da fonte principal.  
+**Fonte principal:** @ramachandran2021r [Seção 10.2.1] para as perdas quadrática e absoluta.\
+**Complemento autoral:** o argumento para a perda $0$--$1$ discreta é uma derivação direta do risco posterior e não foi localizado na seção citada da fonte principal.\
 **Adaptação:** a prova quadrática foi reescrita por decomposição em torno da média posterior; a prova da perda absoluta explicita a derivada do risco.
 :::
 
@@ -956,84 +771,64 @@ Para posteriores contínuas, $P(\theta=a\mid x)=0$ para todo ponto $a$, de modo 
 
 Considere uma família exponencial mínima e regular em forma canônica,
 
-$$
-f_\theta(x)=h(x)\exp\{\theta^\top t(x)-\psi(\theta)\},
-$$
+$$f_\theta(x)=h(x)\exp\{\theta^\top t(x)-\psi(\theta)\},$$
 
 com $\theta$ em um conjunto aberto. O EMV é assintoticamente bem definido — isto é, existe com probabilidade tendendo a um — e
 
-$$
-\widehat\theta_n\xrightarrow{P}\theta.
-$$
+$$\widehat\theta_n\xrightarrow{P}\theta.$$
 
 ### Demonstração {.unnumbered}
 
 A log-verossimilhança média é
 
-$$
-\frac{1}{n}\ell_n(\theta)
+$$\frac{1}{n}\ell_n(\theta)
 =
-\theta^\top\bar T_n-\psi(\theta)+C(x),
-$$
+\theta^\top\bar T_n-\psi(\theta)+C(x),$$
 
 onde
 
-$$
-\bar T_n=\frac{1}{n}\sum_{i=1}^nt(X_i).
-$$
+$$\bar T_n=\frac{1}{n}\sum_{i=1}^nt(X_i).$$
 
 A equação de escore é
 
-$$
-\nabla\psi(\widehat\theta_n)=\bar T_n.
-$$
+$$\nabla\psi(\widehat\theta_n)=\bar T_n.$$
 
 Defina o parâmetro de média
 
-$$
-\tau(\theta)=E_\theta\{t(X)\}=\nabla\psi(\theta).
-$$
+$$\tau(\theta)=E_\theta\{t(X)\}=\nabla\psi(\theta).$$
 
 Em uma família mínima e regular,
 
-$$
-D\tau(\theta)
+$$D\tau(\theta)
 =
 \nabla^2\psi(\theta)
 =
-\operatorname{Var}_\theta\{t(X)\}
-$$
+\operatorname{Var}_\theta\{t(X)\}$$
 
 é positiva definida. Consequentemente, $\tau$ é localmente invertível e, na parametrização mínima, injetiva. Como a imagem de $\tau$ é aberta, a lei dos grandes números implica que $\bar T_n$ pertence a essa imagem com probabilidade tendendo a um. Nesse evento,
 
-$$
-\widehat\theta_n=\tau^{-1}(\bar T_n).
-$$
+$$\widehat\theta_n=\tau^{-1}(\bar T_n).$$
 
 Pela lei dos grandes números,
 
-$$
-\bar T_n\xrightarrow{P}\tau(\theta).
-$$
+$$\bar T_n\xrightarrow{P}\tau(\theta).$$
 
 Pela continuidade de $\tau^{-1}$,
 
-$$
-\widehat\theta_n
+$$\widehat\theta_n
 =
 \tau^{-1}(\bar T_n)
 \xrightarrow{P}
 \tau^{-1}\{\tau(\theta)\}
 =
-\theta.
-$$
+\theta.$$
 
 ::: {.callout-warning title="Escopo do resultado"}
 Esta é uma prova para famílias exponenciais mínimas e regulares. Ela não constitui uma prova geral da consistência do EMV em modelos paramétricos arbitrários. Em modelos não regulares, com parâmetros incidentais ou suporte dependente do parâmetro, o EMV pode ser inconsistente.
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @lauritzen2023fundamentals [Teorema 5.9].  
+**Fonte principal:** @lauritzen2023fundamentals [Teorema 5.9].\
 **Adaptação:** explicitação da equação de escore e do uso do mapa entre parâmetro canônico e parâmetro de média.
 :::
 
@@ -1043,17 +838,13 @@ Esta é uma prova para famílias exponenciais mínimas e regulares. Ela não con
 
 Nas condições da demonstração anterior,
 
-$$
-\sqrt n(\widehat\theta_n-\theta)
+$$\sqrt n(\widehat\theta_n-\theta)
 \xrightarrow{d}
-N_k\{0,I(\theta)^{-1}\},
-$$
+N_k\{0,I(\theta)^{-1}\},$$
 
 onde
 
-$$
-I(\theta)=\operatorname{Var}_\theta\{t(X)\}
-$$
+$$I(\theta)=\operatorname{Var}_\theta\{t(X)\}$$
 
 é a informação de Fisher por observação.
 
@@ -1061,63 +852,51 @@ $$
 
 Pelo Teorema Central do Limite multivariado,
 
-$$
-\sqrt n\{\bar T_n-\tau(\theta)\}
+$$\sqrt n\{\bar T_n-\tau(\theta)\}
 \xrightarrow{d}
-N_k\{0,\kappa(\theta)\},
-$$
+N_k\{0,\kappa(\theta)\},$$
 
 onde
 
-$$
-\kappa(\theta)
+$$\kappa(\theta)
 =
 \operatorname{Var}_\theta\{t(X)\}
 =
-I(\theta).
-$$
+I(\theta).$$
 
 Como
 
-$$
-\widehat\theta_n=\tau^{-1}(\bar T_n),
-$$
+$$\widehat\theta_n=\tau^{-1}(\bar T_n),$$
 
 aplicamos o método delta à função $\tau^{-1}$. Pelo teorema da função inversa,
 
-$$
-D\tau^{-1}\{\tau(\theta)\}
+$$D\tau^{-1}\{\tau(\theta)\}
 =
 [D\tau(\theta)]^{-1}
 =
-\kappa(\theta)^{-1}.
-$$
+\kappa(\theta)^{-1}.$$
 
 Portanto,
 
-$$
-\sqrt n(\widehat\theta_n-\theta)
+$$\sqrt n(\widehat\theta_n-\theta)
 \xrightarrow{d}
 N_k\left(
 0,
 \kappa^{-1}\kappa\kappa^{-1}
-\right),
-$$
+\right),$$
 
 isto é,
 
-$$
-\sqrt n(\widehat\theta_n-\theta)
+$$\sqrt n(\widehat\theta_n-\theta)
 \xrightarrow{d}
-N_k\{0,I(\theta)^{-1}\}.
-$$
+N_k\{0,I(\theta)^{-1}\}.$$
 
 ::: {.callout-tip title="Interpretação"}
 A matriz de covariância assintótica coincide com o inverso da informação de Fisher. Nesse sentido regular, o EMV alcança assintoticamente o limite informacional.
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @lauritzen2023fundamentals [Teorema 5.11].  
+**Fonte principal:** @lauritzen2023fundamentals [Teorema 5.11].\
 **Adaptação:** apresentação explícita como aplicação do TCL multivariado e do método delta ao mapa inverso.
 :::
 
@@ -1127,86 +906,66 @@ A matriz de covariância assintótica coincide com o inverso da informação de 
 
 Suponha que
 
-$$
-\sqrt n(X_n-\xi)\xrightarrow{d}N_k(0,\Sigma)
-$$
+$$\sqrt n(X_n-\xi)\xrightarrow{d}N_k(0,\Sigma)$$
 
 e que $g:\mathbb R^k\to\mathbb R^m$ seja diferenciável em $\xi$. Então
 
-$$
-\sqrt n\{g(X_n)-g(\xi)\}
+$$\sqrt n\{g(X_n)-g(\xi)\}
 \xrightarrow{d}
-N_m\{0,Dg(\xi)\Sigma Dg(\xi)^\top\}.
-$$
+N_m\{0,Dg(\xi)\Sigma Dg(\xi)^\top\}.$$
 
 ### Demonstração {.unnumbered}
 
 Pela diferenciabilidade,
 
-$$
-g(X_n)-g(\xi)
+$$g(X_n)-g(\xi)
 =
-Dg(\xi)(X_n-\xi)+r(X_n-\xi),
-$$
+Dg(\xi)(X_n-\xi)+r(X_n-\xi),$$
 
 com
 
-$$
-\frac{\|r(h)\|}{\|h\|}\to 0
-\quad\text{quando }h\to 0.
-$$
+$$\frac{\|r(h)\|}{\|h\|}\to 0
+\quad\text{quando }h\to 0.$$
 
 Como a convergência em distribuição da sequência escalada implica $X_n\xrightarrow{P}\xi$, temos
 
-$$
-r(X_n-\xi)
-=o_P(\|X_n-\xi\|).
-$$
+$$r(X_n-\xi)
+=o_P(\|X_n-\xi\|).$$
 
 Multiplicando por $\sqrt n$,
 
-$$
-\sqrt n\{g(X_n)-g(\xi)\}
+$$\sqrt n\{g(X_n)-g(\xi)\}
 =
 Dg(\xi)\sqrt n(X_n-\xi)
 +
-o_P\{\sqrt n\|X_n-\xi\|\}.
-$$
+o_P\{\sqrt n\|X_n-\xi\|\}.$$
 
 A sequência $\sqrt n(X_n-\xi)$ é limitada em probabilidade, de modo que o termo de resto é $o_P(1)$. Assim,
 
-$$
-\sqrt n\{g(X_n)-g(\xi)\}
+$$\sqrt n\{g(X_n)-g(\xi)\}
 =
-Dg(\xi)\sqrt n(X_n-\xi)+o_P(1).
-$$
+Dg(\xi)\sqrt n(X_n-\xi)+o_P(1).$$
 
 Pelo teorema de Slutsky,
 
-$$
-\sqrt n\{g(X_n)-g(\xi)\}
+$$\sqrt n\{g(X_n)-g(\xi)\}
 \xrightarrow{d}
-Dg(\xi)Z,
-$$
+Dg(\xi)Z,$$
 
 onde $Z\sim N_k(0,\Sigma)$. Como uma transformação linear de um vetor normal é normal,
 
-$$
-Dg(\xi)Z
+$$Dg(\xi)Z
 \sim
-N_m\{0,Dg(\xi)\Sigma Dg(\xi)^\top\}.
-$$
+N_m\{0,Dg(\xi)\Sigma Dg(\xi)^\top\}.$$
 
 No caso univariado,
 
-$$
-\sqrt n\{g(X_n)-g(\xi)\}
+$$\sqrt n\{g(X_n)-g(\xi)\}
 \xrightarrow{d}
-N\left(0,[g'(\xi)]^2\sigma^2\right).
-$$
+N\left(0,[g'(\xi)]^2\sigma^2\right).$$
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @lauritzen2023fundamentals [Teorema A.19].  
+**Fonte principal:** @lauritzen2023fundamentals [Teorema A.19].\
 **Adaptação:** notação de resto vetorial e explicitação do passo $o_P(1)$.
 :::
 
@@ -1216,31 +975,21 @@ $$
 
 Considere um modelo regular uniparamétrico e o teste de
 
-$$
-H_0:\theta=\theta_0.
-$$
+$$H_0:\theta=\theta_0.$$
 
 Defina
 
-$$
-W_n=I_n(\theta_0)(\widehat\theta-\theta_0)^2,
-$$
+$$W_n=I_n(\theta_0)(\widehat\theta-\theta_0)^2,$$
 
-$$
-S_n=\frac{U_n(\theta_0)^2}{I_n(\theta_0)}
-$$
+$$S_n=\frac{U_n(\theta_0)^2}{I_n(\theta_0)}$$
 
 e
 
-$$
-R_n=2\{\ell_n(\widehat\theta)-\ell_n(\theta_0)\}.
-$$
+$$R_n=2\{\ell_n(\widehat\theta)-\ell_n(\theta_0)\}.$$
 
 Sob $H_0$ e condições de regularidade,
 
-$$
-W_n=S_n+o_P(1)=R_n+o_P(1),
-$$
+$$W_n=S_n+o_P(1)=R_n+o_P(1),$$
 
 e cada estatística converge para $\chi^2_1$.
 
@@ -1248,40 +997,31 @@ e cada estatística converge para $\chi^2_1$.
 
 A equação de escore no EMV é
 
-$$
-U_n(\widehat\theta)=0.
-$$
+$$U_n(\widehat\theta)=0.$$
 
 Expanda em torno de $\theta_0$:
 
-$$
-0
+$$0
 =
 U_n(\theta_0)
 +
-\ell_n''(\widetilde\theta)(\widehat\theta-\theta_0),
-$$
+\ell_n''(\widetilde\theta)(\widehat\theta-\theta_0),$$
 
 onde $\widetilde\theta$ está entre $\widehat\theta$ e $\theta_0$. Sob regularidade,
 
-$$
--\ell_n''(\widetilde\theta)
+$$-\ell_n''(\widetilde\theta)
 =
-I_n(\theta_0)+o_P(n).
-$$
+I_n(\theta_0)+o_P(n).$$
 
 Logo,
 
-$$
-\widehat\theta-\theta_0
+$$\widehat\theta-\theta_0
 =
-\frac{U_n(\theta_0)}{I_n(\theta_0)}+o_P(n^{-1/2}).
-$$
+\frac{U_n(\theta_0)}{I_n(\theta_0)}+o_P(n^{-1/2}).$$
 
 Substituindo no estatístico de Wald,
 
-$$
-W_n
+$$W_n
 =
 I_n(\theta_0)
 \left[
@@ -1290,48 +1030,39 @@ I_n(\theta_0)
 =
 \frac{U_n(\theta_0)^2}{I_n(\theta_0)}+o_P(1)
 =
-S_n+o_P(1).
-$$
+S_n+o_P(1).$$
 
 Agora expanda a log-verossimilhança em torno de $\widehat\theta$:
 
-$$
-\ell_n(\theta_0)
+$$\ell_n(\theta_0)
 =
 \ell_n(\widehat\theta)
 +
-\frac12\ell_n''(\bar\theta)(\theta_0-\widehat\theta)^2,
-$$
+\frac12\ell_n''(\bar\theta)(\theta_0-\widehat\theta)^2,$$
 
 pois $U_n(\widehat\theta)=0$. Assim,
 
-$$
-R_n
+$$R_n
 =
 -\ell_n''(\bar\theta)(\widehat\theta-\theta_0)^2
 =
 I_n(\theta_0)(\widehat\theta-\theta_0)^2+o_P(1)
 =
-W_n+o_P(1).
-$$
+W_n+o_P(1).$$
 
 Por fim,
 
-$$
-\frac{U_n(\theta_0)}{\sqrt{I_n(\theta_0)}}
-\xrightarrow{d}N(0,1),
-$$
+$$\frac{U_n(\theta_0)}{\sqrt{I_n(\theta_0)}}
+\xrightarrow{d}N(0,1),$$
 
 portanto
 
-$$
-S_n\xrightarrow{d}\chi^2_1,
-$$
+$$S_n\xrightarrow{d}\chi^2_1,$$
 
 e o mesmo vale para $W_n$ e $R_n$.
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fontes principais:** @cox2006principles [Capítulo 6, aproximação quadrática da log-verossimilhança]; @lauritzen2023fundamentals [Seções 5.3.3 e 5.4.4].  
+**Fontes principais:** @cox2006principles \[Capítulo 6, aproximação quadrática da log-verossimilhança\]; @lauritzen2023fundamentals [Seções 5.3.3 e 5.4.4].\
 **Adaptação:** prova escalar unificada por duas expansões de Taylor.
 :::
 
@@ -1341,13 +1072,11 @@ e o mesmo vale para $W_n$ e $R_n$.
 
 Considere uma família exponencial curva regular de dimensão $m$ contendo uma subfamília curva regular de dimensão $d$. Sob a hipótese de que o parâmetro verdadeiro pertence à subfamília,
 
-$$
--2\log\Lambda_n
+$$-2\log\Lambda_n
 =
 2\{\ell_n(\widehat\theta)-\ell_n(\widetilde\theta)\}
 \xrightarrow{d}
-\chi^2_{m-d},
-$$
+\chi^2_{m-d},$$
 
 onde $\widehat\theta$ é o EMV irrestrito e $\widetilde\theta$ é o EMV sob a restrição.
 
@@ -1355,55 +1084,38 @@ onde $\widehat\theta$ é o EMV irrestrito e $\widetilde\theta$ é o EMV sob a re
 
 Sob regularidade, a log-verossimilhança admite uma aproximação quadrática local. Em coordenadas padronizadas pela informação de Fisher, escreva
 
-$$
-h=\sqrt n\,I(\theta_0)^{1/2}(\theta-\theta_0).
-$$
+$$h=\sqrt n\,I(\theta_0)^{1/2}(\theta-\theta_0).$$
 
 Uniformemente em conjuntos limitados de $h$,
 
-$$
-\ell_n\left(\theta_0+\frac{I(\theta_0)^{-1/2}h}{\sqrt n}\right)
--
-\ell_n(\theta_0)
-=
-h^\top Z_n-\frac12h^\top h+o_P(1),
-$$
+$$\ell_n\left(\theta_0 + \frac{I(\theta_0)^{-1/2}h}{\sqrt n}\right) - \ell_n(\theta_0)
+=h^\top Z_n-\frac12h^\top h+o_P(1),$$
 
 com
 
-$$
-Z_n\xrightarrow{d}N_m(0,I_m).
-$$
+$$Z_n\xrightarrow{d}N_m(0,I_m).$$
 
 No modelo irrestrito, a função quadrática é maximizada em $h=Z_n$, com máximo
 
-$$
-\frac12\|Z_n\|^2.
-$$
+$$\frac12\|Z_n\|^2.$$
 
 Localmente, a hipótese restrita corresponde a um subespaço tangente $\mathcal T$ de dimensão $d$. O máximo restrito ocorre na projeção ortogonal $\Pi_{\mathcal T}Z_n$, com valor
 
-$$
-\frac12\|\Pi_{\mathcal T}Z_n\|^2.
-$$
+$$\frac12\|\Pi_{\mathcal T}Z_n\|^2.$$
 
 Consequentemente,
 
-$$
--2\log\Lambda_n
+$$-2\log\Lambda_n
 =
 \|Z_n\|^2-
 \|\Pi_{\mathcal T}Z_n\|^2+o_P(1)
 =
-\|\Pi_{\mathcal T^\perp}Z_n\|^2+o_P(1).
-$$
+\|\Pi_{\mathcal T^\perp}Z_n\|^2+o_P(1).$$
 
 O complemento ortogonal $\mathcal T^\perp$ tem dimensão $m-d$. A projeção de um vetor $N_m(0,I_m)$ sobre esse espaço tem $m-d$ componentes normais padrão independentes. Portanto,
 
-$$
-\|\Pi_{\mathcal T^\perp}Z_n\|^2
-\sim\chi^2_{m-d},
-$$
+$$\|\Pi_{\mathcal T^\perp}Z_n\|^2
+\sim\chi^2_{m-d},$$
 
 e o resultado segue por Slutsky.
 
@@ -1412,7 +1124,7 @@ Esta é a versão demonstrada por Lauritzen para subfamílias curvas de família
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @lauritzen2023fundamentals [Teorema 5.39 e resultados geométricos imediatamente anteriores].  
+**Fonte principal:** @lauritzen2023fundamentals [Teorema 5.39 e resultados geométricos imediatamente anteriores].\
 **Adaptação:** apresentação em coordenadas informacionais e por projeção no espaço tangente, preservando o escopo de família exponencial curva da fonte.
 :::
 
@@ -1424,17 +1136,13 @@ Esta é a versão demonstrada por Lauritzen para subfamílias curvas de família
 
 Para testar duas hipóteses simples
 
-$$
-H_0:f=f_0
+$$H_0:f=f_0
 \quad\text{contra}\quad
-H_1:f=f_1,
-$$
+H_1:f=f_1,$$
 
 o teste que rejeita $H_0$ quando
 
-$$
-\frac{f_1(x)}{f_0(x)}>k
-$$
+$$\frac{f_1(x)}{f_0(x)}>k$$
 
 é o teste mais poderoso entre todos os testes de nível no máximo $\alpha$, escolhendo-se $k$ e eventual randomização na fronteira para obter o nível desejado.
 
@@ -1442,48 +1150,38 @@ $$
 
 Seja $\varphi$ o teste da razão de verossimilhanças e $\psi$ qualquer outro teste com
 
-$$
-E_0(\psi)\leq E_0(\varphi)=\alpha.
-$$
+$$E_0(\psi)\leq E_0(\varphi)=\alpha.$$
 
 Pela construção de $\varphi$,
 
-$$
-[\varphi(x)-\psi(x)]\{f_1(x)-kf_0(x)\}\geq 0
-$$
+$$[\varphi(x)-\psi(x)]\{f_1(x)-kf_0(x)\}\geq 0$$
 
 para todo $x$: na região em que $f_1-kf_0>0$, $\varphi$ toma o maior valor possível; fora dela, toma o menor.
 
 Integrando,
 
-$$
-\int(\varphi-\psi)f_1
+$$\int(\varphi-\psi)f_1
 \geq
-k\int(\varphi-\psi)f_0.
-$$
+k\int(\varphi-\psi)f_0.$$
 
 O lado direito é não negativo, pois
 
-$$
-\int\varphi f_0-
+$$\int\varphi f_0-
 \int\psi f_0
 =
 E_0(\varphi)-E_0(\psi)
-\geq 0.
-$$
+\geq 0.$$
 
 Logo,
 
-$$
-E_1(\varphi)-E_1(\psi)
-\geq 0.
-$$
+$$E_1(\varphi)-E_1(\psi)
+\geq 0.$$
 
 Portanto, a potência de $\varphi$ é pelo menos tão grande quanto a de qualquer teste concorrente de nível não superior a $\alpha$.
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @rice2007mathematical [Seção 9.2].  
-**Fonte complementar:** @ramachandran2021r [capítulo de testes de hipóteses].  
+**Fonte principal:** @rice2007mathematical [Seção 9.2].\
+**Fonte complementar:** @ramachandran2021r [capítulo de testes de hipóteses].\
 **Adaptação:** razão escrita como $f_1/f_0$ e prova expressa por funções de teste.
 :::
 
@@ -1493,11 +1191,9 @@ Portanto, a potência de $\varphi$ é pelo menos tão grande quanto a de qualque
 
 Suponha que a família de distribuições da estatística suficiente $T$ tenha razão de verossimilhanças monótona crescente em $T$. Para testar
 
-$$
-H_0:\theta\leq\theta_0
+$$H_0:\theta\leq\theta_0
 \quad\text{contra}\quad
-H_1:\theta>\theta_0,
-$$
+H_1:\theta>\theta_0,$$
 
 o teste que rejeita para valores grandes de $T$ e tem tamanho $\alpha$ em $\theta_0$ é uniformemente mais poderoso de nível $\alpha$.
 
@@ -1505,58 +1201,46 @@ o teste que rejeita para valores grandes de $T$ e tem tamanho $\alpha$ em $\thet
 
 Escolha $c$ e, se necessário, uma probabilidade de randomização $\gamma$ tais que
 
-$$
-E_{\theta_0}\{\varphi(T)\}=\alpha,
-$$
+$$E_{\theta_0}\{\varphi(T)\}=\alpha,$$
 
 onde
 
-$$
-\varphi(t)=
+$$\varphi(t)=
 \begin{cases}
 1,&t>c,\\
 \gamma,&t=c,\\
 0,&t<c.
-\end{cases}
-$$
+\end{cases}$$
 
 Fixe uma alternativa $\theta_1>\theta_0$. A razão
 
-$$
-\frac{f_T(t;\theta_1)}{f_T(t;\theta_0)}
-$$
+$$\frac{f_T(t;\theta_1)}{f_T(t;\theta_0)}$$
 
 é crescente em $t$. Pelo lema de Neyman--Pearson, o teste mais poderoso para
 
-$$
-H_0:\theta=\theta_0
+$$H_0:\theta=\theta_0
 \quad\text{contra}\quad
-H_1:\theta=\theta_1
-$$
+H_1:\theta=\theta_1$$
 
 rejeita para valores grandes de $T$. A região crítica é a mesma para qualquer $\theta_1>\theta_0$, pois o ponto de corte é determinado pela distribuição em $\theta_0$ e pelo nível $\alpha$.
 
 Além disso, a propriedade de razão de verossimilhanças monótona implica que
 
-$$
-E_\theta\{\varphi(T)\}
-$$
+$$E_\theta\{\varphi(T)\}$$
 
 é não decrescente em $\theta$. Consequentemente,
 
-$$
-\sup_{\theta\leq\theta_0}
+$$\sup_{\theta\leq\theta_0}
 E_\theta\{\varphi(T)\}
 =
 E_{\theta_0}\{\varphi(T)\}
 =
-\alpha.
-$$
+\alpha.$$
 
 Logo, $\varphi$ é um teste de nível $\alpha$ para a hipótese composta. Como ele é mais poderoso para cada alternativa simples $\theta_1>\theta_0$, é uniformemente mais poderoso contra toda a alternativa unilateral.
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @rasch2018 [Seção 3.3.1, Teoremas 3.6--3.8 e Corolário 3.3].  
+**Fonte principal:** @rasch2018 [Seção 3.3.1, Teoremas 3.6--3.8 e Corolário 3.3].\
 **Adaptação:** o resultado é apresentado sob o nome usual de Karlin--Rubin, combinando o argumento de monotonicidade da potência com Neyman--Pearson.
 :::
 
@@ -1566,27 +1250,19 @@ Logo, $\varphi$ é um teste de nível $\alpha$ para a hipótese composta. Como e
 
 Para cada $\theta_0$, suponha que $A(\theta_0)$ seja a região de não rejeição de um teste de nível $\alpha$ de
 
-$$
-H_0:\theta=\theta_0,
-$$
+$$H_0:\theta=\theta_0,$$
 
 de modo que
 
-$$
-P_{\theta_0}\{X\notin A(\theta_0)\}\leq\alpha.
-$$
+$$P_{\theta_0}\{X\notin A(\theta_0)\}\leq\alpha.$$
 
 Então
 
-$$
-C(X)=\{\theta_0:X\in A(\theta_0)\}
-$$
+$$C(X)=\{\theta_0:X\in A(\theta_0)\}$$
 
 é uma região de confiança com cobertura pelo menos $1-\alpha$:
 
-$$
-P_{\theta_0}\{\theta_0\in C(X)\}\geq1-\alpha.
-$$
+$$P_{\theta_0}\{\theta_0\in C(X)\}\geq1-\alpha.$$
 
 Se cada teste possui tamanho exatamente $\alpha$ em $\theta_0$, a cobertura é exatamente $1-\alpha$.
 
@@ -1594,36 +1270,28 @@ Se cada teste possui tamanho exatamente $\alpha$ em $\theta_0$, a cobertura é e
 
 Pela definição de $C(X)$,
 
-$$
-\{\theta_0\in C(X)\}
+$$\{\theta_0\in C(X)\}
 =
-\{X\in A(\theta_0)\}.
-$$
+\{X\in A(\theta_0)\}.$$
 
 Portanto,
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 P_{\theta_0}\{\theta_0\in C(X)\}
 &=P_{\theta_0}\{X\in A(\theta_0)\}\\
 &=1-P_{\theta_0}\{X\notin A(\theta_0)\}\\
 &\geq1-\alpha.
-\end{aligned}
-$$
+\end{aligned}$$
 
 Quando $P_{\theta_0}\{X\notin A(\theta_0)\}=\alpha$, todas as desigualdades anteriores tornam-se igualdades.
 
 Reciprocamente, se $C(X)$ satisfaz
 
-$$
-P_{\theta_0}\{\theta_0\in C(X)\}\geq1-\alpha
-$$
+$$P_{\theta_0}\{\theta_0\in C(X)\}\geq1-\alpha$$
 
 para todo $\theta_0$, então
 
-$$
-A(\theta_0)=\{x:\theta_0\in C(x)\}
-$$
+$$A(\theta_0)=\{x:\theta_0\in C(x)\}$$
 
 é a região de não rejeição de um teste de nível no máximo $\alpha$ de $H_0:\theta=\theta_0$.
 
@@ -1632,8 +1300,7 @@ Uma região de confiança é o conjunto dos valores do parâmetro que não seria
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @rice2007mathematical [Seção 9.3, Teoremas A e B].  
-**Correção:** distingue-se cobertura mínima de cobertura exata, conforme os testes tenham nível no máximo $\alpha$ ou tamanho exatamente $\alpha$.
+**Fonte principal:** @rice2007mathematical [Seção 9.3, Teoremas A e B].
 :::
 
 ## Demonstração 15 — Teste $t$ de uma amostra como teste da razão de verossimilhanças generalizada {.unnumbered}
@@ -1642,59 +1309,48 @@ Uma região de confiança é o conjunto dos valores do parâmetro que não seria
 
 Para uma amostra i.i.d. $N(\mu,\sigma^2)$, o teste bilateral de
 
-$$
-H_0:\mu=\mu_0
+$$H_0:\mu=\mu_0
 \quad\text{contra}\quad
-H_1:\mu\neq\mu_0
-$$
+H_1:\mu\neq\mu_0$$
 
 baseado na razão de verossimilhanças generalizada rejeita para valores grandes de
 
-$$
-|T|=
+$$|T|=
 \left|
 \frac{\bar X-\mu_0}{S/\sqrt n}
-\right|.
-$$
+\right|.$$
 
 ### Demonstração {.unnumbered}
 
 A verossimilhança é
 
-$$
-L(\mu,\sigma^2)
+$$L(\mu,\sigma^2)
 =
 (2\pi\sigma^2)^{-n/2}
 \exp\left
 \{-\frac{1}{2\sigma^2}
 \sum_{i=1}^n(X_i-\mu)^2
-\right\}.
-$$
+\right\}.$$
 
 No modelo irrestrito,
 
-$$
-\widehat\mu=\bar X,
+$$\widehat\mu=\bar X,
 \qquad
 \widehat\sigma^2=
 \frac{1}{n}
-\sum_{i=1}^n(X_i-\bar X)^2.
-$$
+\sum_{i=1}^n(X_i-\bar X)^2.$$
 
 Sob $H_0$,
 
-$$
-\widetilde\mu=\mu_0,
+$$\widetilde\mu=\mu_0,
 \qquad
 \widetilde\sigma^2=
 \frac{1}{n}
-\sum_{i=1}^n(X_i-\mu_0)^2.
-$$
+\sum_{i=1}^n(X_i-\mu_0)^2.$$
 
 Após substituir esses estimadores, a razão é
 
-$$
-\Lambda
+$$\Lambda
 =
 \left[
 \frac{
@@ -1702,53 +1358,44 @@ $$
 }{
 \sum_{i=1}^n(X_i-\mu_0)^2
 }
-\right]^{n/2}.
-$$
+\right]^{n/2}.$$
 
 Pela identidade
 
-$$
-\sum_{i=1}^n(X_i-\mu_0)^2
+$$\sum_{i=1}^n(X_i-\mu_0)^2
 =
 \sum_{i=1}^n(X_i-\bar X)^2
-+n(\bar X-\mu_0)^2,
-$$
++n(\bar X-\mu_0)^2,$$
 
 obtemos
 
-$$
-\Lambda
+$$\Lambda
 =
 \left[
 1+
 \frac{n(\bar X-\mu_0)^2}
 {\sum_{i=1}^n(X_i-\bar X)^2}
-\right]^{-n/2}.
-$$
+\right]^{-n/2}.$$
 
 Como
 
-$$
-S^2=
+$$S^2=
 \frac{1}{n-1}
-\sum_{i=1}^n(X_i-\bar X)^2,
-$$
+\sum_{i=1}^n(X_i-\bar X)^2,$$
 
 segue que
 
-$$
-\Lambda
+$$\Lambda
 =
 \left(
 1+
 \frac{T^2}{n-1}
-\right)^{-n/2}.
-$$
+\right)^{-n/2}.$$
 
 Essa expressão é estritamente decrescente em $T^2$. Portanto, rejeitar para valores pequenos de $\Lambda$ equivale a rejeitar para valores grandes de $|T|$. Sob $H_0$, $T\sim t_{n-1}$, produzindo o teste $t$ bilateral usual.
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @larsen2012 [Apêndice 7.A.3].  
+**Fonte principal:** @larsen2012 [Apêndice 7.A.3].\
 **Adaptação:** notação de razão de verossimilhanças e simplificação algébrica preservadas da fonte.
 :::
 
@@ -1760,107 +1407,87 @@ Essa expressão é estritamente decrescente em $T^2$. Portanto, rejeitar para va
 
 Se $Y$ é o dado observado, $Z$ é o dado latente e $X=(Y,Z)$ é o dado completo, suponha que as distribuições envolvidas sejam dominadas por medidas comuns, que os suportes relevantes não variem com $\theta$ e que as esperanças abaixo sejam finitas. Defina
 
-$$
-Q(\theta\mid\theta^{(m)})
+$$Q(\theta\mid\theta^{(m)})
 =
 E_{\theta^{(m)}}
-\{\log p(Y,Z\mid\theta)\mid Y=y\}.
-$$
+\{\log p(Y,Z\mid\theta)\mid Y=y\}.$$
 
 O passo M escolhe $\theta^{(m+1)}$ de modo que
 
-$$
-Q(\theta^{(m+1)}\mid\theta^{(m)})
+$$Q(\theta^{(m+1)}\mid\theta^{(m)})
 \geq
-Q(\theta^{(m)}\mid\theta^{(m)}).
-$$
+Q(\theta^{(m)}\mid\theta^{(m)}).$$
 
 ### Demonstração {.unnumbered}
 
 Seja
 
-$$
-q_m(z)=p(z\mid y,\theta^{(m)}).
-$$
+$$q_m(z)=p(z\mid y,\theta^{(m)}).$$
 
 Para qualquer $\theta$,
 
-$$
-\log p(y\mid\theta)
+$$\log p(y\mid\theta)
 =
 \log p(y,z\mid\theta)-
-\log p(z\mid y,\theta).
-$$
+\log p(z\mid y,\theta).$$
 
 Tomando esperança em relação a $q_m$,
 
-$$
-\ell(\theta)
+$$\ell(\theta)
 =
 Q(\theta\mid\theta^{(m)})
 -
-E_{q_m}\{\log p(Z\mid y,\theta)\}.
-$$
+E_{q_m}\{\log p(Z\mid y,\theta)\}.$$
 
 Adicione e subtraia $E_{q_m}\{\log q_m(Z)\}$. Pela definição da divergência de Kullback--Leibler,
 
-$$
-D_{\mathrm{KL}}
+$$D_{\mathrm{KL}}
 \{q_m\|p(\cdot\mid y,\theta)\}
 =
 E_{q_m}
 \left[
 \log\frac{q_m(Z)}{p(Z\mid y,\theta)}
-\right].
-$$
+\right].$$
 
 Logo,
 
-$$
-\ell(\theta)
+$$\ell(\theta)
 =
 Q(\theta\mid\theta^{(m)})
 -E_{q_m}\{\log q_m(Z)\}
 +
 D_{\mathrm{KL}}
-\{q_m\|p(\cdot\mid y,\theta)\}.
-$$
+\{q_m\|p(\cdot\mid y,\theta)\}.$$
 
 Ao tomar $\theta=\theta^{(m)}$, a divergência é zero. Portanto,
 
-$$
-\ell(\theta)-\ell(\theta^{(m)})
+$$\ell(\theta)-\ell(\theta^{(m)})
 =
 Q(\theta\mid\theta^{(m)})
 -Q(\theta^{(m)}\mid\theta^{(m)})
 +
 D_{\mathrm{KL}}
-\{q_m\|p(\cdot\mid y,\theta)\}.
-$$
+\{q_m\|p(\cdot\mid y,\theta)\}.$$
 
 Como a divergência KL é não negativa,
 
-$$
-\ell(\theta)-\ell(\theta^{(m)})
+$$\ell(\theta)-\ell(\theta^{(m)})
 \geq
 Q(\theta\mid\theta^{(m)})
--Q(\theta^{(m)}\mid\theta^{(m)}).
-$$
+-Q(\theta^{(m)}\mid\theta^{(m)}).$$
 
 Aplicando essa desigualdade a $\theta^{(m+1)}$,
 
-$$
-\ell(\theta^{(m+1)})
+$$\ell(\theta^{(m+1)})
 \geq
-\ell(\theta^{(m)}).
-$$
+\ell(\theta^{(m)}).$$
 
 ::: {.callout-warning title="O que a monotonicidade não garante"}
 O aumento da log-verossimilhança não garante convergência ao máximo global. O algoritmo pode convergir para um máximo local, ponto estacionário ou fronteira, e a sequência de parâmetros exige hipóteses adicionais para convergir. Além disso, a demonstração pode falhar quando o suporte do dado completo depende do parâmetro.
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @gupta2011em [Seções 1.1 e 2.1].  
+**Fonte principal:** @gupta2011em [Seções 1.1 e 2.1].\
 **Adaptação:** prova escrita pela decomposição da log-verossimilhança em $Q$ e divergência KL.
 :::
 
@@ -1870,65 +1497,53 @@ O aumento da log-verossimilhança não garante convergência ao máximo global. 
 
 Sejam $Q_n:\mathbb R^d\to\mathbb R$ funções aleatórias convexas e $Q$ uma função determinística. Suponha que:
 
-1. $Q_n\to Q$ uniformemente em probabilidade em todo compacto;
-2. $Q$ é contínua, estritamente convexa e coerciva;
-3. $\widehat t_n\in\operatorname{argmin}Q_n$ e $t_0=\operatorname{argmin}Q$.
+1.  $Q_n\to Q$ uniformemente em probabilidade em todo compacto;
+2.  $Q$ é contínua, estritamente convexa e coerciva;
+3.  $\widehat t_n\in\operatorname{argmin}Q_n$ e $t_0=\operatorname{argmin}Q$.
 
 Então
 
-$$
-\widehat t_n\xrightarrow{P}t_0.
-$$
+$$\widehat t_n\xrightarrow{P}t_0.$$
 
 ### Demonstração {.unnumbered}
 
 A estrita convexidade e a coercividade de $Q$ garantem que $t_0$ existe e é único. Fixe $\varepsilon>0$. Pela continuidade e unicidade do mínimo,
 
-$$
-\delta_\varepsilon
+$$\delta_\varepsilon
 =
 \inf_{\|t-t_0\|=\varepsilon}
 \{Q(t)-Q(t_0)\}
->0.
-$$
+>0.$$
 
 A convergência uniforme em probabilidade na esfera compacta e em uma vizinhança de $t_0$ implica que, com probabilidade tendendo a um,
 
-$$
-\inf_{\|t-t_0\|=\varepsilon}Q_n(t)
+$$\inf_{\|t-t_0\|=\varepsilon}Q_n(t)
 >
-Q_n(t_0).
-$$
+Q_n(t_0).$$
 
 Suponha, por contradição, que $\|\widehat t_n-t_0\|>\varepsilon$. Pela convexidade, existe $\lambda\in(0,1)$ tal que
 
-$$
-t_1=\lambda\widehat t_n+(1-\lambda)t_0
-$$
+$$t_1=\lambda\widehat t_n+(1-\lambda)t_0$$
 
 satisfaz $\|t_1-t_0\|=\varepsilon$. Como $\widehat t_n$ minimiza $Q_n$,
 
-$$
-Q_n(t_1)
+$$Q_n(t_1)
 \leq
 \lambda Q_n(\widehat t_n)+(1-\lambda)Q_n(t_0)
 \leq
-Q_n(t_0).
-$$
+Q_n(t_0).$$
 
 Isso contradiz a desigualdade anterior na esfera. Logo,
 
-$$
-P(\|\widehat t_n-t_0\|>\varepsilon)
-\to 0.
-$$
+$$P(\|\widehat t_n-t_0\|>\varepsilon)
+\to 0.$$
 
 ::: {.callout-tip title="Interpretação"}
 O resultado é um princípio geral de consistência para $M$-estimadores: se a função-objetivo amostral aproxima uniformemente uma função populacional com mínimo bem separado, os minimizadores amostrais aproximam o minimizador populacional.
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @bickel2016volume2 [Proposição 9.2.1].  
+**Fonte principal:** @bickel2016volume2 [Proposição 9.2.1].\
 **Adaptação:** preservação do argumento geométrico na esfera de raio $\varepsilon$.
 :::
 
@@ -1938,14 +1553,12 @@ O resultado é um princípio geral de consistência para $M$-estimadores: se a f
 
 Para um funcional estatístico $T(P)$, a função de influência sob contaminação pontual é, quando a derivada existe,
 
-$$
-\operatorname{IF}(x;T,P)
+$$\operatorname{IF}(x;T,P)
 =
 \left.
 \frac{d}{d\varepsilon}
 T\{(1-\varepsilon)P+\varepsilon\Delta_x\}
-\right|_{\varepsilon=0}.
-$$
+\right|_{\varepsilon=0}.$$
 
 Ela mede a sensibilidade local de primeira ordem do funcional a uma contaminação infinitesimal no ponto $x$.
 
@@ -1957,11 +1570,9 @@ A função de influência de um **funcional**, definida por derivada de contamin
 
 Considere um modelo semiparamétrico em $P$ cujo espaço tangente $\dot{\mathcal P}$ seja um subespaço linear fechado de $L_2^0(P)$. Suponha que exista um estimador regular e assintoticamente linear do parâmetro, com função de influência $\psi\in L_2^0(P)$. Então a função de influência eficiente é
 
-$$
-\psi_{\mathrm{ef}}
+$$\psi_{\mathrm{ef}}
 =
-\Pi\bigl(\psi\mid\dot{\mathcal P}\bigr),
-$$
+\Pi\bigl(\psi\mid\dot{\mathcal P}\bigr),$$
 
 isto é, a projeção ortogonal de $\psi$ sobre o espaço tangente.
 
@@ -1969,43 +1580,35 @@ isto é, a projeção ortogonal de $\psi$ sobre o espaço tangente.
 
 Pela decomposição ortogonal de Hilbert,
 
-$$
-\psi
+$$\psi
 =
 \Pi(\psi\mid\dot{\mathcal P})
 +
-\Pi(\psi\mid\dot{\mathcal P}^{\perp}).
-$$
+\Pi(\psi\mid\dot{\mathcal P}^{\perp}).$$
 
 As equações que caracterizam uma função de influência regular envolvem seus produtos internos com os escores dos submodelos paramétricos regulares. Esses escores pertencem a $\dot{\mathcal P}$. Para qualquer escore $s\in\dot{\mathcal P}$,
 
-$$
-\langle\psi,s\rangle
+$$\langle\psi,s\rangle
 =
 \left\langle
 \Pi(\psi\mid\dot{\mathcal P}),s
-\right\rangle,
-$$
+\right\rangle,$$
 
 pois o componente em $\dot{\mathcal P}^{\perp}$ é ortogonal a $s$. Portanto, a projeção preserva as equações de derivada que definem uma função de influência regular.
 
 Pelo teorema de Pitágoras,
 
-$$
-\|\psi\|_2^2
+$$\|\psi\|_2^2
 =
 \|\Pi(\psi\mid\dot{\mathcal P})\|_2^2
 +
-\|\Pi(\psi\mid\dot{\mathcal P}^{\perp})\|_2^2.
-$$
+\|\Pi(\psi\mid\dot{\mathcal P}^{\perp})\|_2^2.$$
 
 Consequentemente,
 
-$$
-E_P(\psi_{\mathrm{ef}}^2)
+$$E_P(\psi_{\mathrm{ef}}^2)
 \leq
-E_P(\psi^2).
-$$
+E_P(\psi^2).$$
 
 Como a variância assintótica de um estimador regular assintoticamente linear é determinada por $E_P(\psi^2)$, a projeção possui a menor variância entre as funções de influência regulares admissíveis e é eficiente.
 
@@ -2014,9 +1617,8 @@ Eficiência semiparamétrica e robustez local são critérios distintos. Em aná
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @bickel2016volume2 [Seção 7.2.1, para funções de influência e derivadas funcionais; Seção 9.3 e Proposição 9.3.3, para projeção eficiente].  
-**Fonte complementar:** @wilcox2022 [Seções 2.1--2.2, para a interpretação robusta].  
-**Correção:** as noções funcional e assintótica de função de influência são agora distinguidas explicitamente.
+**Fonte principal:** @bickel2016volume2 [Seção 7.2.1, para funções de influência e derivadas funcionais; Seção 9.3 e Proposição 9.3.3, para projeção eficiente].\
+**Fonte complementar:** @wilcox2022 [Seções 2.1--2.2, para a interpretação robusta].
 :::
 
 ## Demonstração 25 — Validade exata de um teste de permutação {.unnumbered}
@@ -2025,20 +1627,16 @@ Eficiência semiparamétrica e robustez local são critérios distintos. Em aná
 
 Suponha que, sob $H_0$, as observações sejam permutáveis em relação aos rótulos dos grupos. Seja $\mathcal G$ o conjunto finito das permutações admissíveis e $T$ uma estatística em que valores grandes contradizem $H_0$. Defina
 
-$$
-p(x)
+$$p(x)
 =
 \frac{1}{|\mathcal G|}
 \sum_{g\in\mathcal G}
-\mathbf 1\{T(gx)\geq T(x)\}.
-$$
+\mathbf 1\{T(gx)\geq T(x)\}.$$
 
 Então
 
-$$
-P_{H_0}\{p(X)\leq\alpha\}
-\leq\alpha.
-$$
+$$P_{H_0}\{p(X)\leq\alpha\}
+\leq\alpha.$$
 
 Se não há empates e os níveis possíveis são compatíveis com $|\mathcal G|$, a igualdade é exata.
 
@@ -2046,33 +1644,25 @@ Se não há empates e os níveis possíveis são compatíveis com $|\mathcal G|$
 
 Condicione na órbita
 
-$$
-\mathcal O(x)=\{gx:g\in\mathcal G\}.
-$$
+$$\mathcal O(x)=\{gx:g\in\mathcal G\}.$$
 
 Sob a hipótese nula de permutabilidade, todos os elementos da órbita são equiprováveis. Portanto, a posição de $T(X)$ entre os valores
 
-$$
-\{T(gx):g\in\mathcal G\}
-$$
+$$\{T(gx):g\in\mathcal G\}$$
 
 é uniforme, na ausência de empates.
 
 Se os valores forem ordenados do maior para o menor, $p(X)$ é a proporção de valores da órbita que são pelo menos tão extremos quanto o valor observado. Assim, a condição $p(X)\leq\alpha$ só pode ocorrer quando $T(X)$ está entre os no máximo $\alpha|\mathcal G|$ valores mais extremos da órbita. Condicionalmente à órbita,
 
-$$
-P_{H_0}\{p(X)\leq\alpha\mid\mathcal O(X)\}
+$$P_{H_0}\{p(X)\leq\alpha\mid\mathcal O(X)\}
 \leq
 \frac{\lfloor\alpha|\mathcal G|\rfloor}{|\mathcal G|}
-\leq\alpha.
-$$
+\leq\alpha.$$
 
 Tomando esperança sobre a órbita,
 
-$$
-P_{H_0}\{p(X)\leq\alpha\}
-\leq\alpha.
-$$
+$$P_{H_0}\{p(X)\leq\alpha\}
+\leq\alpha.$$
 
 Empates tornam o teste conservador quando se usa a desigualdade $\geq$.
 
@@ -2081,7 +1671,7 @@ A validade exata exige permutabilidade ou uma atribuição aleatória conhecida.
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @chihara2022 [Seção 3.3, argumento de equiprobabilidade das divisões sob $H_0$].  
+**Fonte principal:** @chihara2022 [Seção 3.3, argumento de equiprobabilidade das divisões sob $H_0$].\
 **Adaptação:** a obra apresenta a justificativa por equiprobabilidade; a formulação acima explicita o mesmo argumento em termos de órbitas de um grupo finito.
 :::
 
@@ -2091,12 +1681,10 @@ A validade exata exige permutabilidade ou uma atribuição aleatória conhecida.
 
 Dada uma amostra $X_1,\ldots,X_n$, a distribuição empírica é
 
-$$
-\widehat F_n
+$$\widehat F_n
 =
 \frac{1}{n}
-\sum_{i=1}^n\Delta_{X_i}.
-$$
+\sum_{i=1}^n\Delta_{X_i}.$$
 
 Uma amostra bootstrap $X_1^*,\ldots,X_n^*$ é obtida condicionalmente aos dados por amostragem i.i.d. de $\widehat F_n$.
 
@@ -2104,65 +1692,51 @@ Uma amostra bootstrap $X_1^*,\ldots,X_n^*$ é obtida condicionalmente aos dados 
 
 Sob a distribuição empírica,
 
-$$
-E_*(X_1^*)
+$$E_*(X_1^*)
 =
 \frac{1}{n}\sum_{i=1}^nX_i
 =
-\bar X.
-$$
+\bar X.$$
 
 Logo,
 
-$$
-E_*(\bar X^*)=\bar X.
-$$
+$$E_*(\bar X^*)=\bar X.$$
 
 A variância de uma observação bootstrap é
 
-$$
-\operatorname{Var}_*(X_1^*)
+$$\operatorname{Var}_*(X_1^*)
 =
 \frac{1}{n}
-\sum_{i=1}^n(X_i-\bar X)^2.
-$$
+\sum_{i=1}^n(X_i-\bar X)^2.$$
 
 Como as observações bootstrap são condicionalmente independentes,
 
-$$
-\operatorname{Var}_*(\bar X^*)
+$$\operatorname{Var}_*(\bar X^*)
 =
 \frac{1}{n}
 \operatorname{Var}_*(X_1^*)
 =
 \frac{1}{n^2}
-\sum_{i=1}^n(X_i-\bar X)^2.
-$$
+\sum_{i=1}^n(X_i-\bar X)^2.$$
 
 Usando
 
-$$
-S^2=
+$$S^2=
 \frac{1}{n-1}
-\sum_{i=1}^n(X_i-\bar X)^2,
-$$
+\sum_{i=1}^n(X_i-\bar X)^2,$$
 
 obtemos
 
-$$
-\operatorname{Var}_*(\bar X^*)
+$$\operatorname{Var}_*(\bar X^*)
 =
-\frac{n-1}{n^2}S^2.
-$$
+\frac{n-1}{n^2}S^2.$$
 
 Portanto, o erro-padrão bootstrap ideal da média é
 
-$$
-\operatorname{se}_*(\bar X^*)
+$$\operatorname{se}_*(\bar X^*)
 =
 \frac{S}{\sqrt n}
-\sqrt{\frac{n-1}{n}},
-$$
+\sqrt{\frac{n-1}{n}},$$
 
 que é assintoticamente equivalente ao erro-padrão usual $S/\sqrt n$.
 
@@ -2173,7 +1747,7 @@ O cálculo de média e variância não prova a validade geral do bootstrap para 
 :::
 
 ::: {.callout-note title="Fonte da demonstração"}
-**Fonte principal:** @chihara2022 [Seção 5.2, princípio *plug-in* e distribuição empírica].  
+**Fonte principal:** @chihara2022 [Seção 5.2, princípio *plug-in* e distribuição empírica].\
 **Adaptação:** inclusão da derivação exata dos dois primeiros momentos condicionais da média bootstrap.
 :::
 
@@ -2181,12 +1755,12 @@ O cálculo de média e variância não prova a validade geral do bootstrap para 
 
 As 26 demonstrações formam uma cadeia lógica:
 
-1. a lei dos grandes números e o TCL justificam a estabilidade e a aproximação normal de estatísticas;
-2. os resultados exatos do modelo normal produzem as distribuições $\chi^2$ e $t$;
-3. suficiência, Rao--Blackwell, completude e Cramér--Rao organizam a comparação de estimadores;
-4. verossimilhança, método delta, equivalências assintóticas e Wilks estruturam a inferência regular em grandes amostras;
-5. Neyman--Pearson, Karlin--Rubin e a dualidade com regiões de confiança organizam a teoria dos testes;
-6. EM, minimização, funções de influência, permutação e bootstrap ampliam a teoria para métodos computacionais, robustos e semiparamétricos.
+1.  a lei dos grandes números e o TCL justificam a estabilidade e a aproximação normal de estatísticas;
+2.  os resultados exatos do modelo normal produzem as distribuições $\chi^2$ e $t$;
+3.  suficiência, Rao--Blackwell, completude e Cramér--Rao organizam a comparação de estimadores;
+4.  verossimilhança, método delta, equivalências assintóticas e Wilks estruturam a inferência regular em grandes amostras;
+5.  Neyman--Pearson, Karlin--Rubin e a dualidade com regiões de confiança organizam a teoria dos testes;
+6.  EM, minimização, funções de influência, permutação e bootstrap ampliam a teoria para métodos computacionais, robustos e semiparamétricos.
 
 ::: {.callout-important title="Observação editorial"}
 Para uma versão de graduação avançada, um núcleo possível é formado pelas demonstrações 1--15, 18, 21--22 e 25--26. As demonstrações 16--20 e 23--24 podem ser desenvolvidas em disciplinas de mestrado ou em apêndices, com maior atenção às condições de regularidade, aos espaços tangentes e aos contraexemplos.
