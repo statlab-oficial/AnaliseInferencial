@@ -1112,18 +1112,49 @@ Definição — Distribuição <span class="math inline">\(\chi^2\)</span>
 <p><span class="math display">\[\frac{(n-1)S^2}{\sigma^2}
 \sim\chi^2_{n-1}.\]</span></p>
 <p>Esse resultado e a independência usada em sua obtenção são específicos do modelo normal <span class="citation" data-cites="rice2007mathematical larsen2012 ramachandran2021r">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 7</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.2</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 6.2–6.3</a>)</span>.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Interpretação — Graus de liberdade">
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretação dos graus de liberdade">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Interpretação — Graus de liberdade
+Interpretação dos graus de liberdade
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A soma <span class="math inline">\(\sum(X_i-\overline{X})^2\)</span> possui <span class="math inline">\(n-1\)</span> graus de liberdade porque os <span class="math inline">\(n\)</span> desvios satisfazem a restrição</p>
-<p><span class="math display">\[\sum_{i=1}^n(X_i-\overline{X})=0.\]</span></p>
+<p>Os <strong>graus de liberdade</strong> representam o número de componentes independentes de variação que permanecem disponíveis depois que são consideradas as restrições impostas pelo problema ou os parâmetros estimados a partir dos dados.</p>
+<p>Essa interpretação aparece naturalmente na distribuição qui-quadrado. Se</p>
+<p><span class="math display">\[
+Z_1,\ldots,Z_\nu
+\overset{\mathrm{i.i.d.}}{\sim}
+N(0,1),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+\sum_{j=1}^{\nu}Z_j^2
+\sim
+\chi^2_\nu.
+\]</span></p>
+<p>Nesse caso, <span class="math inline">\(\nu\)</span> é o número de componentes normais independentes que contribuem para a soma de quadrados. Considere agora uma amostra <span class="math inline">\((X_1,\ldots,X_n)\)</span>. Os desvios em relação à média amostral satisfazem</p>
+<p><span class="math display">\[
+\sum_{i=1}^n(X_i-\overline X)=0.
+\]</span></p>
+<p>Logo, os <span class="math inline">\(n\)</span> desvios não podem variar independentemente: depois que <span class="math inline">\((n-1)\)</span> deles são determinados, o último fica completamente definido pela restrição acima. Por essa razão, a soma de quadrados</p>
+<p><span class="math display">\[
+\sum_{i=1}^n(X_i-\overline X)^2
+\]</span></p>
+<p>possui <span class="math inline">\((n-1)\)</span> graus de liberdade. No modelo normal,</p>
+<p><span class="math display">\[
+\frac{(n-1)S^2}{\sigma^2}
+\sim
+\chi^2_{n-1}.
+\]</span></p>
+<p>De maneira mais geral, os graus de liberdade podem ser interpretados como a dimensão do espaço de variação que resta após a imposição de restrições. Em modelos lineares com <span class="math inline">\(n\)</span> observações e uma matriz de delineamento de posto <span class="math inline">\(p\)</span>, por exemplo, os resíduos possuem</p>
+<p><span class="math display">\[
+n-p
+\]</span></p>
+<p>graus de liberdade. Em testes da razão de verossimilhanças, os graus de liberdade assintóticos correspondem à diferença entre as dimensões dos modelos irrestrito e restrito.</p>
+<p>Essa interpretação deve ser usada com cautela em procedimentos aproximados. No teste de Welch, por exemplo, os graus de liberdade podem não ser inteiros: eles constituem uma aproximação de Satterthwaite utilizada para calibrar uma distribuição (t), e não uma contagem literal de observações independentes <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 6.2–6.3 and 9.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;7.1)</span>.</p>
 </div>
 </div>
 </section>

@@ -18,7 +18,6 @@ A **distribuição amostral** de uma estatística $T=g(X_1,\ldots,X_n)$ é a dis
 A distribuição populacional descreve a variabilidade de uma observação individual $X$. A distribuição amostral descreve a variabilidade de uma função de várias observações, como $\overline{X}$, $S^2$, $\widehat p$, uma mediana ou uma estatística de ordem. Essas distribuições, em geral, não são iguais [@ramachandran2021r, seção 4.1, pp. 147--148; @chihara2022, seção 4.1, pp. 77--82].
 :::
 
-
 ### Objetivos do capítulo {.unnumbered}
 
 Ao final deste capítulo, o leitor deverá ser capaz de:
@@ -630,14 +629,59 @@ $$\sum_{i=1}^n(X_i-\mu)^2
 separa a variabilidade residual da variabilidade da média. No modelo normal, os dois termos padronizados são independentes, resultando em
 
 $$\frac{(n-1)S^2}{\sigma^2}
-\sim\chi^2_{n-1}.$$ 
+\sim\chi^2_{n-1}.$$
 
 Esse resultado e a independência usada em sua obtenção são específicos do modelo normal [@rice2007mathematical, seções 6.2--6.3; @larsen2012, capítulo 7; @ramachandran2021r, seção 4.2].
 
-::: {.callout-note title="Interpretação — Graus de liberdade"}
-A soma $\sum(X_i-\overline{X})^2$ possui $n-1$ graus de liberdade porque os $n$ desvios satisfazem a restrição
+::: {.callout-note title="Interpretação dos graus de liberdade"}
 
-$$\sum_{i=1}^n(X_i-\overline{X})=0.$$
+Os **graus de liberdade** representam o número de componentes independentes de variação que permanecem disponíveis depois que são consideradas as restrições impostas pelo problema ou os parâmetros estimados a partir dos dados.
+
+Essa interpretação aparece naturalmente na distribuição qui-quadrado. Se
+
+$$
+Z_1,\ldots,Z_\nu
+\overset{\mathrm{i.i.d.}}{\sim}
+N(0,1),
+$$
+
+então
+
+$$
+\sum_{j=1}^{\nu}Z_j^2
+\sim
+\chi^2_\nu.
+$$
+
+Nesse caso, $\nu$ é o número de componentes normais independentes que contribuem para a soma de quadrados. Considere agora uma amostra $(X_1,\ldots,X_n)$. Os desvios em relação à média amostral satisfazem
+
+$$
+\sum_{i=1}^n(X_i-\overline X)=0.
+$$
+
+Logo, os $n$ desvios não podem variar independentemente: depois que $(n-1)$ deles são determinados, o último fica completamente definido pela restrição acima. Por essa razão, a soma de quadrados
+
+$$
+\sum_{i=1}^n(X_i-\overline X)^2
+$$
+
+possui $(n-1)$ graus de liberdade. No modelo normal,
+
+$$
+\frac{(n-1)S^2}{\sigma^2}
+\sim
+\chi^2_{n-1}.
+$$
+
+De maneira mais geral, os graus de liberdade podem ser interpretados como a dimensão do espaço de variação que resta após a imposição de restrições. Em modelos lineares com $n$ observações e uma matriz de delineamento de posto $p$, por exemplo, os resíduos possuem
+
+$$
+n-p
+$$
+
+graus de liberdade. Em testes da razão de verossimilhanças, os graus de liberdade assintóticos correspondem à diferença entre as dimensões dos modelos irrestrito e restrito.
+
+Essa interpretação deve ser usada com cautela em procedimentos aproximados. No teste de Welch, por exemplo, os graus de liberdade podem não ser inteiros: eles constituem uma aproximação de Satterthwaite utilizada para calibrar uma distribuição (t), e não uma contagem literal de observações independentes [@rice2007mathematical, secs. 6.2--6.3 and 9.5; @chihara2022, sec. 7.1].
 :::
 
 ### Independência entre média e variância
@@ -1065,4 +1109,3 @@ Compare o histograma com as densidades $N(0,1)$ e $t_{14}$.
 22. **Distribuição da estatística de ordem.** Demonstre a fórmula da densidade de $X_{(k)}$ contando as maneiras de obter $k-1$ observações abaixo de $x$, uma observação em $(x,x+dx)$ e $n-k$ observações acima de $x+dx$.
 
 ## Referências {.unnumbered}
-
