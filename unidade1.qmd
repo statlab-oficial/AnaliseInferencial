@@ -294,32 +294,24 @@ Em nosso caso, como a função `rep_sample_n()` usa o gerador de números aleat�
 
 A inferência estatística começa pela distinção entre o mecanismo probabilístico postulado para os dados e a realização efetivamente observada. Antes da coleta, representamos a amostra por um vetor aleatório
 
-$$
-\mathbf{X}=(X_1,\ldots,X_n).
-$$
+$$\mathbf{X}=(X_1,\ldots,X_n).$$
 
 Depois da coleta, os valores observados são escritos como
 
-$$
-\mathbf{x}=(x_1,\ldots,x_n).
-$$
+$$\mathbf{x}=(x_1,\ldots,x_n).$$
 
 A convenção de usar letras maiúsculas para variáveis aleatórias e minúsculas para suas realizações permite separar o procedimento inferencial, definido antes de observar os dados, do resultado numérico obtido em uma amostra particular [@cox2006principles, seção 1.1; @ramachandran2021r, seção 5.2, pp. 180--182].
 
 ::: {.callout-important title="Distinção fundamental"}
 Uma **estatística** é uma função da amostra que não depende de parâmetros desconhecidos:
 
-$$
-T=g(X_1,\ldots,X_n).
-$$
+$$T=g(X_1,\ldots,X_n).$$
 
 Quando uma estatística é utilizada para estimar uma quantidade populacional $\tau(\theta)$, ela recebe o nome de **estimador**. Antes da observação dos dados, o estimador $\widehat\tau=T(\mathbf X)$ é uma variável aleatória.
 
 A **estimativa** é o valor observado do estimador:
 
-$$
-\widehat\tau(\mathbf x)=g(x_1,\ldots,x_n).
-$$
+$$\widehat\tau(\mathbf x)=g(x_1,\ldots,x_n).$$
 
 Assim, o estimador é a regra inferencial; a estimativa é o número produzido pela regra em uma amostra específica [@chihara2022, definição 4.2, p. 79; @ramachandran2021r, seção 5.2, pp. 181--182].
 :::
@@ -338,27 +330,21 @@ O papel inferencial depende do objetivo. Por exemplo, $\overline X$ é sempre um
 
 Considere inicialmente um experimento idealizado no qual cada retirada é realizada **com reposição**, ou de maneira equivalente, no qual os resultados sucessivos podem ser tratados como independentes. Defina
 
-$$
-X_i=
+$$X_i=
 \begin{cases}
 1, & \text{se a }i\text{-ésima bola é vermelha},\\
 0, & \text{se a }i\text{-ésima bola é branca}.
-\end{cases}
-$$
+\end{cases}$$
 
 Se a probabilidade de uma bola vermelha em cada retirada é $p$, então
 
-$$
-X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Bernoulli}(p).
-$$
+$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Bernoulli}(p).$$
 
 O total de bolas vermelhas e a proporção correspondente são
 
-$$
-R=\sum_{i=1}^nX_i
+$$R=\sum_{i=1}^nX_i
 \qquad\text{e}\qquad
-\widehat p=\frac{R}{n}.
-$$
+\widehat p=\frac{R}{n}.$$
 
 Nesse exemplo, $R$ e $\widehat p$ são estatísticas. Quando o objetivo é estimar $p$, a proporção amostral $\widehat p$ funciona como estimador da proporção populacional [@chihara2022, seção 1.5, seção 1.6 e apêndice B.1].
 
@@ -393,21 +379,17 @@ Diferentes estimadores podem ser propostos para o mesmo parâmetro. A escolha en
 
 Para um estimador $\widehat\tau$ de $\tau(\theta)$, o viés e o erro quadrático médio são
 
-$$
-B_\theta(\widehat\tau)
+$$B_\theta(\widehat\tau)
 =
-E_\theta(\widehat\tau)-\tau(\theta)
-$$
+E_\theta(\widehat\tau)-\tau(\theta)$$
 
- e
+e
 
-$$
-\operatorname{EQM}_\theta(\widehat\tau)
+$$\operatorname{EQM}_\theta(\widehat\tau)
 =
 \operatorname{Var}_\theta(\widehat\tau)
 +
-B_\theta(\widehat\tau)^2.
-$$
+B_\theta(\widehat\tau)^2.$$
 
 Esses conceitos são apresentados aqui como um mapa da teoria. Sua análise detalhada, incluindo eficiência, suficiência e resultados de melhoria de estimadores, pertence ao capítulo dedicado à avaliação de estimadores.
 
@@ -415,9 +397,7 @@ Esses conceitos são apresentados aqui como um mapa da teoria. Sua análise deta
 
 O processo gerador de dados de um fenômeno real raramente é conhecido em todos os seus detalhes. A análise começa, portanto, com um **modelo estatístico**: uma família de distribuições que representa os aspectos do mecanismo considerados relevantes para a pergunta científica. Em um modelo paramétrico,
 
-$$
-\mathcal P=\{P_\theta:\theta\in\Theta\},
-$$
+$$\mathcal P=\{P_\theta:\theta\in\Theta\},$$
 
 em que $\theta$ é o parâmetro, ou vetor de parâmetros, e $\Theta$ é o espaço paramétrico. Cada valor de $\theta$ determina uma distribuição possível para os dados. O modelo é uma representação deliberadamente simplificada e sua adequação deve ser examinada no contexto da aplicação [@cox2006principles, seção 1.1; @casella2002statistical, cap. 1].
 
@@ -425,19 +405,15 @@ em que $\theta$ é o parâmetro, ou vetor de parâmetros, e $\Theta$ é o espaç
 
 Suponha que a distribuição conjunta da amostra possua densidade ou função de probabilidade $f_{\mathbf X}(\mathbf x;\theta)$. Depois de observados os dados $\mathbf x$, a **função de verossimilhança** é
 
-$$
-L(\theta;\mathbf x)
+$$L(\theta;\mathbf x)
 =
-f_{\mathbf X}(\mathbf x;\theta),
-$$
+f_{\mathbf X}(\mathbf x;\theta),$$
 
 considerada como função de $\theta$, com $\mathbf x$ fixado. Se as observações forem i.i.d., a densidade conjunta se fatoriza e
 
-$$
-L(\theta;\mathbf x)
+$$L(\theta;\mathbf x)
 =
-\prod_{i=1}^n f(x_i;\theta).
-$$
+\prod_{i=1}^n f(x_i;\theta).$$
 
 A forma em produto é consequência da independência, não parte da definição geral. Além disso, multiplicar $L(\theta;\mathbf x)$ por uma função positiva dos dados que não dependa de $\theta$ não altera as comparações de verossimilhança nem seus maximizadores [@cox2006principles, seção 2.1, pp. 17--18; @casella2002statistical, seção 6.3].
 
@@ -451,60 +427,48 @@ Consequentemente, a verossimilhança não é, em geral, uma distribuição de pr
 
 No modelo de retiradas independentes,
 
-$$
-f(x_i;p)=p^{x_i}(1-p)^{1-x_i},
-\qquad x_i\in\{0,1\}.
-$$
+$$f(x_i;p)=p^{x_i}(1-p)^{1-x_i},
+\qquad x_i\in\{0,1\}.$$
 
 Para uma sequência observada $\mathbf x=(x_1,\ldots,x_n)$, com
 
-$$
-r=\sum_{i=1}^n x_i,
-$$
+$$r=\sum_{i=1}^n x_i,$$
 
 a verossimilhança é
 
-$$
-L(p;\mathbf x)
+$$L(p;\mathbf x)
 =
 p^r(1-p)^{n-r},
-\qquad 0\leq p\leq1.
-$$
+\qquad 0\leq p\leq1.$$
 
 Se apenas o total $R=r$ for registrado, sua função de probabilidade é
 
-$$
-P_p(R=r)
+$$P_p(R=r)
 =
-\binom nr p^r(1-p)^{n-r}.
-$$
+\binom nr p^r(1-p)^{n-r}.$$
 
 O fator $\binom nr$ não depende de $p$. Portanto, a sequência completa e o total de sucessos produzem funções de verossimilhança proporcionais e conduzem ao mesmo estimador de máxima verossimilhança. A dependência dos dados em relação a $p$ ocorre apenas por meio de $r$, antecipando a ideia de redução de dados por suficiência.
 
 Para $0<r<n$, a log-verossimilhança é
 
-$$
-\ell(p)
+$$\ell(p)
 =
-r\log p+(n-r)\log(1-p),
-$$
+r\log p+(n-r)\log(1-p),$$
 
 cujo máximo ocorre em
 
-$$
-\widehat p_{\mathrm{MV}}
+$$\widehat p_{\mathrm{MV}}
 =
-\frac{r}{n}.
-$$
+\frac{r}{n}.$$
 
 O mesmo resultado permanece válido nos casos de fronteira: se $r=0$, então $\widehat p_{\mathrm{MV}}=0$; se $r=n$, então $\widehat p_{\mathrm{MV}}=1$ [@chihara2022, seção 6.1.1, pp. 148--150; @ramachandran2021r, seção 5.3].
 
 ::: {.callout-note title="Três papéis da proporção amostral"}
 No modelo de Bernoulli, $\widehat p=R/n$ é simultaneamente:
 
-1. uma estatística, porque é função da amostra;
-2. um estimador, porque é utilizada para estimar $p$;
-3. o estimador de máxima verossimilhança de $p$.
+1.  uma estatística, porque é função da amostra;
+2.  um estimador, porque é utilizada para estimar $p$;
+3.  o estimador de máxima verossimilhança de $p$.
 
 Os três papéis são conceitualmente distintos, embora sejam desempenhados pela mesma expressão matemática.
 :::
@@ -519,4 +483,3 @@ Os três papéis são conceitualmente distintos, embora sejam desempenhados pela
 6.  Por que as verossimilhanças baseadas na sequência de retiradas e apenas no total $R$ conduzem ao mesmo estimador de $p$?
 
 ## Referências {.unnumbered}
-
