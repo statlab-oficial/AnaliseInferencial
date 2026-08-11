@@ -618,7 +618,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Observe que <code>bowl</code> possui 2400 linhas, o que nos indica que a urna contém 2400 bolas de mesmo tamanho. A primeira variável, <code>ball_ID</code>, é usada como uma variável de identificação, conforme discutido em sala de aula, nenhuma das bolas da urna real possui números marcados. A segunda variável, <code>color</code>, indica se uma determinada bola virtual é <strong>vermelha</strong> ou <strong>branca</strong>. Visualize o conteúdo de <code>bowl</code> no <strong>visualizador de dados do RStudio</strong> e percorra as linhas para se convencer de que <code>bowl</code> é, de fato, um <strong>análogo virtual</strong> da urna real apresentada em sala.</p>
-<p>Agora precisamos de um <strong>análogo virtual da pá</strong> para gerar <strong>amostras virtuais de 50 bolas</strong>. Para isso, vamos utilizar a função <code>rep_sample_n()</code>, incluída no pacote <code>moderndive</code>. Essa função permite realizar <strong>amostragens repetidas (ou replicadas)</strong> de tamanho (n).</p>
+<p>Agora precisamos de um <strong>análogo virtual da pá</strong> para gerar <strong>amostras virtuais de 50 bolas</strong>. Para isso, vamos utilizar a função <code>rep_sample_n()</code>, incluída no pacote <code>moderndive</code>. Essa função permite realizar <strong>amostragens com reposição</strong> de tamanho (n).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2026</span>) <span class="co">#fixando semente</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pa_virtual <span class="ot">&lt;-</span> bowl <span class="sc">%&gt;%</span></span>
@@ -684,7 +684,7 @@ window.Quarto = {
 1         1      16</code></pre>
 </div>
 </div>
-<p>Por que isso funciona? Porque o <code>R</code> trata <code>TRUE</code> como o número 1 e <code>FALSE</code> como o número 0. Assim, somar valores <code>TRUE</code> e <code>FALSE</code> é equivalente a somar 1’s e 0’s. Ao final, essa operação conta o número de bolas para as quais a variável color é igual a “red”. No nosso caso, XX das 50 bolas eram vermelhas. No entanto, você pode ter obtido um número diferente de bolas vermelhas devido ao caráter aleatório da amostragem virtual.</p>
+<p>Por que isso funciona? Porque o <code>R</code> trata <code>TRUE</code> como o número 1 e <code>FALSE</code> como o número 0. Assim, somar valores <code>TRUE</code> e <code>FALSE</code> é equivalente a somar 1’s e 0’s. Ao final, essa operação conta o número de bolas para as quais a variável color é igual a “red”. No nosso caso, 1, 16 das 50 bolas eram vermelhas. No entanto, você pode ter obtido um número diferente de bolas vermelhas devido ao caráter aleatório da amostragem virtual.</p>
 <p>Por fim, vamos calcular a proporção das 50 bolas amostradas que são vermelhas, dividindo num_red por 50:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n_prop_red <span class="ot">&lt;-</span> pa_virtual <span class="sc">%&gt;%</span></span>

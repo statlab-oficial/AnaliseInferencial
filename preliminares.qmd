@@ -9,7 +9,7 @@ As distribuições de estatísticas calculadas em amostras repetidas serão estu
 ## Mapa de dependências teóricas {.unnumbered}
 
 | Resultado preliminar | Utilização nos capítulos posteriores |
-|:--|:--|
+|:-----------------------------------|:-----------------------------------|
 | Somatórios, produtos, logaritmos e diferenciação | verossimilhança, função escore, informação de Fisher e algoritmo EM |
 | Coeficientes binomial e multinomial | modelos Bernoulli, binomial e multinomial; testes exatos; dados categóricos |
 | Vetores, matrizes, formas quadráticas e projeções | parâmetros vetoriais, método delta multivariado, mínimos quadrados, estatísticas de Wald e teorema de Wilks |
@@ -28,44 +28,34 @@ As distribuições de estatísticas calculadas em amostras repetidas serão estu
 
 Para uma sequência $a_1,\ldots,a_n$, utilizaremos
 
-$$
-\sum_{i=1}^n a_i
-=a_1+\cdots+a_n
-$$
+$$\sum_{i=1}^n a_i
+=a_1+\cdots+a_n$$
 
 e
 
-$$
-\prod_{i=1}^n a_i
-=a_1\cdots a_n.
-$$
+$$\prod_{i=1}^n a_i
+=a_1\cdots a_n.$$
 
 A função indicadora de um evento $A$ é
 
-$$
-\mathbf{1}_A(\omega)
+$$\mathbf{1}_A(\omega)
 =
 \begin{cases}
 1, & \omega\in A,\\
 0, & \omega\notin A.
-\end{cases}
-$$
+\end{cases}$$
 
 Ela permite escrever contagens e proporções como somas de variáveis aleatórias. Por exemplo, se $A_i$ representa a ocorrência de sucesso na unidade $i$, então
 
-$$
-R=\sum_{i=1}^n\mathbf{1}_{A_i}
-$$
+$$R=\sum_{i=1}^n\mathbf{1}_{A_i}$$
 
 é o número de sucessos e $R/n$ é a proporção amostral.
 
 A transformação logarítmica converte produtos em somas:
 
-$$
-\log\left(\prod_{i=1}^n a_i\right)
+$$\log\left(\prod_{i=1}^n a_i\right)
 =\sum_{i=1}^n\log a_i,
-\qquad a_i>0.
-$$
+\qquad a_i>0.$$
 
 Essa identidade fundamenta o uso da log-verossimilhança.
 
@@ -73,43 +63,33 @@ Essa identidade fundamenta o uso da log-verossimilhança.
 
 Para inteiros $0\leq k\leq n$, o coeficiente binomial é
 
-$$
-\binom{n}{k}
-=\frac{n!}{k!(n-k)!}.
-$$
+$$\binom{n}{k}
+=\frac{n!}{k!(n-k)!}.$$
 
 Ele conta o número de subconjuntos de tamanho $k$ formados a partir de $n$ elementos. Suas propriedades básicas incluem
 
-$$
-\binom{n}{k}=\binom{n}{n-k}
-$$
+$$\binom{n}{k}=\binom{n}{n-k}$$
 
 e a identidade de Pascal
 
-$$
-\binom{n}{k}
+$$\binom{n}{k}
 =
 \binom{n-1}{k-1}
 +
-\binom{n-1}{k}.
-$$
+\binom{n-1}{k}.$$
 
 O teorema binomial estabelece que
 
-$$
-(x+y)^n
+$$(x+y)^n
 =
 \sum_{k=0}^n
-\binom{n}{k}x^ky^{n-k}.
-$$
+\binom{n}{k}x^ky^{n-k}.$$
 
 Se $k_1+\cdots+k_m=n$, o coeficiente multinomial é
 
-$$
-\binom{n}{k_1,\ldots,k_m}
+$$\binom{n}{k_1,\ldots,k_m}
 =
-\frac{n!}{k_1!\cdots k_m!}.
-$$
+\frac{n!}{k_1!\cdots k_m!}.$$
 
 Esses coeficientes aparecem diretamente nas funções de probabilidade binomial e multinomial [@ramachandran2021r, sec. 3.2.1; @chihara2022, aps. B.1--B.2].
 
@@ -119,32 +99,26 @@ Uma função possuir derivadas de todas as ordens não garante, por si só, que 
 
 Se $g$ possui duas derivadas contínuas em uma vizinhança de $a$, então, para $x$ nessa vizinhança,
 
-$$
-g(x)
+$$g(x)
 =
 g(a)+g'(a)(x-a)
-+\frac{1}{2}g''(\widetilde{x})(x-a)^2,
-$$
++\frac{1}{2}g''(\widetilde{x})(x-a)^2,$$
 
 em que $\widetilde{x}$ está entre $a$ e $x$. Em particular,
 
-$$
-g(x)
+$$g(x)
 =
 g(a)+g'(a)(x-a)+o(|x-a|),
-\qquad x\to a.
-$$
+\qquad x\to a.$$
 
 Para uma função diferenciável $g:\mathbb{R}^k\to\mathbb{R}^m$,
 
-$$
-g(\mathbf{x})
+$$g(\mathbf{x})
 =
 g(\boldsymbol\xi)
 +Dg(\boldsymbol\xi)
 (\mathbf{x}-\boldsymbol\xi)
-+o(\|\mathbf{x}-\boldsymbol\xi\|),
-$$
++o(\|\mathbf{x}-\boldsymbol\xi\|),$$
 
 em que $Dg(\boldsymbol\xi)$ é a matriz jacobiana. Aproximações quadráticas da log-verossimilhança utilizam adicionalmente a matriz hessiana [@lauritzen2023fundamentals, ap. A.3.2].
 
@@ -152,65 +126,51 @@ em que $Dg(\boldsymbol\xi)$ é a matriz jacobiana. Aproximações quadráticas d
 
 Um vetor coluna em $\mathbb{R}^k$ será escrito como
 
-$$
-\mathbf{x}
-=(x_1,\ldots,x_k)^\mathsf{T}.
-$$
+$$\mathbf{x}
+=(x_1,\ldots,x_k)^\mathsf{T}.$$
 
 O produto interno e a norma euclidiana são
 
-$$
-\langle\mathbf{x},\mathbf{y}\rangle
-=\mathbf{x}^\mathsf{T}\mathbf{y}
-$$
+$$\langle\mathbf{x},\mathbf{y}\rangle
+=\mathbf{x}^\mathsf{T}\mathbf{y}$$
 
 e
 
-$$
-\|\mathbf{x}\|
-=\sqrt{\mathbf{x}^\mathsf{T}\mathbf{x}}.
-$$
+$$\|\mathbf{x}\|
+=\sqrt{\mathbf{x}^\mathsf{T}\mathbf{x}}.$$
 
 Uma matriz simétrica $\mathbf{A}$ é **positiva semidefinida** quando
 
-$$
-\mathbf{x}^\mathsf{T}\mathbf{A}\mathbf{x}\geq0
-$$
+$$\mathbf{x}^\mathsf{T}\mathbf{A}\mathbf{x}\geq0$$
 
 para todo $\mathbf{x}$. É **positiva definida** quando a desigualdade é estrita para todo $\mathbf{x}\neq\mathbf{0}$. Matrizes de covariâncias são positivas semidefinidas; matrizes de informação de Fisher regulares são positivas definidas.
 
 Para uma função escalar $q(\boldsymbol\theta)$, o gradiente e a hessiana são
 
-$$
-\nabla q(\boldsymbol\theta)
+$$\nabla q(\boldsymbol\theta)
 =
 \left(
 \frac{\partial q}{\partial\theta_1},
 \ldots,
 \frac{\partial q}{\partial\theta_k}
-\right)^\mathsf{T}
-$$
+\right)^\mathsf{T}$$
 
 e
 
-$$
-\nabla^2q(\boldsymbol\theta)
+$$\nabla^2q(\boldsymbol\theta)
 =
 \left[
 \frac{\partial^2q}
 {\partial\theta_i\partial\theta_j}
-\right]_{i,j=1}^k.
-$$
+\right]_{i,j=1}^k.$$
 
 No método de mínimos quadrados, a matriz
 
-$$
-\mathbf{P}_{\mathbf X}
+$$\mathbf{P}_{\mathbf X}
 =
 \mathbf X
 (\mathbf X^\mathsf{T}\mathbf X)^{-1}
-\mathbf X^\mathsf{T}
-$$
+\mathbf X^\mathsf{T}$$
 
 é a projeção ortogonal sobre o espaço coluna de $\mathbf X$, quando $\mathbf X$ possui posto completo [@lauritzen2023fundamentals, ap. A.1; @rice2007mathematical, secs. 14.3--14.4].
 
@@ -220,27 +180,23 @@ $$
 
 A função de distribuição de uma variável aleatória $X$ é
 
-$$
-F_X(x)=P(X\leq x),
-\qquad x\in\mathbb{R}.
-$$
+$$F_X(x)=P(X\leq x),
+\qquad x\in\mathbb{R}.$$
 
 Toda função de distribuição satisfaz:
 
-1. $F_X$ é não decrescente;
-2. $F_X$ é contínua à direita;
-3. $F_X(x)\to0$ quando $x\to-\infty$;
-4. $F_X(x)\to1$ quando $x\to+\infty$.
+1.  $F_X$ é não decrescente;
+2.  $F_X$ é contínua à direita;
+3.  $F_X(x)\to0$ quando $x\to-\infty$;
+4.  $F_X(x)\to1$ quando $x\to+\infty$.
 
 O suporte é, informalmente, o conjunto de valores em que a distribuição concentra probabilidade. Em modelos paramétricos, é importante verificar se o suporte depende do parâmetro, pois essa dependência pode invalidar resultados regulares de máxima verossimilhança e de Cramér--Rao.
 
 O quantil de ordem $u\in(0,1)$ pode ser definido por
 
-$$
-F_X^{-1}(u)
+$$F_X^{-1}(u)
 =
-\inf\{x:F_X(x)\geq u\}.
-$$
+\inf\{x:F_X(x)\geq u\}.$$
 
 Essa definição funciona também para distribuições discretas [@rice2007mathematical, caps. 1--2; @ramachandran2021r, sec. 3.1].
 
@@ -248,47 +204,35 @@ Essa definição funciona também para distribuições discretas [@rice2007mathe
 
 Uma variável aleatória discreta possui função de probabilidade
 
-$$
-p_X(x)=P(X=x),
-$$
+$$p_X(x)=P(X=x),$$
 
 com
 
-$$
-p_X(x)\geq0
+$$p_X(x)\geq0
 \quad\text{e}\quad
-\sum_xp_X(x)=1.
-$$
+\sum_xp_X(x)=1.$$
 
 Uma variável aleatória é **absolutamente contínua** quando existe uma densidade $f_X$ tal que
 
-$$
-F_X(x)
+$$F_X(x)
 =
-\int_{-\infty}^{x}f_X(t)\,dt,
-$$
+\int_{-\infty}^{x}f_X(t)\,dt,$$
 
 com
 
-$$
-f_X(x)\geq0
+$$f_X(x)\geq0
 \quad\text{e}\quad
-\int_{-\infty}^{\infty}f_X(x)\,dx=1.
-$$
+\int_{-\infty}^{\infty}f_X(x)\,dx=1.$$
 
 Nesse caso,
 
-$$
-P(a<X\leq b)
+$$P(a<X\leq b)
 =
-\int_a^b f_X(x)\,dx
-$$
+\int_a^b f_X(x)\,dx$$
 
 e
 
-$$
-P(X=x)=0
-$$
+$$P(X=x)=0$$
 
 para todo ponto $x$. A probabilidade pontual é nula porque um conjunto unitário possui medida de comprimento zero, e não simplesmente porque a variável assume infinitos valores [@rice2007mathematical, cap. 2; @ramachandran2021r, secs. 3.1--3.2].
 
@@ -296,36 +240,28 @@ para todo ponto $x$. A probabilidade pontual é nula porque um conjunto unitári
 
 Para um vetor aleatório $(X,Y)$, a distribuição conjunta descreve simultaneamente os dois componentes. No caso discreto, a função de probabilidade marginal de $X$ é
 
-$$
-p_X(x)
+$$p_X(x)
 =
-\sum_y p_{X,Y}(x,y).
-$$
+\sum_y p_{X,Y}(x,y).$$
 
 No caso absolutamente contínuo,
 
-$$
-f_X(x)
+$$f_X(x)
 =
 \int_{-\infty}^{\infty}
-f_{X,Y}(x,y)\,dy.
-$$
+f_{X,Y}(x,y)\,dy.$$
 
 Quando $p_Y(y)>0$, a função de probabilidade condicional é
 
-$$
-p_{X\mid Y}(x\mid y)
+$$p_{X\mid Y}(x\mid y)
 =
-\frac{p_{X,Y}(x,y)}{p_Y(y)}.
-$$
+\frac{p_{X,Y}(x,y)}{p_Y(y)}.$$
 
 Analogamente, quando $f_Y(y)>0$,
 
-$$
-f_{X\mid Y}(x\mid y)
+$$f_{X\mid Y}(x\mid y)
 =
-\frac{f_{X,Y}(x,y)}{f_Y(y)}.
-$$
+\frac{f_{X,Y}(x,y)}{f_Y(y)}.$$
 
 Distribuições condicionais sustentam a esperança condicional, o teorema de Rao--Blackwell e a etapa E do algoritmo EM [@rice2007mathematical, secs. 3.2--3.5; @ramachandran2021r, sec. 3.3].
 
@@ -333,29 +269,23 @@ Distribuições condicionais sustentam a esperança condicional, o teorema de Ra
 
 As variáveis aleatórias $X$ e $Y$ são independentes quando
 
-$$
-P(X\in A,Y\in B)
+$$P(X\in A,Y\in B)
 =
-P(X\in A)P(Y\in B)
-$$
+P(X\in A)P(Y\in B)$$
 
 para todos os conjuntos mensuráveis $A$ e $B$. Em modelos dominados, essa condição equivale à fatoração
 
-$$
-f_{X,Y}(x,y)
+$$f_{X,Y}(x,y)
 =
-f_X(x)f_Y(y)
-$$
+f_X(x)f_Y(y)$$
 
 quase sempre.
 
 Se $X$ e $Y$ são independentes e as esperanças existem, então
 
-$$
-E\{g(X)h(Y)\}
+$$E\{g(X)h(Y)\}
 =
-E\{g(X)\}E\{h(Y)\}.
-$$
+E\{g(X)\}E\{h(Y)\}.$$
 
 A recíproca não é verdadeira em geral. Em particular, covariância nula não implica independência, exceto em classes especiais, como a distribuição normal conjunta [@rice2007mathematical, sec. 3.4; @ramachandran2021r, secs. 2.4 e 3.3].
 
@@ -363,46 +293,36 @@ A recíproca não é verdadeira em geral. Em particular, covariância nula não 
 
 Para uma função $g$, a esperança de $g(X)$ é
 
-$$
-E\{g(X)\}
+$$E\{g(X)\}
 =
-\sum_x g(x)p_X(x)
-$$
+\sum_x g(x)p_X(x)$$
 
 no caso discreto, e
 
-$$
-E\{g(X)\}
+$$E\{g(X)\}
 =
 \int_{-\infty}^{\infty}
-g(x)f_X(x)\,dx
-$$
+g(x)f_X(x)\,dx$$
 
 no caso absolutamente contínuo, desde que a soma ou a integral esteja bem definida.
 
 A esperança é linear:
 
-$$
-E\left(
+$$E\left(
 \sum_{i=1}^n a_iX_i+b
 \right)
 =
-\sum_{i=1}^n a_iE(X_i)+b,
-$$
+\sum_{i=1}^n a_iE(X_i)+b,$$
 
 sem necessidade de independência.
 
 O $r$-ésimo momento em torno da origem é
 
-$$
-E(X^r),
-$$
+$$E(X^r),$$
 
 e o $r$-ésimo momento central é
 
-$$
-E\{[X-E(X)]^r\}.
-$$
+$$E\{[X-E(X)]^r\}.$$
 
 Médias, variâncias, assimetria e curtose são casos particulares de momentos [@rice2007mathematical, sec. 4.1; @ramachandran2021r, secs. 3.1 e 3.3].
 
@@ -410,65 +330,53 @@ Médias, variâncias, assimetria e curtose são casos particulares de momentos [
 
 A variância é
 
-$$
-\operatorname{Var}(X)
+$$\operatorname{Var}(X)
 =
 E\{[X-E(X)]^2\}
 =
-E(X^2)-[E(X)]^2.
-$$
+E(X^2)-[E(X)]^2.$$
 
 Para constantes $a$ e $b$,
 
-$$
-\operatorname{Var}(aX+b)
-=a^2\operatorname{Var}(X).
-$$
+$$\operatorname{Var}(aX+b)
+=a^2\operatorname{Var}(X).$$
 
 A covariância entre $X$ e $Y$ é
 
-$$
-\operatorname{Cov}(X,Y)
+$$\operatorname{Cov}(X,Y)
 =
 E\{[X-E(X)][Y-E(Y)]\}
 =
-E(XY)-E(X)E(Y).
-$$
+E(XY)-E(X)E(Y).$$
 
 Para variáveis com segundos momentos finitos,
 
-$$
-\operatorname{Var}
+$$\operatorname{Var}
 \left(
 \sum_{i=1}^n a_iX_i
 \right)
 =
 \sum_{i=1}^n a_i^2\operatorname{Var}(X_i)
 +
-2\sum_{i<j}a_ia_j\operatorname{Cov}(X_i,X_j).
-$$
+2\sum_{i<j}a_ia_j\operatorname{Cov}(X_i,X_j).$$
 
 Se as variáveis são independentes, as covariâncias cruzadas são nulas e
 
-$$
-\operatorname{Var}
+$$\operatorname{Var}
 \left(
 \sum_{i=1}^n a_iX_i
 \right)
 =
-\sum_{i=1}^n a_i^2\operatorname{Var}(X_i).
-$$
+\sum_{i=1}^n a_i^2\operatorname{Var}(X_i).$$
 
 Para um vetor aleatório $\mathbf X$, a matriz de covariâncias é
 
-$$
-\boldsymbol\Sigma
+$$\boldsymbol\Sigma
 =
 E\left[
 (\mathbf X-E\mathbf X)
 (\mathbf X-E\mathbf X)^\mathsf{T}
-\right].
-$$
+\right].$$
 
 Esses resultados são utilizados na distribuição da média, na comparação de estimadores e em modelos lineares [@rice2007mathematical, secs. 4.2--4.3; @ramachandran2021r, sec. 3.3.1].
 
@@ -479,23 +387,19 @@ A esperança condicional $E(X\mid Y)$ é uma variável aleatória mensurável em
 ::: {.callout-important title="Lei da esperança total"}
 Se $E|X|<\infty$, então
 
-$$
-E(X)
+$$E(X)
 =
-E\{E(X\mid Y)\}.
-$$
+E\{E(X\mid Y)\}.$$
 :::
 
 ::: {.callout-important title="Lei da variância total"}
 Se $E(X^2)<\infty$, então
 
-$$
-\operatorname{Var}(X)
+$$\operatorname{Var}(X)
 =
 E\{\operatorname{Var}(X\mid Y)\}
 +
-\operatorname{Var}\{E(X\mid Y)\}.
-$$
+\operatorname{Var}\{E(X\mid Y)\}.$$
 :::
 
 A primeira identidade garante que o condicionamento preserva a média. A segunda decompõe a variabilidade total em uma parcela média interna aos estratos definidos por $Y$ e uma parcela entre esses estratos. Essa decomposição é central no teorema de Rao--Blackwell [@rice2007mathematical, sec. 4.4; @ramachandran2021r, sec. 3.3].
@@ -504,25 +408,21 @@ A primeira identidade garante que o condicionamento preserva a média. A segunda
 
 Se $Y=g(X)$ e $g$ é estritamente monótona e diferenciável, então
 
-$$
-f_Y(y)
+$$f_Y(y)
 =
 f_X\{g^{-1}(y)\}
 \left|
 \frac{d}{dy}g^{-1}(y)
-\right|.
-$$
+\right|.$$
 
 No caso multivariado, se $\mathbf Y=g(\mathbf X)$ é uma transformação bijetiva diferenciável com inversa $\mathbf x=h(\mathbf y)$, então
 
-$$
-f_{\mathbf Y}(\mathbf y)
+$$f_{\mathbf Y}(\mathbf y)
 =
 f_{\mathbf X}\{h(\mathbf y)\}
 \left|
 \det Dh(\mathbf y)
-\right|.
-$$
+\right|.$$
 
 O determinante jacobiano corrige a alteração de volume provocada pela transformação. Esses resultados serão utilizados na obtenção de distribuições de estatísticas e de quantidades pivotais [@rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
 
@@ -530,29 +430,21 @@ O determinante jacobiano corrige a alteração de volume provocada pela transfor
 
 A função geradora de momentos de $X$ é
 
-$$
-M_X(t)=E(e^{tX}),
-$$
+$$M_X(t)=E(e^{tX}),$$
 
 desde que a esperança exista em uma vizinhança de $t=0$. Quando é finita nessa vizinhança,
 
-$$
-M_X^{(r)}(0)=E(X^r).
-$$
+$$M_X^{(r)}(0)=E(X^r).$$
 
 Se $X_1,\ldots,X_n$ são independentes, então
 
-$$
-M_{X_1+\cdots+X_n}(t)
+$$M_{X_1+\cdots+X_n}(t)
 =
-\prod_{i=1}^nM_{X_i}(t).
-$$
+\prod_{i=1}^nM_{X_i}(t).$$
 
 Além disso, se duas funções geradoras existem em uma vizinhança de zero e coincidem nessa vizinhança, elas identificam a mesma distribuição. A função geradora cumulante é
 
-$$
-K_X(t)=\log M_X(t),
-$$
+$$K_X(t)=\log M_X(t),$$
 
 e transforma produtos de funções geradoras em somas. Nem toda distribuição possui função geradora de momentos; quando ela não existe, podem ser utilizadas funções características [@rice2007mathematical, sec. 4.5; @chihara2022, ap. A.8].
 
@@ -565,27 +457,21 @@ Sejam $X_1,X_2,\ldots$ e $X$ variáveis aleatórias.
 ::: {.callout-important title="Convergência quase certa"}
 Dizemos que $X_n\to X$ quase certamente quando
 
-$$
-P\left(
+$$P\left(
 \lim_{n\to\infty}X_n=X
-\right)=1.
-$$
+\right)=1.$$
 :::
 
 ::: {.callout-important title="Convergência em probabilidade"}
 Dizemos que $X_n\xrightarrow{P}X$ quando, para todo $\varepsilon>0$,
 
-$$
-P(|X_n-X|>\varepsilon)\to0.
-$$
+$$P(|X_n-X|>\varepsilon)\to0.$$
 :::
 
 ::: {.callout-important title="Convergência em distribuição"}
 Dizemos que $X_n\xrightarrow{d}X$ quando
 
-$$
-F_{X_n}(x)\to F_X(x)
-$$
+$$F_{X_n}(x)\to F_X(x)$$
 
 em todo ponto de continuidade de $F_X$.
 :::
@@ -596,23 +482,17 @@ A convergência quase certa implica convergência em probabilidade, que implica 
 
 Se
 
-$$
-X_n\xrightarrow{P}X
-$$
+$$X_n\xrightarrow{P}X$$
 
 e $g$ é contínua nos valores assumidos por $X$, então
 
-$$
-g(X_n)\xrightarrow{P}g(X).
-$$
+$$g(X_n)\xrightarrow{P}g(X).$$
 
 A versão correspondente também vale para convergência em distribuição:
 
-$$
-X_n\xrightarrow{d}X
+$$X_n\xrightarrow{d}X
 \quad\Longrightarrow\quad
-g(X_n)\xrightarrow{d}g(X),
-$$
+g(X_n)\xrightarrow{d}g(X),$$
 
 quando $g$ é contínua com probabilidade um sob a distribuição limite [@lauritzen2023fundamentals, teorema A.11].
 
@@ -620,29 +500,21 @@ quando $g$ é contínua com probabilidade um sob a distribuição limite [@lauri
 
 Se
 
-$$
-X_n\xrightarrow{d}X
+$$X_n\xrightarrow{d}X
 \quad\text{e}\quad
-Y_n\xrightarrow{P}c,
-$$
+Y_n\xrightarrow{P}c,$$
 
 em que $c$ é constante, então
 
-$$
-X_n+Y_n\xrightarrow{d}X+c,
-$$
+$$X_n+Y_n\xrightarrow{d}X+c,$$
 
-$$
-X_nY_n\xrightarrow{d}cX
-$$
+$$X_nY_n\xrightarrow{d}cX$$
 
 e, se $c\neq0$,
 
-$$
-\frac{X_n}{Y_n}
+$$\frac{X_n}{Y_n}
 \xrightarrow{d}
-\frac{X}{c}.
-$$
+\frac{X}{c}.$$
 
 Esse lema justifica substituir parâmetros desconhecidos por estimadores consistentes em estatísticas assintóticas [@lauritzen2023fundamentals, corolário A.12].
 
@@ -650,19 +522,15 @@ Esse lema justifica substituir parâmetros desconhecidos por estimadores consist
 
 Se $X_1,X_2,\ldots$ são i.i.d. com
 
-$$
-E|X_1|<\infty,
-$$
+$$E|X_1|<\infty,$$
 
 então
 
-$$
-\overline X_n
+$$\overline X_n
 =
 \frac{1}{n}\sum_{i=1}^nX_i
 \xrightarrow{P}
-E(X_1).
-$$
+E(X_1).$$
 
 A Lei dos Grandes Números explica por que médias amostrais e momentos empíricos aproximam seus correspondentes populacionais. Ela é uma das bases da consistência do método dos momentos e de muitos estimadores definidos por médias empíricas [@rice2007mathematical, sec. 5.2; @ramachandran2021r, sec. 3.5].
 
@@ -670,21 +538,17 @@ A Lei dos Grandes Números explica por que médias amostrais e momentos empíric
 
 Se $X_1,X_2,\ldots$ são i.i.d. com
 
-$$
-E(X_1)=\mu
+$$E(X_1)=\mu
 \quad\text{e}\quad
-0<\operatorname{Var}(X_1)=\sigma^2<\infty,
-$$
+0<\operatorname{Var}(X_1)=\sigma^2<\infty,$$
 
 então
 
-$$
-\frac{
+$$\frac{
 \sqrt n(\overline X_n-\mu)
 }{\sigma}
 \xrightarrow{d}
-N(0,1).
-$$
+N(0,1).$$
 
 O resultado fornece uma aproximação normal para médias e somas, mesmo quando a distribuição das observações não é normal. Ele não afirma que as observações individuais se tornam normais e não garante boa aproximação para todo $n$; assimetria intensa e caudas pesadas podem exigir amostras maiores [@rice2007mathematical, sec. 5.3; @ramachandran2021r, sec. 3.5; @chihara2022, sec. 4.3].
 
@@ -692,58 +556,47 @@ O resultado fornece uma aproximação normal para médias e somas, mesmo quando 
 
 Suponha que
 
-$$
-\sqrt n(T_n-\theta)
+$$\sqrt n(T_n-\theta)
 \xrightarrow{d}
-N(0,\tau^2)
-$$
+N(0,\tau^2)$$
 
 e que $g$ seja diferenciável em $\theta$. Então
 
-$$
-\sqrt n\{g(T_n)-g(\theta)\}
+$$\sqrt n\{g(T_n)-g(\theta)\}
 \xrightarrow{d}
 N\left(
 0,
 [g'(\theta)]^2\tau^2
-\right).
-$$
+\right).$$
 
 Se $g'(\theta)=0$, o resultado de primeira ordem é degenerado e pode ser necessário utilizar uma expansão de ordem superior.
 
 ::: {.callout-tip title="Exemplo"}
 Se
 
-$$
-\sqrt n(\overline X_n-\mu)
+$$\sqrt n(\overline X_n-\mu)
 \xrightarrow{d}
-N(0,\sigma^2)
-$$
+N(0,\sigma^2)$$
 
 e $g(x)=e^x$, então
 
-$$
-\sqrt n\{e^{\overline X_n}-e^\mu\}
+$$\sqrt n\{e^{\overline X_n}-e^\mu\}
 \xrightarrow{d}
-N\left(0,e^{2\mu}\sigma^2\right).
-$$
+N\left(0,e^{2\mu}\sigma^2\right).$$
 :::
 
 ### Método delta multivariado {.unnumbered}
 
 Se
 
-$$
-\sqrt n
+$$\sqrt n
 (\mathbf T_n-\boldsymbol\theta)
 \xrightarrow{d}
-N_k(\mathbf0,\boldsymbol\Sigma)
-$$
+N_k(\mathbf0,\boldsymbol\Sigma)$$
 
 e $g:\mathbb R^k\to\mathbb R^m$ é diferenciável em $\boldsymbol\theta$, então
 
-$$
-\sqrt n
+$$\sqrt n
 \{g(\mathbf T_n)-g(\boldsymbol\theta)\}
 \xrightarrow{d}
 N_m\left[
@@ -751,8 +604,7 @@ N_m\left[
 Dg(\boldsymbol\theta)
 \boldsymbol\Sigma
 Dg(\boldsymbol\theta)^\mathsf{T}
-\right].
-$$
+\right].$$
 
 O método delta sustenta a construção de erros-padrão para funções de parâmetros e diversos intervalos de Wald [@lauritzen2023fundamentals, teorema A.19; @chihara2022, sec. 7.7].
 
@@ -760,21 +612,15 @@ O método delta sustenta a construção de erros-padrão para funções de parâ
 
 Nos desenvolvimentos assintóticos avançados, escreveremos
 
-$$
-X_n=o_P(a_n)
-$$
+$$X_n=o_P(a_n)$$
 
 quando $X_n/a_n\xrightarrow{P}0$, e
 
-$$
-X_n=O_P(a_n)
-$$
+$$X_n=O_P(a_n)$$
 
 quando $X_n/a_n$ é limitado em probabilidade. Em particular,
 
-$$
-T_n-\theta=O_P(n^{-1/2})
-$$
+$$T_n-\theta=O_P(n^{-1/2})$$
 
 indica que o erro do estimador possui ordem probabilística $n^{-1/2}$. Essa notação torna concisas as expansões de Taylor da função escore e da log-verossimilhança [@lauritzen2023fundamentals, sec. 5.5 e ap. A.2].
 
@@ -785,7 +631,7 @@ As parametrizações devem ser verificadas em cada aplicação. Em particular, a
 ### Distribuições discretas essenciais {.unnumbered}
 
 | Distribuição | Função de probabilidade | Esperança | Variância |
-|:--|:--|:--:|:--:|
+|:----------------|:----------------|:-----------------:|:-----------------:|
 | Bernoulli$(p)$ | $p^x(1-p)^{1-x}$, $x\in\{0,1\}$ | $p$ | $p(1-p)$ |
 | Binomial$(n,p)$ | $\binom nxp^x(1-p)^{n-x}$ | $np$ | $np(1-p)$ |
 | Poisson$(\lambda)$ | $e^{-\lambda}\lambda^x/x!$ | $\lambda$ | $\lambda$ |
@@ -793,38 +639,28 @@ As parametrizações devem ser verificadas em cada aplicação. Em particular, a
 
 Para a distribuição multinomial, se
 
-$$
-(X_1,\ldots,X_m)
+$$(X_1,\ldots,X_m)
 \sim
 \operatorname{Multinomial}
-(n;p_1,\ldots,p_m),
-$$
+(n;p_1,\ldots,p_m),$$
 
 com $\sum_jp_j=1$, então
 
-$$
-P(X_1=x_1,\ldots,X_m=x_m)
+$$P(X_1=x_1,\ldots,X_m=x_m)
 =
 \frac{n!}{x_1!\cdots x_m!}
-\prod_{j=1}^m p_j^{x_j},
-$$
+\prod_{j=1}^m p_j^{x_j},$$
 
 para $\sum_jx_j=n$. Além disso,
 
-$$
-E(X_j)=np_j,
-$$
+$$E(X_j)=np_j,$$
 
-$$
-\operatorname{Var}(X_j)=np_j(1-p_j)
-$$
+$$\operatorname{Var}(X_j)=np_j(1-p_j)$$
 
 e
 
-$$
-\operatorname{Cov}(X_j,X_k)=-np_jp_k,
-\qquad j\neq k.
-$$
+$$\operatorname{Cov}(X_j,X_k)=-np_jp_k,
+\qquad j\neq k.$$
 
 A distribuição hipergeométrica, e não a binomial, é o modelo exato para amostragem sem reposição em população finita [@ramachandran2021r, secs. 3.2.1--3.2.4; @chihara2022, aps. B.1--B.6].
 
@@ -834,23 +670,17 @@ A distribuição hipergeométrica, e não a binomial, é o modelo exato para amo
 
 Se $X\sim\operatorname{Unif}(a,b)$, então
 
-$$
-f(x)
+$$f(x)
 =
-\frac{1}{b-a}\mathbf1_{[a,b]}(x),
-$$
+\frac{1}{b-a}\mathbf1_{[a,b]}(x),$$
 
-$$
-E(X)=\frac{a+b}{2}
-$$
+$$E(X)=\frac{a+b}{2}$$
 
 e
 
-$$
-\operatorname{Var}(X)
+$$\operatorname{Var}(X)
 =
-\frac{(b-a)^2}{12}.
-$$
+\frac{(b-a)^2}{12}.$$
 
 Modelos uniformes com extremo desconhecido são exemplos importantes de modelos não regulares, porque o suporte depende do parâmetro.
 
@@ -858,24 +688,20 @@ Modelos uniformes com extremo desconhecido são exemplos importantes de modelos 
 
 Se $X\sim N(\mu,\sigma^2)$, então
 
-$$
-f(x)
+$$f(x)
 =
 \frac{1}{\sqrt{2\pi\sigma^2}}
 \exp\left[
 -\frac{(x-\mu)^2}{2\sigma^2}
-\right].
-$$
+\right].$$
 
 Sua função geradora de momentos é
 
-$$
-M_X(t)
+$$M_X(t)
 =
 \exp\left(
 \mu t+\frac{\sigma^2t^2}{2}
-\right).
-$$
+\right).$$
 
 Combinações lineares de variáveis normais independentes são normais. No caso multivariado, a média e a matriz de covariâncias determinam completamente a distribuição.
 
@@ -883,24 +709,18 @@ Combinações lineares de variáveis normais independentes são normais. No caso
 
 Se $X\sim\operatorname{Exp}(\lambda)$, com taxa $\lambda>0$, então
 
-$$
-f(x)
+$$f(x)
 =
 \lambda e^{-\lambda x}
-\mathbf1_{[0,\infty)}(x),
-$$
+\mathbf1_{[0,\infty)}(x),$$
 
-$$
-E(X)=\frac{1}{\lambda}
-$$
+$$E(X)=\frac{1}{\lambda}$$
 
 e
 
-$$
-\operatorname{Var}(X)
+$$\operatorname{Var}(X)
 =
-\frac{1}{\lambda^2}.
-$$
+\frac{1}{\lambda^2}.$$
 
 A distribuição exponencial possui a propriedade de falta de memória.
 
@@ -908,35 +728,27 @@ A distribuição exponencial possui a propriedade de falta de memória.
 
 Se $X\sim\operatorname{Gama}(\alpha,\text{taxa }\lambda)$, então
 
-$$
-f(x)
+$$f(x)
 =
 \frac{\lambda^\alpha}{\Gamma(\alpha)}
 x^{\alpha-1}e^{-\lambda x}
-\mathbf1_{(0,\infty)}(x),
-$$
+\mathbf1_{(0,\infty)}(x),$$
 
-$$
-E(X)=\frac{\alpha}{\lambda}
-$$
+$$E(X)=\frac{\alpha}{\lambda}$$
 
 e
 
-$$
-\operatorname{Var}(X)
+$$\operatorname{Var}(X)
 =
-\frac{\alpha}{\lambda^2}.
-$$
+\frac{\alpha}{\lambda^2}.$$
 
 A função gama é
 
-$$
-\Gamma(\alpha)
+$$\Gamma(\alpha)
 =
 \int_0^\infty
 x^{\alpha-1}e^{-x}\,dx,
-\qquad \alpha>0.
-$$
+\qquad \alpha>0.$$
 
 A exponencial é o caso particular $\alpha=1$.
 
@@ -944,37 +756,29 @@ A exponencial é o caso particular $\alpha=1$.
 
 Se $X\sim\operatorname{Beta}(\alpha,\beta)$, então
 
-$$
-f(x)
+$$f(x)
 =
 \frac{x^{\alpha-1}(1-x)^{\beta-1}}
 {B(\alpha,\beta)}
-\mathbf1_{(0,1)}(x),
-$$
+\mathbf1_{(0,1)}(x),$$
 
 em que
 
-$$
-B(\alpha,\beta)
+$$B(\alpha,\beta)
 =
 \frac{\Gamma(\alpha)\Gamma(\beta)}
-{\Gamma(\alpha+\beta)}.
-$$
+{\Gamma(\alpha+\beta)}.$$
 
 Além disso,
 
-$$
-E(X)=\frac{\alpha}{\alpha+\beta}
-$$
+$$E(X)=\frac{\alpha}{\alpha+\beta}$$
 
 e
 
-$$
-\operatorname{Var}(X)
+$$\operatorname{Var}(X)
 =
 \frac{\alpha\beta}
-{(\alpha+\beta)^2(\alpha+\beta+1)}.
-$$
+{(\alpha+\beta)^2(\alpha+\beta+1)}.$$
 
 A distribuição beta aparece em modelos bayesianos para proporções, em estatísticas de ordem e em intervalos binomiais exatos [@rice2007mathematical, sec. 2.2; @ramachandran2021r, sec. 3.2; @chihara2022, aps. B.7--B.12].
 
@@ -982,40 +786,32 @@ A distribuição beta aparece em modelos bayesianos para proporções, em estat�
 
 Se $Z_1,\ldots,Z_\nu$ são independentes e $N(0,1)$, então
 
-$$
-U=\sum_{i=1}^\nu Z_i^2
-\sim\chi^2_\nu.
-$$
+$$U=\sum_{i=1}^\nu Z_i^2
+\sim\chi^2_\nu.$$
 
 A distribuição qui-quadrado é um caso particular da distribuição gama:
 
-$$
-\chi^2_\nu
+$$\chi^2_\nu
 =
 \operatorname{Gama}
 \left(
 \frac{\nu}{2},
 \text{taxa }\frac12
-\right).
-$$
+\right).$$
 
 Se $Z\sim N(0,1)$ e $U\sim\chi^2_\nu$ são independentes, então
 
-$$
-T
+$$T
 =
 \frac{Z}{\sqrt{U/\nu}}
-\sim t_\nu.
-$$
+\sim t_\nu.$$
 
 Se $U_1\sim\chi^2_{\nu_1}$ e $U_2\sim\chi^2_{\nu_2}$ são independentes, então
 
-$$
-F
+$$F
 =
 \frac{U_1/\nu_1}{U_2/\nu_2}
-\sim F_{\nu_1,\nu_2}.
-$$
+\sim F_{\nu_1,\nu_2}.$$
 
 Essas três distribuições sustentam a inferência exata para médias e variâncias no modelo normal [@rice2007mathematical, cap. 6; @larsen2012, cap. 7; @chihara2022, aps. B.10--B.13].
 
@@ -1023,9 +819,9 @@ Essas três distribuições sustentam a inferência exata para médias e variân
 
 Os resultados preliminares essenciais podem ser organizados em três camadas:
 
-1. **ferramentas matemáticas:** combinatória, cálculo diferencial e álgebra linear;
-2. **estrutura probabilística:** distribuições, independência, esperança, variância, condicionamento e transformações;
-3. **estrutura assintótica:** convergência, mapeamento contínuo, Slutsky, Lei dos Grandes Números, Teorema Central do Limite e método delta.
+1.  **ferramentas matemáticas:** combinatória, cálculo diferencial e álgebra linear;
+2.  **estrutura probabilística:** distribuições, independência, esperança, variância, condicionamento e transformações;
+3.  **estrutura assintótica:** convergência, mapeamento contínuo, Slutsky, Lei dos Grandes Números, Teorema Central do Limite e método delta.
 
 Essa base permite que os capítulos seguintes se concentrem nos problemas inferenciais, sem repetir demonstrações elementares nem utilizar resultados assintóticos sem enunciar suas condições.
 

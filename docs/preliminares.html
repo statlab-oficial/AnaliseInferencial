@@ -555,148 +555,108 @@ window.Quarto = {
 <section id="somatórios-produtos-e-funções-indicadoras" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="somatórios-produtos-e-funções-indicadoras">Somatórios, produtos e funções indicadoras</h3>
 <p>Para uma sequência <span class="math inline">\(a_1,\ldots,a_n\)</span>, utilizaremos</p>
-<p><span class="math display">\[
-\sum_{i=1}^n a_i
-=a_1+\cdots+a_n
-\]</span></p>
+<p><span class="math display">\[\sum_{i=1}^n a_i
+=a_1+\cdots+a_n\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\prod_{i=1}^n a_i
-=a_1\cdots a_n.
-\]</span></p>
+<p><span class="math display">\[\prod_{i=1}^n a_i
+=a_1\cdots a_n.\]</span></p>
 <p>A função indicadora de um evento <span class="math inline">\(A\)</span> é</p>
-<p><span class="math display">\[
-\mathbf{1}_A(\omega)
+<p><span class="math display">\[\mathbf{1}_A(\omega)
 =
 \begin{cases}
 1, &amp; \omega\in A,\\
 0, &amp; \omega\notin A.
-\end{cases}
-\]</span></p>
+\end{cases}\]</span></p>
 <p>Ela permite escrever contagens e proporções como somas de variáveis aleatórias. Por exemplo, se <span class="math inline">\(A_i\)</span> representa a ocorrência de sucesso na unidade <span class="math inline">\(i\)</span>, então</p>
-<p><span class="math display">\[
-R=\sum_{i=1}^n\mathbf{1}_{A_i}
-\]</span></p>
+<p><span class="math display">\[R=\sum_{i=1}^n\mathbf{1}_{A_i}\]</span></p>
 <p>é o número de sucessos e <span class="math inline">\(R/n\)</span> é a proporção amostral.</p>
 <p>A transformação logarítmica converte produtos em somas:</p>
-<p><span class="math display">\[
-\log\left(\prod_{i=1}^n a_i\right)
+<p><span class="math display">\[\log\left(\prod_{i=1}^n a_i\right)
 =\sum_{i=1}^n\log a_i,
-\qquad a_i&gt;0.
-\]</span></p>
+\qquad a_i&gt;0.\]</span></p>
 <p>Essa identidade fundamenta o uso da log-verossimilhança.</p>
 </section>
 <section id="coeficientes-binomial-e-multinomial" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="coeficientes-binomial-e-multinomial">Coeficientes binomial e multinomial</h3>
 <p>Para inteiros <span class="math inline">\(0\leq k\leq n\)</span>, o coeficiente binomial é</p>
-<p><span class="math display">\[
-\binom{n}{k}
-=\frac{n!}{k!(n-k)!}.
-\]</span></p>
+<p><span class="math display">\[\binom{n}{k}
+=\frac{n!}{k!(n-k)!}.\]</span></p>
 <p>Ele conta o número de subconjuntos de tamanho <span class="math inline">\(k\)</span> formados a partir de <span class="math inline">\(n\)</span> elementos. Suas propriedades básicas incluem</p>
-<p><span class="math display">\[
-\binom{n}{k}=\binom{n}{n-k}
-\]</span></p>
+<p><span class="math display">\[\binom{n}{k}=\binom{n}{n-k}\]</span></p>
 <p>e a identidade de Pascal</p>
-<p><span class="math display">\[
-\binom{n}{k}
+<p><span class="math display">\[\binom{n}{k}
 =
 \binom{n-1}{k-1}
 +
-\binom{n-1}{k}.
-\]</span></p>
+\binom{n-1}{k}.\]</span></p>
 <p>O teorema binomial estabelece que</p>
-<p><span class="math display">\[
-(x+y)^n
+<p><span class="math display">\[(x+y)^n
 =
 \sum_{k=0}^n
-\binom{n}{k}x^ky^{n-k}.
-\]</span></p>
+\binom{n}{k}x^ky^{n-k}.\]</span></p>
 <p>Se <span class="math inline">\(k_1+\cdots+k_m=n\)</span>, o coeficiente multinomial é</p>
-<p><span class="math display">\[
-\binom{n}{k_1,\ldots,k_m}
+<p><span class="math display">\[\binom{n}{k_1,\ldots,k_m}
 =
-\frac{n!}{k_1!\cdots k_m!}.
-\]</span></p>
+\frac{n!}{k_1!\cdots k_m!}.\]</span></p>
 <p>Esses coeficientes aparecem diretamente nas funções de probabilidade binomial e multinomial <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.2.1; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, aps. B.1–B.2)</span>.</p>
 </section>
 <section id="fórmula-de-taylor" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="fórmula-de-taylor">Fórmula de Taylor</h3>
 <p>Uma função possuir derivadas de todas as ordens não garante, por si só, que ela seja igual à sua série de Taylor. O resultado utilizado na inferência é a <strong>aproximação de Taylor com termo de resto</strong>.</p>
 <p>Se <span class="math inline">\(g\)</span> possui duas derivadas contínuas em uma vizinhança de <span class="math inline">\(a\)</span>, então, para <span class="math inline">\(x\)</span> nessa vizinhança,</p>
-<p><span class="math display">\[
-g(x)
+<p><span class="math display">\[g(x)
 =
 g(a)+g'(a)(x-a)
-+\frac{1}{2}g''(\widetilde{x})(x-a)^2,
-\]</span></p>
++\frac{1}{2}g''(\widetilde{x})(x-a)^2,\]</span></p>
 <p>em que <span class="math inline">\(\widetilde{x}\)</span> está entre <span class="math inline">\(a\)</span> e <span class="math inline">\(x\)</span>. Em particular,</p>
-<p><span class="math display">\[
-g(x)
+<p><span class="math display">\[g(x)
 =
 g(a)+g'(a)(x-a)+o(|x-a|),
-\qquad x\to a.
-\]</span></p>
+\qquad x\to a.\]</span></p>
 <p>Para uma função diferenciável <span class="math inline">\(g:\mathbb{R}^k\to\mathbb{R}^m\)</span>,</p>
-<p><span class="math display">\[
-g(\mathbf{x})
+<p><span class="math display">\[g(\mathbf{x})
 =
 g(\boldsymbol\xi)
 +Dg(\boldsymbol\xi)
 (\mathbf{x}-\boldsymbol\xi)
-+o(\|\mathbf{x}-\boldsymbol\xi\|),
-\]</span></p>
++o(\|\mathbf{x}-\boldsymbol\xi\|),\]</span></p>
 <p>em que <span class="math inline">\(Dg(\boldsymbol\xi)\)</span> é a matriz jacobiana. Aproximações quadráticas da log-verossimilhança utilizam adicionalmente a matriz hessiana <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ap. A.3.2)</span>.</p>
 </section>
 <section id="vetores-matrizes-e-formas-quadráticas" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="vetores-matrizes-e-formas-quadráticas">Vetores, matrizes e formas quadráticas</h3>
 <p>Um vetor coluna em <span class="math inline">\(\mathbb{R}^k\)</span> será escrito como</p>
-<p><span class="math display">\[
-\mathbf{x}
-=(x_1,\ldots,x_k)^\mathsf{T}.
-\]</span></p>
+<p><span class="math display">\[\mathbf{x}
+=(x_1,\ldots,x_k)^\mathsf{T}.\]</span></p>
 <p>O produto interno e a norma euclidiana são</p>
-<p><span class="math display">\[
-\langle\mathbf{x},\mathbf{y}\rangle
-=\mathbf{x}^\mathsf{T}\mathbf{y}
-\]</span></p>
+<p><span class="math display">\[\langle\mathbf{x},\mathbf{y}\rangle
+=\mathbf{x}^\mathsf{T}\mathbf{y}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\|\mathbf{x}\|
-=\sqrt{\mathbf{x}^\mathsf{T}\mathbf{x}}.
-\]</span></p>
+<p><span class="math display">\[\|\mathbf{x}\|
+=\sqrt{\mathbf{x}^\mathsf{T}\mathbf{x}}.\]</span></p>
 <p>Uma matriz simétrica <span class="math inline">\(\mathbf{A}\)</span> é <strong>positiva semidefinida</strong> quando</p>
-<p><span class="math display">\[
-\mathbf{x}^\mathsf{T}\mathbf{A}\mathbf{x}\geq0
-\]</span></p>
+<p><span class="math display">\[\mathbf{x}^\mathsf{T}\mathbf{A}\mathbf{x}\geq0\]</span></p>
 <p>para todo <span class="math inline">\(\mathbf{x}\)</span>. É <strong>positiva definida</strong> quando a desigualdade é estrita para todo <span class="math inline">\(\mathbf{x}\neq\mathbf{0}\)</span>. Matrizes de covariâncias são positivas semidefinidas; matrizes de informação de Fisher regulares são positivas definidas.</p>
 <p>Para uma função escalar <span class="math inline">\(q(\boldsymbol\theta)\)</span>, o gradiente e a hessiana são</p>
-<p><span class="math display">\[
-\nabla q(\boldsymbol\theta)
+<p><span class="math display">\[\nabla q(\boldsymbol\theta)
 =
 \left(
 \frac{\partial q}{\partial\theta_1},
 \ldots,
 \frac{\partial q}{\partial\theta_k}
-\right)^\mathsf{T}
-\]</span></p>
+\right)^\mathsf{T}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\nabla^2q(\boldsymbol\theta)
+<p><span class="math display">\[\nabla^2q(\boldsymbol\theta)
 =
 \left[
 \frac{\partial^2q}
 {\partial\theta_i\partial\theta_j}
-\right]_{i,j=1}^k.
-\]</span></p>
+\right]_{i,j=1}^k.\]</span></p>
 <p>No método de mínimos quadrados, a matriz</p>
-<p><span class="math display">\[
-\mathbf{P}_{\mathbf X}
+<p><span class="math display">\[\mathbf{P}_{\mathbf X}
 =
 \mathbf X
 (\mathbf X^\mathsf{T}\mathbf X)^{-1}
-\mathbf X^\mathsf{T}
-\]</span></p>
+\mathbf X^\mathsf{T}\]</span></p>
 <p>é a projeção ortogonal sobre o espaço coluna de <span class="math inline">\(\mathbf X\)</span>, quando <span class="math inline">\(\mathbf X\)</span> possui posto completo <span class="citation" data-cites="lauritzen2023fundamentals rice2007mathematical">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ap. A.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 14.3–14.4)</span>.</p>
 </section>
 </section>
@@ -705,10 +665,8 @@ g(\boldsymbol\xi)
 <section id="função-de-distribuição-suporte-e-quantis" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="função-de-distribuição-suporte-e-quantis">Função de distribuição, suporte e quantis</h3>
 <p>A função de distribuição de uma variável aleatória <span class="math inline">\(X\)</span> é</p>
-<p><span class="math display">\[
-F_X(x)=P(X\leq x),
-\qquad x\in\mathbb{R}.
-\]</span></p>
+<p><span class="math display">\[F_X(x)=P(X\leq x),
+\qquad x\in\mathbb{R}.\]</span></p>
 <p>Toda função de distribuição satisfaz:</p>
 <ol type="1">
 <li><span class="math inline">\(F_X\)</span> é não decrescente;</li>
@@ -718,188 +676,138 @@ F_X(x)=P(X\leq x),
 </ol>
 <p>O suporte é, informalmente, o conjunto de valores em que a distribuição concentra probabilidade. Em modelos paramétricos, é importante verificar se o suporte depende do parâmetro, pois essa dependência pode invalidar resultados regulares de máxima verossimilhança e de Cramér–Rao.</p>
 <p>O quantil de ordem <span class="math inline">\(u\in(0,1)\)</span> pode ser definido por</p>
-<p><span class="math display">\[
-F_X^{-1}(u)
+<p><span class="math display">\[F_X^{-1}(u)
 =
-\inf\{x:F_X(x)\geq u\}.
-\]</span></p>
+\inf\{x:F_X(x)\geq u\}.\]</span></p>
 <p>Essa definição funciona também para distribuições discretas <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, caps. 1–2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.1)</span>.</p>
 </section>
 <section id="variáveis-discretas-e-absolutamente-contínuas" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="variáveis-discretas-e-absolutamente-contínuas">Variáveis discretas e absolutamente contínuas</h3>
 <p>Uma variável aleatória discreta possui função de probabilidade</p>
-<p><span class="math display">\[
-p_X(x)=P(X=x),
-\]</span></p>
+<p><span class="math display">\[p_X(x)=P(X=x),\]</span></p>
 <p>com</p>
-<p><span class="math display">\[
-p_X(x)\geq0
+<p><span class="math display">\[p_X(x)\geq0
 \quad\text{e}\quad
-\sum_xp_X(x)=1.
-\]</span></p>
+\sum_xp_X(x)=1.\]</span></p>
 <p>Uma variável aleatória é <strong>absolutamente contínua</strong> quando existe uma densidade <span class="math inline">\(f_X\)</span> tal que</p>
-<p><span class="math display">\[
-F_X(x)
+<p><span class="math display">\[F_X(x)
 =
-\int_{-\infty}^{x}f_X(t)\,dt,
-\]</span></p>
+\int_{-\infty}^{x}f_X(t)\,dt,\]</span></p>
 <p>com</p>
-<p><span class="math display">\[
-f_X(x)\geq0
+<p><span class="math display">\[f_X(x)\geq0
 \quad\text{e}\quad
-\int_{-\infty}^{\infty}f_X(x)\,dx=1.
-\]</span></p>
+\int_{-\infty}^{\infty}f_X(x)\,dx=1.\]</span></p>
 <p>Nesse caso,</p>
-<p><span class="math display">\[
-P(a&lt;X\leq b)
+<p><span class="math display">\[P(a&lt;X\leq b)
 =
-\int_a^b f_X(x)\,dx
-\]</span></p>
+\int_a^b f_X(x)\,dx\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-P(X=x)=0
-\]</span></p>
+<p><span class="math display">\[P(X=x)=0\]</span></p>
 <p>para todo ponto <span class="math inline">\(x\)</span>. A probabilidade pontual é nula porque um conjunto unitário possui medida de comprimento zero, e não simplesmente porque a variável assume infinitos valores <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 2</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1–3.2)</span>.</p>
 </section>
 <section id="distribuições-conjuntas-marginais-e-condicionais" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="distribuições-conjuntas-marginais-e-condicionais">Distribuições conjuntas, marginais e condicionais</h3>
 <p>Para um vetor aleatório <span class="math inline">\((X,Y)\)</span>, a distribuição conjunta descreve simultaneamente os dois componentes. No caso discreto, a função de probabilidade marginal de <span class="math inline">\(X\)</span> é</p>
-<p><span class="math display">\[
-p_X(x)
+<p><span class="math display">\[p_X(x)
 =
-\sum_y p_{X,Y}(x,y).
-\]</span></p>
+\sum_y p_{X,Y}(x,y).\]</span></p>
 <p>No caso absolutamente contínuo,</p>
-<p><span class="math display">\[
-f_X(x)
+<p><span class="math display">\[f_X(x)
 =
 \int_{-\infty}^{\infty}
-f_{X,Y}(x,y)\,dy.
-\]</span></p>
+f_{X,Y}(x,y)\,dy.\]</span></p>
 <p>Quando <span class="math inline">\(p_Y(y)&gt;0\)</span>, a função de probabilidade condicional é</p>
-<p><span class="math display">\[
-p_{X\mid Y}(x\mid y)
+<p><span class="math display">\[p_{X\mid Y}(x\mid y)
 =
-\frac{p_{X,Y}(x,y)}{p_Y(y)}.
-\]</span></p>
+\frac{p_{X,Y}(x,y)}{p_Y(y)}.\]</span></p>
 <p>Analogamente, quando <span class="math inline">\(f_Y(y)&gt;0\)</span>,</p>
-<p><span class="math display">\[
-f_{X\mid Y}(x\mid y)
+<p><span class="math display">\[f_{X\mid Y}(x\mid y)
 =
-\frac{f_{X,Y}(x,y)}{f_Y(y)}.
-\]</span></p>
+\frac{f_{X,Y}(x,y)}{f_Y(y)}.\]</span></p>
 <p>Distribuições condicionais sustentam a esperança condicional, o teorema de Rao–Blackwell e a etapa E do algoritmo EM <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 3.2–3.5; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.3)</span>.</p>
 </section>
 <section id="independência" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="independência">Independência</h3>
 <p>As variáveis aleatórias <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes quando</p>
-<p><span class="math display">\[
-P(X\in A,Y\in B)
+<p><span class="math display">\[P(X\in A,Y\in B)
 =
-P(X\in A)P(Y\in B)
-\]</span></p>
+P(X\in A)P(Y\in B)\]</span></p>
 <p>para todos os conjuntos mensuráveis <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>. Em modelos dominados, essa condição equivale à fatoração</p>
-<p><span class="math display">\[
-f_{X,Y}(x,y)
+<p><span class="math display">\[f_{X,Y}(x,y)
 =
-f_X(x)f_Y(y)
-\]</span></p>
+f_X(x)f_Y(y)\]</span></p>
 <p>quase sempre.</p>
 <p>Se <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes e as esperanças existem, então</p>
-<p><span class="math display">\[
-E\{g(X)h(Y)\}
+<p><span class="math display">\[E\{g(X)h(Y)\}
 =
-E\{g(X)\}E\{h(Y)\}.
-\]</span></p>
+E\{g(X)\}E\{h(Y)\}.\]</span></p>
 <p>A recíproca não é verdadeira em geral. Em particular, covariância nula não implica independência, exceto em classes especiais, como a distribuição normal conjunta <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;3.4; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 2.4 e 3.3)</span>.</p>
 </section>
 <section id="esperança-e-momentos" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="esperança-e-momentos">Esperança e momentos</h3>
 <p>Para uma função <span class="math inline">\(g\)</span>, a esperança de <span class="math inline">\(g(X)\)</span> é</p>
-<p><span class="math display">\[
-E\{g(X)\}
+<p><span class="math display">\[E\{g(X)\}
 =
-\sum_x g(x)p_X(x)
-\]</span></p>
+\sum_x g(x)p_X(x)\]</span></p>
 <p>no caso discreto, e</p>
-<p><span class="math display">\[
-E\{g(X)\}
+<p><span class="math display">\[E\{g(X)\}
 =
 \int_{-\infty}^{\infty}
-g(x)f_X(x)\,dx
-\]</span></p>
+g(x)f_X(x)\,dx\]</span></p>
 <p>no caso absolutamente contínuo, desde que a soma ou a integral esteja bem definida.</p>
 <p>A esperança é linear:</p>
-<p><span class="math display">\[
-E\left(
+<p><span class="math display">\[E\left(
 \sum_{i=1}^n a_iX_i+b
 \right)
 =
-\sum_{i=1}^n a_iE(X_i)+b,
-\]</span></p>
+\sum_{i=1}^n a_iE(X_i)+b,\]</span></p>
 <p>sem necessidade de independência.</p>
 <p>O <span class="math inline">\(r\)</span>-ésimo momento em torno da origem é</p>
-<p><span class="math display">\[
-E(X^r),
-\]</span></p>
+<p><span class="math display">\[E(X^r),\]</span></p>
 <p>e o <span class="math inline">\(r\)</span>-ésimo momento central é</p>
-<p><span class="math display">\[
-E\{[X-E(X)]^r\}.
-\]</span></p>
+<p><span class="math display">\[E\{[X-E(X)]^r\}.\]</span></p>
 <p>Médias, variâncias, assimetria e curtose são casos particulares de momentos <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;4.1; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1 e 3.3)</span>.</p>
 </section>
 <section id="variância-e-covariância" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="variância-e-covariância">Variância e covariância</h3>
 <p>A variância é</p>
-<p><span class="math display">\[
-\operatorname{Var}(X)
+<p><span class="math display">\[\operatorname{Var}(X)
 =
 E\{[X-E(X)]^2\}
 =
-E(X^2)-[E(X)]^2.
-\]</span></p>
+E(X^2)-[E(X)]^2.\]</span></p>
 <p>Para constantes <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>,</p>
-<p><span class="math display">\[
-\operatorname{Var}(aX+b)
-=a^2\operatorname{Var}(X).
-\]</span></p>
+<p><span class="math display">\[\operatorname{Var}(aX+b)
+=a^2\operatorname{Var}(X).\]</span></p>
 <p>A covariância entre <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> é</p>
-<p><span class="math display">\[
-\operatorname{Cov}(X,Y)
+<p><span class="math display">\[\operatorname{Cov}(X,Y)
 =
 E\{[X-E(X)][Y-E(Y)]\}
 =
-E(XY)-E(X)E(Y).
-\]</span></p>
+E(XY)-E(X)E(Y).\]</span></p>
 <p>Para variáveis com segundos momentos finitos,</p>
-<p><span class="math display">\[
-\operatorname{Var}
+<p><span class="math display">\[\operatorname{Var}
 \left(
 \sum_{i=1}^n a_iX_i
 \right)
 =
 \sum_{i=1}^n a_i^2\operatorname{Var}(X_i)
 +
-2\sum_{i&lt;j}a_ia_j\operatorname{Cov}(X_i,X_j).
-\]</span></p>
+2\sum_{i&lt;j}a_ia_j\operatorname{Cov}(X_i,X_j).\]</span></p>
 <p>Se as variáveis são independentes, as covariâncias cruzadas são nulas e</p>
-<p><span class="math display">\[
-\operatorname{Var}
+<p><span class="math display">\[\operatorname{Var}
 \left(
 \sum_{i=1}^n a_iX_i
 \right)
 =
-\sum_{i=1}^n a_i^2\operatorname{Var}(X_i).
-\]</span></p>
+\sum_{i=1}^n a_i^2\operatorname{Var}(X_i).\]</span></p>
 <p>Para um vetor aleatório <span class="math inline">\(\mathbf X\)</span>, a matriz de covariâncias é</p>
-<p><span class="math display">\[
-\boldsymbol\Sigma
+<p><span class="math display">\[\boldsymbol\Sigma
 =
 E\left[
 (\mathbf X-E\mathbf X)
 (\mathbf X-E\mathbf X)^\mathsf{T}
-\right].
-\]</span></p>
+\right].\]</span></p>
 <p>Esses resultados são utilizados na distribuição da média, na comparação de estimadores e em modelos lineares <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 4.2–4.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.3.1)</span>.</p>
 </section>
 <section id="esperança-e-variância-condicionais" class="level3 unnumbered">
@@ -916,11 +824,9 @@ E\left[
 </div>
 <div class="callout-body-container callout-body">
 <p>Se <span class="math inline">\(E|X|&lt;\infty\)</span>, então</p>
-<p><span class="math display">\[
-E(X)
+<p><span class="math display">\[E(X)
 =
-E\{E(X\mid Y)\}.
-\]</span></p>
+E\{E(X\mid Y)\}.\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Lei da variância total">
@@ -934,13 +840,11 @@ E\{E(X\mid Y)\}.
 </div>
 <div class="callout-body-container callout-body">
 <p>Se <span class="math inline">\(E(X^2)&lt;\infty\)</span>, então</p>
-<p><span class="math display">\[
-\operatorname{Var}(X)
+<p><span class="math display">\[\operatorname{Var}(X)
 =
 E\{\operatorname{Var}(X\mid Y)\}
 +
-\operatorname{Var}\{E(X\mid Y)\}.
-\]</span></p>
+\operatorname{Var}\{E(X\mid Y)\}.\]</span></p>
 </div>
 </div>
 <p>A primeira identidade garante que o condicionamento preserva a média. A segunda decompõe a variabilidade total em uma parcela média interna aos estratos definidos por <span class="math inline">\(Y\)</span> e uma parcela entre esses estratos. Essa decomposição é central no teorema de Rao–Blackwell <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;4.4; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.3)</span>.</p>
@@ -948,45 +852,33 @@ E\{\operatorname{Var}(X\mid Y)\}
 <section id="transformações-de-variáveis-aleatórias" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="transformações-de-variáveis-aleatórias">Transformações de variáveis aleatórias</h3>
 <p>Se <span class="math inline">\(Y=g(X)\)</span> e <span class="math inline">\(g\)</span> é estritamente monótona e diferenciável, então</p>
-<p><span class="math display">\[
-f_Y(y)
+<p><span class="math display">\[f_Y(y)
 =
 f_X\{g^{-1}(y)\}
 \left|
 \frac{d}{dy}g^{-1}(y)
-\right|.
-\]</span></p>
+\right|.\]</span></p>
 <p>No caso multivariado, se <span class="math inline">\(\mathbf Y=g(\mathbf X)\)</span> é uma transformação bijetiva diferenciável com inversa <span class="math inline">\(\mathbf x=h(\mathbf y)\)</span>, então</p>
-<p><span class="math display">\[
-f_{\mathbf Y}(\mathbf y)
+<p><span class="math display">\[f_{\mathbf Y}(\mathbf y)
 =
 f_{\mathbf X}\{h(\mathbf y)\}
 \left|
 \det Dh(\mathbf y)
-\right|.
-\]</span></p>
+\right|.\]</span></p>
 <p>O determinante jacobiano corrige a alteração de volume provocada pela transformação. Esses resultados serão utilizados na obtenção de distribuições de estatísticas e de quantidades pivotais <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 2.3 e 3.6; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.4)</span>.</p>
 </section>
 <section id="função-geradora-de-momentos" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="função-geradora-de-momentos">Função geradora de momentos</h3>
 <p>A função geradora de momentos de <span class="math inline">\(X\)</span> é</p>
-<p><span class="math display">\[
-M_X(t)=E(e^{tX}),
-\]</span></p>
+<p><span class="math display">\[M_X(t)=E(e^{tX}),\]</span></p>
 <p>desde que a esperança exista em uma vizinhança de <span class="math inline">\(t=0\)</span>. Quando é finita nessa vizinhança,</p>
-<p><span class="math display">\[
-M_X^{(r)}(0)=E(X^r).
-\]</span></p>
+<p><span class="math display">\[M_X^{(r)}(0)=E(X^r).\]</span></p>
 <p>Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são independentes, então</p>
-<p><span class="math display">\[
-M_{X_1+\cdots+X_n}(t)
+<p><span class="math display">\[M_{X_1+\cdots+X_n}(t)
 =
-\prod_{i=1}^nM_{X_i}(t).
-\]</span></p>
+\prod_{i=1}^nM_{X_i}(t).\]</span></p>
 <p>Além disso, se duas funções geradoras existem em uma vizinhança de zero e coincidem nessa vizinhança, elas identificam a mesma distribuição. A função geradora cumulante é</p>
-<p><span class="math display">\[
-K_X(t)=\log M_X(t),
-\]</span></p>
+<p><span class="math display">\[K_X(t)=\log M_X(t),\]</span></p>
 <p>e transforma produtos de funções geradoras em somas. Nem toda distribuição possui função geradora de momentos; quando ela não existe, podem ser utilizadas funções características <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;4.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, ap. A.8)</span>.</p>
 </section>
 </section>
@@ -1006,11 +898,9 @@ K_X(t)=\log M_X(t),
 </div>
 <div class="callout-body-container callout-body">
 <p>Dizemos que <span class="math inline">\(X_n\to X\)</span> quase certamente quando</p>
-<p><span class="math display">\[
-P\left(
+<p><span class="math display">\[P\left(
 \lim_{n\to\infty}X_n=X
-\right)=1.
-\]</span></p>
+\right)=1.\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Convergência em probabilidade">
@@ -1024,9 +914,7 @@ P\left(
 </div>
 <div class="callout-body-container callout-body">
 <p>Dizemos que <span class="math inline">\(X_n\xrightarrow{P}X\)</span> quando, para todo <span class="math inline">\(\varepsilon&gt;0\)</span>,</p>
-<p><span class="math display">\[
-P(|X_n-X|&gt;\varepsilon)\to0.
-\]</span></p>
+<p><span class="math display">\[P(|X_n-X|&gt;\varepsilon)\to0.\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Convergência em distribuição">
@@ -1040,9 +928,7 @@ P(|X_n-X|&gt;\varepsilon)\to0.
 </div>
 <div class="callout-body-container callout-body">
 <p>Dizemos que <span class="math inline">\(X_n\xrightarrow{d}X\)</span> quando</p>
-<p><span class="math display">\[
-F_{X_n}(x)\to F_X(x)
-\]</span></p>
+<p><span class="math display">\[F_{X_n}(x)\to F_X(x)\]</span></p>
 <p>em todo ponto de continuidade de <span class="math inline">\(F_X\)</span>.</p>
 </div>
 </div>
@@ -1051,95 +937,69 @@ F_{X_n}(x)\to F_X(x)
 <section id="teorema-do-mapeamento-contínuo" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="teorema-do-mapeamento-contínuo">Teorema do mapeamento contínuo</h3>
 <p>Se</p>
-<p><span class="math display">\[
-X_n\xrightarrow{P}X
-\]</span></p>
+<p><span class="math display">\[X_n\xrightarrow{P}X\]</span></p>
 <p>e <span class="math inline">\(g\)</span> é contínua nos valores assumidos por <span class="math inline">\(X\)</span>, então</p>
-<p><span class="math display">\[
-g(X_n)\xrightarrow{P}g(X).
-\]</span></p>
+<p><span class="math display">\[g(X_n)\xrightarrow{P}g(X).\]</span></p>
 <p>A versão correspondente também vale para convergência em distribuição:</p>
-<p><span class="math display">\[
-X_n\xrightarrow{d}X
+<p><span class="math display">\[X_n\xrightarrow{d}X
 \quad\Longrightarrow\quad
-g(X_n)\xrightarrow{d}g(X),
-\]</span></p>
+g(X_n)\xrightarrow{d}g(X),\]</span></p>
 <p>quando <span class="math inline">\(g\)</span> é contínua com probabilidade um sob a distribuição limite <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, teorema A.11)</span>.</p>
 </section>
 <section id="lema-de-slutsky" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="lema-de-slutsky">Lema de Slutsky</h3>
 <p>Se</p>
-<p><span class="math display">\[
-X_n\xrightarrow{d}X
+<p><span class="math display">\[X_n\xrightarrow{d}X
 \quad\text{e}\quad
-Y_n\xrightarrow{P}c,
-\]</span></p>
+Y_n\xrightarrow{P}c,\]</span></p>
 <p>em que <span class="math inline">\(c\)</span> é constante, então</p>
-<p><span class="math display">\[
-X_n+Y_n\xrightarrow{d}X+c,
-\]</span></p>
-<p><span class="math display">\[
-X_nY_n\xrightarrow{d}cX
-\]</span></p>
+<p><span class="math display">\[X_n+Y_n\xrightarrow{d}X+c,\]</span></p>
+<p><span class="math display">\[X_nY_n\xrightarrow{d}cX\]</span></p>
 <p>e, se <span class="math inline">\(c\neq0\)</span>,</p>
-<p><span class="math display">\[
-\frac{X_n}{Y_n}
+<p><span class="math display">\[\frac{X_n}{Y_n}
 \xrightarrow{d}
-\frac{X}{c}.
-\]</span></p>
+\frac{X}{c}.\]</span></p>
 <p>Esse lema justifica substituir parâmetros desconhecidos por estimadores consistentes em estatísticas assintóticas <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, corolário A.12)</span>.</p>
 </section>
 <section id="lei-dos-grandes-números" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="lei-dos-grandes-números">Lei dos Grandes Números</h3>
 <p>Se <span class="math inline">\(X_1,X_2,\ldots\)</span> são i.i.d. com</p>
-<p><span class="math display">\[
-E|X_1|&lt;\infty,
-\]</span></p>
+<p><span class="math display">\[E|X_1|&lt;\infty,\]</span></p>
 <p>então</p>
-<p><span class="math display">\[
-\overline X_n
+<p><span class="math display">\[\overline X_n
 =
 \frac{1}{n}\sum_{i=1}^nX_i
 \xrightarrow{P}
-E(X_1).
-\]</span></p>
+E(X_1).\]</span></p>
 <p>A Lei dos Grandes Números explica por que médias amostrais e momentos empíricos aproximam seus correspondentes populacionais. Ela é uma das bases da consistência do método dos momentos e de muitos estimadores definidos por médias empíricas <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;5.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.5)</span>.</p>
 </section>
 <section id="teorema-central-do-limite" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="teorema-central-do-limite">Teorema Central do Limite</h3>
 <p>Se <span class="math inline">\(X_1,X_2,\ldots\)</span> são i.i.d. com</p>
-<p><span class="math display">\[
-E(X_1)=\mu
+<p><span class="math display">\[E(X_1)=\mu
 \quad\text{e}\quad
-0&lt;\operatorname{Var}(X_1)=\sigma^2&lt;\infty,
-\]</span></p>
+0&lt;\operatorname{Var}(X_1)=\sigma^2&lt;\infty,\]</span></p>
 <p>então</p>
-<p><span class="math display">\[
-\frac{
+<p><span class="math display">\[\frac{
 \sqrt n(\overline X_n-\mu)
 }{\sigma}
 \xrightarrow{d}
-N(0,1).
-\]</span></p>
+N(0,1).\]</span></p>
 <p>O resultado fornece uma aproximação normal para médias e somas, mesmo quando a distribuição das observações não é normal. Ele não afirma que as observações individuais se tornam normais e não garante boa aproximação para todo <span class="math inline">\(n\)</span>; assimetria intensa e caudas pesadas podem exigir amostras maiores <span class="citation" data-cites="rice2007mathematical ramachandran2021r chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;5.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;4.3)</span>.</p>
 </section>
 <section id="método-delta-univariado" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="método-delta-univariado">Método delta univariado</h3>
 <p>Suponha que</p>
-<p><span class="math display">\[
-\sqrt n(T_n-\theta)
+<p><span class="math display">\[\sqrt n(T_n-\theta)
 \xrightarrow{d}
-N(0,\tau^2)
-\]</span></p>
+N(0,\tau^2)\]</span></p>
 <p>e que <span class="math inline">\(g\)</span> seja diferenciável em <span class="math inline">\(\theta\)</span>. Então</p>
-<p><span class="math display">\[
-\sqrt n\{g(T_n)-g(\theta)\}
+<p><span class="math display">\[\sqrt n\{g(T_n)-g(\theta)\}
 \xrightarrow{d}
 N\left(
 0,
 [g'(\theta)]^2\tau^2
-\right).
-\]</span></p>
+\right).\]</span></p>
 <p>Se <span class="math inline">\(g'(\theta)=0\)</span>, o resultado de primeira ordem é degenerado e pode ser necessário utilizar uma expansão de ordem superior.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Exemplo">
 <div class="callout-header d-flex align-content-center">
@@ -1152,32 +1012,25 @@ N\left(
 </div>
 <div class="callout-body-container callout-body">
 <p>Se</p>
-<p><span class="math display">\[
-\sqrt n(\overline X_n-\mu)
+<p><span class="math display">\[\sqrt n(\overline X_n-\mu)
 \xrightarrow{d}
-N(0,\sigma^2)
-\]</span></p>
+N(0,\sigma^2)\]</span></p>
 <p>e <span class="math inline">\(g(x)=e^x\)</span>, então</p>
-<p><span class="math display">\[
-\sqrt n\{e^{\overline X_n}-e^\mu\}
+<p><span class="math display">\[\sqrt n\{e^{\overline X_n}-e^\mu\}
 \xrightarrow{d}
-N\left(0,e^{2\mu}\sigma^2\right).
-\]</span></p>
+N\left(0,e^{2\mu}\sigma^2\right).\]</span></p>
 </div>
 </div>
 </section>
 <section id="método-delta-multivariado" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="método-delta-multivariado">Método delta multivariado</h3>
 <p>Se</p>
-<p><span class="math display">\[
-\sqrt n
+<p><span class="math display">\[\sqrt n
 (\mathbf T_n-\boldsymbol\theta)
 \xrightarrow{d}
-N_k(\mathbf0,\boldsymbol\Sigma)
-\]</span></p>
+N_k(\mathbf0,\boldsymbol\Sigma)\]</span></p>
 <p>e <span class="math inline">\(g:\mathbb R^k\to\mathbb R^m\)</span> é diferenciável em <span class="math inline">\(\boldsymbol\theta\)</span>, então</p>
-<p><span class="math display">\[
-\sqrt n
+<p><span class="math display">\[\sqrt n
 \{g(\mathbf T_n)-g(\boldsymbol\theta)\}
 \xrightarrow{d}
 N_m\left[
@@ -1185,24 +1038,17 @@ N_m\left[
 Dg(\boldsymbol\theta)
 \boldsymbol\Sigma
 Dg(\boldsymbol\theta)^\mathsf{T}
-\right].
-\]</span></p>
+\right].\]</span></p>
 <p>O método delta sustenta a construção de erros-padrão para funções de parâmetros e diversos intervalos de Wald <span class="citation" data-cites="lauritzen2023fundamentals chihara2022">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, teorema A.19; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;7.7)</span>.</p>
 </section>
 <section id="ordens-estocásticas" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="ordens-estocásticas">Ordens estocásticas</h3>
 <p>Nos desenvolvimentos assintóticos avançados, escreveremos</p>
-<p><span class="math display">\[
-X_n=o_P(a_n)
-\]</span></p>
+<p><span class="math display">\[X_n=o_P(a_n)\]</span></p>
 <p>quando <span class="math inline">\(X_n/a_n\xrightarrow{P}0\)</span>, e</p>
-<p><span class="math display">\[
-X_n=O_P(a_n)
-\]</span></p>
+<p><span class="math display">\[X_n=O_P(a_n)\]</span></p>
 <p>quando <span class="math inline">\(X_n/a_n\)</span> é limitado em probabilidade. Em particular,</p>
-<p><span class="math display">\[
-T_n-\theta=O_P(n^{-1/2})
-\]</span></p>
+<p><span class="math display">\[T_n-\theta=O_P(n^{-1/2})\]</span></p>
 <p>indica que o erro do estimador possui ordem probabilística <span class="math inline">\(n^{-1/2}\)</span>. Essa notação torna concisas as expansões de Taylor da função escore e da log-verossimilhança <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;5.5 e ap. A.2)</span>.</p>
 </section>
 </section>
@@ -1213,10 +1059,10 @@ T_n-\theta=O_P(n^{-1/2})
 <h3 class="unnumbered anchored" data-anchor-id="distribuições-discretas-essenciais">Distribuições discretas essenciais</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1254,31 +1100,21 @@ T_n-\theta=O_P(n^{-1/2})
 </tbody>
 </table>
 <p>Para a distribuição multinomial, se</p>
-<p><span class="math display">\[
-(X_1,\ldots,X_m)
+<p><span class="math display">\[(X_1,\ldots,X_m)
 \sim
 \operatorname{Multinomial}
-(n;p_1,\ldots,p_m),
-\]</span></p>
+(n;p_1,\ldots,p_m),\]</span></p>
 <p>com <span class="math inline">\(\sum_jp_j=1\)</span>, então</p>
-<p><span class="math display">\[
-P(X_1=x_1,\ldots,X_m=x_m)
+<p><span class="math display">\[P(X_1=x_1,\ldots,X_m=x_m)
 =
 \frac{n!}{x_1!\cdots x_m!}
-\prod_{j=1}^m p_j^{x_j},
-\]</span></p>
+\prod_{j=1}^m p_j^{x_j},\]</span></p>
 <p>para <span class="math inline">\(\sum_jx_j=n\)</span>. Além disso,</p>
-<p><span class="math display">\[
-E(X_j)=np_j,
-\]</span></p>
-<p><span class="math display">\[
-\operatorname{Var}(X_j)=np_j(1-p_j)
-\]</span></p>
+<p><span class="math display">\[E(X_j)=np_j,\]</span></p>
+<p><span class="math display">\[\operatorname{Var}(X_j)=np_j(1-p_j)\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\operatorname{Cov}(X_j,X_k)=-np_jp_k,
-\qquad j\neq k.
-\]</span></p>
+<p><span class="math display">\[\operatorname{Cov}(X_j,X_k)=-np_jp_k,
+\qquad j\neq k.\]</span></p>
 <p>A distribuição hipergeométrica, e não a binomial, é o modelo exato para amostragem sem reposição em população finita <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.2.1–3.2.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, aps. B.1–B.6)</span>.</p>
 </section>
 <section id="distribuições-contínuas-essenciais" class="level3 unnumbered">
@@ -1286,154 +1122,114 @@ E(X_j)=np_j,
 <section id="distribuição-uniforme" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="distribuição-uniforme">Distribuição uniforme</h4>
 <p>Se <span class="math inline">\(X\sim\operatorname{Unif}(a,b)\)</span>, então</p>
-<p><span class="math display">\[
-f(x)
+<p><span class="math display">\[f(x)
 =
-\frac{1}{b-a}\mathbf1_{[a,b]}(x),
-\]</span></p>
-<p><span class="math display">\[
-E(X)=\frac{a+b}{2}
-\]</span></p>
+\frac{1}{b-a}\mathbf1_{[a,b]}(x),\]</span></p>
+<p><span class="math display">\[E(X)=\frac{a+b}{2}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\operatorname{Var}(X)
+<p><span class="math display">\[\operatorname{Var}(X)
 =
-\frac{(b-a)^2}{12}.
-\]</span></p>
+\frac{(b-a)^2}{12}.\]</span></p>
 <p>Modelos uniformes com extremo desconhecido são exemplos importantes de modelos não regulares, porque o suporte depende do parâmetro.</p>
 </section>
 <section id="distribuição-normal" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="distribuição-normal">Distribuição normal</h4>
 <p>Se <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>, então</p>
-<p><span class="math display">\[
-f(x)
+<p><span class="math display">\[f(x)
 =
 \frac{1}{\sqrt{2\pi\sigma^2}}
 \exp\left[
 -\frac{(x-\mu)^2}{2\sigma^2}
-\right].
-\]</span></p>
+\right].\]</span></p>
 <p>Sua função geradora de momentos é</p>
-<p><span class="math display">\[
-M_X(t)
+<p><span class="math display">\[M_X(t)
 =
 \exp\left(
 \mu t+\frac{\sigma^2t^2}{2}
-\right).
-\]</span></p>
+\right).\]</span></p>
 <p>Combinações lineares de variáveis normais independentes são normais. No caso multivariado, a média e a matriz de covariâncias determinam completamente a distribuição.</p>
 </section>
 <section id="distribuição-exponencial" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="distribuição-exponencial">Distribuição exponencial</h4>
 <p>Se <span class="math inline">\(X\sim\operatorname{Exp}(\lambda)\)</span>, com taxa <span class="math inline">\(\lambda&gt;0\)</span>, então</p>
-<p><span class="math display">\[
-f(x)
+<p><span class="math display">\[f(x)
 =
 \lambda e^{-\lambda x}
-\mathbf1_{[0,\infty)}(x),
-\]</span></p>
-<p><span class="math display">\[
-E(X)=\frac{1}{\lambda}
-\]</span></p>
+\mathbf1_{[0,\infty)}(x),\]</span></p>
+<p><span class="math display">\[E(X)=\frac{1}{\lambda}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\operatorname{Var}(X)
+<p><span class="math display">\[\operatorname{Var}(X)
 =
-\frac{1}{\lambda^2}.
-\]</span></p>
+\frac{1}{\lambda^2}.\]</span></p>
 <p>A distribuição exponencial possui a propriedade de falta de memória.</p>
 </section>
 <section id="distribuição-gama" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="distribuição-gama">Distribuição gama</h4>
 <p>Se <span class="math inline">\(X\sim\operatorname{Gama}(\alpha,\text{taxa }\lambda)\)</span>, então</p>
-<p><span class="math display">\[
-f(x)
+<p><span class="math display">\[f(x)
 =
 \frac{\lambda^\alpha}{\Gamma(\alpha)}
 x^{\alpha-1}e^{-\lambda x}
-\mathbf1_{(0,\infty)}(x),
-\]</span></p>
-<p><span class="math display">\[
-E(X)=\frac{\alpha}{\lambda}
-\]</span></p>
+\mathbf1_{(0,\infty)}(x),\]</span></p>
+<p><span class="math display">\[E(X)=\frac{\alpha}{\lambda}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\operatorname{Var}(X)
+<p><span class="math display">\[\operatorname{Var}(X)
 =
-\frac{\alpha}{\lambda^2}.
-\]</span></p>
+\frac{\alpha}{\lambda^2}.\]</span></p>
 <p>A função gama é</p>
-<p><span class="math display">\[
-\Gamma(\alpha)
+<p><span class="math display">\[\Gamma(\alpha)
 =
 \int_0^\infty
 x^{\alpha-1}e^{-x}\,dx,
-\qquad \alpha&gt;0.
-\]</span></p>
+\qquad \alpha&gt;0.\]</span></p>
 <p>A exponencial é o caso particular <span class="math inline">\(\alpha=1\)</span>.</p>
 </section>
 <section id="distribuição-beta" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="distribuição-beta">Distribuição beta</h4>
 <p>Se <span class="math inline">\(X\sim\operatorname{Beta}(\alpha,\beta)\)</span>, então</p>
-<p><span class="math display">\[
-f(x)
+<p><span class="math display">\[f(x)
 =
 \frac{x^{\alpha-1}(1-x)^{\beta-1}}
 {B(\alpha,\beta)}
-\mathbf1_{(0,1)}(x),
-\]</span></p>
+\mathbf1_{(0,1)}(x),\]</span></p>
 <p>em que</p>
-<p><span class="math display">\[
-B(\alpha,\beta)
+<p><span class="math display">\[B(\alpha,\beta)
 =
 \frac{\Gamma(\alpha)\Gamma(\beta)}
-{\Gamma(\alpha+\beta)}.
-\]</span></p>
+{\Gamma(\alpha+\beta)}.\]</span></p>
 <p>Além disso,</p>
-<p><span class="math display">\[
-E(X)=\frac{\alpha}{\alpha+\beta}
-\]</span></p>
+<p><span class="math display">\[E(X)=\frac{\alpha}{\alpha+\beta}\]</span></p>
 <p>e</p>
-<p><span class="math display">\[
-\operatorname{Var}(X)
+<p><span class="math display">\[\operatorname{Var}(X)
 =
 \frac{\alpha\beta}
-{(\alpha+\beta)^2(\alpha+\beta+1)}.
-\]</span></p>
+{(\alpha+\beta)^2(\alpha+\beta+1)}.\]</span></p>
 <p>A distribuição beta aparece em modelos bayesianos para proporções, em estatísticas de ordem e em intervalos binomiais exatos <span class="citation" data-cites="rice2007mathematical ramachandran2021r chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;2.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.2; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, aps. B.7–B.12)</span>.</p>
 </section>
 </section>
 <section id="distribuições-derivadas-do-modelo-normal" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="distribuições-derivadas-do-modelo-normal">Distribuições derivadas do modelo normal</h3>
 <p>Se <span class="math inline">\(Z_1,\ldots,Z_\nu\)</span> são independentes e <span class="math inline">\(N(0,1)\)</span>, então</p>
-<p><span class="math display">\[
-U=\sum_{i=1}^\nu Z_i^2
-\sim\chi^2_\nu.
-\]</span></p>
+<p><span class="math display">\[U=\sum_{i=1}^\nu Z_i^2
+\sim\chi^2_\nu.\]</span></p>
 <p>A distribuição qui-quadrado é um caso particular da distribuição gama:</p>
-<p><span class="math display">\[
-\chi^2_\nu
+<p><span class="math display">\[\chi^2_\nu
 =
 \operatorname{Gama}
 \left(
 \frac{\nu}{2},
 \text{taxa }\frac12
-\right).
-\]</span></p>
+\right).\]</span></p>
 <p>Se <span class="math inline">\(Z\sim N(0,1)\)</span> e <span class="math inline">\(U\sim\chi^2_\nu\)</span> são independentes, então</p>
-<p><span class="math display">\[
-T
+<p><span class="math display">\[T
 =
 \frac{Z}{\sqrt{U/\nu}}
-\sim t_\nu.
-\]</span></p>
+\sim t_\nu.\]</span></p>
 <p>Se <span class="math inline">\(U_1\sim\chi^2_{\nu_1}\)</span> e <span class="math inline">\(U_2\sim\chi^2_{\nu_2}\)</span> são independentes, então</p>
-<p><span class="math display">\[
-F
+<p><span class="math display">\[F
 =
 \frac{U_1/\nu_1}{U_2/\nu_2}
-\sim F_{\nu_1,\nu_2}.
-\]</span></p>
+\sim F_{\nu_1,\nu_2}.\]</span></p>
 <p>Essas três distribuições sustentam a inferência exata para médias e variâncias no modelo normal <span class="citation" data-cites="rice2007mathematical larsen2012 chihara2022">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 7</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 6</a>; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, aps. B.10–B.13)</span>.</p>
 </section>
 </section>

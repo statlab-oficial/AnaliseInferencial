@@ -104,7 +104,7 @@ bowl
 
 Observe que `bowl` possui 2400 linhas, o que nos indica que a urna contém 2400 bolas de mesmo tamanho. A primeira variável, `ball_ID`, é usada como uma variável de identificação, conforme discutido em sala de aula, nenhuma das bolas da urna real possui números marcados. A segunda variável, `color`, indica se uma determinada bola virtual é **vermelha** ou **branca**. Visualize o conteúdo de `bowl` no **visualizador de dados do RStudio** e percorra as linhas para se convencer de que `bowl` é, de fato, um **análogo virtual** da urna real apresentada em sala.
 
-Agora precisamos de um **análogo virtual da pá** para gerar **amostras virtuais de 50 bolas**. Para isso, vamos utilizar a função `rep_sample_n()`, incluída no pacote `moderndive`. Essa função permite realizar **amostragens repetidas (ou replicadas)** de tamanho (n).
+Agora precisamos de um **análogo virtual da pá** para gerar **amostras virtuais de 50 bolas**. Para isso, vamos utilizar a função `rep_sample_n()`, incluída no pacote `moderndive`. Essa função permite realizar **amostragens com reposição** de tamanho (n).
 
 ```{r}
 set.seed(2026) #fixando semente
@@ -139,7 +139,7 @@ summarize(num_red = sum(is_red))
 n_red
 ```
 
-Por que isso funciona? Porque o `R` trata `TRUE` como o número 1 e `FALSE` como o número 0. Assim, somar valores `TRUE` e `FALSE` é equivalente a somar 1’s e 0’s. Ao final, essa operação conta o número de bolas para as quais a variável color é igual a "red". No nosso caso, XX das 50 bolas eram vermelhas. No entanto, você pode ter obtido um número diferente de bolas vermelhas devido ao caráter aleatório da amostragem virtual.
+Por que isso funciona? Porque o `R` trata `TRUE` como o número 1 e `FALSE` como o número 0. Assim, somar valores `TRUE` e `FALSE` é equivalente a somar 1’s e 0’s. Ao final, essa operação conta o número de bolas para as quais a variável color é igual a "red". No nosso caso, `r n_red` das 50 bolas eram vermelhas. No entanto, você pode ter obtido um número diferente de bolas vermelhas devido ao caráter aleatório da amostragem virtual.
 
 Por fim, vamos calcular a proporção das 50 bolas amostradas que são vermelhas, dividindo num_red por 50:
 
@@ -319,7 +319,7 @@ Assim, o estimador é a regra inferencial; a estimativa é o número produzido p
 ### Exemplos básicos {.unnumbered}
 
 | Parâmetro de interesse | Estatística utilizada como estimador |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | média populacional $\mu$ | $\displaystyle \overline X=\frac{1}{n}\sum_{i=1}^nX_i$ |
 | variância populacional $\sigma^2$ | $\displaystyle S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2$ |
 | proporção populacional $p$ | $\displaystyle \widehat p=\frac{1}{n}\sum_{i=1}^nX_i$, para $X_i\in\{0,1\}$ |
@@ -371,7 +371,7 @@ Essa divisão evita repetir aqui as derivações probabilísticas que constituem
 Diferentes estimadores podem ser propostos para o mesmo parâmetro. A escolha entre eles exige critérios que descrevam tanto o desempenho em amostras finitas quanto o comportamento quando o tamanho amostral aumenta [@chihara2022, seção 6.3; @ramachandran2021r, seção 5.2].
 
 | Critério | Pergunta orientadora |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | viés | O estimador está centrado, em média, no parâmetro de interesse? |
 | variância | Quanto o estimador varia entre amostras? |
 | erro quadrático médio | Qual é o efeito conjunto do viés e da variabilidade? |
