@@ -190,7 +190,7 @@ Toda função de distribuição satisfaz:
 3.  $F_X(x)\to0$ quando $x\to-\infty$;
 4.  $F_X(x)\to1$ quando $x\to+\infty$.
 
-O suporte é, informalmente, o conjunto de valores em que a distribuição concentra probabilidade. Em modelos paramétricos, é importante verificar se o suporte depende do parâmetro, pois essa dependência pode invalidar resultados regulares de máxima verossimilhança e de Cramér--Rao.
+O suporte é, informalmente, o conjunto de valores em que a distribuição concentra probabilidade. Em modelos paramétricos, é importante verificar se o suporte depende do parâmetro. Muitos resultados regulares de inferência pressupõem que o suporte da distribuição não varie com o parâmetro. Quando essa condição não é satisfeita, alguns resultados usuais de máxima verossimilhança e de Cramér--Rao podem não ser válidos.
 
 O quantil de ordem $u\in(0,1)$ pode ser definido por
 
@@ -369,13 +369,23 @@ $$\operatorname{Var}
 =
 \sum_{i=1}^n a_i^2\operatorname{Var}(X_i).$$
 
-Para um vetor aleatório $\mathbf X$, a matriz de covariâncias é
+Para um vetor aleatório $\mathbf X$, a esperança é definida componente a componente por
+
+$$
+E(\mathbf X)
+=
+\left(
+E(X_1),\ldots,E(X_k)
+\right)^\mathsf{T}.
+$$
+
+A matriz de covariâncias é
 
 $$\boldsymbol\Sigma
 =
 E\left[
-(\mathbf X-E\mathbf X)
-(\mathbf X-E\mathbf X)^\mathsf{T}
+\{\mathbf X-E(\mathbf X)\}
+\{\mathbf X-E(\mathbf X)\}^\mathsf{T}
 \right].$$
 
 Esses resultados são utilizados na distribuição da média, na comparação de estimadores e em modelos lineares [@rice2007mathematical, secs. 4.2--4.3; @ramachandran2021r, sec. 3.3.1].
@@ -422,7 +432,20 @@ $$f_{\mathbf Y}(\mathbf y)
 f_{\mathbf X}\{h(\mathbf y)\}
 \left|
 \det Dh(\mathbf y)
-\right|.$$
+\right|,$$
+
+em que
+
+$$
+Dh(\mathbf y)
+=
+\left[
+\frac{\partial h_i(\mathbf y)}
+{\partial y_j}
+\right]_{i,j=1}^k
+$$
+
+é a matriz jacobiana de $h$ avaliada em $\mathbf y$.
 
 O determinante jacobiano corrige a alteração de volume provocada pela transformação. Esses resultados serão utilizados na obtenção de distribuições de estatísticas e de quantidades pivotais [@rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
 
@@ -430,11 +453,23 @@ O determinante jacobiano corrige a alteração de volume provocada pela transfor
 
 A função geradora de momentos de $X$ é
 
-$$M_X(t)=E(e^{tX}),$$
+$$
+M_X(t)=E(e^{tX}),
+$$
 
-desde que a esperança exista em uma vizinhança de $t=0$. Quando é finita nessa vizinhança,
+desde que a esperança exista em uma vizinhança de $t=0$. Quando é finita nessa vizinhança, a derivada de ordem $r$ da função geradora de momentos é denotada por
 
-$$M_X^{(r)}(0)=E(X^r).$$
+$$
+M_X^{(r)}(t)
+=
+\frac{d^r}{dt^r}M_X(t).
+$$
+
+A derivada de ordem $r$ avaliada em $t=0$ é o momento de ordem $r$ de $X$:
+
+$$
+M_X^{(r)}(0)=E(X^r).
+$$
 
 Se $X_1,\ldots,X_n$ são independentes, então
 
@@ -457,26 +492,45 @@ Sejam $X_1,X_2,\ldots$ e $X$ variáveis aleatórias.
 ::: {.callout-important title="Convergência quase certa"}
 Dizemos que $X_n\to X$ quase certamente quando
 
-$$P\left(
+$$
+P\left(
 \lim_{n\to\infty}X_n=X
-\right)=1.$$
+\right)=1.
+$$
 :::
 
 ::: {.callout-important title="Convergência em probabilidade"}
 Dizemos que $X_n\xrightarrow{P}X$ quando, para todo $\varepsilon>0$,
 
-$$P(|X_n-X|>\varepsilon)\to0.$$
+$$
+P(|X_n-X|>\varepsilon)\to0.
+$$
+:::
+
+::: {.callout-important title="Convergência em média quadrática"}
+Dizemos que $X_n\xrightarrow{L^2}X$ quando
+
+$$
+E\left[(X_n-X)^2\right]\to0,
+$$
+
+desque que essa esperança finita para todo $n$.
+:::
+
+desde que essa esperança exista.
 :::
 
 ::: {.callout-important title="Convergência em distribuição"}
 Dizemos que $X_n\xrightarrow{d}X$ quando
 
-$$F_{X_n}(x)\to F_X(x)$$
+$$
+F_{X_n}(x)\to F_X(x)
+$$
 
 em todo ponto de continuidade de $F_X$.
 :::
 
-A convergência quase certa implica convergência em probabilidade, que implica convergência em distribuição. As recíprocas não valem em geral. Quando o limite é uma constante, convergência em distribuição e em probabilidade são equivalentes [@rice2007mathematical, cap. 5; @lauritzen2023fundamentals, ap. A.2].
+A convergência quase certa implica convergência em probabilidade. A convergência em média quadrática também implica convergência em probabilidade, que, por sua vez, implica convergência em distribuição. Em geral, não há implicação entre convergência quase certa e convergência em média quadrática, e as implicações anteriores não podem ser invertidas. Uma exceção importante ocorre quando o limite é uma constante: nesse caso, convergência em distribuição implica convergência em probabilidade [@rice2007mathematical, cap. 5; @lauritzen2023fundamentals, ap. A.2].
 
 ### Teorema do mapeamento contínuo {.unnumbered}
 
@@ -574,15 +628,25 @@ Se $g'(\theta)=0$, o resultado de primeira ordem é degenerado e pode ser necess
 ::: {.callout-tip title="Exemplo"}
 Se
 
-$$\sqrt n(\overline X_n-\mu)
+$$
+\sqrt n(\overline X_n-\mu)
 \xrightarrow{d}
-N(0,\sigma^2)$$
+N(0,\sigma^2),
+$$
 
-e $g(x)=e^x$, então
+com $\mu\neq 0$, e $g(x)=x^2$, então
 
-$$\sqrt n\{e^{\overline X_n}-e^\mu\}
+$$
+g'(\mu)=2\mu.
+$$
+
+Pelo método delta,
+
+$$
+\sqrt n\left(\overline X_n^2-\mu^2\right)
 \xrightarrow{d}
-N\left(0,e^{2\mu}\sigma^2\right).$$
+N\left(0,4\mu^2\sigma^2\right).
+$$
 :::
 
 ### Método delta multivariado {.unnumbered}
@@ -610,19 +674,38 @@ O método delta sustenta a construção de erros-padrão para funções de parâ
 
 ### Ordens estocásticas {.unnumbered}
 
-Nos desenvolvimentos assintóticos avançados, escreveremos
+Seja $a_n>0$ uma sequência determinística. Nos desenvolvimentos assintóticos avançados, escreveremos
 
 $$X_n=o_P(a_n)$$
 
-quando $X_n/a_n\xrightarrow{P}0$, e
+quando
+
+$$
+\frac{X_n}{a_n}\xrightarrow{P}0,
+$$
+
+e
 
 $$X_n=O_P(a_n)$$
 
-quando $X_n/a_n$ é limitado em probabilidade. Em particular,
+quando $X_n/a_n$ é limitado em probabilidade. Isso significa que, para todo $\varepsilon>0$, existe $M>0$ tal que
+
+$$
+P\left(
+\left|
+\frac{X_n}{a_n}
+\right|>M
+\right)
+<\varepsilon
+$$
+
+para $n$ suficientemente grande.
+
+Em particular, se $T_n$ é um estimador de $\theta$,
 
 $$T_n-\theta=O_P(n^{-1/2})$$
 
-indica que o erro do estimador possui ordem probabilística $n^{-1/2}$. Essa notação torna concisas as expansões de Taylor da função escore e da log-verossimilhança [@lauritzen2023fundamentals, sec. 5.5 e ap. A.2].
+indica que o erro do estimador é, em probabilidade, no máximo da ordem $n^{-1/2}$. Essa notação torna concisas as expansões de Taylor da função escore e da log-verossimilhança [@lauritzen2023fundamentals, sec. 5.5 e ap. A.2].
 
 ## Distribuições utilizadas ao longo do livro {.unnumbered}
 
@@ -703,7 +786,7 @@ $$M_X(t)
 \mu t+\frac{\sigma^2t^2}{2}
 \right).$$
 
-Combinações lineares de variáveis normais independentes são normais. No caso multivariado, a média e a matriz de covariâncias determinam completamente a distribuição.
+Essa expressão permite obter os momentos da distribuição e verificar a estabilidade da família normal sob combinações lineares de variáveis independentes. No caso multivariado, a média e a matriz de covariâncias determinam completamente a distribuição.
 
 #### Distribuição exponencial {.unnumbered}
 
@@ -782,7 +865,7 @@ $$\operatorname{Var}(X)
 
 A distribuição beta aparece em modelos bayesianos para proporções, em estatísticas de ordem e em intervalos binomiais exatos [@rice2007mathematical, sec. 2.2; @ramachandran2021r, sec. 3.2; @chihara2022, aps. B.7--B.12].
 
-### Distribuições derivadas do modelo normal {.unnumbered}
+### Distribuições associadas ao modelo normal {.unnumbered}
 
 Se $Z_1,\ldots,Z_\nu$ são independentes e $N(0,1)$, então
 
@@ -832,7 +915,7 @@ Mostre, pelo teorema binomial, que a função de probabilidade binomial soma um.
 :::
 
 ::: {.callout-note title="Exercício 2"}
-Se $X_1,\ldots,X_n$ são independentes e possuem variâncias finitas, derive a variância de $\overline X$ no caso geral e no caso identicamente distribuído.
+Se $X_1,\ldots,X_n$ são independentes e possuem variâncias finitas, obtenha a variância de $\overline X$ no caso geral e no caso identicamente distribuído.
 :::
 
 ::: {.callout-note title="Exercício 3"}
@@ -852,19 +935,23 @@ Use funções geradoras de momentos para mostrar que a soma de variáveis Poisso
 :::
 
 ::: {.callout-note title="Exercício 7"}
-Mostre que, se $T_n\xrightarrow{P}\theta$ e $g$ é contínua, então $g(T_n)$ é consistente para $g(\theta)$.
+Mostre que, se $T_n\xrightarrow{P}\theta$ e $g$ é contínua, então
+
+$$
+g(T_n)\xrightarrow{P}g(\theta).
+$$
 :::
 
 ::: {.callout-note title="Exercício 8"}
-Se $\sqrt n(T_n-\theta)\xrightarrow{d}N(0,\tau^2)$ e $g(\theta)=\log\theta$, derive a distribuição assintótica de $\log T_n$, supondo $\theta>0$.
+Se $\sqrt n(T_n-\theta)\xrightarrow{d}N(0,\tau^2)$ e $g(\theta)=\log\theta$, obtenha a distribuição assintótica de $\log T_n$, supondo $\theta>0$.
 :::
 
 ::: {.callout-note title="Exercício 9"}
-Verifique as relações entre as distribuições gama e qui-quadrado e entre as distribuições normal, qui-quadrado e $t$.
+Verifique as relações entre as distribuições gama e qui-quadrado e entre as distribuições normal, qui-quadrado e $t$ de Student.
 :::
 
 ::: {.callout-note title="Exercício 10"}
-Explique por que a distribuição uniforme com limite superior desconhecido não satisfaz a condição usual de suporte independente do parâmetro.
+Considere $X\sim\operatorname{Unif}(0,\theta)$, com $\theta>0$. Identifique o suporte da distribuição e explique por que ele depende de $\theta$.
 :::
 
 ## Referências {.unnumbered}
