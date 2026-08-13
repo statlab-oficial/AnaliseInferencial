@@ -10,11 +10,10 @@ Os resultados apresentados neste capítulo serão utilizados como ferramentas. S
 Em particular, a Lei dos Grandes Números e o Teorema Central do Limite serão enunciados aqui, enquanto suas consequências para distribuições amostrais serão estudadas no capítulo **Distribuições Amostrais**. De forma semelhante, o método delta será apresentado aqui e aplicado posteriormente a estimadores e funções de parâmetros.
 :::
 
-
 ## Mapa de dependências {.unnumbered}
 
 | Ferramenta | Utilização posterior |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | Somatórios, produtos, logaritmos e diferenciação | verossimilhança, função escore, informação de Fisher e algoritmo EM |
 | Expansões de Taylor | aproximações, método delta, propriedades assintóticas e expansão da log-verossimilhança |
 | Vetores e matrizes | parâmetros vetoriais, matrizes de covariâncias, informação de Fisher e modelos lineares |
@@ -28,184 +27,143 @@ Em particular, a Lei dos Grandes Números e o Teorema Central do Limite serão e
 | Método delta | distribuição assintótica de funções de estimadores |
 | Ordens estocásticas | representação concisa de erros e expansões assintóticas |
 
-
 ## Notação e ferramentas matemáticas {.unnumbered}
 
 ### Somatórios, produtos e funções indicadoras {.unnumbered}
 
 Para uma sequência $a_1,\ldots,a_n$, utilizaremos
 
-$$
-\sum_{i=1}^n a_i
+$$\sum_{i=1}^n a_i
 =
-a_1+\cdots+a_n
-$$
+a_1+\cdots+a_n$$
 
 e
 
-$$
-\prod_{i=1}^n a_i
+$$\prod_{i=1}^n a_i
 =
-a_1\cdots a_n.
-$$
+a_1\cdots a_n.$$
 
 Algumas propriedades dos somatórios serão utilizadas repetidamente. Para constantes $a$, $b$ e $c$,
 
-$$
-\sum_{i=1}^n (a x_i+b y_i)
+$$\sum_{i=1}^n (a x_i+b y_i)
 =
 a\sum_{i=1}^n x_i
 +
-b\sum_{i=1}^n y_i
-$$
+b\sum_{i=1}^n y_i$$
 
 e
 
-$$
-\sum_{i=1}^n c
+$$\sum_{i=1}^n c
 =
-nc.
-$$
+nc.$$
 
 A média aritmética de $x_1,\ldots,x_n$ será representada por
 
-$$
-\overline x
+$$\overline x
 =
-\frac{1}{n}\sum_{i=1}^n x_i.
-$$
+\frac{1}{n}\sum_{i=1}^n x_i.$$
 
 Uma identidade utilizada na decomposição de somas de quadrados é
 
-$$
-\sum_{i=1}^n(x_i-a)^2
+$$\sum_{i=1}^n(x_i-a)^2
 =
 \sum_{i=1}^n(x_i-\overline x)^2
 +
-n(\overline x-a)^2.
-$$
+n(\overline x-a)^2.$$
 
 Em particular,
 
-$$
-\sum_{i=1}^n(x_i-\overline x)=0.
-$$
-
+$$\sum_{i=1}^n(x_i-\overline x)=0.$$
 
 #### Função indicadora {.unnumbered}
 
 A função indicadora de um evento $A$ é
 
-$$
-\mathbf 1_A(\omega)
+$$\mathbf 1_A(\omega)
 =
 \begin{cases}
 1, & \omega\in A,\\
 0, & \omega\notin A.
-\end{cases}
-$$
+\end{cases}$$
 
 Ela permite representar contagens por meio de somas. Se $A_i$ representa a ocorrência de determinada característica na unidade $i$, então
 
-$$
-R
+$$R
 =
-\sum_{i=1}^n\mathbf 1_{A_i}
-$$
+\sum_{i=1}^n\mathbf 1_{A_i}$$
 
 é o número de unidades que apresentam essa característica e
 
-$$
-\frac{R}{n}
+$$\frac{R}{n}
 =
 \frac{1}{n}
-\sum_{i=1}^n\mathbf 1_{A_i}
-$$
+\sum_{i=1}^n\mathbf 1_{A_i}$$
 
 é a proporção correspondente.
 
 Essa representação será utilizada posteriormente para relacionar contagens, proporções amostrais e médias de variáveis Bernoulli.
 
-
 #### Produtos e logaritmos {.unnumbered}
 
 A transformação logarítmica converte produtos em somas:
 
-$$
-\log
+$$\log
 \left(
 \prod_{i=1}^n a_i
 \right)
 =
 \sum_{i=1}^n\log a_i,
 \qquad
-a_i>0.
-$$
+a_i>0.$$
 
 Da mesma forma,
 
-$$
-\log(a^b)
+$$\log(a^b)
 =
-b\log a.
-$$
+b\log a.$$
 
 Essas identidades serão utilizadas no estudo da função de verossimilhança. Para observações independentes, a verossimilhança geralmente assume a forma de um produto, enquanto sua transformação logarítmica pode ser escrita como uma soma.
-
 
 ### Diferenciação {.unnumbered}
 
 Diversos métodos inferenciais envolvem a maximização ou minimização de funções. Para uma função real diferenciável $g$, um ponto interior $x_0$ candidato a extremo satisfaz
 
-$$
-g'(x_0)=0.
-$$
+$$g'(x_0)=0.$$
 
 Quando
 
-$$
-g''(x_0)<0,
-$$
+$$g''(x_0)<0,$$
 
 o ponto é um máximo local; quando
 
-$$
-g''(x_0)>0,
-$$
+$$g''(x_0)>0,$$
 
 é um mínimo local.
 
 Para funções de vários argumentos,
 
-$$
-g:\mathbb R^k\longrightarrow\mathbb R,
-$$
+$$g:\mathbb R^k\longrightarrow\mathbb R,$$
 
 as derivadas de primeira ordem são reunidas no vetor gradiente,
 
-$$
-\nabla g(\boldsymbol\theta)
+$$\nabla g(\boldsymbol\theta)
 =
 \begin{pmatrix}
 \dfrac{\partial g}{\partial\theta_1}\\
 \vdots\\
 \dfrac{\partial g}{\partial\theta_k}
-\end{pmatrix},
-$$
+\end{pmatrix},$$
 
 e as derivadas de segunda ordem formam a matriz hessiana,
 
-$$
-\nabla^2g(\boldsymbol\theta)
+$$\nabla^2g(\boldsymbol\theta)
 =
 \left[
 \frac{\partial^2g}
 {\partial\theta_i\partial\theta_j}
-\right]_{i,j=1}^k.
-$$
+\right]_{i,j=1}^k.$$
 
 Esses objetos serão utilizados na função escore, na informação observada, na otimização de funções de verossimilhança e em aproximações quadráticas.
-
 
 ### Fórmula de Taylor {.unnumbered}
 
@@ -213,22 +171,19 @@ Uma função possuir derivadas de todas as ordens não garante, por si só, que 
 
 Se $g$ possui duas derivadas contínuas em uma vizinhança de $a$, então, para $x$ nessa vizinhança,
 
-$$
-g(x)
+$$g(x)
 =
 g(a)
 +
 g'(a)(x-a)
 +
-\frac{1}{2}g''(\widetilde{x})(x-a)^2,
-$$
+\frac{1}{2}g''(\widetilde{x})(x-a)^2,$$
 
 em que $\widetilde{x}$ está entre $a$ e $x$.
 
 Em particular,
 
-$$
-g(x)
+$$g(x)
 =
 g(a)
 +
@@ -236,74 +191,55 @@ g'(a)(x-a)
 +
 o(|x-a|),
 \qquad
-x\to a.
-$$
+x\to a.$$
 
 A aproximação de primeira ordem é, portanto,
 
-$$
-g(x)
+$$g(x)
 \approx
-g(a)+g'(a)(x-a)
-$$
+g(a)+g'(a)(x-a)$$
 
 quando $x$ está suficientemente próximo de $a$.
 
-
 ::: {.callout-example title="Exemplo: aproximação de primeira ordem"}
-
 Considere
 
-$$
-g(x)=\log x.
-$$
+$$g(x)=\log x.$$
 
 Em torno de $a=1$,
 
-$$
-g(1)=0
-$$
+$$g(1)=0$$
 
 e
 
-$$
-g'(1)=1.
-$$
+$$g'(1)=1.$$
 
 Logo,
 
-$$
-\log x
+$$\log x
 =
 (x-1)+o(|x-1|),
 \qquad
-x\to1,
-$$
+x\to1,$$
 
 ou, em forma aproximada,
 
-$$
-\log x
+$$\log x
 \approx
-x-1
-$$
+x-1$$
 
 para valores de $x$ próximos de $1$.
 :::
-
 
 #### Taylor em várias dimensões {.unnumbered}
 
 Para uma função diferenciável
 
-$$
-g:\mathbb R^k\longrightarrow\mathbb R^m,
-$$
+$$g:\mathbb R^k\longrightarrow\mathbb R^m,$$
 
 temos
 
-$$
-g(\mathbf x)
+$$g(\mathbf x)
 =
 g(\boldsymbol\xi)
 +
@@ -313,15 +249,13 @@ Dg(\boldsymbol\xi)
 o
 \left(
 \|\mathbf x-\boldsymbol\xi\|
-\right),
-$$
+\right),$$
 
 em que $Dg(\boldsymbol\xi)$ é a matriz de derivadas de primeira ordem de $g$ avaliada em $\boldsymbol\xi$.
 
 Quando $g:\mathbb R^k\to\mathbb R$, a aproximação de primeira ordem pode ser escrita como
 
-$$
-g(\mathbf x)
+$$g(\mathbf x)
 =
 g(\boldsymbol\xi)
 +
@@ -331,427 +265,326 @@ g(\boldsymbol\xi)
 o
 \left(
 \|\mathbf x-\boldsymbol\xi\|
-\right).
-$$
+\right).$$
 
 Aproximações de segunda ordem para funções escalares utilizam a matriz hessiana. Esses resultados serão retomados no método delta e nas expansões da função de log-verossimilhança [@lauritzen2023fundamentals, ap. A.3.2].
-
 
 ## Vetores e matrizes {.unnumbered}
 
 Um vetor coluna em $\mathbb R^k$ será representado por
 
-$$
-\mathbf x
+$$\mathbf x
 =
-(x_1,\ldots,x_k)^\mathsf T.
-$$
+(x_1,\ldots,x_k)^\mathsf T.$$
 
 Seu transposto é
 
-$$
-\mathbf x^\mathsf T
+$$\mathbf x^\mathsf T
 =
-(x_1,\ldots,x_k).
-$$
+(x_1,\ldots,x_k).$$
 
 Para
 
-$$
-\mathbf x,\mathbf y\in\mathbb R^k,
-$$
+$$\mathbf x,\mathbf y\in\mathbb R^k,$$
 
 o produto interno é
 
-$$
-\langle\mathbf x,\mathbf y\rangle
+$$\langle\mathbf x,\mathbf y\rangle
 =
 \mathbf x^\mathsf T\mathbf y
 =
-\sum_{j=1}^k x_jy_j,
-$$
+\sum_{j=1}^k x_jy_j,$$
 
 e a norma euclidiana é
 
-$$
-\|\mathbf x\|
+$$\|\mathbf x\|
 =
-\sqrt{\mathbf x^\mathsf T\mathbf x}.
-$$
-
+\sqrt{\mathbf x^\mathsf T\mathbf x}.$$
 
 ### Matrizes {.unnumbered}
 
 Uma matriz com $m$ linhas e $k$ colunas será representada por
 
-$$
-\mathbf A
+$$\mathbf A
 =
 [a_{ij}]
 \in
-\mathbb R^{m\times k}.
-$$
+\mathbb R^{m\times k}.$$
 
 Sua transposta,
 
-$$
-\mathbf A^\mathsf T,
-$$
+$$\mathbf A^\mathsf T,$$
 
 possui dimensão $k\times m$ e satisfaz
 
-$$
-(\mathbf A\mathbf B)^\mathsf T
+$$(\mathbf A\mathbf B)^\mathsf T
 =
-\mathbf B^\mathsf T\mathbf A^\mathsf T.
-$$
+\mathbf B^\mathsf T\mathbf A^\mathsf T.$$
 
 Uma matriz quadrada $\mathbf A$ é **simétrica** quando
 
-$$
-\mathbf A^\mathsf T=\mathbf A.
-$$
+$$\mathbf A^\mathsf T=\mathbf A.$$
 
 Quando existe uma matriz $\mathbf A^{-1}$ tal que
 
-$$
-\mathbf A^{-1}\mathbf A
+$$\mathbf A^{-1}\mathbf A
 =
 \mathbf A\mathbf A^{-1}
 =
-\mathbf I,
-$$
+\mathbf I,$$
 
 dizemos que $\mathbf A$ é invertível.
 
 O **posto** de uma matriz corresponde ao número máximo de colunas, ou equivalentemente de linhas, linearmente independentes. Para uma matriz
 
-$$
-\mathbf X\in\mathbb R^{n\times p},
-$$
+$$\mathbf X\in\mathbb R^{n\times p},$$
 
 a condição
 
-$$
-\operatorname{posto}(\mathbf X)=p
-$$
+$$\operatorname{posto}(\mathbf X)=p$$
 
 indica que suas colunas são linearmente independentes. Nesse caso, quando $n\geq p$,
 
-$$
-\mathbf X^\mathsf T\mathbf X
-$$
+$$\mathbf X^\mathsf T\mathbf X$$
 
 é invertível.
-
 
 ### Formas quadráticas {.unnumbered}
 
 Para uma matriz simétrica
 
-$$
-\mathbf A\in\mathbb R^{k\times k}
-$$
+$$\mathbf A\in\mathbb R^{k\times k}$$
 
 e um vetor
 
-$$
-\mathbf x\in\mathbb R^k,
-$$
+$$\mathbf x\in\mathbb R^k,$$
 
 a expressão
 
-$$
-\mathbf x^\mathsf T\mathbf A\mathbf x
-$$
+$$\mathbf x^\mathsf T\mathbf A\mathbf x$$
 
 é denominada **forma quadrática**.
 
 A matriz $\mathbf A$ é **positiva semidefinida** quando
 
-$$
-\mathbf x^\mathsf T\mathbf A\mathbf x
-\geq0
-$$
+$$\mathbf x^\mathsf T\mathbf A\mathbf x
+\geq0$$
 
 para todo $\mathbf x\in\mathbb R^k$.
 
 Ela é **positiva definida** quando
 
-$$
-\mathbf x^\mathsf T\mathbf A\mathbf x
->0
-$$
+$$\mathbf x^\mathsf T\mathbf A\mathbf x
+>0$$
 
 para todo
 
-$$
-\mathbf x\neq\mathbf0.
-$$
+$$\mathbf x\neq\mathbf0.$$
 
 Matrizes de covariâncias são positivas semidefinidas. Sob condições de regularidade e identificabilidade, matrizes de informação de Fisher também apresentam essa estrutura.
 
 ::: {.callout-note title="Forma quadrática e soma de quadrados"}
 Quando
 
-$$
-\mathbf A=\mathbf I,
-$$
+$$\mathbf A=\mathbf I,$$
 
 a forma quadrática reduz-se a
 
-$$
-\mathbf x^\mathsf T\mathbf x
+$$\mathbf x^\mathsf T\mathbf x
 =
-\sum_{j=1}^k x_j^2.
-$$
+\sum_{j=1}^k x_j^2.$$
 
 Assim, somas de quadrados podem ser representadas por formas quadráticas. Essa representação será utilizada posteriormente no modelo normal e em mínimos quadrados.
 :::
-
 
 ### Projeções {.unnumbered}
 
 Uma matriz $\mathbf P$ é uma matriz de projeção ortogonal quando
 
-$$
-\mathbf P^\mathsf T=\mathbf P
-$$
+$$\mathbf P^\mathsf T=\mathbf P$$
 
 e
 
-$$
-\mathbf P^2=\mathbf P.
-$$
+$$\mathbf P^2=\mathbf P.$$
 
 Considere
 
-$$
-\mathbf X\in\mathbb R^{n\times p}
-$$
+$$\mathbf X\in\mathbb R^{n\times p}$$
 
 com posto completo nas colunas. A matriz
 
-$$
-\mathbf P_{\mathbf X}
+$$\mathbf P_{\mathbf X}
 =
 \mathbf X
 (\mathbf X^\mathsf T\mathbf X)^{-1}
-\mathbf X^\mathsf T
-$$
+\mathbf X^\mathsf T$$
 
 é a projeção ortogonal sobre o espaço coluna de $\mathbf X$.
 
 Para qualquer vetor
 
-$$
-\mathbf y\in\mathbb R^n,
-$$
+$$\mathbf y\in\mathbb R^n,$$
 
 o vetor
 
-$$
-\widehat{\mathbf y}
+$$\widehat{\mathbf y}
 =
-\mathbf P_{\mathbf X}\mathbf y
-$$
+\mathbf P_{\mathbf X}\mathbf y$$
 
 pertence ao espaço coluna de $\mathbf X$.
 
 O vetor residual
 
-$$
-\mathbf e
+$$\mathbf e
 =
 \mathbf y-\widehat{\mathbf y}
 =
-(\mathbf I-\mathbf P_{\mathbf X})\mathbf y
-$$
+(\mathbf I-\mathbf P_{\mathbf X})\mathbf y$$
 
 é ortogonal a esse espaço. Portanto,
 
-$$
-\mathbf X^\mathsf T\mathbf e
+$$\mathbf X^\mathsf T\mathbf e
 =
-\mathbf0.
-$$
+\mathbf0.$$
 
 Essa decomposição será utilizada no método de mínimos quadrados [@lauritzen2023fundamentals, ap. A.1; @rice2007mathematical, secs. 14.3--14.4].
-
 
 ### Gradiente, jacobiana e hessiana {.unnumbered}
 
 Para uma função escalar
 
-$$
-q:\mathbb R^k\longrightarrow\mathbb R,
-$$
+$$q:\mathbb R^k\longrightarrow\mathbb R,$$
 
 o gradiente é
 
-$$
-\nabla q(\boldsymbol\theta)
+$$\nabla q(\boldsymbol\theta)
 =
 \left(
 \frac{\partial q}{\partial\theta_1},
 \ldots,
 \frac{\partial q}{\partial\theta_k}
-\right)^\mathsf T.
-$$
+\right)^\mathsf T.$$
 
 A matriz hessiana é
 
-$$
-\nabla^2q(\boldsymbol\theta)
+$$\nabla^2q(\boldsymbol\theta)
 =
 \left[
 \frac{\partial^2q}
 {\partial\theta_i\partial\theta_j}
-\right]_{i,j=1}^k.
-$$
+\right]_{i,j=1}^k.$$
 
 Para uma função vetorial
 
-$$
-g:\mathbb R^k\longrightarrow\mathbb R^m,
-$$
+$$g:\mathbb R^k\longrightarrow\mathbb R^m,$$
 
 com
 
-$$
-g(\mathbf x)
+$$g(\mathbf x)
 =
 \begin{pmatrix}
 g_1(\mathbf x)\\
 \vdots\\
 g_m(\mathbf x)
-\end{pmatrix},
-$$
+\end{pmatrix},$$
 
 a matriz jacobiana é
 
-$$
-Dg(\mathbf x)
+$$Dg(\mathbf x)
 =
 \left[
 \frac{\partial g_i(\mathbf x)}
 {\partial x_j}
 \right]_
-{\substack{i=1,\ldots,m\\j=1,\ldots,k}}.
-$$
+{\substack{i=1,\ldots,m\\j=1,\ldots,k}}.$$
 
 Quando $m=1$, a jacobiana corresponde ao transposto do gradiente, de acordo com a convenção de orientação adotada.
 
 Esses objetos aparecem em três situações distintas ao longo do livro:
 
-1. o **gradiente** descreve derivadas de primeira ordem de funções escalares, como a log-verossimilhança;
-2. a **hessiana** reúne derivadas de segunda ordem e será utilizada em aproximações e informação observada;
-3. a **jacobiana** descreve derivadas de transformações vetoriais e será utilizada em mudanças de variáveis e no método delta multivariado.
+1.  o **gradiente** descreve derivadas de primeira ordem de funções escalares, como a log-verossimilhança;
+2.  a **hessiana** reúne derivadas de segunda ordem e será utilizada em aproximações e informação observada;
+3.  a **jacobiana** descreve derivadas de transformações vetoriais e será utilizada em mudanças de variáveis e no método delta multivariado.
 
 ## Transformações multivariadas e jacobiano {.unnumbered}
 
 Considere um vetor aleatório
 
-$$
-\mathbf X
+$$\mathbf X
 =
-(X_1,\ldots,X_k)^\mathsf T
-$$
+(X_1,\ldots,X_k)^\mathsf T$$
 
 com densidade conjunta $f_{\mathbf X}$ e uma transformação
 
-$$
-\mathbf Y=g(\mathbf X),
-$$
+$$\mathbf Y=g(\mathbf X),$$
 
 em que
 
-$$
-g:\mathbb R^k\longrightarrow\mathbb R^k.
-$$
+$$g:\mathbb R^k\longrightarrow\mathbb R^k.$$
 
 Suponha que $g$ seja bijetiva e diferenciável no domínio considerado, com inversa
 
-$$
-\mathbf x=h(\mathbf y).
-$$
+$$\mathbf x=h(\mathbf y).$$
 
 A densidade conjunta de $\mathbf Y$ é
 
-$$
-f_{\mathbf Y}(\mathbf y)
+$$f_{\mathbf Y}(\mathbf y)
 =
 f_{\mathbf X}\{h(\mathbf y)\}
 \left|
 \det Dh(\mathbf y)
-\right|,
-$$
+\right|,$$
 
 em que
 
-$$
-Dh(\mathbf y)
+$$Dh(\mathbf y)
 =
 \left[
 \frac{\partial h_i(\mathbf y)}
 {\partial y_j}
-\right]_{i,j=1}^k
-$$
+\right]_{i,j=1}^k$$
 
 é a matriz jacobiana da transformação inversa.
 
 O fator
 
-$$
-\left|
+$$\left|
 \det Dh(\mathbf y)
-\right|
-$$
+\right|$$
 
 corrige a alteração de volume produzida pela transformação. Essa correção é a extensão multivariada do fator
 
-$$
-\left|
+$$\left|
 \frac{d}{dy}g^{-1}(y)
-\right|
-$$
+\right|$$
 
 utilizado no caso univariado [@rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
 
-
 ::: {.callout-example title="Exemplo: transformação linear em duas dimensões"}
-
 Considere
 
-$$
-\mathbf Y
+$$\mathbf Y
 =
-\mathbf A\mathbf X+\mathbf b,
-$$
+\mathbf A\mathbf X+\mathbf b,$$
 
 em que $\mathbf A$ é uma matriz $2\times2$ invertível.
 
 A transformação inversa é
 
-$$
-\mathbf X
+$$\mathbf X
 =
 \mathbf A^{-1}
-(\mathbf Y-\mathbf b).
-$$
+(\mathbf Y-\mathbf b).$$
 
 Portanto,
 
-$$
-Dh(\mathbf y)
+$$Dh(\mathbf y)
 =
-\mathbf A^{-1}
-$$
+\mathbf A^{-1}$$
 
 e
 
-$$
-\left|
+$$\left|
 \det Dh(\mathbf y)
 \right|
 =
@@ -759,159 +592,117 @@ $$
 \det(\mathbf A^{-1})
 \right|
 =
-\frac{1}{|\det(\mathbf A)|}.
-$$
+\frac{1}{|\det(\mathbf A)|}.$$
 
 Assim,
 
-$$
-f_{\mathbf Y}(\mathbf y)
+$$f_{\mathbf Y}(\mathbf y)
 =
 f_{\mathbf X}
 \left\{
 \mathbf A^{-1}
 (\mathbf y-\mathbf b)
 \right\}
-\frac{1}{|\det(\mathbf A)|}.
-$$
+\frac{1}{|\det(\mathbf A)|}.$$
 :::
-
 
 ::: {.callout-note title="Uso posterior"}
 O método será utilizado quando a distribuição de uma estatística for obtida por transformação de um vetor aleatório. Na Unidade de Distribuições Amostrais, ele também fornecerá uma das ferramentas para derivar distribuições associadas ao modelo normal.
 :::
 
-
 ## Ferramentas assintóticas {.unnumbered}
 
 Resultados assintóticos descrevem o comportamento de sequências de variáveis aleatórias ou estatísticas quando
 
-$$
-n\to\infty.
-$$
+$$n\to\infty.$$
 
 Na Inferência Estatística, esses resultados permitem estudar propriedades de estimadores e construir aproximações quando uma distribuição amostral exata não está disponível.
 
 A linguagem utilizada para formular esses resultados começa pelos diferentes modos de convergência.
 
-
 ### Modos de convergência {.unnumbered}
 
 Sejam
 
-$$
-X_1,X_2,\ldots
-$$
+$$X_1,X_2,\ldots$$
 
 uma sequência de variáveis aleatórias e $X$ outra variável aleatória.
 
-
 ::: {.callout-important title="Convergência quase certa"}
-
 Dizemos que $X_n$ converge **quase certamente** para $X$ quando
 
-$$
-P\left(
+$$P\left(
 \lim_{n\to\infty}X_n=X
 \right)
 =
-1.
-$$
+1.$$
 
 Escrevemos
 
-$$
-X_n\xrightarrow{\text{q.c.}}X.
-$$
+$$X_n\xrightarrow{\text{q.c.}}X.$$
 :::
-
 
 ::: {.callout-important title="Convergência em probabilidade"}
-
 Dizemos que $X_n$ converge **em probabilidade** para $X$ quando, para todo $\varepsilon>0$,
 
-$$
-P(|X_n-X|>\varepsilon)
+$$P(|X_n-X|>\varepsilon)
 \longrightarrow
-0.
-$$
+0.$$
 
 Escrevemos
 
-$$
-X_n\xrightarrow{P}X.
-$$
+$$X_n\xrightarrow{P}X.$$
 :::
 
-
 ::: {.callout-important title="Convergência em média quadrática"}
-
 Dizemos que $X_n$ converge **em média quadrática** para $X$ quando
 
-$$
-E\left[(X_n-X)^2\right]
+$$E\left[(X_n-X)^2\right]
 \longrightarrow
-0,
-$$
+0,$$
 
 desde que essa esperança exista.
 
 Escrevemos
 
-$$
-X_n\xrightarrow{L^2}X.
-$$
+$$X_n\xrightarrow{L^2}X.$$
 :::
 
-
 ::: {.callout-important title="Convergência em distribuição"}
-
 Dizemos que $X_n$ converge **em distribuição** para $X$ quando
 
-$$
-F_{X_n}(x)
+$$F_{X_n}(x)
 \longrightarrow
-F_X(x)
-$$
+F_X(x)$$
 
 em todo ponto de continuidade de $F_X$.
 
 Escrevemos
 
-$$
-X_n\xrightarrow{d}X.
-$$
+$$X_n\xrightarrow{d}X.$$
 :::
-
 
 ### Relações entre os modos de convergência {.unnumbered}
 
 As seguintes implicações serão utilizadas ao longo do livro:
 
-$$
-X_n\xrightarrow{\text{q.c.}}X
+$$X_n\xrightarrow{\text{q.c.}}X
 \quad\Longrightarrow\quad
-X_n\xrightarrow{P}X,
-$$
+X_n\xrightarrow{P}X,$$
 
-$$
-X_n\xrightarrow{L^2}X
+$$X_n\xrightarrow{L^2}X
 \quad\Longrightarrow\quad
-X_n\xrightarrow{P}X
-$$
+X_n\xrightarrow{P}X$$
 
 e
 
-$$
-X_n\xrightarrow{P}X
+$$X_n\xrightarrow{P}X
 \quad\Longrightarrow\quad
-X_n\xrightarrow{d}X.
-$$
+X_n\xrightarrow{d}X.$$
 
 Portanto,
 
-$$
-\begin{array}{ccc}
+$$\begin{array}{ccc}
 X_n\xrightarrow{\text{q.c.}}X
 & \searrow & \\
 &&X_n\xrightarrow{P}X
@@ -919,25 +710,19 @@ X_n\xrightarrow{\text{q.c.}}X
 X_n\xrightarrow{d}X\\
 X_n\xrightarrow{L^2}X
 & \nearrow &
-\end{array}
-$$
+\end{array}$$
 
 Em geral, não há implicação entre convergência quase certa e convergência em média quadrática. As demais implicações também não podem ser invertidas sem hipóteses adicionais.
 
 Há uma exceção utilizada com frequência em Inferência Estatística. Se $c$ é uma constante, então
 
-$$
-X_n\xrightarrow{d}c
-$$
+$$X_n\xrightarrow{d}c$$
 
 implica
 
-$$
-X_n\xrightarrow{P}c.
-$$
+$$X_n\xrightarrow{P}c.$$
 
 Assim, quando o limite é constante, convergência em distribuição e convergência em probabilidade são equivalentes [@rice2007mathematical, cap. 5; @lauritzen2023fundamentals, ap. A.2].
-
 
 ### Teorema do mapeamento contínuo {.unnumbered}
 
@@ -945,130 +730,96 @@ O teorema do mapeamento contínuo permite transferir resultados de convergência
 
 Se
 
-$$
-X_n\xrightarrow{P}X
-$$
+$$X_n\xrightarrow{P}X$$
 
 e $g$ é contínua nos valores assumidos por $X$, então
 
-$$
-g(X_n)
+$$g(X_n)
 \xrightarrow{P}
-g(X).
-$$
+g(X).$$
 
 A versão correspondente para convergência em distribuição estabelece que
 
-$$
-X_n\xrightarrow{d}X
-$$
+$$X_n\xrightarrow{d}X$$
 
 implica
 
-$$
-g(X_n)
+$$g(X_n)
 \xrightarrow{d}
-g(X),
-$$
+g(X),$$
 
 quando $g$ é contínua com probabilidade um sob a distribuição limite [@lauritzen2023fundamentals, teorema A.11].
 
-
 ::: {.callout-example title="Exemplo"}
-
 Se
 
-$$
-T_n\xrightarrow{P}\theta,
-$$
+$$T_n\xrightarrow{P}\theta,$$
 
 com $\theta>0$, então, pela continuidade do logaritmo em $(0,\infty)$,
 
-$$
-\log T_n
+$$\log T_n
 \xrightarrow{P}
-\log\theta.
-$$
+\log\theta.$$
 
 Da mesma forma,
 
-$$
-T_n^2
+$$T_n^2
 \xrightarrow{P}
-\theta^2.
-$$
+\theta^2.$$
 
 O resultado permite obter a consistência de transformações contínuas de estimadores consistentes.
 :::
-
 
 ### Lema de Slutsky {.unnumbered}
 
 Considere
 
-$$
-X_n\xrightarrow{d}X
-$$
+$$X_n\xrightarrow{d}X$$
 
 e
 
-$$
-Y_n\xrightarrow{P}c,
-$$
+$$Y_n\xrightarrow{P}c,$$
 
 em que $c$ é uma constante.
 
 Então,
 
-$$
-X_n+Y_n
+$$X_n+Y_n
 \xrightarrow{d}
-X+c,
-$$
+X+c,$$
 
-$$
-X_nY_n
+$$X_nY_n
 \xrightarrow{d}
-cX
-$$
+cX$$
 
 e, se $c\neq0$,
 
-$$
-\frac{X_n}{Y_n}
+$$\frac{X_n}{Y_n}
 \xrightarrow{d}
-\frac{X}{c}.
-$$
+\frac{X}{c}.$$
 
 O lema permite combinar uma quantidade com distribuição limite não degenerada com outra que converge em probabilidade para uma constante [@lauritzen2023fundamentals, corolário A.12].
 
-
 ::: {.callout-example title="Exemplo: substituição de um parâmetro"}
-
 Suponha que
 
-$$
-\frac{
+$$\frac{
 \sqrt n(T_n-\theta)
 }{
 \sigma
 }
 \xrightarrow{d}
-N(0,1)
-$$
+N(0,1)$$
 
 e que
 
-$$
-S_n\xrightarrow{P}\sigma,
+$$S_n\xrightarrow{P}\sigma,
 \qquad
-\sigma>0.
-$$
+\sigma>0.$$
 
 Podemos escrever
 
-$$
-\frac{
+$$\frac{
 \sqrt n(T_n-\theta)
 }{
 S_n
@@ -1079,170 +830,134 @@ S_n
 }{
 \sigma
 }
-\frac{\sigma}{S_n}.
-$$
+\frac{\sigma}{S_n}.$$
 
 Como
 
-$$
-\frac{\sigma}{S_n}
+$$\frac{\sigma}{S_n}
 \xrightarrow{P}
-1,
-$$
+1,$$
 
 o lema de Slutsky fornece
 
-$$
-\frac{
+$$\frac{
 \sqrt n(T_n-\theta)
 }{
 S_n
 }
 \xrightarrow{d}
-N(0,1).
-$$
+N(0,1).$$
 
 Esse mecanismo permite substituir, em diversos resultados assintóticos, uma quantidade desconhecida por um estimador consistente.
 :::
-
 
 ### Lei dos Grandes Números {.unnumbered}
 
 Considere uma sequência
 
-$$
-X_1,X_2,\ldots
-$$
+$$X_1,X_2,\ldots$$
 
 de variáveis aleatórias independentes e identicamente distribuídas, com
 
-$$
-E|X_1|<\infty.
-$$
+$$E|X_1|<\infty.$$
 
 Então,
 
-$$
-\overline X_n
+$$\overline X_n
 =
 \frac{1}{n}
 \sum_{i=1}^nX_i
 \xrightarrow{P}
-E(X_1).
-$$
+E(X_1).$$
 
 Se
 
-$$
-E(X_1)=\mu,
-$$
+$$E(X_1)=\mu,$$
 
 podemos escrever simplesmente
 
-$$
-\overline X_n
+$$\overline X_n
 \xrightarrow{P}
-\mu.
-$$
+\mu.$$
 
 A Lei dos Grandes Números descreve a estabilização da média amostral em torno da média da distribuição quando o tamanho da amostra aumenta [@rice2007mathematical, sec. 5.2; @ramachandran2021r, sec. 3.5].
-
 
 ::: {.callout-note title="Interpretação"}
 A Lei dos Grandes Números é um resultado de **convergência**. Ela estabelece que
 
-$$
-\overline X_n
+$$\overline X_n
 \xrightarrow{P}
-\mu,
-$$
+\mu,$$
 
 mas não fornece diretamente a forma da distribuição de $\overline X_n$ para um valor fixado de $n$.
 
 A distribuição e a velocidade das flutuações de $\overline X_n$ em torno de $\mu$ são tratadas pelo Teorema Central do Limite.
 :::
 
-
 ### Teorema Central do Limite {.unnumbered}
 
 Considere
 
-$$
-X_1,X_2,\ldots
-$$
+$$X_1,X_2,\ldots$$
 
 independentes e identicamente distribuídas, com
 
-$$
-E(X_1)=\mu
-$$
+$$E(X_1)=\mu$$
 
 e
 
-$$
-0<
+$$0<
 \operatorname{Var}(X_1)
 =
 \sigma^2
 <
-\infty.
-$$
+\infty.$$
 
 Então,
 
-$$
-\frac{
+$$\frac{
 \sqrt n(\overline X_n-\mu)
 }{
 \sigma
 }
 \xrightarrow{d}
-N(0,1).
-$$
+N(0,1).$$
 
 Equivalentemente,
 
-$$
-\frac{
+$$\frac{
 \sum_{i=1}^nX_i-n\mu
 }{
 \sigma\sqrt n
 }
 \xrightarrow{d}
-N(0,1).
-$$
+N(0,1).$$
 
 O resultado descreve a distribuição limite das flutuações padronizadas da média ou da soma em torno de seus respectivos valores esperados [@rice2007mathematical, sec. 5.3; @ramachandran2021r, sec. 3.5; @chihara2022, sec. 4.3].
-
 
 ::: {.callout-important title="O que o Teorema Central do Limite estabelece"}
 O Teorema Central do Limite não afirma que as observações individuais se tornam normalmente distribuídas quando $n$ aumenta.
 
 A convergência refere-se à distribuição da quantidade padronizada
 
-$$
-\frac{
+$$\frac{
 \sqrt n(\overline X_n-\mu)
 }{
 \sigma
-}.
-$$
+}.$$
 
 Para amostras suficientemente grandes, esse resultado permite aproximar a distribuição da média por
 
-$$
-\overline X_n
+$$\overline X_n
 \approx
 N
 \left(
 \mu,
 \frac{\sigma^2}{n}
-\right).
-$$
+\right).$$
 
 A qualidade dessa aproximação depende da distribuição das observações e do tamanho da amostra. Distribuições com forte assimetria ou caudas pesadas podem exigir valores maiores de $n$.
 :::
-
 
 ### Lei dos Grandes Números e Teorema Central do Limite {.unnumbered}
 
@@ -1250,30 +965,26 @@ Os dois resultados descrevem aspectos diferentes do comportamento da média amos
 
 A Lei dos Grandes Números estabelece
 
-$$
-\overline X_n
+$$\overline X_n
 \xrightarrow{P}
-\mu.
-$$
+\mu.$$
 
 Seu foco é a aproximação de $\overline X_n$ ao valor $\mu$.
 
 O Teorema Central do Limite estabelece
 
-$$
-\frac{
+$$\frac{
 \sqrt n(\overline X_n-\mu)
 }{
 \sigma
 }
 \xrightarrow{d}
-N(0,1).
-$$
+N(0,1).$$
 
 Seu foco é a distribuição das flutuações de $\overline X_n$ em torno de $\mu$ na escala $n^{-1/2}$.
 
 | Resultado | Questão descrita |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | Lei dos Grandes Números | $\overline X_n$ se aproxima de $\mu$? |
 | Teorema Central do Limite | como $\overline X_n-\mu$ se distribui, após a padronização adequada? |
 
@@ -1285,74 +996,57 @@ O método delta permite obter a distribuição assintótica de uma função de u
 
 Suponha que
 
-$$
-\sqrt n(T_n-\theta)
+$$\sqrt n(T_n-\theta)
 \xrightarrow{d}
-N(0,\tau^2)
-$$
+N(0,\tau^2)$$
 
 e que $g$ seja diferenciável em $\theta$. Denotando por $g'(\theta)$ a primeira derivada de $g$ avaliada em $\theta$, temos
 
-$$
-\sqrt n
+$$\sqrt n
 \{g(T_n)-g(\theta)\}
 \xrightarrow{d}
 N
 \left(
 0,
 [g'(\theta)]^2\tau^2
-\right).
-$$
+\right).$$
 
 A aproximação de Taylor fornece
 
-$$
-g(T_n)
+$$g(T_n)
 =
 g(\theta)
 +
 g'(\theta)(T_n-\theta)
 +
-o_P(|T_n-\theta|).
-$$
+o_P(|T_n-\theta|).$$
 
 Assim, em primeira ordem,
 
-$$
-g(T_n)-g(\theta)
+$$g(T_n)-g(\theta)
 \approx
-g'(\theta)(T_n-\theta).
-$$
+g'(\theta)(T_n-\theta).$$
 
 O método transfere, portanto, a distribuição assintótica de $T_n$ para a função $g(T_n)$.
 
-
 ::: {.callout-example title="Exemplo: quadrado da média amostral"}
-
 Suponha que
 
-$$
-\sqrt n(\overline X_n-\mu)
+$$\sqrt n(\overline X_n-\mu)
 \xrightarrow{d}
-N(0,\sigma^2),
-$$
+N(0,\sigma^2),$$
 
 com $\mu\neq0$, e considere
 
-$$
-g(x)=x^2.
-$$
+$$g(x)=x^2.$$
 
 Como
 
-$$
-g'(\mu)=2\mu,
-$$
+$$g'(\mu)=2\mu,$$
 
 o método delta fornece
 
-$$
-\sqrt n
+$$\sqrt n
 \left(
 \overline X_n^2-\mu^2
 \right)
@@ -1361,33 +1055,24 @@ N
 \left(
 0,
 4\mu^2\sigma^2
-\right).
-$$
+\right).$$
 
 Consequentemente, para valores grandes de $n$,
 
-$$
-\overline X_n^2
-$$
+$$\overline X_n^2$$
 
 tem variância assintótica aproximadamente igual a
 
-$$
-\frac{4\mu^2\sigma^2}{n}.
-$$
+$$\frac{4\mu^2\sigma^2}{n}.$$
 :::
-
 
 ::: {.callout-note title="Quando a primeira derivada é nula"}
 Se
 
-$$
-g'(\theta)=0,
-$$
+$$g'(\theta)=0,$$
 
 o resultado de primeira ordem é degenerado. Nesse caso, pode ser necessário utilizar uma expansão de Taylor de ordem superior e uma normalização diferente.
 :::
-
 
 ### Método delta multivariado {.unnumbered}
 
@@ -1395,73 +1080,39 @@ O método delta também se aplica quando o parâmetro e a estatística são veto
 
 Suponha que
 
-$$
-\sqrt n
-(\mathbf T_n-\boldsymbol\theta)
-\xrightarrow{d}
-N_k
-(\mathbf0,\boldsymbol\Sigma)
-$$
+$$\sqrt{n}(\mathbf T_n-\boldsymbol\theta)\xrightarrow{d}N_k(\mathbf0,\boldsymbol\Sigma),$$
 
 e que
 
-$$
-g:\mathbb R^k\longrightarrow\mathbb R^m
-$$
+$$g:\mathbb R^k\longrightarrow\mathbb R^m$$
 
 seja diferenciável em $\boldsymbol\theta$.
 
 Se
 
-$$
-Dg(\boldsymbol\theta)
-$$
+$$Dg(\boldsymbol\theta)$$
 
 denota a matriz jacobiana de $g$ avaliada em $\boldsymbol\theta$, então
 
-$$
-\sqrt n
-\{
-g(\mathbf T_n)-g(\boldsymbol\theta)
-\}
-\xrightarrow{d}
-N_m
-\left[
-\mathbf0,
-Dg(\boldsymbol\theta)
-\boldsymbol\Sigma
-Dg(\boldsymbol\theta)^\mathsf T
-\right].
-$$
+$$\sqrt{n}\{g(\mathbf T_n)-g(\boldsymbol\theta)\}\xrightarrow{d} N_m \left[
+\mathbf0,Dg(\boldsymbol\theta)\boldsymbol\Sigma Dg(\boldsymbol\theta)^\mathsf T \right].$$
 
 O resultado é a extensão vetorial da aproximação
 
-$$
-g(\mathbf T_n)
--
-g(\boldsymbol\theta)
-\approx
-Dg(\boldsymbol\theta)
-(\mathbf T_n-\boldsymbol\theta).
-$$
+$$g(\mathbf T_n) - g(\boldsymbol\theta) \approx Dg(\boldsymbol\theta) (\mathbf T_n-\boldsymbol\theta).$$
 
 Quando $m=1$, a matriz jacobiana reduz-se a um vetor linha e a variância assintótica de $g(\mathbf T_n)$ é
 
-$$
-\nabla g(\boldsymbol\theta)^\mathsf T
+$$\nabla g(\boldsymbol\theta)^\mathsf T
 \boldsymbol\Sigma
-\nabla g(\boldsymbol\theta).
-$$
+\nabla g(\boldsymbol\theta).$$
 
 O método delta será utilizado posteriormente para obter variâncias assintóticas de funções de estimadores e erros-padrão associados a transformações de parâmetros [@lauritzen2023fundamentals, teorema A.19; @chihara2022, sec. 7.7].
 
-
 ::: {.callout-example title="Exemplo: razão entre duas quantidades"}
-
 Suponha que
 
-$$
-\sqrt n
+$$\sqrt n
 \left[
 \begin{pmatrix}
 T_{1n}\\
@@ -1478,34 +1129,28 @@ N_2
 \left(
 \mathbf0,
 \boldsymbol\Sigma
-\right),
-$$
+\right),$$
 
 com $\theta_2\neq0$.
 
 Considere
 
-$$
-g(\theta_1,\theta_2)
+$$g(\theta_1,\theta_2)
 =
-\frac{\theta_1}{\theta_2}.
-$$
+\frac{\theta_1}{\theta_2}.$$
 
 O gradiente é
 
-$$
-\nabla g(\theta_1,\theta_2)
+$$\nabla g(\theta_1,\theta_2)
 =
 \begin{pmatrix}
 \dfrac{1}{\theta_2}\\[6pt]
 -\dfrac{\theta_1}{\theta_2^2}
-\end{pmatrix}.
-$$
+\end{pmatrix}.$$
 
 Portanto,
 
-$$
-\sqrt n
+$$\sqrt n
 \left(
 \frac{T_{1n}}{T_{2n}}
 -
@@ -1518,10 +1163,8 @@ N
 \nabla g(\boldsymbol\theta)^\mathsf T
 \boldsymbol\Sigma
 \nabla g(\boldsymbol\theta)
-\right).
-$$
+\right).$$
 :::
-
 
 ### Ordens estocásticas {.unnumbered}
 
@@ -1529,47 +1172,34 @@ As notações $o_P$ e $O_P$ permitem descrever a magnitude probabilística de se
 
 Seja $a_n>0$ uma sequência determinística.
 
-
 ::: {.callout-important title="Pequena ordem em probabilidade"}
-
 Escrevemos
 
-$$
-X_n=o_P(a_n)
-$$
+$$X_n=o_P(a_n)$$
 
 quando
 
-$$
-\frac{X_n}{a_n}
+$$\frac{X_n}{a_n}
 \xrightarrow{P}
-0.
-$$
+0.$$
 
 Assim, $X_n$ torna-se desprezível em relação a $a_n$ em probabilidade.
 :::
 
-
 ::: {.callout-important title="Ordem em probabilidade"}
-
 Escrevemos
 
-$$
-X_n=O_P(a_n)
-$$
+$$X_n=O_P(a_n)$$
 
 quando
 
-$$
-\frac{X_n}{a_n}
-$$
+$$\frac{X_n}{a_n}$$
 
 é limitado em probabilidade.
 
 Formalmente, para todo $\varepsilon>0$, existe $M>0$ tal que, para $n$ suficientemente grande,
 
-$$
-P
+$$P
 \left(
 \left|
 \frac{X_n}{a_n}
@@ -1577,103 +1207,75 @@ P
 >M
 \right)
 <
-\varepsilon.
-$$
+\varepsilon.$$
 :::
 
 Em particular,
 
-$$
-X_n=O_P(1)
-$$
+$$X_n=O_P(1)$$
 
 indica que a sequência é limitada em probabilidade, enquanto
 
-$$
-X_n=o_P(1)
-$$
+$$X_n=o_P(1)$$
 
 equivale a
 
-$$
-X_n\xrightarrow{P}0.
-$$
-
+$$X_n\xrightarrow{P}0.$$
 
 #### Taxa de convergência {.unnumbered}
 
 Suponha que $T_n$ estime $\theta$. A expressão
 
-$$
-T_n-\theta
+$$T_n-\theta
 =
-O_P(n^{-1/2})
-$$
+O_P(n^{-1/2})$$
 
 indica que o erro de estimação possui ordem probabilística $n^{-1/2}$.
 
 Por exemplo, sob as condições do Teorema Central do Limite,
 
-$$
-\sqrt n(\overline X_n-\mu)
+$$\sqrt n(\overline X_n-\mu)
 \xrightarrow{d}
-N(0,\sigma^2).
-$$
+N(0,\sigma^2).$$
 
 Como uma sequência que converge em distribuição é limitada em probabilidade,
 
-$$
-\sqrt n(\overline X_n-\mu)
+$$\sqrt n(\overline X_n-\mu)
 =
-O_P(1).
-$$
+O_P(1).$$
 
 Consequentemente,
 
-$$
-\overline X_n-\mu
+$$\overline X_n-\mu
 =
-O_P(n^{-1/2}).
-$$
+O_P(n^{-1/2}).$$
 
 Essa notação será utilizada posteriormente em expansões de Taylor da função escore e da log-verossimilhança [@lauritzen2023fundamentals, sec. 5.5 e ap. A.2].
-
 
 ::: {.callout-note title="Diferença entre $O_P$ e $o_P$"}
 As expressões
 
-$$
-X_n=O_P(a_n)
-$$
+$$X_n=O_P(a_n)$$
 
 e
 
-$$
-X_n=o_P(a_n)
-$$
+$$X_n=o_P(a_n)$$
 
 não têm o mesmo significado.
 
 A primeira indica que $X_n/a_n$ permanece limitado em probabilidade. A segunda estabelece a condição mais forte
 
-$$
-\frac{X_n}{a_n}
-\xrightarrow{P}0.
-$$
+$$\frac{X_n}{a_n}
+\xrightarrow{P}0.$$
 
 Portanto,
 
-$$
-X_n=o_P(a_n)
-$$
+$$X_n=o_P(a_n)$$
 
 implica
 
-$$
-X_n=O_P(a_n).
-$$
+$$X_n=O_P(a_n).$$
 :::
-
 
 ## Síntese {.unnumbered}
 
@@ -1700,156 +1302,123 @@ A segunda reúne ferramentas para o estudo assintótico de estatísticas:
 
 As relações entre alguns desses resultados podem ser representadas por
 
-$$
-\text{LGN}
+$$\text{LGN}
 \longrightarrow
 \text{convergência para uma constante}
 \longrightarrow
-\text{consistência},
-$$
+\text{consistência},$$
 
 enquanto
 
-$$
-\text{TCL}
+$$\text{TCL}
 \longrightarrow
 \text{distribuição limite}
 \longrightarrow
-\text{aproximação normal}.
-$$
+\text{aproximação normal}.$$
 
 O método delta combina uma distribuição assintótica com uma expansão de Taylor:
 
-$$
-\text{distribuição assintótica de }T_n
+$$\text{distribuição assintótica de }T_n
 +
 \text{Taylor}
 \longrightarrow
-\text{distribuição assintótica de }g(T_n).
-$$
+\text{distribuição assintótica de }g(T_n).$$
 
 O mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes. As notações $O_P$ e $o_P$ fornecem uma forma compacta de registrar a magnitude dos termos que aparecem nessas aproximações.
 
 Os capítulos seguintes utilizarão esses resultados sem redefini-los. As condições e interpretações específicas serão discutidas no contexto em que cada ferramenta for aplicada.
-
 
 ## Exercícios de consolidação {.unnumbered}
 
 ::: {.callout-note title="Exercício 1"}
 Mostre que
 
-$$
-\sum_{i=1}^n(x_i-a)^2
+$$\sum_{i=1}^n(x_i-a)^2
 =
 \sum_{i=1}^n(x_i-\overline x)^2
 +
-n(\overline x-a)^2.
-$$
+n(\overline x-a)^2.$$
 
 Utilize a identidade
 
-$$
-\sum_{i=1}^n(x_i-\overline x)=0.
-$$
+$$\sum_{i=1}^n(x_i-\overline x)=0.$$
 :::
-
 
 ::: {.callout-note title="Exercício 2"}
 Obtenha a aproximação de Taylor de primeira ordem de
 
-$$
-g(x)=\frac{1}{x}
-$$
+$$g(x)=\frac{1}{x}$$
 
 em torno de $a=1$.
 
 Em seguida, obtenha a aproximação de segunda ordem.
 :::
 
-
 ::: {.callout-note title="Exercício 3"}
 Para
 
-$$
-g(x,y)=x^2+xy+y^2,
-$$
+$$g(x,y)=x^2+xy+y^2,$$
 
 obtenha:
 
-a. o gradiente $\nabla g(x,y)$;
+a.  o gradiente $\nabla g(x,y)$;
 
-b. a matriz hessiana $\nabla^2g(x,y)$;
+b.  a matriz hessiana $\nabla^2g(x,y)$;
 
-c. a aproximação de Taylor de primeira ordem em torno de $(1,1)$.
+c.  a aproximação de Taylor de primeira ordem em torno de $(1,1)$.
 :::
-
 
 ::: {.callout-note title="Exercício 4"}
 Considere
 
-$$
-\mathbf A
+$$\mathbf A
 =
 \begin{pmatrix}
 2 & 1\\
 1 & 2
-\end{pmatrix}.
-$$
+\end{pmatrix}.$$
 
 Mostre que $\mathbf A$ é positiva definida verificando que
 
-$$
-\mathbf x^\mathsf T
+$$\mathbf x^\mathsf T
 \mathbf A
 \mathbf x
->0
-$$
+>0$$
 
 para todo $\mathbf x\neq\mathbf0$.
 :::
 
-
 ::: {.callout-note title="Exercício 5"}
 Se
 
-$$
-\mathbf P
+$$\mathbf P
 =
 \mathbf X
 (\mathbf X^\mathsf T\mathbf X)^{-1}
-\mathbf X^\mathsf T,
-$$
+\mathbf X^\mathsf T,$$
 
 com $\mathbf X$ de posto completo nas colunas, mostre que
 
-$$
-\mathbf P^\mathsf T=\mathbf P
-$$
+$$\mathbf P^\mathsf T=\mathbf P$$
 
 e
 
-$$
-\mathbf P^2=\mathbf P.
-$$
+$$\mathbf P^2=\mathbf P.$$
 :::
-
 
 ::: {.callout-note title="Exercício 6"}
 Considere a transformação
 
-$$
-Y_1=X_1+X_2,
+$$Y_1=X_1+X_2,
 \qquad
-Y_2=X_1-X_2.
-$$
+Y_2=X_1-X_2.$$
 
-a. Obtenha a transformação inversa.
+a.  Obtenha a transformação inversa.
 
-b. Determine sua matriz jacobiana.
+b.  Determine sua matriz jacobiana.
 
-c. Calcule o valor absoluto do determinante jacobiano da transformação inversa.
+c.  Calcule o valor absoluto do determinante jacobiano da transformação inversa.
 :::
-
 
 ::: {.callout-note title="Exercício 7"}
 Organize as seguintes formas de convergência de acordo com as implicações válidas em geral:
@@ -1862,120 +1431,85 @@ Organize as seguintes formas de convergência de acordo com as implicações vá
 Indique quais implicações não podem ser invertidas sem hipóteses adicionais.
 :::
 
-
 ::: {.callout-note title="Exercício 8"}
 Suponha que
 
-$$
-T_n\xrightarrow{P}\theta,
+$$T_n\xrightarrow{P}\theta,
 \qquad
-\theta>0.
-$$
+\theta>0.$$
 
 Utilize o teorema do mapeamento contínuo para obter os limites em probabilidade de
 
-$$
-T_n^2,
+$$T_n^2,
 \qquad
-\sqrt{T_n}
-$$
+\sqrt{T_n}$$
 
 e
 
-$$
-\log T_n.
-$$
+$$\log T_n.$$
 :::
-
 
 ::: {.callout-note title="Exercício 9"}
 Suponha que
 
-$$
-X_n\xrightarrow{d}N(0,1)
-$$
+$$X_n\xrightarrow{d}N(0,1)$$
 
 e
 
-$$
-Y_n\xrightarrow{P}2.
-$$
+$$Y_n\xrightarrow{P}2.$$
 
 Utilize o lema de Slutsky para obter as distribuições limites de
 
-$$
-X_n+Y_n,
-$$
+$$X_n+Y_n,$$
 
-$$
-X_nY_n
-$$
+$$X_nY_n$$
 
 e
 
-$$
-\frac{X_n}{Y_n}.
-$$
+$$\frac{X_n}{Y_n}.$$
 :::
-
 
 ::: {.callout-note title="Exercício 10"}
 Se
 
-$$
-X_1,X_2,\ldots
-\overset{\mathrm{iid}}{\sim}P,
-$$
+$$X_1,X_2,\ldots
+\overset{\mathrm{iid}}{\sim}P,$$
 
 com
 
-$$
-E(X_i)=\mu
-$$
+$$E(X_i)=\mu$$
 
 e
 
-$$
-0<\operatorname{Var}(X_i)=\sigma^2<\infty,
-$$
+$$0<\operatorname{Var}(X_i)=\sigma^2<\infty,$$
 
 indique separadamente o que a Lei dos Grandes Números e o Teorema Central do Limite estabelecem sobre $\overline X_n$.
 :::
 
-
 ::: {.callout-note title="Exercício 11"}
 Suponha que
 
-$$
-\sqrt n(T_n-\theta)
+$$\sqrt n(T_n-\theta)
 \xrightarrow{d}
-N(0,\tau^2),
-$$
+N(0,\tau^2),$$
 
 com $\theta>0$.
 
 Use o método delta para obter a distribuição assintótica de
 
-$$
-\log T_n.
-$$
+$$\log T_n.$$
 :::
-
 
 ::: {.callout-note title="Exercício 12"}
 Nas condições do exercício anterior, obtenha a distribuição assintótica de
 
-$$
-\frac{1}{T_n}.
-$$
+$$\frac{1}{T_n}.$$
 :::
-
 
 ::: {.callout-note title="Exercício 13"}
 Suponha que
 
-$$
-\sqrt n
+$$\sqrt n
 \left[
 \begin{pmatrix}
 T_{1n}\\
@@ -1989,53 +1523,38 @@ T_{2n}
 \right]
 \xrightarrow{d}
 N_2
-(\mathbf0,\boldsymbol\Sigma).
-$$
+(\mathbf0,\boldsymbol\Sigma).$$
 
 Utilize o método delta para obter a forma da variância assintótica de
 
-$$
-g(\theta_1,\theta_2)
+$$g(\theta_1,\theta_2)
 =
-\theta_1\theta_2.
-$$
+\theta_1\theta_2.$$
 :::
-
 
 ::: {.callout-note title="Exercício 14"}
 Mostre que
 
-$$
-X_n=o_P(a_n)
-$$
+$$X_n=o_P(a_n)$$
 
 implica
 
-$$
-X_n=O_P(a_n).
-$$
+$$X_n=O_P(a_n).$$
 :::
-
 
 ::: {.callout-note title="Exercício 15"}
 Suponha que
 
-$$
-\sqrt n(T_n-\theta)
-\xrightarrow{d}Z,
-$$
+$$\sqrt n(T_n-\theta)
+\xrightarrow{d}Z,$$
 
 em que $Z$ possui uma distribuição própria.
 
 Mostre que
 
-$$
-T_n-\theta
+$$T_n-\theta
 =
-O_P(n^{-1/2}).
-$$
+O_P(n^{-1/2}).$$
 :::
 
-
 ## Referências {.unnumbered}
-

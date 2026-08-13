@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Resultados Matemáticos e Assintóticos para Inferência</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./unidade1.html" rel="next">
+<link href="./unidade0p1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e2fb59b0b9d1befbe783af2ecca9a04e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ef508e81d2bdf022cbbfedbc5b1611ea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-e2fb59b0b9d1befbe783af2ecca9a04e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade0p2.html">Resultados Matemáticos e Assintóticos para Inferência</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+        <div class="sidebar-tools-collapse">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Informações Legais e Declaração de Uso de Inteligência Artificial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Identificação da(s) Disciplina(s)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade0p1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Revisão de Probabilidade e Modelos Probabilísticos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade0p2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Resultados Matemáticos e Assintóticos para Inferência</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Fundamentos da Inferência Estatística</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Distribuições Amostrais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Avaliação de Estimadores e Princípios de Redução de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Métodos de Estimação Pontual</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação intervalar</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testes de Hipóteses e Análise de Dados Categóricos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Projetos Aplicados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unidade8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exemplos Aplicados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Demonstrações</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#mapa-de-dependências" id="toc-mapa-de-dependências" class="nav-link active" data-scroll-target="#mapa-de-dependências">Mapa de dependências</a></li>
+  <li><a href="#notação-e-ferramentas-matemáticas" id="toc-notação-e-ferramentas-matemáticas" class="nav-link" data-scroll-target="#notação-e-ferramentas-matemáticas">Notação e ferramentas matemáticas</a>
+  <ul class="collapse">
+  <li><a href="#somatórios-produtos-e-funções-indicadoras" id="toc-somatórios-produtos-e-funções-indicadoras" class="nav-link" data-scroll-target="#somatórios-produtos-e-funções-indicadoras">Somatórios, produtos e funções indicadoras</a></li>
+  <li><a href="#diferenciação" id="toc-diferenciação" class="nav-link" data-scroll-target="#diferenciação">Diferenciação</a></li>
+  <li><a href="#fórmula-de-taylor" id="toc-fórmula-de-taylor" class="nav-link" data-scroll-target="#fórmula-de-taylor">Fórmula de Taylor</a></li>
+  </ul></li>
+  <li><a href="#vetores-e-matrizes" id="toc-vetores-e-matrizes" class="nav-link" data-scroll-target="#vetores-e-matrizes">Vetores e matrizes</a>
+  <ul class="collapse">
+  <li><a href="#matrizes" id="toc-matrizes" class="nav-link" data-scroll-target="#matrizes">Matrizes</a></li>
+  <li><a href="#formas-quadráticas" id="toc-formas-quadráticas" class="nav-link" data-scroll-target="#formas-quadráticas">Formas quadráticas</a></li>
+  <li><a href="#projeções" id="toc-projeções" class="nav-link" data-scroll-target="#projeções">Projeções</a></li>
+  <li><a href="#gradiente-jacobiana-e-hessiana" id="toc-gradiente-jacobiana-e-hessiana" class="nav-link" data-scroll-target="#gradiente-jacobiana-e-hessiana">Gradiente, jacobiana e hessiana</a></li>
+  </ul></li>
+  <li><a href="#transformações-multivariadas-e-jacobiano" id="toc-transformações-multivariadas-e-jacobiano" class="nav-link" data-scroll-target="#transformações-multivariadas-e-jacobiano">Transformações multivariadas e jacobiano</a></li>
+  <li><a href="#ferramentas-assintóticas" id="toc-ferramentas-assintóticas" class="nav-link" data-scroll-target="#ferramentas-assintóticas">Ferramentas assintóticas</a>
+  <ul class="collapse">
+  <li><a href="#modos-de-convergência" id="toc-modos-de-convergência" class="nav-link" data-scroll-target="#modos-de-convergência">Modos de convergência</a></li>
+  <li><a href="#relações-entre-os-modos-de-convergência" id="toc-relações-entre-os-modos-de-convergência" class="nav-link" data-scroll-target="#relações-entre-os-modos-de-convergência">Relações entre os modos de convergência</a></li>
+  <li><a href="#teorema-do-mapeamento-contínuo" id="toc-teorema-do-mapeamento-contínuo" class="nav-link" data-scroll-target="#teorema-do-mapeamento-contínuo">Teorema do mapeamento contínuo</a></li>
+  <li><a href="#lema-de-slutsky" id="toc-lema-de-slutsky" class="nav-link" data-scroll-target="#lema-de-slutsky">Lema de Slutsky</a></li>
+  <li><a href="#lei-dos-grandes-números" id="toc-lei-dos-grandes-números" class="nav-link" data-scroll-target="#lei-dos-grandes-números">Lei dos Grandes Números</a></li>
+  <li><a href="#teorema-central-do-limite" id="toc-teorema-central-do-limite" class="nav-link" data-scroll-target="#teorema-central-do-limite">Teorema Central do Limite</a></li>
+  <li><a href="#lei-dos-grandes-números-e-teorema-central-do-limite" id="toc-lei-dos-grandes-números-e-teorema-central-do-limite" class="nav-link" data-scroll-target="#lei-dos-grandes-números-e-teorema-central-do-limite">Lei dos Grandes Números e Teorema Central do Limite</a></li>
+  <li><a href="#método-delta-univariado" id="toc-método-delta-univariado" class="nav-link" data-scroll-target="#método-delta-univariado">Método delta univariado</a></li>
+  <li><a href="#método-delta-multivariado" id="toc-método-delta-multivariado" class="nav-link" data-scroll-target="#método-delta-multivariado">Método delta multivariado</a></li>
+  <li><a href="#ordens-estocásticas" id="toc-ordens-estocásticas" class="nav-link" data-scroll-target="#ordens-estocásticas">Ordens estocásticas</a></li>
+  </ul></li>
+  <li><a href="#síntese" id="toc-síntese" class="nav-link" data-scroll-target="#síntese">Síntese</a></li>
+  <li><a href="#exercícios-de-consolidação" id="toc-exercícios-de-consolidação" class="nav-link" data-scroll-target="#exercícios-de-consolidação">Exercícios de consolidação</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Resultados Matemáticos e Assintóticos para Inferência</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Este capítulo reúne resultados matemáticos e assintóticos que serão utilizados nos desenvolvimentos posteriores de Inferência Estatística. O objetivo é estabelecer a notação e registrar ferramentas de cálculo, álgebra linear e teoria assintótica necessárias para estudar distribuições amostrais, propriedades de estimadores, métodos de estimação, intervalos de confiança e testes de hipóteses <span class="citation" data-cites="rice2007mathematical ramachandran2021r lauritzen2023fundamentals">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, caps. 1–6; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, caps. 2–4; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ap. A)</span>.</p>
+<p>Os conceitos e modelos probabilísticos necessários ao livro foram revisados no capítulo anterior. Aqui, a atenção se concentra nas ferramentas matemáticas utilizadas para manipular funções, vetores e matrizes e para estudar o comportamento de sequências de variáveis aleatórias e estatísticas quando o tamanho da amostra aumenta.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Delimitação do capítulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Delimitação do capítulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os resultados apresentados neste capítulo serão utilizados como ferramentas. Suas aplicações estatísticas serão desenvolvidas nos capítulos correspondentes.</p>
+<p>Em particular, a Lei dos Grandes Números e o Teorema Central do Limite serão enunciados aqui, enquanto suas consequências para distribuições amostrais serão estudadas no capítulo <strong>Distribuições Amostrais</strong>. De forma semelhante, o método delta será apresentado aqui e aplicado posteriormente a estimadores e funções de parâmetros.</p>
+</div>
+</div>
+<section id="mapa-de-dependências" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="mapa-de-dependências">Mapa de dependências</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ferramenta</th>
+<th style="text-align: left;">Utilização posterior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Somatórios, produtos, logaritmos e diferenciação</td>
+<td style="text-align: left;">verossimilhança, função escore, informação de Fisher e algoritmo EM</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Expansões de Taylor</td>
+<td style="text-align: left;">aproximações, método delta, propriedades assintóticas e expansão da log-verossimilhança</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vetores e matrizes</td>
+<td style="text-align: left;">parâmetros vetoriais, matrizes de covariâncias, informação de Fisher e modelos lineares</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Formas quadráticas</td>
+<td style="text-align: left;">distribuições associadas ao modelo normal, mínimos quadrados e estatísticas inferenciais</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Projeções</td>
+<td style="text-align: left;">mínimos quadrados e decomposição da variabilidade em modelos lineares</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Transformações multivariadas e jacobiano</td>
+<td style="text-align: left;">obtenção de distribuições e reparametrizações</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Modos de convergência</td>
+<td style="text-align: left;">consistência e aproximações assintóticas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mapeamento contínuo e Slutsky</td>
+<td style="text-align: left;">transformação e substituição de quantidades em resultados assintóticos</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lei dos Grandes Números</td>
+<td style="text-align: left;">médias e momentos amostrais, consistência</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Teorema Central do Limite</td>
+<td style="text-align: left;">aproximações normais e normalidade assintótica</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Método delta</td>
+<td style="text-align: left;">distribuição assintótica de funções de estimadores</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ordens estocásticas</td>
+<td style="text-align: left;">representação concisa de erros e expansões assintóticas</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notação-e-ferramentas-matemáticas" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="notação-e-ferramentas-matemáticas">Notação e ferramentas matemáticas</h2>
+<section id="somatórios-produtos-e-funções-indicadoras" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="somatórios-produtos-e-funções-indicadoras">Somatórios, produtos e funções indicadoras</h3>
+<p>Para uma sequência <span class="math inline">\(a_1,\ldots,a_n\)</span>, utilizaremos</p>
+<p><span class="math display">\[\sum_{i=1}^n a_i
+=
+a_1+\cdots+a_n\]</span></p>
+<p>e</p>
+<p><span class="math display">\[\prod_{i=1}^n a_i
+=
+a_1\cdots a_n.\]</span></p>
+<p>Algumas propriedades dos somatórios serão utilizadas repetidamente. Para constantes <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> e <span class="math inline">\(c\)</span>,</p>
+<p><span class="math display">\[\sum_{i=1}^n (a x_i+b y_i)
+=
+a\sum_{i=1}^n x_i
++
+b\sum_{i=1}^n y_i\]</span></p>
+<p>e</p>
+<p><span class="math display">\[\sum_{i=1}^n c
+=
+nc.\]</span></p>
+<p>A média aritmética de <span class="math inline">\(x_1,\ldots,x_n\)</span> será representada por</p>
+<p><span class="math display">\[\overline x
+=
+\frac{1}{n}\sum_{i=1}^n x_i.\]</span></p>
+<p>Uma identidade utilizada na decomposição de somas de quadrados é</p>
+<p><span class="math display">\[\sum_{i=1}^n(x_i-a)^2
+=
+\sum_{i=1}^n(x_i-\overline x)^2
++
+n(\overline x-a)^2.\]</span></p>
+<p>Em particular,</p>
+<p><span class="math display">\[\sum_{i=1}^n(x_i-\overline x)=0.\]</span></p>
+<section id="função-indicadora" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="função-indicadora">Função indicadora</h4>
+<p>A função indicadora de um evento <span class="math inline">\(A\)</span> é</p>
+<p><span class="math display">\[\mathbf 1_A(\omega)
+=
+\begin{cases}
+1, &amp; \omega\in A,\\
+0, &amp; \omega\notin A.
+\end{cases}\]</span></p>
+<p>Ela permite representar contagens por meio de somas. Se <span class="math inline">\(A_i\)</span> representa a ocorrência de determinada característica na unidade <span class="math inline">\(i\)</span>, então</p>
+<p><span class="math display">\[R
+=
+\sum_{i=1}^n\mathbf 1_{A_i}\]</span></p>
+<p>é o número de unidades que apresentam essa característica e</p>
+<p><span class="math display">\[\frac{R}{n}
+=
+\frac{1}{n}
+\sum_{i=1}^n\mathbf 1_{A_i}\]</span></p>
+<p>é a proporção correspondente.</p>
+<p>Essa representação será utilizada posteriormente para relacionar contagens, proporções amostrais e médias de variáveis Bernoulli.</p>
+</section>
+<section id="produtos-e-logaritmos" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="produtos-e-logaritmos">Produtos e logaritmos</h4>
+<p>A transformação logarítmica converte produtos em somas:</p>
+<p><span class="math display">\[\log
+\left(
+\prod_{i=1}^n a_i
+\right)
+=
+\sum_{i=1}^n\log a_i,
+\qquad
+a_i&gt;0.\]</span></p>
+<p>Da mesma forma,</p>
+<p><span class="math display">\[\log(a^b)
+=
+b\log a.\]</span></p>
+<p>Essas identidades serão utilizadas no estudo da função de verossimilhança. Para observações independentes, a verossimilhança geralmente assume a forma de um produto, enquanto sua transformação logarítmica pode ser escrita como uma soma.</p>
+</section>
+</section>
+<section id="diferenciação" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="diferenciação">Diferenciação</h3>
+<p>Diversos métodos inferenciais envolvem a maximização ou minimização de funções. Para uma função real diferenciável <span class="math inline">\(g\)</span>, um ponto interior <span class="math inline">\(x_0\)</span> candidato a extremo satisfaz</p>
+<p><span class="math display">\[g'(x_0)=0.\]</span></p>
+<p>Quando</p>
+<p><span class="math display">\[g''(x_0)&lt;0,\]</span></p>
+<p>o ponto é um máximo local; quando</p>
+<p><span class="math display">\[g''(x_0)&gt;0,\]</span></p>
+<p>é um mínimo local.</p>
+<p>Para funções de vários argumentos,</p>
+<p><span class="math display">\[g:\mathbb R^k\longrightarrow\mathbb R,\]</span></p>
+<p>as derivadas de primeira ordem são reunidas no vetor gradiente,</p>
+<p><span class="math display">\[\nabla g(\boldsymbol\theta)
+=
+\begin{pmatrix}
+\dfrac{\partial g}{\partial\theta_1}\\
+\vdots\\
+\dfrac{\partial g}{\partial\theta_k}
+\end{pmatrix},\]</span></p>
+<p>e as derivadas de segunda ordem formam a matriz hessiana,</p>
+<p><span class="math display">\[\nabla^2g(\boldsymbol\theta)
+=
+\left[
+\frac{\partial^2g}
+{\partial\theta_i\partial\theta_j}
+\right]_{i,j=1}^k.\]</span></p>
+<p>Esses objetos serão utilizados na função escore, na informação observada, na otimização de funções de verossimilhança e em aproximações quadráticas.</p>
+</section>
+<section id="fórmula-de-taylor" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="fórmula-de-taylor">Fórmula de Taylor</h3>
+<p>Uma função possuir derivadas de todas as ordens não garante, por si só, que ela seja igual à sua série de Taylor. O resultado utilizado na inferência é a <strong>aproximação de Taylor com termo de resto</strong>.</p>
+<p>Se <span class="math inline">\(g\)</span> possui duas derivadas contínuas em uma vizinhança de <span class="math inline">\(a\)</span>, então, para <span class="math inline">\(x\)</span> nessa vizinhança,</p>
+<p><span class="math display">\[g(x)
+=
+g(a)
++
+g'(a)(x-a)
++
+\frac{1}{2}g''(\widetilde{x})(x-a)^2,\]</span></p>
+<p>em que <span class="math inline">\(\widetilde{x}\)</span> está entre <span class="math inline">\(a\)</span> e <span class="math inline">\(x\)</span>.</p>
+<p>Em particular,</p>
+<p><span class="math display">\[g(x)
+=
+g(a)
++
+g'(a)(x-a)
++
+o(|x-a|),
+\qquad
+x\to a.\]</span></p>
+<p>A aproximação de primeira ordem é, portanto,</p>
+<p><span class="math display">\[g(x)
+\approx
+g(a)+g'(a)(x-a)\]</span></p>
+<p>quando <span class="math inline">\(x\)</span> está suficientemente próximo de <span class="math inline">\(a\)</span>.</p>
+<div class="callout-example" title="Exemplo: aproximação de primeira ordem">
+<p>Considere</p>
+<p><span class="math display">\[g(x)=\log x.\]</span></p>
+<p>Em torno de <span class="math inline">\(a=1\)</span>,</p>
+<p><span class="math display">\[g(1)=0\]</span></p>
+<p>e</p>
+<p><span class="math display">\[g'(1)=1.\]</span></p>
+<p>Logo,</p>
+<p><span class="math display">\[\log x
+=
+(x-1)+o(|x-1|),
+\qquad
+x\to1,\]</span></p>
+<p>ou, em forma aproximada,</p>
+<p><span class="math display">\[\log x
+\approx
+x-1\]</span></p>
+<p>para valores de <span class="math inline">\(x\)</span> próximos de <span class="math inline">\(1\)</span>.</p>
+</div>
+<section id="taylor-em-várias-dimensões" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="taylor-em-várias-dimensões">Taylor em várias dimensões</h4>
+<p>Para uma função diferenciável</p>
+<p><span class="math display">\[g:\mathbb R^k\longrightarrow\mathbb R^m,\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[g(\mathbf x)
+=
+g(\boldsymbol\xi)
++
+Dg(\boldsymbol\xi)
+(\mathbf x-\boldsymbol\xi)
++
+o
+\left(
+\|\mathbf x-\boldsymbol\xi\|
+\right),\]</span></p>
+<p>em que <span class="math inline">\(Dg(\boldsymbol\xi)\)</span> é a matriz de derivadas de primeira ordem de <span class="math inline">\(g\)</span> avaliada em <span class="math inline">\(\boldsymbol\xi\)</span>.</p>
+<p>Quando <span class="math inline">\(g:\mathbb R^k\to\mathbb R\)</span>, a aproximação de primeira ordem pode ser escrita como</p>
+<p><span class="math display">\[g(\mathbf x)
+=
+g(\boldsymbol\xi)
++
+\nabla g(\boldsymbol\xi)^\mathsf T
+(\mathbf x-\boldsymbol\xi)
++
+o
+\left(
+\|\mathbf x-\boldsymbol\xi\|
+\right).\]</span></p>
+<p>Aproximações de segunda ordem para funções escalares utilizam a matriz hessiana. Esses resultados serão retomados no método delta e nas expansões da função de log-verossimilhança <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ap. A.3.2)</span>.</p>
+</section>
+</section>
+</section>
+<section id="vetores-e-matrizes" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="vetores-e-matrizes">Vetores e matrizes</h2>
+<p>Um vetor coluna em <span class="math inline">\(\mathbb R^k\)</span> será representado por</p>
+<p><span class="math display">\[\mathbf x
+=
+(x_1,\ldots,x_k)^\mathsf T.\]</span></p>
+<p>Seu transposto é</p>
+<p><span class="math display">\[\mathbf x^\mathsf T
+=
+(x_1,\ldots,x_k).\]</span></p>
+<p>Para</p>
+<p><span class="math display">\[\mathbf x,\mathbf y\in\mathbb R^k,\]</span></p>
+<p>o produto interno é</p>
+<p><span class="math display">\[\langle\mathbf x,\mathbf y\rangle
+=
+\mathbf x^\mathsf T\mathbf y
+=
+\sum_{j=1}^k x_jy_j,\]</span></p>
+<p>e a norma euclidiana é</p>
+<p><span class="math display">\[\|\mathbf x\|
+=
+\sqrt{\mathbf x^\mathsf T\mathbf x}.\]</span></p>
+<section id="matrizes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="matrizes">Matrizes</h3>
+<p>Uma matriz com <span class="math inline">\(m\)</span> linhas e <span class="math inline">\(k\)</span> colunas será representada por</p>
+<p><span class="math display">\[\mathbf A
+=
+[a_{ij}]
+\in
+\mathbb R^{m\times k}.\]</span></p>
+<p>Sua transposta,</p>
+<p><span class="math display">\[\mathbf A^\mathsf T,\]</span></p>
+<p>possui dimensão <span class="math inline">\(k\times m\)</span> e satisfaz</p>
+<p><span class="math display">\[(\mathbf A\mathbf B)^\mathsf T
+=
+\mathbf B^\mathsf T\mathbf A^\mathsf T.\]</span></p>
+<p>Uma matriz quadrada <span class="math inline">\(\mathbf A\)</span> é <strong>simétrica</strong> quando</p>
+<p><span class="math display">\[\mathbf A^\mathsf T=\mathbf A.\]</span></p>
+<p>Quando existe uma matriz <span class="math inline">\(\mathbf A^{-1}\)</span> tal que</p>
+<p><span class="math display">\[\mathbf A^{-1}\mathbf A
+=
+\mathbf A\mathbf A^{-1}
+=
+\mathbf I,\]</span></p>
+<p>dizemos que <span class="math inline">\(\mathbf A\)</span> é invertível.</p>
+<p>O <strong>posto</strong> de uma matriz corresponde ao número máximo de colunas, ou equivalentemente de linhas, linearmente independentes. Para uma matriz</p>
+<p><span class="math display">\[\mathbf X\in\mathbb R^{n\times p},\]</span></p>
+<p>a condição</p>
+<p><span class="math display">\[\operatorname{posto}(\mathbf X)=p\]</span></p>
+<p>indica que suas colunas são linearmente independentes. Nesse caso, quando <span class="math inline">\(n\geq p\)</span>,</p>
+<p><span class="math display">\[\mathbf X^\mathsf T\mathbf X\]</span></p>
+<p>é invertível.</p>
+</section>
+<section id="formas-quadráticas" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="formas-quadráticas">Formas quadráticas</h3>
+<p>Para uma matriz simétrica</p>
+<p><span class="math display">\[\mathbf A\in\mathbb R^{k\times k}\]</span></p>
+<p>e um vetor</p>
+<p><span class="math display">\[\mathbf x\in\mathbb R^k,\]</span></p>
+<p>a expressão</p>
+<p><span class="math display">\[\mathbf x^\mathsf T\mathbf A\mathbf x\]</span></p>
+<p>é denominada <strong>forma quadrática</strong>.</p>
+<p>A matriz <span class="math inline">\(\mathbf A\)</span> é <strong>positiva semidefinida</strong> quando</p>
+<p><span class="math display">\[\mathbf x^\mathsf T\mathbf A\mathbf x
+\geq0\]</span></p>
+<p>para todo <span class="math inline">\(\mathbf x\in\mathbb R^k\)</span>.</p>
+<p>Ela é <strong>positiva definida</strong> quando</p>
+<p><span class="math display">\[\mathbf x^\mathsf T\mathbf A\mathbf x
+&gt;0\]</span></p>
+<p>para todo</p>
+<p><span class="math display">\[\mathbf x\neq\mathbf0.\]</span></p>
+<p>Matrizes de covariâncias são positivas semidefinidas. Sob condições de regularidade e identificabilidade, matrizes de informação de Fisher também apresentam essa estrutura.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Forma quadrática e soma de quadrados">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Forma quadrática e soma de quadrados
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quando</p>
+<p><span class="math display">\[\mathbf A=\mathbf I,\]</span></p>
+<p>a forma quadrática reduz-se a</p>
+<p><span class="math display">\[\mathbf x^\mathsf T\mathbf x
+=
+\sum_{j=1}^k x_j^2.\]</span></p>
+<p>Assim, somas de quadrados podem ser representadas por formas quadráticas. Essa representação será utilizada posteriormente no modelo normal e em mínimos quadrados.</p>
+</div>
+</div>
+</section>
+<section id="projeções" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="projeções">Projeções</h3>
+<p>Uma matriz <span class="math inline">\(\mathbf P\)</span> é uma matriz de projeção ortogonal quando</p>
+<p><span class="math display">\[\mathbf P^\mathsf T=\mathbf P\]</span></p>
+<p>e</p>
+<p><span class="math display">\[\mathbf P^2=\mathbf P.\]</span></p>
+<p>Considere</p>
+<p><span class="math display">\[\mathbf X\in\mathbb R^{n\times p}\]</span></p>
+<p>com posto completo nas colunas. A matriz</p>
+<p><span class="math display">\[\mathbf P_{\mathbf X}
+=
+\mathbf X
+(\mathbf X^\mathsf T\mathbf X)^{-1}
+\mathbf X^\mathsf T\]</span></p>
+<p>é a projeção ortogonal sobre o espaço coluna de <span class="math inline">\(\mathbf X\)</span>.</p>
+<p>Para qualquer vetor</p>
+<p><span class="math display">\[\mathbf y\in\mathbb R^n,\]</span></p>
+<p>o vetor</p>
+<p><span class="math display">\[\widehat{\mathbf y}
+=
+\mathbf P_{\mathbf X}\mathbf y\]</span></p>
+<p>pertence ao espaço coluna de <span class="math inline">\(\mathbf X\)</span>.</p>
+<p>O vetor residual</p>
+<p><span class="math display">\[\mathbf e
+=
+\mathbf y-\widehat{\mathbf y}
+=
+(\mathbf I-\mathbf P_{\mathbf X})\mathbf y\]</span></p>
+<p>é ortogonal a esse espaço. Portanto,</p>
+<p><span class="math display">\[\mathbf X^\mathsf T\mathbf e
+=
+\mathbf0.\]</span></p>
+<p>Essa decomposição será utilizada no método de mínimos quadrados <span class="citation" data-cites="lauritzen2023fundamentals rice2007mathematical">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ap. A.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 14.3–14.4)</span>.</p>
+</section>
+<section id="gradiente-jacobiana-e-hessiana" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="gradiente-jacobiana-e-hessiana">Gradiente, jacobiana e hessiana</h3>
+<p>Para uma função escalar</p>
+<p><span class="math display">\[q:\mathbb R^k\longrightarrow\mathbb R,\]</span></p>
+<p>o gradiente é</p>
+<p><span class="math display">\[\nabla q(\boldsymbol\theta)
+=
+\left(
+\frac{\partial q}{\partial\theta_1},
+\ldots,
+\frac{\partial q}{\partial\theta_k}
+\right)^\mathsf T.\]</span></p>
+<p>A matriz hessiana é</p>
+<p><span class="math display">\[\nabla^2q(\boldsymbol\theta)
+=
+\left[
+\frac{\partial^2q}
+{\partial\theta_i\partial\theta_j}
+\right]_{i,j=1}^k.\]</span></p>
+<p>Para uma função vetorial</p>
+<p><span class="math display">\[g:\mathbb R^k\longrightarrow\mathbb R^m,\]</span></p>
+<p>com</p>
+<p><span class="math display">\[g(\mathbf x)
+=
+\begin{pmatrix}
+g_1(\mathbf x)\\
+\vdots\\
+g_m(\mathbf x)
+\end{pmatrix},\]</span></p>
+<p>a matriz jacobiana é</p>
+<p><span class="math display">\[Dg(\mathbf x)
+=
+\left[
+\frac{\partial g_i(\mathbf x)}
+{\partial x_j}
+\right]_
+{\substack{i=1,\ldots,m\\j=1,\ldots,k}}.\]</span></p>
+<p>Quando <span class="math inline">\(m=1\)</span>, a jacobiana corresponde ao transposto do gradiente, de acordo com a convenção de orientação adotada.</p>
+<p>Esses objetos aparecem em três situações distintas ao longo do livro:</p>
+<ol type="1">
+<li>o <strong>gradiente</strong> descreve derivadas de primeira ordem de funções escalares, como a log-verossimilhança;</li>
+<li>a <strong>hessiana</strong> reúne derivadas de segunda ordem e será utilizada em aproximações e informação observada;</li>
+<li>a <strong>jacobiana</strong> descreve derivadas de transformações vetoriais e será utilizada em mudanças de variáveis e no método delta multivariado.</li>
+</ol>
+</section>
+</section>
+<section id="transformações-multivariadas-e-jacobiano" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="transformações-multivariadas-e-jacobiano">Transformações multivariadas e jacobiano</h2>
+<p>Considere um vetor aleatório</p>
+<p><span class="math display">\[\mathbf X
+=
+(X_1,\ldots,X_k)^\mathsf T\]</span></p>
+<p>com densidade conjunta <span class="math inline">\(f_{\mathbf X}\)</span> e uma transformação</p>
+<p><span class="math display">\[\mathbf Y=g(\mathbf X),\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[g:\mathbb R^k\longrightarrow\mathbb R^k.\]</span></p>
+<p>Suponha que <span class="math inline">\(g\)</span> seja bijetiva e diferenciável no domínio considerado, com inversa</p>
+<p><span class="math display">\[\mathbf x=h(\mathbf y).\]</span></p>
+<p>A densidade conjunta de <span class="math inline">\(\mathbf Y\)</span> é</p>
+<p><span class="math display">\[f_{\mathbf Y}(\mathbf y)
+=
+f_{\mathbf X}\{h(\mathbf y)\}
+\left|
+\det Dh(\mathbf y)
+\right|,\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[Dh(\mathbf y)
+=
+\left[
+\frac{\partial h_i(\mathbf y)}
+{\partial y_j}
+\right]_{i,j=1}^k\]</span></p>
+<p>é a matriz jacobiana da transformação inversa.</p>
+<p>O fator</p>
+<p><span class="math display">\[\left|
+\det Dh(\mathbf y)
+\right|\]</span></p>
+<p>corrige a alteração de volume produzida pela transformação. Essa correção é a extensão multivariada do fator</p>
+<p><span class="math display">\[\left|
+\frac{d}{dy}g^{-1}(y)
+\right|\]</span></p>
+<p>utilizado no caso univariado <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 2.3 e 3.6; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.4)</span>.</p>
+<div class="callout-example" title="Exemplo: transformação linear em duas dimensões">
+<p>Considere</p>
+<p><span class="math display">\[\mathbf Y
+=
+\mathbf A\mathbf X+\mathbf b,\]</span></p>
+<p>em que <span class="math inline">\(\mathbf A\)</span> é uma matriz <span class="math inline">\(2\times2\)</span> invertível.</p>
+<p>A transformação inversa é</p>
+<p><span class="math display">\[\mathbf X
+=
+\mathbf A^{-1}
+(\mathbf Y-\mathbf b).\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[Dh(\mathbf y)
+=
+\mathbf A^{-1}\]</span></p>
+<p>e</p>
+<p><span class="math display">\[\left|
+\det Dh(\mathbf y)
+\right|
+=
+\left|
+\det(\mathbf A^{-1})
+\right|
+=
+\frac{1}{|\det(\mathbf A)|}.\]</span></p>
+<p>Assim,</p>
+<p><span class="math display">\[f_{\mathbf Y}(\mathbf y)
+=
+f_{\mathbf X}
+\left\{
+\mathbf A^{-1}
+(\mathbf y-\mathbf b)
+\right\}
+\frac{1}{|\det(\mathbf A)|}.\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Uso posterior">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Uso posterior
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O método será utilizado quando a distribuição de uma estatística for obtida por transformação de um vetor aleatório. Na Unidade de Distribuições Amostrais, ele também fornecerá uma das ferramentas para derivar distribuições associadas ao modelo normal.</p>
+</div>
+</div>
+</section>
+<section id="ferramentas-assintóticas" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ferramentas-assintóticas">Ferramentas assintóticas</h2>
+<p>Resultados assintóticos descrevem o comportamento de sequências de variáveis aleatórias ou estatísticas quando</p>
+<p><span class="math display">\[n\to\infty.\]</span></p>
+<p>Na Inferência Estatística, esses resultados permitem estudar propriedades de estimadores e construir aproximações quando uma distribuição amostral exata não está disponível.</p>
+<p>A linguagem utilizada para formular esses resultados começa pelos diferentes modos de convergência.</p>
+<section id="modos-de-convergência" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="modos-de-convergência">Modos de convergência</h3>
+<p>Sejam</p>
+<p><span class="math display">\[X_1,X_2,\ldots\]</span></p>
+<p>uma sequência de variáveis aleatórias e <span class="math inline">\(X\)</span> outra variável aleatória.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Convergência quase certa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Convergência quase certa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dizemos que <span class="math inline">\(X_n\)</span> converge <strong>quase certamente</strong> para <span class="math inline">\(X\)</span> quando</p>
+<p><span class="math display">\[P\left(
+\lim_{n\to\infty}X_n=X
+\right)
+=
+1.\]</span></p>
+<p>Escrevemos</p>
+<p><span class="math display">\[X_n\xrightarrow{\text{q.c.}}X.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Convergência em probabilidade">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Convergência em probabilidade
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dizemos que <span class="math inline">\(X_n\)</span> converge <strong>em probabilidade</strong> para <span class="math inline">\(X\)</span> quando, para todo <span class="math inline">\(\varepsilon&gt;0\)</span>,</p>
+<p><span class="math display">\[P(|X_n-X|&gt;\varepsilon)
+\longrightarrow
+0.\]</span></p>
+<p>Escrevemos</p>
+<p><span class="math display">\[X_n\xrightarrow{P}X.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Convergência em média quadrática">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Convergência em média quadrática
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dizemos que <span class="math inline">\(X_n\)</span> converge <strong>em média quadrática</strong> para <span class="math inline">\(X\)</span> quando</p>
+<p><span class="math display">\[E\left[(X_n-X)^2\right]
+\longrightarrow
+0,\]</span></p>
+<p>desde que essa esperança exista.</p>
+<p>Escrevemos</p>
+<p><span class="math display">\[X_n\xrightarrow{L^2}X.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Convergência em distribuição">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Convergência em distribuição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dizemos que <span class="math inline">\(X_n\)</span> converge <strong>em distribuição</strong> para <span class="math inline">\(X\)</span> quando</p>
+<p><span class="math display">\[F_{X_n}(x)
+\longrightarrow
+F_X(x)\]</span></p>
+<p>em todo ponto de continuidade de <span class="math inline">\(F_X\)</span>.</p>
+<p>Escrevemos</p>
+<p><span class="math display">\[X_n\xrightarrow{d}X.\]</span></p>
+</div>
+</div>
+</section>
+<section id="relações-entre-os-modos-de-convergência" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="relações-entre-os-modos-de-convergência">Relações entre os modos de convergência</h3>
+<p>As seguintes implicações serão utilizadas ao longo do livro:</p>
+<p><span class="math display">\[X_n\xrightarrow{\text{q.c.}}X
+\quad\Longrightarrow\quad
+X_n\xrightarrow{P}X,\]</span></p>
+<p><span class="math display">\[X_n\xrightarrow{L^2}X
+\quad\Longrightarrow\quad
+X_n\xrightarrow{P}X\]</span></p>
+<p>e</p>
+<p><span class="math display">\[X_n\xrightarrow{P}X
+\quad\Longrightarrow\quad
+X_n\xrightarrow{d}X.\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[\begin{array}{ccc}
+X_n\xrightarrow{\text{q.c.}}X
+&amp; \searrow &amp; \\
+&amp;&amp;X_n\xrightarrow{P}X
+\longrightarrow
+X_n\xrightarrow{d}X\\
+X_n\xrightarrow{L^2}X
+&amp; \nearrow &amp;
+\end{array}\]</span></p>
+<p>Em geral, não há implicação entre convergência quase certa e convergência em média quadrática. As demais implicações também não podem ser invertidas sem hipóteses adicionais.</p>
+<p>Há uma exceção utilizada com frequência em Inferência Estatística. Se <span class="math inline">\(c\)</span> é uma constante, então</p>
+<p><span class="math display">\[X_n\xrightarrow{d}c\]</span></p>
+<p>implica</p>
+<p><span class="math display">\[X_n\xrightarrow{P}c.\]</span></p>
+<p>Assim, quando o limite é constante, convergência em distribuição e convergência em probabilidade são equivalentes <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 5</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, ap. A.2)</span>.</p>
+</section>
+<section id="teorema-do-mapeamento-contínuo" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="teorema-do-mapeamento-contínuo">Teorema do mapeamento contínuo</h3>
+<p>O teorema do mapeamento contínuo permite transferir resultados de convergência para funções contínuas das variáveis envolvidas.</p>
+<p>Se</p>
+<p><span class="math display">\[X_n\xrightarrow{P}X\]</span></p>
+<p>e <span class="math inline">\(g\)</span> é contínua nos valores assumidos por <span class="math inline">\(X\)</span>, então</p>
+<p><span class="math display">\[g(X_n)
+\xrightarrow{P}
+g(X).\]</span></p>
+<p>A versão correspondente para convergência em distribuição estabelece que</p>
+<p><span class="math display">\[X_n\xrightarrow{d}X\]</span></p>
+<p>implica</p>
+<p><span class="math display">\[g(X_n)
+\xrightarrow{d}
+g(X),\]</span></p>
+<p>quando <span class="math inline">\(g\)</span> é contínua com probabilidade um sob a distribuição limite <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, teorema A.11)</span>.</p>
+<div class="callout-example" title="Exemplo">
+<p>Se</p>
+<p><span class="math display">\[T_n\xrightarrow{P}\theta,\]</span></p>
+<p>com <span class="math inline">\(\theta&gt;0\)</span>, então, pela continuidade do logaritmo em <span class="math inline">\((0,\infty)\)</span>,</p>
+<p><span class="math display">\[\log T_n
+\xrightarrow{P}
+\log\theta.\]</span></p>
+<p>Da mesma forma,</p>
+<p><span class="math display">\[T_n^2
+\xrightarrow{P}
+\theta^2.\]</span></p>
+<p>O resultado permite obter a consistência de transformações contínuas de estimadores consistentes.</p>
+</div>
+</section>
+<section id="lema-de-slutsky" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="lema-de-slutsky">Lema de Slutsky</h3>
+<p>Considere</p>
+<p><span class="math display">\[X_n\xrightarrow{d}X\]</span></p>
+<p>e</p>
+<p><span class="math display">\[Y_n\xrightarrow{P}c,\]</span></p>
+<p>em que <span class="math inline">\(c\)</span> é uma constante.</p>
+<p>Então,</p>
+<p><span class="math display">\[X_n+Y_n
+\xrightarrow{d}
+X+c,\]</span></p>
+<p><span class="math display">\[X_nY_n
+\xrightarrow{d}
+cX\]</span></p>
+<p>e, se <span class="math inline">\(c\neq0\)</span>,</p>
+<p><span class="math display">\[\frac{X_n}{Y_n}
+\xrightarrow{d}
+\frac{X}{c}.\]</span></p>
+<p>O lema permite combinar uma quantidade com distribuição limite não degenerada com outra que converge em probabilidade para uma constante <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, corolário A.12)</span>.</p>
+<div class="callout-example" title="Exemplo: substituição de um parâmetro">
+<p>Suponha que</p>
+<p><span class="math display">\[\frac{
+\sqrt n(T_n-\theta)
+}{
+\sigma
+}
+\xrightarrow{d}
+N(0,1)\]</span></p>
+<p>e que</p>
+<p><span class="math display">\[S_n\xrightarrow{P}\sigma,
+\qquad
+\sigma&gt;0.\]</span></p>
+<p>Podemos escrever</p>
+<p><span class="math display">\[\frac{
+\sqrt n(T_n-\theta)
+}{
+S_n
+}
+=
+\frac{
+\sqrt n(T_n-\theta)
+}{
+\sigma
+}
+\frac{\sigma}{S_n}.\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[\frac{\sigma}{S_n}
+\xrightarrow{P}
+1,\]</span></p>
+<p>o lema de Slutsky fornece</p>
+<p><span class="math display">\[\frac{
+\sqrt n(T_n-\theta)
+}{
+S_n
+}
+\xrightarrow{d}
+N(0,1).\]</span></p>
+<p>Esse mecanismo permite substituir, em diversos resultados assintóticos, uma quantidade desconhecida por um estimador consistente.</p>
+</div>
+</section>
+<section id="lei-dos-grandes-números" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="lei-dos-grandes-números">Lei dos Grandes Números</h3>
+<p>Considere uma sequência</p>
+<p><span class="math display">\[X_1,X_2,\ldots\]</span></p>
+<p>de variáveis aleatórias independentes e identicamente distribuídas, com</p>
+<p><span class="math display">\[E|X_1|&lt;\infty.\]</span></p>
+<p>Então,</p>
+<p><span class="math display">\[\overline X_n
+=
+\frac{1}{n}
+\sum_{i=1}^nX_i
+\xrightarrow{P}
+E(X_1).\]</span></p>
+<p>Se</p>
+<p><span class="math display">\[E(X_1)=\mu,\]</span></p>
+<p>podemos escrever simplesmente</p>
+<p><span class="math display">\[\overline X_n
+\xrightarrow{P}
+\mu.\]</span></p>
+<p>A Lei dos Grandes Números descreve a estabilização da média amostral em torno da média da distribuição quando o tamanho da amostra aumenta <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;5.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.5)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretação">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A Lei dos Grandes Números é um resultado de <strong>convergência</strong>. Ela estabelece que</p>
+<p><span class="math display">\[\overline X_n
+\xrightarrow{P}
+\mu,\]</span></p>
+<p>mas não fornece diretamente a forma da distribuição de <span class="math inline">\(\overline X_n\)</span> para um valor fixado de <span class="math inline">\(n\)</span>.</p>
+<p>A distribuição e a velocidade das flutuações de <span class="math inline">\(\overline X_n\)</span> em torno de <span class="math inline">\(\mu\)</span> são tratadas pelo Teorema Central do Limite.</p>
+</div>
+</div>
+</section>
+<section id="teorema-central-do-limite" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="teorema-central-do-limite">Teorema Central do Limite</h3>
+<p>Considere</p>
+<p><span class="math display">\[X_1,X_2,\ldots\]</span></p>
+<p>independentes e identicamente distribuídas, com</p>
+<p><span class="math display">\[E(X_1)=\mu\]</span></p>
+<p>e</p>
+<p><span class="math display">\[0&lt;
+\operatorname{Var}(X_1)
+=
+\sigma^2
+&lt;
+\infty.\]</span></p>
+<p>Então,</p>
+<p><span class="math display">\[\frac{
+\sqrt n(\overline X_n-\mu)
+}{
+\sigma
+}
+\xrightarrow{d}
+N(0,1).\]</span></p>
+<p>Equivalentemente,</p>
+<p><span class="math display">\[\frac{
+\sum_{i=1}^nX_i-n\mu
+}{
+\sigma\sqrt n
+}
+\xrightarrow{d}
+N(0,1).\]</span></p>
+<p>O resultado descreve a distribuição limite das flutuações padronizadas da média ou da soma em torno de seus respectivos valores esperados <span class="citation" data-cites="rice2007mathematical ramachandran2021r chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;5.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;4.3)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="O que o Teorema Central do Limite estabelece">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>O que o Teorema Central do Limite estabelece
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O Teorema Central do Limite não afirma que as observações individuais se tornam normalmente distribuídas quando <span class="math inline">\(n\)</span> aumenta.</p>
+<p>A convergência refere-se à distribuição da quantidade padronizada</p>
+<p><span class="math display">\[\frac{
+\sqrt n(\overline X_n-\mu)
+}{
+\sigma
+}.\]</span></p>
+<p>Para amostras suficientemente grandes, esse resultado permite aproximar a distribuição da média por</p>
+<p><span class="math display">\[\overline X_n
+\approx
+N
+\left(
+\mu,
+\frac{\sigma^2}{n}
+\right).\]</span></p>
+<p>A qualidade dessa aproximação depende da distribuição das observações e do tamanho da amostra. Distribuições com forte assimetria ou caudas pesadas podem exigir valores maiores de <span class="math inline">\(n\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="lei-dos-grandes-números-e-teorema-central-do-limite" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="lei-dos-grandes-números-e-teorema-central-do-limite">Lei dos Grandes Números e Teorema Central do Limite</h3>
+<p>Os dois resultados descrevem aspectos diferentes do comportamento da média amostral.</p>
+<p>A Lei dos Grandes Números estabelece</p>
+<p><span class="math display">\[\overline X_n
+\xrightarrow{P}
+\mu.\]</span></p>
+<p>Seu foco é a aproximação de <span class="math inline">\(\overline X_n\)</span> ao valor <span class="math inline">\(\mu\)</span>.</p>
+<p>O Teorema Central do Limite estabelece</p>
+<p><span class="math display">\[\frac{
+\sqrt n(\overline X_n-\mu)
+}{
+\sigma
+}
+\xrightarrow{d}
+N(0,1).\]</span></p>
+<p>Seu foco é a distribuição das flutuações de <span class="math inline">\(\overline X_n\)</span> em torno de <span class="math inline">\(\mu\)</span> na escala <span class="math inline">\(n^{-1/2}\)</span>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Resultado</th>
+<th style="text-align: left;">Questão descrita</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Lei dos Grandes Números</td>
+<td style="text-align: left;"><span class="math inline">\(\overline X_n\)</span> se aproxima de <span class="math inline">\(\mu\)</span>?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Teorema Central do Limite</td>
+<td style="text-align: left;">como <span class="math inline">\(\overline X_n-\mu\)</span> se distribui, após a padronização adequada?</td>
+</tr>
+</tbody>
+</table>
+<p>Esses resultados serão utilizados de maneira distinta nos capítulos seguintes. A Lei dos Grandes Números sustentará resultados de consistência, enquanto o Teorema Central do Limite sustentará aproximações normais e resultados de normalidade assintótica.</p>
+</section>
+<section id="método-delta-univariado" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="método-delta-univariado">Método delta univariado</h3>
+<p>O método delta permite obter a distribuição assintótica de uma função de uma estatística a partir da distribuição assintótica da própria estatística. O resultado decorre de uma aproximação de Taylor de primeira ordem.</p>
+<p>Suponha que</p>
+<p><span class="math display">\[\sqrt n(T_n-\theta)
+\xrightarrow{d}
+N(0,\tau^2)\]</span></p>
+<p>e que <span class="math inline">\(g\)</span> seja diferenciável em <span class="math inline">\(\theta\)</span>. Denotando por <span class="math inline">\(g'(\theta)\)</span> a primeira derivada de <span class="math inline">\(g\)</span> avaliada em <span class="math inline">\(\theta\)</span>, temos</p>
+<p><span class="math display">\[\sqrt n
+\{g(T_n)-g(\theta)\}
+\xrightarrow{d}
+N
+\left(
+0,
+[g'(\theta)]^2\tau^2
+\right).\]</span></p>
+<p>A aproximação de Taylor fornece</p>
+<p><span class="math display">\[g(T_n)
+=
+g(\theta)
++
+g'(\theta)(T_n-\theta)
++
+o_P(|T_n-\theta|).\]</span></p>
+<p>Assim, em primeira ordem,</p>
+<p><span class="math display">\[g(T_n)-g(\theta)
+\approx
+g'(\theta)(T_n-\theta).\]</span></p>
+<p>O método transfere, portanto, a distribuição assintótica de <span class="math inline">\(T_n\)</span> para a função <span class="math inline">\(g(T_n)\)</span>.</p>
+<div class="callout-example" title="Exemplo: quadrado da média amostral">
+<p>Suponha que</p>
+<p><span class="math display">\[\sqrt n(\overline X_n-\mu)
+\xrightarrow{d}
+N(0,\sigma^2),\]</span></p>
+<p>com <span class="math inline">\(\mu\neq0\)</span>, e considere</p>
+<p><span class="math display">\[g(x)=x^2.\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[g'(\mu)=2\mu,\]</span></p>
+<p>o método delta fornece</p>
+<p><span class="math display">\[\sqrt n
+\left(
+\overline X_n^2-\mu^2
+\right)
+\xrightarrow{d}
+N
+\left(
+0,
+4\mu^2\sigma^2
+\right).\]</span></p>
+<p>Consequentemente, para valores grandes de <span class="math inline">\(n\)</span>,</p>
+<p><span class="math display">\[\overline X_n^2\]</span></p>
+<p>tem variância assintótica aproximadamente igual a</p>
+<p><span class="math display">\[\frac{4\mu^2\sigma^2}{n}.\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Quando a primeira derivada é nula">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Quando a primeira derivada é nula
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[g'(\theta)=0,\]</span></p>
+<p>o resultado de primeira ordem é degenerado. Nesse caso, pode ser necessário utilizar uma expansão de Taylor de ordem superior e uma normalização diferente.</p>
+</div>
+</div>
+</section>
+<section id="método-delta-multivariado" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="método-delta-multivariado">Método delta multivariado</h3>
+<p>O método delta também se aplica quando o parâmetro e a estatística são vetoriais.</p>
+<p>Suponha que</p>
+<p><span class="math display">\[\sqrt{n}(\mathbf T_n-\boldsymbol\theta)\xrightarrow{d}N_k(\mathbf0,\boldsymbol\Sigma),\]</span></p>
+<p>e que</p>
+<p><span class="math display">\[g:\mathbb R^k\longrightarrow\mathbb R^m\]</span></p>
+<p>seja diferenciável em <span class="math inline">\(\boldsymbol\theta\)</span>.</p>
+<p>Se</p>
+<p><span class="math display">\[Dg(\boldsymbol\theta)\]</span></p>
+<p>denota a matriz jacobiana de <span class="math inline">\(g\)</span> avaliada em <span class="math inline">\(\boldsymbol\theta\)</span>, então</p>
+<p><span class="math display">\[\sqrt{n}\{g(\mathbf T_n)-g(\boldsymbol\theta)\}\xrightarrow{d} N_m \left[
+\mathbf0,Dg(\boldsymbol\theta)\boldsymbol\Sigma Dg(\boldsymbol\theta)^\mathsf T \right].\]</span></p>
+<p>O resultado é a extensão vetorial da aproximação</p>
+<p><span class="math display">\[g(\mathbf T_n) - g(\boldsymbol\theta) \approx Dg(\boldsymbol\theta) (\mathbf T_n-\boldsymbol\theta).\]</span></p>
+<p>Quando <span class="math inline">\(m=1\)</span>, a matriz jacobiana reduz-se a um vetor linha e a variância assintótica de <span class="math inline">\(g(\mathbf T_n)\)</span> é</p>
+<p><span class="math display">\[\nabla g(\boldsymbol\theta)^\mathsf T
+\boldsymbol\Sigma
+\nabla g(\boldsymbol\theta).\]</span></p>
+<p>O método delta será utilizado posteriormente para obter variâncias assintóticas de funções de estimadores e erros-padrão associados a transformações de parâmetros <span class="citation" data-cites="lauritzen2023fundamentals chihara2022">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, teorema A.19; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;7.7)</span>.</p>
+<div class="callout-example" title="Exemplo: razão entre duas quantidades">
+<p>Suponha que</p>
+<p><span class="math display">\[\sqrt n
+\left[
+\begin{pmatrix}
+T_{1n}\\
+T_{2n}
+\end{pmatrix}
+-
+\begin{pmatrix}
+\theta_1\\
+\theta_2
+\end{pmatrix}
+\right]
+\xrightarrow{d}
+N_2
+\left(
+\mathbf0,
+\boldsymbol\Sigma
+\right),\]</span></p>
+<p>com <span class="math inline">\(\theta_2\neq0\)</span>.</p>
+<p>Considere</p>
+<p><span class="math display">\[g(\theta_1,\theta_2)
+=
+\frac{\theta_1}{\theta_2}.\]</span></p>
+<p>O gradiente é</p>
+<p><span class="math display">\[\nabla g(\theta_1,\theta_2)
+=
+\begin{pmatrix}
+\dfrac{1}{\theta_2}\\[6pt]
+-\dfrac{\theta_1}{\theta_2^2}
+\end{pmatrix}.\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[\sqrt n
+\left(
+\frac{T_{1n}}{T_{2n}}
+-
+\frac{\theta_1}{\theta_2}
+\right)
+\xrightarrow{d}
+N
+\left(
+0,
+\nabla g(\boldsymbol\theta)^\mathsf T
+\boldsymbol\Sigma
+\nabla g(\boldsymbol\theta)
+\right).\]</span></p>
+</div>
+</section>
+<section id="ordens-estocásticas" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ordens-estocásticas">Ordens estocásticas</h3>
+<p>As notações <span class="math inline">\(o_P\)</span> e <span class="math inline">\(O_P\)</span> permitem descrever a magnitude probabilística de sequências de variáveis aleatórias e tornam mais concisas as expansões assintóticas.</p>
+<p>Seja <span class="math inline">\(a_n&gt;0\)</span> uma sequência determinística.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pequena ordem em probabilidade">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Pequena ordem em probabilidade
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Escrevemos</p>
+<p><span class="math display">\[X_n=o_P(a_n)\]</span></p>
+<p>quando</p>
+<p><span class="math display">\[\frac{X_n}{a_n}
+\xrightarrow{P}
+0.\]</span></p>
+<p>Assim, <span class="math inline">\(X_n\)</span> torna-se desprezível em relação a <span class="math inline">\(a_n\)</span> em probabilidade.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Ordem em probabilidade">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Ordem em probabilidade
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Escrevemos</p>
+<p><span class="math display">\[X_n=O_P(a_n)\]</span></p>
+<p>quando</p>
+<p><span class="math display">\[\frac{X_n}{a_n}\]</span></p>
+<p>é limitado em probabilidade.</p>
+<p>Formalmente, para todo <span class="math inline">\(\varepsilon&gt;0\)</span>, existe <span class="math inline">\(M&gt;0\)</span> tal que, para <span class="math inline">\(n\)</span> suficientemente grande,</p>
+<p><span class="math display">\[P
+\left(
+\left|
+\frac{X_n}{a_n}
+\right|
+&gt;M
+\right)
+&lt;
+\varepsilon.\]</span></p>
+</div>
+</div>
+<p>Em particular,</p>
+<p><span class="math display">\[X_n=O_P(1)\]</span></p>
+<p>indica que a sequência é limitada em probabilidade, enquanto</p>
+<p><span class="math display">\[X_n=o_P(1)\]</span></p>
+<p>equivale a</p>
+<p><span class="math display">\[X_n\xrightarrow{P}0.\]</span></p>
+<section id="taxa-de-convergência" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="taxa-de-convergência">Taxa de convergência</h4>
+<p>Suponha que <span class="math inline">\(T_n\)</span> estime <span class="math inline">\(\theta\)</span>. A expressão</p>
+<p><span class="math display">\[T_n-\theta
+=
+O_P(n^{-1/2})\]</span></p>
+<p>indica que o erro de estimação possui ordem probabilística <span class="math inline">\(n^{-1/2}\)</span>.</p>
+<p>Por exemplo, sob as condições do Teorema Central do Limite,</p>
+<p><span class="math display">\[\sqrt n(\overline X_n-\mu)
+\xrightarrow{d}
+N(0,\sigma^2).\]</span></p>
+<p>Como uma sequência que converge em distribuição é limitada em probabilidade,</p>
+<p><span class="math display">\[\sqrt n(\overline X_n-\mu)
+=
+O_P(1).\]</span></p>
+<p>Consequentemente,</p>
+<p><span class="math display">\[\overline X_n-\mu
+=
+O_P(n^{-1/2}).\]</span></p>
+<p>Essa notação será utilizada posteriormente em expansões de Taylor da função escore e da log-verossimilhança <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;5.5 e ap. A.2)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Diferença entre $O_P$ e $o_P$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Diferença entre <span class="math inline">\(O_P\)</span> e <span class="math inline">\(o_P\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As expressões</p>
+<p><span class="math display">\[X_n=O_P(a_n)\]</span></p>
+<p>e</p>
+<p><span class="math display">\[X_n=o_P(a_n)\]</span></p>
+<p>não têm o mesmo significado.</p>
+<p>A primeira indica que <span class="math inline">\(X_n/a_n\)</span> permanece limitado em probabilidade. A segunda estabelece a condição mais forte</p>
+<p><span class="math display">\[\frac{X_n}{a_n}
+\xrightarrow{P}0.\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[X_n=o_P(a_n)\]</span></p>
+<p>implica</p>
+<p><span class="math display">\[X_n=O_P(a_n).\]</span></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="síntese" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="síntese">Síntese</h2>
+<p>Os resultados deste capítulo podem ser organizados em duas partes.</p>
+<p>A primeira reúne ferramentas de cálculo e álgebra linear:</p>
+<ul>
+<li>somatórios, produtos e funções indicadoras;</li>
+<li>diferenciação e expansões de Taylor;</li>
+<li>vetores e matrizes;</li>
+<li>formas quadráticas e projeções;</li>
+<li>gradientes, matrizes jacobianas e hessianas;</li>
+<li>transformações multivariadas.</li>
+</ul>
+<p>A segunda reúne ferramentas para o estudo assintótico de estatísticas:</p>
+<ul>
+<li>convergência quase certa, em média quadrática, em probabilidade e em distribuição;</li>
+<li>teorema do mapeamento contínuo;</li>
+<li>lema de Slutsky;</li>
+<li>Lei dos Grandes Números;</li>
+<li>Teorema Central do Limite;</li>
+<li>método delta;</li>
+<li>ordens estocásticas.</li>
+</ul>
+<p>As relações entre alguns desses resultados podem ser representadas por</p>
+<p><span class="math display">\[\text{LGN}
+\longrightarrow
+\text{convergência para uma constante}
+\longrightarrow
+\text{consistência},\]</span></p>
+<p>enquanto</p>
+<p><span class="math display">\[\text{TCL}
+\longrightarrow
+\text{distribuição limite}
+\longrightarrow
+\text{aproximação normal}.\]</span></p>
+<p>O método delta combina uma distribuição assintótica com uma expansão de Taylor:</p>
+<p><span class="math display">\[\text{distribuição assintótica de }T_n
++
+\text{Taylor}
+\longrightarrow
+\text{distribuição assintótica de }g(T_n).\]</span></p>
+<p>O mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes. As notações <span class="math inline">\(O_P\)</span> e <span class="math inline">\(o_P\)</span> fornecem uma forma compacta de registrar a magnitude dos termos que aparecem nessas aproximações.</p>
+<p>Os capítulos seguintes utilizarão esses resultados sem redefini-los. As condições e interpretações específicas serão discutidas no contexto em que cada ferramenta for aplicada.</p>
+</section>
+<section id="exercícios-de-consolidação" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercícios-de-consolidação">Exercícios de consolidação</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mostre que</p>
+<p><span class="math display">\[\sum_{i=1}^n(x_i-a)^2
+=
+\sum_{i=1}^n(x_i-\overline x)^2
++
+n(\overline x-a)^2.\]</span></p>
+<p>Utilize a identidade</p>
+<p><span class="math display">\[\sum_{i=1}^n(x_i-\overline x)=0.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 2">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Obtenha a aproximação de Taylor de primeira ordem de</p>
+<p><span class="math display">\[g(x)=\frac{1}{x}\]</span></p>
+<p>em torno de <span class="math inline">\(a=1\)</span>.</p>
+<p>Em seguida, obtenha a aproximação de segunda ordem.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 3">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para</p>
+<p><span class="math display">\[g(x,y)=x^2+xy+y^2,\]</span></p>
+<p>obtenha:</p>
+<ol type="a">
+<li><p>o gradiente <span class="math inline">\(\nabla g(x,y)\)</span>;</p></li>
+<li><p>a matriz hessiana <span class="math inline">\(\nabla^2g(x,y)\)</span>;</p></li>
+<li><p>a aproximação de Taylor de primeira ordem em torno de <span class="math inline">\((1,1)\)</span>.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 4">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere</p>
+<p><span class="math display">\[\mathbf A
+=
+\begin{pmatrix}
+2 &amp; 1\\
+1 &amp; 2
+\end{pmatrix}.\]</span></p>
+<p>Mostre que <span class="math inline">\(\mathbf A\)</span> é positiva definida verificando que</p>
+<p><span class="math display">\[\mathbf x^\mathsf T
+\mathbf A
+\mathbf x
+&gt;0\]</span></p>
+<p>para todo <span class="math inline">\(\mathbf x\neq\mathbf0\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 5">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[\mathbf P
+=
+\mathbf X
+(\mathbf X^\mathsf T\mathbf X)^{-1}
+\mathbf X^\mathsf T,\]</span></p>
+<p>com <span class="math inline">\(\mathbf X\)</span> de posto completo nas colunas, mostre que</p>
+<p><span class="math display">\[\mathbf P^\mathsf T=\mathbf P\]</span></p>
+<p>e</p>
+<p><span class="math display">\[\mathbf P^2=\mathbf P.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 6">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere a transformação</p>
+<p><span class="math display">\[Y_1=X_1+X_2,
+\qquad
+Y_2=X_1-X_2.\]</span></p>
+<ol type="a">
+<li><p>Obtenha a transformação inversa.</p></li>
+<li><p>Determine sua matriz jacobiana.</p></li>
+<li><p>Calcule o valor absoluto do determinante jacobiano da transformação inversa.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 7">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Organize as seguintes formas de convergência de acordo com as implicações válidas em geral:</p>
+<ul>
+<li>convergência quase certa;</li>
+<li>convergência em média quadrática;</li>
+<li>convergência em probabilidade;</li>
+<li>convergência em distribuição.</li>
+</ul>
+<p>Indique quais implicações não podem ser invertidas sem hipóteses adicionais.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 8">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que</p>
+<p><span class="math display">\[T_n\xrightarrow{P}\theta,
+\qquad
+\theta&gt;0.\]</span></p>
+<p>Utilize o teorema do mapeamento contínuo para obter os limites em probabilidade de</p>
+<p><span class="math display">\[T_n^2,
+\qquad
+\sqrt{T_n}\]</span></p>
+<p>e</p>
+<p><span class="math display">\[\log T_n.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 9">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que</p>
+<p><span class="math display">\[X_n\xrightarrow{d}N(0,1)\]</span></p>
+<p>e</p>
+<p><span class="math display">\[Y_n\xrightarrow{P}2.\]</span></p>
+<p>Utilize o lema de Slutsky para obter as distribuições limites de</p>
+<p><span class="math display">\[X_n+Y_n,\]</span></p>
+<p><span class="math display">\[X_nY_n\]</span></p>
+<p>e</p>
+<p><span class="math display">\[\frac{X_n}{Y_n}.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 10">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[X_1,X_2,\ldots
+\overset{\mathrm{iid}}{\sim}P,\]</span></p>
+<p>com</p>
+<p><span class="math display">\[E(X_i)=\mu\]</span></p>
+<p>e</p>
+<p><span class="math display">\[0&lt;\operatorname{Var}(X_i)=\sigma^2&lt;\infty,\]</span></p>
+<p>indique separadamente o que a Lei dos Grandes Números e o Teorema Central do Limite estabelecem sobre <span class="math inline">\(\overline X_n\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 11">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que</p>
+<p><span class="math display">\[\sqrt n(T_n-\theta)
+\xrightarrow{d}
+N(0,\tau^2),\]</span></p>
+<p>com <span class="math inline">\(\theta&gt;0\)</span>.</p>
+<p>Use o método delta para obter a distribuição assintótica de</p>
+<p><span class="math display">\[\log T_n.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 12">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nas condições do exercício anterior, obtenha a distribuição assintótica de</p>
+<p><span class="math display">\[\frac{1}{T_n}.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 13">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 13
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que</p>
+<p><span class="math display">\[\sqrt n
+\left[
+\begin{pmatrix}
+T_{1n}\\
+T_{2n}
+\end{pmatrix}
+-
+\begin{pmatrix}
+\theta_1\\
+\theta_2
+\end{pmatrix}
+\right]
+\xrightarrow{d}
+N_2
+(\mathbf0,\boldsymbol\Sigma).\]</span></p>
+<p>Utilize o método delta para obter a forma da variância assintótica de</p>
+<p><span class="math display">\[g(\theta_1,\theta_2)
+=
+\theta_1\theta_2.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 14">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 14
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mostre que</p>
+<p><span class="math display">\[X_n=o_P(a_n)\]</span></p>
+<p>implica</p>
+<p><span class="math display">\[X_n=O_P(a_n).\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 15">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 15
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que</p>
+<p><span class="math display">\[\sqrt n(T_n-\theta)
+\xrightarrow{d}Z,\]</span></p>
+<p>em que <span class="math inline">\(Z\)</span> possui uma distribuição própria.</p>
+<p>Mostre que</p>
+<p><span class="math display">\[T_n-\theta
+=
+O_P(n^{-1/2}).\]</span></p>
+</div>
+</div>
+</section>
+<section id="referências" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-chihara2022" class="csl-entry" role="listitem">
+CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.
+</div>
+<div id="ref-lauritzen2023fundamentals" class="csl-entry" role="listitem">
+LAURITZEN, Steffen. <strong>Fundamentals of Mathematical Statistics</strong>. 1. ed. Boca Raton, FL: CRC Press, 2023.
+</div>
+<div id="ref-ramachandran2021r" class="csl-entry" role="listitem">
+RAMACHANDRAN, Kandethody M.; TSOKOS, Chris P. <strong>Mathematical Statistics with Applications in <span>R</span></strong>. 3. ed. London: Academic Press, 2021.
+</div>
+<div id="ref-rice2007mathematical" class="csl-entry" role="listitem">
+RICE, John A. <strong>Mathematical Statistics and Data Analysis</strong>. 3. ed. Belmont, CA: Duxbury Press, 2007.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./unidade0p1.html" class="pagination-link" aria-label="Revisão de Probabilidade e Modelos Probabilísticos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Revisão de Probabilidade e Modelos Probabilísticos</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./unidade1.html" class="pagination-link" aria-label="Fundamentos da Inferência Estatística">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Fundamentos da Inferência Estatística</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
