@@ -1,0 +1,4110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Revisão de Probabilidade e Modelos Probabilísticos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./preliminares.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e2fb59b0b9d1befbe783af2ecca9a04e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ef508e81d2bdf022cbbfedbc5b1611ea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-e2fb59b0b9d1befbe783af2ecca9a04e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade0p1.html">Revisão de Probabilidade e Modelos Probabilísticos</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+        <div class="sidebar-tools-collapse">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Informações Legais e Declaração de Uso de Inteligência Artificial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Identificação da(s) Disciplina(s)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade0p1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Revisão de Probabilidade e Modelos Probabilísticos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preliminares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Resultados Preliminares</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Fundamentos da Inferência Estatística</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Distribuições Amostrais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Avaliação de Estimadores e Princípios de Redução de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Métodos de Estimação Pontual</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação intervalar</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testes de Hipóteses e Análise de Dados Categóricos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Projetos Aplicados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unidade8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exemplos Aplicados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Demonstrações</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#probabilidade-e-condicionamento" id="toc-probabilidade-e-condicionamento" class="nav-link active" data-scroll-target="#probabilidade-e-condicionamento">Probabilidade e condicionamento</a>
+  <ul class="collapse">
+  <li><a href="#experimentos-aleatórios-espaço-amostral-e-eventos" id="toc-experimentos-aleatórios-espaço-amostral-e-eventos" class="nav-link" data-scroll-target="#experimentos-aleatórios-espaço-amostral-e-eventos">Experimentos aleatórios, espaço amostral e eventos</a></li>
+  <li><a href="#probabilidade" id="toc-probabilidade" class="nav-link" data-scroll-target="#probabilidade">Probabilidade</a></li>
+  <li><a href="#revisão-de-combinatória" id="toc-revisão-de-combinatória" class="nav-link" data-scroll-target="#revisão-de-combinatória">Revisão de combinatória</a></li>
+  <li><a href="#probabilidade-condicional" id="toc-probabilidade-condicional" class="nav-link" data-scroll-target="#probabilidade-condicional">Probabilidade condicional</a></li>
+  <li><a href="#lei-da-probabilidade-total" id="toc-lei-da-probabilidade-total" class="nav-link" data-scroll-target="#lei-da-probabilidade-total">Lei da probabilidade total</a></li>
+  <li><a href="#teorema-de-bayes" id="toc-teorema-de-bayes" class="nav-link" data-scroll-target="#teorema-de-bayes">Teorema de Bayes</a></li>
+  <li><a href="#independência-de-eventos" id="toc-independência-de-eventos" class="nav-link" data-scroll-target="#independência-de-eventos">Independência de eventos</a></li>
+  </ul></li>
+  <li><a href="#variáveis-aleatórias-e-distribuições" id="toc-variáveis-aleatórias-e-distribuições" class="nav-link" data-scroll-target="#variáveis-aleatórias-e-distribuições">Variáveis aleatórias e distribuições</a>
+  <ul class="collapse">
+  <li><a href="#função-de-distribuição-suporte-e-quantis" id="toc-função-de-distribuição-suporte-e-quantis" class="nav-link" data-scroll-target="#função-de-distribuição-suporte-e-quantis">Função de distribuição, suporte e quantis</a></li>
+  <li><a href="#variáveis-discretas-e-absolutamente-contínuas" id="toc-variáveis-discretas-e-absolutamente-contínuas" class="nav-link" data-scroll-target="#variáveis-discretas-e-absolutamente-contínuas">Variáveis discretas e absolutamente contínuas</a></li>
+  <li><a href="#função-indicadora" id="toc-função-indicadora" class="nav-link" data-scroll-target="#função-indicadora">Função indicadora</a></li>
+  <li><a href="#funções-de-variáveis-aleatórias" id="toc-funções-de-variáveis-aleatórias" class="nav-link" data-scroll-target="#funções-de-variáveis-aleatórias">Funções de variáveis aleatórias</a></li>
+  </ul></li>
+  <li><a href="#esperança-variância-e-momentos" id="toc-esperança-variância-e-momentos" class="nav-link" data-scroll-target="#esperança-variância-e-momentos">Esperança, variância e momentos</a>
+  <ul class="collapse">
+  <li><a href="#esperança-e-momentos" id="toc-esperança-e-momentos" class="nav-link" data-scroll-target="#esperança-e-momentos">Esperança e momentos</a></li>
+  </ul></li>
+  <li><a href="#modelos-probabilísticos-discretos" id="toc-modelos-probabilísticos-discretos" class="nav-link" data-scroll-target="#modelos-probabilísticos-discretos">Modelos probabilísticos discretos</a>
+  <ul class="collapse">
+  <li><a href="#distribuição-uniforme-discreta" id="toc-distribuição-uniforme-discreta" class="nav-link" data-scroll-target="#distribuição-uniforme-discreta">Distribuição uniforme discreta</a></li>
+  <li><a href="#distribuição-de-bernoulli" id="toc-distribuição-de-bernoulli" class="nav-link" data-scroll-target="#distribuição-de-bernoulli">Distribuição de Bernoulli</a></li>
+  <li><a href="#distribuição-binomial" id="toc-distribuição-binomial" class="nav-link" data-scroll-target="#distribuição-binomial">Distribuição binomial</a></li>
+  <li><a href="#distribuição-hipergeométrica" id="toc-distribuição-hipergeométrica" class="nav-link" data-scroll-target="#distribuição-hipergeométrica">Distribuição hipergeométrica</a></li>
+  <li><a href="#binomial-e-hipergeométrica" id="toc-binomial-e-hipergeométrica" class="nav-link" data-scroll-target="#binomial-e-hipergeométrica">Binomial e hipergeométrica</a></li>
+  <li><a href="#distribuição-geométrica" id="toc-distribuição-geométrica" class="nav-link" data-scroll-target="#distribuição-geométrica">Distribuição geométrica</a></li>
+  <li><a href="#distribuição-binomial-negativa" id="toc-distribuição-binomial-negativa" class="nav-link" data-scroll-target="#distribuição-binomial-negativa">Distribuição binomial negativa</a></li>
+  <li><a href="#distribuição-de-poisson" id="toc-distribuição-de-poisson" class="nav-link" data-scroll-target="#distribuição-de-poisson">Distribuição de Poisson</a></li>
+  <li><a href="#relação-entre-binomial-e-poisson" id="toc-relação-entre-binomial-e-poisson" class="nav-link" data-scroll-target="#relação-entre-binomial-e-poisson">Relação entre binomial e Poisson</a></li>
+  <li><a href="#soma-de-variáveis-poisson-independentes" id="toc-soma-de-variáveis-poisson-independentes" class="nav-link" data-scroll-target="#soma-de-variáveis-poisson-independentes">Soma de variáveis Poisson independentes</a></li>
+  <li><a href="#distribuição-multinomial" id="toc-distribuição-multinomial" class="nav-link" data-scroll-target="#distribuição-multinomial">Distribuição multinomial</a></li>
+  <li><a href="#relações-entre-os-modelos-discretos" id="toc-relações-entre-os-modelos-discretos" class="nav-link" data-scroll-target="#relações-entre-os-modelos-discretos">Relações entre os modelos discretos</a></li>
+  </ul></li>
+  <li><a href="#modelos-probabilísticos-contínuos" id="toc-modelos-probabilísticos-contínuos" class="nav-link" data-scroll-target="#modelos-probabilísticos-contínuos">Modelos probabilísticos contínuos</a>
+  <ul class="collapse">
+  <li><a href="#distribuição-uniforme-contínua" id="toc-distribuição-uniforme-contínua" class="nav-link" data-scroll-target="#distribuição-uniforme-contínua">Distribuição uniforme contínua</a></li>
+  <li><a href="#distribuição-exponencial" id="toc-distribuição-exponencial" class="nav-link" data-scroll-target="#distribuição-exponencial">Distribuição exponencial</a></li>
+  <li><a href="#distribuição-gama" id="toc-distribuição-gama" class="nav-link" data-scroll-target="#distribuição-gama">Distribuição gama</a></li>
+  <li><a href="#relação-entre-exponencial-e-gama" id="toc-relação-entre-exponencial-e-gama" class="nav-link" data-scroll-target="#relação-entre-exponencial-e-gama">Relação entre exponencial e gama</a></li>
+  <li><a href="#distribuição-normal" id="toc-distribuição-normal" class="nav-link" data-scroll-target="#distribuição-normal">Distribuição normal</a></li>
+  <li><a href="#transformações-lineares-da-distribuição-normal" id="toc-transformações-lineares-da-distribuição-normal" class="nav-link" data-scroll-target="#transformações-lineares-da-distribuição-normal">Transformações lineares da distribuição normal</a></li>
+  <li><a href="#distribuição-beta" id="toc-distribuição-beta" class="nav-link" data-scroll-target="#distribuição-beta">Distribuição beta</a></li>
+  <li><a href="#relações-entre-gama-e-beta" id="toc-relações-entre-gama-e-beta" class="nav-link" data-scroll-target="#relações-entre-gama-e-beta">Relações entre gama e beta</a></li>
+  <li><a href="#escolha-entre-alguns-modelos-contínuos" id="toc-escolha-entre-alguns-modelos-contínuos" class="nav-link" data-scroll-target="#escolha-entre-alguns-modelos-contínuos">Escolha entre alguns modelos contínuos</a></li>
+  </ul></li>
+  <li><a href="#distribuições-conjuntas-e-dependência" id="toc-distribuições-conjuntas-e-dependência" class="nav-link" data-scroll-target="#distribuições-conjuntas-e-dependência">Distribuições conjuntas e dependência</a>
+  <ul class="collapse">
+  <li><a href="#distribuição-conjunta" id="toc-distribuição-conjunta" class="nav-link" data-scroll-target="#distribuição-conjunta">Distribuição conjunta</a></li>
+  <li><a href="#distribuições-marginais" id="toc-distribuições-marginais" class="nav-link" data-scroll-target="#distribuições-marginais">Distribuições marginais</a></li>
+  <li><a href="#distribuições-condicionais" id="toc-distribuições-condicionais" class="nav-link" data-scroll-target="#distribuições-condicionais">Distribuições condicionais</a></li>
+  <li><a href="#independência-de-variáveis-aleatórias" id="toc-independência-de-variáveis-aleatórias" class="nav-link" data-scroll-target="#independência-de-variáveis-aleatórias">Independência de variáveis aleatórias</a></li>
+  <li><a href="#independência-de-várias-variáveis" id="toc-independência-de-várias-variáveis" class="nav-link" data-scroll-target="#independência-de-várias-variáveis">Independência de várias variáveis</a></li>
+  <li><a href="#covariância-e-correlação" id="toc-covariância-e-correlação" class="nav-link" data-scroll-target="#covariância-e-correlação">Covariância e correlação</a></li>
+  <li><a href="#esperança-condicional" id="toc-esperança-condicional" class="nav-link" data-scroll-target="#esperança-condicional">Esperança condicional</a></li>
+  <li><a href="#variância-condicional" id="toc-variância-condicional" class="nav-link" data-scroll-target="#variância-condicional">Variância condicional</a></li>
+  <li><a href="#vetores-de-médias-e-matrizes-de-covariâncias" id="toc-vetores-de-médias-e-matrizes-de-covariâncias" class="nav-link" data-scroll-target="#vetores-de-médias-e-matrizes-de-covariâncias">Vetores de médias e matrizes de covariâncias</a></li>
+  <li><a href="#síntese-das-relações-conjuntas" id="toc-síntese-das-relações-conjuntas" class="nav-link" data-scroll-target="#síntese-das-relações-conjuntas">Síntese das relações conjuntas</a></li>
+  </ul></li>
+  <li><a href="#transformações-e-função-geradora-de-momentos" id="toc-transformações-e-função-geradora-de-momentos" class="nav-link" data-scroll-target="#transformações-e-função-geradora-de-momentos">Transformações e função geradora de momentos</a>
+  <ul class="collapse">
+  <li><a href="#transformações-de-variáveis-aleatórias" id="toc-transformações-de-variáveis-aleatórias" class="nav-link" data-scroll-target="#transformações-de-variáveis-aleatórias">Transformações de variáveis aleatórias</a></li>
+  <li><a href="#função-geradora-de-momentos" id="toc-função-geradora-de-momentos" class="nav-link" data-scroll-target="#função-geradora-de-momentos">Função geradora de momentos</a></li>
+  <li><a href="#algumas-funções-geradoras-de-momentos" id="toc-algumas-funções-geradoras-de-momentos" class="nav-link" data-scroll-target="#algumas-funções-geradoras-de-momentos">Algumas funções geradoras de momentos</a></li>
+  </ul></li>
+  <li><a href="#quadro-síntese-dos-modelos-probabilísticos" id="toc-quadro-síntese-dos-modelos-probabilísticos" class="nav-link" data-scroll-target="#quadro-síntese-dos-modelos-probabilísticos">Quadro-síntese dos modelos probabilísticos</a></li>
+  <li><a href="#síntese" id="toc-síntese" class="nav-link" data-scroll-target="#síntese">Síntese</a></li>
+  <li><a href="#exercícios-de-consolidação" id="toc-exercícios-de-consolidação" class="nav-link" data-scroll-target="#exercícios-de-consolidação">Exercícios de consolidação</a></li>
+  <li><a href="#da-probabilidade-à-inferência-estatística" id="toc-da-probabilidade-à-inferência-estatística" class="nav-link" data-scroll-target="#da-probabilidade-à-inferência-estatística">Da Probabilidade à Inferência Estatística</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Revisão de Probabilidade e Modelos Probabilísticos</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Este capítulo revisa conceitos de Probabilidade e modelos probabilísticos que serão utilizados ao longo do estudo de Inferência Estatística. O conteúdo pressupõe uma formação anterior em Probabilidade e concentra-se nas definições, propriedades e relações que serão retomadas nos capítulos seguintes.</p>
+<p>A revisão abrange probabilidade condicional, independência, variáveis aleatórias, distribuições, esperança, variância, modelos probabilísticos discretos e contínuos e distribuições conjuntas. Alguns resultados são apresentados de forma resumida, pois o objetivo é recuperar a linguagem probabilística necessária à inferência, e não desenvolver novamente um curso completo de Probabilidade <span class="citation" data-cites="dantas1997 magalhaes2006 meyer1983">(<a href="#ref-dantas1997" role="doc-biblioref">Dantas, 1997</a>; <a href="#ref-magalhaes2006" role="doc-biblioref">Magalhães, 2006</a>; <a href="#ref-meyer1983" role="doc-biblioref">Meyer, 1983</a>)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Delimitação do capítulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Delimitação do capítulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Neste capítulo, os modelos probabilísticos são tratados como objetos conhecidos da teoria da Probabilidade. Conceitos propriamente inferenciais, como parâmetro desconhecido, modelo estatístico, verossimilhança, estimação e testes de hipóteses, serão introduzidos posteriormente.</p>
+<p>Resultados sobre convergência, Lei dos Grandes Números, Teorema Central do Limite, lema de Slutsky, método delta e ordens estocásticas serão reunidos no capítulo <strong>Resultados Matemáticos e Assintóticos para Inferência</strong>.</p>
+</div>
+</div>
+<section id="probabilidade-e-condicionamento" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="probabilidade-e-condicionamento">Probabilidade e condicionamento</h2>
+<section id="experimentos-aleatórios-espaço-amostral-e-eventos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="experimentos-aleatórios-espaço-amostral-e-eventos">Experimentos aleatórios, espaço amostral e eventos</h3>
+<p>Um <strong>experimento aleatório</strong> é um procedimento cujo resultado não pode ser determinado antecipadamente, embora seja possível especificar o conjunto de resultados que podem ocorrer.</p>
+<p>O <strong>espaço amostral</strong>, denotado por <span class="math inline">\(\Omega\)</span>, é o conjunto dos resultados possíveis do experimento. Um <strong>evento</strong> é um subconjunto de <span class="math inline">\(\Omega\)</span>.</p>
+<p>Por exemplo, no lançamento de um dado de seis faces,</p>
+<p><span class="math display">\[
+\Omega=\{1,2,3,4,5,6\}.
+\]</span></p>
+<p>O evento</p>
+<p><span class="math display">\[
+A=\{2,4,6\}
+\]</span></p>
+<p>representa a ocorrência de um resultado par.</p>
+<p>As operações entre eventos seguem as operações usuais entre conjuntos. Para eventos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>:</p>
+<ul>
+<li><span class="math inline">\(A\cup B\)</span> representa a ocorrência de pelo menos um dos eventos;</li>
+<li><span class="math inline">\(A\cap B\)</span> representa a ocorrência simultânea de <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>;</li>
+<li><span class="math inline">\(A^c\)</span> representa a não ocorrência de <span class="math inline">\(A\)</span>;</li>
+<li><span class="math inline">\(A\setminus B\)</span> representa a ocorrência de <span class="math inline">\(A\)</span> sem a ocorrência de <span class="math inline">\(B\)</span>.</li>
+</ul>
+<p>Dois eventos são <strong>mutuamente exclusivos</strong> quando</p>
+<p><span class="math display">\[
+A\cap B=\varnothing.
+\]</span></p>
+</section>
+<section id="probabilidade" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="probabilidade">Probabilidade</h3>
+<p>Uma medida de probabilidade <span class="math inline">\(P\)</span> associa a cada evento <span class="math inline">\(A\)</span> um número <span class="math inline">\(P(A)\)</span> que representa sua probabilidade de ocorrência. As propriedades básicas são</p>
+<p><span class="math display">\[
+P(A)\geq 0,
+\]</span></p>
+<p><span class="math display">\[
+P(\Omega)=1
+\]</span></p>
+<p>e, para uma sequência de eventos mutuamente exclusivos <span class="math inline">\(A_1,A_2,\ldots\)</span>,</p>
+<p><span class="math display">\[
+P\left(
+\bigcup_{i=1}^{\infty}A_i
+\right)
+=
+\sum_{i=1}^{\infty}P(A_i).
+\]</span></p>
+<p>Dessas propriedades decorrem relações utilizadas com frequência:</p>
+<p><span class="math display">\[
+P(A^c)=1-P(A),
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+P(A\cup B)
+=
+P(A)+P(B)-P(A\cap B).
+\]</span></p>
+<p>Se <span class="math inline">\(A\subseteq B\)</span>, então</p>
+<p><span class="math display">\[
+P(A)\leq P(B).
+\]</span></p>
+<p>Em espaços amostrais finitos com resultados equiprováveis, a probabilidade de um evento pode ser calculada por</p>
+<p><span class="math display">\[
+P(A)
+=
+\frac{|A|}{|\Omega|},
+\]</span></p>
+<p>em que <span class="math inline">\(|A|\)</span> e <span class="math inline">\(|\Omega|\)</span> representam, respectivamente, o número de elementos de <span class="math inline">\(A\)</span> e de <span class="math inline">\(\Omega\)</span> <span class="citation" data-cites="dantas1997 meyer1983">(<a href="#ref-dantas1997" role="doc-biblioref">Dantas, 1997</a>; <a href="#ref-meyer1983" role="doc-biblioref">Meyer, 1983</a>)</span>.</p>
+</section>
+<section id="revisão-de-combinatória" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="revisão-de-combinatória">Revisão de combinatória</h3>
+<p>Em problemas com resultados equiprováveis, o cálculo de probabilidades depende frequentemente da contagem dos resultados possíveis. Para esta revisão, serão utilizados principalmente o princípio multiplicativo, os coeficientes binomiais e os coeficientes multinomiais.</p>
+<p>Se um procedimento pode ser realizado em <span class="math inline">\(n_1\)</span> formas em uma primeira etapa e, para cada uma delas, em <span class="math inline">\(n_2\)</span> formas em uma segunda etapa, o número de resultados possíveis é</p>
+<p><span class="math display">\[
+n_1n_2.
+\]</span></p>
+<p>Para <span class="math inline">\(n\)</span> objetos distintos, o número de ordenações possíveis é</p>
+<p><span class="math display">\[
+n!.
+\]</span></p>
+<p>O número de maneiras de escolher <span class="math inline">\(k\)</span> elementos dentre <span class="math inline">\(n\)</span>, sem considerar a ordem, é</p>
+<p><span class="math display">\[
+\binom{n}{k}
+=
+\frac{n!}{k!(n-k)!},
+\qquad
+k=0,1,\ldots,n.
+\]</span></p>
+<p>Se <span class="math inline">\(n\)</span> elementos devem ser distribuídos em <span class="math inline">\(m\)</span> grupos de tamanhos <span class="math inline">\(n_1,\ldots,n_m\)</span>, com</p>
+<p><span class="math display">\[
+n_1+\cdots+n_m=n,
+\]</span></p>
+<p>o número de configurações é dado pelo coeficiente multinomial</p>
+<p><span class="math display">\[
+\binom{n}{n_1,\ldots,n_m}
+=
+\frac{n!}{n_1!\cdots n_m!}.
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Uso posterior">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Uso posterior
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os coeficientes binomial e multinomial aparecem diretamente nas funções de probabilidade das distribuições binomial, hipergeométrica e multinomial. Nesta revisão, a combinatória será utilizada como ferramenta para descrever esses modelos, sem retomar técnicas de contagem mais específicas.</p>
+</div>
+</div>
+</section>
+<section id="probabilidade-condicional" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="probabilidade-condicional">Probabilidade condicional</h3>
+<p>A ocorrência de um evento pode alterar a probabilidade atribuída a outro evento.</p>
+<p>Se <span class="math inline">\(P(B)&gt;0\)</span>, a <strong>probabilidade condicional</strong> de <span class="math inline">\(A\)</span> (ocorrer) dado <span class="math inline">\(B\)</span> (ocorreu) é definida por</p>
+<p><span class="math display">\[
+P(A\mid B)
+=
+\frac{P(A\cap B)}{P(B)}.
+\]</span></p>
+<p>A expressão representa a probabilidade de <span class="math inline">\(A\)</span> quando a informação disponível restringe o espaço de possibilidades ao evento <span class="math inline">\(B\)</span>.</p>
+<p>Da definição decorre a regra do produto:</p>
+<p><span class="math display">\[
+P(A\cap B)
+=
+P(A\mid B)P(B).
+\]</span></p>
+<p>Também podemos escrever</p>
+<p><span class="math display">\[
+P(A\cap B)
+=
+P(B\mid A)P(A),
+\]</span></p>
+<p>quando <span class="math inline">\(P(A)&gt;0\)</span>.</p>
+<p>Para uma sequência de eventos <span class="math inline">\(A_1,\ldots,A_n\)</span>, a regra pode ser estendida na forma</p>
+<p><span class="math display">\[
+P(A_1\cap\cdots\cap A_n)
+=
+P(A_1)
+P(A_2\mid A_1)
+\cdots
+P(A_n\mid A_1\cap\cdots\cap A_{n-1}),
+\]</span></p>
+<p>desde que as probabilidades condicionais envolvidas estejam definidas <span class="citation" data-cites="magalhaes2006 ross2006">(<a href="#ref-magalhaes2006" role="doc-biblioref">Magalhães, 2006</a>; <a href="#ref-ross2006" role="doc-biblioref">Ross, 2006</a>)</span>.</p>
+</section>
+<section id="lei-da-probabilidade-total" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="lei-da-probabilidade-total">Lei da probabilidade total</h3>
+<p>Considere uma partição do espaço amostral formada pelos eventos</p>
+<p><span class="math display">\[
+B_1,\ldots,B_k,
+\]</span></p>
+<p>tais que</p>
+<p><span class="math display">\[
+B_i\cap B_j=\varnothing,
+\qquad i\neq j,
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\bigcup_{j=1}^k B_j=\Omega.
+\]</span></p>
+<p>Se <span class="math inline">\(P(B_j)&gt;0\)</span>, então, para qualquer evento <span class="math inline">\(A\)</span>,</p>
+<p><span class="math display">\[
+P(A)
+=
+\sum_{j=1}^k
+P(A\mid B_j)P(B_j).
+\]</span></p>
+<p>A expressão decompõe a probabilidade de <span class="math inline">\(A\)</span> segundo os diferentes eventos que formam a partição.</p>
+</section>
+<section id="teorema-de-bayes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="teorema-de-bayes">Teorema de Bayes</h3>
+<p>Com a mesma partição <span class="math inline">\(B_1,\ldots,B_k\)</span>, se <span class="math inline">\(P(A)&gt;0\)</span>, então</p>
+<p><span class="math display">\[
+P(B_j\mid A)
+=
+\frac{
+P(A\mid B_j)P(B_j)
+}{
+\displaystyle
+\sum_{\ell=1}^k
+P(A\mid B_\ell)P(B_\ell)
+}.
+\]</span></p>
+<p>O teorema de Bayes permite inverter o condicionamento quando são conhecidas as probabilidades <span class="math inline">\(P(B_j)\)</span> e <span class="math inline">\(P(A\mid B_j)\)</span>.</p>
+<div class="callout-example" title="Exemplo: teste diagnóstico">
+<p>Considere uma condição presente em <span class="math inline">\(2\%\)</span> de uma população. Um teste apresenta sensibilidade de <span class="math inline">\(95\%\)</span> e produz resultado positivo em <span class="math inline">\(5\%\)</span> das pessoas que não apresentam a condição.</p>
+<p>Se <span class="math inline">\(D\)</span> representa a presença da condição e <span class="math inline">\(H\)</span> um resultado positivo, então</p>
+<p><span class="math display">\[
+P(D)=0{,}02,
+\qquad
+P(H\mid D)=0{,}95
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+P(H\mid D^c)=0{,}05.
+\]</span></p>
+<p>Pela lei da probabilidade total,</p>
+<p><span class="math display">\[
+P(H)
+=
+0{,}95(0{,}02)
++
+0{,}05(0{,}98)
+=
+0{,}068.
+\]</span></p>
+<p>Assim,</p>
+<p><span class="math display">\[
+P(D\mid H)
+=
+\frac{0{,}95(0{,}02)}{0{,}068}
+\approx
+0{,}279.
+\]</span></p>
+<p>A probabilidade condicional <span class="math inline">\(P(D\mid H)\)</span> não coincide com <span class="math inline">\(P(H \mid D)\)</span>. A diferença decorre da frequência da condição na população e das duas probabilidades condicionais associadas ao teste.</p>
+</div>
+</section>
+<section id="independência-de-eventos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="independência-de-eventos">Independência de eventos</h3>
+<p>Dois eventos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> são <strong>independentes</strong> quando</p>
+<p><span class="math display">\[
+P(A\cap B)
+=
+P(A)P(B).
+\]</span></p>
+<p>Se <span class="math inline">\(P(B)&gt;0\)</span>, essa condição equivale a</p>
+<p><span class="math display">\[
+P(A\mid B)=P(A).
+\]</span></p>
+<p>Nesse caso, saber que <span class="math inline">\(B\)</span> ocorreu não altera a probabilidade atribuída a <span class="math inline">\(A\)</span>.</p>
+<p>Independência não deve ser confundida com exclusão mútua. Se <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> são mutuamente exclusivos e ambos possuem probabilidade positiva, então</p>
+<p><span class="math display">\[
+P(A\cap B)=0,
+\]</span></p>
+<p>enquanto</p>
+<p><span class="math display">\[
+P(A)P(B)&gt;0.
+\]</span></p>
+<p>Portanto, eventos mutuamente exclusivos com probabilidades positivas não são independentes.</p>
+<p>Para eventos <span class="math inline">\(A_1,\ldots,A_n\)</span>, independência conjunta requer que, para todo subconjunto de índices <span class="math inline">\(\{i_1,\ldots,i_r\}\)</span>,</p>
+<p><span class="math display">\[
+P(A_{i_1}\cap\cdots\cap A_{i_r})
+=
+\prod_{j=1}^rP(A_{i_j}).
+\]</span></p>
+<p>A independência aos pares, isoladamente, não garante independência conjunta <span class="citation" data-cites="dantas1997 magalhaes2006">(<a href="#ref-dantas1997" role="doc-biblioref">Dantas, 1997</a>; <a href="#ref-magalhaes2006" role="doc-biblioref">Magalhães, 2006</a>)</span>.</p>
+</section>
+</section>
+<section id="variáveis-aleatórias-e-distribuições" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="variáveis-aleatórias-e-distribuições">Variáveis aleatórias e distribuições</h2>
+<p>Uma <strong>variável aleatória</strong> associa um valor numérico a cada resultado de um experimento aleatório. Sua distribuição descreve os valores que podem ocorrer e as probabilidades associadas a esses valores ou conjuntos de valores.</p>
+<p>Ao longo do livro, letras maiúsculas, como <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> e <span class="math inline">\(Z\)</span>, representarão variáveis aleatórias. Letras minúsculas, como <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> e <span class="math inline">\(z\)</span>, representarão valores possíveis ou observados dessas variáveis.</p>
+<section id="função-de-distribuição-suporte-e-quantis" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="função-de-distribuição-suporte-e-quantis">Função de distribuição, suporte e quantis</h3>
+<p>A função de distribuição de uma variável aleatória <span class="math inline">\(X\)</span> é</p>
+<p><span class="math display">\[F_X(x)=P(X\leq x),
+\qquad x\in\mathbb{R}.\]</span></p>
+<p>Toda função de distribuição satisfaz:</p>
+<ol type="1">
+<li><span class="math inline">\(F_X\)</span> é não decrescente;</li>
+<li><span class="math inline">\(F_X\)</span> é contínua à direita;</li>
+<li><span class="math inline">\(F_X(x)\to0\)</span> quando <span class="math inline">\(x\to-\infty\)</span>;</li>
+<li><span class="math inline">\(F_X(x)\to1\)</span> quando <span class="math inline">\(x\to+\infty\)</span>.</li>
+</ol>
+<p>O <strong>suporte</strong> de uma variável aleatória será entendido, neste livro, como o conjunto de valores admissíveis para a variável sob a distribuição considerada. No caso discreto, corresponde aos valores aos quais a função de probabilidade atribui probabilidade positiva. No caso absolutamente contínuo, será representado pelo conjunto em que a densidade é positiva, desconsiderando diferenças em conjuntos de probabilidade nula.</p>
+<p>Em modelos paramétricos, o suporte pode depender do parâmetro. Essa distinção será utilizada posteriormente, pois algumas condições de regularidade em Inferência Estatística pressupõem que o suporte seja comum a todos os valores do parâmetro.</p>
+<p>O quantil de ordem <span class="math inline">\(u\in(0,1)\)</span> pode ser definido por</p>
+<p><span class="math display">\[F_X^{-1}(u)
+=
+\inf\{x:F_X(x)\geq u\}.\]</span></p>
+<p>Essa definição funciona também para distribuições discretas <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, caps. 1–2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.1)</span>.</p>
+</section>
+<section id="variáveis-discretas-e-absolutamente-contínuas" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="variáveis-discretas-e-absolutamente-contínuas">Variáveis discretas e absolutamente contínuas</h3>
+<p>Uma variável aleatória discreta possui função de probabilidade</p>
+<p><span class="math display">\[p_X(x)=P(X=x),\]</span></p>
+<p>com</p>
+<p><span class="math display">\[p_X(x)\geq0
+\quad\text{e}\quad
+\sum_xp_X(x)=1.\]</span></p>
+<p>Uma variável aleatória é <strong>absolutamente contínua</strong> quando existe uma densidade <span class="math inline">\(f_X\)</span> tal que</p>
+<p><span class="math display">\[F_X(x)
+=
+\int_{-\infty}^{x}f_X(t)\,dt,\]</span></p>
+<p>com</p>
+<p><span class="math display">\[f_X(x)\geq0
+\quad\text{e}\quad
+\int_{-\infty}^{\infty}f_X(x)\,dx=1.\]</span></p>
+<p>Nesse caso,</p>
+<p><span class="math display">\[P(a&lt;X\leq b)
+=
+\int_a^b f_X(x)\,dx\]</span></p>
+<p>e</p>
+<p><span class="math display">\[P(X=x)=0\]</span></p>
+<p>para todo ponto <span class="math inline">\(x\)</span>. A probabilidade pontual é nula porque um conjunto unitário possui medida de comprimento zero, e não simplesmente porque a variável assume infinitos valores <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 2</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1–3.2)</span>.</p>
+</section>
+<section id="função-indicadora" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="função-indicadora">Função indicadora</h3>
+<p>Para um conjunto <span class="math inline">\(A\)</span>, a função indicadora de <span class="math inline">\(A\)</span> é definida por</p>
+<p><span class="math display">\[
+\mathbf 1_A(x)
+=
+\begin{cases}
+1, &amp; x\in A,\\
+0, &amp; x\notin A.
+\end{cases}
+\]</span></p>
+<p>A função indicadora permite incorporar o conjunto de valores admissíveis de uma variável diretamente em sua função de probabilidade ou densidade. Por exemplo,</p>
+<p><span class="math display">\[
+f_X(x)
+=
+g(x)\mathbf 1_A(x)
+\]</span></p>
+<p>indica que a densidade é dada por <span class="math inline">\(g(x)\)</span> para <span class="math inline">\(x\in A\)</span> e é nula fora desse conjunto.</p>
+<p>Essa notação será utilizada na apresentação dos modelos probabilísticos deste capítulo.</p>
+</section>
+<section id="funções-de-variáveis-aleatórias" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="funções-de-variáveis-aleatórias">Funções de variáveis aleatórias</h3>
+<p>Se <span class="math inline">\(X\)</span> é uma variável aleatória e</p>
+<p><span class="math display">\[
+Y=g(X),
+\]</span></p>
+<p>então <span class="math inline">\(Y\)</span> também é uma variável aleatória. Sua distribuição é determinada pela distribuição de <span class="math inline">\(X\)</span> e pela transformação <span class="math inline">\(g\)</span>.</p>
+<p>Em alguns casos, a distribuição de <span class="math inline">\(Y\)</span> pode ser obtida diretamente por meio de sua função de distribuição:</p>
+<p><span class="math display">\[
+F_Y(y)
+=
+P\{g(X)\leq y\}.
+\]</span></p>
+<p>Quando <span class="math inline">\(X\)</span> é absolutamente contínua e <span class="math inline">\(g\)</span> é estritamente monótona e diferenciável, uma expressão para a densidade de <span class="math inline">\(Y\)</span> será retomada posteriormente neste capítulo.</p>
+</section>
+</section>
+<section id="esperança-variância-e-momentos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="esperança-variância-e-momentos">Esperança, variância e momentos</h2>
+<section id="esperança-e-momentos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="esperança-e-momentos">Esperança e momentos</h3>
+<p>Para uma função <span class="math inline">\(g\)</span>, a esperança de <span class="math inline">\(g(X)\)</span> é</p>
+<p><span class="math display">\[E\{g(X)\}
+=
+\sum_x g(x)p_X(x)\]</span></p>
+<p>no caso discreto, e</p>
+<p><span class="math display">\[E\{g(X)\}
+=
+\int_{-\infty}^{\infty}
+g(x)f_X(x)\,dx\]</span></p>
+<p>no caso absolutamente contínuo, desde que a soma ou a integral esteja bem definida.</p>
+<p>A esperança é linear:</p>
+<p><span class="math display">\[E\left(
+\sum_{i=1}^n a_iX_i+b
+\right)
+=
+\sum_{i=1}^n a_iE(X_i)+b,\]</span></p>
+<p>sem necessidade de independência.</p>
+<p>O <span class="math inline">\(r\)</span>-ésimo momento em torno da origem é</p>
+<p><span class="math display">\[E(X^r),\]</span></p>
+<p>e o <span class="math inline">\(r\)</span>-ésimo momento central é</p>
+<p><span class="math display">\[E\{[X-E(X)]^r\}.\]</span></p>
+<p>Média e variância são determinadas pelos primeiros momentos da distribuição, enquanto medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados.<span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;4.1; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1 e 3.3)</span>.</p>
+</section>
+</section>
+<section id="modelos-probabilísticos-discretos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="modelos-probabilísticos-discretos">Modelos probabilísticos discretos</h2>
+<p>Modelos probabilísticos discretos descrevem variáveis aleatórias que assumem valores em conjuntos finitos ou enumeráveis. A escolha de uma distribuição depende do mecanismo que produz a variável observada. Contagens de sucessos em ensaios independentes, amostragem sem reposição, número de tentativas até determinado evento e contagens em intervalos correspondem a estruturas probabilísticas distintas.</p>
+<p>Nesta revisão, serão considerados os modelos Bernoulli, binomial, hipergeométrico, geométrico, binomial negativo, Poisson e multinomial. A distribuição uniforme discreta será apresentada de forma resumida. As parametrizações adotadas serão mantidas ao longo do livro <span class="citation" data-cites="dantas1997 magalhaes2006 ross2006">(<a href="#ref-dantas1997" role="doc-biblioref">Dantas, 1997</a>; <a href="#ref-magalhaes2006" role="doc-biblioref">Magalhães, 2006</a>; <a href="#ref-ross2006" role="doc-biblioref">Ross, 2006</a>)</span>.</p>
+<section id="distribuição-uniforme-discreta" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-uniforme-discreta">Distribuição uniforme discreta</h3>
+<p>Se <span class="math inline">\(X\)</span> assume os valores distintos <span class="math inline">\(x_1,\ldots,x_m\)</span> com a mesma probabilidade, então</p>
+<p><span class="math display">\[
+p_X(x)
+=
+\frac{1}{m}
+\mathbf 1_{\{x_1,\ldots,x_m\}}(x).
+\]</span></p>
+<p>Nesse caso, <span class="math inline">\(X\)</span> possui distribuição <strong>uniforme discreta</strong> sobre o conjunto <span class="math inline">\(\{x_1,\ldots,x_m\}\)</span>.</p>
+<p>Quando os valores possíveis são</p>
+<p><span class="math display">\[
+1,2,\ldots,m,
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+E(X)=\frac{m+1}{2}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\frac{m^2-1}{12}.
+\]</span></p>
+<p>Esse modelo descreve situações em que um conjunto finito de resultados possui probabilidades iguais, como o resultado de um dado equilibrado ou a seleção aleatória de um elemento de uma população numerada.</p>
+</section>
+<section id="distribuição-de-bernoulli" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-de-bernoulli">Distribuição de Bernoulli</h3>
+<p>Um <strong>ensaio de Bernoulli</strong> é um experimento com dois resultados possíveis, representados por <span class="math inline">\(1\)</span> e <span class="math inline">\(0\)</span>. Convencionalmente, esses resultados são denominados sucesso e fracasso.</p>
+<p>Uma variável aleatória <span class="math inline">\(X\)</span> possui distribuição de Bernoulli com parâmetro <span class="math inline">\(p \in (0,1)\)</span> quando sua função de probabilidade é</p>
+<p><span class="math display">\[
+p_X(x)
+=
+p^x(1-p)^{1-x}
+\mathbf 1_{\{0,1\}}(x).
+\]</span></p>
+<p>Escrevemos</p>
+<p><span class="math display">\[
+X\sim\operatorname{Bernoulli}(p).
+\]</span></p>
+<p>A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)=p
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)=p(1-p).
+\]</span></p>
+<p>Uma variável de Bernoulli pode ser utilizada para representar a presença ou ausência de uma característica. Se <span class="math inline">\(X=1\)</span> indica que uma unidade apresenta determinada característica e <span class="math inline">\(X=0\)</span> indica que não apresenta, então <span class="math inline">\(p\)</span> representa a probabilidade de ocorrência dessa característica.</p>
+<p>A função indicadora fornece uma representação direta desse modelo. Para um evento <span class="math inline">\(A\)</span>,</p>
+<p><span class="math display">\[
+Y=\mathbf 1_A
+\]</span></p>
+<p>possui distribuição de Bernoulli com parâmetro</p>
+<p><span class="math display">\[
+p=P(A).
+\]</span></p>
+<div class="callout-example" title="Exemplo">
+<p>Considere a seleção aleatória de uma unidade de uma população e defina</p>
+<p><span class="math display">\[
+Y=
+\begin{cases}
+1, &amp; \text{se a unidade apresenta a característica de interesse},\\
+0, &amp; \text{caso contrário}.
+\end{cases}
+\]</span></p>
+<p>Se a probabilidade de uma unidade apresentar a característica é <span class="math inline">\(p\)</span>, então</p>
+<p><span class="math display">\[
+Y\sim\operatorname{Bernoulli}(p).
+\]</span></p>
+</div>
+</section>
+<section id="distribuição-binomial" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-binomial">Distribuição binomial</h3>
+<p>Considere <span class="math inline">\(n\)</span> ensaios de Bernoulli independentes, todos com a mesma probabilidade de sucesso <span class="math inline">\(p\)</span>. Se</p>
+<p><span class="math display">\[
+X_i\sim\operatorname{Bernoulli}(p),
+\qquad i=1,\ldots,n,
+\]</span></p>
+<p>e <span class="math inline">\(X_1,\ldots,X_n\)</span> são independentes, então o número total de sucessos</p>
+<p><span class="math display">\[
+X=\sum_{i=1}^nX_i
+\]</span></p>
+<p>possui distribuição binomial,</p>
+<p><span class="math display">\[
+X\sim\operatorname{Binomial}(n,p).
+\]</span></p>
+<p>Sua função de probabilidade é</p>
+<p><span class="math display">\[
+p_X(x)
+=
+\binom{n}{x}
+p^x(1-p)^{n-x}
+\mathbf 1_{\{0,1,\ldots,n\}}(x).
+\]</span></p>
+<p>O termo</p>
+<p><span class="math display">\[
+\binom{n}{x}
+\]</span></p>
+<p>corresponde ao número de maneiras de posicionar <span class="math inline">\(x\)</span> sucessos entre os <span class="math inline">\(n\)</span> ensaios.</p>
+<p>Como <span class="math inline">\(X\)</span> é uma soma de variáveis Bernoulli independentes,</p>
+<p><span class="math display">\[
+E(X)
+=
+\sum_{i=1}^nE(X_i)
+=
+np
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\sum_{i=1}^n\operatorname{Var}(X_i)
+=
+np(1-p).
+\]</span></p>
+<p>A variável</p>
+<p><span class="math display">\[
+\frac{X}{n}
+\]</span></p>
+<p>representa a proporção de sucessos nos <span class="math inline">\(n\)</span> ensaios e possui esperança</p>
+<p><span class="math display">\[
+E\left(\frac{X}{n}\right)=p
+\]</span></p>
+<p>e variância</p>
+<p><span class="math display">\[
+\operatorname{Var}\left(\frac{X}{n}\right)
+=
+\frac{p(1-p)}{n}.
+\]</span></p>
+<p>Essa relação será retomada no estudo da proporção amostral.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Estrutura do modelo binomial">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Estrutura do modelo binomial
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A distribuição binomial resulta de três condições:</p>
+<ol type="1">
+<li>o número de ensaios <span class="math inline">\(n\)</span> é fixado;</li>
+<li>os ensaios são independentes;</li>
+<li>a probabilidade de sucesso <span class="math inline">\(p\)</span> é a mesma em todos os ensaios.</li>
+</ol>
+<p>Quando alguma dessas condições é alterada, outro modelo pode ser necessário.</p>
+</div>
+</div>
+</section>
+<section id="distribuição-hipergeométrica" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-hipergeométrica">Distribuição hipergeométrica</h3>
+<p>A distribuição hipergeométrica descreve contagens de sucessos em uma amostra retirada <strong>sem reposição</strong> de uma população finita.</p>
+<p>Considere uma população com:</p>
+<ul>
+<li><span class="math inline">\(N\)</span> unidades;</li>
+<li><span class="math inline">\(M\)</span> unidades classificadas como sucesso;</li>
+<li><span class="math inline">\(N-M\)</span> unidades classificadas como fracasso.</li>
+</ul>
+<p>Seleciona-se uma amostra de tamanho <span class="math inline">\(n\)</span>, sem reposição, e define-se <span class="math inline">\(X\)</span> como o número de sucessos observados na amostra. Então</p>
+<p><span class="math display">\[
+X\sim\operatorname{Hipergeometrica}(N,M,n)
+\]</span></p>
+<p>Defina</p>
+<p><span class="math display">\[
+\mathcal X
+=
+\left\{
+\max\{0,n-N+M\},
+\ldots,
+\min\{n,M\}
+\right\}.
+\]</span></p>
+<p>Então</p>
+<p><span class="math display">\[
+p_X(x)
+=
+\frac{
+\binom{M}{x}
+\binom{N-M}{n-x}
+}{
+\binom{N}{n}
+}
+\mathbf 1_{\mathcal X}(x).
+\]</span></p>
+<p>Definindo</p>
+<p><span class="math display">\[
+p=\frac{M}{N},
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+E(X)=np
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+np(1-p)
+\frac{N-n}{N-1}.
+\]</span></p>
+<p>O fator</p>
+<p><span class="math display">\[
+\frac{N-n}{N-1}
+\]</span></p>
+<p>é decorrente da amostragem sem reposição. As retiradas não são independentes, pois a composição da população disponível é alterada após cada unidade selecionada.</p>
+<p>A distribuição hipergeométrica, e não a binomial, é o modelo exato para amostragem sem reposição em população finita <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.2.1–3.2.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, aps. B.1–B.6)</span>.</p>
+</section>
+<section id="binomial-e-hipergeométrica" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="binomial-e-hipergeométrica">Binomial e hipergeométrica</h3>
+<p>As distribuições binomial e hipergeométrica descrevem o número de sucessos em <span class="math inline">\(n\)</span> observações, mas correspondem a mecanismos diferentes.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Característica</th>
+<th style="text-align: center;">Binomial</th>
+<th style="text-align: center;">Hipergeométrica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Número de observações</td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Número de sucessos</td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Probabilidade inicial de sucesso</td>
+<td style="text-align: center;"><span class="math inline">\(p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(p=M/N\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reposição</td>
+<td style="text-align: center;">sim ou população conceitualmente ilimitada</td>
+<td style="text-align: center;">não</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Independência entre observações</td>
+<td style="text-align: center;">sim</td>
+<td style="text-align: center;">não</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Esperança</td>
+<td style="text-align: center;"><span class="math inline">\(np\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Variância</td>
+<td style="text-align: center;"><span class="math inline">\(np(1-p)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np(1-p)\dfrac{N-n}{N-1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Quando <span class="math inline">\(N\)</span> é grande em relação a <span class="math inline">\(n\)</span>, o fator</p>
+<p><span class="math display">\[
+\frac{N-n}{N-1}
+\]</span></p>
+<p>fica próximo de <span class="math inline">\(1\)</span>. Nessas condições, a distribuição binomial pode fornecer uma aproximação para a distribuição hipergeométrica.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Relação com o experimento da urna">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Relação com o experimento da urna
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Essa distinção será utilizada no capítulo <strong>Fundamentos da Inferência Estatística</strong>. A retirada de bolas sem reposição corresponde a um modelo hipergeométrico, enquanto uma sequência de retiradas independentes com probabilidade constante de sucesso corresponde ao modelo Bernoulli/binomial.</p>
+</div>
+</div>
+</section>
+<section id="distribuição-geométrica" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-geométrica">Distribuição geométrica</h3>
+<p>Considere uma sequência de ensaios de Bernoulli independentes, com probabilidade de sucesso <span class="math inline">\(p\)</span> em cada ensaio. Seja <span class="math inline">\(X\)</span> o número de ensaios necessários até a ocorrência do primeiro sucesso.</p>
+<p>Nesse caso,</p>
+<p><span class="math display">\[
+X\sim\operatorname{Geométrica}(p)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+p_X(x)
+=
+p(1-p)^{x-1}
+\mathbf 1_{\{1,2,\ldots\}}(x).
+\]</span> A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)
+=
+\frac{1}{p}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\frac{1-p}{p^2}.
+\]</span></p>
+<p>Nesta parametrização, <span class="math inline">\(X\)</span> conta o <strong>número de ensaios até o primeiro sucesso</strong>, incluindo o ensaio em que o sucesso ocorre.</p>
+<p>A distribuição geométrica possui a propriedade de falta de memória. Para inteiros não negativos <span class="math inline">\(m\)</span> e <span class="math inline">\(n\)</span>,</p>
+<p><span class="math display">\[
+P(X&gt;m+n\mid X&gt;m)
+=
+P(X&gt;n).
+\]</span></p>
+<p>A expressão indica que, depois de <span class="math inline">\(m\)</span> tentativas sem sucesso, a distribuição do número adicional de tentativas necessárias permanece a mesma.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Parametrização">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Parametrização
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Outra convenção define a variável geométrica como o número de fracassos antes do primeiro sucesso, com suporte <span class="math inline">\(\{0,1,2,\ldots\}\)</span>. Neste livro será utilizada a parametrização em que <span class="math inline">\(X\)</span> representa o número de ensaios até o primeiro sucesso.</p>
+</div>
+</div>
+</section>
+<section id="distribuição-binomial-negativa" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-binomial-negativa">Distribuição binomial negativa</h3>
+<p>A distribuição binomial negativa estende o modelo geométrico. Considere ensaios de Bernoulli independentes, cada um com probabilidade de sucesso <span class="math inline">\(p\)</span>, e seja <span class="math inline">\(X\)</span> o número de ensaios necessários para observar o <span class="math inline">\(r\)</span>-ésimo sucesso.</p>
+<p>Então</p>
+<p><span class="math display">\[
+X\sim\operatorname{BinomialNegativa}(r,p),
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+p_X(x)
+=
+\binom{x-1}{r-1}
+p^r(1-p)^{x-r}
+\mathbf 1_{\{r,r+1,\ldots\}}(x).
+\]</span></p>
+<p>Para que o <span class="math inline">\(r\)</span>-ésimo sucesso ocorra no ensaio <span class="math inline">\(x\)</span>, entre os primeiros <span class="math inline">\(x-1\)</span> ensaios devem ocorrer exatamente <span class="math inline">\(r-1\)</span> sucessos, e o último ensaio deve ser um sucesso.</p>
+<p>A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)
+=
+\frac{r}{p}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\frac{r(1-p)}{p^2}.
+\]</span></p>
+<p>Quando <span class="math inline">\(r=1\)</span>, obtém-se a distribuição geométrica.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Parametrização">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Parametrização
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A distribuição binomial negativa também pode ser definida em termos do número de fracassos observados antes do <span class="math inline">\(r\)</span>-ésimo sucesso. Neste livro, <span class="math inline">\(X\)</span> representará o número total de ensaios necessários para atingir <span class="math inline">\(r\)</span> sucessos.</p>
+</div>
+</div>
+</section>
+<section id="distribuição-de-poisson" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-de-poisson">Distribuição de Poisson</h3>
+<p>A distribuição de Poisson é utilizada para modelar contagens de ocorrências em uma região de observação, como um intervalo de tempo, uma área, um comprimento ou um volume. Seu parâmetro <span class="math inline">\(\lambda&gt;0\)</span> representa o número esperado de ocorrências nessa região.</p>
+<p>Quando o modelo decorre de uma taxa <span class="math inline">\(\rho\)</span> por unidade de exposição e a exposição considerada é <span class="math inline">\(t\)</span>, pode-se escrever</p>
+<p><span class="math display">\[
+\lambda=\rho t.
+\]</span></p>
+<p>Se</p>
+<p><span class="math display">\[
+X\sim\operatorname{Poisson}(\lambda),
+\qquad
+\lambda&gt;0,
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+p_X(x)
+=
+e^{-\lambda}
+\frac{\lambda^x}{x!}
+\mathbf 1_{\{0,1,2,\ldots\}}(x).
+\]</span></p>
+<p>A esperança e a variância coincidem:</p>
+<p><span class="math display">\[
+E(X)=\lambda
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)=\lambda.
+\]</span></p>
+<p>O parâmetro <span class="math inline">\(\lambda\)</span> representa o número médio de ocorrências na região de observação especificada.</p>
+<p>Se a taxa de ocorrência por unidade de exposição é <span class="math inline">\(\rho\)</span> e a exposição considerada é <span class="math inline">\(t\)</span>, pode-se escrever</p>
+<p><span class="math display">\[
+\lambda=\rho t.
+\]</span></p>
+<p>Assim, o significado de <span class="math inline">\(\lambda\)</span> depende da escala utilizada para definir a região de observação.</p>
+<div class="callout-example" title="Exemplo">
+<p>Se o número de chegadas a determinado serviço durante uma hora é modelado por</p>
+<p><span class="math display">\[
+X\sim\operatorname{Poisson}(12),
+\]</span></p>
+<p>então o modelo atribui</p>
+<p><span class="math display">\[
+E(X)=12
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)=12.
+\]</span></p>
+<p>O parâmetro refere-se ao intervalo de uma hora. Uma mudança na duração do intervalo requer uma correspondente alteração no valor esperado da contagem.</p>
+</div>
+</section>
+<section id="relação-entre-binomial-e-poisson" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="relação-entre-binomial-e-poisson">Relação entre binomial e Poisson</h3>
+<p>A distribuição de Poisson pode surgir como aproximação da distribuição binomial quando o número de ensaios é grande e a probabilidade de sucesso em cada ensaio é pequena.</p>
+<p>Se</p>
+<p><span class="math display">\[
+X_n\sim\operatorname{Binomial}(n,p_n),
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+n\to\infty,
+\qquad
+p_n\to0
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+np_n\to\lambda,
+\]</span></p>
+<p>então, para cada <span class="math inline">\(x=0,1,2,\ldots\)</span>,</p>
+<p><span class="math display">\[
+P(X_n=x)
+\longrightarrow
+e^{-\lambda}
+\frac{\lambda^x}{x!}.
+\]</span></p>
+<p>Assim, uma contagem resultante de muitos ensaios com baixa probabilidade individual de sucesso pode, em determinadas situações, ser aproximada por uma distribuição de Poisson.</p>
+</section>
+<section id="soma-de-variáveis-poisson-independentes" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="soma-de-variáveis-poisson-independentes">Soma de variáveis Poisson independentes</h3>
+<p>Se</p>
+<p><span class="math display">\[
+X_1\sim\operatorname{Poisson}(\lambda_1),
+\qquad
+X_2\sim\operatorname{Poisson}(\lambda_2),
+\]</span></p>
+<p>e <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> são independentes, então</p>
+<p><span class="math display">\[
+X_1+X_2
+\sim
+\operatorname{Poisson}(\lambda_1+\lambda_2).
+\]</span></p>
+<p>Mais geralmente, se <span class="math inline">\(X_1,\ldots,X_k\)</span> são independentes e</p>
+<p><span class="math display">\[
+X_j\sim\operatorname{Poisson}(\lambda_j),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+\sum_{j=1}^kX_j
+\sim
+\operatorname{Poisson}
+\left(
+\sum_{j=1}^k\lambda_j
+\right).
+\]</span></p>
+<p>Essa propriedade relaciona a soma de contagens independentes à soma de suas taxas médias.</p>
+</section>
+<section id="distribuição-multinomial" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-multinomial">Distribuição multinomial</h3>
+<p>A distribuição multinomial estende a distribuição binomial para situações em que cada ensaio pode resultar em uma entre <span class="math inline">\(m\)</span> categorias.</p>
+<p>Considere <span class="math inline">\(n\)</span> ensaios independentes. Em cada ensaio, uma observação é classificada em exatamente uma das categorias</p>
+<p><span class="math display">\[
+1,\ldots,m,
+\]</span></p>
+<p>com probabilidades</p>
+<p><span class="math display">\[
+p_1,\ldots,p_m,
+\]</span></p>
+<p>tais que</p>
+<p><span class="math display">\[
+p_j\geq0
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\sum_{j=1}^mp_j=1.
+\]</span></p>
+<p>Se <span class="math inline">\(X_j\)</span> representa o número de observações classificadas na categoria <span class="math inline">\(j\)</span>, então</p>
+<p><span class="math display">\[
+(X_1,\ldots,X_m)
+\sim
+\operatorname{Multinomial}
+(n;p_1,\ldots,p_m).
+\]</span></p>
+<p>Como cada uma das <span class="math inline">\(n\)</span> observações pertence a uma única categoria,</p>
+<p><span class="math display">\[
+\sum_{j=1}^mX_j=n.
+\]</span></p>
+<p>Defina o conjunto</p>
+<p><span class="math display">\[
+\mathcal X_n
+=
+\left\{
+(x_1,\ldots,x_m)\in\mathbb N_0^m:
+\sum_{j=1}^m x_j=n
+\right\}.
+\]</span></p>
+<p>A função de probabilidade conjunta é</p>
+<p><span class="math display">\[
+p_{\mathbf X}(\mathbf x)
+=
+\frac{n!}{x_1!\cdots x_m!}
+\prod_{j=1}^m p_j^{x_j}
+\mathbf 1_{\mathcal X_n}(\mathbf x).
+\]</span></p>
+<p>para</p>
+<p><span class="math display">\[
+x_j\in\{0,1,\ldots,n\},
+\qquad
+\sum_{j=1}^mx_j=n.
+\]</span></p>
+<p>Para cada categoria,</p>
+<p><span class="math display">\[
+E(X_j)=np_j
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X_j)
+=
+np_j(1-p_j).
+\]</span></p>
+<p>Para categorias distintas,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(X_j,X_k)
+=
+-np_jp_k,
+\qquad j\neq k.
+\]</span></p>
+<p>A covariância negativa decorre da restrição</p>
+<p><span class="math display">\[
+X_1+\cdots+X_m=n.
+\]</span></p>
+<p>Com <span class="math inline">\(n\)</span> fixo, um aumento na contagem de uma categoria reduz o número de observações disponível para as demais.</p>
+<p>Quando <span class="math inline">\(m=2\)</span>, a distribuição multinomial reduz-se ao modelo binomial.</p>
+<p>A distribuição multinomial será retomada posteriormente no estudo de dados categóricos <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.2.1–3.2.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, aps. B.1–B.6)</span>.</p>
+</section>
+<section id="relações-entre-os-modelos-discretos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="relações-entre-os-modelos-discretos">Relações entre os modelos discretos</h3>
+<p>Os modelos apresentados podem ser organizados segundo o mecanismo que define a variável aleatória.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Modelo</th>
+<th style="text-align: left;">Variável modelada</th>
+<th style="text-align: left;">Estrutura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bernoulli<span class="math inline">\((p)\)</span></td>
+<td style="text-align: left;">resultado de um único ensaio</td>
+<td style="text-align: left;">sucesso ou fracasso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Binomial<span class="math inline">\((n,p)\)</span></td>
+<td style="text-align: left;">número de sucessos em <span class="math inline">\(n\)</span> ensaios</td>
+<td style="text-align: left;">Bernoulli independentes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hipergeométrica<span class="math inline">\((N,M,n)\)</span></td>
+<td style="text-align: left;">número de sucessos em uma amostra</td>
+<td style="text-align: left;">população finita, sem reposição</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Geométrica<span class="math inline">\((p)\)</span></td>
+<td style="text-align: left;">número de ensaios até o primeiro sucesso</td>
+<td style="text-align: left;">Bernoulli sequenciais</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Binomial negativa<span class="math inline">\((r,p)\)</span></td>
+<td style="text-align: left;">número de ensaios até o <span class="math inline">\(r\)</span>-ésimo sucesso</td>
+<td style="text-align: left;">extensão da geométrica</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poisson<span class="math inline">\((\lambda)\)</span></td>
+<td style="text-align: left;">número de ocorrências em uma região de observação</td>
+<td style="text-align: left;">modelo de contagens</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multinomial<span class="math inline">\((n;p_1,\ldots,p_m)\)</span></td>
+<td style="text-align: left;">contagens em <span class="math inline">\(m\)</span> categorias</td>
+<td style="text-align: left;">extensão da binomial</td>
+</tr>
+</tbody>
+</table>
+<p>As principais relações podem ser resumidas por</p>
+<p><span class="math display">\[
+\operatorname{Bernoulli}
+\longrightarrow
+\operatorname{Binomial},
+\]</span></p>
+<p><span class="math display">\[
+\operatorname{Geométrica}
+\longrightarrow
+\operatorname{BinomialNegativa},
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Binomial}
+\longrightarrow
+\operatorname{Multinomial}.
+\]</span></p>
+<p>A distribuição hipergeométrica fornece a correspondente estrutura de contagem quando a seleção ocorre sem reposição em uma população finita. A distribuição de Poisson descreve outra classe de problemas de contagem e também pode surgir como limite da distribuição binomial.</p>
+</section>
+</section>
+<section id="modelos-probabilísticos-contínuos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="modelos-probabilísticos-contínuos">Modelos probabilísticos contínuos</h2>
+<p>Modelos probabilísticos contínuos descrevem variáveis aleatórias cujos valores pertencem a subconjuntos contínuos da reta real. Nesse caso, as probabilidades são obtidas a partir de uma função de densidade, e a probabilidade de um valor isolado é nula.</p>
+<p>Nesta revisão, serão considerados os modelos uniforme, exponencial, gama, normal e beta. Esses modelos reaparecem em diferentes etapas da Inferência Estatística, seja na construção de distribuições amostrais, na estimação de parâmetros ou na formulação de procedimentos inferenciais <span class="citation" data-cites="dantas1997 magalhaes2006 meyer1983">(<a href="#ref-dantas1997" role="doc-biblioref">Dantas, 1997</a>; <a href="#ref-magalhaes2006" role="doc-biblioref">Magalhães, 2006</a>; <a href="#ref-meyer1983" role="doc-biblioref">Meyer, 1983</a>)</span>.</p>
+<section id="distribuição-uniforme-contínua" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-uniforme-contínua">Distribuição uniforme contínua</h3>
+<p>Uma variável aleatória <span class="math inline">\(X\)</span> possui distribuição uniforme no intervalo <span class="math inline">\((a,b)\)</span>, com <span class="math inline">\(a&lt;b\)</span>, quando sua densidade é</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{1}{b-a}
+\mathbf 1_{(a,b)}(x).
+\]</span></p>
+<p>Escrevemos</p>
+<p><span class="math display">\[
+X\sim\operatorname{Uniforme}(a,b).
+\]</span></p>
+<p>A função de distribuição é</p>
+<p><span class="math display">\[
+F_X(x)
+=
+\begin{cases}
+0, &amp; x\leq a,\\[4pt]
+\dfrac{x-a}{b-a}, &amp; a&lt;x&lt;b,\\[8pt]
+1, &amp; x\geq b.
+\end{cases}
+\]</span></p>
+<p>A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)
+=
+\frac{a+b}{2}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\frac{(b-a)^2}{12}.
+\]</span></p>
+<p>A densidade constante indica que intervalos de mesmo comprimento, contidos em <span class="math inline">\((a,b)\)</span>, recebem a mesma probabilidade.</p>
+<p>Um caso que será utilizado posteriormente ocorre quando</p>
+<p><span class="math display">\[
+X\sim\operatorname{Uniforme}(0,\theta),
+\qquad
+\theta&gt;0.
+\]</span></p>
+<p>Nesse modelo,</p>
+<p><span class="math display">\[
+f_X(x\mid\theta)
+=
+\frac{1}{\theta}
+\mathbf 1_{(0,\theta)}(x).
+\]</span></p>
+<p>O suporte depende, portanto, do parâmetro <span class="math inline">\(\theta\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Suporte dependente do parâmetro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Suporte dependente do parâmetro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No modelo <span class="math inline">\(\operatorname{Uniforme}(0,\theta)\)</span>, o conjunto de valores possíveis para <span class="math inline">\(X\)</span> depende do parâmetro <span class="math inline">\(\theta\)</span>. Essa característica será retomada no estudo de máxima verossimilhança e das condições de regularidade.</p>
+</div>
+</div>
+</section>
+<section id="distribuição-exponencial" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-exponencial">Distribuição exponencial</h3>
+<p>Uma variável aleatória <span class="math inline">\(X\)</span> possui distribuição exponencial com taxa <span class="math inline">\(\lambda&gt;0\)</span> quando</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\lambda e^{-\lambda x}
+\mathbf 1_{(0,\infty)}(x).
+\]</span></p>
+<p>Escrevemos</p>
+<p><span class="math display">\[
+X\sim\operatorname{Exponencial}(\lambda).
+\]</span></p>
+<p>A função de distribuição é</p>
+<p><span class="math display">\[
+F_X(x)
+=
+\begin{cases}
+0, &amp; x\leq 0,\\[4pt]
+1-e^{-\lambda x}, &amp; x&gt;0.
+\end{cases}
+\]</span></p>
+<p>Para <span class="math inline">\(x\geq 0\)</span>, a função de sobrevivência é</p>
+<p><span class="math display">\[
+P(X&gt;x)
+=
+e^{-\lambda x}.
+\]</span></p>
+<p>A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)
+=
+\frac{1}{\lambda}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\frac{1}{\lambda^2}.
+\]</span></p>
+<p>O modelo exponencial é utilizado para representar tempos de espera ou tempos até a ocorrência de determinado evento quando uma taxa constante é adequada ao fenômeno considerado.</p>
+<p>Uma de suas propriedades é a falta de memória:</p>
+<p><span class="math display">\[
+P(X&gt;s+t\mid X&gt;s)
+=
+P(X&gt;t),
+\qquad
+s,t&gt;0.
+\]</span></p>
+<p>Assim, condicionada à sobrevivência até o instante <span class="math inline">\(s\)</span>, a distribuição do tempo adicional de espera é a mesma distribuição exponencial original.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Parametrização">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Parametrização
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Neste livro, a distribuição exponencial será parametrizada pela <strong>taxa</strong> <span class="math inline">\(\lambda\)</span>. Nessa parametrização,</p>
+<p><span class="math display">\[
+E(X)=\frac{1}{\lambda}.
+\]</span></p>
+<p>Outra convenção utiliza diretamente a média ou escala como parâmetro. A parametrização adotada deve ser verificada ao comparar fórmulas entre diferentes referências.</p>
+</div>
+</div>
+</section>
+<section id="distribuição-gama" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-gama">Distribuição gama</h3>
+<p>A distribuição gama estende o modelo exponencial e permite representar uma variedade maior de formas para variáveis positivas.</p>
+<p>Neste livro, será utilizada a parametrização por <strong>forma</strong> <span class="math inline">\(\alpha&gt;0\)</span> e <strong>taxa</strong> <span class="math inline">\(\lambda&gt;0\)</span>. Escrevemos</p>
+<p><span class="math display">\[
+X\sim\operatorname{Gama}(\alpha,\lambda)
+\]</span></p>
+<p>quando</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{\lambda^\alpha}{\Gamma(\alpha)}
+x^{\alpha-1}e^{-\lambda x}
+\mathbf 1_{(0,\infty)}(x).
+\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+\Gamma(\alpha)
+=
+\int_0^\infty
+t^{\alpha-1}e^{-t}\,dt
+\]</span></p>
+<p>é a função gama.</p>
+<p>A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)
+=
+\frac{\alpha}{\lambda}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\frac{\alpha}{\lambda^2}.
+\]</span></p>
+<p>Quando <span class="math inline">\(\alpha=1\)</span>,</p>
+<p><span class="math display">\[
+X\sim\operatorname{Gama}(1,\lambda)
+\]</span></p>
+<p>reduz-se à distribuição exponencial com taxa <span class="math inline">\(\lambda\)</span>.</p>
+<p>Se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exponencial}(\lambda),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+\sum_{i=1}^nX_i
+\sim
+\operatorname{Gama}(n,\lambda).
+\]</span></p>
+<p>Essa relação será utilizada posteriormente na obtenção de distribuições exatas associadas a amostras exponenciais.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Forma e taxa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Forma e taxa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A literatura também utiliza a parametrização por forma <span class="math inline">\(\alpha\)</span> e escala <span class="math inline">\(\beta\)</span>, com densidade</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{1}{\Gamma(\alpha)\beta^\alpha}
+x^{\alpha-1}e^{-x/\beta}
+\mathbf 1_{(0,\infty)}(x).
+\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+\beta=\frac{1}{\lambda}.
+\]</span></p>
+<p>Neste livro será utilizada, salvo indicação contrária, a parametrização por forma e taxa.</p>
+</div>
+</div>
+</section>
+<section id="relação-entre-exponencial-e-gama" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="relação-entre-exponencial-e-gama">Relação entre exponencial e gama</h3>
+<p>A relação entre os dois modelos pode ser resumida por</p>
+<p><span class="math display">\[
+\operatorname{Exponencial}(\lambda)
+=
+\operatorname{Gama}(1,\lambda).
+\]</span></p>
+<p>Além disso, somas de variáveis exponenciais independentes com a mesma taxa possuem distribuição gama.</p>
+<p>Se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exponencial}(\lambda),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+S_n
+=
+\sum_{i=1}^nX_i
+\sim
+\operatorname{Gama}(n,\lambda).
+\]</span></p>
+<p>Consequentemente,</p>
+<p><span class="math display">\[
+E(S_n)
+=
+\frac{n}{\lambda}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(S_n)
+=
+\frac{n}{\lambda^2}.
+\]</span></p>
+<p>Essa propriedade fornece uma ligação entre o modelo probabilístico de observações individuais e a distribuição de uma estatística construída a partir da amostra.</p>
+</section>
+<section id="distribuição-normal" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-normal">Distribuição normal</h3>
+<p>Uma variável aleatória <span class="math inline">\(X\)</span> possui distribuição normal com média <span class="math inline">\(\mu\)</span> e variância <span class="math inline">\(\sigma^2&gt;0\)</span> quando sua densidade é</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp
+\left\{
+-\frac{(x-\mu)^2}{2\sigma^2}
+\right\}
+\mathbf 1_{\mathbb R}(x).
+\]</span></p>
+<p>Escrevemos</p>
+<p><span class="math display">\[
+X\sim N(\mu,\sigma^2).
+\]</span></p>
+<p>A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)=\mu
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)=\sigma^2.
+\]</span></p>
+<p>O parâmetro <span class="math inline">\(\mu\)</span> determina a localização da distribuição, enquanto <span class="math inline">\(\sigma\)</span> determina sua dispersão.</p>
+<p>A densidade é simétrica em torno de <span class="math inline">\(\mu\)</span>. Em particular,</p>
+<p><span class="math display">\[
+P(X\leq\mu)=\frac{1}{2}.
+\]</span></p>
+<p>Se</p>
+<p><span class="math display">\[
+X\sim N(\mu,\sigma^2),
+\]</span></p>
+<p>então a transformação</p>
+<p><span class="math display">\[
+Z
+=
+\frac{X-\mu}{\sigma}
+\]</span></p>
+<p>possui distribuição normal padrão,</p>
+<p><span class="math display">\[
+Z\sim N(0,1).
+\]</span></p>
+<p>Consequentemente,</p>
+<p><span class="math display">\[
+P(X\leq x)
+=
+\Phi
+\left(
+\frac{x-\mu}{\sigma}
+\right),
+\]</span></p>
+<p>em que <span class="math inline">\(\Phi\)</span> representa a função de distribuição da normal padrão.</p>
+<div class="callout-example" title="Padronização">
+<p>Se</p>
+<p><span class="math display">\[
+X\sim N(100,15^2),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+P(X\leq115)
+=
+P
+\left(
+\frac{X-100}{15}
+\leq
+1
+\right)
+=
+\Phi(1).
+\]</span></p>
+<p>A padronização permite expressar probabilidades de qualquer distribuição normal em termos da distribuição <span class="math inline">\(N(0,1)\)</span>.</p>
+</div>
+</section>
+<section id="transformações-lineares-da-distribuição-normal" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="transformações-lineares-da-distribuição-normal">Transformações lineares da distribuição normal</h3>
+<p>Se</p>
+<p><span class="math display">\[
+X\sim N(\mu,\sigma^2)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y=aX+b,
+\]</span></p>
+<p>com <span class="math inline">\(a\neq0\)</span>, então</p>
+<p><span class="math display">\[
+Y
+\sim
+N(a\mu+b,a^2\sigma^2).
+\]</span></p>
+<p>Além disso, se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\]</span></p>
+<p>são independentes e</p>
+<p><span class="math display">\[
+X_i\sim N(\mu_i,\sigma_i^2),
+\]</span></p>
+<p>então, para constantes <span class="math inline">\(a_1,\ldots,a_n\)</span>,</p>
+<p><span class="math display">\[
+\sum_{i=1}^na_iX_i
+\sim
+N
+\left(
+\sum_{i=1}^na_i\mu_i,
+\sum_{i=1}^na_i^2\sigma_i^2
+\right).
+\]</span></p>
+<p>Em particular, se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+\overline X
+=
+\frac{1}{n}\sum_{i=1}^nX_i
+\]</span></p>
+<p>possui distribuição</p>
+<p><span class="math display">\[
+\overline X
+\sim
+N
+\left(
+\mu,
+\frac{\sigma^2}{n}
+\right).
+\]</span></p>
+<p>Esse resultado será retomado no estudo das distribuições amostrais.</p>
+</section>
+<section id="distribuição-beta" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-beta">Distribuição beta</h3>
+<p>Uma variável aleatória <span class="math inline">\(X\)</span> possui distribuição beta com parâmetros <span class="math inline">\(\alpha&gt;0\)</span> e <span class="math inline">\(\beta&gt;0\)</span> quando</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{1}{B(\alpha,\beta)}
+x^{\alpha-1}
+(1-x)^{\beta-1}
+\mathbf 1_{(0,1)}(x).
+\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+B(\alpha,\beta)
+=
+\int_0^1
+x^{\alpha-1}
+(1-x)^{\beta-1}\,dx
+\]</span></p>
+<p>é a função beta.</p>
+<p>A função beta relaciona-se à função gama por</p>
+<p><span class="math display">\[
+B(\alpha,\beta)
+=
+\frac{
+\Gamma(\alpha)\Gamma(\beta)
+}{
+\Gamma(\alpha+\beta)
+}.
+\]</span></p>
+<p>Escrevemos</p>
+<p><span class="math display">\[
+X\sim\operatorname{Beta}(\alpha,\beta).
+\]</span></p>
+<p>A esperança e a variância são</p>
+<p><span class="math display">\[
+E(X)
+=
+\frac{\alpha}{\alpha+\beta}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+\frac{\alpha\beta}
+{(\alpha+\beta)^2(\alpha+\beta+1)}.
+\]</span></p>
+<p>O suporte da distribuição beta é o intervalo <span class="math inline">\((0,1)\)</span>, o que torna esse modelo adequado para representar variáveis contínuas restritas a esse intervalo.</p>
+<p>Dependendo dos valores de <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span>, a densidade pode apresentar formas distintas. Quando</p>
+<p><span class="math display">\[
+\alpha=\beta=1,
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+X\sim\operatorname{Uniforme}(0,1).
+\]</span></p>
+<p>Quando</p>
+<p><span class="math display">\[
+\alpha=\beta,
+\]</span></p>
+<p>a densidade é simétrica em torno de <span class="math inline">\(1/2\)</span>.</p>
+</section>
+<section id="relações-entre-gama-e-beta" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="relações-entre-gama-e-beta">Relações entre gama e beta</h3>
+<p>As distribuições gama e beta estão relacionadas por transformações de variáveis aleatórias independentes.</p>
+<p>Se</p>
+<p><span class="math display">\[
+X\sim\operatorname{Gama}(\alpha,\lambda)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y\sim\operatorname{Gama}(\beta,\lambda),
+\]</span></p>
+<p>independentes, então</p>
+<p><span class="math display">\[
+\frac{X}{X+Y}
+\sim
+\operatorname{Beta}(\alpha,\beta).
+\]</span></p>
+<p>Além disso,</p>
+<p><span class="math display">\[
+X+Y
+\sim
+\operatorname{Gama}(\alpha+\beta,\lambda).
+\]</span></p>
+<p>Essas relações serão úteis para compreender algumas distribuições derivadas que aparecem posteriormente no estudo de estatísticas construídas a partir de amostras normais.</p>
+</section>
+<section id="escolha-entre-alguns-modelos-contínuos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="escolha-entre-alguns-modelos-contínuos">Escolha entre alguns modelos contínuos</h3>
+<p>Os modelos contínuos podem ser associados a diferentes estruturas probabilísticas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Situação modelada</th>
+<th style="text-align: left;">Distribuição possível</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">valores distribuídos uniformemente em um intervalo</td>
+<td style="text-align: left;">Uniforme</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tempo até um evento com taxa constante</td>
+<td style="text-align: left;">Exponencial</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">soma de tempos exponenciais ou tempo até sucessivos eventos</td>
+<td style="text-align: left;">Gama</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">variável contínua aproximadamente simétrica em torno de uma média</td>
+<td style="text-align: left;">Normal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">variável contínua limitada ao intervalo <span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">Beta</td>
+</tr>
+</tbody>
+</table>
+<p>A adequação de uma distribuição depende do mecanismo considerado, das propriedades da variável e das hipóteses adotadas. Esses modelos serão utilizados posteriormente como componentes de modelos estatísticos.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Distribuições derivadas do modelo normal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Distribuições derivadas do modelo normal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As distribuições qui-quadrado, <span class="math inline">\(t\)</span> de Student e <span class="math inline">\(F\)</span> estão relacionadas a funções de variáveis normais. Elas serão apresentadas no estudo das distribuições amostrais, quando surgirem naturalmente a partir da média e da variância amostrais.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="distribuições-conjuntas-e-dependência" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="distribuições-conjuntas-e-dependência">Distribuições conjuntas e dependência</h2>
+<p>Muitos problemas probabilísticos envolvem mais de uma variável aleatória observada simultaneamente. Nesses casos, além do comportamento individual de cada variável, é necessário descrever como elas se relacionam.</p>
+<p>Considere o vetor aleatório</p>
+<p><span class="math display">\[
+\mathbf X
+=
+(X_1,\ldots,X_k)^\mathsf{T}.
+\]</span></p>
+<p>Sua distribuição conjunta determina as probabilidades associadas aos possíveis valores de todas as componentes. A partir dela podem ser obtidas as distribuições marginais e condicionais, assim como medidas de dependência entre as variáveis.</p>
+<section id="distribuição-conjunta" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuição-conjunta">Distribuição conjunta</h3>
+<p>Para duas variáveis aleatórias <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, a função de distribuição conjunta é definida por</p>
+<p><span class="math display">\[
+F_{X,Y}(x,y)
+=
+P(X\leq x,\;Y\leq y).
+\]</span></p>
+<p>No caso discreto, a distribuição conjunta pode ser representada pela função de probabilidade</p>
+<p><span class="math display">\[
+p_{X,Y}(x,y)
+=
+P(X=x,Y=y),
+\]</span></p>
+<p>que satisfaz</p>
+<p><span class="math display">\[
+p_{X,Y}(x,y)\geq0
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\sum_x\sum_y
+p_{X,Y}(x,y)
+=
+1.
+\]</span></p>
+<p>No caso absolutamente contínuo, a distribuição conjunta é caracterizada por uma função de densidade <span class="math inline">\(f_{X,Y}\)</span> tal que</p>
+<p><span class="math display">\[
+f_{X,Y}(x,y)\geq0
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\int_{-\infty}^{\infty}
+\int_{-\infty}^{\infty}
+f_{X,Y}(x,y)\,dx\,dy
+=
+1.
+\]</span></p>
+<p>Para uma região <span class="math inline">\(A\subseteq\mathbb R^2\)</span>,</p>
+<p><span class="math display">\[
+P\{(X,Y)\in A\}
+=
+\iint_A
+f_{X,Y}(x,y)\,dx\,dy.
+\]</span></p>
+<p>A mesma ideia se estende a vetores com mais de duas componentes, utilizando uma função de probabilidade ou densidade conjunta definida no suporte do vetor aleatório.</p>
+</section>
+<section id="distribuições-marginais" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuições-marginais">Distribuições marginais</h3>
+<p>A distribuição marginal descreve o comportamento de uma componente do vetor aleatório sem condicionar aos valores das demais.</p>
+<p>No caso discreto, a função de probabilidade marginal de <span class="math inline">\(X\)</span> é obtida somando a função conjunta sobre todos os valores possíveis de <span class="math inline">\(Y\)</span>:</p>
+<p><span class="math display">\[
+p_X(x)
+=
+\sum_y p_{X,Y}(x,y).
+\]</span></p>
+<p>Analogamente,</p>
+<p><span class="math display">\[
+p_Y(y)
+=
+\sum_x p_{X,Y}(x,y).
+\]</span></p>
+<p>No caso absolutamente contínuo,</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\int_{-\infty}^{\infty}
+f_{X,Y}(x,y)\,dy
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+f_Y(y)
+=
+\int_{-\infty}^{\infty}
+f_{X,Y}(x,y)\,dx.
+\]</span></p>
+<p>A operação de soma ou integração elimina da distribuição conjunta a variável que não aparece na distribuição marginal desejada.</p>
+</section>
+<section id="distribuições-condicionais" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="distribuições-condicionais">Distribuições condicionais</h3>
+<p>A distribuição condicional descreve o comportamento de uma variável quando se conhece o valor assumido por outra.</p>
+<p>No caso discreto, se <span class="math inline">\(p_Y(y)&gt;0\)</span>,</p>
+<p><span class="math display">\[
+p_{X\mid Y}(x\mid y)
+=
+\frac{p_{X,Y}(x,y)}{p_Y(y)}.
+\]</span></p>
+<p>Para cada valor fixado de <span class="math inline">\(y\)</span>,</p>
+<p><span class="math display">\[
+\sum_x
+p_{X\mid Y}(x\mid y)
+=
+1.
+\]</span></p>
+<p>No caso absolutamente contínuo, se <span class="math inline">\(f_Y(y)&gt;0\)</span>,</p>
+<p><span class="math display">\[
+f_{X\mid Y}(x\mid y)
+=
+\frac{f_{X,Y}(x,y)}{f_Y(y)},
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+\int_{-\infty}^{\infty}
+f_{X\mid Y}(x\mid y)\,dx
+=
+1.
+\]</span></p>
+<p>A distribuição conjunta pode ser recuperada a partir de uma distribuição marginal e da distribuição condicional correspondente:</p>
+<p><span class="math display">\[
+p_{X,Y}(x,y)
+=
+p_{X\mid Y}(x\mid y)p_Y(y)
+\]</span></p>
+<p>no caso discreto e</p>
+<p><span class="math display">\[
+f_{X,Y}(x,y)
+=
+f_{X\mid Y}(x\mid y)f_Y(y)
+\]</span></p>
+<p>no caso absolutamente contínuo.</p>
+<p>Distribuições condicionais sustentam a esperança condicional, o teorema de Rao–Blackwell e a etapa E do algoritmo EM <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 3.2–3.5; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.3)</span>.</p>
+<div class="callout-example" title="Exemplo: distribuição conjunta discreta">
+<p>Considere duas variáveis aleatórias <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> com função de probabilidade conjunta dada por</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(X\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y=0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y=1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}20\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}10\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}30\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}40\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>A distribuição marginal de <span class="math inline">\(X\)</span> é</p>
+<p><span class="math display">\[
+P(X=0)
+=
+0{,}20+0{,}10
+=
+0{,}30
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+P(X=1)
+=
+0{,}30+0{,}40
+=
+0{,}70.
+\]</span></p>
+<p>Para <span class="math inline">\(Y\)</span>,</p>
+<p><span class="math display">\[
+P(Y=0)
+=
+0{,}20+0{,}30
+=
+0{,}50
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+P(Y=1)
+=
+0{,}10+0{,}40
+=
+0{,}50.
+\]</span></p>
+<p>Condicionando em <span class="math inline">\(Y=1\)</span>,</p>
+<p><span class="math display">\[
+P(X=1\mid Y=1)
+=
+\frac{P(X=1,Y=1)}{P(Y=1)}
+=
+\frac{0{,}40}{0{,}50}
+=
+0{,}80.
+\]</span></p>
+<p>Assim, a distribuição condicional de <span class="math inline">\(X\)</span> pode diferir de sua distribuição marginal. Nesse exemplo,</p>
+<p><span class="math display">\[
+P(X=1)=0{,}70,
+\]</span></p>
+<p>enquanto</p>
+<p><span class="math display">\[
+P(X=1\mid Y=1)=0{,}80.
+\]</span></p>
+</div>
+</section>
+<section id="independência-de-variáveis-aleatórias" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="independência-de-variáveis-aleatórias">Independência de variáveis aleatórias</h3>
+<p>As variáveis aleatórias <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes quando</p>
+<p><span class="math display">\[
+P(X\in A,Y\in B)
+=
+P(X\in A)P(Y\in B)
+\]</span></p>
+<p>para todos os conjuntos mensuráveis <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>.</p>
+<p>No caso discreto, a independência equivale a</p>
+<p><span class="math display">\[
+p_{X,Y}(x,y)
+=
+p_X(x)p_Y(y)
+\]</span></p>
+<p>para todos os valores possíveis de <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span>.</p>
+<p>No caso absolutamente contínuo, a fatoração correspondente é</p>
+<p><span class="math display">\[
+f_{X,Y}(x,y)
+=
+f_X(x)f_Y(y)
+\]</span></p>
+<p>quase sempre.</p>
+<p>Se <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes e as esperanças envolvidas existem, então</p>
+<p><span class="math display">\[
+E\{g(X)h(Y)\}
+=
+E\{g(X)\}E\{h(Y)\}.
+\]</span></p>
+<p>Em particular,</p>
+<p><span class="math display">\[
+E(XY)
+=
+E(X)E(Y).
+\]</span></p>
+<p>A recíproca não é verdadeira em geral. A igualdade entre determinados momentos não é suficiente para estabelecer independência <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;3.4; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 2.4 e 3.3)</span>.</p>
+</section>
+<section id="independência-de-várias-variáveis" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="independência-de-várias-variáveis">Independência de várias variáveis</h3>
+<p>As variáveis aleatórias</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\]</span></p>
+<p>são mutuamente independentes quando, para quaisquer conjuntos mensuráveis <span class="math inline">\(A_1,\ldots,A_n\)</span>,</p>
+<p><span class="math display">\[
+P(X_1\in A_1,\ldots,X_n\in A_n)
+=
+\prod_{i=1}^n
+P(X_i\in A_i).
+\]</span></p>
+<p>No caso discreto, essa condição equivale à fatoração</p>
+<p><span class="math display">\[
+p_{X_1,\ldots,X_n}(x_1,\ldots,x_n)
+=
+\prod_{i=1}^n p_{X_i}(x_i).
+\]</span></p>
+<p>No caso absolutamente contínuo, corresponde a</p>
+<p><span class="math display">\[
+f_{X_1,\ldots,X_n}(x_1,\ldots,x_n)
+=
+\prod_{i=1}^n f_{X_i}(x_i)
+\]</span></p>
+<p>quase sempre.</p>
+<p>Se, além de independentes, todas as variáveis possuem a mesma distribuição <span class="math inline">\(P\)</span>, escreve-se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+F.
+\]</span></p>
+<p>A sigla <strong>i.i.d.</strong> indica que as variáveis são <strong>independentes e identicamente distribuídas</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Estrutura i.i.d.">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Estrutura i.i.d.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A notação</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+P
+\]</span></p>
+<p>reúne duas condições distintas:</p>
+<ol type="1">
+<li><span class="math inline">\(X_1,\ldots,X_n\)</span> são independentes;</li>
+<li>todas possuem a mesma distribuição <span class="math inline">\(P\)</span>.</li>
+</ol>
+<p>A estrutura i.i.d. será utilizada com frequência na representação probabilística de amostras aleatórias. Ela corresponde a uma hipótese sobre o mecanismo probabilístico adotado e não descreve todos os procedimentos de obtenção de dados.</p>
+</div>
+</div>
+</section>
+<section id="covariância-e-correlação" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="covariância-e-correlação">Covariância e correlação</h3>
+<p>A covariância entre <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, definida anteriormente por</p>
+<p><span class="math display">\[
+\operatorname{Cov}(X,Y)
+=
+E(XY)-E(X)E(Y),
+\]</span></p>
+<p>descreve a direção da associação linear entre duas variáveis.</p>
+<p>Se <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes e possuem segundos momentos finitos, então</p>
+<p><span class="math display">\[
+E(XY)=E(X)E(Y),
+\]</span></p>
+<p>e, portanto,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(X,Y)=0.
+\]</span></p>
+<p>Assim,</p>
+<p><span class="math display">\[
+X\perp Y
+\quad\Longrightarrow\quad
+\operatorname{Cov}(X,Y)=0.
+\]</span></p>
+<p>A recíproca não é válida em geral. Covariância nula não garante independência.</p>
+<p>Considere</p>
+<p><span class="math display">\[
+X\sim N(0,1)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y=X^2.
+\]</span></p>
+<p>Como a distribuição de <span class="math inline">\(X\)</span> é simétrica em torno de zero,</p>
+<p><span class="math display">\[
+E(X)=0
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+E(X^3)=0.
+\]</span></p>
+<p>Logo,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(X,Y)
+=
+E(X^3)-E(X)E(X^2)
+=
+0.
+\]</span></p>
+<p>Entretanto, <span class="math inline">\(Y\)</span> é completamente determinado por <span class="math inline">\(X\)</span>, de modo que as variáveis não são independentes.</p>
+<p>A covariância depende das unidades de medida. Para obter uma medida adimensional da associação linear, define-se o coeficiente de correlação por</p>
+<p><span class="math display">\[
+\rho_{X,Y}
+=
+\operatorname{Corr}(X,Y)
+=
+\frac{
+\operatorname{Cov}(X,Y)
+}{
+\sqrt{\operatorname{Var}(X)}
+\sqrt{\operatorname{Var}(Y)}
+},
+\]</span></p>
+<p>desde que</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)&gt;0
+\qquad\text{e}\qquad
+\operatorname{Var}(Y)&gt;0.
+\]</span></p>
+<p>O coeficiente satisfaz</p>
+<p><span class="math display">\[
+-1\leq\rho_{X,Y}\leq1.
+\]</span></p>
+<p>Valores positivos indicam associação linear positiva e valores negativos indicam associação linear negativa. O valor</p>
+<p><span class="math display">\[
+\rho_{X,Y}=0
+\]</span></p>
+<p>indica ausência de associação linear, mas não implica ausência de dependência.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Independência e correlação">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Independência e correlação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Independência implica correlação nula quando as variâncias existem. A implicação inversa não vale para distribuições arbitrárias.</p>
+<p>Para variáveis conjuntamente normais, entretanto, correlação nula implica independência. Essa propriedade será retomada quando o modelo normal for utilizado em problemas inferenciais.</p>
+</div>
+</div>
+</section>
+<section id="esperança-condicional" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="esperança-condicional">Esperança condicional</h3>
+<p>A distribuição condicional permite definir momentos condicionais.</p>
+<p>No caso discreto,</p>
+<p><span class="math display">\[
+E(X\mid Y=y)
+=
+\sum_x
+x\,p_{X\mid Y}(x\mid y),
+\]</span></p>
+<p>desde que a soma esteja bem definida.</p>
+<p>No caso absolutamente contínuo,</p>
+<p><span class="math display">\[
+E(X\mid Y=y)
+=
+\int_{-\infty}^{\infty}
+x\,f_{X\mid Y}(x\mid y)\,dx.
+\]</span></p>
+<p>Ao permitir que <span class="math inline">\(Y\)</span> varie, obtemos a variável aleatória</p>
+<p><span class="math display">\[
+E(X\mid Y).
+\]</span></p>
+<p>Mais geralmente, para uma função <span class="math inline">\(g\)</span>,</p>
+<p><span class="math display">\[
+E\{g(X)\mid Y=y\}
+\]</span></p>
+<p>é calculada utilizando a distribuição condicional de <span class="math inline">\(X\)</span> dado <span class="math inline">\(Y=y\)</span>.</p>
+<p>Se <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes e <span class="math inline">\(E|X|&lt;\infty\)</span>, então</p>
+<p><span class="math display">\[
+E(X\mid Y)
+=
+E(X).
+\]</span></p>
+<p>Nesse caso, conhecer <span class="math inline">\(Y\)</span> não altera a média condicional de <span class="math inline">\(X\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Lei da esperança total">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Lei da esperança total
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se <span class="math inline">\(E|X|&lt;\infty\)</span>, então</p>
+<p><span class="math display">\[
+E(X)
+=
+E\{E(X\mid Y)\}.
+\]</span></p>
+</div>
+</div>
+<p>A lei da esperança total permite calcular uma esperança em duas etapas: primeiro condicionando em <span class="math inline">\(Y\)</span> e depois tomando a esperança em relação à distribuição de <span class="math inline">\(Y\)</span>.</p>
+<div class="callout-example" title="Exemplo: esperança total">
+<p>Considere uma variável <span class="math inline">\(Y\)</span> que identifica dois grupos,</p>
+<p><span class="math display">\[
+Y\in\{0,1\},
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+P(Y=0)=0{,}6
+\qquad\text{e}\qquad
+P(Y=1)=0{,}4.
+\]</span></p>
+<p>Suponha que</p>
+<p><span class="math display">\[
+E(X\mid Y=0)=10
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+E(X\mid Y=1)=20.
+\]</span></p>
+<p>Então</p>
+<p><span class="math display">\[
+E(X)
+=
+E\{E(X\mid Y)\}
+\]</span></p>
+<p>e, portanto,</p>
+<p><span class="math display">\[
+E(X)
+=
+10(0{,}6)+20(0{,}4)
+=
+14.
+\]</span></p>
+</div>
+</section>
+<section id="variância-condicional" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="variância-condicional">Variância condicional</h3>
+<p>A variância condicional de <span class="math inline">\(X\)</span> dado <span class="math inline">\(Y=y\)</span> é</p>
+<p><span class="math display">\[
+\operatorname{Var}(X\mid Y=y)
+=
+E
+\left[
+\{X-E(X\mid Y=y)\}^2
+\mid Y=y
+\right].
+\]</span></p>
+<p>Também pode ser escrita como</p>
+<p><span class="math display">\[
+\operatorname{Var}(X\mid Y=y)
+=
+E(X^2\mid Y=y)
+-
+[E(X\mid Y=y)]^2.
+\]</span></p>
+<p>Ao permitir que <span class="math inline">\(Y\)</span> varie, obtém-se a variável aleatória</p>
+<p><span class="math display">\[
+\operatorname{Var}(X\mid Y).
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Lei da variância total">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Lei da variância total
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se <span class="math inline">\(E(X^2)&lt;\infty\)</span>, então</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+E\{\operatorname{Var}(X\mid Y)\}
++
+\operatorname{Var}\{E(X\mid Y)\}.
+\]</span></p>
+</div>
+</div>
+<p>A primeira parcela,</p>
+<p><span class="math display">\[
+E\{\operatorname{Var}(X\mid Y)\},
+\]</span></p>
+<p>representa a média das variâncias condicionais. A segunda,</p>
+<p><span class="math display">\[
+\operatorname{Var}\{E(X\mid Y)\},
+\]</span></p>
+<p>representa a variabilidade entre as médias condicionais.</p>
+<p>Essa decomposição separa a variabilidade total de <span class="math inline">\(X\)</span> em uma componente associada à variação dentro das distribuições condicionais e outra associada à variação entre suas médias <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;4.4; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.3)</span>.</p>
+<div class="callout-example" title="Exemplo: decomposição da variância">
+<p>Considere novamente</p>
+<p><span class="math display">\[
+P(Y=0)=0{,}6,
+\qquad
+P(Y=1)=0{,}4,
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+E(X\mid Y=0)=10,
+\qquad
+E(X\mid Y=1)=20.
+\]</span></p>
+<p>Suponha ainda que</p>
+<p><span class="math display">\[
+\operatorname{Var}(X\mid Y=0)=9
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X\mid Y=1)=16.
+\]</span></p>
+<p>A primeira parcela da lei da variância total é</p>
+<p><span class="math display">\[
+E\{\operatorname{Var}(X\mid Y)\}
+=
+9(0{,}6)+16(0{,}4)
+=
+11{,}8.
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+E(X)=14,
+\]</span></p>
+<p>a variância das médias condicionais é</p>
+<p><span class="math display">\[
+\operatorname{Var}\{E(X\mid Y)\}
+=
+0{,}6(10-14)^2
++
+0{,}4(20-14)^2
+=
+24.
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+11{,}8+24
+=
+35{,}8.
+\]</span></p>
+</div>
+</section>
+<section id="vetores-de-médias-e-matrizes-de-covariâncias" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="vetores-de-médias-e-matrizes-de-covariâncias">Vetores de médias e matrizes de covariâncias</h3>
+<p>Para o vetor aleatório</p>
+<p><span class="math display">\[
+\mathbf X
+=
+(X_1,\ldots,X_k)^\mathsf{T},
+\]</span></p>
+<p>o vetor de médias é</p>
+<p><span class="math display">\[
+E(\mathbf X)
+=
+\begin{pmatrix}
+E(X_1)\\
+\vdots\\
+E(X_k)
+\end{pmatrix}.
+\]</span></p>
+<p>A matriz de covariâncias é</p>
+<p><span class="math display">\[
+\boldsymbol\Sigma
+=
+\operatorname{Cov}(\mathbf X)
+=
+E
+\left[
+\{\mathbf X-E(\mathbf X)\}
+\{\mathbf X-E(\mathbf X)\}^\mathsf{T}
+\right].
+\]</span></p>
+<p>Sua forma é</p>
+<p><span class="math display">\[
+\boldsymbol\Sigma
+=
+\begin{pmatrix}
+\operatorname{Var}(X_1)
+&amp;
+\operatorname{Cov}(X_1,X_2)
+&amp;
+\cdots
+&amp;
+\operatorname{Cov}(X_1,X_k)
+\\
+\operatorname{Cov}(X_2,X_1)
+&amp;
+\operatorname{Var}(X_2)
+&amp;
+\cdots
+&amp;
+\operatorname{Cov}(X_2,X_k)
+\\
+\vdots
+&amp;
+\vdots
+&amp;
+\ddots
+&amp;
+\vdots
+\\
+\operatorname{Cov}(X_k,X_1)
+&amp;
+\operatorname{Cov}(X_k,X_2)
+&amp;
+\cdots
+&amp;
+\operatorname{Var}(X_k)
+\end{pmatrix}.
+\]</span></p>
+<p>A diagonal contém as variâncias das componentes e os elementos fora da diagonal contêm as covariâncias entre pares de variáveis.</p>
+<p>A matriz de covariâncias é simétrica e positiva semidefinida. Esses resultados serão utilizados posteriormente em parâmetros vetoriais, método delta multivariado e modelos lineares <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 4.2–4.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.3.1)</span>.</p>
+</section>
+<section id="síntese-das-relações-conjuntas" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="síntese-das-relações-conjuntas">Síntese das relações conjuntas</h3>
+<p>As principais relações desta seção podem ser organizadas na sequência</p>
+<p><span class="math display">\[
+\text{distribuição conjunta}
+\longrightarrow
+\begin{cases}
+\text{distribuições marginais},\\
+\text{distribuições condicionais},
+\end{cases}
+\]</span></p>
+<p>seguida de</p>
+<p><span class="math display">\[
+\text{distribuição conjunta}
+\longrightarrow
+\text{estrutura de dependência}.
+\]</span></p>
+<p>Para variáveis independentes, a distribuição conjunta se fatora no produto das distribuições marginais. No caso discreto,</p>
+<p><span class="math display">\[
+p_{X,Y}(x,y)
+=
+p_X(x)p_Y(y),
+\]</span></p>
+<p>enquanto, no caso absolutamente contínuo,</p>
+<p><span class="math display">\[
+f_{X,Y}(x,y)
+=
+f_X(x)f_Y(y)
+\]</span></p>
+<p>quase sempre.</p>
+<p>Covariância e a correlação descrevem apenas a associação linear.</p>
+<p>O condicionamento também fornece as identidades</p>
+<p><span class="math display">\[
+E(X)
+=
+E\{E(X\mid Y)\}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+E\{\operatorname{Var}(X\mid Y)\}
++
+\operatorname{Var}\{E(X\mid Y)\}.
+\]</span></p>
+<p>A notação</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+P
+\]</span></p>
+<p>será utilizada posteriormente para representar uma sequência de variáveis independentes com a mesma distribuição.</p>
+</section>
+</section>
+<section id="transformações-e-função-geradora-de-momentos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="transformações-e-função-geradora-de-momentos">Transformações e função geradora de momentos</h2>
+<p>Transformações de variáveis aleatórias permitem obter novas variáveis a partir de variáveis com distribuição conhecida. Se</p>
+<p><span class="math display">\[
+Y=g(X),
+\]</span></p>
+<p>a distribuição de <span class="math inline">\(Y\)</span> depende da distribuição de <span class="math inline">\(X\)</span> e da função <span class="math inline">\(g\)</span>.</p>
+<p>Nesta revisão, serão retomados o método da função de distribuição e a transformação de densidades no caso univariado. Transformações multivariadas e o uso do determinante jacobiano serão tratados no capítulo <strong>Resultados Matemáticos e Assintóticos para Inferência</strong>.</p>
+<section id="transformações-de-variáveis-aleatórias" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="transformações-de-variáveis-aleatórias">Transformações de variáveis aleatórias</h3>
+<p>Uma forma geral de obter a distribuição de</p>
+<p><span class="math display">\[
+Y=g(X)
+\]</span></p>
+<p>consiste em determinar sua função de distribuição:</p>
+<p><span class="math display">\[
+F_Y(y)
+=
+P(Y\leq y)
+=
+P\{g(X)\leq y\}.
+\]</span></p>
+<p>A partir de <span class="math inline">\(F_Y\)</span>, pode-se obter a função de probabilidade, no caso discreto, ou a densidade, no caso absolutamente contínuo.</p>
+<section id="transformação-monótona" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="transformação-monótona">Transformação monótona</h4>
+<p>Se <span class="math inline">\(X\)</span> é absolutamente contínua e <span class="math inline">\(g\)</span> é estritamente monótona e diferenciável, então existe a função inversa</p>
+<p><span class="math display">\[
+x=g^{-1}(y).
+\]</span></p>
+<p>A densidade de</p>
+<p><span class="math display">\[
+Y=g(X)
+\]</span></p>
+<p>é</p>
+<p><span class="math display">\[
+f_Y(y)
+=
+f_X\{g^{-1}(y)\}
+\left|
+\frac{d}{dy}g^{-1}(y)
+\right|,
+\]</span></p>
+<p>para os valores de <span class="math inline">\(y\)</span> pertencentes ao suporte de <span class="math inline">\(Y\)</span> <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 2.3 e 3.6; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.4)</span>.</p>
+<p>O valor absoluto da derivada da transformação inversa ajusta a densidade à mudança de escala produzida por <span class="math inline">\(g\)</span>.</p>
+<div class="callout-example" title="Exemplo: transformação linear">
+<p>Considere</p>
+<p><span class="math display">\[
+Y=aX+b,
+\qquad a\neq0.
+\]</span></p>
+<p>A transformação inversa é</p>
+<p><span class="math display">\[
+x=\frac{y-b}{a}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\left|
+\frac{dx}{dy}
+\right|
+=
+\frac{1}{|a|}.
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+f_Y(y)
+=
+f_X
+\left(
+\frac{y-b}{a}
+\right)
+\frac{1}{|a|}.
+\]</span></p>
+<p>Se, em particular,</p>
+<p><span class="math display">\[
+X\sim N(\mu,\sigma^2),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+Y=aX+b
+\sim
+N(a\mu+b,a^2\sigma^2),
+\]</span></p>
+<p>resultado apresentado anteriormente para o modelo normal.</p>
+</div>
+</section>
+<section id="transformações-não-monótonas" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="transformações-não-monótonas">Transformações não monótonas</h4>
+<p>Quando <span class="math inline">\(g\)</span> não é monotônica em todo o suporte de <span class="math inline">\(X\)</span>, uma mesma realização de <span class="math inline">\(Y\)</span> pode corresponder a mais de um valor de <span class="math inline">\(X\)</span>. Nesse caso, o método da função de distribuição costuma fornecer uma forma direta de obter a distribuição resultante.</p>
+<p>Considere, por exemplo,</p>
+<p><span class="math display">\[
+Y=X^2.
+\]</span></p>
+<p>Para <span class="math inline">\(y\geq0\)</span>,</p>
+<p><span class="math display">\[
+F_Y(y)
+=
+P(X^2\leq y)
+=
+P(-\sqrt y\leq X\leq\sqrt y).
+\]</span></p>
+<p>Logo,</p>
+<p><span class="math display">\[
+F_Y(y)
+=
+F_X(\sqrt y)-F_X(-\sqrt y),
+\]</span></p>
+<p>quando <span class="math inline">\(X\)</span> é contínua. A densidade de <span class="math inline">\(Y\)</span>, quando necessária, pode ser obtida derivando essa expressão em relação a <span class="math inline">\(y\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Transformações multivariadas">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Transformações multivariadas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para transformações de vetores aleatórios, a mudança de variáveis envolve o determinante da matriz jacobiana da transformação inversa. Esse resultado será retomado no capítulo <strong>Resultados Matemáticos e Assintóticos para Inferência</strong>, quando for necessário para obter distribuições de funções de vetores aleatórios.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="função-geradora-de-momentos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="função-geradora-de-momentos">Função geradora de momentos</h3>
+<p>A <strong>função geradora de momentos (FGM)</strong> de uma variável aleatória <span class="math inline">\(X\)</span> é definida por</p>
+<p><span class="math display">\[
+M_X(t)
+=
+E(e^{tX}),
+\]</span></p>
+<p>desde que essa esperança exista em uma vizinhança de <span class="math inline">\(t=0\)</span>.</p>
+<p>No caso discreto,</p>
+<p><span class="math display">\[
+M_X(t)
+=
+\sum_x e^{tx}p_X(x),
+\]</span></p>
+<p>enquanto, no caso absolutamente contínuo,</p>
+<p><span class="math display">\[
+M_X(t)
+=
+\int_{-\infty}^{\infty}
+e^{tx}f_X(x)\,dx.
+\]</span></p>
+<section id="obtenção-de-momentos" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="obtenção-de-momentos">Obtenção de momentos</h4>
+<p>Quando a FGM é finita em uma vizinhança de zero, a derivada de ordem <span class="math inline">\(r\)</span> é denotada por</p>
+<p><span class="math display">\[
+M_X^{(r)}(t)
+=
+\frac{d^r}{dt^r}M_X(t).
+\]</span></p>
+<p>A derivada de ordem <span class="math inline">\(r\)</span> avaliada em <span class="math inline">\(t=0\)</span> fornece o momento de ordem <span class="math inline">\(r\)</span>:</p>
+<p><span class="math display">\[
+M_X^{(r)}(0)
+=
+E(X^r).
+\]</span></p>
+<p>Em particular,</p>
+<p><span class="math display">\[
+M_X'(0)
+=
+E(X)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+M_X''(0)
+=
+E(X^2).
+\]</span></p>
+<p>Consequentemente,</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)
+=
+M_X''(0)-[M_X'(0)]^2.
+\]</span></p>
+</section>
+<section id="transformações-lineares" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="transformações-lineares">Transformações lineares</h4>
+<p>Se</p>
+<p><span class="math display">\[
+Y=aX+b,
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+M_Y(t)
+=
+E\left(e^{t(aX+b)}\right).
+\]</span></p>
+<p>Assim,</p>
+<p><span class="math display">\[
+M_Y(t)
+=
+e^{bt}M_X(at).
+\]</span></p>
+<p>Essa relação permite obter a FGM de transformações lineares a partir da FGM da variável original.</p>
+</section>
+<section id="soma-de-variáveis-independentes" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="soma-de-variáveis-independentes">Soma de variáveis independentes</h4>
+<p>Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são independentes e suas funções geradoras de momentos existem em uma vizinhança de zero, então</p>
+<p><span class="math display">\[
+M_{X_1+\cdots+X_n}(t)
+=
+\prod_{i=1}^nM_{X_i}(t).
+\]</span></p>
+<p>Se, além disso,</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+X,
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+M_{X_1+\cdots+X_n}(t)
+=
+[M_X(t)]^n.
+\]</span></p>
+<p>Essa propriedade permite reconhecer a distribuição de somas de variáveis independentes quando a FGM resultante corresponde à de uma distribuição conhecida.</p>
+<div class="callout-example" title="Exemplo: soma de variáveis Poisson">
+<p>Se</p>
+<p><span class="math display">\[
+X_1\sim\operatorname{Poisson}(\lambda_1)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+X_2\sim\operatorname{Poisson}(\lambda_2),
+\]</span></p>
+<p>independentes, suas funções geradoras de momentos são</p>
+<p><span class="math display">\[
+M_{X_1}(t)
+=
+\exp\{\lambda_1(e^t-1)\}
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+M_{X_2}(t)
+=
+\exp\{\lambda_2(e^t-1)\}.
+\]</span></p>
+<p>Logo,</p>
+<p><span class="math display">\[
+M_{X_1+X_2}(t)
+=
+\exp\{(\lambda_1+\lambda_2)(e^t-1)\},
+\]</span></p>
+<p>que corresponde à FGM de uma distribuição de Poisson com parâmetro <span class="math inline">\(\lambda_1+\lambda_2\)</span>. Portanto,</p>
+<p><span class="math display">\[
+X_1+X_2
+\sim
+\operatorname{Poisson}(\lambda_1+\lambda_2).
+\]</span></p>
+</div>
+<div class="callout-example" title="Exemplo: soma de variáveis normais">
+<p>Considere variáveis independentes</p>
+<p><span class="math display">\[
+X_i\sim N(\mu_i,\sigma_i^2),
+\qquad
+i=1,\ldots,n.
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+M_{X_i}(t)
+=
+\exp
+\left(
+\mu_i t+\frac{\sigma_i^2t^2}{2}
+\right),
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+M_{\sum_{i=1}^nX_i}(t)
+=
+\prod_{i=1}^n
+\exp
+\left(
+\mu_i t+\frac{\sigma_i^2t^2}{2}
+\right).
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+M_{\sum_{i=1}^nX_i}(t)
+=
+\exp
+\left[
+\left(
+\sum_{i=1}^n\mu_i
+\right)t
++
+\frac{1}{2}
+\left(
+\sum_{i=1}^n\sigma_i^2
+\right)t^2
+\right].
+\]</span></p>
+<p>Essa é a FGM da distribuição</p>
+<p><span class="math display">\[
+N
+\left(
+\sum_{i=1}^n\mu_i,
+\sum_{i=1}^n\sigma_i^2
+\right).
+\]</span></p>
+<p>Assim,</p>
+<p><span class="math display">\[
+\sum_{i=1}^nX_i
+\sim
+N
+\left(
+\sum_{i=1}^n\mu_i,
+\sum_{i=1}^n\sigma_i^2
+\right).
+\]</span></p>
+</div>
+</section>
+<section id="identificação-de-distribuições" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="identificação-de-distribuições">Identificação de distribuições</h4>
+<p>Se duas variáveis aleatórias possuem funções geradoras de momentos que existem e coincidem em uma vizinhança de <span class="math inline">\(t=0\)</span>, então elas possuem a mesma distribuição.</p>
+<p>Essa propriedade, combinada com a regra do produto para variáveis independentes, permite utilizar a FGM para identificar distribuições de somas <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;4.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, ap. A.8)</span>.</p>
+<p>Nem toda distribuição possui função geradora de momentos. Portanto, a FGM é uma ferramenta disponível quando sua existência estiver garantida.</p>
+</section>
+</section>
+<section id="algumas-funções-geradoras-de-momentos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="algumas-funções-geradoras-de-momentos">Algumas funções geradoras de momentos</h3>
+<p>Para referência, algumas das distribuições apresentadas neste capítulo possuem as seguintes funções geradoras de momentos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Distribuição</th>
+<th style="text-align: left;">Função geradora de momentos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bernoulli<span class="math inline">\((p)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1-p+pe^t\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Binomial<span class="math inline">\((n,p)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((1-p+pe^t)^n\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poisson<span class="math inline">\((\lambda)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\exp\{\lambda(e^t-1)\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exponencial<span class="math inline">\((\lambda)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\dfrac{\lambda}{\lambda-t}\)</span>, <span class="math inline">\(t&lt;\lambda\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gama<span class="math inline">\((\alpha,\lambda)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\left(\dfrac{\lambda}{\lambda-t}\right)^\alpha\)</span>, <span class="math inline">\(t&lt;\lambda\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Normal<span class="math inline">\((\mu,\sigma^2)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\exp\left(\mu t+\dfrac{\sigma^2t^2}{2}\right)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>A tabela também evidencia algumas relações apresentadas anteriormente. A FGM da binomial é a <span class="math inline">\(n\)</span>-ésima potência da FGM de Bernoulli, e a FGM da soma de variáveis exponenciais independentes com a mesma taxa corresponde à FGM de uma distribuição gama.</p>
+</section>
+</section>
+<section id="quadro-síntese-dos-modelos-probabilísticos" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="quadro-síntese-dos-modelos-probabilísticos">Quadro-síntese dos modelos probabilísticos</h2>
+<p>Os modelos apresentados neste capítulo podem ser comparados segundo a variável que descrevem, seu suporte, seus parâmetros e seus momentos.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Distribuição</th>
+<th style="text-align: left;">Suporte</th>
+<th style="text-align: left;">Parâmetro(s)</th>
+<th style="text-align: center;"><span class="math inline">\(E(X)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\operatorname{Var}(X)\)</span></th>
+<th style="text-align: left;">Estrutura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bernoulli</td>
+<td style="text-align: left;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(p(1-p)\)</span></td>
+<td style="text-align: left;">resultado binário</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Binomial</td>
+<td style="text-align: left;"><span class="math inline">\(\{0,\ldots,n\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n,p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np(1-p)\)</span></td>
+<td style="text-align: left;">número de sucessos em <span class="math inline">\(n\)</span> ensaios independentes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hipergeométrica</td>
+<td style="text-align: left;">finito</td>
+<td style="text-align: left;"><span class="math inline">\(N,M,n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np(1-p)\dfrac{N-n}{N-1}\)</span></td>
+<td style="text-align: left;">número de sucessos em amostragem sem reposição</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Geométrica</td>
+<td style="text-align: left;"><span class="math inline">\(\{1,2,\ldots\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{1}{p}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{1-p}{p^2}\)</span></td>
+<td style="text-align: left;">número de ensaios até o primeiro sucesso</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Binomial negativa</td>
+<td style="text-align: left;"><span class="math inline">\(\{r,r+1,\ldots\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(r,p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{r}{p}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{r(1-p)}{p^2}\)</span></td>
+<td style="text-align: left;">número de ensaios até o <span class="math inline">\(r\)</span>-ésimo sucesso</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poisson</td>
+<td style="text-align: left;"><span class="math inline">\(\{0,1,2,\ldots\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: left;">número de ocorrências em uma região de observação</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Multinomial</td>
+<td style="text-align: left;"><span class="math inline">\(\sum_jx_j=n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n,p_1,\ldots,p_m\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(E(X_j)=np_j\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\operatorname{Var}(X_j)=np_j(1-p_j)\)</span></td>
+<td style="text-align: left;">contagens em várias categorias</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uniforme</td>
+<td style="text-align: left;"><span class="math inline">\((a,b)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(a,b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{a+b}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{(b-a)^2}{12}\)</span></td>
+<td style="text-align: left;">densidade constante em um intervalo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exponencial</td>
+<td style="text-align: left;"><span class="math inline">\((0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{1}{\lambda}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{1}{\lambda^2}\)</span></td>
+<td style="text-align: left;">tempo até um evento sob taxa constante</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gama</td>
+<td style="text-align: left;"><span class="math inline">\((0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\alpha,\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\alpha}{\lambda}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\alpha}{\lambda^2}\)</span></td>
+<td style="text-align: left;">soma de tempos exponenciais e variáveis positivas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Normal</td>
+<td style="text-align: left;"><span class="math inline">\(\mathbb R\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mu,\sigma^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sigma^2\)</span></td>
+<td style="text-align: left;">modelo de localização e dispersão</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beta</td>
+<td style="text-align: left;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\alpha,\beta\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\alpha}{\alpha+\beta}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}\)</span></td>
+<td style="text-align: left;">variável contínua limitada a <span class="math inline">\((0,1)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>A tabela resume propriedades de cada distribuição, mas a escolha de um modelo depende do mecanismo considerado. Duas variáveis com o mesmo suporte podem exigir modelos distintos quando correspondem a formas diferentes de produção dos dados.</p>
+</section>
+<section id="síntese" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="síntese">Síntese</h2>
+<p>A revisão deste capítulo pode ser organizada em quatro componentes.</p>
+<ol type="1">
+<li><p><strong>Probabilidade e condicionamento:</strong> eventos, probabilidade condicional, lei da probabilidade total, teorema de Bayes e independência.</p></li>
+<li><p><strong>Variáveis aleatórias e distribuições:</strong> função de distribuição, suporte, variáveis discretas e absolutamente contínuas, esperança, variância e momentos.</p></li>
+<li><p><strong>Distribuições conjuntas e dependência:</strong> distribuições marginais e condicionais, independência de variáveis aleatórias, covariância, correlação, esperança condicional e variância condicional.</p></li>
+<li><p><strong>Modelos e operações probabilísticas:</strong> modelos discretos e contínuos, transformações de variáveis aleatórias e função geradora de momentos.</p></li>
+</ol>
+<p>Esses elementos fornecem a linguagem probabilística utilizada nos capítulos seguintes. A partir deles, uma coleção de observações pode ser representada por variáveis aleatórias, e diferentes hipóteses probabilísticas podem ser utilizadas para descrever o mecanismo que produz os dados.</p>
+</section>
+<section id="exercícios-de-consolidação" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercícios-de-consolidação">Exercícios de consolidação</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere dois eventos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> com</p>
+<p><span class="math display">\[
+P(A)=0{,}4,
+\qquad
+P(B)=0{,}5
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+P(A\cap B)=0{,}2.
+\]</span></p>
+<p>Calcule <span class="math inline">\(P(A\mid B)\)</span> e verifique se <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> são independentes.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 2">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explique por que dois eventos mutuamente exclusivos com probabilidades positivas não podem ser independentes.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 3">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma condição ocorre em <span class="math inline">\(1\%\)</span> de determinada população. Um teste apresenta sensibilidade de <span class="math inline">\(90\%\)</span> e especificidade de <span class="math inline">\(95\%\)</span>.</p>
+<p>Calcule a probabilidade de um indivíduo apresentar a condição dado que seu teste foi positivo.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 4">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para cada situação abaixo, indique uma distribuição probabilística plausível e identifique seus parâmetros.</p>
+<ol type="a">
+<li><p>Presença ou ausência de determinada característica em uma unidade selecionada aleatoriamente.</p></li>
+<li><p>Número de unidades com essa característica em <span class="math inline">\(50\)</span> observações independentes.</p></li>
+<li><p>Número de unidades com a característica em uma amostra de tamanho <span class="math inline">\(50\)</span> retirada sem reposição de uma população finita.</p></li>
+<li><p>Número de chamadas recebidas por uma central durante uma hora.</p></li>
+<li><p>Número de tentativas necessárias até o primeiro sucesso.</p></li>
+<li><p>Tempo até a ocorrência de determinado evento sob taxa constante.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 5">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere</p>
+<p><span class="math display">\[
+X\sim\operatorname{Binomial}(20,0{,}3).
+\]</span></p>
+<p>Obtenha</p>
+<p><span class="math display">\[
+E(X),
+\qquad
+\operatorname{Var}(X)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+P(X\leq4).
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 6">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma urna contém <span class="math inline">\(N=100\)</span> bolas, das quais <span class="math inline">\(M=30\)</span> são vermelhas.</p>
+<p>Considere uma amostra de <span class="math inline">\(n=10\)</span> bolas.</p>
+<ol type="a">
+<li><p>Especifique a distribuição do número de bolas vermelhas quando a seleção ocorre sem reposição.</p></li>
+<li><p>Especifique um modelo para o número de bolas vermelhas em <span class="math inline">\(10\)</span> retiradas independentes, com probabilidade de sucesso <span class="math inline">\(p=0{,}3\)</span>.</p></li>
+<li><p>Compare as esperanças e variâncias dos dois modelos.</p></li>
+<li><p>Explique a origem da diferença entre as variâncias.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 7">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X\sim\operatorname{Geométrica}(p),
+\]</span></p>
+<p>mostre que</p>
+<p><span class="math display">\[
+P(X&gt;m+n\mid X&gt;m)
+=
+P(X&gt;n).
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 8">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Bernoulli}(p),
+\]</span></p>
+<p>use funções geradoras de momentos para identificar a distribuição de</p>
+<p><span class="math display">\[
+S_n=\sum_{i=1}^nX_i.
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 9">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exponencial}(\lambda),
+\]</span></p>
+<p>obtenha a distribuição de</p>
+<p><span class="math display">\[
+S_n=\sum_{i=1}^nX_i.
+\]</span></p>
+<p>Calcule também <span class="math inline">\(E(S_n)\)</span> e <span class="math inline">\(\operatorname{Var}(S_n)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 10">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X\sim N(\mu,\sigma^2)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y=aX+b,
+\]</span></p>
+<p>com <span class="math inline">\(a\neq0\)</span>, obtenha a distribuição de <span class="math inline">\(Y\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 11">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mostre que a distribuição</p>
+<p><span class="math display">\[
+\operatorname{Beta}(1,1)
+\]</span></p>
+<p>coincide com a distribuição uniforme em <span class="math inline">\((0,1)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 12">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere a função de probabilidade conjunta</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(X\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y=0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y=1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}10\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}20\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}30\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}40\)</span></td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li><p>Obtenha as distribuições marginais de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>.</p></li>
+<li><p>Obtenha <span class="math inline">\(P(X=1\mid Y=1)\)</span>.</p></li>
+<li><p>Verifique se <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes.</p></li>
+<li><p>Calcule <span class="math inline">\(\operatorname{Cov}(X,Y)\)</span>.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 13">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 13
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mostre que, se <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> são independentes e possuem segundos momentos finitos, então</p>
+<p><span class="math display">\[
+\operatorname{Cov}(X,Y)=0.
+\]</span></p>
+<p>Apresente um exemplo mostrando que a recíproca não é válida em geral.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 14">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 14
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se <span class="math inline">\(Y\)</span> assume os valores <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>, com</p>
+<p><span class="math display">\[
+P(Y=1)=p,
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+E(X\mid Y=0)=\mu_0,
+\qquad
+E(X\mid Y=1)=\mu_1,
+\]</span></p>
+<p>obtenha <span class="math inline">\(E(X)\)</span> utilizando a lei da esperança total.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 15">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 15
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nas condições do exercício anterior, suponha ainda que</p>
+<p><span class="math display">\[
+\operatorname{Var}(X\mid Y=0)=\sigma_0^2
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}(X\mid Y=1)=\sigma_1^2.
+\]</span></p>
+<p>Use a lei da variância total para obter <span class="math inline">\(\operatorname{Var}(X)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 16">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 16
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X\sim N(0,1)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y=X^2,
+\]</span></p>
+<p>obtenha a função de distribuição de <span class="math inline">\(Y\)</span> utilizando</p>
+<p><span class="math display">\[
+F_Y(y)=P(X^2\leq y).
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 17">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 17
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X\sim\operatorname{Exponencial}(\lambda)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y=cX,
+\qquad c&gt;0,
+\]</span></p>
+<p>obtenha a densidade de <span class="math inline">\(Y\)</span> pelo método da transformação e identifique sua distribuição.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 18">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 18
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Gama}(\alpha,\lambda),
+\]</span></p>
+<p>use funções geradoras de momentos para identificar a distribuição de</p>
+<p><span class="math display">\[
+S_n=\sum_{i=1}^nX_i.
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="da-probabilidade-à-inferência-estatística" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="da-probabilidade-à-inferência-estatística">Da Probabilidade à Inferência Estatística</h2>
+<p>Neste capítulo, partimos de distribuições probabilísticas especificadas e revisamos propriedades das variáveis aleatórias associadas a esses modelos. Conhecida uma distribuição, podem ser obtidas probabilidades, esperanças, variâncias e distribuições de funções das variáveis envolvidas.</p>
+<p>Na Inferência Estatística, observamos dados e buscamos obter informação sobre características desconhecidas da população ou do modelo probabilístico utilizado para representá-la. Essa passagem introduzirá conceitos como população, parâmetro, amostra, modelo estatístico e verossimilhança.</p>
+<p>Antes desse desenvolvimento, o próximo capítulo reúne resultados matemáticos e assintóticos que serão utilizados ao longo do livro. Em seguida, o capítulo <strong>Fundamentos da Inferência Estatística</strong> inicia a construção inferencial a partir do Processo Gerador de Dados e da variabilidade associada à obtenção de diferentes amostras.</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-chihara2022" class="csl-entry" role="listitem">
+CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.
+</div>
+<div id="ref-dantas1997" class="csl-entry" role="listitem">
+DANTAS, Carlos Alberto Barbosa. <strong>Probabilidade: um curso introdutório</strong>. São Paulo: EDUSP, 1997.
+</div>
+<div id="ref-magalhaes2006" class="csl-entry" role="listitem">
+MAGALHÃES, Marcos Nascimento. <strong>Probabilidade e Variáveis Aleatórias</strong>. São Paulo: EDUSP, 2006.
+</div>
+<div id="ref-meyer1983" class="csl-entry" role="listitem">
+MEYER, Paul L. <strong>Probabilidade e Aplicações à Estatística</strong>. 2. ed. Rio de Janeiro: Livros Técnicos e Científicos, 1983.
+</div>
+<div id="ref-ramachandran2021r" class="csl-entry" role="listitem">
+RAMACHANDRAN, Kandethody M.; TSOKOS, Chris P. <strong>Mathematical Statistics with Applications in <span>R</span></strong>. 3. ed. London: Academic Press, 2021.
+</div>
+<div id="ref-rice2007mathematical" class="csl-entry" role="listitem">
+RICE, John A. <strong>Mathematical Statistics and Data Analysis</strong>. 3. ed. Belmont, CA: Duxbury Press, 2007.
+</div>
+<div id="ref-ross2006" class="csl-entry" role="listitem">
+ROSS, Sheldon M. <strong>A First Course in Probability</strong>. 7. ed. Upper Saddle River, NJ: Prentice Hall, 2006.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link" aria-label="Identificação da(s) Disciplina(s)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Identificação da(s) Disciplina(s)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./preliminares.html" class="pagination-link" aria-label="Resultados Preliminares">
+        <span class="nav-page-text">Resultados Preliminares</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Testes de Hipóteses e Análise de Dados Categóricos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./unidade7.html" rel="next">
+<link href="./unidade5.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e2fb59b0b9d1befbe783af2ecca9a04e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ef508e81d2bdf022cbbfedbc5b1611ea.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-e2fb59b0b9d1befbe783af2ecca9a04e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./unidade6.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testes de Hipóteses e Análise de Dados Categóricos</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+        <div class="sidebar-tools-collapse">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Informações Legais e Declaração de Uso de Inteligência Artificial</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Identificação da(s) Disciplina(s)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade0p1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Revisão de Probabilidade e Modelos Probabilísticos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preliminares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Resultados Preliminares</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Fundamentos da Inferência Estatística</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Distribuições Amostrais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Avaliação de Estimadores e Princípios de Redução de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Métodos de Estimação Pontual</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação intervalar</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testes de Hipóteses e Análise de Dados Categóricos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidade7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Projetos Aplicados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unidade8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exemplos Aplicados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Demonstrações</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#objetivos-de-aprendizagem" id="toc-objetivos-de-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-de-aprendizagem"><span class="header-section-number">6.1</span> Objetivos de aprendizagem</a></li>
+  <li><a href="#motivação-uma-moeda-aparentemente-honesta" id="toc-motivação-uma-moeda-aparentemente-honesta" class="nav-link" data-scroll-target="#motivação-uma-moeda-aparentemente-honesta"><span class="header-section-number">6.2</span> Motivação: uma moeda aparentemente honesta</a></li>
+  <li><a href="#formulação-estatística-do-problema" id="toc-formulação-estatística-do-problema" class="nav-link" data-scroll-target="#formulação-estatística-do-problema"><span class="header-section-number">6.3</span> Formulação estatística do problema</a>
+  <ul class="collapse">
+  <li><a href="#função-de-teste-e-região-crítica" id="toc-função-de-teste-e-região-crítica" class="nav-link" data-scroll-target="#função-de-teste-e-região-crítica"><span class="header-section-number">6.3.1</span> Função de teste e região crítica</a></li>
+  <li><a href="#função-poder-tamanho-e-nível" id="toc-função-poder-tamanho-e-nível" class="nav-link" data-scroll-target="#função-poder-tamanho-e-nível"><span class="header-section-number">6.3.2</span> Função poder, tamanho e nível</a></li>
+  <li><a href="#erros-dos-tipos-i-e-ii" id="toc-erros-dos-tipos-i-e-ii" class="nav-link" data-scroll-target="#erros-dos-tipos-i-e-ii"><span class="header-section-number">6.3.3</span> Erros dos tipos I e II</a></li>
+  </ul></li>
+  <li><a href="#valor-p" id="toc-valor-p" class="nav-link" data-scroll-target="#valor-p"><span class="header-section-number">6.4</span> Valor-<span class="math inline">\(p\)</span></a>
+  <ul class="collapse">
+  <li><a href="#regra-de-decisão" id="toc-regra-de-decisão" class="nav-link" data-scroll-target="#regra-de-decisão"><span class="header-section-number">6.4.1</span> Regra de decisão</a></li>
+  </ul></li>
+  <li><a href="#procedimento-recomendado" id="toc-procedimento-recomendado" class="nav-link" data-scroll-target="#procedimento-recomendado"><span class="header-section-number">6.5</span> Procedimento recomendado</a></li>
+  <li><a href="#exemplo-motivacional" id="toc-exemplo-motivacional" class="nav-link" data-scroll-target="#exemplo-motivacional"><span class="header-section-number">6.6</span> Exemplo motivacional</a></li>
+  <li><a href="#lema-de-neymanpearson" id="toc-lema-de-neymanpearson" class="nav-link" data-scroll-target="#lema-de-neymanpearson"><span class="header-section-number">6.7</span> Lema de Neyman–Pearson</a>
+  <ul class="collapse">
+  <li><a href="#exemplo-média-normal-alternativa-simples" id="toc-exemplo-média-normal-alternativa-simples" class="nav-link" data-scroll-target="#exemplo-média-normal-alternativa-simples"><span class="header-section-number">6.7.1</span> Exemplo: média normal, alternativa simples</a></li>
+  </ul></li>
+  <li><a href="#testes-uniformemente-mais-poderosos" id="toc-testes-uniformemente-mais-poderosos" class="nav-link" data-scroll-target="#testes-uniformemente-mais-poderosos"><span class="header-section-number">6.8</span> Testes uniformemente mais poderosos</a>
+  <ul class="collapse">
+  <li><a href="#razão-de-verossimilhanças-monótona" id="toc-razão-de-verossimilhanças-monótona" class="nav-link" data-scroll-target="#razão-de-verossimilhanças-monótona"><span class="header-section-number">6.8.1</span> Razão de verossimilhanças monótona</a></li>
+  <li><a href="#exemplos-importantes" id="toc-exemplos-importantes" class="nav-link" data-scroll-target="#exemplos-importantes"><span class="header-section-number">6.8.2</span> Exemplos importantes</a></li>
+  <li><a href="#por-que-geralmente-não-existe-ump-bilateral" id="toc-por-que-geralmente-não-existe-ump-bilateral" class="nav-link" data-scroll-target="#por-que-geralmente-não-existe-ump-bilateral"><span class="header-section-number">6.8.3</span> Por que geralmente não existe UMP bilateral?</a></li>
+  </ul></li>
+  <li><a href="#teste-da-razão-de-verossimilhanças" id="toc-teste-da-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#teste-da-razão-de-verossimilhanças"><span class="header-section-number">6.9</span> Teste da razão de verossimilhanças</a>
+  <ul class="collapse">
+  <li><a href="#resultado-assintótico-de-wilks" id="toc-resultado-assintótico-de-wilks" class="nav-link" data-scroll-target="#resultado-assintótico-de-wilks"><span class="header-section-number">6.9.1</span> Resultado assintótico de Wilks</a></li>
+  <li><a href="#exemplo-média-normal-com-variância-conhecida" id="toc-exemplo-média-normal-com-variância-conhecida" class="nav-link" data-scroll-target="#exemplo-média-normal-com-variância-conhecida"><span class="header-section-number">6.9.2</span> Exemplo: média normal com variância conhecida</a></li>
+  <li><a href="#exemplo-proporção-binomial" id="toc-exemplo-proporção-binomial" class="nav-link" data-scroll-target="#exemplo-proporção-binomial"><span class="header-section-number">6.9.3</span> Exemplo: proporção binomial</a></li>
+  </ul></li>
+  <li><a href="#testes-usuais-para-parâmetros-populacionais" id="toc-testes-usuais-para-parâmetros-populacionais" class="nav-link" data-scroll-target="#testes-usuais-para-parâmetros-populacionais"><span class="header-section-number">6.10</span> Testes usuais para parâmetros populacionais</a>
+  <ul class="collapse">
+  <li><a href="#uma-média-com-variância-conhecida" id="toc-uma-média-com-variância-conhecida" class="nav-link" data-scroll-target="#uma-média-com-variância-conhecida"><span class="header-section-number">6.10.1</span> Uma média com variância conhecida</a></li>
+  <li><a href="#uma-média-com-variância-desconhecida" id="toc-uma-média-com-variância-desconhecida" class="nav-link" data-scroll-target="#uma-média-com-variância-desconhecida"><span class="header-section-number">6.10.2</span> Uma média com variância desconhecida</a></li>
+  <li><a href="#uma-proporção" id="toc-uma-proporção" class="nav-link" data-scroll-target="#uma-proporção"><span class="header-section-number">6.10.3</span> Uma proporção</a></li>
+  <li><a href="#duas-médias-independentes-teste-de-welch" id="toc-duas-médias-independentes-teste-de-welch" class="nav-link" data-scroll-target="#duas-médias-independentes-teste-de-welch"><span class="header-section-number">6.10.4</span> Duas médias independentes: teste de Welch</a></li>
+  <li><a href="#duas-médias-independentes-com-variância-comum" id="toc-duas-médias-independentes-com-variância-comum" class="nav-link" data-scroll-target="#duas-médias-independentes-com-variância-comum"><span class="header-section-number">6.10.5</span> Duas médias independentes com variância comum</a></li>
+  <li><a href="#amostras-pareadas" id="toc-amostras-pareadas" class="nav-link" data-scroll-target="#amostras-pareadas"><span class="header-section-number">6.10.6</span> Amostras pareadas</a></li>
+  <li><a href="#duas-proporções-independentes" id="toc-duas-proporções-independentes" class="nav-link" data-scroll-target="#duas-proporções-independentes"><span class="header-section-number">6.10.7</span> Duas proporções independentes</a></li>
+  </ul></li>
+  <li><a href="#testes-exatos-de-permutação-e-robustez" id="toc-testes-exatos-de-permutação-e-robustez" class="nav-link" data-scroll-target="#testes-exatos-de-permutação-e-robustez"><span class="header-section-number">6.11</span> Testes exatos, de permutação e robustez</a>
+  <ul class="collapse">
+  <li><a href="#testes-de-permutação" id="toc-testes-de-permutação" class="nav-link" data-scroll-target="#testes-de-permutação"><span class="header-section-number">6.11.1</span> Testes de permutação</a></li>
+  <li><a href="#robustez" id="toc-robustez" class="nav-link" data-scroll-target="#robustez"><span class="header-section-number">6.11.2</span> Robustez</a></li>
+  </ul></li>
+  <li><a href="#planejamento-amostral-e-poder" id="toc-planejamento-amostral-e-poder" class="nav-link" data-scroll-target="#planejamento-amostral-e-poder"><span class="header-section-number">6.12</span> Planejamento amostral e poder</a>
+  <ul class="collapse">
+  <li><a href="#uma-média-com-variância-conhecida-1" id="toc-uma-média-com-variância-conhecida-1" class="nav-link" data-scroll-target="#uma-média-com-variância-conhecida-1"><span class="header-section-number">6.12.1</span> Uma média com variância conhecida</a></li>
+  <li><a href="#uma-proporção-1" id="toc-uma-proporção-1" class="nav-link" data-scroll-target="#uma-proporção-1"><span class="header-section-number">6.12.2</span> Uma proporção</a></li>
+  </ul></li>
+  <li><a href="#análise-de-dados-categóricos" id="toc-análise-de-dados-categóricos" class="nav-link" data-scroll-target="#análise-de-dados-categóricos"><span class="header-section-number">6.13</span> Análise de dados categóricos</a>
+  <ul class="collapse">
+  <li><a href="#estatística-qui-quadrado-de-pearson" id="toc-estatística-qui-quadrado-de-pearson" class="nav-link" data-scroll-target="#estatística-qui-quadrado-de-pearson"><span class="header-section-number">6.13.1</span> Estatística qui-quadrado de Pearson</a></li>
+  <li><a href="#estatística-da-razão-de-verossimilhanças" id="toc-estatística-da-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#estatística-da-razão-de-verossimilhanças"><span class="header-section-number">6.13.2</span> Estatística da razão de verossimilhanças</a></li>
+  </ul></li>
+  <li><a href="#teste-qui-quadrado-de-aderência" id="toc-teste-qui-quadrado-de-aderência" class="nav-link" data-scroll-target="#teste-qui-quadrado-de-aderência"><span class="header-section-number">6.14</span> Teste qui-quadrado de aderência</a>
+  <ul class="collapse">
+  <li><a href="#exemplo-dado-de-seis-faces" id="toc-exemplo-dado-de-seis-faces" class="nav-link" data-scroll-target="#exemplo-dado-de-seis-faces"><span class="header-section-number">6.14.1</span> Exemplo: dado de seis faces</a></li>
+  </ul></li>
+  <li><a href="#tabelas-de-contingência" id="toc-tabelas-de-contingência" class="nav-link" data-scroll-target="#tabelas-de-contingência"><span class="header-section-number">6.15</span> Tabelas de contingência</a>
+  <ul class="collapse">
+  <li><a href="#homogeneidade-e-independência" id="toc-homogeneidade-e-independência" class="nav-link" data-scroll-target="#homogeneidade-e-independência"><span class="header-section-number">6.15.1</span> Homogeneidade e independência</a></li>
+  <li><a href="#exemplo-renda-e-hipertensão" id="toc-exemplo-renda-e-hipertensão" class="nav-link" data-scroll-target="#exemplo-renda-e-hipertensão"><span class="header-section-number">6.15.2</span> Exemplo: renda e hipertensão</a></li>
+  </ul></li>
+  <li><a href="#diagnóstico-por-resíduos" id="toc-diagnóstico-por-resíduos" class="nav-link" data-scroll-target="#diagnóstico-por-resíduos"><span class="header-section-number">6.16</span> Diagnóstico por resíduos</a></li>
+  <li><a href="#pressupostos-e-tabelas-esparsas" id="toc-pressupostos-e-tabelas-esparsas" class="nav-link" data-scroll-target="#pressupostos-e-tabelas-esparsas"><span class="header-section-number">6.17</span> Pressupostos e tabelas esparsas</a></li>
+  <li><a href="#teste-exato-de-fisher" id="toc-teste-exato-de-fisher" class="nav-link" data-scroll-target="#teste-exato-de-fisher"><span class="header-section-number">6.18</span> Teste exato de Fisher</a></li>
+  <li><a href="#medidas-de-tamanho-do-efeito-em-tabelas" id="toc-medidas-de-tamanho-do-efeito-em-tabelas" class="nav-link" data-scroll-target="#medidas-de-tamanho-do-efeito-em-tabelas"><span class="header-section-number">6.19</span> Medidas de tamanho do efeito em tabelas</a></li>
+  <li><a href="#poder-e-tamanho-amostral-em-testes-qui-quadrado" id="toc-poder-e-tamanho-amostral-em-testes-qui-quadrado" class="nav-link" data-scroll-target="#poder-e-tamanho-amostral-em-testes-qui-quadrado"><span class="header-section-number">6.20</span> Poder e tamanho amostral em testes qui-quadrado</a></li>
+  <li><a href="#relação-entre-testes-e-intervalos-de-confiança" id="toc-relação-entre-testes-e-intervalos-de-confiança" class="nav-link" data-scroll-target="#relação-entre-testes-e-intervalos-de-confiança"><span class="header-section-number">6.21</span> Relação entre testes e intervalos de confiança</a></li>
+  <li><a href="#boas-práticas-de-apresentação" id="toc-boas-práticas-de-apresentação" class="nav-link" data-scroll-target="#boas-práticas-de-apresentação"><span class="header-section-number">6.22</span> Boas práticas de apresentação</a>
+  <ul class="collapse">
+  <li><a href="#modelo-de-redação" id="toc-modelo-de-redação" class="nav-link" data-scroll-target="#modelo-de-redação"><span class="header-section-number">6.22.1</span> Modelo de redação</a></li>
+  </ul></li>
+  <li><a href="#erros-frequentes-de-interpretação" id="toc-erros-frequentes-de-interpretação" class="nav-link" data-scroll-target="#erros-frequentes-de-interpretação"><span class="header-section-number">6.23</span> Erros frequentes de interpretação</a></li>
+  <li><a href="#quadro-síntese" id="toc-quadro-síntese" class="nav-link" data-scroll-target="#quadro-síntese"><span class="header-section-number">6.24</span> Quadro-síntese</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">6.25</span> Exercícios</a>
+  <ul class="collapse">
+  <li><a href="#exercícios-conceituais" id="toc-exercícios-conceituais" class="nav-link" data-scroll-target="#exercícios-conceituais"><span class="header-section-number">6.25.1</span> Exercícios conceituais</a></li>
+  <li><a href="#neymanpearson-e-testes-ump" id="toc-neymanpearson-e-testes-ump" class="nav-link" data-scroll-target="#neymanpearson-e-testes-ump"><span class="header-section-number">6.25.2</span> Neyman–Pearson e testes UMP</a></li>
+  <li><a href="#razão-de-verossimilhanças" id="toc-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#razão-de-verossimilhanças"><span class="header-section-number">6.25.3</span> Razão de verossimilhanças</a></li>
+  <li><a href="#testes-para-médias-e-proporções" id="toc-testes-para-médias-e-proporções" class="nav-link" data-scroll-target="#testes-para-médias-e-proporções"><span class="header-section-number">6.25.4</span> Testes para médias e proporções</a></li>
+  <li><a href="#dados-categóricos" id="toc-dados-categóricos" class="nav-link" data-scroll-target="#dados-categóricos"><span class="header-section-number">6.25.5</span> Dados categóricos</a></li>
+  <li><a href="#reamostragem-e-robustez" id="toc-reamostragem-e-robustez" class="nav-link" data-scroll-target="#reamostragem-e-robustez"><span class="header-section-number">6.25.6</span> Reamostragem e robustez</a></li>
+  </ul></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Testes de Hipóteses e Análise de Dados Categóricos</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Os testes de hipóteses fornecem regras para avaliar a compatibilidade entre os dados e afirmações sobre um modelo estatístico, controlando probabilidades de erro previamente especificadas. Este capítulo articula a formulação frequentista dos testes, os princípios de optimalidade de Neyman–Pearson, os testes da razão de verossimilhanças, os procedimentos usuais para parâmetros populacionais e a análise de contagens categóricas <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002, cap. 8</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023, cap. 7</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 9</a>)</span>.</p>
+<section id="objetivos-de-aprendizagem" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="objetivos-de-aprendizagem"><span class="header-section-number">6.1</span> Objetivos de aprendizagem</h2>
+<p>Ao final deste capítulo, o leitor deverá ser capaz de:</p>
+<ol type="1">
+<li>formular hipóteses estatísticas simples e compostas;</li>
+<li>definir formalmente região crítica, função de teste, tamanho, nível, função poder e erros dos tipos I e II;</li>
+<li>calcular e interpretar corretamente o valor-<span class="math inline">\(p\)</span>;</li>
+<li>aplicar o lema de Neyman–Pearson na construção de testes mais poderosos;</li>
+<li>caracterizar testes uniformemente mais poderosos em famílias com razão de verossimilhanças monótona;</li>
+<li>construir e interpretar testes da razão de verossimilhanças;</li>
+<li>selecionar testes para médias, proporções e comparações entre duas populações;</li>
+<li>aplicar testes qui-quadrado de aderência, homogeneidade e independência;</li>
+<li>reconhecer situações em que testes exatos, de permutação ou procedimentos robustos são preferíveis;</li>
+<li>distinguir significância estatística, magnitude do efeito e relevância científica.</li>
+</ol>
+</section>
+<section id="motivação-uma-moeda-aparentemente-honesta" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="motivação-uma-moeda-aparentemente-honesta"><span class="header-section-number">6.2</span> Motivação: uma moeda aparentemente honesta</h2>
+<p>Considere <span class="math inline">\(100\)</span> lançamentos independentes de uma moeda. Seja <span class="math inline">\(X\)</span> o número de caras observadas. Sob a hipótese de que a moeda é honesta,</p>
+<p><span class="math display">\[H_0:p=0{,}5,\]</span></p>
+<p>tem-se</p>
+<p><span class="math display">\[X\sim\operatorname{Bin}(100,0{,}5).\]</span></p>
+<p>Suponha que tenham sido observadas <span class="math inline">\(99\)</span> caras.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretação unilateral">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretação unilateral
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quando a suspeita científica é especificamente de favorecimento de caras,</p>
+<p><span class="math display">\[H_1:p&gt;0{,}5,\]</span></p>
+<p>o resultado observado é avaliado pela cauda superior:</p>
+<p><span class="math display">\[P_{0{,}5}(X\geq 99)
+=\frac{101}{2^{100}}
+\approx 7{,}97\times 10^{-29}.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretação bilateral">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretação bilateral
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quando a hipótese alternativa é apenas que a moeda não é honesta,</p>
+<p><span class="math display">\[H_1:p\neq 0{,}5,\]</span></p>
+<p>devem ser considerados desvios nas duas direções. Pela simetria da distribuição binomial,</p>
+<p><span class="math display">\[P_{0{,}5}(X\geq 99\ \text{ou}\ X\leq 1)
+=\frac{202}{2^{100}}
+\approx 1{,}59\times 10^{-28}.\]</span></p>
+</div>
+</div>
+<p>Em ambos os casos, o resultado é extremamente incompatível com o modelo de moeda honesta. A conclusão não decorre de uma “prova” de que <span class="math inline">\(H_0\)</span> seja falsa, mas da aplicação de uma regra inferencial cujo comportamento é avaliado sob repetições do experimento. Em particular, o nível do teste controla a frequência de rejeições incorretas quando <span class="math inline">\(H_0\)</span> é verdadeira <span class="citation" data-cites="casella2002statistical cox2006principles lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.1 e 8.3.1; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 3.2 e 5.4; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.1–7.3)</span>.</p>
+</section>
+<section id="formulação-estatística-do-problema" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="formulação-estatística-do-problema"><span class="header-section-number">6.3</span> Formulação estatística do problema</h2>
+<p>Considere um modelo estatístico</p>
+<p><span class="math display">\[\mathcal{P}=\{P_\theta:\theta\in\Theta\},\]</span></p>
+<p>em que <span class="math inline">\(\theta\)</span> é um parâmetro desconhecido. Um problema de teste de hipóteses divide o espaço paramétrico em dois subconjuntos disjuntos <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;7.2)</span>:</p>
+<p><span class="math display">\[H_0:\theta\in\Theta_0
+\qquad\text{versus}\qquad
+H_1:\theta\in\Theta_1,\]</span></p>
+<p>com <span class="math inline">\(\Theta_1=\Theta\setminus\Theta_0\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição: hipóteses simples e compostas">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição: hipóteses simples e compostas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma hipótese é <strong>simples</strong> quando determina completamente a distribuição dos dados. Por exemplo,</p>
+<p><span class="math display">\[H_0:p=0{,}5\]</span></p>
+<p>é simples no modelo binomial com <span class="math inline">\(n\)</span> conhecido.</p>
+<p>Uma hipótese é <strong>composta</strong> quando contém mais de uma distribuição possível. Por exemplo,</p>
+<p><span class="math display">\[H_1:p&gt;0{,}5\]</span></p>
+<p>é composta, pois inclui todos os valores <span class="math inline">\(p\in(0{,}5,1]\)</span>.</p>
+</div>
+</div>
+<p>A escolha de qual afirmação deve ocupar o papel de hipótese nula não é puramente algébrica. Ela depende do objetivo científico, das consequências das decisões e da estrutura do modelo. Em muitos estudos, <span class="math inline">\(H_0\)</span> representa ausência de efeito, um modelo mais restritivo ou uma afirmação cuja rejeição incorreta deve ser controlada <span class="citation" data-cites="casella2002statistical rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 9.1–9.2.2)</span>.</p>
+<section id="função-de-teste-e-região-crítica" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="função-de-teste-e-região-crítica"><span class="header-section-number">6.3.1</span> Função de teste e região crítica</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição: função de teste">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição: função de teste
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma função de teste é uma função mensurável</p>
+<p><span class="math display">\[\varphi:\mathcal{X}\longrightarrow[0,1].\]</span></p>
+<p>Para uma amostra observada <span class="math inline">\(X=x\)</span>:</p>
+<ul>
+<li><span class="math inline">\(\varphi(x)=1\)</span> significa rejeitar <span class="math inline">\(H_0\)</span>;</li>
+<li><span class="math inline">\(\varphi(x)=0\)</span> significa não rejeitar <span class="math inline">\(H_0\)</span>;</li>
+<li><span class="math inline">\(0&lt;\varphi(x)&lt;1\)</span> representa um teste aleatorizado, no qual <span class="math inline">\(H_0\)</span> é rejeitada com probabilidade <span class="math inline">\(\varphi(x)\)</span>.</li>
+</ul>
+<p>Nos testes não aleatorizados, <span class="math inline">\(\varphi(x)\in\{0,1\}\)</span> e a <strong>região crítica</strong> é</p>
+<p><span class="math display">\[C=\{x\in\mathcal{X}:\varphi(x)=1\}.\]</span></p>
+</div>
+</div>
+<p>Testes aleatorizados aparecem naturalmente em modelos discretos quando não é possível obter exatamente um tamanho prescrito apenas com uma região crítica determinística. Em aplicações, costuma-se preferir testes não aleatorizados e reportar o tamanho efetivamente alcançado <span class="citation" data-cites="casella2002statistical rasch2018">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.2–8.3; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, secs. 3.1–3.3)</span>.</p>
+</section>
+<section id="função-poder-tamanho-e-nível" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="função-poder-tamanho-e-nível"><span class="header-section-number">6.3.2</span> Função poder, tamanho e nível</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição: função poder">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição: função poder
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A função poder de um teste <span class="math inline">\(\varphi\)</span> é</p>
+<p><span class="math display">\[\pi_\varphi(\theta)
+=E_\theta[\varphi(X)]
+=P_\theta(\text{rejeitar }H_0).\]</span></p>
+</div>
+</div>
+<p>O comportamento desejável é:</p>
+<ul>
+<li><span class="math inline">\(\pi_\varphi(\theta)\)</span> pequena para <span class="math inline">\(\theta\in\Theta_0\)</span>;</li>
+<li><span class="math inline">\(\pi_\varphi(\theta)\)</span> grande para <span class="math inline">\(\theta\in\Theta_1\)</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição: tamanho e nível">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição: tamanho e nível
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O <strong>tamanho</strong> do teste é</p>
+<p><span class="math display">\[\alpha_\varphi
+=\sup_{\theta\in\Theta_0}\pi_\varphi(\theta).\]</span></p>
+<p>Dizemos que <span class="math inline">\(\varphi\)</span> é um teste de <strong>nível</strong> <span class="math inline">\(\alpha\)</span> quando</p>
+<p><span class="math display">\[\sup_{\theta\in\Theta_0}\pi_\varphi(\theta)\leq\alpha.\]</span></p>
+<p>Quando a igualdade é satisfeita, o teste tem tamanho <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</div>
+<p>Essa distinção é relevante em hipóteses nulas compostas: o nível <span class="math inline">\(\alpha\)</span> constitui um limite superior uniforme para a probabilidade de rejeição incorreta em todos os valores de <span class="math inline">\(\theta\)</span> permitidos por <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.1–7.3)</span>.</p>
+</section>
+<section id="erros-dos-tipos-i-e-ii" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="erros-dos-tipos-i-e-ii"><span class="header-section-number">6.3.3</span> Erros dos tipos I e II</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Estado verdadeiro</th>
+<th style="text-align: left;">Não rejeitar <span class="math inline">\(H_0\)</span></th>
+<th style="text-align: left;">Rejeitar <span class="math inline">\(H_0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\theta\in\Theta_0\)</span></td>
+<td style="text-align: left;">decisão correta</td>
+<td style="text-align: left;">erro do tipo I</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\theta\in\Theta_1\)</span></td>
+<td style="text-align: left;">erro do tipo II</td>
+<td style="text-align: left;">decisão correta</td>
+</tr>
+</tbody>
+</table>
+<p>A probabilidade do erro do tipo I, em um ponto <span class="math inline">\(\theta\in\Theta_0\)</span>, é</p>
+<p><span class="math display">\[P_\theta(\text{rejeitar }H_0)=\pi_\varphi(\theta).\]</span></p>
+<p>Para <span class="math inline">\(\theta\in\Theta_1\)</span>, a probabilidade do erro do tipo II é</p>
+<p><span class="math display">\[\beta_\varphi(\theta)
+=P_\theta(\text{não rejeitar }H_0)
+=1-\pi_\varphi(\theta).\]</span></p>
+<p>Portanto, o poder no ponto <span class="math inline">\(\theta\in\Theta_1\)</span> é <span class="math inline">\(1-\beta_\varphi(\theta)\)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Observação">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Observação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O valor <span class="math inline">\(\beta\)</span> não é, em geral, uma constante única. Ele depende do valor verdadeiro do parâmetro sob a alternativa. Por isso, o planejamento amostral deve especificar uma diferença mínima ou um valor alternativo de interesse.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="valor-p" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="valor-p"><span class="header-section-number">6.4</span> Valor-<span class="math inline">\(p\)</span></h2>
+<p>Considere uma estatística de teste <span class="math inline">\(T=T(X)\)</span> construída de modo que valores grandes sejam mais incompatíveis com <span class="math inline">\(H_0\)</span>. Para uma hipótese nula simples <span class="math inline">\(H_0:\theta=\theta_0\)</span>, o valor-<span class="math inline">\(p\)</span> observado é</p>
+<p><span class="math display">\[p(x)
+=P_{\theta_0}\{T(X)\geq T(x)\}.\]</span></p>
+<p>Para uma hipótese nula composta, uma construção conservadora que garante validade uniforme é</p>
+<p><span class="math display">\[p(x)
+=\sup_{\theta\in\Theta_0}
+P_\theta\{T(X)\geq T(x)\}.\]</span></p>
+<p>Outras construções de valores-<span class="math inline">\(p\)</span> são possíveis, especialmente quando existe uma estatística condicionante, um parâmetro de perturbação ou uma estrutura discreta. Em todos os casos, a propriedade essencial de validade é</p>
+<p><span class="math display">\[P_\theta\{p(X)\leq u\}\leq u,
+\qquad 0\leq u\leq1,
+\quad \theta\in\Theta_0.\]</span></p>
+<p>Em testes bilaterais, a noção de resultado “tão ou mais extremo” deve ser determinada pela estatística bilateral escolhida, como <span class="math inline">\(|Z|\)</span>, <span class="math inline">\(T^2\)</span> ou <span class="math inline">\(-2\log\Lambda\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretação">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O valor-<span class="math inline">\(p\)</span> quantifica a incompatibilidade dos dados com <span class="math inline">\(H_0\)</span> segundo um procedimento de teste especificado. Valores pequenos indicam que a estatística observada se encontra em uma região rara da distribuição nula.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="O que o valor-$p$ não representa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>O que o valor-<span class="math inline">\(p\)</span> não representa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O valor-<span class="math inline">\(p\)</span> não é:</p>
+<ul>
+<li>a probabilidade de <span class="math inline">\(H_0\)</span> ser verdadeira;</li>
+<li>a probabilidade de a decisão estar errada;</li>
+<li>uma medida da magnitude do efeito;</li>
+<li>uma garantia de relevância científica, clínica ou prática.</li>
+</ul>
+</div>
+</div>
+<p>Sob uma hipótese nula simples e para um teste contínuo exatamente calibrado, o valor-<span class="math inline">\(p\)</span> possui distribuição uniforme em <span class="math inline">\((0,1)\)</span>. Em problemas discretos ou sob hipóteses nulas compostas, ele pode ser apenas <strong>superuniforme</strong>, isto é,</p>
+<p><span class="math display">\[P_\theta\{p(X)\leq\alpha\}\leq\alpha,
+\qquad \theta\in\Theta_0.\]</span></p>
+<p>A igualdade ocorre no caso contínuo exatamente calibrado; a desigualdade corresponde a um procedimento conservador. Essa propriedade conecta diretamente o valor-<span class="math inline">\(p\)</span> à regra de decisão de nível <span class="math inline">\(\alpha\)</span> <span class="citation" data-cites="casella2002statistical cox2006principles rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.4; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;3.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.3 e 7.7)</span>.</p>
+<section id="regra-de-decisão" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="regra-de-decisão"><span class="header-section-number">6.4.1</span> Regra de decisão</h3>
+<p>Após fixar <span class="math inline">\(\alpha\)</span> antes de examinar os resultados:</p>
+<p><span class="math display">\[\begin{cases}
+p\leq\alpha &amp;\Longrightarrow \text{rejeitar }H_0,\\
+p&gt;\alpha &amp;\Longrightarrow \text{não rejeitar }H_0.
+\end{cases}\]</span></p>
+<p>A forma “não rejeitar <span class="math inline">\(H_0\)</span>” é preferível a “aceitar <span class="math inline">\(H_0\)</span>”, pois um resultado não significativo pode decorrer de baixo poder, grande variabilidade ou tamanho amostral insuficiente. Em procedimentos discretos, a convenção de igualdade no ponto de corte deve ser compatível com a definição do valor-<span class="math inline">\(p\)</span> e com a região crítica.</p>
+</section>
+</section>
+<section id="procedimento-recomendado" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="procedimento-recomendado"><span class="header-section-number">6.5</span> Procedimento recomendado</h2>
+<p>Um teste de hipóteses deve ser conduzido na seguinte ordem:</p>
+<ol type="1">
+<li>definir a população, o modelo e o parâmetro de interesse;</li>
+<li>formular <span class="math inline">\(H_0\)</span> e <span class="math inline">\(H_1\)</span> antes de examinar os resultados;</li>
+<li>escolher uma estatística cuja distribuição sob <span class="math inline">\(H_0\)</span> seja conhecida ou aproximável;</li>
+<li>fixar o nível <span class="math inline">\(\alpha\)</span> e, no planejamento, o poder desejado;</li>
+<li>verificar pressupostos e o delineamento amostral;</li>
+<li>calcular a estatística, o valor-<span class="math inline">\(p\)</span> e uma estimativa do efeito;</li>
+<li>apresentar a conclusão no contexto científico;</li>
+<li>reportar limitações, incerteza e sensibilidade a pressupostos.</li>
+</ol>
+</section>
+<section id="exemplo-motivacional" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="exemplo-motivacional"><span class="header-section-number">6.6</span> Exemplo motivacional</h2>
+<p>Considere um programa educacional fictício. A média de referência é <span class="math inline">\(\mu_0=662\)</span>, o desvio-padrão populacional é tratado como conhecido, <span class="math inline">\(\sigma=131\)</span>, e uma amostra aleatória de <span class="math inline">\(n=100\)</span> participantes apresentou média <span class="math inline">\(\bar{x}=696\)</span>. Deseja-se testar</p>
+<p><span class="math display">\[H_0:\mu\leq 662
+\qquad\text{versus}\qquad
+H_1:\mu&gt;662.\]</span></p>
+<p>A estatística é</p>
+<p><span class="math display">\[Z
+=\frac{\bar{X}-662}{131/\sqrt{100}}.\]</span></p>
+<p>Para os dados observados,</p>
+<p><span class="math display">\[z_{\text{obs}}
+=\frac{696-662}{13{,}1}
+\approx 2{,}595.\]</span></p>
+<p>Como a probabilidade de rejeição é máxima na fronteira <span class="math inline">\(\mu=662\)</span> da hipótese nula composta, o valor-<span class="math inline">\(p\)</span> é</p>
+<p><span class="math display">\[p=\sup_{\mu\leq662}
+P_\mu(Z\geq z_{\mathrm{obs}})
+=
+P_{662}(Z\geq2{,}595)
+\approx0{,}0047.\]</span></p>
+<p>Ao nível de <span class="math inline">\(5\%\)</span>, rejeita-se <span class="math inline">\(H_0\)</span>. Os dados fornecem evidência de que a média dos participantes excede <span class="math inline">\(662\)</span> no modelo adotado.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Limitação causal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Limitação causal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esse teste compara médias, mas não estabelece por si só que o programa causou o aumento. Uma conclusão causal exige delineamento adequado, como randomização, grupo de controle e controle de perdas e confundimento.</p>
+</div>
+</div>
+</section>
+<section id="lema-de-neymanpearson" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="lema-de-neymanpearson"><span class="header-section-number">6.7</span> Lema de Neyman–Pearson</h2>
+<p>Quando <span class="math inline">\(H_0\)</span> e <span class="math inline">\(H_1\)</span> são simples, o lema de Neyman–Pearson fornece um critério ótimo para a construção da região crítica.</p>
+<p>Considere</p>
+<p><span class="math display">\[H_0:\theta=\theta_0
+\qquad\text{versus}\qquad
+H_1:\theta=\theta_1,\]</span></p>
+<p>com densidades ou funções de probabilidade <span class="math inline">\(f_{\theta_0}(x)\)</span> e <span class="math inline">\(f_{\theta_1}(x)\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição: teste mais poderoso">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição: teste mais poderoso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Um teste <span class="math inline">\(\varphi^*\)</span> de nível <span class="math inline">\(\alpha\)</span> é <strong>mais poderoso</strong> para <span class="math inline">\(\theta_1\)</span> quando, para todo teste <span class="math inline">\(\varphi\)</span> de nível no máximo <span class="math inline">\(\alpha\)</span>,</p>
+<p><span class="math display">\[E_{\theta_1}[\varphi^*(X)]
+\geq
+E_{\theta_1}[\varphi(X)].\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema: lema de Neyman--Pearson">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Teorema: lema de Neyman–Pearson
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Entre todos os testes de nível <span class="math inline">\(\alpha\)</span> para hipóteses simples, um teste mais poderoso rejeita <span class="math inline">\(H_0\)</span> quando a razão</p>
+<p><span class="math display">\[\frac{f_{\theta_1}(x)}{f_{\theta_0}(x)}\]</span></p>
+<p>é suficientemente grande. Equivalentemente, rejeita-se <span class="math inline">\(H_0\)</span> quando</p>
+<p><span class="math display">\[\frac{f_{\theta_0}(x)}{f_{\theta_1}(x)}\]</span></p>
+<p>é suficientemente pequena. O ponto de corte — e, quando necessário, a probabilidade de aleatorização na fronteira — é escolhido para que o teste tenha tamanho <span class="math inline">\(\alpha\)</span> ou, na versão não aleatorizada, tamanho no máximo <span class="math inline">\(\alpha\)</span> <span class="citation" data-cites="casella2002statistical hogg1978 rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978, cap. 7</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.2)</span>.</p>
+</div>
+</div>
+<section id="exemplo-média-normal-alternativa-simples" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="exemplo-média-normal-alternativa-simples"><span class="header-section-number">6.7.1</span> Exemplo: média normal, alternativa simples</h3>
+<p>O exemplo aplica diretamente o lema de Neyman–Pearson ao modelo normal <span class="citation" data-cites="casella2002statistical hogg1978 rasch2018">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978, cap. 7</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;3.2)</span>.</p>
+<p>Se</p>
+<p><span class="math display">\[X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2),\]</span></p>
+<p>com <span class="math inline">\(\sigma^2\)</span> conhecida, considere</p>
+<p><span class="math display">\[H_0:\mu=\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu=\mu_1,\]</span></p>
+<p>em que <span class="math inline">\(\mu_1&gt;\mu_0\)</span>. A razão de verossimilhanças é uma função crescente de <span class="math inline">\(\bar{X}\)</span>. Portanto, o teste mais poderoso rejeita <span class="math inline">\(H_0\)</span> para valores grandes de <span class="math inline">\(\bar{X}\)</span>:</p>
+<p><span class="math display">\[\bar{X}&gt;
+\mu_0+z_{1-\alpha}\frac{\sigma}{\sqrt{n}}.\]</span></p>
+<p>Equivalentemente,</p>
+<p><span class="math display">\[Z=\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}&gt;z_{1-\alpha}.\]</span></p>
+<p>O ponto de corte não depende do valor específico <span class="math inline">\(\mu_1\)</span>, desde que <span class="math inline">\(\mu_1&gt;\mu_0\)</span>. Essa propriedade conduz aos testes uniformemente mais poderosos.</p>
+</section>
+</section>
+<section id="testes-uniformemente-mais-poderosos" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="testes-uniformemente-mais-poderosos"><span class="header-section-number">6.8</span> Testes uniformemente mais poderosos</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição: teste UMP">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição: teste UMP
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Um teste <span class="math inline">\(\varphi^*\)</span> de nível <span class="math inline">\(\alpha\)</span> é <strong>uniformemente mais poderoso</strong> — UMP, de <em>uniformly most powerful</em> — para</p>
+<p><span class="math display">\[H_0:\theta\in\Theta_0
+\qquad\text{versus}\qquad
+H_1:\theta\in\Theta_1\]</span></p>
+<p>quando, para todo teste <span class="math inline">\(\varphi\)</span> de nível no máximo <span class="math inline">\(\alpha\)</span>,</p>
+<p><span class="math display">\[E_\theta[\varphi^*(X)]
+\geq
+E_\theta[\varphi(X)]
+\qquad
+\text{para todo }\theta\in\Theta_1.\]</span></p>
+</div>
+</div>
+<p>A palavra “uniformemente” significa que o mesmo teste maximiza o poder em todos os pontos da hipótese alternativa, e não apenas em um valor particular.</p>
+<section id="razão-de-verossimilhanças-monótona" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="razão-de-verossimilhanças-monótona"><span class="header-section-number">6.8.1</span> Razão de verossimilhanças monótona</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma família dominada <span class="math inline">\(\{f_\theta:\theta\in\Theta\subseteq\mathbb{R}\}\)</span>, com suporte comum, possui <strong>razão de verossimilhanças monótona</strong> em uma estatística <span class="math inline">\(T(X)\)</span> quando, para <span class="math inline">\(\theta_2&gt;\theta_1\)</span> e nos pontos em que o denominador é positivo,</p>
+<p><span class="math display">\[\frac{f_{\theta_2}(x)}{f_{\theta_1}(x)}\]</span></p>
+<p>é uma função não decrescente de <span class="math inline">\(T(x)\)</span>.</p>
+</div>
+</div>
+<p>Em famílias com essa propriedade, valores grandes de <span class="math inline">\(T\)</span> favorecem sistematicamente valores maiores do parâmetro.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema: resultado de Karlin--Rubin">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Teorema: resultado de Karlin–Rubin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que <span class="math inline">\(\{f_\theta:\theta\in\Theta\subseteq\mathbb{R}\}\)</span> possua razão de verossimilhanças monótona não decrescente em <span class="math inline">\(T(X)\)</span>. Então o teste</p>
+<p><span class="math display">\[\varphi(x)=
+\begin{cases}
+1, &amp; T(x)&gt;c,\\
+\gamma, &amp; T(x)=c,\\
+0, &amp; T(x)&lt;c,
+\end{cases}\]</span></p>
+<p>com <span class="math inline">\(c\)</span> e <span class="math inline">\(\gamma\)</span> determinados por</p>
+<p><span class="math display">\[P_{\theta_0}\{T(X)&gt;c\}
++\gamma P_{\theta_0}\{T(X)=c\}
+=\alpha,\]</span></p>
+<p>é UMP de nível <span class="math inline">\(\alpha\)</span> para</p>
+<p><span class="math display">\[H_0:\theta\leq\theta_0
+\qquad\text{versus}\qquad
+H_1:\theta&gt;\theta_0.\]</span></p>
+<p>A versão com rejeição para valores pequenos de <span class="math inline">\(T\)</span> aplica-se quando a razão é não crescente ou quando a alternativa é à esquerda. Em modelos contínuos, normalmente <span class="math inline">\(P_{\theta_0}\{T=c\}=0\)</span> e a aleatorização não é necessária <span class="citation" data-cites="casella2002statistical borovkov1998 rasch2018">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;3.3.1)</span>.</p>
+</div>
+</div>
+</section>
+<section id="exemplos-importantes" class="level3" data-number="6.8.2">
+<h3 data-number="6.8.2" class="anchored" data-anchor-id="exemplos-importantes"><span class="header-section-number">6.8.2</span> Exemplos importantes</h3>
+<section id="média-normal-com-variância-conhecida" class="level4" data-number="6.8.2.1">
+<h4 data-number="6.8.2.1" class="anchored" data-anchor-id="média-normal-com-variância-conhecida"><span class="header-section-number">6.8.2.1</span> Média normal com variância conhecida</h4>
+<p>Para</p>
+<p><span class="math display">\[X_i\sim N(\mu,\sigma^2),\]</span></p>
+<p>com <span class="math inline">\(\sigma^2\)</span> conhecida, a família possui razão de verossimilhanças monótona em <span class="math inline">\(T=\sum_iX_i\)</span>, ou equivalentemente em <span class="math inline">\(\bar{X}\)</span>. Assim,</p>
+<p><span class="math display">\[\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}&gt;z_{1-\alpha}\]</span></p>
+<p>é UMP para</p>
+<p><span class="math display">\[H_0:\mu\leq\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu&gt;\mu_0.\]</span></p>
+</section>
+<section id="proporção-binomial" class="level4" data-number="6.8.2.2">
+<h4 data-number="6.8.2.2" class="anchored" data-anchor-id="proporção-binomial"><span class="header-section-number">6.8.2.2</span> Proporção binomial</h4>
+<p>Se <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span>, a família possui razão de verossimilhanças monótona em <span class="math inline">\(X\)</span>. Portanto, testes que rejeitam para valores grandes de <span class="math inline">\(X\)</span> são UMP para</p>
+<p><span class="math display">\[H_0:p\leq p_0
+\qquad\text{versus}\qquad
+H_1:p&gt;p_0.\]</span></p>
+<p>Como <span class="math inline">\(X\)</span> é discreta, o tamanho exato pode ser menor que <span class="math inline">\(\alpha\)</span> em um teste não aleatorizado.</p>
+</section>
+<section id="média-de-poisson" class="level4" data-number="6.8.2.3">
+<h4 data-number="6.8.2.3" class="anchored" data-anchor-id="média-de-poisson"><span class="header-section-number">6.8.2.3</span> Média de Poisson</h4>
+<p>Se <span class="math inline">\(X_1,\ldots,X_n\sim\operatorname{Poisson}(\lambda)\)</span>, a estatística <span class="math inline">\(T=\sum_iX_i\)</span> possui razão de verossimilhanças monótona. A rejeição para valores grandes de <span class="math inline">\(T\)</span> produz um teste UMP para</p>
+<p><span class="math display">\[H_0:\lambda\leq\lambda_0
+\qquad\text{versus}\qquad
+H_1:\lambda&gt;\lambda_0.\]</span></p>
+</section>
+</section>
+<section id="por-que-geralmente-não-existe-ump-bilateral" class="level3" data-number="6.8.3">
+<h3 data-number="6.8.3" class="anchored" data-anchor-id="por-que-geralmente-não-existe-ump-bilateral"><span class="header-section-number">6.8.3</span> Por que geralmente não existe UMP bilateral?</h3>
+<p>No modelo normal com variância conhecida, o teste mais poderoso contra <span class="math inline">\(\mu_1&gt;\mu_0\)</span> rejeita para valores grandes de <span class="math inline">\(\bar{X}\)</span>. Contra <span class="math inline">\(\mu_1&lt;\mu_0\)</span>, o teste mais poderoso rejeita para valores pequenos de <span class="math inline">\(\bar{X}\)</span>. Não existe, em geral, uma única região de nível <span class="math inline">\(\alpha\)</span> que seja simultaneamente mais poderosa em ambas as direções. Por isso, testes UMP são mais comuns em problemas unilaterais; problemas bilaterais frequentemente exigem restrições adicionais de optimalidade ou o teste da razão de verossimilhanças <span class="citation" data-cites="casella2002statistical borovkov1998 rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.3.2–8.3.3; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 6.2–6.3)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Observação: testes não viesados e UMPU">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Observação: testes não viesados e UMPU
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para um teste de tamanho <span class="math inline">\(\alpha\)</span>, uma condição de não viés é</p>
+<p><span class="math display">\[\pi_\varphi(\theta)\geq\alpha,
+\qquad \theta\in\Theta_1.\]</span></p>
+<p>Restringindo a comparação à classe dos testes não viesados, pode existir um teste <strong>uniformemente mais poderoso não viesado</strong> (UMPU), mesmo quando não existe teste UMP entre todos os testes de nível <span class="math inline">\(\alpha\)</span>. O desenvolvimento completo dessa teoria exige condições adicionais e não deve ser confundido com a optimalidade geral do TRV <span class="citation" data-cites="casella2002statistical borovkov1998">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.3.2–8.3.3; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>)</span>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="teste-da-razão-de-verossimilhanças" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="teste-da-razão-de-verossimilhanças"><span class="header-section-number">6.9</span> Teste da razão de verossimilhanças</h2>
+<p>O teste da razão de verossimilhanças — TRV — fornece um procedimento geral para hipóteses simples ou compostas. Diferentemente do lema de Neyman–Pearson, o TRV generalizado não é, em geral, ótimo em amostras finitas; sua importância decorre da aplicabilidade ampla e de propriedades assintóticas favoráveis. A estatística <span class="math inline">\(\Lambda\)</span> é preservada por reparametrizações biunívocas do modelo <span class="citation" data-cites="casella2002statistical hogg1978 rice2007mathematical chihara2022">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.2.1; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.6)</span>.</p>
+<p>Considere</p>
+<p><span class="math display">\[H_0:\theta\in\Theta_0
+\qquad\text{versus}\qquad
+H_1:\theta\in\Theta\setminus\Theta_0.\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição: razão de verossimilhanças generalizada">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição: razão de verossimilhanças generalizada
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A estatística é</p>
+<p><span class="math display">\[\Lambda(x)
+=
+\frac{\displaystyle\sup_{\theta\in\Theta_0}L(\theta;x)}
+{\displaystyle\sup_{\theta\in\Theta}L(\theta;x)}.\]</span></p>
+<p>Como <span class="math inline">\(\Theta_0\subseteq\Theta\)</span>,</p>
+<p><span class="math display">\[0\leq\Lambda(x)\leq1.\]</span></p>
+<p>Valores pequenos de <span class="math inline">\(\Lambda\)</span> indicam que o melhor ajuste permitido por <span class="math inline">\(H_0\)</span> é muito inferior ao melhor ajuste no modelo completo.</p>
+</div>
+</div>
+<p>O TRV rejeita <span class="math inline">\(H_0\)</span> para valores pequenos de <span class="math inline">\(\Lambda\)</span>, ou, equivalentemente, para valores grandes de</p>
+<p><span class="math display">\[W=-2\log\Lambda.\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Relação com Neyman--Pearson">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Relação com Neyman–Pearson
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quando ambas as hipóteses são simples, comparar <span class="math inline">\(\Lambda\)</span> com um ponto de corte é equivalente a comparar <span class="math inline">\(f_{\theta_1}(x)/f_{\theta_0}(x)\)</span> com um ponto de corte. Portanto, o TRV coincide com a forma do teste mais poderoso fornecida pelo lema de Neyman–Pearson. Para hipóteses compostas, essa equivalência de optimalidade não é garantida <span class="citation" data-cites="casella2002statistical hogg1978">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.2.1 e 8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4)</span>.</p>
+</div>
+</div>
+<section id="resultado-assintótico-de-wilks" class="level3" data-number="6.9.1">
+<h3 data-number="6.9.1" class="anchored" data-anchor-id="resultado-assintótico-de-wilks"><span class="header-section-number">6.9.1</span> Resultado assintótico de Wilks</h3>
+<p>Suponha que o parâmetro verdadeiro seja um ponto interior, que o modelo seja identificável e diferenciável e que <span class="math inline">\(H_0\)</span> imponha <span class="math inline">\(q\)</span> restrições independentes e regulares. Então, sob <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[-2\log\Lambda
+\xrightarrow{d}
+\chi^2_q,\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[q=\dim(\Theta)-\dim(\Theta_0)\]</span></p>
+<p>é o número de restrições independentes impostas por <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="casella2002statistical rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;10.3; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Condições e exceções">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Condições e exceções
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A aproximação qui-quadrado pode falhar quando:</p>
+<ul>
+<li>o parâmetro verdadeiro está na fronteira do espaço paramétrico;</li>
+<li>há parâmetros não identificáveis sob <span class="math inline">\(H_0\)</span>;</li>
+<li>o suporte da distribuição depende do parâmetro;</li>
+<li>a amostra é pequena;</li>
+<li>o modelo é irregular ou excessivamente esparso.</li>
+</ul>
+<p>Nessas situações, devem ser consideradas distribuições exatas, simulação de Monte Carlo ou <em>bootstrap</em> paramétrico.</p>
+</div>
+</div>
+</section>
+<section id="exemplo-média-normal-com-variância-conhecida" class="level3" data-number="6.9.2">
+<h3 data-number="6.9.2" class="anchored" data-anchor-id="exemplo-média-normal-com-variância-conhecida"><span class="header-section-number">6.9.2</span> Exemplo: média normal com variância conhecida</h3>
+<p>Este exemplo mostra um caso em que o TRV possui distribuição nula exata, e não apenas assintótica <span class="citation" data-cites="casella2002statistical rice2007mathematical hogg1978">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.2.1 e 10.3; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4)</span>.</p>
+<p>Considere</p>
+<p><span class="math display">\[X_i\sim N(\mu,\sigma^2),\]</span></p>
+<p>com <span class="math inline">\(\sigma^2\)</span> conhecida, e</p>
+<p><span class="math display">\[H_0:\mu=\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu\neq\mu_0.\]</span></p>
+<p>No modelo completo, o estimador de máxima verossimilhança é <span class="math inline">\(\widehat\mu=\bar{X}\)</span>. Sob <span class="math inline">\(H_0\)</span>, o parâmetro é fixado em <span class="math inline">\(\mu_0\)</span>. Após simplificação,</p>
+<p><span class="math display">\[\Lambda
+=
+\exp\left\{-\frac{n(\bar{X}-\mu_0)^2}{2\sigma^2}\right\},\]</span></p>
+<p>portanto,</p>
+<p><span class="math display">\[-2\log\Lambda
+=
+\frac{n(\bar{X}-\mu_0)^2}{\sigma^2}
+=Z^2.\]</span></p>
+<p>Como <span class="math inline">\(Z\sim N(0,1)\)</span> sob <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[Z^2\sim\chi^2_1.\]</span></p>
+<p>Logo, o TRV é exatamente equivalente ao teste bilateral <span class="math inline">\(Z\)</span>.</p>
+</section>
+<section id="exemplo-proporção-binomial" class="level3" data-number="6.9.3">
+<h3 data-number="6.9.3" class="anchored" data-anchor-id="exemplo-proporção-binomial"><span class="header-section-number">6.9.3</span> Exemplo: proporção binomial</h3>
+<p>A expressão abaixo é a deviance binomial para o teste de uma proporção <span class="citation" data-cites="casella2002statistical rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;10.3; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 9.4–9.5; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.3)</span>.</p>
+<p>Se <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span> e deseja-se testar</p>
+<p><span class="math display">\[H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p\neq p_0,\]</span></p>
+<p>o estimador irrestrito é <span class="math inline">\(\widehat p=X/n\)</span>. Para <span class="math inline">\(0&lt;X&lt;n\)</span>,</p>
+<p><span class="math display">\[-2\log\Lambda
+=
+2\left[
+X\log\left(\frac{X}{np_0}\right)
++(n-X)\log\left(\frac{n-X}{n(1-p_0)}\right)
+\right].\]</span></p>
+<p>Adota-se a convenção <span class="math inline">\(0\log 0=0\)</span>. Para amostras grandes, essa estatística possui distribuição aproximadamente <span class="math inline">\(\chi^2_1\)</span> sob <span class="math inline">\(H_0\)</span>. Em amostras pequenas, o teste binomial exato é preferível.</p>
+</section>
+</section>
+<section id="testes-usuais-para-parâmetros-populacionais" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="testes-usuais-para-parâmetros-populacionais"><span class="header-section-number">6.10</span> Testes usuais para parâmetros populacionais</h2>
+<section id="uma-média-com-variância-conhecida" class="level3" data-number="6.10.1">
+<h3 data-number="6.10.1" class="anchored" data-anchor-id="uma-média-com-variância-conhecida"><span class="header-section-number">6.10.1</span> Uma média com variância conhecida</h3>
+<p>Suponha</p>
+<p><span class="math display">\[X_1,\ldots,X_n\sim N(\mu,\sigma^2),\]</span></p>
+<p>com <span class="math inline">\(\sigma^2\)</span> conhecida. Sob <span class="math inline">\(H_0:\mu=\mu_0\)</span>,</p>
+<p><span class="math display">\[Z=\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1).\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 30%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Alternativa</th>
+<th style="text-align: left;">Região crítica</th>
+<th style="text-align: left;">Valor-<span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu&gt;\mu_0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Z&gt;z_{1-\alpha}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1-\Phi(z_{\mathrm{obs}})\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mu&lt;\mu_0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Z&lt;z_{\alpha}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\Phi(z_{\mathrm{obs}})\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu\neq\mu_0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(|Z|&gt;z_{1-\alpha/2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(2\{1-\Phi(|z_{\mathrm{obs}}|)\}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Esses testes são exatos sob o modelo normal com variância conhecida <span class="citation" data-cites="chihara2022 larsen2012 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.1; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 6</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.4.2)</span>.</p>
+</section>
+<section id="uma-média-com-variância-desconhecida" class="level3" data-number="6.10.2">
+<h3 data-number="6.10.2" class="anchored" data-anchor-id="uma-média-com-variância-desconhecida"><span class="header-section-number">6.10.2</span> Uma média com variância desconhecida</h3>
+<p>Se a população é normal e <span class="math inline">\(\sigma^2\)</span> é desconhecida,</p>
+<p><span class="math display">\[T=\frac{\bar{X}-\mu_0}{S/\sqrt{n}}
+\sim t_{n-1}\]</span></p>
+<p>sob <span class="math inline">\(H_0\)</span>. As regiões críticas seguem o mesmo padrão do teste <span class="math inline">\(Z\)</span>, substituindo os quantis normais pelos quantis da distribuição <span class="math inline">\(t\)</span> com <span class="math inline">\(n-1\)</span> graus de liberdade <span class="citation" data-cites="lauritzen2023fundamentals larsen2012">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;7.6.1; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 6</a>)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Pressuposto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Pressuposto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para amostras pequenas, a validade exata do teste depende da normalidade da população. Para amostras maiores, a aproximação costuma ser favorecida pelo comportamento assintótico da média, mas assimetria intensa e valores extremos podem comprometer a inferência.</p>
+</div>
+</div>
+</section>
+<section id="uma-proporção" class="level3" data-number="6.10.3">
+<h3 data-number="6.10.3" class="anchored" data-anchor-id="uma-proporção"><span class="header-section-number">6.10.3</span> Uma proporção</h3>
+<p>Se <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span>, a estatística aproximada sob <span class="math inline">\(H_0:p=p_0\)</span> é</p>
+<p><span class="math display">\[Z
+=
+\frac{\widehat p-p_0}
+{\sqrt{p_0(1-p_0)/n}},
+\qquad
+\widehat p=\frac{X}{n}.\]</span></p>
+<p>A aproximação normal deve ser usada apenas quando a distribuição binomial sob <span class="math inline">\(H_0\)</span> não for excessivamente assimétrica ou esparsa. Regras baseadas apenas em <span class="math inline">\(np_0\)</span> e <span class="math inline">\(n(1-p_0)\)</span> são heurísticas, não garantias de precisão. Caso contrário, utiliza-se o teste exato <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 8.1 e 8.4.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.4.2)</span>.</p>
+<section id="teste-binomial-exato" class="level4" data-number="6.10.3.1">
+<h4 data-number="6.10.3.1" class="anchored" data-anchor-id="teste-binomial-exato"><span class="header-section-number">6.10.3.1</span> Teste binomial exato</h4>
+<p>Para uma alternativa unilateral à direita,</p>
+<p><span class="math display">\[p=P_{p_0}(X\geq x_{\mathrm{obs}}).\]</span></p>
+<p>Para uma alternativa unilateral à esquerda,</p>
+<p><span class="math display">\[p=P_{p_0}(X\leq x_{\mathrm{obs}}).\]</span></p>
+<p>Em testes bilaterais discretos, há mais de uma convenção possível. Uma definição amplamente utilizada soma as probabilidades dos resultados cuja probabilidade sob <span class="math inline">\(H_0\)</span> é menor ou igual à probabilidade do resultado observado:</p>
+<p><span class="math display">\[p
+=
+\sum_{k:\,P_{p_0}(X=k)\leq P_{p_0}(X=x_{\mathrm{obs}})}
+P_{p_0}(X=k).\]</span></p>
+<p>O método bilateral adotado deve ser explicitado, pois dobrar mecanicamente uma cauda nem sempre coincide com essa definição <span class="citation" data-cites="chihara2022 rasch2018">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.1; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018, cap. 3</a>)</span>.</p>
+</section>
+</section>
+<section id="duas-médias-independentes-teste-de-welch" class="level3" data-number="6.10.4">
+<h3 data-number="6.10.4" class="anchored" data-anchor-id="duas-médias-independentes-teste-de-welch"><span class="header-section-number">6.10.4</span> Duas médias independentes: teste de Welch</h3>
+<p>Considere duas amostras independentes, com médias <span class="math inline">\(\bar{X}_1\)</span> e <span class="math inline">\(\bar{X}_2\)</span>, variâncias <span class="math inline">\(S_1^2\)</span> e <span class="math inline">\(S_2^2\)</span> e tamanhos <span class="math inline">\(n_1\)</span> e <span class="math inline">\(n_2\)</span>. Para testar</p>
+<p><span class="math display">\[H_0:\mu_1-\mu_2=\Delta_0,\]</span></p>
+<p>a estatística de Welch é</p>
+<p><span class="math display">\[T
+=
+\frac{(\bar{X}_1-\bar{X}_2)-\Delta_0}
+{\sqrt{S_1^2/n_1+S_2^2/n_2}}.\]</span></p>
+<p>Os graus de liberdade são aproximados por</p>
+<p><span class="math display">\[\nu
+=
+\frac{\left(S_1^2/n_1+S_2^2/n_2\right)^2}
+{\dfrac{(S_1^2/n_1)^2}{n_1-1}
++\dfrac{(S_2^2/n_2)^2}{n_2-1}}.\]</span></p>
+<p>Sob populações normais independentes, a distribuição <span class="math inline">\(t_\nu\)</span> utilizada pelo teste de Welch é uma aproximação de Satterthwaite. O procedimento é uma escolha padrão quando não há justificativa substantiva para assumir variâncias iguais <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.5.1.2; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.3)</span>.</p>
+</section>
+<section id="duas-médias-independentes-com-variância-comum" class="level3" data-number="6.10.5">
+<h3 data-number="6.10.5" class="anchored" data-anchor-id="duas-médias-independentes-com-variância-comum"><span class="header-section-number">6.10.5</span> Duas médias independentes com variância comum</h3>
+<p>Quando o modelo científico justifica</p>
+<p><span class="math display">\[\sigma_1^2=\sigma_2^2=\sigma^2,\]</span></p>
+<p>utiliza-se</p>
+<p><span class="math display">\[S_p^2
+=
+\frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}\]</span></p>
+<p>e</p>
+<p><span class="math display">\[T
+=
+\frac{(\bar{X}_1-\bar{X}_2)-\Delta_0}
+{S_p\sqrt{1/n_1+1/n_2}},\]</span></p>
+<p>com <span class="math inline">\(n_1+n_2-2\)</span> graus de liberdade. Essa distribuição é exata quando as duas populações são normais, independentes e possuem uma variância comum <span class="citation" data-cites="larsen2012 ramachandran2021r">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 9</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.5.1.1)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Observação">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Observação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A decisão de agrupar variâncias não deve ser baseada apenas em um teste preliminar de igualdade de variâncias. Ela deve refletir o modelo e o delineamento do estudo.</p>
+</div>
+</div>
+</section>
+<section id="amostras-pareadas" class="level3" data-number="6.10.6">
+<h3 data-number="6.10.6" class="anchored" data-anchor-id="amostras-pareadas"><span class="header-section-number">6.10.6</span> Amostras pareadas</h3>
+<p>Para pares <span class="math inline">\((X_i,Y_i)\)</span>, defina</p>
+<p><span class="math display">\[D_i=X_i-Y_i.\]</span></p>
+<p>O teste pareado é simplesmente um teste para uma média aplicado às diferenças:</p>
+<p><span class="math display">\[T
+=
+\frac{\bar{D}-\Delta_0}{S_D/\sqrt{n}}
+\sim t_{n-1}\]</span></p>
+<p>sob normalidade das diferenças. O pareamento deve ser incorporado à análise; tratar observações pareadas como independentes desperdiça informação e produz erro-padrão inadequado <span class="citation" data-cites="chihara2022 larsen2012">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.3; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 9</a>)</span>.</p>
+</section>
+<section id="duas-proporções-independentes" class="level3" data-number="6.10.7">
+<h3 data-number="6.10.7" class="anchored" data-anchor-id="duas-proporções-independentes"><span class="header-section-number">6.10.7</span> Duas proporções independentes</h3>
+<p>Se <span class="math inline">\(X_j\sim\operatorname{Bin}(n_j,p_j)\)</span>, <span class="math inline">\(j=1,2\)</span>, e deseja-se testar</p>
+<p><span class="math display">\[H_0:p_1=p_2,\]</span></p>
+<p>a proporção combinada sob <span class="math inline">\(H_0\)</span> é</p>
+<p><span class="math display">\[\widehat p
+=
+\frac{X_1+X_2}{n_1+n_2}.\]</span></p>
+<p>A estatística aproximada é</p>
+<p><span class="math display">\[Z
+=
+\frac{\widehat p_1-\widehat p_2}
+{\sqrt{\widehat p(1-\widehat p)(1/n_1+1/n_2)}}.\]</span></p>
+<p>Para tabelas <span class="math inline">\(2\times2\)</span> esparsas, o teste exato de Fisher é uma alternativa importante. A estatística normal acima é aproximada e requer independência entre os grupos e contagens esperadas compatíveis com a aproximação normal <span class="citation" data-cites="chihara2022 rosner2011fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 8.3 e 10.3.3; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, cap. 10</a>)</span>.</p>
+</section>
+</section>
+<section id="testes-exatos-de-permutação-e-robustez" class="level2" data-number="6.11">
+<h2 data-number="6.11" class="anchored" data-anchor-id="testes-exatos-de-permutação-e-robustez"><span class="header-section-number">6.11</span> Testes exatos, de permutação e robustez</h2>
+<p>Os testes paramétricos anteriores dependem de modelos probabilísticos específicos. Quando a distribuição exata sob <span class="math inline">\(H_0\)</span> é conhecida, um teste exato controla o nível sem recorrer a aproximações assintóticas. Exemplos são o teste binomial e o teste exato de Fisher.</p>
+<section id="testes-de-permutação" class="level3" data-number="6.11.1">
+<h3 data-number="6.11.1" class="anchored" data-anchor-id="testes-de-permutação"><span class="header-section-number">6.11.1</span> Testes de permutação</h3>
+<p>Em problemas de comparação entre grupos, um teste de permutação constrói a distribuição nula recombinando os rótulos das observações. A justificativa não é simplesmente “não assumir normalidade”: sob <span class="math inline">\(H_0\)</span>, é necessário que as observações sejam permutáveis, condição frequentemente derivada da randomização experimental ou da igualdade das distribuições sob a hipótese nula. Para dados pareados, permutam-se sinais ou condições dentro dos pares, preservando a estrutura do delineamento <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 3</a> e secs. 8.5 e 9.5.1)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Observação">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Observação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Um teste de permutação baseado na diferença de médias pode testar igualdade de distribuições ou uma hipótese decorrente do mecanismo de randomização; ele não é automaticamente um teste exato apenas para igualdade de médias quando as distribuições diferem em outros aspectos. A hipótese efetivamente testada deve ser explicitada.</p>
+</div>
+</div>
+</section>
+<section id="robustez" class="level3" data-number="6.11.2">
+<h3 data-number="6.11.2" class="anchored" data-anchor-id="robustez"><span class="header-section-number">6.11.2</span> Robustez</h3>
+<p>O teste <span class="math inline">\(t\)</span> pode ser relativamente estável diante de desvios moderados de normalidade, sobretudo em amostras equilibradas e sem observações extremas. Contudo, caudas pesadas, heteroscedasticidade, assimetria pronunciada e <em>outliers</em> podem alterar substancialmente o nível e o poder. Nessas situações, devem ser considerados o teste de Welch, métodos de reamostragem coerentes com o delineamento e procedimentos robustos baseados, por exemplo, em médias aparadas ou estimadores robustos de localização <span class="citation" data-cites="wilcox2022">(<a href="#ref-wilcox2022" role="doc-biblioref">Wilcox, 2022</a>, caps. 4–7)</span>.</p>
+</section>
+</section>
+<section id="planejamento-amostral-e-poder" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="planejamento-amostral-e-poder"><span class="header-section-number">6.12</span> Planejamento amostral e poder</h2>
+<section id="uma-média-com-variância-conhecida-1" class="level3" data-number="6.12.1">
+<h3 data-number="6.12.1" class="anchored" data-anchor-id="uma-média-com-variância-conhecida-1"><span class="header-section-number">6.12.1</span> Uma média com variância conhecida</h3>
+<p>Para o teste unilateral</p>
+<p><span class="math display">\[H_0:\mu=\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu&gt;\mu_0,\]</span></p>
+<p>suponha que se deseje poder <span class="math inline">\(1-\beta\)</span> para detectar <span class="math inline">\(\mu_1&gt;\mu_0\)</span>. Uma aproximação para o tamanho amostral é</p>
+<p><span class="math display">\[n
+=
+\left\lceil
+\left[
+\frac{(z_{1-\alpha}+z_{1-\beta})\sigma}
+{\mu_1-\mu_0}
+\right]^2
+\right\rceil.\]</span></p>
+<p>Para o teste bilateral, a substituição de <span class="math inline">\(z_{1-\alpha}\)</span> por <span class="math inline">\(z_{1-\alpha/2}\)</span> fornece uma aproximação conservadora usual, pois o poder bilateral exato envolve as duas caudas. A expressão deve ser entendida como planejamento para uma diferença alternativa previamente especificada <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.1.1; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.2)</span>.</p>
+</section>
+<section id="uma-proporção-1" class="level3" data-number="6.12.2">
+<h3 data-number="6.12.2" class="anchored" data-anchor-id="uma-proporção-1"><span class="header-section-number">6.12.2</span> Uma proporção</h3>
+<p>Para detectar <span class="math inline">\(p_1\neq p_0\)</span>, uma aproximação unilateral é</p>
+<p><span class="math display">\[n
+\approx
+\frac{
+\left[
+z_{1-\alpha}\sqrt{p_0(1-p_0)}
++z_{1-\beta}\sqrt{p_1(1-p_1)}
+\right]^2
+}{(p_1-p_0)^2}.\]</span></p>
+<p>No caso bilateral, usa-se <span class="math inline">\(z_{1-\alpha/2}\)</span>. Trata-se de uma aproximação normal; após arredondar <span class="math inline">\(n\)</span> para cima, recomenda-se recalcular o poder pela distribuição binomial exata, especialmente quando <span class="math inline">\(p_0\)</span> ou <span class="math inline">\(p_1\)</span> estiver próximo de <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span> <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.1.1)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Significância prática">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Significância prática
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O planejamento deve ser baseado na menor diferença cientificamente relevante, e não na menor diferença que possa se tornar estatisticamente significativa. Com amostras muito grandes, efeitos desprezíveis podem produzir valores-<span class="math inline">\(p\)</span> pequenos.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="análise-de-dados-categóricos" class="level2" data-number="6.13">
+<h2 data-number="6.13" class="anchored" data-anchor-id="análise-de-dados-categóricos"><span class="header-section-number">6.13</span> Análise de dados categóricos</h2>
+<p>Dados categóricos são representados por contagens em categorias mutuamente exclusivas. O modelo multinomial fornece a base probabilística para testes de aderência e para tabelas de contingência <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals chihara2022 larsen2012">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.5; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.2–8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 10</a>; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 10</a>)</span>.</p>
+<section id="estatística-qui-quadrado-de-pearson" class="level3" data-number="6.13.1">
+<h3 data-number="6.13.1" class="anchored" data-anchor-id="estatística-qui-quadrado-de-pearson"><span class="header-section-number">6.13.1</span> Estatística qui-quadrado de Pearson</h3>
+<p>Para contagens observadas <span class="math inline">\(O_1,\ldots,O_k\)</span> e esperadas <span class="math inline">\(E_1,\ldots,E_k\)</span>, a estatística de Pearson é</p>
+<p><span class="math display">\[X^2
+=
+\sum_{i=1}^k
+\frac{(O_i-E_i)^2}{E_i}.\]</span></p>
+<p>Valores grandes indicam discrepância entre os dados e o modelo nulo.</p>
+</section>
+<section id="estatística-da-razão-de-verossimilhanças" class="level3" data-number="6.13.2">
+<h3 data-number="6.13.2" class="anchored" data-anchor-id="estatística-da-razão-de-verossimilhanças"><span class="header-section-number">6.13.2</span> Estatística da razão de verossimilhanças</h3>
+<p>A estatística correspondente ao TRV é</p>
+<p><span class="math display">\[G^2
+=
+2\sum_{i=1}^k
+O_i\log\left(\frac{O_i}{E_i}\right),\]</span></p>
+<p>com a convenção de que termos com <span class="math inline">\(O_i=0\)</span> são iguais a zero. Sob condições regulares,</p>
+<p><span class="math display">\[G^2\approx X^2,\]</span></p>
+<p>e ambas as estatísticas possuem a mesma distribuição qui-quadrado assintótica sob <span class="math inline">\(H_0\)</span>. Sob regularidade, sua diferença é assintoticamente desprezível, embora seus valores em uma amostra finita não precisem ser próximos quando existem células esparsas <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.5; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.2–8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.6)</span>.</p>
+</section>
+</section>
+<section id="teste-qui-quadrado-de-aderência" class="level2" data-number="6.14">
+<h2 data-number="6.14" class="anchored" data-anchor-id="teste-qui-quadrado-de-aderência"><span class="header-section-number">6.14</span> Teste qui-quadrado de aderência</h2>
+<p>Considere uma variável com <span class="math inline">\(k\)</span> categorias e probabilidades especificadas por <span class="math inline">\(H_0\)</span>:</p>
+<p><span class="math display">\[H_0:(p_1,\ldots,p_k)=(p_1^{(0)},\ldots,p_k^{(0)}).\]</span></p>
+<p>As frequências esperadas são</p>
+<p><span class="math display">\[E_i=np_i^{(0)}.\]</span></p>
+<p>Quando nenhuma quantidade é estimada a partir da própria amostra, os graus de liberdade são</p>
+<p><span class="math display">\[\nu=k-1.\]</span></p>
+<p>Se <span class="math inline">\(q\)</span> parâmetros livres forem estimados, sob condições regulares, a partir da mesma amostra para calcular as probabilidades esperadas, então</p>
+<p><span class="math display">\[\nu=k-1-q.\]</span></p>
+<p>Essa redução dos graus de liberdade pressupõe que os parâmetros sejam identificáveis e que o modelo ajustado possua posto local <span class="math inline">\(q\)</span> <span class="citation" data-cites="larsen2012 chihara2022">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, secs. 10.3–10.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.5)</span>.</p>
+<section id="exemplo-dado-de-seis-faces" class="level3" data-number="6.14.1">
+<h3 data-number="6.14.1" class="anchored" data-anchor-id="exemplo-dado-de-seis-faces"><span class="header-section-number">6.14.1</span> Exemplo: dado de seis faces</h3>
+<p>Em <span class="math inline">\(120\)</span> lançamentos de um dado, foram observadas as contagens</p>
+<p><span class="math display">\[(14,18,20,22,21,25).\]</span></p>
+<p>Sob a hipótese de equilíbrio,</p>
+<p><span class="math display">\[E_i=120\times\frac{1}{6}=20.\]</span></p>
+<p>Logo,</p>
+<p><span class="math display">\[X^2
+=\frac{(14-20)^2}{20}
++\cdots+
+\frac{(25-20)^2}{20}
+=3{,}50.\]</span></p>
+<p>Com <span class="math inline">\(\nu=5\)</span>, o valor-<span class="math inline">\(p\)</span> é aproximadamente <span class="math inline">\(0{,}623\)</span>. Não se rejeita a hipótese de probabilidades iguais.</p>
+<div id="ebdd68e6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chisquare</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>observado <span class="op">=</span> np.array([<span class="dv">14</span>, <span class="dv">18</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">21</span>, <span class="dv">25</span>])</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>esperado <span class="op">=</span> np.repeat(<span class="dv">20</span>, <span class="dv">6</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>estatistica, p_valor <span class="op">=</span> chisquare(observado, f_exp<span class="op">=</span>esperado)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"X² = </span><span class="sc">{</span>estatistica<span class="sc">:.3f}</span><span class="ss">; valor-p = </span><span class="sc">{</span>p_valor<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>X² = 3.500; valor-p = 0.6234</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="tabelas-de-contingência" class="level2" data-number="6.15">
+<h2 data-number="6.15" class="anchored" data-anchor-id="tabelas-de-contingência"><span class="header-section-number">6.15</span> Tabelas de contingência</h2>
+<p>Considere uma tabela com <span class="math inline">\(r\)</span> linhas e <span class="math inline">\(c\)</span> colunas. Seja <span class="math inline">\(O_{ij}\)</span> a frequência observada na célula <span class="math inline">\((i,j)\)</span>, <span class="math inline">\(O_{i\cdot}\)</span> o total da linha, <span class="math inline">\(O_{\cdot j}\)</span> o total da coluna e <span class="math inline">\(n\)</span> o total geral.</p>
+<p>Sob independência ou homogeneidade, a frequência esperada é</p>
+<p><span class="math display">\[E_{ij}
+=
+\frac{O_{i\cdot}O_{\cdot j}}{n}.\]</span></p>
+<p>A estatística de Pearson é</p>
+<p><span class="math display">\[X^2
+=
+\sum_{i=1}^r\sum_{j=1}^c
+\frac{(O_{ij}-E_{ij})^2}{E_{ij}},\]</span></p>
+<p>com</p>
+<p><span class="math display">\[\nu=(r-1)(c-1).\]</span></p>
+<p>Esses resultados decorrem do modelo de independência para contagens multinomiais ou produtos multinomiais <span class="citation" data-cites="lauritzen2023fundamentals chihara2022 larsen2012">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 10.1–10.3; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, sec.&nbsp;10.5)</span>.</p>
+<section id="homogeneidade-e-independência" class="level3" data-number="6.15.1">
+<h3 data-number="6.15.1" class="anchored" data-anchor-id="homogeneidade-e-independência"><span class="header-section-number">6.15.1</span> Homogeneidade e independência</h3>
+<p>Os dois testes utilizam a mesma estatística, mas respondem a perguntas distintas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Teste</th>
+<th style="text-align: left;">Delineamento</th>
+<th style="text-align: left;">Hipótese nula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Homogeneidade</td>
+<td style="text-align: left;">amostras independentes de diferentes populações</td>
+<td style="text-align: left;">a distribuição categórica é a mesma nas populações</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Independência</td>
+<td style="text-align: left;">uma amostra, com duas variáveis categóricas medidas em cada unidade</td>
+<td style="text-align: left;">as variáveis são independentes</td>
+</tr>
+</tbody>
+</table>
+<p>A interpretação correta depende do esquema amostral, não apenas da tabela numérica.</p>
+</section>
+<section id="exemplo-renda-e-hipertensão" class="level3" data-number="6.15.2">
+<h3 data-number="6.15.2" class="anchored" data-anchor-id="exemplo-renda-e-hipertensão"><span class="header-section-number">6.15.2</span> Exemplo: renda e hipertensão</h3>
+<p>Considere os dados hipotéticos:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Renda</th>
+<th style="text-align: right;">Hipertensão: sim</th>
+<th style="text-align: right;">Hipertensão: não</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Baixa</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Média</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alta</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: right;"><strong>125</strong></td>
+<td style="text-align: right;"><strong>175</strong></td>
+<td style="text-align: right;"><strong>300</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Sob independência, as frequências esperadas em cada linha são <span class="math inline">\(41{,}67\)</span> e <span class="math inline">\(58{,}33\)</span>. A estatística é</p>
+<p><span class="math display">\[X^2=33{,}60,\]</span></p>
+<p>com <span class="math inline">\(\nu=2\)</span> e</p>
+<p><span class="math display">\[p\approx5{,}06\times10^{-8}.\]</span></p>
+<p>Rejeita-se a hipótese de independência. O resultado indica associação, mas não demonstra causalidade.</p>
+<div id="91c18b0e" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>observado <span class="op">=</span> np.array([</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">60</span>, <span class="dv">40</span>],</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">45</span>, <span class="dv">55</span>],</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">20</span>, <span class="dv">80</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>x2, p_valor, gl, esperado <span class="op">=</span> chi2_contingency(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    observado,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    correction<span class="op">=</span><span class="va">False</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"X² = </span><span class="sc">{</span>x2<span class="sc">:.3f}</span><span class="ss">; gl = </span><span class="sc">{</span>gl<span class="sc">}</span><span class="ss">; valor-p = </span><span class="sc">{</span>p_valor<span class="sc">:.4g}</span><span class="ss">"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(esperado)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>X² = 33.600; gl = 2; valor-p = 5.057e-08
+[[41.66666667 58.33333333]
+ [41.66666667 58.33333333]
+ [41.66666667 58.33333333]]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="diagnóstico-por-resíduos" class="level2" data-number="6.16">
+<h2 data-number="6.16" class="anchored" data-anchor-id="diagnóstico-por-resíduos"><span class="header-section-number">6.16</span> Diagnóstico por resíduos</h2>
+<p>A rejeição global não identifica automaticamente quais células explicam a associação.</p>
+<p>O resíduo de Pearson é</p>
+<p><span class="math display">\[r_{ij}
+=
+\frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}}.\]</span></p>
+<p>Um resíduo ajustado é</p>
+<p><span class="math display">\[r_{ij}^{\mathrm{aj}}
+=
+\frac{O_{ij}-E_{ij}}
+{\sqrt{E_{ij}
+\left(1-\dfrac{O_{i\cdot}}{n}\right)
+\left(1-\dfrac{O_{\cdot j}}{n}\right)}}.\]</span></p>
+<p>Valores absolutos grandes indicam células que contribuem de maneira relevante para a discrepância global. A aproximação normal de cada resíduo é assintótica, e os resíduos de uma mesma tabela são dependentes. Quando muitas células são examinadas, a interpretação deve considerar multiplicidade <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.2–8.3)</span>.</p>
+</section>
+<section id="pressupostos-e-tabelas-esparsas" class="level2" data-number="6.17">
+<h2 data-number="6.17" class="anchored" data-anchor-id="pressupostos-e-tabelas-esparsas"><span class="header-section-number">6.17</span> Pressupostos e tabelas esparsas</h2>
+<p>Os testes qui-quadrado requerem:</p>
+<ol type="1">
+<li>observações independentes;</li>
+<li>categorias mutuamente exclusivas;</li>
+<li>frequências esperadas suficientemente grandes para justificar a aproximação assintótica;</li>
+<li>um esquema amostral compatível com o modelo multinomial ou com o modelo de tabela de contingência.</li>
+</ol>
+<p>A regra pedagógica <span class="math inline">\(E_{ij}\geq5\)</span> é apenas uma heurística, não um teorema universal. Quando há muitas células com contagens esperadas pequenas, podem ser necessários:</p>
+<ul>
+<li>agrupamento de categorias cientificamente justificável;</li>
+<li>teste exato de Fisher em tabelas <span class="math inline">\(2\times2\)</span>;</li>
+<li>testes exatos condicionais;</li>
+<li>valores-<span class="math inline">\(p\)</span> por Monte Carlo;</li>
+<li>modelos multinomiais ou log-lineares apropriados.</li>
+</ul>
+<p>A adequação de critérios numéricos específicos para frequências esperadas deve ser avaliada considerando o número de células, o grau de desequilíbrio e a precisão desejada; a regra <span class="math inline">\(5\)</span> não constitui garantia universal <span class="citation" data-cites="chihara2022 rosner2011fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 10</a>; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, cap. 10</a>)</span>.</p>
+</section>
+<section id="teste-exato-de-fisher" class="level2" data-number="6.18">
+<h2 data-number="6.18" class="anchored" data-anchor-id="teste-exato-de-fisher"><span class="header-section-number">6.18</span> Teste exato de Fisher</h2>
+<p>Em uma tabela <span class="math inline">\(2\times2\)</span>, condicionando aos totais marginais, a contagem de uma célula segue distribuição hipergeométrica sob a hipótese nula. O teste exato de Fisher calcula probabilidades diretamente dessa distribuição e não depende da aproximação qui-quadrado. Para alternativas bilaterais, existem diferentes convenções de ordenação das tabelas; a convenção utilizada pelo software deve ser declarada <span class="citation" data-cites="lauritzen2023fundamentals chihara2022 rosner2011fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;8.3.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.3.3; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011</a>, sec.&nbsp;10.3)</span>.</p>
+<div id="11d19bcb" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> fisher_exact</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tabela <span class="op">=</span> np.array([</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">8</span>, <span class="dv">2</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>, <span class="dv">5</span>]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>razao_chances, p_valor <span class="op">=</span> fisher_exact(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    tabela,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    alternative<span class="op">=</span><span class="st">"two-sided"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Razão de chances = </span><span class="sc">{</span>razao_chances<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Valor-p exato = </span><span class="sc">{</span>p_valor<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Razão de chances = 20.000
+Valor-p exato = 0.0350</code></pre>
+</div>
+</div>
+</section>
+<section id="medidas-de-tamanho-do-efeito-em-tabelas" class="level2" data-number="6.19">
+<h2 data-number="6.19" class="anchored" data-anchor-id="medidas-de-tamanho-do-efeito-em-tabelas"><span class="header-section-number">6.19</span> Medidas de tamanho do efeito em tabelas</h2>
+<p>Para uma tabela <span class="math inline">\(2\times2\)</span>, a <strong>magnitude</strong> do coeficiente <span class="math inline">\(\phi\)</span> pode ser escrita como</p>
+<p><span class="math display">\[|\phi|
+=\sqrt{\frac{X^2}{n}}.\]</span></p>
+<p>O sinal de <span class="math inline">\(\phi\)</span> depende da codificação e da orientação das linhas e colunas; a expressão baseada em <span class="math inline">\(X^2\)</span> fornece apenas sua magnitude.</p>
+<p>Para uma tabela <span class="math inline">\(r\times c\)</span>, o <span class="math inline">\(V\)</span> de Cramér é</p>
+<p><span class="math display">\[V
+=\sqrt{
+\frac{X^2}
+{n\min(r-1,c-1)}
+}.\]</span></p>
+<p>No exemplo de renda e hipertensão,</p>
+<p><span class="math display">\[V
+=\sqrt{\frac{33{,}60}{300}}
+\approx0{,}335.\]</span></p>
+<p>A interpretação substantiva deve considerar o contexto, o delineamento e a direção observada nas proporções e nos resíduos. Pontos de corte universais para “efeito pequeno”, “médio” ou “grande” não substituem a análise contextual. Essas medidas são descritivas e não substituem a apresentação das proporções ou dos resíduos que determinam a direção da associação.</p>
+</section>
+<section id="poder-e-tamanho-amostral-em-testes-qui-quadrado" class="level2" data-number="6.20">
+<h2 data-number="6.20" class="anchored" data-anchor-id="poder-e-tamanho-amostral-em-testes-qui-quadrado"><span class="header-section-number">6.20</span> Poder e tamanho amostral em testes qui-quadrado</h2>
+<p>No teste de aderência com probabilidades nulas completamente especificadas, defina</p>
+<p><span class="math display">\[w
+=
+\sqrt{
+\sum_i
+\frac{(p_i-p_i^{(0)})^2}{p_i^{(0)}}
+},\]</span></p>
+<p>em que <span class="math inline">\(p_i\)</span> representa uma alternativa cientificamente relevante. Sob a aproximação qui-quadrado não central, o parâmetro de não centralidade é</p>
+<p><span class="math display">\[\lambda=nw^2.\]</span></p>
+<p>Em tabelas de contingência, a definição correspondente deve ser construída a partir das probabilidades conjuntas sob a alternativa e das probabilidades ajustadas sob a hipótese de independência; não se deve reutilizar mecanicamente a fórmula de aderência.</p>
+<p>Para <span class="math inline">\(\nu\)</span> graus de liberdade e nível <span class="math inline">\(\alpha\)</span>, o poder aproximado é</p>
+<p><span class="math display">\[1-\beta
+=
+P\left
+\{
+\chi^2_\nu(\lambda)
+&gt;
+\chi^2_{\nu,1-\alpha}
+\right\}.\]</span></p>
+<p>O tamanho amostral deve ser obtido numericamente a partir dessa expressão. Fórmulas que ignoram os graus de liberdade podem produzir planejamento inadequado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Observação bibliográfica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Observação bibliográfica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A relação <span class="math inline">\(\lambda=nw^2\)</span> é uma aproximação de planejamento. Após obter <span class="math inline">\(n\)</span>, recomenda-se recalcular o poder com o modelo probabilístico específico e verificar as frequências esperadas previstas.</p>
+</div>
+</div>
+<div id="970feb5c" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> ceil</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brentq</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2, ncx2</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>poder_alvo <span class="op">=</span> <span class="fl">0.80</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.30</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>gl <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>critico <span class="op">=</span> chi2.ppf(<span class="dv">1</span> <span class="op">-</span> alpha, df<span class="op">=</span>gl)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poder(n):</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    nao_centralidade <span class="op">=</span> n <span class="op">*</span> w<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ncx2.sf(critico, df<span class="op">=</span>gl, nc<span class="op">=</span>nao_centralidade)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>raiz <span class="op">=</span> brentq(<span class="kw">lambda</span> n: poder(n) <span class="op">-</span> poder_alvo, <span class="dv">2</span>, <span class="dv">100000</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>n_minimo <span class="op">=</span> ceil(raiz)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"n mínimo aproximado = </span><span class="sc">{</span>n_minimo<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"poder recalculado = </span><span class="sc">{</span>poder(n_minimo)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>n mínimo aproximado = 108
+poder recalculado = 0.8037</code></pre>
+</div>
+</div>
+</section>
+<section id="relação-entre-testes-e-intervalos-de-confiança" class="level2" data-number="6.21">
+<h2 data-number="6.21" class="anchored" data-anchor-id="relação-entre-testes-e-intervalos-de-confiança"><span class="header-section-number">6.21</span> Relação entre testes e intervalos de confiança</h2>
+<p>Há uma dualidade entre testes bilaterais e intervalos de confiança. Para um procedimento coerente de nível <span class="math inline">\(\alpha\)</span>,</p>
+<p><span class="math display">\[H_0:\theta=\theta_0\]</span></p>
+<p>não é rejeitada se, e somente se, <span class="math inline">\(\theta_0\)</span> pertence ao conjunto de confiança de nível <span class="math inline">\(1-\alpha\)</span> obtido pela inversão dessa mesma família de testes <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.4)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretação">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Interpretação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O intervalo de confiança complementa o valor-<span class="math inline">\(p\)</span> porque mostra a faixa de valores compatíveis com os dados e permite avaliar a magnitude e a precisão do efeito.</p>
+</div>
+</div>
+</section>
+<section id="boas-práticas-de-apresentação" class="level2" data-number="6.22">
+<h2 data-number="6.22" class="anchored" data-anchor-id="boas-práticas-de-apresentação"><span class="header-section-number">6.22</span> Boas práticas de apresentação</h2>
+<p>Um relatório de teste deve incluir:</p>
+<ul>
+<li>hipóteses e direção do teste;</li>
+<li>estatística de teste e distribuição de referência;</li>
+<li>graus de liberdade, quando aplicável;</li>
+<li>valor-<span class="math inline">\(p\)</span>, preferencialmente com precisão adequada;</li>
+<li>estimativa pontual e intervalo de confiança;</li>
+<li>medida de tamanho do efeito;</li>
+<li>verificação dos pressupostos;</li>
+<li>interpretação contextual, sem linguagem causal indevida.</li>
+</ul>
+<section id="modelo-de-redação" class="level3" data-number="6.22.1">
+<h3 data-number="6.22.1" class="anchored" data-anchor-id="modelo-de-redação"><span class="header-section-number">6.22.1</span> Modelo de redação</h3>
+<blockquote class="blockquote">
+<p>A diferença média estimada foi de <span class="math inline">\(4{,}2\)</span> unidades, com intervalo de confiança de <span class="math inline">\(95\%\)</span> de <span class="math inline">\([1{,}1;7{,}3]\)</span>. O teste de Welch forneceu <span class="math inline">\(t=2{,}68\)</span>, <span class="math inline">\(\nu=37{,}4\)</span> e <span class="math inline">\(p=0{,}011\)</span>. Há evidência de diferença entre as médias no modelo adotado. A magnitude e a relevância prática devem ser avaliadas à luz da escala da variável e do delineamento do estudo.</p>
+</blockquote>
+</section>
+</section>
+<section id="erros-frequentes-de-interpretação" class="level2" data-number="6.23">
+<h2 data-number="6.23" class="anchored" data-anchor-id="erros-frequentes-de-interpretação"><span class="header-section-number">6.23</span> Erros frequentes de interpretação</h2>
+<ol type="1">
+<li><strong>Confundir valor-</strong><span class="math inline">\(p\)</span> com <span class="math inline">\(P(H_0\mid\text{dados})\)</span>. O valor-<span class="math inline">\(p\)</span> é calculado sob <span class="math inline">\(H_0\)</span> e não atribui probabilidade posterior à hipótese.</li>
+<li><strong>Escolher unilateralidade após observar os dados.</strong> A direção deve ser definida previamente.</li>
+<li><strong>Concluir ausência de efeito a partir de</strong> <span class="math inline">\(p\geq\alpha\)</span>. Um teste não significativo pode ter baixo poder.</li>
+<li><strong>Ignorar tamanho do efeito.</strong> Significância estatística não implica relevância prática.</li>
+<li><strong>Usar teste</strong> <span class="math inline">\(t\)</span> pareado como se as amostras fossem independentes. O pareamento deve ser incorporado pelas diferenças.</li>
+<li><strong>Aplicar qui-quadrado em células extremamente esparsas sem diagnóstico.</strong> Métodos exatos ou de simulação podem ser necessários.</li>
+<li><strong>Interpretar associação como causalidade.</strong> Testes de independência não eliminam confundimento nem estabelecem mecanismo causal.</li>
+<li><strong>Realizar muitos testes sem controlar multiplicidade.</strong> A probabilidade de ao menos uma rejeição falsa cresce com o número de comparações.</li>
+</ol>
+</section>
+<section id="quadro-síntese" class="level2" data-number="6.24">
+<h2 data-number="6.24" class="anchored" data-anchor-id="quadro-síntese"><span class="header-section-number">6.24</span> Quadro-síntese</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Problema</th>
+<th style="text-align: left;">Estatística principal</th>
+<th style="text-align: left;">Referência sob <span class="math inline">\(H_0\)</span></th>
+<th style="text-align: left;">Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">uma média, <span class="math inline">\(\sigma\)</span> conhecida</td>
+<td style="text-align: left;"><span class="math inline">\(Z\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(N(0,1)\)</span></td>
+<td style="text-align: left;">exato sob normalidade</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">uma média, <span class="math inline">\(\sigma\)</span> desconhecida</td>
+<td style="text-align: left;"><span class="math inline">\(T\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(t_{n-1}\)</span></td>
+<td style="text-align: left;">exato sob normalidade</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">duas médias independentes</td>
+<td style="text-align: left;"><span class="math inline">\(T\)</span> de Welch</td>
+<td style="text-align: left;"><span class="math inline">\(t_\nu\)</span> aproximada</td>
+<td style="text-align: left;">não exige variâncias iguais</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">médias pareadas</td>
+<td style="text-align: left;"><span class="math inline">\(T\)</span> nas diferenças</td>
+<td style="text-align: left;"><span class="math inline">\(t_{n-1}\)</span></td>
+<td style="text-align: left;">analisa <span class="math inline">\(D_i=X_i-Y_i\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">uma proporção</td>
+<td style="text-align: left;"><span class="math inline">\(Z\)</span> ou binomial exato</td>
+<td style="text-align: left;">normal ou binomial</td>
+<td style="text-align: left;">preferir exato em amostras pequenas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">duas proporções</td>
+<td style="text-align: left;"><span class="math inline">\(Z\)</span> combinado</td>
+<td style="text-align: left;">normal aproximada</td>
+<td style="text-align: left;">Fisher em <span class="math inline">\(2\times2\)</span> esparsa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aderência</td>
+<td style="text-align: left;"><span class="math inline">\(X^2\)</span> ou <span class="math inline">\(G^2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\chi^2_{k-1-q}\)</span></td>
+<td style="text-align: left;">descontar parâmetros estimados</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">homogeneidade/independência</td>
+<td style="text-align: left;"><span class="math inline">\(X^2\)</span> ou <span class="math inline">\(G^2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\chi^2_{(r-1)(c-1)}\)</span></td>
+<td style="text-align: left;">mesma álgebra, delineamentos distintos</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hipótese paramétrica geral</td>
+<td style="text-align: left;"><span class="math inline">\(-2\log\Lambda\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\chi^2_q\)</span> assintótica</td>
+<td style="text-align: left;">verificar regularidade</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="exercícios" class="level2" data-number="6.25">
+<h2 data-number="6.25" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">6.25</span> Exercícios</h2>
+<p>Os exercícios a seguir são autorais ou foram adaptados conceitualmente das fontes teóricas e aplicadas utilizadas no capítulo <span class="citation" data-cites="casella2002statistical hogg1978 borovkov1998 rice2007mathematical ramachandran2021r rasch2018 lauritzen2023fundamentals chihara2022 shao2005">(<a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998</a>; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>; <a href="#ref-shao2005" role="doc-biblioref">Shao, 2005</a>)</span>.</p>
+<section id="exercícios-conceituais" class="level3" data-number="6.25.1">
+<h3 data-number="6.25.1" class="anchored" data-anchor-id="exercícios-conceituais"><span class="header-section-number">6.25.1</span> Exercícios conceituais</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explique por que um valor-<span class="math inline">\(p\)</span> igual a <span class="math inline">\(0{,}03\)</span> não significa que existe probabilidade de <span class="math inline">\(3\%\)</span> de <span class="math inline">\(H_0\)</span> ser verdadeira.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 2">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere um teste de nível <span class="math inline">\(0{,}05\)</span> cujo poder em <span class="math inline">\(\theta_1\)</span> é <span class="math inline">\(0{,}80\)</span>. Determine as probabilidades dos erros dos tipos I e II quando o verdadeiro parâmetro é, respectivamente, um ponto de fronteira de <span class="math inline">\(H_0\)</span> em que o tamanho é alcançado e o ponto <span class="math inline">\(\theta_1\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 3">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mostre que, se o valor-<span class="math inline">\(p\)</span> de um teste contínuo é uniforme em <span class="math inline">\((0,1)\)</span> sob <span class="math inline">\(H_0\)</span>, então a regra “rejeitar quando <span class="math inline">\(p\leq\alpha\)</span>” possui tamanho <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="neymanpearson-e-testes-ump" class="level3" data-number="6.25.2">
+<h3 data-number="6.25.2" class="anchored" data-anchor-id="neymanpearson-e-testes-ump"><span class="header-section-number">6.25.2</span> Neyman–Pearson e testes UMP</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 4">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sejam <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span>, com <span class="math inline">\(\sigma^2\)</span> conhecida. Use o lema de Neyman–Pearson para obter o teste mais poderoso de nível <span class="math inline">\(\alpha\)</span> para</p>
+<p><span class="math display">\[H_0:\mu=\mu_0
+\qquad\text{versus}\qquad
+H_1:\mu=\mu_1,\]</span></p>
+<p>nos casos <span class="math inline">\(\mu_1&gt;\mu_0\)</span> e <span class="math inline">\(\mu_1&lt;\mu_0\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 5">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sejam <span class="math inline">\(X_1,\ldots,X_n\sim\operatorname{Poisson}(\lambda)\)</span>. Mostre que a razão de verossimilhanças é monótona em <span class="math inline">\(T=\sum_iX_i\)</span> e construa um teste UMP de nível <span class="math inline">\(\alpha\)</span> para</p>
+<p><span class="math display">\[H_0:\lambda\leq\lambda_0
+\qquad\text{versus}\qquad
+H_1:\lambda&gt;\lambda_0.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 6">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span>. Determine a região crítica não aleatorizada UMP para</p>
+<p><span class="math display">\[H_0:p\leq p_0
+\qquad\text{versus}\qquad
+H_1:p&gt;p_0,\]</span></p>
+<p>e calcule o nível efetivamente alcançado. Discuta como um teste aleatorizado poderia atingir tamanho exatamente <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 7">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No modelo normal com variância conhecida, explique formalmente por que o teste bilateral de <span class="math inline">\(H_0:\mu=\mu_0\)</span> contra <span class="math inline">\(H_1:\mu\neq\mu_0\)</span> não é, em geral, UMP.</p>
+</div>
+</div>
+</section>
+<section id="razão-de-verossimilhanças" class="level3" data-number="6.25.3">
+<h3 data-number="6.25.3" class="anchored" data-anchor-id="razão-de-verossimilhanças"><span class="header-section-number">6.25.3</span> Razão de verossimilhanças</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 8">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Derive o TRV para</p>
+<p><span class="math display">\[X_1,\ldots,X_n\sim N(\mu,\sigma^2),\]</span></p>
+<p>com <span class="math inline">\(\sigma^2\)</span> conhecida, e mostre que <span class="math inline">\(-2\log\Lambda=Z^2\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 9">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span>, derive a expressão de <span class="math inline">\(-2\log\Lambda\)</span> para testar <span class="math inline">\(H_0:p=p_0\)</span>. Compare numericamente o valor-<span class="math inline">\(p\)</span> assintótico com o valor-<span class="math inline">\(p\)</span> binomial exato para <span class="math inline">\(n=20\)</span>, <span class="math inline">\(p_0=0{,}5\)</span> e <span class="math inline">\(x=15\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 10">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explique por que o resultado de Wilks pode falhar quando o parâmetro sob <span class="math inline">\(H_0\)</span> está na fronteira do espaço paramétrico. Indique uma estratégia computacional para estimar a distribuição nula de <span class="math inline">\(-2\log\Lambda\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="testes-para-médias-e-proporções" class="level3" data-number="6.25.4">
+<h3 data-number="6.25.4" class="anchored" data-anchor-id="testes-para-médias-e-proporções"><span class="header-section-number">6.25.4</span> Testes para médias e proporções</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 11">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma amostra de <span class="math inline">\(25\)</span> observações apresentou <span class="math inline">\(\bar{x}=52\)</span> e <span class="math inline">\(s=8\)</span>. Teste <span class="math inline">\(H_0:\mu=50\)</span> contra <span class="math inline">\(H_1:\mu\neq50\)</span> ao nível de <span class="math inline">\(5\%\)</span>, supondo normalidade. Calcule também o intervalo de confiança de <span class="math inline">\(95\%\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 12">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Duas amostras independentes produziram:</p>
+<p><span class="math display">\[(n_1,\bar{x}_1,s_1)=(18,14{,}2,3{,}1),\]</span></p>
+<p><span class="math display">\[(n_2,\bar{x}_2,s_2)=(22,12{,}5,4{,}0).\]</span></p>
+<p>Aplique o teste de Welch para <span class="math inline">\(H_0:\mu_1=\mu_2\)</span> contra uma alternativa bilateral. Reporte estatística, graus de liberdade, valor-<span class="math inline">\(p\)</span> e intervalo de confiança.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 13">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 13
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em <span class="math inline">\(40\)</span> pares antes–depois, a média das diferenças foi <span class="math inline">\(-2{,}4\)</span> e o desvio-padrão das diferenças foi <span class="math inline">\(5{,}8\)</span>. Teste se a média da diferença é menor que zero e interprete o sinal adotado na definição de <span class="math inline">\(D_i\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 14">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 14
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em <span class="math inline">\(30\)</span> ensaios Bernoulli, foram observados <span class="math inline">\(23\)</span> sucessos. Teste <span class="math inline">\(H_0:p=0{,}5\)</span> contra <span class="math inline">\(H_1:p&gt;0{,}5\)</span> pelos métodos exato e normal. Compare os resultados e discuta a adequação da aproximação.</p>
+</div>
+</div>
+</section>
+<section id="dados-categóricos" class="level3" data-number="6.25.5">
+<h3 data-number="6.25.5" class="anchored" data-anchor-id="dados-categóricos"><span class="header-section-number">6.25.5</span> Dados categóricos</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 15">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 15
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma variável categórica com quatro níveis apresentou contagens <span class="math inline">\((48,31,15,6)\)</span> em uma amostra de tamanho <span class="math inline">\(100\)</span>. Teste a aderência às probabilidades <span class="math inline">\((0{,}40,0{,}30,0{,}20,0{,}10)\)</span> usando <span class="math inline">\(X^2\)</span> e <span class="math inline">\(G^2\)</span>. Compare as estatísticas.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 16">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 16
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere a tabela:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Grupo</th>
+<th style="text-align: right;">Sucesso</th>
+<th style="text-align: right;">Fracasso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">35</td>
+</tr>
+</tbody>
+</table>
+<p>Teste a homogeneidade das proporções, calcule os resíduos ajustados e o <span class="math inline">\(V\)</span> de Cramér. Identifique as células que mais contribuem para a rejeição.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 17">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 17
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em uma tabela <span class="math inline">\(2\times2\)</span> com contagens <span class="math inline">\((8,2;1,5)\)</span>, compare o teste qui-quadrado de Pearson, o teste com correção de continuidade e o teste exato de Fisher. Justifique qual resultado deve receber maior ênfase.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 18">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 18
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para um teste qui-quadrado com <span class="math inline">\(\nu=3\)</span>, <span class="math inline">\(\alpha=0{,}05\)</span>, poder desejado de <span class="math inline">\(0{,}90\)</span> e tamanho do efeito <span class="math inline">\(w=0{,}25\)</span>, determine numericamente o menor tamanho amostral usando a distribuição qui-quadrado não central.</p>
+</div>
+</div>
+</section>
+<section id="reamostragem-e-robustez" class="level3" data-number="6.25.6">
+<h3 data-number="6.25.6" class="anchored" data-anchor-id="reamostragem-e-robustez"><span class="header-section-number">6.25.6</span> Reamostragem e robustez</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 19">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 19
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em um experimento completamente randomizado, dois grupos independentes apresentam tamanhos <span class="math inline">\(n_1=12\)</span> e <span class="math inline">\(n_2=15\)</span>. Descreva um teste de permutação para a diferença de médias, explicando qual hipótese nula é garantida pelo mecanismo de randomização e como calcular um valor-<span class="math inline">\(p\)</span> Monte Carlo.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercício 20">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Exercício 20
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Construa um exemplo numérico em que o teste <span class="math inline">\(t\)</span> com variâncias agrupadas e o teste de Welch produzam conclusões distintas. Investigue o papel do desbalanceamento amostral e da heteroscedasticidade.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="referências" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-borovkov1998" class="csl-entry" role="listitem">
+BOROVKOV, A. A. <strong>Mathematical Statistics</strong>. Amsterdam: Gordon; Breach Science Publishers, 1998.
+</div>
+<div id="ref-casella2002statistical" class="csl-entry" role="listitem">
+CASELLA, George; BERGER, Roger L. <strong>Statistical Inference</strong>. 2. ed. Pacific Grove, CA: Duxbury Press, 2002.
+</div>
+<div id="ref-chihara2022" class="csl-entry" role="listitem">
+CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.
+</div>
+<div id="ref-cox2006principles" class="csl-entry" role="listitem">
+COX, D. R. <strong>Principles of Statistical Inference</strong>. Cambridge: Cambridge University Press, 2006.
+</div>
+<div id="ref-hogg1978" class="csl-entry" role="listitem">
+HOGG, Robert V.; CRAIG, Allen T. <strong>Introduction to Mathematical Statistics</strong>. 4. ed. New York: Macmillan Publishing Co., 1978.
+</div>
+<div id="ref-larsen2012" class="csl-entry" role="listitem">
+LARSEN, Richard J.; MARX, Morris L. <strong>An Introduction to Mathematical Statistics and Its Applications</strong>. 5. ed. Boston: Prentice Hall, 2012.
+</div>
+<div id="ref-lauritzen2023fundamentals" class="csl-entry" role="listitem">
+LAURITZEN, Steffen. <strong>Fundamentals of Mathematical Statistics</strong>. 1. ed. Boca Raton, FL: CRC Press, 2023.
+</div>
+<div id="ref-ramachandran2021r" class="csl-entry" role="listitem">
+RAMACHANDRAN, Kandethody M.; TSOKOS, Chris P. <strong>Mathematical Statistics with Applications in <span>R</span></strong>. 3. ed. London: Academic Press, 2021.
+</div>
+<div id="ref-rasch2018" class="csl-entry" role="listitem">
+RASCH, Dieter; SCHOTT, Dieter. <strong>Mathematical Statistics</strong>. Chichester: John Wiley &amp; Sons, 2018.
+</div>
+<div id="ref-rice2007mathematical" class="csl-entry" role="listitem">
+RICE, John A. <strong>Mathematical Statistics and Data Analysis</strong>. 3. ed. Belmont, CA: Duxbury Press, 2007.
+</div>
+<div id="ref-rosner2011fundamentals" class="csl-entry" role="listitem">
+ROSNER, Bernard. <strong>Fundamentals of Biostatistics</strong>. 7. ed. Boston: Brooks/Cole, Cengage Learning, 2011.
+</div>
+<div id="ref-shao2005" class="csl-entry" role="listitem">
+SHAO, Jun. <strong>Mathematical Statistics: Exercises and Solutions</strong>. New York: Springer Science+Business Media, 2005.
+</div>
+<div id="ref-wilcox2022" class="csl-entry" role="listitem">
+WILCOX, Rand R. <strong>Introduction to Robust Estimation and Hypothesis Testing</strong>. 5. ed. London: Academic Press, 2022.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./unidade5.html" class="pagination-link" aria-label="Estimação intervalar">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimação intervalar</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./unidade7.html" class="pagination-link" aria-label="Projetos Aplicados">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Projetos Aplicados</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
