@@ -1,47 +1,33 @@
 # Resultados Matemáticos e Assintóticos para Inferência 
 
-Este capítulo reúne ferramentas matemáticas e assintóticas que serão utilizadas ao longo do estudo de Inferência Estatística. O objetivo é estabelecer uma base comum de notação e revisar resultados de cálculo, álgebra linear e teoria assintótica necessários para estudar distribuições amostrais, propriedades de estimadores, métodos de estimação, intervalos de confiança e testes de hipóteses [@rice2007mathematical, caps. 1--6; @ramachandran2021r, caps. 2--4; @lauritzen2023fundamentals, ap. A].
+Este capítulo reúne ferramentas matemáticas e assintóticas que podem ser utilizadas nos desenvolvimentos posteriores de Inferência Estatística. O objetivo é estabelecer uma notação comum e registrar resultados de cálculo, álgebra linear e teoria assintótica importantes no estudo de distribuições amostrais, propriedades de estimadores, métodos de estimação, intervalos de confiança e testes de hipóteses [@rice2007mathematical, caps. 1--6; @ramachandran2021r, caps. 2--4; @lauritzen2023fundamentals, ap. A].
 
-No capítulo anterior, a atenção esteve concentrada na linguagem da Probabilidade: variáveis aleatórias, distribuições, momentos, dependência, transformações e modelos probabilísticos. A partir deste capítulo, passamos a reunir ferramentas utilizadas para **manipular esses modelos matematicamente** e para **estudar o comportamento de estatísticas quando o tamanho da amostra aumenta**.
-
-A primeira parte revisa operações com somatórios e produtos, diferenciação, expansões de Taylor, vetores, matrizes, formas quadráticas, projeções e transformações multivariadas. A segunda introduz a linguagem assintótica utilizada posteriormente para estudar consistência, distribuições limites, normalidade assintótica e aproximações de funções de estimadores.
+Os conceitos e modelos probabilísticos foram apresentados no capítulo anterior. Aqui, a atenção se concentra em duas classes de ferramentas. A primeira permite manipular funções, vetores, matrizes e transformações. A segunda permite estudar o comportamento de sequências de variáveis aleatórias quando o tamanho da amostra aumenta.
 
 ::: {.callout-note title="Delimitação do capítulo"}
+Os resultados apresentados neste capítulo podem ser utilizados como ferramentas. O objetivo não é desenvolver novamente conteúdos de Cálculo ou Álgebra Linear nem apresentar demonstrações dos resultados assintóticos.
 
-Os resultados apresentados neste capítulo serão utilizados como **ferramentas matemáticas**. Suas aplicações estatísticas completas serão desenvolvidas nos capítulos correspondentes.
-
-Em particular:
-
-- a Lei Fraca dos Grandes Números e o Teorema Central do Limite serão estabelecidos aqui, enquanto suas consequências para distribuições amostrais serão estudadas no capítulo **Distribuições Amostrais**;
-- o método delta será apresentado como consequência de uma expansão de Taylor e aplicado posteriormente a estimadores e funções de parâmetros;
-- gradientes e matrizes hessianas serão definidos aqui e utilizados depois em funções de verossimilhança, funções escore e informação;
-- formas quadráticas e projeções serão retomadas quando surgirem em distribuições associadas ao modelo normal e em métodos de mínimos quadrados.
-
-O objetivo não é desenvolver novamente cursos completos de Cálculo ou Álgebra Linear, mas registrar os resultados necessários para os desenvolvimentos inferenciais do livro.
+A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e interpretados aqui. Suas consequências para distribuições de estatísticas serão desenvolvidas no capítulo **Distribuições Amostrais**. O método delta será apresentado como ferramenta para transformar distribuições assintóticas e será aplicado posteriormente aos problemas inferenciais correspondentes.
 :::
 
 
 ## Mapa de dependências 
 
-As ferramentas deste capítulo reaparecerão em diferentes partes do livro. O quadro seguinte resume suas principais conexões.
-
 | Ferramenta | Utilização posterior |
 |:---|:---|
-| Somatórios, produtos e logaritmos | verossimilhança, log-verossimilhança e funções construídas a partir de amostras |
-| Diferenciação | otimização, função escore e informação |
-| Expansões de Taylor | método delta, aproximações e propriedades assintóticas |
-| Vetores e matrizes | parâmetros vetoriais, covariâncias, informação e modelos lineares |
-| Formas quadráticas | distribuições associadas ao modelo normal, somas de quadrados e estatísticas inferenciais |
+| Somatórios, produtos e logaritmos | verossimilhança, função escore e métodos de estimação |
+| Vetores e matrizes | parâmetros vetoriais, matrizes de covariâncias, informação de Fisher e modelos lineares |
+| Diferenciação | otimização, função escore e informação observada |
+| Expansões de Taylor | aproximações, método delta e resultados assintóticos |
+| Formas quadráticas | distribuições associadas ao modelo normal, mínimos quadrados e estatísticas inferenciais |
 | Projeções | mínimos quadrados e decomposição da variabilidade |
-| Transformações multivariadas e jacobiano | obtenção de distribuições e mudanças de variáveis |
+| Transformações multivariadas e jacobiano | obtenção de distribuições e reparametrizações |
 | Modos de convergência | consistência e aproximações assintóticas |
-| Lei Fraca dos Grandes Números | médias e momentos amostrais, consistência |
+| Lei dos Grandes Números | médias e momentos amostrais, consistência |
 | Teorema Central do Limite | aproximações normais e normalidade assintótica |
-| Mapeamento contínuo | transformação de sequências convergentes |
-| Lema de Slutsky | combinação de limites e substituição de quantidades desconhecidas |
-| Método delta | distribuição assintótica de funções de estatísticas |
-| Ordens estocásticas | representação de taxas, erros e termos de resto |
-
+| Mapeamento contínuo e Slutsky | transformação e combinação de sequências convergentes |
+| Método delta | distribuições assintóticas de funções |
+| Ordens estocásticas | representação da magnitude de erros e termos de aproximação |
 
 ```{r}
 #| echo: false
@@ -68,21 +54,11 @@ tema_matematico <- theme_bw(base_size = 16) +
   )
 ```
 
+## Ferramentas matemáticas 
 
-## Notação e ferramentas de cálculo 
+### Somatórios, produtos e logaritmos 
 
-Diversos desenvolvimentos inferenciais podem ser expressos de forma compacta por meio de somatórios, produtos, logaritmos e derivadas. Essas operações aparecerão repetidamente quando uma estatística for construída a partir de uma amostra ou quando uma função de vários parâmetros precisar ser analisada.
-
-
-### Somatórios e produtos 
-
-Para uma sequência
-
-$$
-a_1,\ldots,a_n,
-$$
-
-utilizaremos a notação
+Para uma sequência $a_1,\ldots,a_n$, utilizaremos
 
 $$
 \sum_{i=1}^n a_i
@@ -90,332 +66,239 @@ $$
 a_1+\cdots+a_n
 $$
 
-para representar sua soma e
+e
 
 $$
 \prod_{i=1}^n a_i
 =
-a_1\cdots a_n
+a_1\cdots a_n.
 $$
 
-para representar seu produto.
-
-Algumas propriedades dos somatórios serão utilizadas repetidamente. Para constantes $a$, $b$ e $c$,
+A linearidade dos somatórios permite escrever
 
 $$
-\sum_{i=1}^n
-(ax_i+by_i)
+\sum_{i=1}^n(ax_i+by_i)
 =
 a\sum_{i=1}^n x_i
 +
-b\sum_{i=1}^n y_i
+b\sum_{i=1}^n y_i,
+$$
+
+para constantes $a$ e $b$.
+
+A média aritmética de $x_1,\ldots,x_n$ será representada por
+
+$$
+\overline x
+=
+\frac{1}{n}\sum_{i=1}^n x_i.
+$$
+
+Duas identidades serão utilizadas repetidamente:
+
+$$
+\sum_{i=1}^n(x_i-\overline x)=0
 $$
 
 e
 
 $$
-\sum_{i=1}^n c
-=
-nc.
-$$
-
-A média aritmética de
-
-$$
-x_1,\ldots,x_n
-$$
-
-é
-
-$$
-\overline x
-=
-\frac{1}{n}
-\sum_{i=1}^n x_i.
-$$
-
-Uma propriedade útil é
-
-$$
-\sum_{i=1}^n
-(x_i-\overline x)
-=
-0.
-$$
-
-De fato,
-
-$$
-\sum_{i=1}^n
-(x_i-\overline x)
-=
-\sum_{i=1}^n x_i
--
-n\overline x
-=
-0.
-$$
-
-Essa identidade permite obter uma decomposição que será utilizada posteriormente em somas de quadrados. Para qualquer constante $a$,
-
-$$
-x_i-a
-=
-(x_i-\overline x)
-+
-(\overline x-a).
-$$
-
-Elevando ao quadrado e somando,
-
-$$
-\sum_{i=1}^n(x_i-a)^2
-=
-\sum_{i=1}^n(x_i-\overline x)^2
-+
-2(\overline x-a)
-\sum_{i=1}^n(x_i-\overline x)
-+
-n(\overline x-a)^2.
-$$
-
-Como
-
-$$
-\sum_{i=1}^n(x_i-\overline x)=0,
-$$
-
-obtemos
-
-$$
-\boxed{
 \sum_{i=1}^n(x_i-a)^2
 =
 \sum_{i=1}^n(x_i-\overline x)^2
 +
 n(\overline x-a)^2.
-}
 $$
 
-A expressão decompõe a soma dos quadrados dos desvios em relação a um valor arbitrário $a$ em duas parcelas: a variação em torno da média e a distância entre $\overline x$ e $a$.
-
-
-::: {.callout-example title="Uso em Inferência: estatísticas construídas por somas"}
-
-Muitas estatísticas utilizadas posteriormente possuem a forma de uma soma ou de uma média. Por exemplo,
+A transformação logarítmica converte produtos em somas:
 
 $$
-\overline X_n
+\log\left(\prod_{i=1}^n a_i\right)
 =
-\frac{1}{n}
-\sum_{i=1}^nX_i
+\sum_{i=1}^n\log a_i,
+\qquad a_i>0.
 $$
 
-é uma função das $n$ observações da amostra.
+Também utilizaremos $\log(a^b)=b\log a$.
 
-Da mesma forma, uma soma de quadrados como
+Essas identidades serão particularmente úteis quando uma função construída como produto puder ser estudada por meio de sua transformação logarítmica.
 
-$$
-\sum_{i=1}^n
-(X_i-\overline X_n)^2
-$$
+::: {.callout-example title="Exemplo: produto e logaritmo"}
 
-será utilizada para descrever a variabilidade das observações.
-
-A notação de somatório permite escrever essas estatísticas sem depender de um valor específico de $n$.
-:::
-
-
-### Produtos e logaritmos 
-
-Produtos aparecem naturalmente quando várias contribuições individuais são combinadas. Uma transformação particularmente útil nesses casos é o logaritmo.
-
-Para
-
-$$
-a_i>0,
-\qquad
-i=1,\ldots,n,
-$$
-
-temos
-
-$$
-\log
-\left(
-\prod_{i=1}^n a_i
-\right)
-=
-\sum_{i=1}^n
-\log a_i.
-$$
-
-Além disso,
-
-$$
-\log(a^b)
-=
-b\log a,
-\qquad
-a>0.
-$$
-
-Outra propriedade frequentemente utilizada é
-
-$$
-\log\left(\frac{a}{b}\right)
-=
-\log a-\log b,
-\qquad
-a,b>0.
-$$
-
-Como o logaritmo natural é uma função estritamente crescente,
-
-$$
-a<b
-\quad\Longleftrightarrow\quad
-\log a<\log b
-$$
-
-para valores positivos. Consequentemente, maximizar uma função positiva é equivalente a maximizar seu logaritmo.
-
-
-::: {.callout-example title="Uso em Inferência: produtos transformados em somas"}
-
-Quando observações independentes contribuem multiplicativamente para uma função, pode surgir uma expressão da forma
+Considere
 
 $$
 L(\theta)
 =
 \prod_{i=1}^n
-f(x_i\mid\theta).
+\theta e^{-\theta x_i},
+\qquad
+\theta>0.
+$$
+
+O produto pode ser escrito como
+
+$$
+L(\theta)
+=
+\theta^n
+\exp\left(
+-\theta\sum_{i=1}^n x_i
+\right).
 $$
 
 Aplicando o logaritmo,
 
 $$
-\ell(\theta)
-=
 \log L(\theta)
 =
-\sum_{i=1}^n
-\log f(x_i\mid\theta).
+n\log\theta
+-
+\theta\sum_{i=1}^n x_i.
 $$
 
-Assim, um produto com $n$ fatores é convertido em uma soma com $n$ parcelas.
-
-Essa transformação será utilizada posteriormente na passagem da função de verossimilhança para a log-verossimilhança.
+A transformação preserva a informação contida em $L(\theta)$ e produz uma expressão mais simples para diferenciação.
 :::
 
 
-## Diferenciação 
+### Vetores e matrizes 
 
-A diferenciação permite estudar como uma função varia quando seus argumentos são modificados. Em Inferência Estatística, derivadas aparecem em problemas de otimização, aproximações locais e análise da sensibilidade de funções em relação aos parâmetros.
-
-
-### Funções de uma variável 
-
-Considere uma função diferenciável
+Um vetor coluna em $\mathbb R^k$ será representado por
 
 $$
-g:\mathbb R\longrightarrow\mathbb R.
-$$
-
-A derivada de $g$ em $x$ é
-
-$$
-g'(x)
+\mathbf x
 =
-\frac{d}{dx}g(x).
+(x_1,\ldots,x_k)^\mathsf T.
 $$
 
-Geometricamente, $g'(x)$ representa a inclinação da reta tangente ao gráfico de $g$ no ponto considerado.
+Seu transposto é $\mathbf x^\mathsf T=(x_1,\ldots,x_k)$.
 
-Se $x_0$ é um ponto interior do domínio e $g$ apresenta um extremo local diferenciável em $x_0$, então uma condição necessária é
-
-$$
-g'(x_0)=0.
-$$
-
-Um ponto que satisfaz essa igualdade é denominado **ponto crítico**.
-
-A derivada de segunda ordem auxilia na classificação desse ponto. Se
+Para $\mathbf x,\mathbf y\in\mathbb R^k$, o produto interno é
 
 $$
-g'(x_0)=0
+\mathbf x^\mathsf T\mathbf y
+=
+\sum_{j=1}^k x_jy_j,
 $$
 
-e
+e a norma euclidiana é
 
 $$
-g''(x_0)<0,
+\|\mathbf x\|
+=
+\sqrt{\mathbf x^\mathsf T\mathbf x}.
 $$
 
-então $x_0$ é um máximo local. Se
+
+#### Matrizes 
+
+Uma matriz com $m$ linhas e $k$ colunas será representada por $\mathbf A=[a_{ij}]\in\mathbb R^{m\times k}$.
+
+Sua transposta $\mathbf A^\mathsf T$ possui dimensão $k\times m$ e satisfaz
 
 $$
-g''(x_0)>0,
+(\mathbf A\mathbf B)^\mathsf T
+=
+\mathbf B^\mathsf T\mathbf A^\mathsf T.
 $$
 
-então $x_0$ é um mínimo local.
+A matriz identidade de ordem $k$ será representada por $\mathbf I_k$, ou simplesmente $\mathbf I$ quando sua dimensão estiver clara.
 
-Quando
+Uma matriz quadrada $\mathbf A$ é **simétrica** quando $\mathbf A^\mathsf T=\mathbf A$.
 
-$$
-g''(x_0)=0,
-$$
-
-o teste da segunda derivada é inconclusivo.
-
-
-::: {.callout-note title="Extremos na fronteira"}
-
-A condição
+O **determinante**, representado por $\det(\mathbf A)$, é um escalar associado a uma matriz quadrada. Uma matriz é invertível se, e somente se,
 
 $$
-g'(x_0)=0
+\det(\mathbf A)\neq0.
 $$
 
-é uma condição para extremos **interiores**.
+Quando $\mathbf A$ é invertível, existe $\mathbf A^{-1}$ tal que
 
-Quando o domínio possui fronteiras, o máximo ou o mínimo pode ocorrer em um ponto no qual a derivada não é zero ou nem sequer está definida como derivada bilateral.
+$$
+\mathbf A^{-1}\mathbf A
+=
+\mathbf A\mathbf A^{-1}
+=
+\mathbf I.
+$$
 
-Essa distinção será relevante em alguns problemas de estimação nos quais o espaço paramétrico possui restrições.
+Além disso,
+
+$$
+\det(\mathbf A^{-1})
+=
+\frac{1}{\det(\mathbf A)}.
+$$
+
+O **posto** de uma matriz corresponde ao número máximo de colunas, ou equivalentemente de linhas, linearmente independentes.
+
+Se $\mathbf X\in\mathbb R^{n\times p}$ possui posto $p$, suas colunas são linearmente independentes. Quando $n\geq p$, a matriz $\mathbf X^\mathsf T\mathbf X$ é então invertível.
+
+::: {.callout-example title="Exemplo: operações matriciais"}
+
+Considere
+
+$$
+\mathbf A
+=
+\begin{pmatrix}
+2 & 1\\
+1 & 3
+\end{pmatrix}.
+$$
+
+A matriz é simétrica e
+
+$$
+\det(\mathbf A)
+=
+2(3)-1(1)
+=
+5.
+$$
+
+Como o determinante é diferente de zero, $\mathbf A$ é invertível. Sua inversa é
+
+$$
+\mathbf A^{-1}
+=
+\frac{1}{5}
+\begin{pmatrix}
+3 & -1\\
+-1 & 2
+\end{pmatrix}.
+$$
 :::
 
 
-### Funções de várias variáveis 
+### Diferenciação 
 
-Considere agora uma função escalar
+Diversos procedimentos posteriores envolverão a maximização ou minimização de funções.
+
+Para uma função real diferenciável $g$, um ponto interior $x_0$ candidato a extremo satisfaz $g'(x_0)=0$. Quando $g''(x_0)<0$, o ponto corresponde a um máximo local; quando $g''(x_0)>0$, corresponde a um mínimo local.
+
+
+#### Gradiente e hessiana 
+
+Para uma função escalar
 
 $$
-g:\mathbb R^k\longrightarrow\mathbb R
+g:\mathbb R^k\longrightarrow\mathbb R,
 $$
 
-e um vetor de argumentos
-
-$$
-\boldsymbol\theta
-=
-(\theta_1,\ldots,\theta_k)^\mathsf T.
-$$
-
-As derivadas parciais de primeira ordem são reunidas no **gradiente**,
+as derivadas de primeira ordem são reunidas no **gradiente**,
 
 $$
 \nabla g(\boldsymbol\theta)
 =
 \begin{pmatrix}
-\dfrac{\partial g}{\partial\theta_1}\\[6pt]
-\vdots\\[6pt]
+\dfrac{\partial g}{\partial\theta_1}\\
+\vdots\\
 \dfrac{\partial g}{\partial\theta_k}
 \end{pmatrix}.
 $$
 
-O gradiente descreve a variação local de $g$ em relação a todas as componentes de $\boldsymbol\theta$.
-
-As derivadas de segunda ordem são reunidas na **matriz hessiana**,
+As derivadas de segunda ordem formam a **matriz hessiana**,
 
 $$
 \nabla^2g(\boldsymbol\theta)
@@ -426,46 +309,34 @@ $$
 \right]_{i,j=1}^k.
 $$
 
-Explicitamente,
+
+#### Matriz jacobiana 
+
+Para uma função vetorial
 
 $$
-\nabla^2g(\boldsymbol\theta)
+g:\mathbb R^k\longrightarrow\mathbb R^m,
+$$
+
+com componentes $g_1,\ldots,g_m$, a **matriz jacobiana** é
+
+$$
+Dg(\mathbf x)
 =
-\begin{pmatrix}
-\dfrac{\partial^2g}{\partial\theta_1^2}
-&
-\cdots
-&
-\dfrac{\partial^2g}
-{\partial\theta_1\partial\theta_k}
-\\[8pt]
-\vdots
-&
-\ddots
-&
-\vdots
-\\[8pt]
-\dfrac{\partial^2g}
-{\partial\theta_k\partial\theta_1}
-&
-\cdots
-&
-\dfrac{\partial^2g}{\partial\theta_k^2}
-\end{pmatrix}.
+\left[
+\frac{\partial g_i(\mathbf x)}
+{\partial x_j}
+\right]_
+{\substack{i=1,\ldots,m\\j=1,\ldots,k}}.
 $$
 
-Quando as derivadas parciais de segunda ordem são contínuas em uma vizinhança do ponto considerado, as derivadas cruzadas coincidem,
+Quando $m=1$, a matriz jacobiana corresponde ao transposto do gradiente, de acordo com a convenção adotada.
 
-$$
-\frac{\partial^2g}
-{\partial\theta_i\partial\theta_j}
-=
-\frac{\partial^2g}
-{\partial\theta_j\partial\theta_i},
-$$
+O gradiente, a hessiana e a jacobiana aparecerão em contextos diferentes ao longo do livro:
 
-e a matriz hessiana é simétrica.
-
+- o gradiente será utilizado na diferenciação de funções escalares;
+- a hessiana será utilizada em aproximações de segunda ordem;
+- a jacobiana será utilizada em transformações vetoriais e no método delta multivariado.
 
 ::: {.callout-example title="Exemplo: gradiente e hessiana"}
 
@@ -478,7 +349,7 @@ g(\theta_1,\theta_2)
 +
 \theta_1\theta_2
 +
-\theta_2^2.
+2\theta_2^2.
 $$
 
 O gradiente é
@@ -488,70 +359,28 @@ $$
 =
 \begin{pmatrix}
 2\theta_1+\theta_2\\
-\theta_1+2\theta_2
-\end{pmatrix}.
+\theta_1+4\theta_2
+\end{pmatrix},
 $$
 
-A matriz hessiana é
+e a hessiana é
 
 $$
 \nabla^2g(\theta_1,\theta_2)
 =
 \begin{pmatrix}
 2 & 1\\
-1 & 2
+1 & 4
 \end{pmatrix}.
 $$
-
-Nesse exemplo, a hessiana não depende do ponto em que é avaliada.
 :::
 
 
-::: {.callout-example title="Uso em Inferência: parâmetros vetoriais"}
+### Fórmula de Taylor 
 
-Um modelo pode depender de mais de um parâmetro. Na distribuição normal, por exemplo, podemos organizar
+A fórmula de Taylor permite aproximar uma função em torno de um ponto conhecido. Essa ferramenta será utilizada posteriormente para estudar funções de estatísticas e para construir aproximações locais.
 
-$$
-\boldsymbol\theta
-=
-\begin{pmatrix}
-\mu\\
-\sigma^2
-\end{pmatrix}.
-$$
-
-Quando uma função
-
-$$
-\ell(\boldsymbol\theta)
-$$
-
-depender simultaneamente desses parâmetros, seu gradiente reunirá as derivadas de primeira ordem,
-
-$$
-\nabla\ell(\boldsymbol\theta),
-$$
-
-enquanto a hessiana reunirá as derivadas de segunda ordem,
-
-$$
-\nabla^2\ell(\boldsymbol\theta).
-$$
-
-Essas estruturas serão utilizadas posteriormente na função escore, na informação observada e em aproximações locais de funções inferenciais.
-:::
-
-
-## Fórmula de Taylor 
-
-A fórmula de Taylor permite representar localmente uma função por meio de um polinômio construído a partir de suas derivadas.
-
-Na Inferência Estatística, a ideia principal não é substituir permanentemente uma função por uma série infinita. O interesse está em utilizar **aproximações locais com termos de resto controlados**.
-
-
-### Aproximação de primeira ordem 
-
-Se $g$ é diferenciável em $a$, então
+Se $g$ é diferenciável em uma vizinhança de $a$, a aproximação de primeira ordem é
 
 $$
 g(x)
@@ -565,86 +394,55 @@ o(|x-a|),
 x\to a.
 $$
 
-Assim, para $x$ suficientemente próximo de $a$,
+A notação $r(x)=o(|x-a|)$ significa que
+
+$$
+\frac{r(x)}{|x-a|}
+\longrightarrow0
+$$
+
+quando $x\to a$.
+
+Quando $g$ possui duas derivadas contínuas, a aproximação de segunda ordem pode ser escrita como
 
 $$
 g(x)
-\approx
+=
 g(a)
 +
-g'(a)(x-a).
+g'(a)(x-a)
++
+\frac{1}{2}g''(a)(x-a)^2
++
+o\{(x-a)^2\}.
 $$
 
-A expressão à direita corresponde à reta tangente ao gráfico de $g$ no ponto
+::: {.callout-example title="Exemplo: aproximação de $\log x$"}
 
-$$
-(a,g(a)).
-$$
+Considere $g(x)=\log x$. Em torno de $a=1$, temos $g(1)=0$ e $g'(1)=1$.
 
-O termo
-
-$$
-o(|x-a|)
-$$
-
-representa um erro que se torna desprezível em relação a $|x-a|$ quando
-
-$$
-x\to a.
-$$
-
-
-::: {.callout-example title="Exemplo: aproximação do logaritmo"}
-
-Considere
-
-$$
-g(x)=\log x.
-$$
-
-Em torno de
-
-$$
-a=1,
-$$
-
-temos
-
-$$
-g(1)=0
-$$
-
-e
-
-$$
-g'(1)=1.
-$$
-
-Portanto,
+Assim,
 
 $$
 \log x
 =
-(x-1)
-+
-o(|x-1|),
+(x-1)+o(|x-1|),
 \qquad
 x\to1.
 $$
 
-Em primeira ordem,
+Para valores próximos de $1$, podemos utilizar
 
 $$
-\boxed{
 \log x
 \approx
-x-1
-}
+x-1.
 $$
 
-para valores de $x$ próximos de $1$.
+Por exemplo, para $x=1{,}05$, a aproximação fornece $0{,}05$, enquanto $\log(1{,}05)\approx0{,}0488$.
 :::
 
+A aproximação linear pode ser comparada graficamente com a função original.
 
 ```{r}
 #| label: fig-taylor-log
@@ -652,7 +450,7 @@ para valores de $x$ próximos de $1$.
 #| fig-width: 6
 #| fig-height: 5
 #| fig-align: center
-#| fig-cap: "Função logarítmica e sua aproximação de Taylor de primeira ordem em torno de a=1."
+#| fig-cap: "Função logarítmica e sua aproximação de Taylor de primeira ordem em torno de a = 1."
 #| warning: false
 #| message: false
 
@@ -712,207 +510,13 @@ ggplot(
   tema_matematico
 ```
 
-A @fig-taylor-log mostra que a aproximação linear coincide com a função no ponto
+A @fig-taylor-log mostra que a aproximação linear coincide com a função no ponto $x=1$ e acompanha seu comportamento em uma vizinhança desse ponto. À medida que $x$ se afasta de $1$, a diferença entre a função e sua aproximação aumenta.
 
-$$
-x=1
-$$
+Esse caráter **local** da aproximação será utilizado nos resultados assintóticos: quando uma sequência de quantidades aleatórias se aproxima de determinado valor, uma função dessas quantidades pode ser aproximada por sua expansão de Taylor em torno do valor limite.
 
-e acompanha seu comportamento em uma vizinhança desse ponto. À medida que $x$ se afasta de $1$, a diferença entre a função e sua aproximação aumenta.
+#### Taylor em várias dimensões 
 
-Esse caráter **local** da aproximação é o aspecto que será utilizado nos resultados assintóticos: quando uma sequência de estatísticas se aproxima de determinado valor, uma função dessas estatísticas pode ser aproximada por sua expansão de Taylor em torno do valor limite.
-
-
-### Aproximação de segunda ordem 
-
-Se $g$ possui segunda derivada contínua em uma vizinhança de $a$, então
-
-$$
-g(x)
-=
-g(a)
-+
-g'(a)(x-a)
-+
-\frac{1}{2}
-g''(a)(x-a)^2
-+
-o\{(x-a)^2\},
-\qquad
-x\to a.
-$$
-
-Assim, a aproximação de segunda ordem é
-
-$$
-g(x)
-\approx
-g(a)
-+
-g'(a)(x-a)
-+
-\frac{1}{2}
-g''(a)(x-a)^2.
-$$
-
-Enquanto a aproximação de primeira ordem utiliza apenas a inclinação local, a aproximação de segunda ordem incorpora também a curvatura da função.
-
-Uma forma equivalente, utilizando o resto de Lagrange, é
-
-$$
-g(x)
-=
-g(a)
-+
-g'(a)(x-a)
-+
-\frac{1}{2}
-g''(\widetilde x)(x-a)^2,
-$$
-
-em que $\widetilde x$ está entre $a$ e $x$, sob as condições usuais para o resultado.
-
-
-::: {.callout-example title="Uso em Inferência: aproximações locais"}
-
-Expansões de Taylor aparecerão posteriormente em diferentes situações.
-
-Se uma estatística $T_n$ se aproxima de $\theta$, então uma função $g(T_n)$ pode ser aproximada por
-
-$$
-g(T_n)
-\approx
-g(\theta)
-+
-g'(\theta)(T_n-\theta).
-$$
-
-Essa é a ideia utilizada pelo **método delta**.
-
-De forma semelhante, uma função inferencial $\ell(\theta)$ pode ser aproximada localmente em torno de um valor $\theta_0$ por
-
-$$
-\ell(\theta)
-\approx
-\ell(\theta_0)
-+
-\ell'(\theta_0)(\theta-\theta_0)
-+
-\frac{1}{2}
-\ell''(\theta_0)(\theta-\theta_0)^2.
-$$
-
-Expansões desse tipo serão utilizadas posteriormente para estudar funções de verossimilhança e propriedades assintóticas de estimadores.
-:::
-
-
-## Taylor em várias dimensões 
-
-A mesma ideia se estende a funções de vetores.
-
-Considere
-
-$$
-g:\mathbb R^k\longrightarrow\mathbb R
-$$
-
-diferenciável em
-
-$$
-\boldsymbol\xi\in\mathbb R^k.
-$$
-
-Para $\mathbf x$ próximo de $\boldsymbol\xi$,
-
-$$
-g(\mathbf x)
-=
-g(\boldsymbol\xi)
-+
-\nabla g(\boldsymbol\xi)^\mathsf T
-(\mathbf x-\boldsymbol\xi)
-+
-o
-\left(
-\|\mathbf x-\boldsymbol\xi\|
-\right).
-$$
-
-A aproximação de primeira ordem é, portanto,
-
-$$
-g(\mathbf x)
-\approx
-g(\boldsymbol\xi)
-+
-\nabla g(\boldsymbol\xi)^\mathsf T
-(\mathbf x-\boldsymbol\xi).
-$$
-
-Se $g$ possui derivadas de segunda ordem adequadamente regulares, a aproximação de segunda ordem pode ser escrita como
-
-$$
-g(\mathbf x)
-\approx
-g(\boldsymbol\xi)
-+
-\nabla g(\boldsymbol\xi)^\mathsf T
-(\mathbf x-\boldsymbol\xi)
-+
-\frac{1}{2}
-(\mathbf x-\boldsymbol\xi)^\mathsf T
-\nabla^2g(\boldsymbol\xi)
-(\mathbf x-\boldsymbol\xi).
-$$
-
-O termo
-
-$$
-(\mathbf x-\boldsymbol\xi)^\mathsf T
-\nabla^2g(\boldsymbol\xi)
-(\mathbf x-\boldsymbol\xi)
-$$
-
-é uma forma quadrática e incorpora a curvatura da função em diferentes direções.
-
-
-### Funções vetoriais 
-
-Considere agora
-
-$$
-g:\mathbb R^k\longrightarrow\mathbb R^m,
-$$
-
-com
-
-$$
-g(\mathbf x)
-=
-\begin{pmatrix}
-g_1(\mathbf x)\\
-\vdots\\
-g_m(\mathbf x)
-\end{pmatrix}.
-$$
-
-A matriz de derivadas de primeira ordem é a **matriz jacobiana**,
-
-$$
-Dg(\mathbf x)
-=
-\left[
-\frac{\partial g_i(\mathbf x)}
-{\partial x_j}
-\right]_{
-\substack{
-i=1,\ldots,m\\
-j=1,\ldots,k
-}
-}.
-$$
-
-Para $\mathbf x$ próximo de $\boldsymbol\xi$,
+Para uma função diferenciável $g:\mathbb R^k\to\mathbb R^m$,
 
 $$
 g(\mathbf x)
@@ -922,417 +526,46 @@ g(\boldsymbol\xi)
 Dg(\boldsymbol\xi)
 (\mathbf x-\boldsymbol\xi)
 +
-o
-\left(
+o\left(
 \|\mathbf x-\boldsymbol\xi\|
 \right).
 $$
 
-Quando
+Quando $g:\mathbb R^k\to\mathbb R$, a aproximação de primeira ordem é
 
 $$
-m=1,
-$$
-
-a jacobiana é um vetor linha e corresponde ao transposto do gradiente segundo a convenção adotada:
-
-$$
-Dg(\mathbf x)
+g(\mathbf x)
 =
-\nabla g(\mathbf x)^\mathsf T.
+g(\boldsymbol\xi)
++
+\nabla g(\boldsymbol\xi)^\mathsf T
+(\mathbf x-\boldsymbol\xi)
++
+o\left(
+\|\mathbf x-\boldsymbol\xi\|
+\right).
 $$
 
+A aproximação de segunda ordem utiliza a hessiana:
 
-::: {.callout-note title="Gradiente, hessiana e jacobiana"}
-
-Os três objetos possuem funções distintas:
-
-- o **gradiente** reúne derivadas de primeira ordem de uma função escalar;
-- a **hessiana** reúne derivadas de segunda ordem de uma função escalar;
-- a **jacobiana** reúne derivadas de primeira ordem de uma função vetorial.
-
-Essa distinção será mantida ao longo do livro.
-:::
-
-
-::: {.callout-example title="Uso em Inferência: parâmetros vetoriais e método delta"}
-
-Suponha que
-
-$$
-\mathbf T_n
-=
-\begin{pmatrix}
-T_{1n}\\
-T_{2n}
-\end{pmatrix}
-$$
-
-se aproxime de
-
-$$
-\boldsymbol\theta
-=
-\begin{pmatrix}
-\theta_1\\
-\theta_2
-\end{pmatrix}
-$$
-
-e que a quantidade de interesse seja
-
-$$
-g(\boldsymbol\theta)
-=
-\frac{\theta_1}{\theta_2}.
-$$
-
-Uma aproximação local de
-
-$$
-g(\mathbf T_n)
-$$
-
-dependerá do gradiente de $g$,
-
-$$
-\nabla g(\theta_1,\theta_2)
-=
-\begin{pmatrix}
-\dfrac{1}{\theta_2}\\[8pt]
--\dfrac{\theta_1}{\theta_2^2}
-\end{pmatrix}.
-$$
-
-Essa estrutura será utilizada posteriormente no **método delta multivariado** para obter a distribuição assintótica de funções de estimadores vetoriais [@lauritzen2023fundamentals, ap. A.3.2].
-:::
-
-## Vetores e matrizes 
-
-Muitos resultados inferenciais envolvem várias quantidades simultaneamente. Parâmetros podem ser vetoriais, estatísticas podem ser organizadas em vetores e estruturas de variabilidade podem ser representadas por matrizes.
-
-A notação matricial permite expressar essas relações de forma compacta e será particularmente útil no estudo de parâmetros multidimensionais, distribuições conjuntas, informação de Fisher e modelos lineares.
-
-
-### Vetores e operações 
-
-Um vetor coluna em $\mathbb R^k$ será representado por
-
-$$
-\mathbf x
-=
-\begin{pmatrix}
-x_1\\
-\vdots\\
-x_k
-\end{pmatrix}
-=
-(x_1,\ldots,x_k)^\mathsf T.
-$$
-
-Seu transposto é o vetor linha
-
-$$
-\mathbf x^\mathsf T
-=
-(x_1,\ldots,x_k).
-$$
-
-Para
-
-$$
-\mathbf x,\mathbf y\in\mathbb R^k,
-$$
-
-a soma é realizada componente a componente:
-
-$$
-\mathbf x+\mathbf y
-=
-\begin{pmatrix}
-x_1+y_1\\
-\vdots\\
-x_k+y_k
-\end{pmatrix}.
-$$
-
-Para um escalar $a$,
-
-$$
-a\mathbf x
-=
-\begin{pmatrix}
-ax_1\\
-\vdots\\
-ax_k
-\end{pmatrix}.
-$$
-
-
-### Produto interno e norma 
-
-O produto interno entre $\mathbf x$ e $\mathbf y$ é
-
-$$
-\langle\mathbf x,\mathbf y\rangle
-=
-\mathbf x^\mathsf T\mathbf y
-=
-\sum_{j=1}^k x_jy_j.
-$$
-
-Dois vetores são **ortogonais** quando
-
-$$
-\mathbf x^\mathsf T\mathbf y=0.
-$$
-
-A norma euclidiana de $\mathbf x$ é
-
-$$
-\|\mathbf x\|
-=
-\sqrt{\mathbf x^\mathsf T\mathbf x}
-=
-\sqrt{
-\sum_{j=1}^k x_j^2
-}.
-$$
-
-A norma representa o comprimento do vetor no espaço euclidiano.
-
-A distância entre dois vetores pode ser escrita como
-
-$$
-\|\mathbf x-\mathbf y\|.
-$$
-
-
-::: {.callout-example title="Uso em Inferência: distância entre vetores de parâmetros"}
-
-Considere dois valores possíveis de um parâmetro vetorial,
-
-$$
-\boldsymbol\theta_1
-=
-\begin{pmatrix}
-\theta_{11}\\
-\theta_{12}
-\end{pmatrix}
-$$
-
-e
-
-$$
-\boldsymbol\theta_2
-=
-\begin{pmatrix}
-\theta_{21}\\
-\theta_{22}
-\end{pmatrix}.
-$$
-
-A quantidade
-
-$$
-\|\boldsymbol\theta_1-\boldsymbol\theta_2\|
-$$
-
-mede a distância euclidiana entre esses dois pontos no espaço paramétrico.
-
-Em resultados assintóticos, expressões como
-
-$$
-\|\mathbf T_n-\boldsymbol\theta\|
-\to0
-$$
-
-serão utilizadas para representar a aproximação de uma estatística vetorial ao parâmetro que ela estima.
-:::
-
-
-## Matrizes 
-
-Uma matriz com $m$ linhas e $k$ colunas será representada por
-
-$$
-\mathbf A
-=
-[a_{ij}]
-\in
-\mathbb R^{m\times k}.
-$$
-
-Sua transposta,
-
-$$
-\mathbf A^\mathsf T,
-$$
-
-possui dimensão
-
-$$
-k\times m.
-$$
-
-Para matrizes compatíveis,
-
-$$
-(\mathbf A\mathbf B)^\mathsf T
-=
-\mathbf B^\mathsf T\mathbf A^\mathsf T.
-$$
-
-
-### Matriz identidade e inversa 
-
-A matriz identidade de ordem $k$ é
-
-$$
-\mathbf I_k
-=
-\begin{pmatrix}
-1 & 0 & \cdots & 0\\
-0 & 1 & \cdots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \cdots & 1
-\end{pmatrix}.
-$$
-
-Quando a dimensão estiver clara pelo contexto, escreveremos simplesmente
-
-$$
-\mathbf I.
-$$
-
-Uma matriz quadrada $\mathbf A$ é **invertível** quando existe uma matriz
-
-$$
-\mathbf A^{-1}
-$$
-
-tal que
-
-$$
-\mathbf A^{-1}\mathbf A
-=
-\mathbf A\mathbf A^{-1}
-=
-\mathbf I.
-$$
-
-
-### Matrizes simétricas 
-
-Uma matriz quadrada $\mathbf A$ é **simétrica** quando
-
-$$
-\mathbf A^\mathsf T
-=
-\mathbf A.
-$$
-
-Matrizes de covariâncias e matrizes hessianas sob condições adequadas são exemplos importantes de matrizes simétricas que aparecerão ao longo do livro.
-
-
-### Posto e independência linear 
-
-O **posto** de uma matriz corresponde ao número máximo de colunas, ou equivalentemente de linhas, linearmente independentes.
-
-Considere
-
 $$
-\mathbf X
-\in
-\mathbb R^{n\times p}.
+g(\mathbf x)
+\approx
+g(\boldsymbol\xi)
++
+\nabla g(\boldsymbol\xi)^\mathsf T
+(\mathbf x-\boldsymbol\xi)
++
+\frac{1}{2}
+(\mathbf x-\boldsymbol\xi)^\mathsf T
+\nabla^2g(\boldsymbol\xi)
+(\mathbf x-\boldsymbol\xi).
 $$
 
-Se
 
-$$
-\operatorname{posto}(\mathbf X)=p,
-$$
-
-dizemos que $\mathbf X$ possui **posto completo nas colunas**.
-
-Nesse caso, suas $p$ colunas são linearmente independentes.
-
-Quando
-
-$$
-n\geq p
-$$
-
-e $\mathbf X$ possui posto completo nas colunas,
-
-$$
-\mathbf X^\mathsf T\mathbf X
-$$
-
-é invertível.
-
-
-::: {.callout-example title="Uso em Inferência: matriz de planejamento"}
-
-Em modelos lineares, as observações podem ser organizadas em um vetor
-
-$$
-\mathbf y
-\in
-\mathbb R^n,
-$$
-
-enquanto as variáveis explicativas são organizadas em uma matriz
-
-$$
-\mathbf X
-\in
-\mathbb R^{n\times p}.
-$$
-
-A condição
-
-$$
-\operatorname{posto}(\mathbf X)=p
-$$
-
-garante que as colunas de $\mathbf X$ não apresentam dependência linear exata.
-
-Sob essa condição,
-
-$$
-\mathbf X^\mathsf T\mathbf X
-$$
-
-é invertível e expressões como
-
-$$
-(\mathbf X^\mathsf T\mathbf X)^{-1}
-$$
-
-podem ser utilizadas no método de mínimos quadrados.
-:::
-
-
-## Formas quadráticas 
-
-Considere uma matriz simétrica
-
-$$
-\mathbf A
-\in
-\mathbb R^{k\times k}
-$$
-
-e um vetor
-
-$$
-\mathbf x
-\in
-\mathbb R^k.
-$$
+### Formas quadráticas 
 
-A expressão
+Para uma matriz simétrica $\mathbf A\in\mathbb R^{k\times k}$ e um vetor $\mathbf x\in\mathbb R^k$, a expressão
 
 $$
 \mathbf x^\mathsf T
@@ -1342,40 +575,7 @@ $$
 
 é denominada **forma quadrática**.
 
-Quando
-
-$$
-\mathbf A=\mathbf I,
-$$
-
-temos
-
-$$
-\mathbf x^\mathsf T
-\mathbf x
-=
-\sum_{j=1}^k x_j^2.
-$$
-
-Assim, uma soma de quadrados é um caso particular de forma quadrática.
-
-
-### Matrizes positivas semidefinidas e positivas definidas 
-
-Uma matriz simétrica $\mathbf A$ é **positiva semidefinida** quando
-
-$$
-\mathbf x^\mathsf T
-\mathbf A
-\mathbf x
-\geq0
-$$
-
-para todo
-
-$$
-\mathbf x\in\mathbb R^k.
-$$
+A matriz $\mathbf A$ é **positiva semidefinida** quando $\mathbf x^\mathsf T\mathbf A\mathbf x\geq0$ para todo $\mathbf x$.
 
 Ela é **positiva definida** quando
 
@@ -1383,163 +583,78 @@ $$
 \mathbf x^\mathsf T
 \mathbf A
 \mathbf x
->0
+>
+0
 $$
 
-para todo
+para todo $\mathbf x\neq\mathbf0$.
 
-$$
-\mathbf x\neq\mathbf0.
-$$
-
-Toda matriz positiva definida é positiva semidefinida, mas a recíproca não é necessariamente verdadeira.
-
-
-::: {.callout-example title="Exemplo: uma forma quadrática"}
-
-Considere
-
-$$
-\mathbf A
-=
-\begin{pmatrix}
-2 & 1\\
-1 & 2
-\end{pmatrix}
-$$
-
-e
-
-$$
-\mathbf x
-=
-\begin{pmatrix}
-x_1\\
-x_2
-\end{pmatrix}.
-$$
-
-Então,
+Analogamente, $\mathbf A$ é **negativa definida** quando
 
 $$
 \mathbf x^\mathsf T
 \mathbf A
 \mathbf x
+<
+0
+$$
+
+para todo $\mathbf x\neq\mathbf0$.
+
+Uma matriz simétrica é **indefinida** quando sua forma quadrática assume valores positivos para alguns vetores não nulos e valores negativos para outros.
+
+Matrizes de covariâncias são positivas semidefinidas. Formas quadráticas também serão utilizadas na representação de somas de quadrados e em resultados associados ao modelo normal.
+
+::: {.callout-example title="Exemplo: soma de quadrados"}
+
+Quando $\mathbf A=\mathbf I$,
+
+$$
+\mathbf x^\mathsf T\mathbf x
 =
-2x_1^2
-+
-2x_1x_2
-+
-2x_2^2.
+\sum_{j=1}^k x_j^2.
 $$
 
-Podemos reescrever essa expressão como
+Assim, para $\mathbf x=(2,-1,3)^\mathsf T$,
 
 $$
-2x_1^2
-+
-2x_1x_2
-+
-2x_2^2
+\mathbf x^\mathsf T\mathbf x
 =
-(x_1+x_2)^2
-+
-x_1^2
-+
-x_2^2.
+2^2+(-1)^2+3^2
+=
+14.
 $$
-
-Logo,
-
-$$
-\mathbf x^\mathsf T
-\mathbf A
-\mathbf x
->0
-$$
-
-para todo
-
-$$
-\mathbf x\neq\mathbf0.
-$$
-
-Portanto, $\mathbf A$ é positiva definida.
 :::
 
+#### Critério de segunda ordem 
 
-::: {.callout-example title="Uso em Inferência: covariâncias e distâncias quadráticas"}
-
-Se $\boldsymbol\Sigma$ é uma matriz de covariâncias, então
-
-$$
-\mathbf a^\mathsf T
-\boldsymbol\Sigma
-\mathbf a
-\geq0
-$$
-
-para todo vetor $\mathbf a$, pois essa quantidade corresponde à variância de uma combinação linear:
+Considere uma função $g:\mathbb R^k\to\mathbb R$ e um ponto $\boldsymbol\theta_0$ no qual
 
 $$
-\operatorname{Var}
-(\mathbf a^\mathsf T\mathbf X)
+\nabla g(\boldsymbol\theta_0)
 =
-\mathbf a^\mathsf T
-\boldsymbol\Sigma
-\mathbf a.
+\mathbf0.
 $$
 
-Quando $\boldsymbol\Sigma$ é positiva definida, expressões como
+A matriz hessiana permite classificar o comportamento local da função:
+
+- se $\nabla^2g(\boldsymbol\theta_0)$ é positiva definida, $\boldsymbol\theta_0$ é um mínimo local;
+- se $\nabla^2g(\boldsymbol\theta_0)$ é negativa definida, $\boldsymbol\theta_0$ é um máximo local;
+- se $\nabla^2g(\boldsymbol\theta_0)$ é indefinida, $\boldsymbol\theta_0$ é um ponto de sela.
+
+Esse critério será utilizado posteriormente na análise de funções que precisam ser maximizadas ou minimizadas.
+
+### Projeções 
+
+Uma matriz $\mathbf P$ é uma matriz de **projeção ortogonal** quando
 
 $$
-(\mathbf x-\boldsymbol\mu)^\mathsf T
-\boldsymbol\Sigma^{-1}
-(\mathbf x-\boldsymbol\mu)
+\mathbf P^\mathsf T=\mathbf P
+\qquad\text{e}\qquad
+\mathbf P^2=\mathbf P.
 $$
 
-definem uma distância quadrática ajustada à estrutura de variabilidade das componentes.
-
-Formas desse tipo aparecem em distribuições normais multivariadas e em diferentes estatísticas inferenciais.
-:::
-
-
-## Projeções 
-
-A ideia de projeção permite decompor um vetor em uma componente pertencente a determinado subespaço e outra componente ortogonal a ele.
-
-Uma matriz $\mathbf P$ representa uma **projeção ortogonal** quando
-
-$$
-\mathbf P^\mathsf T
-=
-\mathbf P
-$$
-
-e
-
-$$
-\mathbf P^2
-=
-\mathbf P.
-$$
-
-A primeira condição estabelece simetria. A segunda estabelece **idempotência**: aplicar a projeção novamente não modifica um vetor que já foi projetado.
-
-
-### Projeção sobre o espaço coluna 
-
-Considere
-
-$$
-\mathbf X
-\in
-\mathbb R^{n\times p}
-$$
-
-com posto completo nas colunas.
-
-A matriz
+Considere $\mathbf X\in\mathbb R^{n\times p}$ com posto completo nas colunas. A matriz
 
 $$
 \mathbf P_{\mathbf X}
@@ -1549,63 +664,25 @@ $$
 \mathbf X^\mathsf T
 $$
 
-é a matriz de projeção ortogonal sobre o espaço coluna de $\mathbf X$,
+projeta vetores de $\mathbb R^n$ sobre o espaço coluna de $\mathbf X$.
 
-$$
-\operatorname{Col}(\mathbf X).
-$$
-
-Para
-
-$$
-\mathbf y\in\mathbb R^n,
-$$
-
-o vetor projetado é
+Para $\mathbf y\in\mathbb R^n$, definimos
 
 $$
 \widehat{\mathbf y}
 =
-\mathbf P_{\mathbf X}\mathbf y.
+\mathbf P_{\mathbf X}\mathbf y
 $$
 
-Como
-
-$$
-\widehat{\mathbf y}
-\in
-\operatorname{Col}(\mathbf X),
-$$
-
-podemos interpretar $\widehat{\mathbf y}$ como a componente de $\mathbf y$ representada pelo espaço gerado pelas colunas de $\mathbf X$.
-
-O vetor
+e
 
 $$
 \mathbf e
 =
-\mathbf y-\widehat{\mathbf y}
+\mathbf y-\widehat{\mathbf y}.
 $$
 
-é o **resíduo da projeção**.
-
-Como
-
-$$
-\widehat{\mathbf y}
-=
-\mathbf P_{\mathbf X}\mathbf y,
-$$
-
-temos
-
-$$
-\mathbf e
-=
-(\mathbf I-\mathbf P_{\mathbf X})\mathbf y.
-$$
-
-Esse vetor é ortogonal ao espaço coluna de $\mathbf X$. Portanto,
+O vetor $\widehat{\mathbf y}$ pertence ao espaço coluna de $\mathbf X$, enquanto $\mathbf e$ é ortogonal a esse espaço. Em particular,
 
 $$
 \mathbf X^\mathsf T\mathbf e
@@ -1613,47 +690,77 @@ $$
 \mathbf0.
 $$
 
+Essa decomposição será utilizada posteriormente no método de mínimos quadrados [@lauritzen2023fundamentals, ap. A.1; @rice2007mathematical, secs. 14.3--14.4].
 
-::: {.callout-important title="Decomposição ortogonal"}
+::: {.callout-example title="Exemplo: projeção sobre o vetor constante"}
 
-A projeção produz a decomposição
+Considere
 
 $$
-\boxed{
 \mathbf y
 =
-\widehat{\mathbf y}
-+
-\mathbf e
-}
-$$
-
-com
-
-$$
-\widehat{\mathbf y}
-\in
-\operatorname{Col}(\mathbf X)
+\begin{pmatrix}
+1\\
+2\\
+6
+\end{pmatrix}
 $$
 
 e
 
 $$
-\mathbf e
-\perp
-\operatorname{Col}(\mathbf X).
+\mathbf X
+=
+\begin{pmatrix}
+1\\
+1\\
+1
+\end{pmatrix}.
 $$
 
-Consequentemente,
+Nesse caso,
 
 $$
-\widehat{\mathbf y}^\mathsf T
+\mathbf P_{\mathbf X}
+=
+\frac{1}{3}
+\begin{pmatrix}
+1&1&1\\
+1&1&1\\
+1&1&1
+\end{pmatrix}.
+$$
+
+A projeção é
+
+$$
+\widehat{\mathbf y}
+=
+\begin{pmatrix}
+3\\
+3\\
+3
+\end{pmatrix},
+$$
+
+pois $3$ é a média dos elementos de $\mathbf y$.
+
+O vetor residual é
+
+$$
 \mathbf e
 =
-0.
+\begin{pmatrix}
+-2\\
+-1\\
+3
+\end{pmatrix},
 $$
+
+e seus elementos somam zero. Essa é a forma mais simples da decomposição que aparecerá posteriormente em mínimos quadrados.
 :::
 
+A interpretação geométrica da projeção pode ser visualizada na @fig-projecao-ortogonal.
 
 ```{r}
 #| label: fig-projecao-ortogonal
@@ -1661,14 +768,9 @@ $$
 #| fig-width: 6
 #| fig-height: 5
 #| fig-align: center
-#| fig-cap: "Representação geométrica de uma projeção ortogonal: o vetor y é decomposto na projeção y sobre um subespaço e no resíduo ortogonal e."
+#| fig-cap: "Representação geométrica de uma projeção ortogonal: o vetor y é decomposto em sua projeção sobre um subespaço e em um resíduo ortogonal."
 #| warning: false
 #| message: false
-
-origem <- tibble(
-  x = 0,
-  y = 0
-)
 
 vetores <- tibble(
   tipo = c(
@@ -1722,8 +824,8 @@ ggplot() +
       linetype = tipo
     ),
     linewidth = 1.1,
-    arrow = arrow(
-      length = unit(0.18, "cm")
+    arrow = grid::arrow(
+      length = grid::unit(0.18, "cm")
     )
   ) +
   annotate(
@@ -1779,7 +881,7 @@ ggplot() +
   )
 ```
 
-A @fig-projecao-ortogonal mostra a decomposição geométrica
+A @fig-projecao-ortogonal representa geometricamente a decomposição
 
 $$
 \mathbf y
@@ -1789,205 +891,11 @@ $$
 \mathbf e.
 $$
 
-A projeção
+O vetor $\widehat{\mathbf y}$ pertence ao espaço sobre o qual $\mathbf y$ é projetado, enquanto o resíduo $\mathbf e$ é ortogonal a esse espaço.
 
-$$
-\widehat{\mathbf y}
-$$
+### Transformações multivariadas e jacobiano 
 
-pertence ao espaço coluna de $\mathbf X$, enquanto o resíduo
-
-$$
-\mathbf e
-$$
-
-é perpendicular a esse espaço.
-
-Essa ortogonalidade é a propriedade geométrica que fundamenta a solução de mínimos quadrados.
-
-
-::: {.callout-example title="Uso em Inferência: mínimos quadrados"}
-
-No modelo linear,
-
-$$
-\mathbf y
-=
-\mathbf X\boldsymbol\beta
-+
-\boldsymbol\varepsilon,
-$$
-
-os valores ajustados por mínimos quadrados podem ser escritos como
-
-$$
-\widehat{\mathbf y}
-=
-\mathbf X\widehat{\boldsymbol\beta}.
-$$
-
-Quando $\mathbf X$ possui posto completo nas colunas,
-
-$$
-\widehat{\boldsymbol\beta}
-=
-(\mathbf X^\mathsf T\mathbf X)^{-1}
-\mathbf X^\mathsf T\mathbf y.
-$$
-
-Consequentemente,
-
-$$
-\widehat{\mathbf y}
-=
-\mathbf X
-(\mathbf X^\mathsf T\mathbf X)^{-1}
-\mathbf X^\mathsf T
-\mathbf y
-=
-\mathbf P_{\mathbf X}\mathbf y.
-$$
-
-Assim, ajustar o modelo por mínimos quadrados corresponde geometricamente a projetar $\mathbf y$ sobre o espaço gerado pelas colunas de $\mathbf X$ [@lauritzen2023fundamentals, ap. A.1; @rice2007mathematical, secs. 14.3--14.4].
-:::
-
-
-## Transformações vetoriais e matriz jacobiana 
-
-No capítulo anterior, transformações univariadas foram consideradas na forma
-
-$$
-Y=g(X).
-$$
-
-Quando várias variáveis são transformadas simultaneamente, utilizamos uma função vetorial
-
-$$
-g:
-\mathbb R^k
-\longrightarrow
-\mathbb R^m.
-$$
-
-Escrevemos
-
-$$
-\mathbf y
-=
-g(\mathbf x),
-$$
-
-em que
-
-$$
-\mathbf x
-=
-(x_1,\ldots,x_k)^\mathsf T
-$$
-
-e
-
-$$
-\mathbf y
-=
-(y_1,\ldots,y_m)^\mathsf T.
-$$
-
-A matriz jacobiana de $g$ é
-
-$$
-Dg(\mathbf x)
-=
-\left[
-\frac{\partial g_i(\mathbf x)}
-{\partial x_j}
-\right]_{
-\substack{
-i=1,\ldots,m\\
-j=1,\ldots,k
-}
-}.
-$$
-
-A jacobiana descreve localmente como pequenas alterações nas componentes de $\mathbf x$ são transformadas em alterações nas componentes de $g(\mathbf x)$.
-
-
-::: {.callout-example title="Exemplo: transformação em duas dimensões"}
-
-Considere
-
-$$
-Y_1
-=
-X_1+X_2
-$$
-
-e
-
-$$
-Y_2
-=
-X_1-X_2.
-$$
-
-A transformação pode ser escrita como
-
-$$
-\begin{pmatrix}
-Y_1\\
-Y_2
-\end{pmatrix}
-=
-\begin{pmatrix}
-1 & 1\\
-1 & -1
-\end{pmatrix}
-\begin{pmatrix}
-X_1\\
-X_2
-\end{pmatrix}.
-$$
-
-A matriz jacobiana da transformação é
-
-$$
-Dg(\mathbf x)
-=
-\begin{pmatrix}
-1 & 1\\
-1 & -1
-\end{pmatrix}.
-$$
-
-Seu determinante é
-
-$$
-\det Dg(\mathbf x)
-=
--2.
-$$
-
-Como esse determinante é diferente de zero, a transformação linear é invertível.
-
-Somando e subtraindo as equações,
-
-$$
-X_1
-=
-\frac{Y_1+Y_2}{2}
-$$
-
-e
-
-$$
-X_2
-=
-\frac{Y_1-Y_2}{2}.
-$$
-:::
-
-
-## Transformações multivariadas e jacobiano 
+O capítulo anterior apresentou transformações de uma variável aleatória. Para vetores aleatórios, a mudança de variáveis requer considerar simultaneamente a transformação e a alteração de volume que ela produz.
 
 Considere um vetor aleatório
 
@@ -1997,65 +905,42 @@ $$
 (X_1,\ldots,X_k)^\mathsf T
 $$
 
-com densidade conjunta
+com suporte $\mathcal X\subseteq\mathbb R^k$ e densidade conjunta $f_{\mathbf X}$.
+
+Seja
 
 $$
-f_{\mathbf X}(\mathbf x).
+\mathbf Y=g(\mathbf X),
 $$
 
-Considere uma transformação
+em que $g:\mathcal X\to\mathcal Y$ é uma transformação bijetiva e diferenciável no domínio considerado, com inversa diferenciável
 
 $$
-\mathbf Y
+\mathbf X=h(\mathbf Y).
+$$
+
+Admitiremos que o determinante jacobiano da transformação inversa seja diferente de zero nos pontos considerados.
+
+O suporte transformado é
+
+$$
+\mathcal Y
 =
-g(\mathbf X),
-$$
-
-em que
-
-$$
-g:
-\mathbb R^k
-\longrightarrow
-\mathbb R^k.
-$$
-
-Suponha que $g$ seja bijetiva e diferenciável na região considerada e que sua inversa seja
-
-$$
-\mathbf x
-=
-h(\mathbf y).
+g(\mathcal X).
 $$
 
 A densidade conjunta de $\mathbf Y$ é
 
 $$
-\boxed{
 f_{\mathbf Y}(\mathbf y)
 =
-f_{\mathbf X}
-\{h(\mathbf y)\}
+f_{\mathbf X}\{h(\mathbf y)\}
 \left|
 \det Dh(\mathbf y)
-\right|
-}
+\right|,
+\qquad
+\mathbf y\in\mathcal Y.
 $$
-
-para os valores de $\mathbf y$ pertencentes ao suporte transformado.
-
-A matriz
-
-$$
-Dh(\mathbf y)
-=
-\left[
-\frac{\partial h_i(\mathbf y)}
-{\partial y_j}
-\right]_{i,j=1}^k
-$$
-
-é a jacobiana da transformação inversa.
 
 O fator
 
@@ -2065,64 +950,19 @@ $$
 \right|
 $$
 
-corrige a alteração local de volume produzida pela transformação.
+é o valor absoluto do **determinante jacobiano da transformação inversa**. Ele ajusta a densidade à alteração de escala ou volume produzida pela transformação.
 
+#### Transformação linear 
 
-### Relação com o caso univariado 
-
-No caso
-
-$$
-k=1,
-$$
-
-o determinante da matriz jacobiana reduz-se à derivada da transformação inversa:
-
-$$
-\left|
-\det Dh(y)
-\right|
-=
-\left|
-\frac{dh(y)}{dy}
-\right|.
-$$
-
-Assim,
-
-$$
-f_Y(y)
-=
-f_X\{h(y)\}
-\left|
-\frac{dh(y)}{dy}
-\right|,
-$$
-
-que é exatamente a fórmula de transformação univariada apresentada no capítulo anterior [@rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
-
-
-### Transformação linear 
-
-Considere
+Considere a transformação
 
 $$
 \mathbf Y
 =
-\mathbf A\mathbf X
-+
-\mathbf b,
+\mathbf A\mathbf X+\mathbf b,
 $$
 
-em que
-
-$$
-\mathbf A
-\in
-\mathbb R^{k\times k}
-$$
-
-é invertível.
+em que $\mathbf A\in\mathbb R^{k\times k}$ é invertível e $\mathbf b\in\mathbb R^k$.
 
 A transformação inversa é
 
@@ -2133,122 +973,12 @@ $$
 (\mathbf Y-\mathbf b).
 $$
 
-Portanto,
+Nesse caso,
 
 $$
 Dh(\mathbf y)
 =
-\mathbf A^{-1}.
-$$
-
-O determinante jacobiano é
-
-$$
-\left|
-\det Dh(\mathbf y)
-\right|
-=
-\left|
-\det(\mathbf A^{-1})
-\right|.
-$$
-
-Como
-
-$$
-\det(\mathbf A^{-1})
-=
-\frac{1}{\det(\mathbf A)},
-$$
-
-temos
-
-$$
-\left|
-\det Dh(\mathbf y)
-\right|
-=
-\frac{1}{
-|\det(\mathbf A)|
-}.
-$$
-
-Consequentemente,
-
-$$
-\boxed{
-f_{\mathbf Y}(\mathbf y)
-=
-f_{\mathbf X}
-\left\{
-\mathbf A^{-1}
-(\mathbf y-\mathbf b)
-\right\}
-\frac{1}{
-|\det(\mathbf A)|
-}.
-}
-$$
-
-
-::: {.callout-example title="Exemplo: soma e diferença de duas variáveis"}
-
-Considere novamente
-
-$$
-Y_1=X_1+X_2
-$$
-
-e
-
-$$
-Y_2=X_1-X_2.
-$$
-
-A transformação inversa é
-
-$$
-X_1
-=
-\frac{Y_1+Y_2}{2}
-$$
-
-e
-
-$$
-X_2
-=
-\frac{Y_1-Y_2}{2}.
-$$
-
-Logo,
-
-$$
-h(y_1,y_2)
-=
-\begin{pmatrix}
-\dfrac{y_1+y_2}{2}\\[8pt]
-\dfrac{y_1-y_2}{2}
-\end{pmatrix}.
-$$
-
-A matriz jacobiana da transformação inversa é
-
-$$
-Dh(\mathbf y)
-=
-\begin{pmatrix}
-\dfrac{1}{2} & \dfrac{1}{2}\\[8pt]
-\dfrac{1}{2} & -\dfrac{1}{2}
-\end{pmatrix}.
-$$
-
-Seu determinante é
-
-$$
-\det Dh(\mathbf y)
-=
--\frac{1}{2},
+\mathbf A^{-1},
 $$
 
 e, portanto,
@@ -2258,260 +988,174 @@ $$
 \det Dh(\mathbf y)
 \right|
 =
-\frac{1}{2}.
+\frac{1}{|\det(\mathbf A)|}.
 $$
 
-Se a densidade conjunta de $(X_1,X_2)$ é conhecida, então
+Consequentemente,
+
+$$
+f_{\mathbf Y}(\mathbf y)
+=
+f_{\mathbf X}
+\left\{
+\mathbf A^{-1}
+(\mathbf y-\mathbf b)
+\right\}
+\frac{1}{|\det(\mathbf A)|},
+\qquad
+\mathbf y\in\mathcal Y.
+$$
+
+A transformação linear é um caso particularmente simples de mudança multivariada, pois sua matriz jacobiana não depende de $\mathbf y$.
+
+::: {.callout-note title="Duas utilizações da matriz jacobiana"}
+A matriz jacobiana aparecerá novamente no método delta multivariado.
+
+Na mudança de variáveis, utiliza-se o **determinante da jacobiana da transformação inversa** para ajustar uma densidade.
+
+No método delta, utiliza-se a **própria matriz jacobiana da transformação** para aproximar localmente uma função vetorial.
+:::
+
+
+::: {.callout-example title="Exemplo: soma de duas variáveis exponenciais"}
+
+Considere $X_1$ e $X_2$ independentes, ambas com distribuição exponencial de taxa $\lambda$. Defina
+
+$$
+Y_1=X_1+X_2,
+\qquad
+Y_2=X_2.
+$$
+
+A transformação inversa é
+
+$$
+X_1=Y_1-Y_2,
+\qquad
+X_2=Y_2.
+$$
+
+Sua matriz jacobiana é
+
+$$
+Dh(\mathbf y)
+=
+\begin{pmatrix}
+1&-1\\
+0&1
+\end{pmatrix},
+$$
+
+de modo que $|\det Dh(\mathbf y)|=1$.
+
+Como $X_1>0$ e $X_2>0$, o suporte transformado é
+
+$$
+\mathcal Y
+=
+\{
+(y_1,y_2):0<y_2<y_1
+\}.
+$$
+
+A densidade conjunta transformada é
 
 $$
 f_{Y_1,Y_2}(y_1,y_2)
 =
-f_{X_1,X_2}
-\left(
-\frac{y_1+y_2}{2},
-\frac{y_1-y_2}{2}
-\right)
-\frac{1}{2},
+\lambda^2e^{-\lambda y_1},
+\qquad
+0<y_2<y_1.
 $$
 
-para os valores $(y_1,y_2)$ pertencentes ao suporte transformado.
-:::
-
-
-::: {.callout-example title="Uso em Inferência: distribuições de estatísticas"}
-
-Muitas estatísticas são funções de várias variáveis aleatórias.
-
-Por exemplo, a média e outra quantidade construída a partir da mesma amostra podem ser organizadas como
+Integrando em relação a $y_2$,
 
 $$
-\mathbf T
+f_{Y_1}(y_1)
 =
-g(X_1,\ldots,X_n).
+\lambda^2y_1e^{-\lambda y_1},
+\qquad
+y_1>0.
 $$
 
-Quando se deseja obter a distribuição conjunta dessas estatísticas por meio de uma transformação invertível, o determinante jacobiano corrige a mudança de volume produzida pela transformação.
-
-Esse procedimento será utilizado posteriormente na obtenção de algumas distribuições associadas a amostras normais.
+Portanto, a soma de duas variáveis exponenciais independentes com a mesma taxa possui distribuição gama com forma $2$ e taxa $\lambda$, em concordância com a relação apresentada no capítulo anterior.
 :::
 
-
-::: {.callout-note title="Jacobian e método delta"}
-
-A matriz jacobiana aparece neste capítulo em dois contextos relacionados, mas distintos.
-
-Na **mudança de variáveis**, utiliza-se o determinante da jacobiana da transformação inversa:
-
-$$
-\left|
-\det Dh(\mathbf y)
-\right|.
-$$
-
-No **método delta multivariado**, a jacobiana da própria função $g$,
-
-$$
-Dg(\boldsymbol\theta),
-$$
-
-descreve sua aproximação linear local.
-
-Portanto, o mesmo objeto matemático participa de dois procedimentos diferentes: transformação de densidades e aproximação assintótica de funções.
-:::
 
 ## Ferramentas assintóticas 
 
-Em muitos problemas de Inferência Estatística, uma estatística depende do tamanho da amostra. Para cada valor de $n$, podemos ter uma quantidade diferente,
+Resultados exatos descrevem uma variável ou estatística para um tamanho amostral específico. Resultados assintóticos descrevem seu comportamento quando o tamanho da amostra cresce.
+
+A teoria assintótica será utilizada quando uma distribuição exata for difícil de obter ou quando for necessário estudar propriedades que emergem à medida que $n$ aumenta.
+
+O ponto de partida é definir diferentes formas de convergência de sequências de variáveis aleatórias.
+
+
+### Modos de convergência 
+
+Considere uma sequência $X_1,X_2,\ldots$ de variáveis aleatórias e uma variável aleatória $X$.
+
+
+#### Convergência quase certa 
+
+Dizemos que $X_n$ **converge quase certamente** para $X$, e escrevemos
 
 $$
-T_n
-=
-T_n(X_1,\ldots,X_n).
+X_n\xrightarrow{\mathrm{q.c.}}X,
 $$
 
-Assim, ao considerar amostras de tamanhos crescentes,
+quando
 
 $$
-n=1,2,3,\ldots,
-$$
-
-obtemos uma sequência de variáveis aleatórias,
-
-$$
-T_1,T_2,T_3,\ldots.
-$$
-
-A teoria assintótica estuda o comportamento dessas sequências quando
-
-$$
-n\to\infty.
-$$
-
-Esse estudo permite descrever, por exemplo, se uma estatística se aproxima de determinada quantidade, qual é a ordem de seu erro e qual distribuição pode aproximar suas flutuações para valores grandes de $n$.
-
-::: {.callout-note title="Resultados exatos e resultados assintóticos"}
-
-Um resultado assintótico descreve o comportamento de uma sequência quando
-
-$$
-n\to\infty.
-$$
-
-Ele não fornece, por si só, a distribuição exata de uma estatística para um tamanho de amostra fixado.
-
-Por exemplo, afirmar que
-
-$$
-T_n\xrightarrow{P}\theta
-$$
-
-descreve a aproximação de $T_n$ a $\theta$ à medida que $n$ aumenta. Já um resultado da forma
-
-$$
-T_n\sim G_n
-$$
-
-para determinado $n$ especifica uma distribuição exata.
-
-Os dois tipos de resultado serão utilizados ao longo do livro.
-:::
-
-
-## Modos de convergência 
-
-A expressão informal "$T_n$ se aproxima de $T$" pode assumir significados matemáticos diferentes. Nesta seção serão utilizados quatro modos de convergência: quase certa, em média quadrática, em probabilidade e em distribuição.
-
-Considere uma sequência de variáveis aleatórias
-
-$$
-X_1,X_2,\ldots
-$$
-
-e uma variável aleatória $X$.
-
-
-### Convergência quase certa 
-
-::: {.callout-important title="Convergência quase certa"}
-
-Dizemos que $X_n$ converge **quase certamente** para $X$ quando
-
-$$
-P
-\left(
+P\left(
 \lim_{n\to\infty}X_n=X
 \right)
 =
 1.
 $$
 
-Escrevemos
+
+#### Convergência em média quadrática 
+
+Dizemos que $X_n$ **converge em média quadrática** para $X$, e escrevemos
 
 $$
-X_n
-\xrightarrow{\text{q.c.}}
-X.
-$$
-:::
-
-A definição estabelece que, com probabilidade $1$, a sequência numérica
-
-$$
-X_1(\omega),
-X_2(\omega),
-\ldots
+X_n\xrightarrow{L^2}X,
 $$
 
-converge para
+quando
 
 $$
-X(\omega).
+E\left[(X_n-X)^2\right]
+\longrightarrow0.
 $$
 
-Portanto, a convergência quase certa descreve o comportamento das trajetórias da sequência para quase todos os resultados do experimento aleatório.
 
+#### Convergência em probabilidade 
 
-### Convergência em média quadrática 
-
-::: {.callout-important title="Convergência em média quadrática"}
-
-Dizemos que $X_n$ converge **em média quadrática** para $X$ quando
+Dizemos que $X_n$ **converge em probabilidade** para $X$, e escrevemos
 
 $$
-E
-\left[
-(X_n-X)^2
-\right]
-\longrightarrow
-0,
+X_n\xrightarrow{P}X,
 $$
 
-desde que os momentos envolvidos existam.
-
-Escrevemos
+quando, para todo $\varepsilon>0$,
 
 $$
-X_n
-\xrightarrow{L^2}
-X.
-$$
-:::
-
-A quantidade
-
-$$
-E[(X_n-X)^2]
+P(|X_n-X|>\varepsilon)
+\longrightarrow0.
 $$
 
-mede o erro quadrático médio entre $X_n$ e $X$. A convergência em média quadrática exige que esse erro tenda a zero.
 
+#### Convergência em distribuição 
 
-### Convergência em probabilidade 
-
-::: {.callout-important title="Convergência em probabilidade"}
-
-Dizemos que $X_n$ converge **em probabilidade** para $X$ quando, para todo
+Dizemos que $X_n$ **converge em distribuição** para $X$, e escrevemos
 
 $$
-\varepsilon>0,
+X_n\xrightarrow{d}X,
 $$
 
-temos
-
-$$
-P
-\left(
-|X_n-X|>\varepsilon
-\right)
-\longrightarrow
-0.
-$$
-
-Escrevemos
-
-$$
-X_n
-\xrightarrow{P}
-X.
-$$
-:::
-
-A definição estabelece que a probabilidade de uma diferença maior do que qualquer tolerância fixada $\varepsilon$ se torna arbitrariamente pequena quando $n$ aumenta.
-
-Quando o limite é uma constante $\theta$,
-
-$$
-T_n\xrightarrow{P}\theta,
-$$
-
-essa forma de convergência será utilizada posteriormente na definição de **consistência** de estimadores.
-
-
-### Convergência em distribuição 
-
-::: {.callout-important title="Convergência em distribuição"}
-
-Dizemos que $X_n$ converge **em distribuição** para $X$ quando
+quando
 
 $$
 F_{X_n}(x)
@@ -2519,154 +1163,87 @@ F_{X_n}(x)
 F_X(x)
 $$
 
-em todo ponto $x$ no qual $F_X$ é contínua.
+em todo ponto de continuidade de $F_X$.
 
-Escrevemos
-
-$$
-X_n
-\xrightarrow{d}
-X.
-$$
-:::
-
-Diferentemente das convergências anteriores, a convergência em distribuição descreve a aproximação entre as **distribuições** das variáveis.
-
-Ela será utilizada especialmente quando uma sequência de estatísticas, após centralização e mudança de escala adequadas, apresentar uma distribuição limite não degenerada.
+A notação de convergência em distribuição também será utilizada para vetores aleatórios, especialmente no método delta multivariado.
 
 
-::: {.callout-example title="Uso em Inferência: dois tipos de comportamento assintótico"}
+### Relações entre os modos de convergência 
 
-Considere uma estatística $T_n$ destinada a fornecer informação sobre um parâmetro $\theta$.
-
-Um resultado como
+As principais implicações utilizadas neste livro são
 
 $$
-T_n
-\xrightarrow{P}
-\theta
-$$
-
-indica que $T_n$ se concentra progressivamente em torno de $\theta$.
-
-Já um resultado como
-
-$$
-\sqrt n(T_n-\theta)
-\xrightarrow{d}
-N(0,\tau^2)
-$$
-
-descreve a distribuição limite das flutuações de $T_n$ em torno de $\theta$ depois de uma mudança de escala.
-
-Os dois resultados possuem funções diferentes. O primeiro descreve aproximação a uma quantidade; o segundo descreve a distribuição do erro em uma escala apropriada.
-:::
-
-
-## Relações entre os modos de convergência 
-
-Os quatro modos de convergência não são equivalentes em geral.
-
-As seguintes implicações serão utilizadas ao longo do livro:
-
-$$
-X_n
-\xrightarrow{\text{q.c.}}
-X
+X_n\xrightarrow{\mathrm{q.c.}}X
 \quad\Longrightarrow\quad
-X_n
-\xrightarrow{P}
-X,
-$$
-
-$$
-X_n
-\xrightarrow{L^2}
-X
+X_n\xrightarrow{P}X
 \quad\Longrightarrow\quad
-X_n
-\xrightarrow{P}
-X
+X_n\xrightarrow{d}X
 $$
 
 e
 
 $$
-X_n
-\xrightarrow{P}
-X
-\quad\Longrightarrow\quad
-X_n
-\xrightarrow{d}
-X.
-$$
-
-Podemos representar essas relações por
-
-$$
-\begin{array}{ccc}
-X_n\xrightarrow{\text{q.c.}}X
-& \searrow & \\
-&&
-X_n\xrightarrow{P}X
-\longrightarrow
-X_n\xrightarrow{d}X
-\\
 X_n\xrightarrow{L^2}X
-& \nearrow &
-\end{array}
+\quad\Longrightarrow\quad
+X_n\xrightarrow{P}X.
 $$
 
-Em geral, não há implicação entre convergência quase certa e convergência em média quadrática. As implicações anteriores também não podem ser invertidas sem hipóteses adicionais.
+Em geral, não existe implicação entre convergência quase certa e convergência em média quadrática.
 
-Há uma situação particularmente útil. Se $c$ é uma constante, então
+As implicações anteriores também não podem, em geral, ser invertidas. Uma exceção particularmente útil ocorre quando o limite é uma constante $c$:
 
 $$
 X_n\xrightarrow{d}c
-$$
-
-se, e somente se,
-
-$$
+\quad\Longrightarrow\quad
 X_n\xrightarrow{P}c.
 $$
 
-Assim, quando o limite é constante, convergência em distribuição e convergência em probabilidade são equivalentes [@rice2007mathematical, cap. 5; @lauritzen2023fundamentals, ap. A.2].
+[@rice2007mathematical, cap. 5; @lauritzen2023fundamentals, ap. A.2]
 
+::: {.callout-example title="Exemplo: convergência em média quadrática"}
 
-::: {.callout-note title="Hierarquia e finalidade"}
-
-Para os desenvolvimentos inferenciais deste livro, duas formas aparecerão com maior frequência:
-
-$$
-T_n\xrightarrow{P}\theta
-$$
-
-para expressar aproximação de uma estatística a uma quantidade fixa, e
+Se $Z$ possui segundo momento finito e definimos $X_n=Z/n$, então
 
 $$
-Z_n\xrightarrow{d}Z
+E(X_n^2)
+=
+\frac{E(Z^2)}{n^2}
+\longrightarrow0.
 $$
 
-para descrever uma distribuição limite.
+Logo,
 
-A Lei Fraca dos Grandes Números fornecerá um resultado do primeiro tipo. O Teorema Central do Limite fornecerá um resultado do segundo tipo.
+$$
+X_n\xrightarrow{L^2}0.
+$$
+
+Consequentemente, também temos $X_n\xrightarrow{P}0$ e $X_n\xrightarrow{d}0$.
 :::
 
 
-## Lei Fraca dos Grandes Números 
+::: {.callout-example title="Exemplo: convergência em distribuição"}
 
 Considere
 
 $$
-X_1,X_2,\ldots
+X_n
+\sim
+N\left(0,1+\frac{1}{n}\right).
 $$
 
-variáveis aleatórias independentes e identicamente distribuídas, com
+À medida que $n$ aumenta, sua distribuição se aproxima de $N(0,1)$. Assim,
 
 $$
-E|X_1|<\infty.
+X_n\xrightarrow{d}N(0,1).
 $$
+
+Como o limite não é uma constante, a convergência em distribuição, isoladamente, não permite concluir convergência em probabilidade.
+:::
+
+
+### Lei Fraca dos Grandes Números 
+
+Considere uma sequência $X_1,X_2,\ldots$ de variáveis aleatórias independentes e identicamente distribuídas, com $E|X_1|<\infty$.
 
 Defina
 
@@ -2677,45 +1254,15 @@ $$
 \sum_{i=1}^nX_i.
 $$
 
-Se
+A **Lei Fraca dos Grandes Números** estabelece
 
 $$
-E(X_1)=\mu,
-$$
-
-então a **Lei Fraca dos Grandes Números** estabelece que
-
-$$
-\boxed{
 \overline X_n
 \xrightarrow{P}
-\mu.
-}
+E(X_1).
 $$
 
-Equivalentemente, para todo
-
-$$
-\varepsilon>0,
-$$
-
-temos
-
-$$
-P
-\left(
-|\overline X_n-\mu|>\varepsilon
-\right)
-\longrightarrow
-0.
-$$
-
-A probabilidade de a média amostral permanecer afastada de $\mu$ por mais do que uma tolerância fixa tende a zero quando o tamanho da amostra aumenta [@rice2007mathematical, sec. 5.2; @ramachandran2021r, sec. 3.5].
-
-
-::: {.callout-note title="Por que Lei Fraca?"}
-
-A denominação **Lei Fraca dos Grandes Números** refere-se à convergência em probabilidade,
+Se $E(X_1)=\mu$, escrevemos
 
 $$
 \overline X_n
@@ -2723,88 +1270,50 @@ $$
 \mu.
 $$
 
-Existem versões fortes da Lei dos Grandes Números que estabelecem convergência quase certa. Para os desenvolvimentos principais deste livro, a versão em probabilidade será suficiente.
+O resultado descreve a estabilização da média amostral em torno da média da distribuição quando o tamanho da amostra aumenta [@rice2007mathematical, sec. 5.2; @ramachandran2021r, sec. 3.5].
+
+::: {.callout-important title="Interpretação"}
+A Lei dos Grandes Números responde a uma questão de **convergência**:
+
+> a média calculada a partir de muitas observações tende a se aproximar da média da distribuição?
+
+O resultado não fornece, por si só, a forma da distribuição de $\overline X_n$ para um valor específico de $n$.
 :::
 
 
-### Interpretação 
-
-A Lei Fraca dos Grandes Números é um resultado de **estabilização** da média.
-
-Ela estabelece que
-
-$$
-\overline X_n
-$$
-
-se concentra progressivamente em torno de
-
-$$
-\mu
-$$
-
-à medida que $n$ aumenta.
-
-O resultado não afirma que
-
-$$
-\overline X_n=\mu
-$$
-
-para amostras grandes, nem especifica a distribuição exata da média para determinado valor de $n$.
-
-Também não descreve diretamente a velocidade ou a forma das flutuações de $\overline X_n$ em torno de $\mu$. Essa segunda questão será tratada pelo Teorema Central do Limite.
-
-
-::: {.callout-example title="Uso em Inferência: médias e momentos amostrais"}
+::: {.callout-example title="Exemplo: proporção de sucessos"}
 
 Considere
 
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-P
+\operatorname{Bernoulli}(p).
 $$
 
-com
-
-$$
-E(X_i)=\mu.
-$$
-
-A Lei Fraca dos Grandes Números fornece
+Como $E(X_i)=p$,
 
 $$
 \overline X_n
 \xrightarrow{P}
-\mu.
+p.
 $$
 
-Mais geralmente, se
+Como
 
 $$
-E|g(X_1)|<\infty,
-$$
-
-podemos aplicar o mesmo resultado às variáveis
-
-$$
-g(X_1),\ldots,g(X_n),
-$$
-
-obtendo
-
-$$
+\overline X_n
+=
 \frac{1}{n}
-\sum_{i=1}^n
-g(X_i)
-\xrightarrow{P}
-E\{g(X_1)\}.
+\sum_{i=1}^nX_i
 $$
 
-Isso permitirá estudar posteriormente médias, proporções e momentos amostrais como quantidades que se aproximam de características da distribuição.
+é a proporção de sucessos observada, a Lei dos Grandes Números estabelece que essa proporção tende a se aproximar de $p$ quando $n$ aumenta.
 :::
 
+#### Visualização da estabilização 
+
+A estabilização da média pode ser observada por meio de diferentes sequências de observações provenientes da mesma distribuição.
 
 ```{r}
 #| label: fig-lgfn-media-amostral
@@ -2812,7 +1321,7 @@ Isso permitirá estudar posteriormente médias, proporções e momentos amostrai
 #| fig-width: 6
 #| fig-height: 6
 #| fig-align: center
-#| fig-cap: "Trajetórias de médias acumuladas de amostras exponenciais com média mu=1. As médias amostrais tendem a se estabilizar em torno da média populacional à medida que n aumenta."
+#| fig-cap: "Trajetórias de médias acumuladas de amostras exponenciais com média 1."
 #| warning: false
 #| message: false
 
@@ -2877,46 +1386,13 @@ ggplot(
   tema_matematico
 ```
 
-A @fig-lgfn-media-amostral ilustra o comportamento descrito pela Lei Fraca dos Grandes Números. As trajetórias correspondem a diferentes sequências de observações provenientes de uma distribuição exponencial com
+A @fig-lgfn-media-amostral apresenta diferentes trajetórias de médias acumuladas de observações exponenciais com $E(X)=1$. Para valores pequenos de $n$, as médias apresentam maior variabilidade entre as trajetórias. À medida que $n$ aumenta, tendem a permanecer mais próximas de $\mu=1$.
 
-$$
-E(X)=1.
-$$
+A figura ilustra a **estabilização** descrita pela Lei Fraca dos Grandes Números. Ela não informa, porém, a forma da distribuição das flutuações em torno de $\mu$.
 
-Para valores pequenos de $n$, as médias acumuladas apresentam maior variabilidade entre trajetórias. À medida que $n$ aumenta, elas tendem a permanecer mais próximas de
+### Teorema Central do Limite 
 
-$$
-\mu=1.
-$$
-
-A figura ilustra a estabilização da média, mas não constitui uma demonstração da Lei Fraca dos Grandes Números.
-
-
-## Teorema Central do Limite 
-
-A Lei Fraca dos Grandes Números descreve a aproximação
-
-$$
-\overline X_n
-\xrightarrow{P}
-\mu.
-$$
-
-Para estudar as flutuações da média em torno de $\mu$, é necessário considerar uma mudança de escala.
-
-Considere
-
-$$
-X_1,X_2,\ldots
-$$
-
-variáveis aleatórias independentes e identicamente distribuídas, com
-
-$$
-E(X_1)=\mu
-$$
-
-e
+Considere $X_1,X_2,\ldots$ independentes e identicamente distribuídas, com $E(X_1)=\mu$ e
 
 $$
 0<
@@ -2927,10 +1403,9 @@ $$
 \infty.
 $$
 
-Então, pelo **Teorema Central do Limite**,
+O **Teorema Central do Limite** estabelece
 
 $$
-\boxed{
 \frac{
 \sqrt n(\overline X_n-\mu)
 }{
@@ -2938,13 +1413,11 @@ $$
 }
 \xrightarrow{d}
 N(0,1).
-}
 $$
 
 Equivalentemente,
 
 $$
-\boxed{
 \frac{
 \sum_{i=1}^nX_i-n\mu
 }{
@@ -2952,21 +1425,13 @@ $$
 }
 \xrightarrow{d}
 N(0,1).
-}
 $$
 
 O resultado descreve a distribuição limite das flutuações padronizadas da média ou da soma em torno de seus respectivos valores esperados [@rice2007mathematical, sec. 5.3; @ramachandran2021r, sec. 3.5; @chihara2022, sec. 4.3].
 
+#### Centralização e mudança de escala 
 
-### Centralização e mudança de escala 
-
-A quantidade
-
-$$
-\overline X_n-\mu
-$$
-
-representa o desvio da média amostral em relação à média da distribuição.
+A quantidade $\overline X_n-\mu$ representa o desvio da média amostral em relação à média da distribuição.
 
 Como
 
@@ -2976,13 +1441,7 @@ $$
 \frac{\sigma^2}{n},
 $$
 
-seu desvio-padrão é
-
-$$
-\frac{\sigma}{\sqrt n}.
-$$
-
-Portanto,
+o desvio-padrão de $\overline X_n$ é $\sigma/\sqrt n$. Portanto,
 
 $$
 \frac{
@@ -2995,55 +1454,77 @@ $$
 \sqrt n(\overline X_n-\mu)
 }{
 \sigma
-}
+}.
 $$
 
-corresponde à média amostral centralizada e dividida por seu desvio-padrão.
+A padronização utilizada no Teorema Central do Limite envolve, assim, duas operações: a **centralização**, obtida subtraindo $\mu$, e a **mudança de escala**, obtida dividindo pelo desvio-padrão da média amostral.
 
+O fator $\sqrt n$ surge porque a variância de $\overline X_n$ diminui à taxa $1/n$, enquanto seu desvio-padrão diminui à taxa $1/\sqrt n$.
 
-::: {.callout-important title="O que o Teorema Central do Limite estabelece"}
-
-O Teorema Central do Limite **não afirma que as observações individuais se tornam normalmente distribuídas** quando $n$ aumenta.
-
-A distribuição das observações
-
-$$
-X_1,\ldots,X_n
-$$
-
-não é modificada pelo aumento do tamanho da amostra.
-
-O resultado estabelece a convergência da distribuição da quantidade padronizada
-
-$$
-\frac{
-\sqrt n(\overline X_n-\mu)
-}{
-\sigma
-}
-$$
-
-para a distribuição normal padrão.
-
-Para valores suficientemente grandes de $n$, essa convergência sustenta a aproximação
+Para valores suficientemente grandes de $n$, o resultado sugere a aproximação
 
 $$
 \overline X_n
 \approx
-N
-\left(
+N\left(
 \mu,
 \frac{\sigma^2}{n}
 \right).
 $$
 
-A qualidade da aproximação para um valor finito de $n$ depende da distribuição das observações. Distribuições com forte assimetria ou caudas pesadas podem exigir amostras maiores para que a aproximação normal seja adequada.
+A qualidade dessa aproximação depende da distribuição das observações e do tamanho da amostra.
+
+::: {.callout-important title="O que o Teorema Central do Limite estabelece"}
+O Teorema Central do Limite não afirma que as observações individuais se tornam normais à medida que $n$ aumenta.
+
+A convergência refere-se à distribuição da **média ou soma padronizada**. Distribuições muito assimétricas ou com caudas pesadas podem exigir amostras maiores para que a aproximação normal seja satisfatória.
 :::
 
 
-### Visualização da convergência 
+::: {.callout-example title="Exemplo: média de tempos exponenciais"}
 
-A aproximação produzida pelo Teorema Central do Limite pode ser visualizada a partir de uma distribuição que não é normal.
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exponencial}(\lambda).
+$$
+
+Como
+
+$$
+E(X_i)=\frac{1}{\lambda}
+\qquad\text{e}\qquad
+\operatorname{Var}(X_i)=\frac{1}{\lambda^2},
+$$
+
+o Teorema Central do Limite fornece
+
+$$
+\lambda\sqrt n
+\left(
+\overline X_n-\frac{1}{\lambda}
+\right)
+\xrightarrow{d}
+N(0,1).
+$$
+
+Consequentemente, para amostras suficientemente grandes,
+
+$$
+\overline X_n
+\approx
+N\left(
+\frac{1}{\lambda},
+\frac{1}{n\lambda^2}
+\right).
+$$
+:::
+
+#### Visualização da convergência 
+
+A aproximação produzida pelo Teorema Central do Limite pode ser visualizada partindo de uma distribuição que não é normal.
 
 Considere
 
@@ -3053,19 +1534,7 @@ X_1,\ldots,X_n
 \operatorname{Exponencial}(1).
 $$
 
-Nesse caso,
-
-$$
-E(X_i)=1
-$$
-
-e
-
-$$
-\operatorname{Var}(X_i)=1.
-$$
-
-Além disso,
+Nesse caso, $E(X_i)=1$ e $\operatorname{Var}(X_i)=1$. Além disso,
 
 $$
 S_n
@@ -3075,7 +1544,7 @@ S_n
 \operatorname{Gama}(n,1).
 $$
 
-A variável padronizada é
+A média padronizada pode ser escrita como
 
 $$
 Z_n
@@ -3086,14 +1555,7 @@ Z_n
 \frac{S_n-n}{\sqrt n}.
 $$
 
-O Teorema Central do Limite estabelece
-
-$$
-Z_n
-\xrightarrow{d}
-N(0,1).
-$$
-
+O Teorema Central do Limite estabelece $Z_n\xrightarrow{d}N(0,1)$.
 
 ```{r}
 #| label: fig-tcl-exponencial
@@ -3176,307 +1638,121 @@ ggplot(
   tema_matematico
 ```
 
-A @fig-tcl-exponencial parte de observações exponenciais, cuja distribuição é fortemente assimétrica quando $n=1$. À medida que o tamanho da amostra aumenta, a densidade da média padronizada
+A @fig-tcl-exponencial parte de observações exponenciais, cuja distribuição é assimétrica. À medida que $n$ aumenta, a densidade da média padronizada $Z_n$ se aproxima da densidade da distribuição $N(0,1)$.
 
-$$
-Z_n
-=
-\sqrt n(\overline X_n-1)
-$$
+A figura destaca que o objeto que se aproxima da distribuição normal é a **média padronizada**, e não a distribuição das observações individuais.
 
-se aproxima da densidade da distribuição
-
-$$
-N(0,1).
-$$
-
-Para $n=30$, a diferença entre as duas curvas já é consideravelmente menor do que para $n=1$ ou $n=5$.
-
-A figura destaca que o objeto que se aproxima da normal é a **distribuição da média padronizada**, e não a distribuição das observações individuais.
-
-
-## Lei Fraca dos Grandes Números e Teorema Central do Limite 
+### Lei dos Grandes Números e Teorema Central do Limite 
 
 Os dois resultados descrevem aspectos diferentes do comportamento da média amostral.
 
-A Lei Fraca dos Grandes Números estabelece
+| Resultado | Questão |
+|:---|:---|
+| Lei dos Grandes Números | $\overline X_n$ se aproxima de $\mu$? |
+| Teorema Central do Limite | como as flutuações de $\overline X_n$ em torno de $\mu$ se distribuem após padronização? |
+
+A Lei dos Grandes Números estabelece
 
 $$
-\overline X_n
-\xrightarrow{P}
-\mu.
+\overline X_n\xrightarrow{P}\mu,
 $$
 
-Seu foco é a **estabilização** da média amostral em torno da média da distribuição.
-
-O Teorema Central do Limite estabelece
+enquanto o Teorema Central do Limite estabelece
 
 $$
-\frac{
-\sqrt n(\overline X_n-\mu)
-}{
-\sigma
-}
+\frac{\sqrt n(\overline X_n-\mu)}{\sigma}
 \xrightarrow{d}
 N(0,1).
 $$
 
-Seu foco é a **distribuição das flutuações** de $\overline X_n$ em torno de $\mu$ na escala
+Assim, a Lei dos Grandes Números descreve **estabilização**, enquanto o Teorema Central do Limite descreve **flutuação em torno do limite**.
+
+
+### Teorema do mapeamento contínuo 
+
+O teorema do mapeamento contínuo permite transportar um resultado de convergência através de uma função contínua.
+
+Se $X_n\xrightarrow{P}X$ e $g$ é contínua nos valores relevantes, então
 
 $$
-n^{-1/2}.
-$$
-
-| Resultado | Objeto | Conclusão |
-|:---|:---|:---|
-| Lei Fraca dos Grandes Números | $\overline X_n$ | aproxima-se de $\mu$ em probabilidade |
-| Teorema Central do Limite | $\sqrt n(\overline X_n-\mu)/\sigma$ | aproxima-se em distribuição de $N(0,1)$ |
-
-Podemos resumir as funções dos dois resultados por
-
-$$
-\boxed{
-\text{LGN}
-\longrightarrow
-\text{estabilização}
-}
-$$
-
-e
-
-$$
-\boxed{
-\text{TCL}
-\longrightarrow
-\text{distribuição das flutuações}.
-}
-$$
-
-
-::: {.callout-example title="Uso em Inferência: consistência e normalidade assintótica"}
-
-Os dois resultados serão utilizados de maneiras diferentes nos capítulos posteriores.
-
-A convergência
-
-$$
-\overline X_n
-\xrightarrow{P}
-\mu
-$$
-
-fornecida pela Lei Fraca dos Grandes Números é a estrutura típica de um resultado de **consistência**.
-
-Já a convergência
-
-$$
-\sqrt n
-(\overline X_n-\mu)
-\xrightarrow{d}
-N(0,\sigma^2)
-$$
-
-é a estrutura típica de um resultado de **normalidade assintótica**.
-
-A primeira descreve para onde a estatística converge. A segunda descreve como seu erro se comporta, após a mudança de escala apropriada.
-:::
-
-
-## Teorema do mapeamento contínuo 
-
-Depois de obter um resultado de convergência para uma sequência, frequentemente é necessário estudar uma função dessa sequência.
-
-O **teorema do mapeamento contínuo** permite transferir a convergência para funções contínuas.
-
-Se
-
-$$
-X_n
-\xrightarrow{P}
-X
-$$
-
-e $g$ é contínua nos valores relevantes de $X$, então
-
-$$
-\boxed{
 g(X_n)
 \xrightarrow{P}
 g(X).
-}
 $$
 
-A versão correspondente para convergência em distribuição estabelece que, se
+De forma análoga, se $X_n\xrightarrow{d}X$ e $g$ é contínua com probabilidade um sob a distribuição limite, então
 
 $$
-X_n
-\xrightarrow{d}
-X,
-$$
-
-então
-
-$$
-\boxed{
 g(X_n)
 \xrightarrow{d}
-g(X)
-}
+g(X).
 $$
 
-quando $g$ é contínua com probabilidade $1$ sob a distribuição limite [@lauritzen2023fundamentals, teorema A.11].
+[@lauritzen2023fundamentals, teorema A.11]
 
+::: {.callout-example title="Exemplo: transformação de uma sequência convergente"}
 
-::: {.callout-example title="Exemplo: transformações contínuas"}
+Suponha que $T_n\xrightarrow{P}\theta$, com $\theta>0$.
 
-Suponha que
-
-$$
-T_n
-\xrightarrow{P}
-\theta,
-\qquad
-\theta>0.
-$$
-
-Como
-
-$$
-g_1(x)=x^2,
-$$
-
-$$
-g_2(x)=\sqrt x
-$$
-
-e
-
-$$
-g_3(x)=\log x
-$$
-
-são contínuas em $\theta>0$, segue que
-
-$$
-T_n^2
-\xrightarrow{P}
-\theta^2,
-$$
+Como as funções $g_1(x)=\sqrt{x}$, $g_2(x)=\log x$ e $g_3(x)=1/x$ são contínuas em $\theta$, temos
 
 $$
 \sqrt{T_n}
 \xrightarrow{P}
-\sqrt\theta
+\sqrt{\theta},
 $$
-
-e
 
 $$
 \log T_n
 \xrightarrow{P}
-\log\theta.
-$$
-:::
-
-
-::: {.callout-example title="Uso em Inferência: funções de estimadores consistentes"}
-
-Suponha que uma sequência de estimadores satisfaça
-
-$$
-\widehat\theta_n
-\xrightarrow{P}
-\theta.
-$$
-
-Se $g$ é contínua em $\theta$, então
-
-$$
-g(\widehat\theta_n)
-\xrightarrow{P}
-g(\theta).
-$$
-
-Assim, a consistência de um estimador pode ser transferida para transformações contínuas dele.
-
-Por exemplo, se
-
-$$
-\widehat\lambda_n
-\xrightarrow{P}
-\lambda,
-\qquad
-\lambda>0,
-$$
-
-então
-
-$$
-\frac{1}{\widehat\lambda_n}
-\xrightarrow{P}
-\frac{1}{\lambda}.
-$$
-
-Essa propriedade será utilizada quando a quantidade de interesse for uma função do parâmetro originalmente utilizado para especificar o modelo.
-:::
-
-
-## Lema de Slutsky 
-
-O teorema do mapeamento contínuo permite transformar uma sequência convergente. O **lema de Slutsky** permite combinar sequências com diferentes tipos de limite.
-
-Suponha que
-
-$$
-X_n
-\xrightarrow{d}
-X
+\log\theta
 $$
 
 e
 
 $$
-Y_n
+\frac{1}{T_n}
 \xrightarrow{P}
-c,
+\frac{1}{\theta}.
 $$
 
-em que $c$ é uma constante.
+Como $\theta>0$, a convergência implica também $P(T_n>0)\to1$, de modo que as transformações ficam bem definidas com probabilidade tendendo a um.
+:::
 
-Então,
+
+### Lema de Slutsky 
+
+Se
 
 $$
-\boxed{
+X_n\xrightarrow{d}X
+\qquad\text{e}\qquad
+Y_n\xrightarrow{P}c,
+$$
+
+em que $c$ é uma constante, então
+
+$$
 X_n+Y_n
 \xrightarrow{d}
 X+c,
-}
 $$
 
 $$
-\boxed{
 X_nY_n
 \xrightarrow{d}
-cX,
-}
+cX
 $$
 
-e, se
+e, se $c\neq0$,
 
 $$
-c\neq0,
-$$
-
-$$
-\boxed{
 \frac{X_n}{Y_n}
 \xrightarrow{d}
 \frac{X}{c}.
-}
 $$
 
-O resultado permite combinar uma sequência com distribuição limite não degenerada e outra que converge em probabilidade para uma constante [@lauritzen2023fundamentals, corolário A.12].
-
+O lema permite combinar uma sequência com distribuição limite não degenerada com outra que converge em probabilidade para uma constante [@lauritzen2023fundamentals, corolário A.12].
 
 ::: {.callout-example title="Exemplo: substituição de uma quantidade desconhecida"}
 
@@ -3492,17 +1768,9 @@ $$
 N(0,1)
 $$
 
-e que
+e que $S_n\xrightarrow{P}\sigma$, com $\sigma>0$.
 
-$$
-S_n
-\xrightarrow{P}
-\sigma,
-\qquad
-\sigma>0.
-$$
-
-Podemos escrever
+Então
 
 $$
 \frac{
@@ -3519,23 +1787,7 @@ S_n
 \frac{\sigma}{S_n}.
 $$
 
-Como
-
-$$
-S_n
-\xrightarrow{P}
-\sigma,
-$$
-
-o teorema do mapeamento contínuo fornece
-
-$$
-\frac{\sigma}{S_n}
-\xrightarrow{P}
-1.
-$$
-
-Aplicando o lema de Slutsky,
+Como $\sigma/S_n\xrightarrow{P}1$, o lema de Slutsky fornece
 
 $$
 \frac{
@@ -3546,124 +1798,14 @@ S_n
 \xrightarrow{d}
 N(0,1).
 $$
+
+Esse mecanismo será utilizado posteriormente quando uma quantidade desconhecida presente em uma padronização for substituída por uma aproximação consistente.
 :::
 
 
-::: {.callout-example title="Uso em Inferência: padronização com erro-padrão estimado"}
+### Método delta 
 
-Resultados de normalidade assintótica frequentemente assumem a forma
-
-$$
-\frac{
-\sqrt n(T_n-\theta)
-}{
-\tau(\theta)
-}
-\xrightarrow{d}
-N(0,1),
-$$
-
-em que
-
-$$
-\tau(\theta)
-$$
-
-depende de uma quantidade desconhecida.
-
-Se existe um estimador consistente
-
-$$
-\widehat\tau_n
-\xrightarrow{P}
-\tau(\theta),
-$$
-
-com
-
-$$
-\tau(\theta)>0,
-$$
-
-Slutsky permite substituir a quantidade desconhecida por sua versão estimada:
-
-$$
-\boxed{
-\frac{
-\sqrt n(T_n-\theta)
-}{
-\widehat\tau_n
-}
-\xrightarrow{d}
-N(0,1).
-}
-$$
-
-Esse mecanismo será utilizado posteriormente na construção de estatísticas padronizadas, erros-padrão assintóticos e intervalos de confiança.
-:::
-
-
-::: {.callout-note title="Fluxo dos resultados assintóticos"}
-
-Até este ponto, as ferramentas podem ser organizadas da seguinte forma:
-
-$$
-\boxed{
-\text{Lei Fraca dos Grandes Números}
-\longrightarrow
-\text{convergência em probabilidade}
-}
-$$
-
-$$
-\boxed{
-\text{Teorema Central do Limite}
-\longrightarrow
-\text{convergência em distribuição}
-}
-$$
-
-$$
-\boxed{
-\text{mapeamento contínuo}
-\longrightarrow
-\text{transformação de limites}
-}
-$$
-
-$$
-\boxed{
-\text{Slutsky}
-\longrightarrow
-\text{combinação e substituição de limites}.
-}
-$$
-
-O próximo resultado acrescentará uma nova operação a esse fluxo: utilizar uma **aproximação de Taylor** para obter a distribuição assintótica de uma função de uma estatística.
-:::
-
-## Método delta 
-
-O teorema do mapeamento contínuo permite concluir que, se
-
-$$
-T_n\xrightarrow{P}\theta,
-$$
-
-então
-
-$$
-g(T_n)\xrightarrow{P}g(\theta)
-$$
-
-para funções contínuas $g$.
-
-Esse resultado informa **para onde** $g(T_n)$ converge, mas não descreve a distribuição de suas flutuações em torno de $g(\theta)$.
-
-Quando já conhecemos uma distribuição assintótica para $T_n$, o **método delta** permite obter uma distribuição assintótica para $g(T_n)$. A ferramenta matemática que produz essa passagem é a aproximação de Taylor.
-
-
-### Método delta univariado 
+O método delta permite obter a distribuição assintótica de uma transformação a partir da distribuição assintótica da quantidade original.
 
 Suponha que
 
@@ -3673,324 +1815,69 @@ $$
 N(0,\tau^2)
 $$
 
-e que
-
-$$
-g:\mathbb R\longrightarrow\mathbb R
-$$
-
-seja diferenciável em $\theta$, com
-
-$$
-g'(\theta)\neq0.
-$$
+e que $g$ seja diferenciável em $\theta$.
 
 Então,
 
 $$
-\boxed{
 \sqrt n
 \{g(T_n)-g(\theta)\}
 \xrightarrow{d}
-N
-\left(
+N\left(
 0,
 [g'(\theta)]^2\tau^2
 \right).
-}
 $$
 
+Quando $g'(\theta)\neq0$, o resultado fornece uma distribuição limite não degenerada de primeira ordem.
 
-### De Taylor ao método delta 
+Se $g'(\theta)=0$, a aproximação de primeira ordem produz variância limite igual a zero. Nesse caso, uma expansão de ordem superior e uma escala diferente podem ser necessárias.
 
-Como $g$ é diferenciável em $\theta$,
+::: {.callout-note title="Relação com Taylor"}
+O método delta utiliza localmente a aproximação
 
 $$
 g(T_n)
-=
+\approx
 g(\theta)
 +
-g'(\theta)(T_n-\theta)
-+
-r_n,
+g'(\theta)(T_n-\theta).
 $$
 
-em que
-
-$$
-r_n
-=
-o_P(|T_n-\theta|).
-$$
-
-Portanto,
-
-$$
-g(T_n)-g(\theta)
-=
-g'(\theta)(T_n-\theta)
-+
-r_n.
-$$
-
-Multiplicando por $\sqrt n$,
-
-$$
-\sqrt n
-\{g(T_n)-g(\theta)\}
-=
-g'(\theta)
-\sqrt n(T_n-\theta)
-+
-\sqrt n\,r_n.
-$$
-
-Da hipótese
-
-$$
-\sqrt n(T_n-\theta)
-\xrightarrow{d}
-N(0,\tau^2)
-$$
-
-segue que
-
-$$
-\sqrt n(T_n-\theta)
-=
-O_P(1).
-$$
-
-Como o termo de resto é de ordem menor que $|T_n-\theta|$,
-
-$$
-\sqrt n\,r_n
-=
-o_P(1).
-$$
-
-Assim,
-
-$$
-\sqrt n
-\{g(T_n)-g(\theta)\}
-=
-g'(\theta)
-\sqrt n(T_n-\theta)
-+
-o_P(1).
-$$
-
-Pelo lema de Slutsky,
-
-$$
-\sqrt n
-\{g(T_n)-g(\theta)\}
-\xrightarrow{d}
-N
-\left(
-0,
-[g'(\theta)]^2\tau^2
-\right).
-$$
-
-O método delta pode, portanto, ser resumido por
-
-$$
-\boxed{
-\text{distribuição assintótica}
-+
-\text{Taylor}
-+
-\text{Slutsky}
-\longrightarrow
-\text{distribuição assintótica da transformação}.
-}
-$$
+Assim, uma transformação suave herda, em primeira ordem, a distribuição assintótica de $T_n$, ajustada pela derivada $g'(\theta)$.
+:::
 
 
-::: {.callout-example title="Exemplo: quadrado da média amostral"}
+::: {.callout-example title="Exemplo: logaritmo da média"}
 
 Suponha que
 
 $$
-\sqrt n
-(\overline X_n-\mu)
+\sqrt n(\overline X_n-\mu)
 \xrightarrow{d}
 N(0,\sigma^2),
+\qquad
+\mu>0.
 $$
 
-com
-
-$$
-\mu\neq0.
-$$
-
-Considere
-
-$$
-g(x)=x^2.
-$$
-
-A derivada é
-
-$$
-g'(x)=2x,
-$$
-
-de modo que
-
-$$
-g'(\mu)=2\mu.
-$$
-
-Pelo método delta,
+Considere $g(x)=\log x$. Como $g'(\mu)=1/\mu$, o método delta fornece
 
 $$
 \sqrt n
-\left(
-\overline X_n^2-\mu^2
-\right)
+\{\log(\overline X_n)-\log(\mu)\}
 \xrightarrow{d}
-N
-\left(
+N\left(
 0,
-4\mu^2\sigma^2
+\frac{\sigma^2}{\mu^2}
 \right).
 $$
 
-Equivalentemente, para valores grandes de $n$,
-
-$$
-\overline X_n^2
-\approx
-N
-\left(
-\mu^2,
-\frac{
-4\mu^2\sigma^2
-}{n}
-\right).
-$$
-
-A variância assintótica de $\overline X_n^2$ é, portanto,
-
-$$
-\frac{
-4\mu^2\sigma^2
-}{n}.
-$$
+Esse resultado mostra como uma distribuição assintótica conhecida pode ser transportada para uma escala transformada.
 :::
 
+#### Visualização do método delta 
 
-::: {.callout-example title="Exemplo: transformação logarítmica"}
-
-Suponha que
-
-$$
-\sqrt n(T_n-\theta)
-\xrightarrow{d}
-N(0,\tau^2),
-$$
-
-com
-
-$$
-\theta>0.
-$$
-
-Considere
-
-$$
-g(x)=\log x.
-$$
-
-Como
-
-$$
-g'(\theta)
-=
-\frac{1}{\theta},
-$$
-
-o método delta fornece
-
-$$
-\boxed{
-\sqrt n
-\{\log T_n-\log\theta\}
-\xrightarrow{d}
-N
-\left(
-0,
-\frac{\tau^2}{\theta^2}
-\right).
-}
-$$
-:::
-
-
-::: {.callout-example title="Uso em Inferência: função de um parâmetro"}
-
-Em uma distribuição exponencial parametrizada pela taxa $\lambda$,
-
-$$
-E(X)
-=
-\frac{1}{\lambda}.
-$$
-
-Suponha que um estimador $\widehat\lambda_n$ satisfaça
-
-$$
-\sqrt n
-(\widehat\lambda_n-\lambda)
-\xrightarrow{d}
-N(0,\tau^2).
-$$
-
-Se a quantidade de interesse for o tempo médio
-
-$$
-\mu
-=
-g(\lambda)
-=
-\frac{1}{\lambda},
-$$
-
-então
-
-$$
-g'(\lambda)
-=
--\frac{1}{\lambda^2}.
-$$
-
-Pelo método delta,
-
-$$
-\sqrt n
-\left(
-\frac{1}{\widehat\lambda_n}
--
-\frac{1}{\lambda}
-\right)
-\xrightarrow{d}
-N
-\left(
-0,
-\frac{\tau^2}{\lambda^4}
-\right).
-$$
-
-Assim, uma distribuição assintótica para o estimador do parâmetro original pode ser transferida para uma função desse parâmetro.
-:::
-
-
-### Visualização do método delta 
-
-O efeito do método delta pode ser observado em um exemplo no qual a estatística original possui uma distribuição assintótica conhecida.
+A aproximação fornecida pelo método delta pode ser observada no mesmo modelo exponencial utilizado para ilustrar o Teorema Central do Limite.
 
 Considere
 
@@ -4000,19 +1887,7 @@ X_1,\ldots,X_n
 \operatorname{Exponencial}(1).
 $$
 
-Como
-
-$$
-E(X_i)=1
-$$
-
-e
-
-$$
-\operatorname{Var}(X_i)=1,
-$$
-
-o Teorema Central do Limite fornece
+Como $E(X_i)=1$ e $\operatorname{Var}(X_i)=1$, o Teorema Central do Limite fornece
 
 $$
 \sqrt n
@@ -4021,25 +1896,7 @@ $$
 N(0,1).
 $$
 
-Para
-
-$$
-g(x)=\log x,
-$$
-
-temos
-
-$$
-g(1)=0
-$$
-
-e
-
-$$
-g'(1)=1.
-$$
-
-Portanto, pelo método delta,
+Para $g(x)=\log x$, temos $g(1)=0$ e $g'(1)=1$. Portanto, pelo método delta,
 
 $$
 \sqrt n
@@ -4048,14 +1905,13 @@ $$
 N(0,1).
 $$
 
-
 ```{r}
 #| label: fig-metodo-delta
 #| echo: false
 #| fig-width: 6
 #| fig-height: 10
 #| fig-align: center
-#| fig-cap: "Distribuição simulada para amostras exponenciais e densidade normal padrão prevista pelo método delta."
+#| fig-cap: "Distribuição simulada da transformação da média amostral e densidade normal padrão prevista pelo método delta."
 #| warning: false
 #| message: false
 
@@ -4138,142 +1994,26 @@ ggplot(
   tema_matematico
 ```
 
-A @fig-metodo-delta mostra que, para amostras pequenas, a distribuição de
-
-$$
-\sqrt n
-\log\overline X_n
-$$
-
-ainda apresenta diferenças em relação à normal padrão. À medida que $n$ aumenta, a distribuição simulada se aproxima de
-
-$$
-N(0,1),
-$$
-
-como previsto pelo método delta.
+A @fig-metodo-delta mostra que, para amostras pequenas, a distribuição de $\sqrt n\log\overline X_n$ ainda apresenta diferenças em relação à normal padrão. À medida que $n$ aumenta, a distribuição simulada se aproxima de $N(0,1)$, como previsto pelo método delta.
 
 O resultado é assintótico. A qualidade da aproximação para um tamanho de amostra específico depende do modelo, da transformação e do valor de $n$.
 
+### Método delta multivariado 
 
-### Quando a primeira derivada é nula 
-
-A versão de primeira ordem do método delta depende da derivada
-
-$$
-g'(\theta).
-$$
-
-Se
-
-$$
-g'(\theta)=0,
-$$
-
-a aproximação linear
-
-$$
-g(T_n)-g(\theta)
-\approx
-g'(\theta)(T_n-\theta)
-$$
-
-torna-se degenerada.
-
-Nesse caso, pode ser necessário utilizar uma expansão de Taylor de ordem superior e uma normalização diferente.
-
-::: {.callout-note title="Exemplo de degenerescência de primeira ordem"}
-
-Considere
-
-$$
-g(x)=x^2
-$$
-
-e
-
-$$
-\theta=0.
-$$
-
-Então,
-
-$$
-g'(0)=0.
-$$
-
-A aproximação de primeira ordem não descreve a variação de $T_n^2$ em torno de zero.
-
-O primeiro termo não nulo da expansão aparece na segunda ordem:
-
-$$
-g(T_n)
-=
-T_n^2.
-$$
-
-Resultados desse tipo exigem tratamento específico e não serão necessários para os principais desenvolvimentos deste capítulo.
-:::
-
-
-## Método delta multivariado 
-
-O método delta também se aplica quando a estatística e o parâmetro são vetoriais.
-
-Considere
-
-$$
-\mathbf T_n
-\in
-\mathbb R^k
-$$
-
-e
-
-$$
-\boldsymbol\theta
-\in
-\mathbb R^k.
-$$
-
-Suponha que
+Considere um vetor $\mathbf T_n\in\mathbb R^k$ tal que
 
 $$
 \sqrt n
 (\mathbf T_n-\boldsymbol\theta)
 \xrightarrow{d}
-N_k
-(
-\mathbf0,
-\boldsymbol\Sigma
-).
+N_k(\mathbf0,\boldsymbol\Sigma).
 $$
 
-Considere uma função diferenciável
+Se $g:\mathbb R^k\to\mathbb R^m$ é diferenciável em $\boldsymbol\theta$, então
 
 $$
-g:
-\mathbb R^k
-\longrightarrow
-\mathbb R^m.
-$$
-
-Se
-
-$$
-Dg(\boldsymbol\theta)
-$$
-
-denota a matriz jacobiana de $g$ avaliada em $\boldsymbol\theta$, então
-
-$$
-\boxed{
 \sqrt n
-\{
-g(\mathbf T_n)
--
-g(\boldsymbol\theta)
-\}
+\{g(\mathbf T_n)-g(\boldsymbol\theta)\}
 \xrightarrow{d}
 N_m
 \left[
@@ -4282,752 +2022,254 @@ Dg(\boldsymbol\theta)
 \boldsymbol\Sigma
 Dg(\boldsymbol\theta)^\mathsf T
 \right].
-}
 $$
 
-O resultado decorre da aproximação de primeira ordem
-
-$$
-g(\mathbf T_n)
--
-g(\boldsymbol\theta)
-\approx
-Dg(\boldsymbol\theta)
-(\mathbf T_n-\boldsymbol\theta).
-$$
-
-A matriz de covariâncias assintótica é transformada segundo
-
-$$
-\boxed{
-\boldsymbol\Sigma
-\longmapsto
-Dg(\boldsymbol\theta)
-\boldsymbol\Sigma
-Dg(\boldsymbol\theta)^\mathsf T.
-}
-$$
-
-
-### Caso escalar 
-
-Quando
-
-$$
-m=1,
-$$
-
-a função
-
-$$
-g:
-\mathbb R^k
-\longrightarrow
-\mathbb R
-$$
-
-possui gradiente
-
-$$
-\nabla g(\boldsymbol\theta).
-$$
-
-Nesse caso, a variância limite é
-
-$$
-\boxed{
-\nabla g(\boldsymbol\theta)^\mathsf T
-\boldsymbol\Sigma
-\nabla g(\boldsymbol\theta).
-}
-$$
-
+A matriz jacobiana transforma a matriz de covariâncias assintótica da mesma forma que uma transformação linear atua sobre uma matriz de covariâncias.
 
 ::: {.callout-example title="Exemplo: razão entre duas quantidades"}
-
-Suponha que
-
-$$
-\sqrt n
-\left[
-\begin{pmatrix}
-T_{1n}\\
-T_{2n}
-\end{pmatrix}
--
-\begin{pmatrix}
-\theta_1\\
-\theta_2
-\end{pmatrix}
-\right]
-\xrightarrow{d}
-N_2
-\left(
-\mathbf0,
-\boldsymbol\Sigma
-\right),
-$$
-
-com
-
-$$
-\theta_2\neq0.
-$$
 
 Considere
 
 $$
 g(\theta_1,\theta_2)
 =
-\frac{\theta_1}{\theta_2}.
+\frac{\theta_1}{\theta_2},
+\qquad
+\theta_2\neq0.
 $$
 
 O gradiente é
 
 $$
-\nabla g(\theta_1,\theta_2)
+\nabla g(\boldsymbol\theta)
 =
 \begin{pmatrix}
-\dfrac{1}{\theta_2}\\[8pt]
+\dfrac{1}{\theta_2}\\[2mm]
 -\dfrac{\theta_1}{\theta_2^2}
 \end{pmatrix}.
 $$
 
-Pelo método delta,
+Se
 
 $$
 \sqrt n
 \left(
+\mathbf T_n-\boldsymbol\theta
+\right)
+\xrightarrow{d}
+N_2(\mathbf0,\boldsymbol\Sigma),
+$$
+
+então
+
+$$
+\sqrt n
+\left\{
 \frac{T_{1n}}{T_{2n}}
 -
 \frac{\theta_1}{\theta_2}
-\right)
+\right\}
 \xrightarrow{d}
-N
-\left(
-0,
+N(0,V),
+$$
+
+em que
+
+$$
+V
+=
 \nabla g(\boldsymbol\theta)^\mathsf T
 \boldsymbol\Sigma
-\nabla g(\boldsymbol\theta)
-\right).
+\nabla g(\boldsymbol\theta).
 $$
 :::
 
 
-::: {.callout-example title="Uso em Inferência: funções de parâmetros vetoriais"}
+### Ordens estocásticas 
 
-Considere um modelo descrito por
+As ordens estocásticas fornecem uma notação compacta para descrever a magnitude de sequências aleatórias.
 
-$$
-\boldsymbol\theta
-=
-(\theta_1,\ldots,\theta_k)^\mathsf T
-$$
-
-e um estimador vetorial
-
-$$
-\widehat{\boldsymbol\theta}_n.
-$$
-
-A quantidade de interesse pode ser uma função escalar dos parâmetros,
-
-$$
-\psi
-=
-g(\boldsymbol\theta).
-$$
-
-Mesmo quando existe uma distribuição assintótica para
-
-$$
-\widehat{\boldsymbol\theta}_n,
-$$
-
-a distribuição de
-
-$$
-g(\widehat{\boldsymbol\theta}_n)
-$$
-
-não precisa ser obtida novamente a partir do início.
-
-O método delta utiliza o gradiente de $g$ e a matriz de covariâncias assintótica de $\widehat{\boldsymbol\theta}_n$ para obter a variância assintótica da transformação [@lauritzen2023fundamentals, teorema A.19; @chihara2022, sec. 7.7].
-:::
-
-
-## Ordens estocásticas 
-
-Resultados assintóticos frequentemente envolvem vários termos cujas magnitudes precisam ser comparadas.
-
-As notações
-
-$$
-O_P
-$$
-
-e
-
-$$
-o_P
-$$
-
-permitem registrar essas magnitudes de forma compacta, sem repetir a cada passo uma afirmação completa de convergência.
-
-Considere uma sequência de variáveis aleatórias
-
-$$
-X_n
-$$
-
-e uma sequência determinística positiva
-
-$$
-a_n>0.
-$$
-
-
-### Ordem em probabilidade 
-
-::: {.callout-important title="Ordem em probabilidade"}
+Seja $a_n>0$ uma sequência determinística.
 
 Escrevemos
 
 $$
-X_n
-=
-O_P(a_n)
+X_n=o_P(a_n)
 $$
 
 quando
 
 $$
 \frac{X_n}{a_n}
+\xrightarrow{P}
+0.
 $$
 
-é **limitado em probabilidade**.
+Nesse caso, $X_n$ é assintoticamente desprezível em relação a $a_n$.
 
-Formalmente, para todo
-
-$$
-\varepsilon>0,
-$$
-
-existe
+Escrevemos
 
 $$
-M>0
+X_n=O_P(a_n)
 $$
 
-tal que, para $n$ suficientemente grande,
+quando $X_n/a_n$ é **limitado em probabilidade**. Isso significa que, para todo $\varepsilon>0$, existe $M>0$ tal que, para valores suficientemente grandes de $n$,
 
 $$
-P
-\left(
+P\left(
 \left|
 \frac{X_n}{a_n}
-\right|
->M
+\right|>M
 \right)
 <
 \varepsilon.
 $$
-:::
 
-A expressão
-
-$$
-X_n=O_P(a_n)
-$$
-
-indica que a magnitude probabilística de $X_n$ não excede sistematicamente a ordem determinada por $a_n$.
-
-Em particular,
-
-$$
-X_n=O_P(1)
-$$
-
-significa que a sequência é limitada em probabilidade.
-
-
-### Pequena ordem em probabilidade 
-
-::: {.callout-important title="Pequena ordem em probabilidade"}
-
-Escrevemos
-
-$$
-X_n
-=
-o_P(a_n)
-$$
-
-quando
-
-$$
-\frac{X_n}{a_n}
-\xrightarrow{P}
-0.
-$$
-:::
-
-Nesse caso, $X_n$ torna-se desprezível em relação a $a_n$ em probabilidade.
-
-Em particular,
-
-$$
-X_n=o_P(1)
-$$
-
-se, e somente se,
-
-$$
-X_n\xrightarrow{P}0.
-$$
-
-
-### Diferença entre \(O_P\) e \(o_P\) 
-
-As expressões
-
-$$
-X_n=O_P(a_n)
-$$
-
-e
+As duas notações não possuem o mesmo significado. A relação
 
 $$
 X_n=o_P(a_n)
 $$
 
-não possuem o mesmo significado.
-
-A primeira estabelece que
+é mais forte que
 
 $$
-\frac{X_n}{a_n}
-$$
-
-permanece limitado em probabilidade.
-
-A segunda estabelece a condição mais forte
-
-$$
-\frac{X_n}{a_n}
-\xrightarrow{P}
-0.
-$$
-
-Portanto,
-
-$$
-\boxed{
-X_n=o_P(a_n)
-\quad\Longrightarrow\quad
 X_n=O_P(a_n).
-}
 $$
 
-A implicação inversa não é válida em geral.
+Algumas consequências e regras que serão utilizadas posteriormente são:
 
+- se $X_n\xrightarrow{P}0$, então $X_n=o_P(1)$;
+- se $X_n\xrightarrow{d}X$, então $X_n=O_P(1)$;
+- se $X_n=O_P(a_n)$ e $Y_n=O_P(b_n)$, então $X_nY_n=O_P(a_nb_n)$;
+- se $X_n=o_P(a_n)$ e $Y_n=O_P(b_n)$, então $X_nY_n=o_P(a_nb_n)$;
+- se $X_n=O_P(a_n)$ e $Y_n=O_P(a_n)$, então $X_n+Y_n=O_P(a_n)$;
+- se $X_n=o_P(a_n)$ e $Y_n=o_P(a_n)$, então $X_n+Y_n=o_P(a_n)$.
 
-### Taxa de convergência 
+Essas regras permitem identificar quais parcelas possuem a mesma ordem e quais se tornam desprezíveis em expansões assintóticas.
 
-Considere uma estatística $T_n$ que se aproxima de $\theta$.
+::: {.callout-example title="Exemplo: ordem da média amostral"}
 
-A expressão
-
-$$
-T_n-\theta
-=
-O_P(n^{-1/2})
-$$
-
-indica que seu erro possui ordem probabilística
+Se
 
 $$
-n^{-1/2}.
-$$
-
-Isso significa que a multiplicação do erro por $\sqrt n$ produz uma sequência limitada em probabilidade:
-
-$$
-\sqrt n
-(T_n-\theta)
-=
-O_P(1).
-$$
-
-
-::: {.callout-example title="Exemplo: média amostral"}
-
-Sob as condições do Teorema Central do Limite,
-
-$$
-\sqrt n
-(\overline X_n-\mu)
+\sqrt n(\overline X_n-\mu)
 \xrightarrow{d}
-N(0,\sigma^2).
+N(0,\sigma^2),
 $$
 
-Toda sequência que converge em distribuição para uma variável aleatória própria é limitada em probabilidade. Portanto,
+então
 
 $$
-\sqrt n
-(\overline X_n-\mu)
+\sqrt n(\overline X_n-\mu)
 =
 O_P(1).
 $$
 
-Dividindo por $\sqrt n$,
+Consequentemente,
 
 $$
-\boxed{
 \overline X_n-\mu
 =
 O_P(n^{-1/2}).
-}
 $$
 
-Assim, a média amostral se aproxima de $\mu$ com erro de ordem probabilística $n^{-1/2}$.
+A expressão indica que as flutuações da média em torno de $\mu$ possuem, sob as condições do Teorema Central do Limite, ordem $n^{-1/2}$.
 :::
 
 
-### Algumas regras de cálculo 
+## Síntese 
 
-As ordens estocásticas obedecem a regras que facilitam a manipulação de expansões assintóticas.
+Os resultados deste capítulo podem ser organizados em dois componentes.
 
-Se
+O primeiro reúne **ferramentas matemáticas**. Somatórios, produtos e logaritmos permitem reorganizar expressões; vetores e matrizes fornecem a linguagem necessária para parâmetros e estatísticas multidimensionais; diferenciação, gradientes, hessianas e expansões de Taylor permitem estudar localmente funções; formas quadráticas e projeções serão utilizadas principalmente em distribuições associadas ao modelo normal e em mínimos quadrados; e o jacobiano permite trabalhar com transformações multivariadas.
 
-$$
-X_n=O_P(a_n)
-$$
+O segundo reúne **ferramentas assintóticas**. Os modos de convergência formalizam diferentes sentidos em que uma sequência aleatória pode aproximar um limite. A Lei dos Grandes Números descreve a estabilização de médias, enquanto o Teorema Central do Limite descreve suas flutuações padronizadas. O teorema do mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes. O método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias, e as ordens $O_P$ e $o_P$ registram de forma compacta a magnitude dos termos envolvidos.
 
-e
+A estrutura assintótica central pode ser resumida por
 
 $$
-Y_n=O_P(b_n),
-$$
-
-então
-
-$$
-X_nY_n
-=
-O_P(a_nb_n).
-$$
-
-Se
-
-$$
-X_n=o_P(a_n)
-$$
-
-e
-
-$$
-Y_n=O_P(b_n),
-$$
-
-então
-
-$$
-X_nY_n
-=
-o_P(a_nb_n).
-$$
-
-Se
-
-$$
-X_n=O_P(a_n)
-$$
-
-e
-
-$$
-Y_n=O_P(a_n),
-$$
-
-então
-
-$$
-X_n+Y_n
-=
-O_P(a_n).
-$$
-
-Se
-
-$$
-X_n=o_P(a_n)
-$$
-
-e
-
-$$
-Y_n=o_P(a_n),
-$$
-
-então
-
-$$
-X_n+Y_n
-=
-o_P(a_n).
-$$
-
-Essas regras serão utilizadas posteriormente para identificar quais parcelas dominam uma expansão e quais podem ser incorporadas ao termo de resto.
-
-
-::: {.callout-example title="Uso em Inferência: expansão assintótica"}
-
-Suponha que uma estatística satisfaça uma representação da forma
-
-$$
-T_n-\theta
-=
-\frac{1}{\sqrt n}Z_n
-+
-R_n,
-$$
-
-com
-
-$$
-Z_n=O_P(1)
-$$
-
-e
-
-$$
-R_n=o_P(n^{-1/2}).
-$$
-
-Então,
-
-$$
-T_n-\theta
-=
-O_P(n^{-1/2}).
-$$
-
-Além disso, multiplicando a expressão por $\sqrt n$,
-
-$$
-\sqrt n(T_n-\theta)
-=
-Z_n
-+
-o_P(1).
-$$
-
-Se
-
-$$
-Z_n\xrightarrow{d}Z,
-$$
-
-o lema de Slutsky fornece
-
-$$
-\sqrt n(T_n-\theta)
-\xrightarrow{d}
-Z.
-$$
-
-Esse tipo de representação será utilizado posteriormente em expansões envolvendo estimadores, função escore e log-verossimilhança [@lauritzen2023fundamentals, sec. 5.5 e ap. A.2].
-:::
-
-
-## Mapa das ferramentas assintóticas 
-
-Os resultados desenvolvidos nesta parte possuem funções diferentes e podem ser organizados segundo o tipo de questão que respondem.
-
-| Ferramenta | Função principal |
-|:---|:---|
-| Convergência em probabilidade | expressar aproximação de uma estatística a uma quantidade |
-| Convergência em distribuição | expressar aproximação entre distribuições |
-| Lei Fraca dos Grandes Números | produzir convergência da média para a esperança |
-| Teorema Central do Limite | produzir uma distribuição limite para flutuações padronizadas |
-| Mapeamento contínuo | transformar sequências convergentes |
-| Lema de Slutsky | combinar limites e substituir quantidades convergentes |
-| Método delta | transferir uma distribuição assintótica para uma função diferenciável |
-| $O_P$ | registrar ordem probabilística |
-| $o_P$ | registrar termos assintoticamente desprezíveis |
-
-Um fluxo típico pode ser representado por
-
-$$
-\boxed{
-\text{LGN}
+\text{Lei dos Grandes Números}
 \longrightarrow
-\text{convergência em probabilidade}
+\text{convergência para uma constante},
+$$
+
+$$
+\text{Teorema Central do Limite}
 \longrightarrow
-\text{consistência}
-}
+\text{distribuição das flutuações},
 $$
 
 e
 
 $$
-\boxed{
-\text{TCL}
-\longrightarrow
-\text{convergência em distribuição}
-\longrightarrow
-\text{normalidade assintótica}.
-}
-$$
-
-Quando a quantidade de interesse é uma função da estatística,
-
-$$
-\boxed{
-\text{TCL}
+\text{distribuição assintótica}
 +
 \text{Taylor}
 +
 \text{Slutsky}
 \longrightarrow
 \text{método delta}.
-}
 $$
 
-As ordens estocásticas fornecem uma linguagem compacta para escrever os erros e termos de resto que aparecem nessas aproximações.
-
-
-## Síntese 
-
-Os resultados deste capítulo podem ser organizados em duas partes complementares.
-
-A primeira reúne ferramentas matemáticas utilizadas para representar e manipular funções, vetores e matrizes:
-
-- somatórios, produtos e logaritmos;
-- diferenciação;
-- gradientes e matrizes hessianas;
-- aproximações de Taylor;
-- vetores e matrizes;
-- formas quadráticas;
-- projeções;
-- matrizes jacobianas;
-- transformações multivariadas.
-
-Essas ferramentas serão utilizadas em problemas de otimização, transformações de variáveis aleatórias, verossimilhança, métodos de mínimos quadrados e aproximações locais.
-
-A segunda parte reúne ferramentas para estudar sequências de estatísticas quando
-
-$$
-n\to\infty:
-$$
-
-- convergência quase certa;
-- convergência em média quadrática;
-- convergência em probabilidade;
-- convergência em distribuição;
-- Lei Fraca dos Grandes Números;
-- Teorema Central do Limite;
-- teorema do mapeamento contínuo;
-- lema de Slutsky;
-- método delta;
-- ordens estocásticas.
-
-A Lei Fraca dos Grandes Números descreve a estabilização da média amostral,
-
-$$
-\overline X_n
-\xrightarrow{P}
-\mu,
-$$
-
-enquanto o Teorema Central do Limite descreve suas flutuações na escala $n^{-1/2}$:
-
-$$
-\frac{
-\sqrt n(\overline X_n-\mu)
-}{
-\sigma
-}
-\xrightarrow{d}
-N(0,1).
-$$
-
-O mapeamento contínuo e o lema de Slutsky permitem transformar e combinar resultados de convergência. O método delta acrescenta uma aproximação de Taylor e permite obter distribuições assintóticas para funções de estatísticas.
-
-Por fim,
-
-$$
-O_P
-$$
-
-e
-
-$$
-o_P
-$$
-
-registram de forma compacta a magnitude de erros e termos de resto.
-
-Os capítulos seguintes utilizarão essas ferramentas sem redefini-las. As hipóteses e interpretações específicas serão retomadas no contexto em que cada resultado for aplicado.
+Os capítulos seguintes utilizarão essas ferramentas sem redefini-las. As interpretações e condições específicas serão retomadas no contexto de cada problema inferencial.
 
 
 ## Exercícios de consolidação 
 
-### Ferramentas de cálculo e álgebra linear 
+### Ferramentas matemáticas 
 
 ::: {.callout-note title="Exercício 1"}
 
-Mostre que
+Considere os valores $x_1=2$, $x_2=4$, $x_3=5$ e $x_4=9$.
+
+a. Calcule $\overline x$.
+
+b. Calcule $\sum_{i=1}^4(x_i-\overline x)$.
+
+c. Para $a=3$, calcule os dois lados da identidade
 
 $$
-\sum_{i=1}^n
-(x_i-a)^2
+\sum_{i=1}^4(x_i-a)^2
 =
-\sum_{i=1}^n
-(x_i-\overline x)^2
+\sum_{i=1}^4(x_i-\overline x)^2
 +
-n(\overline x-a)^2.
+4(\overline x-a)^2
 $$
 
-Utilize a identidade
+e verifique numericamente que os valores coincidem.
 
-$$
-\sum_{i=1}^n
-(x_i-\overline x)
-=
-0.
-$$
-
-Interprete as duas parcelas da decomposição.
+d. Explique por que essa decomposição pode ser útil quando uma soma de quadrados é estudada em torno de valores diferentes.
 :::
 
 
 ::: {.callout-note title="Exercício 2"}
 
-Obtenha as aproximações de Taylor de primeira e segunda ordens da função
+Considere
 
 $$
-g(x)=\frac{1}{x}
+\mathbf A
+=
+\begin{pmatrix}
+3&1\\
+1&2
+\end{pmatrix}
+\qquad\text{e}\qquad
+\mathbf x
+=
+\begin{pmatrix}
+2\\
+-1
+\end{pmatrix}.
 $$
 
-em torno de
+a. Verifique se $\mathbf A$ é simétrica.
 
-$$
-a=1.
-$$
+b. Calcule $\det(\mathbf A)$.
 
-Compare numericamente as duas aproximações para
+c. Determine se $\mathbf A$ é invertível e, em caso afirmativo, obtenha $\mathbf A^{-1}$.
 
-$$
-x=0{,}9
-$$
-
-e
-
-$$
-x=1{,}1.
-$$
+d. Calcule $\mathbf A\mathbf x$ e $\mathbf x^\mathsf T\mathbf A\mathbf x$.
 :::
 
 
@@ -5036,34 +2278,42 @@ $$
 Considere
 
 $$
-g(x,y)
+g(\theta_1,\theta_2)
 =
-x^2+xy+y^2.
+\theta_1^2
++
+2\theta_2^2
+-
+2\theta_1
++
+4\theta_2.
 $$
 
-Obtenha:
+a. Obtenha $\nabla g(\theta_1,\theta_2)$.
 
-a. o gradiente
+b. Obtenha a matriz hessiana.
 
-$$
-\nabla g(x,y);
-$$
+c. Determine o ponto em que o gradiente é nulo.
 
-b. a matriz hessiana
-
-$$
-\nabla^2g(x,y);
-$$
-
-c. a aproximação de Taylor de primeira ordem em torno de
-
-$$
-(1,1).
-$$
+d. A partir da hessiana, classifique esse ponto como máximo ou mínimo local.
 :::
 
 
 ::: {.callout-note title="Exercício 4"}
+
+Utilize aproximações de Taylor de primeira ordem para:
+
+a. aproximar $\log(1{,}08)$ em torno de $1$;
+
+b. aproximar $\sqrt{1{,}04}$ em torno de $1$;
+
+c. comparar as aproximações com os valores calculados diretamente.
+
+Em qual dos dois casos o erro absoluto foi maior?
+:::
+
+
+::: {.callout-note title="Exercício 5"}
 
 Considere
 
@@ -5071,149 +2321,130 @@ $$
 \mathbf A
 =
 \begin{pmatrix}
-2 & 1\\
-1 & 2
-\end{pmatrix}.
+2&1\\
+1&2
+\end{pmatrix}
 $$
 
-Mostre que $\mathbf A$ é positiva definida verificando que
+e $\mathbf x=(x_1,x_2)^\mathsf T$.
+
+a. Obtenha a expressão de $\mathbf x^\mathsf T\mathbf A\mathbf x$.
+
+b. Verifique que essa expressão pode ser escrita como
 
 $$
 \mathbf x^\mathsf T
 \mathbf A
 \mathbf x
->0
-$$
-
-para todo
-
-$$
-\mathbf x\neq\mathbf0.
-$$
-:::
-
-
-::: {.callout-note title="Exercício 5"}
-
-Se
-
-$$
-\mathbf P
 =
-\mathbf X
-(\mathbf X^\mathsf T\mathbf X)^{-1}
-\mathbf X^\mathsf T,
+x_1^2+x_2^2+(x_1+x_2)^2.
 $$
 
-com $\mathbf X$ de posto completo nas colunas, mostre que
+c. A partir dessa expressão, classifique $\mathbf A$ quanto à definitude.
 
-$$
-\mathbf P^\mathsf T=\mathbf P
-$$
-
-e
-
-$$
-\mathbf P^2=\mathbf P.
-$$
-
-Explique por que a segunda propriedade é denominada idempotência.
+d. Calcule a forma quadrática para $\mathbf x=(1,-1)^\mathsf T$ e para $\mathbf x=(1,1)^\mathsf T$.
 :::
 
 
 ::: {.callout-note title="Exercício 6"}
 
-Considere a transformação
+Considere
 
 $$
-Y_1=X_1+X_2,
-\qquad
-Y_2=X_1-X_2.
-$$
-
-a. Obtenha a transformação inversa.
-
-b. Determine a matriz jacobiana da transformação direta.
-
-c. Determine a matriz jacobiana da transformação inversa.
-
-d. Calcule o valor absoluto do determinante jacobiano utilizado na mudança de variáveis.
-:::
-
-
-### Convergência e resultados limites 
-
-::: {.callout-note title="Exercício 7"}
-
-Organize as seguintes formas de convergência de acordo com as implicações válidas em geral:
-
-- convergência quase certa;
-- convergência em média quadrática;
-- convergência em probabilidade;
-- convergência em distribuição.
-
-Indique quais implicações não podem ser invertidas sem hipóteses adicionais.
-:::
-
-
-::: {.callout-note title="Exercício 8"}
-
-Suponha que
-
-$$
-T_n\xrightarrow{P}\theta.
-$$
-
-Explique, utilizando a definição de convergência em probabilidade, o significado da afirmação
-
-$$
-P(|T_n-\theta|>\varepsilon)
-\longrightarrow
-0
-$$
-
-para todo
-
-$$
-\varepsilon>0.
-$$
-:::
-
-
-::: {.callout-note title="Exercício 9"}
-
-Se
-
-$$
-X_1,X_2,\ldots
-\overset{\mathrm{iid}}{\sim}
-P,
-$$
-
-com
-
-$$
-E(X_i)=\mu
+\mathbf X
+=
+\begin{pmatrix}
+1\\
+1\\
+1\\
+1
+\end{pmatrix}
 $$
 
 e
 
 $$
-0<
-\operatorname{Var}(X_i)
+\mathbf y
 =
-\sigma^2
-<
-\infty,
+\begin{pmatrix}
+2\\
+3\\
+7\\
+8
+\end{pmatrix}.
 $$
 
-escreva separadamente:
+a. Obtenha $\mathbf P_{\mathbf X}$.
 
-a. a conclusão da Lei Fraca dos Grandes Números;
+b. Calcule $\widehat{\mathbf y}=\mathbf P_{\mathbf X}\mathbf y$.
 
-b. a conclusão do Teorema Central do Limite;
+c. Calcule $\mathbf e=\mathbf y-\widehat{\mathbf y}$.
 
-c. a diferença conceitual entre os dois resultados.
+d. Verifique numericamente que $\mathbf X^\mathsf T\mathbf e=0$.
+
+e. Relacione os elementos de $\widehat{\mathbf y}$ com a média dos elementos de $\mathbf y$.
+:::
+
+
+::: {.callout-note title="Exercício 7"}
+
+Considere $X_1$ e $X_2$ independentes e exponenciais com taxa $\lambda$. Defina
+
+$$
+Y_1=X_1,
+\qquad
+Y_2=X_1+X_2.
+$$
+
+a. Obtenha a transformação inversa.
+
+b. Determine a matriz jacobiana da transformação inversa e seu determinante.
+
+c. Determine o suporte conjunto $\mathcal Y$ de $(Y_1,Y_2)$.
+
+d. Obtenha a densidade conjunta de $(Y_1,Y_2)$.
+
+e. Explique o papel do determinante jacobiano nesse cálculo.
+:::
+
+
+### Ferramentas assintóticas 
+
+::: {.callout-note title="Exercício 8"}
+
+Seja $Z$ uma variável aleatória com $E(Z^2)<\infty$ e defina $X_n=Z/n$.
+
+a. Calcule $E(X_n^2)$.
+
+b. Identifique o limite de $E(X_n^2)$ quando $n\to\infty$.
+
+c. Qual modo de convergência pode ser concluído diretamente?
+
+d. Quais outros modos de convergência decorrem desse resultado?
+
+Agora considere $Y_n\sim N(0,1+1/n)$. Qual convergência em distribuição é esperada? É possível concluir, apenas dessa informação, que $Y_n$ converge em probabilidade?
+:::
+
+
+::: {.callout-note title="Exercício 9"}
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Bernoulli}(0{,}35)
+$$
+
+e $R_n=\sum_{i=1}^nX_i$.
+
+a. Escreva $R_n/n$ como uma média.
+
+b. Utilize a Lei Fraca dos Grandes Números para identificar o limite em probabilidade de $R_n/n$.
+
+c. Interprete o resultado no contexto de uma sequência de ensaios.
+
+d. O resultado afirma que $R_n/n$ será exatamente igual a $0{,}35$ para algum valor finito de $n$? Explique.
 :::
 
 
@@ -5222,92 +2453,70 @@ c. a diferença conceitual entre os dois resultados.
 Considere
 
 $$
-X_1,\ldots,X_n
+X_1,\ldots,X_{64}
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Exponencial}(2).
 $$
 
-Como
+a. Determine $E(X_i)$ e $\operatorname{Var}(X_i)$.
+
+b. Obtenha a aproximação normal fornecida pelo Teorema Central do Limite para $\overline X_{64}$.
+
+c. Utilize essa aproximação para calcular aproximadamente
 
 $$
-\overline X_n
-=
-\frac{1}{n}
-\sum_{i=1}^nX_i
+P(0{,}45<\overline X_{64}<0{,}55).
 $$
 
-é a proporção de sucessos, utilize:
-
-a. a Lei Fraca dos Grandes Números para obter o limite em probabilidade de $\overline X_n$;
-
-b. o Teorema Central do Limite para obter a distribuição limite de
-
-$$
-\sqrt n
-(\overline X_n-p).
-$$
+d. Explique por que a aproximação do item anterior não significa que cada $X_i$ possui distribuição aproximadamente normal.
 :::
 
 
-### Mapeamento contínuo e Slutsky 
-
 ::: {.callout-note title="Exercício 11"}
 
-Suponha que
+Considere uma sequência i.i.d. com média $\mu$ e variância finita e positiva.
+
+Compare as afirmações
 
 $$
-T_n\xrightarrow{P}\theta,
-\qquad
-\theta>0.
-$$
-
-Utilize o teorema do mapeamento contínuo para obter os limites em probabilidade de
-
-$$
-T_n^2,
-$$
-
-$$
-\sqrt{T_n}
+\overline X_n\xrightarrow{P}\mu
 $$
 
 e
 
 $$
-\log T_n.
+\frac{\sqrt n(\overline X_n-\mu)}{\sigma}
+\xrightarrow{d}
+N(0,1).
 $$
+
+Em sua resposta, indique:
+
+a. qual resultado corresponde à Lei dos Grandes Números;
+
+b. qual corresponde ao Teorema Central do Limite;
+
+c. o que cada resultado informa sobre $\overline X_n$;
+
+d. por que um resultado não substitui o outro.
 :::
 
 
 ::: {.callout-note title="Exercício 12"}
 
-Suponha que
+Suponha que $T_n\xrightarrow{P}\theta$, com $\theta>0$.
 
-$$
-X_n\xrightarrow{d}N(0,1)
-$$
+Utilize o teorema do mapeamento contínuo para determinar os limites em probabilidade de:
 
-e
+a. $\sqrt{T_n}$;
 
-$$
-Y_n\xrightarrow{P}2.
-$$
+b. $\log T_n$;
 
-Utilize o lema de Slutsky para obter as distribuições limites de
+c. $T_n^2$;
 
-$$
-X_n+Y_n,
-$$
+d. $1/T_n$.
 
-$$
-X_nY_n
-$$
-
-e
-
-$$
-\frac{X_n}{Y_n}.
-$$
+Explique por que a condição $\theta>0$ garante que as transformações utilizadas nos itens (a), (b) e (d) estejam definidas e sejam contínuas em uma vizinhança de $\theta$.
 :::
 
 
@@ -5316,38 +2525,26 @@ $$
 Suponha que
 
 $$
-\frac{
 \sqrt n(T_n-\theta)
-}{
-\sigma
-}
 \xrightarrow{d}
-N(0,1)
+N(0,4)
 $$
 
-e
+e que $S_n\xrightarrow{P}2$.
 
-$$
-S_n\xrightarrow{P}\sigma,
-\qquad
-\sigma>0.
-$$
-
-Mostre, utilizando o lema de Slutsky, que
+Determine a distribuição limite de
 
 $$
 \frac{
 \sqrt n(T_n-\theta)
 }{
 S_n
-}
-\xrightarrow{d}
-N(0,1).
+}.
 $$
+
+Indique explicitamente onde o lema de Slutsky é utilizado.
 :::
 
-
-### Método delta 
 
 ::: {.callout-note title="Exercício 14"}
 
@@ -5357,35 +2554,23 @@ $$
 \sqrt n(T_n-\theta)
 \xrightarrow{d}
 N(0,\tau^2),
-$$
-
-com
-
-$$
+\qquad
 \theta>0.
 $$
 
-Utilize o método delta para obter a distribuição assintótica de
+Utilize o método delta para obter a distribuição limite de:
 
-$$
-\log T_n.
-$$
+a. $\sqrt n\{\log(T_n)-\log(\theta)\}$;
+
+b. $\sqrt n(1/T_n-1/\theta)$.
+
+Compare as variâncias assintóticas obtidas.
 :::
 
 
 ::: {.callout-note title="Exercício 15"}
 
-Nas condições do exercício anterior, obtenha a distribuição assintótica de
-
-$$
-\frac{1}{T_n}.
-$$
-:::
-
-
-::: {.callout-note title="Exercício 16"}
-
-Suponha que
+Considere
 
 $$
 \sqrt n
@@ -5402,259 +2587,54 @@ T_{2n}
 \right]
 \xrightarrow{d}
 N_2
-(
-\mathbf0,
-\boldsymbol\Sigma
-).
+\left[
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix},
+\begin{pmatrix}
+4&1\\
+1&9
+\end{pmatrix}
+\right],
 $$
 
-Utilize o método delta para obter a forma da variância assintótica de
-
-$$
-g(\theta_1,\theta_2)
-=
-\theta_1\theta_2.
-$$
-
-Determine inicialmente
-
-$$
-\nabla g(\theta_1,\theta_2).
-$$
-:::
-
-
-::: {.callout-note title="Exercício 17"}
-
-Suponha que
-
-$$
-\sqrt n
-(\overline X_n-\mu)
-\xrightarrow{d}
-N(0,\sigma^2),
-$$
-
-com
-
-$$
-\mu>0.
-$$
-
-Utilize o método delta para obter as distribuições assintóticas de:
-
-a.
-
-$$
-\sqrt{\overline X_n};
-$$
-
-b.
-
-$$
-\log\overline X_n;
-$$
-
-c.
-
-$$
-\frac{1}{\overline X_n}.
-$$
-:::
-
-
-### Ordens estocásticas 
-
-::: {.callout-note title="Exercício 18"}
-
-Mostre que
-
-$$
-X_n=o_P(a_n)
-$$
-
-implica
-
-$$
-X_n=O_P(a_n).
-$$
-:::
-
-
-::: {.callout-note title="Exercício 19"}
-
-Suponha que
-
-$$
-\sqrt n(T_n-\theta)
-\xrightarrow{d}Z,
-$$
-
-em que $Z$ possui uma distribuição própria.
-
-Mostre que
-
-$$
-T_n-\theta
-=
-O_P(n^{-1/2}).
-$$
-:::
-
-
-::: {.callout-note title="Exercício 20"}
-
-Suponha que
-
-$$
-X_n=O_P(n^{-1/2})
-$$
-
-e
-
-$$
-Y_n=O_P(n^{-1}).
-$$
-
-Determine ordens apropriadas para:
-
-a.
-
-$$
-X_nY_n;
-$$
-
-b.
-
-$$
-X_n^2;
-$$
-
-c.
-
-$$
-X_n+Y_n.
-$$
-:::
-
-
-### Exploração computacional 
-
-::: {.callout-note title="Exercício 21"}
-
-Utilize R para ilustrar a Lei Fraca dos Grandes Números.
-
-1. Simule $1000$ observações de uma distribuição exponencial com taxa $1$.
-2. Calcule, para cada $n=1,\ldots,1000$, a média das primeiras $n$ observações.
-3. Represente graficamente $\overline X_n$ em função de $n$.
-4. Acrescente uma linha horizontal em
-
-$$
-\mu=1.
-$$
-
-5. Repita a simulação para pelo menos cinco trajetórias e descreva o comportamento observado.
-:::
-
-
-::: {.callout-note title="Exercício 22"}
-
-Utilize simulação para estudar o Teorema Central do Limite.
-
-Considere
-
-$$
-X_i
-\sim
-\operatorname{Exponencial}(1).
-$$
+com $\theta_2\neq0$.
 
 Para
 
 $$
-n=2,\;10,\;30,\;100,
-$$
-
-simule muitas amostras e calcule
-
-$$
-Z_n
+g(\theta_1,\theta_2)
 =
-\sqrt n
-(\overline X_n-1).
+\frac{\theta_1}{\theta_2},
 $$
 
-Para cada valor de $n$:
+a. obtenha o gradiente de $g$;
 
-1. represente a distribuição simulada de $Z_n$;
-2. compare-a com a densidade normal padrão;
-3. descreva como a aproximação muda quando $n$ aumenta.
+b. utilize o método delta multivariado para escrever a variância limite de
 
-Explique por que essa simulação não significa que as observações exponenciais estejam se tornando normais.
+$$
+\sqrt n
+\left(
+\frac{T_{1n}}{T_{2n}}
+-
+\frac{\theta_1}{\theta_2}
+\right);
+$$
+
+c. calcule essa variância para $\theta_1=2$ e $\theta_2=4$.
 :::
 
 
-::: {.callout-note title="Exercício 23"}
+::: {.callout-note title="Exercício 16"}
 
-Considere novamente
+Considere amostras de uma distribuição exponencial com taxa $1$.
 
-$$
-X_i
-\sim
-\operatorname{Exponencial}(1).
-$$
+Utilizando R, simule repetidamente amostras de tamanhos $n=10$, $50$ e $200$ e investigue três resultados deste capítulo:
 
-O Teorema Central do Limite fornece
+1. **Lei dos Grandes Números:** compare a distribuição das médias amostrais com o valor $E(X)=1$;
+2. **Teorema Central do Limite:** examine a distribuição de $\sqrt n(\overline X_n-1)$ e compare-a com $N(0,1)$;
+3. **Método delta:** examine a distribuição de $\sqrt n\log(\overline X_n)$ e compare-a com a distribuição limite prevista pelo método delta.
 
-$$
-\sqrt n
-(\overline X_n-1)
-\xrightarrow{d}
-N(0,1).
-$$
-
-Utilize o método delta para determinar teoricamente a distribuição limite de
-
-$$
-\sqrt n
-\log\overline X_n.
-$$
-
-Depois:
-
-1. simule essa quantidade para diferentes tamanhos de amostra;
-2. represente suas distribuições;
-3. compare-as com a distribuição limite obtida teoricamente.
-:::
-
-
-::: {.callout-note title="Exercício 24"}
-
-Escolha uma situação inferencial em que uma quantidade de interesse seja uma função de outra.
-
-Por exemplo,
-
-$$
-\mu=\frac{1}{\lambda},
-$$
-
-$$
-\psi=\log\theta
-$$
-
-ou
-
-$$
-\psi=\frac{\theta_1}{\theta_2}.
-$$
-
-Em seguida:
-
-1. defina o parâmetro original;
-2. defina a função de interesse;
-3. obtenha sua derivada ou gradiente;
-4. suponha uma distribuição assintótica para o estimador do parâmetro original;
-5. aplique o método delta para obter a distribuição assintótica da quantidade transformada.
-
-O objetivo é identificar a estrutura do método delta, sem desenvolver ainda um procedimento completo de estimação.
+Apresente gráficos adequados e escreva uma interpretação curta para cada resultado. O objetivo é comparar estabilização, aproximação normal e transformação assintótica, e não apenas reproduzir o código.
 :::
