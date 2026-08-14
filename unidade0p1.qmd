@@ -1,4 +1,4 @@
-# Revisão de Probabilidade e Modelos Probabilísticos {.unnumbered}
+# Revisão de Probabilidade e Modelos Probabilísticos 
 
 Este capítulo revisa conceitos de Probabilidade e modelos probabilísticos que serão utilizados ao longo do estudo de Inferência Estatística. O conteúdo pressupõe uma formação anterior em Probabilidade e concentra-se nas definições, propriedades e relações necessárias aos capítulos seguintes.
 
@@ -53,9 +53,9 @@ tema_distribuicao <- theme_bw(base_size = 16) +
 ```
 
 
-## Probabilidade e condicionamento {.unnumbered}
+## Probabilidade e condicionamento 
 
-### Experimentos aleatórios, espaço amostral e eventos {.unnumbered}
+### Experimentos aleatórios, espaço amostral e eventos 
 
 Um **experimento aleatório** é um procedimento cujo resultado não pode ser determinado antecipadamente, embora seja possível especificar o conjunto de resultados que podem ocorrer.
 
@@ -89,7 +89,7 @@ A\cap B=\varnothing.
 $$
 
 
-### Probabilidade {.unnumbered}
+### Probabilidade 
 
 Uma medida de probabilidade $P$ associa a cada evento $A$ um número $P(A)$ que representa sua probabilidade de ocorrência. Suas propriedades básicas são
 
@@ -148,7 +148,7 @@ $$
 em que $|A|$ e $|\Omega|$ representam, respectivamente, o número de elementos de $A$ e de $\Omega$ [@dantas1997; @meyer1983].
 
 
-### Revisão de combinatória {.unnumbered}
+### Revisão de combinatória 
 
 Em problemas com resultados equiprováveis, o cálculo de probabilidades pode depender da contagem dos resultados possíveis. Nesta revisão, serão utilizados principalmente o princípio multiplicativo, o fatorial e os coeficientes binomial e multinomial.
 
@@ -199,7 +199,7 @@ Os coeficientes binomial e multinomial aparecem diretamente nas funções de pro
 :::
 
 
-### Probabilidade condicional {.unnumbered}
+### Probabilidade condicional 
 
 A informação de que um evento ocorreu pode alterar a probabilidade atribuída a outro evento. Se $P(B)>0$, a **probabilidade condicional** de $A$ dado $B$ é
 
@@ -241,7 +241,7 @@ $$
 desde que as probabilidades condicionais envolvidas estejam definidas [@magalhaes2006; @ross2006].
 
 
-### Lei da probabilidade total {.unnumbered}
+### Lei da probabilidade total 
 
 Considere uma partição do espaço amostral formada pelos eventos
 
@@ -282,7 +282,7 @@ $$
 A probabilidade de $A$ é decomposta segundo as diferentes partes do espaço amostral.
 
 
-### Teorema de Bayes {.unnumbered}
+### Teorema de Bayes 
 
 Considerando a mesma partição $B_1,\ldots,B_k$, se $P(A)>0$, então
 
@@ -303,38 +303,38 @@ O teorema de Bayes permite inverter o condicionamento quando são conhecidas as 
 
 ::: {.callout-example title="Exemplo: teste diagnóstico"}
 
-Considere uma condição presente em $2\%$ de uma população. Um teste apresenta sensibilidade de $95\%$ e produz resultado positivo em $5\%$ das pessoas que não apresentam a condição.
+Considere uma condição genética presente em $2\%$ de uma população. Um teste apresenta sensibilidade de $95\%$ e produz resultado positivo em $5\%$ das pessoas que não apresentam a condição.
 
-Se $D$ representa a presença da condição e $+$ representa um resultado positivo, então
-
-$$
-P(D)=0{,}02,
-$$
+Se $G$ representa a presença da condição e $T$ representa um resultado positivo no teste, então
 
 $$
-P(+\mid D)=0{,}95
+P(G)=0{,}02,
+$$
+
+$$
+P(T\mid G)=0{,}95
 $$
 
 e
 
 $$
-P(+\mid D^c)=0{,}05.
+P(T\mid G^c)=0{,}05.
 $$
 
 Pela lei da probabilidade total,
 
 $$
-P(+)
+P(T)
 =
-P(+\mid D)P(D)
+P(T\mid G)P(G)
 +
-P(+\mid D^c)P(D^c).
+P(T\mid G^c)P(G^c).
 $$
 
 Logo,
 
 $$
-P(+)
+P(T)
 =
 0{,}95(0{,}02)
 +
@@ -346,36 +346,30 @@ $$
 Aplicando o teorema de Bayes,
 
 $$
-P(D\mid +)
+P(G\mid T)
 =
 \frac{
-P(+\mid D)P(D)
+P(T\mid G)P(G)
 }{
-P(+)
+P(T)
 }
 $$
 
 e, portanto,
 
 $$
-P(D\mid +)
+P(G\mid T)
 =
 \frac{0{,}95(0{,}02)}{0{,}068}
 \approx
 0{,}279.
 $$
 
-Assim,
-
-$$
-P(D\mid +)\approx27{,}9\%.
-$$
-
-A probabilidade de uma pessoa apresentar a condição dado que recebeu um resultado positivo não coincide com a sensibilidade do teste. O cálculo também depende da frequência da condição na população e da probabilidade de resultado positivo entre as pessoas que não apresentam a condição.
+A probabilidade de uma pessoa apresentar a condição genética (G) dado que recebeu um resultado positivo no teste (T) não coincide com a sensibilidade do teste. O cálculo também depende da frequência da condição na população e da probabilidade de resultado positivo entre as pessoas que não apresentam a condição.
 :::
 
 
-### Independência de eventos {.unnumbered}
+### Independência de eventos 
 
 Dois eventos $A$ e $B$ são **independentes** quando
 
@@ -430,14 +424,14 @@ $$
 A independência aos pares, isoladamente, não garante independência conjunta [@dantas1997; @magalhaes2006].
 
 
-## Variáveis aleatórias e distribuições {.unnumbered}
+## Variáveis aleatórias e distribuições 
 
 Uma variável aleatória associa valores numéricos aos resultados de um experimento aleatório. Sua distribuição descreve quais valores podem ocorrer e como a probabilidade é distribuída entre esses valores ou conjuntos de valores.
 
 Ao longo do livro, letras maiúsculas, como $X$, $Y$ e $Z$, representarão variáveis aleatórias. Letras minúsculas, como $x$, $y$ e $z$, representarão valores possíveis ou observados dessas variáveis.
 
 
-### Função de distribuição {.unnumbered}
+### Função de distribuição 
 
 A **função de distribuição acumulada** de uma variável aleatória $X$ é definida por
 
@@ -459,28 +453,7 @@ Toda função de distribuição satisfaz:
 A função $F_X$ caracteriza completamente a distribuição de $X$ [@rice2007mathematical, caps. 1--2; @ramachandran2021r, sec. 3.1].
 
 
-### Suporte {.unnumbered}
-
-O **suporte** de uma variável aleatória será entendido, neste livro, como o conjunto de valores admissíveis para a variável sob a distribuição considerada.
-
-No caso discreto, o suporte corresponde aos valores aos quais a função de probabilidade atribui probabilidade positiva. No caso absolutamente contínuo, será representado pelo conjunto em que a densidade é positiva, desconsiderando diferenças em conjuntos de probabilidade nula.
-
-Por exemplo, uma variável de contagem pode possuir suporte
-
-$$
-\{0,1,2,\ldots\},
-$$
-
-enquanto uma variável que representa um tempo de espera pode possuir suporte
-
-$$
-(0,\infty).
-$$
-
-Em modelos paramétricos, o suporte pode depender do parâmetro. Essa característica será retomada posteriormente, pois algumas condições de regularidade utilizadas em Inferência Estatística pressupõem que o suporte seja comum aos diferentes valores possíveis do parâmetro.
-
-
-### Quantis {.unnumbered}
+### Quantis 
 
 Para
 
@@ -507,7 +480,7 @@ $$
 Quantis serão utilizados posteriormente na construção de intervalos e regiões associados a distribuições amostrais.
 
 
-### Variáveis aleatórias discretas {.unnumbered}
+### Variáveis aleatórias discretas 
 
 Uma variável aleatória $X$ é **discreta** quando assume valores em um conjunto finito ou enumerável.
 
@@ -528,7 +501,29 @@ $$
 e
 
 $$
-\sum_xp_X(x)=1.
+\sum_x p_X(x)=1.
+$$
+
+O **suporte** de $X$ é o conjunto dos valores aos quais a função de massa de probabilidade atribui probabilidade positiva. Neste livro, o suporte de $X$ será representado pela letra maiúscula caligráfica
+
+$$
+\mathcal X.
+$$
+
+Assim,
+
+$$
+\mathcal X
+=
+\{x:p_X(x)>0\}.
+$$
+
+Por exemplo, se $X$ é uma variável de contagem que pode assumir qualquer valor inteiro não negativo, então
+
+$$
+\mathcal X
+=
+\{0,1,2,\ldots\}.
 $$
 
 A função de distribuição é obtida acumulando as probabilidades:
@@ -542,7 +537,7 @@ $$
 Como consequência, a função de distribuição de uma variável discreta apresenta saltos nos valores que recebem probabilidade positiva.
 
 
-### Variáveis aleatórias absolutamente contínuas {.unnumbered}
+### Variáveis aleatórias absolutamente contínuas 
 
 Uma variável aleatória $X$ é **absolutamente contínua** quando existe uma função de densidade $f_X$ tal que
 
@@ -567,6 +562,22 @@ f_X(x)\,dx
 1.
 $$
 
+Também utilizaremos
+
+$$
+\mathcal X
+$$
+
+para representar o suporte de uma variável aleatória absolutamente contínua $X$. Neste caso, o suporte será entendido como o conjunto de valores admissíveis para $X$ em que a densidade é positiva, desconsiderando diferenças em conjuntos de probabilidade nula.
+
+Por exemplo, se $X$ representa um tempo de espera estritamente positivo, então
+
+$$
+\mathcal X
+=
+(0,\infty).
+$$
+
 Nesse caso,
 
 $$
@@ -583,10 +594,18 @@ $$
 
 A probabilidade pontual é nula porque conjuntos unitários possuem comprimento nulo, e não simplesmente porque uma variável contínua pode assumir infinitos valores [@rice2007mathematical, cap. 2; @ramachandran2021r, secs. 3.1--3.2].
 
+Em modelos paramétricos, o suporte pode depender do parâmetro. Quando for necessário explicitar essa dependência, utilizaremos uma notação como
 
-### Função indicadora {.unnumbered}
+$$
+\mathcal X_\theta.
+$$
 
-Para um conjunto $A$, a função indicadora de $A$ é
+Essa característica será retomada posteriormente, pois algumas condições de regularidade utilizadas em Inferência Estatística pressupõem que o suporte seja comum aos diferentes valores possíveis do parâmetro.
+
+
+### Função indicadora 
+
+Para um conjunto $A$, a **função indicadora** de $A$ é definida por
 
 $$
 \mathbf 1_A(x)
@@ -597,19 +616,58 @@ $$
 \end{cases}
 $$
 
-A função indicadora permite incorporar o conjunto de valores admissíveis diretamente à expressão de uma função de probabilidade ou densidade.
+Quando o conjunto considerado é o suporte $\mathcal X$ de uma variável aleatória $X$, escreveremos
 
-Por exemplo,
+$$
+\mathbf 1_{\mathcal X}(x)
+=
+\begin{cases}
+1, & x\in\mathcal X,\\
+0, & x\notin\mathcal X.
+\end{cases}
+$$
+
+Essa notação permite incorporar diretamente o suporte à expressão de uma função de massa de probabilidade ou de uma densidade.
+
+No caso discreto, uma função de massa de probabilidade poderá ser escrita na forma
+
+$$
+p_X(x)
+=
+h(x)\mathbf 1_{\mathcal X}(x),
+$$
+
+indicando que
+
+$$
+p_X(x)
+=
+\begin{cases}
+h(x), & x\in\mathcal X,\\
+0, & x\notin\mathcal X.
+\end{cases}
+$$
+
+De forma análoga, para uma variável aleatória absolutamente contínua, uma densidade poderá ser escrita como
 
 $$
 f_X(x)
 =
-g(x)\mathbf 1_A(x)
+h(x)\mathbf 1_{\mathcal X}(x),
 $$
 
-indica que a densidade é dada por $g(x)$ quando $x\in A$ e é nula fora de $A$.
+isto é,
 
-Essa notação será utilizada sistematicamente na apresentação dos modelos probabilísticos deste capítulo.
+$$
+f_X(x)
+=
+\begin{cases}
+h(x), & x\in\mathcal X,\\
+0, & x\notin\mathcal X.
+\end{cases}
+$$
+
+A função indicadora permite, portanto, apresentar em uma única expressão a forma da função de massa ou da densidade e o suporte ao qual ela está associada. Essa notação será utilizada sistematicamente na apresentação dos modelos probabilísticos deste capítulo.
 
 A função indicadora também permite representar contagens de ocorrências. Considere os eventos
 
@@ -625,7 +683,7 @@ I_i
 \mathbf 1_{A_i}.
 $$
 
-Então
+Então,
 
 $$
 I_i
@@ -663,7 +721,7 @@ representa a proporção de ocorrências.
 
 Essa representação será utilizada na distribuição binomial e, posteriormente, permitirá relacionar contagens, proporções e médias de variáveis Bernoulli.
 
-### Funções de variáveis aleatórias {.unnumbered}
+### Funções de variáveis aleatórias 
 
 Se $X$ é uma variável aleatória e
 
@@ -686,11 +744,11 @@ $$
 Métodos específicos para transformações de variáveis aleatórias serão retomados posteriormente neste capítulo.
 
 
-## Esperança, variância e momentos {.unnumbered}
+## Esperança, variância e momentos 
 
-### Esperança {.unnumbered}
+### Esperança 
 
-A **esperança** de uma variável aleatória representa uma média ponderada de seus possíveis valores segundo a distribuição de probabilidade.
+A **esperança matemática** de uma variável aleatória representa uma média ponderada de seus possíveis valores segundo a distribuição de probabilidade.
 
 No caso discreto,
 
@@ -732,13 +790,7 @@ $$
 
 no caso absolutamente contínuo.
 
-A esperança é linear. Para constantes
-
-$$
-a_1,\ldots,a_n
-$$
-
-e $b$,
+A esperança é linear. Para constantes $a_1,\ldots,a_n$ e $b$,
 
 $$
 E\left(
@@ -751,7 +803,7 @@ $$
 Essa propriedade não exige independência entre as variáveis.
 
 
-### Momentos {.unnumbered}
+### Momentos 
 
 O **momento de ordem $r$ em torno da origem** é
 
@@ -761,7 +813,7 @@ $$
 
 quando existe.
 
-O **momento central de ordem $r$** é
+O **momento centrado (na média) de ordem $r$** é
 
 $$
 E\left[
@@ -769,12 +821,12 @@ E\left[
 \right].
 $$
 
-A média corresponde ao primeiro momento em torno da origem. A variância corresponde ao segundo momento central.
+A média corresponde ao primeiro momento em torno da origem. A variância corresponde ao segundo momento centrado.
 
 Medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados [@rice2007mathematical, sec. 4.1; @ramachandran2021r, secs. 3.1 e 3.3].
 
 
-### Variância {.unnumbered}
+### Variância 
 
 A **variância** de $X$ é
 
@@ -801,9 +853,6 @@ $$
 =
 a^2\operatorname{Var}(X).
 $$
-
-A constante $b$ altera a localização da variável, mas não sua dispersão.
-
 A raiz quadrada da variância,
 
 $$
@@ -815,11 +864,17 @@ $$
 é o desvio-padrão da distribuição.
 
 
-## Distribuições conjuntas e dependência {.unnumbered}
+## Distribuições conjuntas e dependência 
 
-Muitos problemas probabilísticos envolvem mais de uma variável aleatória observada simultaneamente. Nesses casos, além das distribuições individuais, é necessário descrever como as variáveis se comportam conjuntamente.
+Muitos problemas probabilísticos envolvem mais de uma variável aleatória considerada simultaneamente. Nesses casos, além de descrever o comportamento individual de cada variável, é necessário estudar como elas se comportam conjuntamente e como se relacionam.
 
-Considere o vetor aleatório
+Variáveis aleatórias
+
+$$
+X_1,\ldots,X_k
+$$
+
+consideradas conjuntamente podem ser reunidas no vetor aleatório
 
 $$
 \mathbf X
@@ -827,18 +882,42 @@ $$
 (X_1,\ldots,X_k)^\mathsf T.
 $$
 
-Sua distribuição conjunta determina as probabilidades associadas aos possíveis valores de todas as componentes.
+A distribuição conjunta descreve o comportamento probabilístico de suas componentes consideradas simultaneamente. A partir dela, podem ser obtidas distribuições marginais e condicionais e estudadas relações de dependência entre as variáveis.
+
+Quando forem consideradas apenas duas variáveis aleatórias, utilizaremos a notação $X$ e $Y$.
 
 
-### Distribuição conjunta {.unnumbered}
+### Distribuição conjunta 
 
-Para duas variáveis aleatórias $X$ e $Y$, a função de distribuição conjunta é
+Considere duas variáveis aleatórias $X$ e $Y$, com suportes $\mathcal X$ e $\mathcal Y$, respectivamente. Os pares formados por seus valores pertencem ao produto cartesiano
+
+$$
+\mathcal X\times\mathcal Y.
+$$
+
+A distribuição conjunta descreve o comportamento probabilístico de $X$ e $Y$ consideradas simultaneamente. Sua função de distribuição conjunta é definida por
 
 $$
 F_{X,Y}(x,y)
 =
 P(X\leq x,\;Y\leq y).
 $$
+
+O **suporte conjunto** de $(X,Y)$ é formado pelos pares
+
+$$
+(x,y)\in\mathcal X\times\mathcal Y
+$$
+
+admissíveis sob a distribuição conjunta considerada.
+
+O suporte conjunto não precisa coincidir com todo o produto cartesiano
+
+$$
+\mathcal X\times\mathcal Y.
+$$
+
+Dependendo da relação entre $X$ e $Y$, apenas parte das combinações entre seus valores individuais pode pertencer ao suporte conjunto.
 
 No caso discreto, a distribuição conjunta pode ser descrita pela função de massa de probabilidade
 
@@ -897,7 +976,7 @@ $$
 A mesma ideia se estende a vetores aleatórios com mais de duas componentes.
 
 
-### Distribuições marginais {.unnumbered}
+### Distribuições marginais 
 
 A distribuição marginal descreve o comportamento de uma componente do vetor sem condicionar aos valores das demais.
 
@@ -938,7 +1017,7 @@ $$
 A soma ou integração elimina da distribuição conjunta a variável que não aparece na distribuição marginal desejada.
 
 
-### Distribuições condicionais {.unnumbered}
+### Distribuições condicionais 
 
 A distribuição condicional descreve o comportamento de uma variável quando o valor de outra é conhecido.
 
@@ -1096,7 +1175,7 @@ A informação de que $Y=1$ altera a distribuição atribuída a $X$.
 :::
 
 
-### Independência de variáveis aleatórias {.unnumbered}
+### Independência de variáveis aleatórias 
 
 As variáveis aleatórias $X$ e $Y$ são **independentes** quando
 
@@ -1147,7 +1226,7 @@ $$
 A recíproca não é válida em geral. A igualdade de determinados momentos não é suficiente para estabelecer independência [@rice2007mathematical, sec. 3.4; @ramachandran2021r, secs. 2.4 e 3.3].
 
 
-### Independência de várias variáveis {.unnumbered}
+### Independência de várias variáveis 
 
 As variáveis
 
@@ -1193,17 +1272,35 @@ $$
 quase sempre.
 
 
-### Variáveis independentes e identicamente distribuídas {.unnumbered}
+### Variáveis independentes e identicamente distribuídas 
 
-Se, além de independentes, $X_1,\ldots,X_n$ possuem a mesma distribuição $P$, escrevemos
+Se, além de mutuamente independentes, as variáveis
+
+$$
+X_1,\ldots,X_n
+$$
+
+possuem a mesma distribuição, dizemos que são **independentes e identicamente distribuídas**.
+
+Formalmente, existe uma função de distribuição comum $F$ tal que
+
+$$
+F_{X_i}(x)
+=
+F(x),
+\qquad
+i=1,\ldots,n.
+$$
+
+Nesse caso, escrevemos
 
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-P.
+F.
 $$
 
-A sigla **i.i.d.** indica que as variáveis são **independentes e identicamente distribuídas**.
+A sigla **i.i.d.** corresponde à expressão *independentes e identicamente distribuídas*.
 
 ::: {.callout-note title="Estrutura i.i.d."}
 A notação
@@ -1211,19 +1308,20 @@ A notação
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-P
+F
 $$
 
 reúne duas condições distintas:
 
-1. $X_1,\ldots,X_n$ são independentes;
-2. todas possuem a mesma distribuição $P$.
+1. $X_1,\ldots,X_n$ são mutuamente independentes;
+2. todas possuem a mesma distribuição $F$.
 
-Essa estrutura será utilizada posteriormente para representar muitas amostras aleatórias. Ela corresponde a uma hipótese probabilística específica e não descreve todos os mecanismos possíveis de obtenção de dados.
+Serem identicamente distribuídas não significa que as variáveis assumam os mesmos valores. Significa que todas são regidas pela mesma distribuição probabilística.
+
+A estrutura i.i.d. será utilizada repetidamente ao longo do livro e, posteriormente, aparecerá na definição usual de uma amostra aleatória. Ela representa uma hipótese específica sobre o mecanismo probabilístico de geração das observações e não se aplica a todos os processos de obtenção de dados.
 :::
 
-
-### Covariância e correlação {.unnumbered}
+### Covariância e correlação 
 
 A **covariância** entre $X$ e $Y$ é
 
@@ -1268,42 +1366,6 @@ X\perp Y
 $$
 
 A implicação inversa não é válida em geral.
-
-Considere, por exemplo,
-
-$$
-X\sim N(0,1)
-$$
-
-e
-
-$$
-Y=X^2.
-$$
-
-Como
-
-$$
-E(X)=0
-$$
-
-e, pela simetria da distribuição normal padrão,
-
-$$
-E(X^3)=0,
-$$
-
-temos
-
-$$
-\operatorname{Cov}(X,Y)
-=
-E(X^3)-E(X)E(X^2)
-=
-0.
-$$
-
-Entretanto, $Y$ é completamente determinado por $X$, de modo que as variáveis não são independentes.
 
 A covariância depende das unidades de medida. Uma medida adimensional da associação linear é o **coeficiente de correlação**,
 
@@ -1353,7 +1415,7 @@ Para variáveis conjuntamente normais, correlação nula implica independência.
 :::
 
 
-### Variância de combinações lineares {.unnumbered}
+### Variância de combinações lineares 
 
 Para variáveis com segundos momentos finitos,
 
@@ -1386,7 +1448,7 @@ $$
 Esse resultado será utilizado repetidamente na obtenção das variâncias de somas, médias e outras estatísticas construídas a partir de observações independentes [@rice2007mathematical, secs. 4.2--4.3; @ramachandran2021r, sec. 3.3.1].
 
 
-### Esperança condicional {.unnumbered}
+### Esperança condicional 
 
 A distribuição condicional permite definir momentos condicionais.
 
@@ -1504,7 +1566,7 @@ $$
 :::
 
 
-### Variância condicional {.unnumbered}
+### Variância condicional 
 
 A variância condicional de $X$ dado $Y=y$ é
 
@@ -1638,7 +1700,7 @@ $$
 :::
 
 
-### Vetores de médias e matrizes de covariâncias {.unnumbered}
+### Vetores de médias e matrizes de covariâncias 
 
 Para um vetor aleatório
 
@@ -1765,15 +1827,15 @@ Quando várias variáveis são independentes e possuem a mesma distribuição, u
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-P.
+F.
 $$
 
 Essa estrutura será utilizada repetidamente nos modelos probabilísticos apresentados a seguir e, posteriormente, na definição de amostras aleatórias.
 :::
 
-## Função geradora de momentos {.unnumbered}
+## Função geradora de momentos 
 
-A **função geradora de momentos (FGM)** de uma variável aleatória $X$ é definida por
+A **função geradora de momentos (fgm)** de uma variável aleatória $X$ é definida por
 
 $$
 M_X(t)
@@ -1801,12 +1863,12 @@ M_X(t)
 e^{tx}f_X(x)\,dx.
 $$
 
-A FGM será utilizada neste capítulo para três finalidades: obter momentos, estudar distribuições de somas de variáveis independentes e reconhecer distribuições a partir de sua forma funcional [@rice2007mathematical, sec. 4.5; @chihara2022, ap. A.8].
+A fgm será utilizada neste capítulo para três finalidades: obter momentos, estudar distribuições de somas de variáveis independentes e reconhecer distribuições a partir de sua forma funcional [@rice2007mathematical, sec. 4.5; @chihara2022, ap. A.8].
 
 
-### Obtenção de momentos {.unnumbered}
+### Obtenção de momentos 
 
-Quando a FGM é finita em uma vizinhança de zero, sua derivada de ordem $r$ é
+Quando a fgm é finita em uma vizinhança de zero, sua derivada de ordem $r$ é
 
 $$
 M_X^{(r)}(t)
@@ -1848,10 +1910,10 @@ M_X''(0)
 [M_X'(0)]^2.
 $$
 
-Assim, quando a FGM possui uma expressão simples, ela fornece uma forma alternativa de obter os momentos da distribuição.
+Assim, quando a fgm possui uma expressão simples, ela fornece uma forma alternativa de obter os momentos da distribuição.
 
 
-### Transformações lineares {.unnumbered}
+### Transformações lineares 
 
 Se
 
@@ -1886,10 +1948,10 @@ M_Y(t)
 e^{bt}M_X(at).
 $$
 
-Essa relação permite obter a FGM de uma transformação linear a partir da FGM da variável original.
+Essa relação permite obter a fgm de uma transformação linear a partir da FGM da variável original.
 
 
-### Soma de variáveis independentes {.unnumbered}
+### Soma de variáveis independentes 
 
 Se
 
@@ -1908,7 +1970,7 @@ $$
 Se, além disso,
 
 $$
-X_1,\ldots,X_n
+S_n=X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
 X,
 $$
@@ -1916,6 +1978,8 @@ $$
 então
 
 $$
+M_{S_n}(t)
+=
 M_{X_1+\cdots+X_n}(t)
 =
 [M_X(t)]^n.
@@ -1924,26 +1988,26 @@ $$
 Essa propriedade será utilizada nas seções seguintes para estabelecer relações entre alguns modelos probabilísticos.
 
 
-### Identificação de distribuições {.unnumbered}
+### Identificação de distribuições 
 
 Se duas variáveis aleatórias possuem funções geradoras de momentos que existem e coincidem em uma vizinhança de $t=0$, então elas possuem a mesma distribuição.
 
-Assim, quando a FGM de uma variável ou de uma soma de variáveis coincide com a FGM de uma distribuição conhecida, essa igualdade pode ser utilizada para identificar sua distribuição.
+Assim, quando a fgm de uma variável ou de uma soma de variáveis coincide com a fgm de uma distribuição conhecida, essa igualdade pode ser utilizada para identificar sua distribuição.
 
-::: {.callout-note title="Existência da FGM"}
+::: {.callout-note title="Existência da fgm"}
 Nem toda distribuição possui função geradora de momentos. Neste capítulo, a FGM será apresentada junto aos modelos em que sua expressão é útil para os desenvolvimentos posteriores.
 
 Não será introduzida uma expressão complicada apenas para completar uma tabela. Quando a FGM de determinado modelo envolver funções especiais que não serão utilizadas no livro, essa forma será omitida.
 :::
 
-## Modelos probabilísticos discretos {.unnumbered}
+## Modelos probabilísticos discretos 
 
 Modelos probabilísticos discretos descrevem variáveis aleatórias que assumem valores em conjuntos finitos ou enumeráveis. A escolha de uma distribuição depende do mecanismo que produz a variável observada. Um único resultado binário, uma contagem de sucessos, uma amostragem sem reposição, o número de tentativas até determinado evento e o número de ocorrências em um intervalo correspondem a estruturas probabilísticas distintas.
 
 Nesta seção, serão revisadas as distribuições uniforme discreta, Bernoulli, binomial, hipergeométrica, geométrica, binomial negativa e Poisson. Para cada modelo serão apresentados seu mecanismo probabilístico, suporte, função de massa de probabilidade, esperança, variância, função geradora de momentos, situações que podem originar problemas inferenciais e o comportamento gráfico da função de massa e da função de distribuição acumulada [@dantas1997; @magalhaes2006; @ross2006].
 
 
-### Distribuição uniforme discreta {.unnumbered}
+### Distribuição uniforme discreta 
 
 A distribuição uniforme discreta descreve situações em que um número finito de resultados possui a mesma probabilidade de ocorrência.
 
@@ -1971,7 +2035,7 @@ $$
 Nesse caso, escrevemos
 
 $$
-X\sim\operatorname{UniformeDiscreta}(1,\ldots,m)
+X\sim\operatorname{U}\{1,\ldots,m\}
 $$
 
 e
@@ -2032,7 +2096,7 @@ $$
 Considere uma população cujos elementos são numerados consecutivamente de $1$ até um valor máximo desconhecido $m$. Se um elemento é selecionado aleatoriamente e todos os números possuem a mesma probabilidade de seleção, então
 
 $$
-X\sim\operatorname{UniformeDiscreta}(1,\ldots,m).
+X\sim\operatorname{U}\{1,\ldots,m\}.
 $$
 
 Um exemplo ocorre quando números de série são atribuídos sequencialmente aos itens produzidos por uma empresa. Se apenas alguns números de série são observados, pode haver interesse em obter informação sobre o número total $m$ de itens produzidos.
@@ -2152,7 +2216,7 @@ g_fmp / g_fda
 A @fig-uniforme-discreta-fmp-fda mostra que todos os valores do suporte possuem a mesma massa de probabilidade. À medida que $m$ aumenta, essa massa individual diminui, pois a probabilidade total igual a $1$ é distribuída entre um número maior de valores. A função de distribuição apresenta saltos de mesma magnitude, iguais a $1/m$. Assim, quanto maior o número de valores possíveis, menores são os saltos da função de distribuição.
 
 
-### Distribuição de Bernoulli {.unnumbered}
+### Distribuição de Bernoulli 
 
 Um **ensaio de Bernoulli** é um experimento com dois resultados possíveis, representados por $1$ e $0$. Convencionalmente, esses resultados são denominados sucesso e fracasso.
 
@@ -2174,7 +2238,7 @@ $$
 Escrevemos
 
 $$
-X\sim\operatorname{Bernoulli}(p).
+X\sim\operatorname{Ber}(p).
 $$
 
 O parâmetro $p$ representa a probabilidade de sucesso:
@@ -2255,7 +2319,7 @@ $$
 Se $p$ representa a probabilidade de uma pessoa da população utilizar o serviço, então
 
 $$
-X\sim\operatorname{Bernoulli}(p).
+X\sim\operatorname{Ber}(p).
 $$
 
 Em uma situação inferencial, podem ser observadas respostas de várias pessoas com o objetivo de obter informação sobre a proporção populacional $p$ de usuários do serviço.
@@ -2383,14 +2447,14 @@ g_fmp / g_fda
 A @fig-bernoulli-fmp-fda mostra que o parâmetro $p$ redistribui a massa entre os dois valores possíveis. Quando $p$ é pequeno, a maior massa está em $X=0$; quando $p$ é grande, concentra-se em $X=1$. Para $p=0{,}5$, os dois resultados possuem a mesma probabilidade. Na função de distribuição, o primeiro salto possui magnitude $1-p$ e ocorre em $x=0$; o segundo completa a probabilidade acumulada em $x=1$.
 
 
-### Distribuição binomial {.unnumbered}
+### Distribuição binomial 
 
 Considere
 
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 $$
 
 A variável
@@ -2406,7 +2470,7 @@ representa o número de sucessos nos $n$ ensaios.
 Nesse caso,
 
 $$
-X\sim\operatorname{Binomial}(n,p),
+X\sim\operatorname{Binom}(n,p),
 $$
 
 com
@@ -2434,14 +2498,6 @@ p_X(x)
 p^x(1-p)^{n-x}
 \mathbf 1_{\{0,1,\ldots,n\}}(x).
 $$
-
-O coeficiente
-
-$$
-\binom{n}{x}
-$$
-
-representa o número de maneiras de posicionar $x$ sucessos entre os $n$ ensaios.
 
 Como $X$ é uma soma de variáveis Bernoulli independentes,
 
@@ -2549,7 +2605,7 @@ Considere uma pesquisa de satisfação realizada com $n=100$ usuários de determ
 Se as respostas puderem ser representadas por ensaios de Bernoulli independentes com probabilidade de satisfação $p$, o número total $X$ de pessoas satisfeitas pode ser modelado por
 
 $$
-X\sim\operatorname{Binomial}(100,p).
+X\sim\operatorname{Binom}(100,p).
 $$
 
 O interesse inferencial pode estar na proporção $p$ de usuários satisfeitos na população. O valor de $p$ é desconhecido, enquanto $X$ é observado a partir da amostra.
@@ -2684,7 +2740,7 @@ $$
 o aumento de $p$ desloca a massa de probabilidade para valores maiores de $x$. Para $p=0{,}5$, a distribuição é simétrica em torno de $x=5$. Os casos $p=0{,}2$ e $p=0{,}8$ apresentam formas espelhadas, consequência da troca entre as probabilidades de sucesso e fracasso. Na função de distribuição, esse deslocamento aparece na posição em que a probabilidade acumulada cresce.
 
 
-### Distribuição hipergeométrica {.unnumbered}
+### Distribuição hipergeométrica 
 
 A distribuição hipergeométrica descreve o número de sucessos em uma amostra retirada **sem reposição** de uma população finita.
 
@@ -2699,7 +2755,7 @@ Seleciona-se uma amostra de tamanho $n$ sem reposição e define-se $X$ como o n
 Então,
 
 $$
-X\sim\operatorname{Hipergeométrica}(N,M,n),
+X\sim\text{Hiper}(N,M,n),
 $$
 
 com
@@ -2796,7 +2852,7 @@ Considere um lote com $N=500$ componentes eletrônicos. Uma quantidade desconhec
 Condicionalmente ao número $M$ de componentes defeituosos existentes no lote,
 
 $$
-X\sim\operatorname{Hipergeométrica}(500,M,30).
+X\sim\text{Hiper}(500,M,30).
 $$
 
 Em um problema inferencial, a contagem observada $X$ pode fornecer informação sobre $M$ ou sobre a proporção
@@ -2942,7 +2998,7 @@ $$
 o aumento de $M$ desloca a distribuição para contagens maiores. Os casos $M=10$ e $M=40$ apresentam comportamento aproximadamente espelhado, enquanto $M=25$ corresponde a uma população com metade das unidades em cada categoria.
 
 
-### Binomial e hipergeométrica {.unnumbered}
+### Binomial e hipergeométrica 
 
 As distribuições binomial e hipergeométrica podem descrever o número de sucessos em $n$ observações, mas correspondem a mecanismos de obtenção dos dados diferentes.
 
@@ -2977,7 +3033,7 @@ Considere uma urna com $N$ bolas, das quais $M$ apresentam determinada caracter�
 $$
 X
 \sim
-\operatorname{Hipergeométrica}(N,M,n).
+\text{Hiper}(N,M,n).
 $$
 
 Nesse mecanismo, as retiradas não são independentes, pois a composição da urna é modificada após cada seleção.
@@ -2993,7 +3049,7 @@ e as retiradas podem ser representadas por variáveis Bernoulli independentes:
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 $$
 
 Nesse caso,
@@ -3003,13 +3059,13 @@ X
 =
 \sum_{i=1}^nX_i
 \sim
-\operatorname{Binomial}(n,p).
+\operatorname{Binom}(n,p).
 $$
 
 Assim, mecanismos de amostragem diferentes podem produzir variáveis com interpretações semelhantes, mas distribuições probabilísticas distintas.
 :::
 
-### Distribuição geométrica {.unnumbered}
+### Distribuição geométrica 
 
 Considere uma sequência de ensaios de Bernoulli independentes, todos com probabilidade de sucesso
 
@@ -3020,7 +3076,7 @@ $$
 Se $X$ representa o **número de ensaios necessários até a ocorrência do primeiro sucesso**, então
 
 $$
-X\sim\operatorname{Geométrica}(p).
+X\sim\text{Geo}(p).
 $$
 
 O suporte é
@@ -3091,7 +3147,7 @@ Considere ligações realizadas por uma central até que um cliente aceite parti
 Se $X$ representa o número de ligações necessárias até a primeira aceitação,
 
 $$
-X\sim\operatorname{Geométrica}(p).
+X\sim\text{Geo}(p).
 $$
 
 Em um problema inferencial, os números de ligações necessários em diferentes sequências de contatos podem fornecer informação sobre a probabilidade $p$ de aceitação de um convite.
@@ -3228,7 +3284,7 @@ $$
 Assim, para $p=0{,}8$, a probabilidade acumulada aproxima-se rapidamente de $1$, enquanto para $p=0{,}2$ a distribuição apresenta uma cauda mais longa.
 
 
-#### Falta de memória {.unnumbered}
+#### Falta de memória 
 
 A distribuição geométrica possui a propriedade de falta de memória. Para inteiros não negativos $m$ e $n$,
 
@@ -3251,7 +3307,7 @@ Neste livro, $X$ representa o número total de ensaios até o primeiro sucesso e
 :::
 
 
-### Distribuição binomial negativa {.unnumbered}
+### Distribuição binomial negativa 
 
 A distribuição binomial negativa generaliza a distribuição geométrica.
 
@@ -3270,7 +3326,7 @@ $$
 então
 
 $$
-X\sim\operatorname{BinomialNegativa}(r,p).
+X\sim\operatorname{BN}(r,p).
 $$
 
 Seu suporte é
@@ -3345,7 +3401,7 @@ Considere uma equipe de recrutamento que entra em contato com candidatos até ob
 Se cada contato resulta em aceitação com probabilidade $p$, sob condições que permitam tratar os resultados como independentes, o número total $X$ de contatos necessários até a quinta aceitação pode ser modelado por
 
 $$
-X\sim\operatorname{BinomialNegativa}(5,p).
+X\sim\operatorname{BN}(5,p).
 $$
 
 Os números de contatos necessários em diferentes processos podem ser utilizados para obter informação sobre a probabilidade $p$ de aceitação.
@@ -3488,7 +3544,7 @@ E(X)=\frac{r}{p}.
 $$
 
 
-### Distribuição de Poisson {.unnumbered}
+### Distribuição de Poisson 
 
 A distribuição de Poisson é utilizada para modelar o número de ocorrências de determinado evento em uma região de observação, como um intervalo de tempo, uma área, um comprimento ou um volume.
 
@@ -3772,7 +3828,7 @@ $$
 Para $\lambda=1$, a distribuição apresenta maior concentração nos primeiros valores e assimetria à direita. À medida que $\lambda$ aumenta, a massa se desloca para valores maiores e a forma da distribuição torna-se visualmente menos assimétrica.
 
 
-### Relação entre binomial e Poisson {.unnumbered}
+### Relação entre binomial e Poisson 
 
 A distribuição de Poisson pode surgir como limite da distribuição binomial em situações com grande número de ensaios e pequena probabilidade individual de sucesso.
 
@@ -3781,7 +3837,7 @@ Considere
 $$
 X_n
 \sim
-\operatorname{Binomial}(n,p_n).
+\operatorname{Binom}(n,p_n).
 $$
 
 Se
@@ -3818,7 +3874,7 @@ $$
 Assim, em determinadas situações, uma contagem resultante de muitos ensaios com baixa probabilidade individual de sucesso pode ser aproximada por uma distribuição de Poisson.
 
 
-### Soma de variáveis Poisson independentes {.unnumbered}
+### Soma de variáveis Poisson independentes 
 
 Considere variáveis independentes
 
@@ -3888,7 +3944,7 @@ $$
 Esse resultado mostra uma das utilidades da função geradora de momentos: propriedades de fechamento de famílias probabilísticas podem ser obtidas pela identificação da FGM resultante.
 
 
-### Relações entre os modelos discretos {.unnumbered}
+### Relações entre os modelos discretos 
 
 Os modelos discretos apresentados nesta seção correspondem a diferentes mecanismos de geração das observações.
 
@@ -3905,26 +3961,26 @@ Os modelos discretos apresentados nesta seção correspondem a diferentes mecani
 Algumas relações podem ser representadas por
 
 $$
-\operatorname{Bernoulli}
+\operatorname{Ber}
 \longrightarrow
-\operatorname{Binomial},
+\operatorname{Binom},
 $$
 
 pois a distribuição binomial resulta da soma de variáveis Bernoulli independentes, e por
 
 $$
-\operatorname{Geométrica}
+\operatorname{Geo}
 \longrightarrow
-\operatorname{BinomialNegativa},
+\operatorname{BN},
 $$
 
 pois a binomial negativa pode ser representada pela soma dos tempos de espera entre sucessivos sucessos.
 
 A distribuição hipergeométrica descreve uma estrutura semelhante à binomial quando a seleção ocorre sem reposição em uma população finita. A distribuição de Poisson, por sua vez, descreve outra classe de problemas de contagem e pode surgir como limite da distribuição binomial.
 
-## Modelo multinomial {.unnumbered}
+## Modelo multinomial 
 
-### Distribuição multinomial {.unnumbered}
+### Distribuição multinomial 
 
 A distribuição multinomial generaliza a distribuição binomial para situações em que cada ensaio pode resultar em uma entre $m$ categorias mutuamente exclusivas.
 
@@ -3980,7 +4036,7 @@ $$
 $$
 
 
-### Suporte e função de massa conjunta {.unnumbered}
+### Suporte e função de massa conjunta 
 
 O suporte da distribuição multinomial é
 
@@ -4030,7 +4086,7 @@ $$
 e o modelo multinomial reduz-se à distribuição binomial.
 
 
-### Esperanças, variâncias e covariâncias {.unnumbered}
+### Esperanças, variâncias e covariâncias 
 
 Para cada categoria,
 
@@ -4098,7 +4154,7 @@ $$
 fora da diagonal.
 
 
-### Distribuições marginais {.unnumbered}
+### Distribuições marginais 
 
 Embora as componentes de $\mathbf X$ não sejam independentes, cada contagem individual possui distribuição binomial.
 
@@ -4113,7 +4169,7 @@ temos
 $$
 X_j
 \sim
-\operatorname{Binomial}(n,p_j).
+\operatorname{Binom}(n,p_j).
 $$
 
 Portanto,
@@ -4131,7 +4187,7 @@ $$
 Essa propriedade permite interpretar cada componente separadamente, embora a distribuição conjunta contenha informação adicional sobre a dependência entre as contagens.
 
 
-### Função geradora de momentos conjunta {.unnumbered}
+### Função geradora de momentos conjunta 
 
 Para um vetor
 
@@ -4402,7 +4458,7 @@ A intensidade do preenchimento representa a massa de probabilidade atribuída a 
 No painel inferior aparecem as três distribuições marginais. Como
 
 $$
-X_j\sim\operatorname{Binomial}(n,p_j),
+X_j\sim\operatorname{Binom}(n,p_j),
 $$
 
 a categoria com maior probabilidade, $p_3=0{,}5$, apresenta sua massa concentrada em valores maiores do que as categorias com $p_1=0{,}2$ e $p_2=0{,}3$.
@@ -4410,14 +4466,14 @@ a categoria com maior probabilidade, $p_3=0{,}5$, apresenta sua massa concentrad
 A representação também evidencia uma diferença em relação aos modelos discretos univariados: a distribuição multinomial descreve simultaneamente várias contagens relacionadas pela restrição de soma.
 
 
-## Modelos probabilísticos contínuos {.unnumbered}
+## Modelos probabilísticos contínuos 
 
 Modelos probabilísticos contínuos descrevem variáveis aleatórias cujos valores pertencem a intervalos ou outros subconjuntos contínuos da reta real. Nesse caso, as probabilidades são determinadas por áreas sob uma função de densidade, enquanto a probabilidade atribuída a qualquer valor isolado é nula.
 
 Nesta seção, serão revisadas as distribuições uniforme, exponencial, gama, normal e beta. Para cada modelo serão apresentados o mecanismo probabilístico, o suporte, a função densidade de probabilidade, a esperança, a variância, a função geradora de momentos quando sua expressão for útil, situações que podem originar problemas inferenciais e o comportamento gráfico da densidade e da função de distribuição acumulada [@dantas1997; @magalhaes2006; @meyer1983].
 
 
-### Distribuição uniforme contínua {.unnumbered}
+### Distribuição uniforme contínua 
 
 A distribuição uniforme contínua descreve uma variável cujos intervalos de mesmo comprimento, contidos em determinado intervalo $(a,b)$, possuem a mesma probabilidade.
 
@@ -4430,7 +4486,7 @@ $$
 quando
 
 $$
-X\sim\operatorname{Uniforme}(a,b)
+X\sim\operatorname{U}(a,b)
 $$
 
 e sua densidade é
@@ -4525,7 +4581,7 @@ com $\theta>0$.
 Nesse caso,
 
 $$
-X\sim\operatorname{Uniforme}(-\theta,\theta),
+X\sim\operatorname{U}(-\theta,\theta),
 $$
 
 e $\theta$ determina o limite máximo da magnitude do erro.
@@ -4540,7 +4596,7 @@ Esse exemplo também ilustra uma característica que será retomada posteriormen
 Um caso particular que será utilizado novamente nos capítulos posteriores é
 
 $$
-X\sim\operatorname{Uniforme}(0,\theta),
+X\sim\operatorname{U}(0,\theta),
 \qquad
 \theta>0.
 $$
@@ -4580,7 +4636,7 @@ $$
 
 A característica que merece atenção é que o próprio conjunto de valores admissíveis para $X$ depende de $\theta$. Por exemplo, se $\theta=2$, os valores possíveis pertencem a $(0,2)$; se $\theta=5$, pertencem a $(0,5)$.
 
-Essa dependência entre suporte e parâmetro fará com que o modelo $\operatorname{Uniforme}(0,\theta)$ tenha comportamento diferente de modelos como normal, Poisson e exponencial em alguns resultados inferenciais. Por esse motivo, ele será retomado como caso de referência ao discutir máxima verossimilhança e condições de regularidade.
+Essa dependência entre suporte e parâmetro fará com que o modelo $\operatorname{U}(0,\theta)$ tenha comportamento diferente de modelos como normal, Poisson e exponencial em alguns resultados inferenciais. Por esse motivo, ele será retomado como caso de referência ao discutir máxima verossimilhança e condições de regularidade.
 :::
 
 
@@ -4683,12 +4739,12 @@ g_fda <- ggplot(
 g_fdp / g_fda
 ```
 
-A @fig-uniforme-fdp-fda mostra separadamente os efeitos da posição e do comprimento do intervalo. As distribuições $\operatorname{Uniforme}(-2,2)$ e $\operatorname{Uniforme}(0,4)$ possuem a mesma amplitude, igual a $4$, e consequentemente a mesma altura da densidade e a mesma variância. A segunda distribuição está apenas deslocada para a direita.
+A @fig-uniforme-fdp-fda mostra separadamente os efeitos da posição e do comprimento do intervalo. As distribuições $\operatorname{U}(-2,2)$ e $\operatorname{U}(0,4)$ possuem a mesma amplitude, igual a $4$, e consequentemente a mesma altura da densidade e a mesma variância. A segunda distribuição está apenas deslocada para a direita.
 
-Para $\operatorname{Uniforme}(-1,1)$, a amplitude é menor. Como a área total sob a densidade deve permanecer igual a $1$, a redução do comprimento do intervalo aumenta a altura da densidade. Na função de distribuição, intervalos menores produzem um crescimento mais rápido de $0$ até $1$.
+Para $\operatorname{U}(-1,1)$, a amplitude é menor. Como a área total sob a densidade deve permanecer igual a $1$, a redução do comprimento do intervalo aumenta a altura da densidade. Na função de distribuição, intervalos menores produzem um crescimento mais rápido de $0$ até $1$.
 
 
-### Distribuição exponencial {.unnumbered}
+### Distribuição exponencial 
 
 A distribuição exponencial é utilizada para representar tempos até a ocorrência de determinado evento em situações nas quais uma taxa de ocorrência constante constitui uma descrição adequada do mecanismo considerado.
 
@@ -4701,7 +4757,7 @@ $$
 quando
 
 $$
-X\sim\operatorname{Exponencial}(\lambda)
+X\sim\operatorname{Exp}(\lambda)
 $$
 
 e sua densidade é
@@ -4794,7 +4850,7 @@ Considere uma agência bancária e seja $X$ o tempo transcorrido entre a chegada
 Se uma distribuição exponencial fornecer uma representação adequada para esses tempos,
 
 $$
-X\sim\operatorname{Exponencial}(\lambda),
+X\sim\operatorname{Exp}(\lambda),
 $$
 
 em que $\lambda>0$ é o parâmetro de taxa da distribuição.
@@ -4912,7 +4968,7 @@ $$
 Para $\lambda=2$, a densidade decresce rapidamente e a função de distribuição aproxima-se de $1$ em valores relativamente pequenos de $x$. Para $\lambda=0{,}5$, tempos maiores recebem probabilidade mais elevada e a função de distribuição cresce mais lentamente.
 
 
-#### Falta de memória {.unnumbered}
+#### Falta de memória 
 
 A distribuição exponencial possui a propriedade de falta de memória. Para
 
@@ -4952,7 +5008,7 @@ As duas formas descrevem a mesma família de distribuições, mas as expressões
 :::
 
 
-### Distribuição gama {.unnumbered}
+### Distribuição gama 
 
 A distribuição gama generaliza a distribuição exponencial e permite representar diferentes formas para variáveis aleatórias positivas.
 
@@ -5041,7 +5097,7 @@ temos
 $$
 \operatorname{Gama}(1,\lambda)
 =
-\operatorname{Exponencial}(\lambda).
+\operatorname{Exp}(\lambda).
 $$
 
 
@@ -5054,7 +5110,7 @@ Se
 $$
 X_1,X_2,X_3
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda),
+\operatorname{Exp}(\lambda),
 $$
 
 o tempo total
@@ -5203,14 +5259,14 @@ E(X)=\frac{\alpha}{\lambda}.
 $$
 
 
-#### Relação entre exponencial e gama {.unnumbered}
+#### Relação entre exponencial e gama 
 
 Se
 
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda),
+\operatorname{Exp}(\lambda),
 $$
 
 então
@@ -5300,7 +5356,7 @@ Neste livro será utilizada, salvo indicação contrária, a parametrização po
 :::
 
 
-### Distribuição normal {.unnumbered}
+### Distribuição normal 
 
 A distribuição normal é uma família de distribuições contínuas simétricas determinada por um parâmetro de localização e outro de dispersão.
 
@@ -5505,7 +5561,7 @@ A @fig-normal-fdp-fda mostra separadamente os efeitos dos parâmetros $\mu$ e $\
 Na função de distribuição, mudanças em $\mu$ deslocam a curva horizontalmente, enquanto valores maiores de $\sigma$ tornam a transição entre probabilidades próximas de $0$ e de $1$ mais gradual.
 
 
-#### Padronização {.unnumbered}
+#### Padronização 
 
 Se
 
@@ -5543,7 +5599,7 @@ em que $\Phi$ representa a função de distribuição da normal padrão.
 A transformação separa a posição e a escala da variável original e permite expressar probabilidades de qualquer distribuição normal em termos de uma única distribuição de referência.
 
 
-#### Transformações lineares da distribuição normal {.unnumbered}
+#### Transformações lineares da distribuição normal 
 
 Se
 
@@ -5630,7 +5686,7 @@ $$
 Esse resultado será retomado no estudo das distribuições amostrais.
 
 
-### Distribuição beta {.unnumbered}
+### Distribuição beta 
 
 A distribuição beta forma uma família de distribuições contínuas definidas no intervalo $(0,1)$. Seus dois parâmetros permitem representar diferentes padrões de simetria, assimetria e concentração.
 
@@ -5919,7 +5975,7 @@ $$
 respectivamente.
 
 
-#### Casos particulares e simetria {.unnumbered}
+#### Casos particulares e simetria 
 
 Quando
 
@@ -5938,13 +5994,13 @@ Em particular,
 $$
 \operatorname{Beta}(1,1)
 =
-\operatorname{Uniforme}(0,1).
+\operatorname{U}(0,1).
 $$
 
 Assim, a distribuição uniforme padrão aparece como um caso particular da família beta.
 
 
-### Relações entre gama e beta {.unnumbered}
+### Relações entre gama e beta 
 
 As distribuições gama e beta estão relacionadas por transformações de variáveis aleatórias independentes.
 
@@ -5986,7 +6042,7 @@ A primeira relação decorre diretamente da função geradora de momentos. A seg
 Essas relações serão úteis posteriormente para compreender algumas distribuições derivadas de funções de variáveis aleatórias.
 
 
-### Escolha entre alguns modelos contínuos {.unnumbered}
+### Escolha entre alguns modelos contínuos 
 
 Os modelos contínuos apresentados correspondem a estruturas probabilísticas diferentes. A tabela resume alguns contextos que podem orientar sua interpretação.
 
@@ -6006,7 +6062,7 @@ As distribuições qui-quadrado, $t$ de Student e $F$ estão relacionadas a fun�
 
 
 
-## Transformações de variáveis aleatórias {.unnumbered}
+## Transformações de variáveis aleatórias 
 
 Transformações de variáveis aleatórias permitem construir novas variáveis a partir de variáveis cuja distribuição é conhecida.
 
@@ -6023,7 +6079,7 @@ Esse problema aparece em diferentes contextos. Uma estatística calculada a part
 Nesta revisão serão considerados o método da função de distribuição e a transformação de densidades no caso univariado. Transformações multivariadas e o determinante jacobiano serão retomados no capítulo **Resultados Matemáticos e Assintóticos para Inferência**.
 
 
-### Método da função de distribuição {.unnumbered}
+### Método da função de distribuição 
 
 Uma forma geral de determinar a distribuição de
 
@@ -6064,7 +6120,7 @@ em termos dos valores assumidos por $X$.
 Depois de obtida $F_Y$, a função de massa ou a densidade de $Y$ pode ser determinada quando necessário.
 
 
-### Transformação monótona {.unnumbered}
+### Transformação monótona 
 
 Suponha que $X$ seja absolutamente contínua e que
 
@@ -6169,12 +6225,12 @@ resultado já apresentado para a distribuição normal.
 :::
 
 
-### Exemplo de transformação entre modelos {.unnumbered}
+### Exemplo de transformação entre modelos 
 
 Considere
 
 $$
-X\sim\operatorname{Uniforme}(0,1)
+X\sim\operatorname{U}(0,1)
 $$
 
 e defina
@@ -6261,13 +6317,13 @@ Essa é a função de distribuição de uma variável exponencial com taxa $1$. 
 $$
 -\log X
 \sim
-\operatorname{Exponencial}(1).
+\operatorname{Exp}(1).
 $$
 
 O exemplo mostra que diferentes famílias probabilísticas podem estar relacionadas por transformações de variáveis aleatórias.
 
 
-### Transformações não monótonas {.unnumbered}
+### Transformações não monótonas 
 
 Quando $g$ não é monotônica em todo o suporte de $X$, um mesmo valor de $Y$ pode corresponder a mais de um valor de $X$.
 
@@ -6362,7 +6418,7 @@ Esse resultado exige ferramentas de cálculo multivariado e será retomado no ca
 :::
 
 
-### Transformações em problemas inferenciais {.unnumbered}
+### Transformações em problemas inferenciais 
 
 Transformações também aparecem quando a quantidade de interesse é uma função de um parâmetro.
 
@@ -6386,27 +6442,27 @@ Embora ambos descrevam o mesmo modelo probabilístico, a interpretação da quan
 
 Posteriormente, métodos como a propriedade de invariância dos estimadores de máxima verossimilhança e o método delta permitirão estudar sistematicamente funções de parâmetros e de estimadores.
 
-## Quadro-síntese dos modelos probabilísticos {.unnumbered}
+## Quadro-síntese dos modelos probabilísticos 
 
 Os modelos apresentados ao longo deste capítulo diferem quanto ao suporte, aos parâmetros e ao mecanismo probabilístico utilizado para representar a variável observada. As tabelas seguintes reúnem suas principais características para consulta.
 
 A escolha de uma distribuição não deve ser determinada apenas pela semelhança entre o formato de um gráfico e a forma de uma densidade ou função de massa conhecida. O suporte da variável, o mecanismo que produz os dados, as relações de dependência e o significado dos parâmetros também precisam ser considerados.
 
 
-### Modelos discretos univariados {.unnumbered}
+### Modelos discretos univariados 
 
 | Distribuição | Suporte | Parâmetro(s) | $E(X)$ | $\operatorname{Var}(X)$ |
 |:---|:---|:---|:---:|:---:|
 | Uniforme discreta | $\{1,\ldots,m\}$ | $m$ | $\dfrac{m+1}{2}$ | $\dfrac{m^2-1}{12}$ |
 | Bernoulli | $\{0,1\}$ | $p$ | $p$ | $p(1-p)$ |
 | Binomial | $\{0,\ldots,n\}$ | $n,p$ | $np$ | $np(1-p)$ |
-| Hipergeométrica | $\{\max(0,n-N+M)$, $\ldots,\min(n,M)\}$ | $N,M,n$ | $np$, $p=M/N$ | $np(1-p)\dfrac{N-n}{N-1}$ |
+| Hipergeométrica | $\{\max(0,n-N+M),$ $\ldots,\min(n,M)\}$ | $N,M,n$ | $np$, $p=M/N$ | $np(1-p)\dfrac{N-n}{N-1}$ |
 | Geométrica | $\{1,2,\ldots\}$ | $p$ | $\dfrac{1}{p}$ | $\dfrac{1-p}{p^2}$ |
 | Binomial negativa | $\{r,r+1,\ldots\}$ | $r,p$ | $\dfrac{r}{p}$ | $\dfrac{r(1-p)}{p^2}$ |
 | Poisson | $\{0,1,2,\ldots\}$ | $\lambda$ | $\lambda$ | $\lambda$ |
 
 
-### Modelos contínuos univariados {.unnumbered}
+### Modelos contínuos univariados 
 
 | Distribuição | Suporte | Parâmetro(s) | $E(X)$ | $\operatorname{Var}(X)$ |
 |:---|:---|:---|:---:|:---:|
@@ -6417,7 +6473,7 @@ A escolha de uma distribuição não deve ser determinada apenas pela semelhanç
 | Beta | $(0,1)$ | $\alpha,\beta$ | $\dfrac{\alpha}{\alpha+\beta}$ | $\dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$ |
 
 
-### Funções geradoras de momentos {.unnumbered}
+### Funções geradoras de momentos 
 
 As funções geradoras de momentos apresentadas no capítulo podem ser reunidas em uma tabela de referência.
 
@@ -6438,102 +6494,28 @@ As funções geradoras de momentos apresentadas no capítulo podem ser reunidas 
 A distribuição beta não aparece nessa tabela porque sua função geradora de momentos, embora exista para todo $t\in\mathbb R$, envolve uma função especial que não será utilizada nos capítulos seguintes.
 
 
-### Modelo multinomial {.unnumbered}
-
-Para
-
-$$
-\mathbf X
-=
-(X_1,\ldots,X_m)^\mathsf T
-\sim
-\operatorname{Multinomial}
-(n;p_1,\ldots,p_m),
-$$
-
-temos
-
-$$
-\sum_{j=1}^mX_j=n
-$$
-
-e
-
-$$
-\sum_{j=1}^mp_j=1.
-$$
-
-Para cada componente,
-
-$$
-E(X_j)=np_j
-$$
-
-e
-
-$$
-\operatorname{Var}(X_j)
-=
-np_j(1-p_j).
-$$
-
-Para
-
-$$
-j\neq k,
-$$
-
-temos
-
-$$
-\operatorname{Cov}(X_j,X_k)
-=
--np_jp_k.
-$$
-
-A função geradora de momentos conjunta é
-
-$$
-M_{\mathbf X}
-(t_1,\ldots,t_m)
-=
-\left(
-\sum_{j=1}^m
-p_je^{t_j}
-\right)^n.
-$$
-
-Cada componente possui distribuição marginal
-
-$$
-X_j
-\sim
-\operatorname{Binomial}(n,p_j).
-$$
-
-
-## Relações entre os principais modelos {.unnumbered}
+## Relações entre os principais modelos 
 
 As relações desenvolvidas ao longo do capítulo podem ser reunidas em um mapa de referência. Elas decorrem de diferentes mecanismos: soma de variáveis independentes, mudança no esquema de amostragem, generalização de um modelo, transformação ou passagem ao limite.
 
 
-### Modelos discretos {.unnumbered}
+### Modelos discretos 
 
 Um ensaio Bernoulli representa um único resultado binário,
 
 $$
 X_i
 \sim
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 $$
 
 A soma de ensaios Bernoulli independentes com a mesma probabilidade de sucesso produz a distribuição binomial:
 
 $$
 \boxed{
-\operatorname{Bernoulli}(p)
+\operatorname{Ber}(p)
 \overset{\text{soma de }n\text{ ensaios}}{\longrightarrow}
-\operatorname{Binomial}(n,p)
+\operatorname{Binom}(n,p)
 }
 $$
 
@@ -6543,7 +6525,7 @@ $$
 \boxed{
 \text{contagem de sucessos sem reposição}
 \longrightarrow
-\operatorname{Hipergeométrica}(N,M,n)
+\operatorname{Hiper}(N,M,n)
 }
 $$
 
@@ -6551,9 +6533,9 @@ A distribuição geométrica representa o número de ensaios até o primeiro suc
 
 $$
 \boxed{
-\operatorname{Geométrica}(p)
+\operatorname{Geo}(p)
 =
-\operatorname{BinomialNegativa}(1,p)
+\operatorname{BN}(1,p)
 }
 $$
 
@@ -6561,9 +6543,9 @@ e, de forma mais geral,
 
 $$
 \boxed{
-\operatorname{Geométrica}(p)
+\operatorname{Geo}(p)
 \overset{r\text{ sucessos}}{\longrightarrow}
-\operatorname{BinomialNegativa}(r,p).
+\operatorname{BN}(r,p).
 }
 $$
 
@@ -6571,7 +6553,7 @@ A distribuição de Poisson pode surgir como limite de distribuições binomiais
 
 $$
 \boxed{
-\operatorname{Binomial}(n,p_n)
+\operatorname{Binom}(n,p_n)
 \overset{
 n\to\infty,\;
 p_n\to0,\;
@@ -6585,20 +6567,20 @@ A distribuição multinomial estende a estrutura binomial de duas categorias par
 
 $$
 \boxed{
-\operatorname{Binomial}
+\operatorname{Binom}
 \overset{\text{mais de duas categorias}}{\longrightarrow}
 \operatorname{Multinomial}.
 }
 $$
 
 
-### Modelos contínuos {.unnumbered}
+### Modelos contínuos 
 
 A distribuição exponencial é um caso particular da distribuição gama:
 
 $$
 \boxed{
-\operatorname{Exponencial}(\lambda)
+\operatorname{Exp}(\lambda)
 =
 \operatorname{Gama}(1,\lambda).
 }
@@ -6610,7 +6592,7 @@ $$
 \boxed{
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda)
+\operatorname{Exp}(\lambda)
 \quad\Longrightarrow\quad
 \sum_{i=1}^nX_i
 \sim
@@ -6622,7 +6604,7 @@ A distribuição uniforme padrão é um caso particular da família beta:
 
 $$
 \boxed{
-\operatorname{Uniforme}(0,1)
+\operatorname{U}(0,1)
 =
 \operatorname{Beta}(1,1).
 }
@@ -6661,7 +6643,7 @@ $$
 $$
 
 
-### Leitura do mapa {.unnumbered}
+### Leitura do mapa 
 
 As relações anteriores possuem naturezas diferentes:
 
@@ -6678,475 +6660,287 @@ As relações anteriores possuem naturezas diferentes:
 
 O mapa mostra que os modelos probabilísticos não constituem uma coleção isolada de fórmulas. Suas relações decorrem dos mecanismos utilizados para produzir, combinar ou transformar variáveis aleatórias.
 
-## Síntese {.unnumbered}
+## Síntese 
 
-A revisão desenvolvida neste capítulo pode ser organizada em cinco componentes.
+O conteúdo deste capítulo pode ser organizado em seis componentes.
 
 O primeiro corresponde à **estrutura básica da Probabilidade**. Eventos, probabilidade condicional, lei da probabilidade total, teorema de Bayes e independência permitem descrever relações entre acontecimentos aleatórios e incorporar informações condicionais.
 
-O segundo corresponde às **variáveis aleatórias e suas distribuições**. A função de distribuição caracteriza a distribuição de uma variável, enquanto funções de massa e densidade fornecem representações específicas para variáveis discretas e absolutamente contínuas. O suporte determina os valores admissíveis, e a função indicadora permite incorporá-lo diretamente às expressões probabilísticas.
+O segundo reúne **variáveis aleatórias e suas distribuições**. A função de distribuição caracteriza a distribuição de uma variável aleatória, enquanto a função de massa de probabilidade e a densidade descrevem, respectivamente, variáveis discretas e absolutamente contínuas. O suporte, representado por $\mathcal X$ para uma variável $X$, identifica os valores admissíveis sob a distribuição considerada. A função indicadora permite incorporar esse suporte diretamente às expressões probabilísticas e também representar contagens e proporções.
 
-O terceiro reúne **esperança, variância, momentos e dependência**. Essas quantidades descrevem características da distribuição e fornecem ferramentas para estudar somas, combinações lineares, distribuições conjuntas e condicionais. Esperança e variância condicionais permitem decompor informações segundo diferentes componentes do mecanismo probabilístico.
+O terceiro corresponde a **esperança, variância e momentos**. Essas quantidades descrevem características da distribuição de uma variável aleatória e permitem estudar transformações lineares, somas e combinações de variáveis.
 
-O quarto componente corresponde à **função geradora de momentos**. Quando existe em uma vizinhança de zero, ela permite obter momentos, reconhecer distribuições e estudar somas de variáveis independentes.
+O quarto reúne **distribuições conjuntas e dependência**. Distribuições marginais e condicionais descrevem diferentes aspectos de uma distribuição conjunta, enquanto covariância e correlação quantificam formas de associação. A independência estabelece uma condição probabilística mais forte e, quando várias variáveis são simultaneamente independentes e possuem a mesma distribuição, obtém-se a estrutura i.i.d., que será utilizada posteriormente na definição usual de amostras aleatórias. Esperança e variância condicionais também permitem decompor momentos por meio das leis da esperança total e da variância total.
 
-O quinto reúne os **modelos probabilísticos**. Bernoulli, binomial, hipergeométrica, geométrica, binomial negativa, Poisson, uniforme, exponencial, gama, normal, beta e multinomial representam mecanismos diferentes. Em cada caso, a interpretação dos parâmetros depende do fenômeno considerado.
+O quinto componente corresponde à **função geradora de momentos e às transformações de variáveis aleatórias**. Quando existe em uma vizinhança de zero, a função geradora de momentos permite obter momentos, identificar distribuições e estudar somas de variáveis independentes. As transformações permitem determinar a distribuição de novas variáveis construídas a partir de variáveis com distribuição conhecida.
 
-As situações inferenciais apresentadas junto às distribuições antecipam uma distinção que será formalizada posteriormente. Por exemplo:
+O sexto reúne os **modelos probabilísticos** apresentados no capítulo. As distribuições uniforme discreta, Bernoulli, binomial, hipergeométrica, geométrica, binomial negativa, Poisson, uniforme contínua, exponencial, gama, normal, beta e multinomial representam diferentes mecanismos probabilísticos. Sua utilização depende do tipo de variável, de seu suporte, do mecanismo que produz os dados e da interpretação de seus parâmetros.
 
-- em um modelo Bernoulli, $p$ pode representar uma proporção populacional desconhecida;
-- em um modelo Poisson, $\lambda$ pode representar uma taxa média de ocorrências;
-- em um modelo exponencial, $1/\lambda$ pode representar um tempo médio;
-- em um modelo normal, $\mu$ e $\sigma^2$ podem representar a localização e a variabilidade de uma população;
-- em um modelo multinomial, $p_1,\ldots,p_m$ podem representar proporções populacionais associadas a diferentes categorias.
+As situações inferenciais apresentadas ao longo do capítulo mostram como parâmetros desses modelos podem representar quantidades de interesse em problemas posteriores. Por exemplo:
 
-Nesse estágio, essas quantidades são apenas componentes dos modelos probabilísticos apresentados. Sua condição de parâmetros desconhecidos e os procedimentos utilizados para obter informação sobre elas serão desenvolvidos nos capítulos de Inferência Estatística.
+- em um modelo Bernoulli ou binomial, $p$ pode representar uma proporção populacional;
+- em um modelo hipergeométrico, $M$ pode representar uma quantidade desconhecida de unidades com determinada característica em uma população finita;
+- em um modelo Poisson, $\lambda$ representa o número esperado de ocorrências na exposição considerada e, quando $\lambda=\rho t$, $\rho$ representa a taxa média por unidade de exposição;
+- em um modelo exponencial, $1/\lambda$ representa o valor esperado da variável, podendo corresponder, por exemplo, a um tempo médio;
+- em um modelo normal, $\mu$ e $\sigma^2$ descrevem localização e variabilidade;
+- em um modelo multinomial, $p_1,\ldots,p_m$ descrevem as probabilidades associadas às diferentes categorias.
+
+Até este ponto, a direção predominante foi partir de um modelo probabilístico e estudar suas consequências:
+
+$$
+\boxed{
+\text{modelo probabilístico}
+\longrightarrow
+\text{comportamento das variáveis aleatórias}.
+}
+$$
+
+Na Inferência Estatística, a questão será diferente. Os dados serão observados, enquanto uma ou mais características do modelo que os produziu serão desconhecidas. A direção do problema passa, então, a ser
+
+$$
+\boxed{
+\text{dados observados}
+\longrightarrow
+\text{informação sobre quantidades desconhecidas do modelo}.
+}
+$$
+
+Essa passagem exigirá conceitos como população, parâmetro, amostra, estatística, estimador, modelo estatístico e verossimilhança. Antes de introduzi-los formalmente, o próximo capítulo reúne as ferramentas matemáticas e assintóticas utilizadas nos desenvolvimentos posteriores. Em seguida, o capítulo **Fundamentos da Inferência Estatística** formulará propriamente o problema inferencial.
 
 
-## Exercícios de consolidação {.unnumbered}
-
-### Conceitos, suporte e escolha de modelos {.unnumbered}
+## Exercícios de consolidação 
 
 ::: {.callout-note title="Exercício 1"}
 
-Explique a diferença entre:
+Considere eventos $A$ e $B$ tais que $P(A)=0{,}4$, $P(B)=0{,}5$ e $P(A\cap B)=0{,}2$.
 
-a. eventos mutuamente exclusivos;
+a. Calcule $P(A\mid B)$ e $P(B\mid A)$.
 
-b. eventos independentes.
+b. Verifique se $A$ e $B$ são independentes.
 
-Mostre por que dois eventos mutuamente exclusivos com probabilidades positivas não podem ser independentes.
+c. Explique a diferença entre **eventos independentes** e **eventos mutuamente exclusivos**.
+
+d. Mostre que dois eventos mutuamente exclusivos com probabilidades positivas não podem ser independentes.
 :::
 
 
 ::: {.callout-note title="Exercício 2"}
 
-Para cada variável abaixo, determine se seu suporte é discreto ou contínuo e proponha uma distribuição probabilística plausível entre as estudadas neste capítulo.
+Uma condição ocorre em $1\%$ de determinada população. Um teste apresenta sensibilidade de $90\%$ e especificidade de $95\%$.
 
-a. Número de clientes que entram em uma agência durante uma hora.
+Calcule a probabilidade de uma pessoa apresentar a condição dado que recebeu resultado positivo no teste.
 
-b. Tempo de espera de um cliente até o início de seu atendimento.
-
-c. Número de pessoas favoráveis a uma proposta em uma amostra de $200$ entrevistados.
-
-d. Proporção da superfície de uma parcela coberta por vegetação.
-
-e. Número de peças defeituosas em uma amostra retirada sem reposição de um lote finito.
-
-f. Peso de embalagens produzidas por uma máquina.
-
-Em cada caso, identifique o significado dos parâmetros do modelo proposto.
+Identifique, no cálculo, o papel da prevalência da condição, da sensibilidade e da especificidade.
 :::
 
 
 ::: {.callout-note title="Exercício 3"}
 
-Considere duas situações:
+Para cada situação abaixo:
 
-1. são realizadas $20$ retiradas com reposição de uma urna que contém $30\%$ de bolas vermelhas;
-2. são retiradas $20$ bolas sem reposição de uma urna com $100$ bolas, das quais $30$ são vermelhas.
+1. defina a variável aleatória;
+2. indique seu suporte $\mathcal X$;
+3. proponha uma distribuição probabilística plausível entre as estudadas neste capítulo;
+4. identifique o significado dos parâmetros;
+5. indique a característica do mecanismo que sustenta a escolha do modelo.
 
-Defina $X$ como o número de bolas vermelhas observadas.
+Considere:
 
-a. Especifique a distribuição de $X$ em cada situação.
+a. presença ou ausência de determinada característica em uma unidade selecionada;
 
-b. Compare as esperanças.
+b. número de unidades com essa característica entre $50$ observações independentes;
 
-c. Compare as variâncias.
+c. número de unidades com a característica em uma amostra retirada sem reposição de uma população finita;
 
-d. Explique a origem da diferença entre as duas variâncias.
+d. número de chamadas recebidas por uma central durante uma hora;
+
+e. número de tentativas necessárias até o primeiro sucesso;
+
+f. número de tentativas necessárias até o quinto sucesso;
+
+g. tempo de espera até a ocorrência de determinado evento, admitindo uma taxa constante;
+
+h. duração total de várias etapas positivas e independentes com a mesma taxa;
+
+i. medida contínua aproximadamente simétrica em torno de um valor de localização;
+
+j. proporção contínua que assume valores estritamente entre $0$ e $1$.
+
+Em cada caso, a distribuição proposta deve ser entendida como um modelo plausível, cuja adequação dependeria do fenômeno observado.
 :::
 
 
 ::: {.callout-note title="Exercício 4"}
 
-Uma variável $X$ representa o número de tentativas necessárias para observar o primeiro sucesso.
+Considere $X\sim\operatorname{Uniforme}(0,\theta)$, com $\theta>0$.
 
-a. Qual distribuição pode representar $X$?
+a. Escreva o suporte de $X$ utilizando a notação $\mathcal X_\theta$.
 
-b. Qual é seu suporte segundo a parametrização utilizada neste livro?
+b. Determine $E(X)$ e $\operatorname{Var}(X)$.
 
-c. Como muda $E(X)$ quando a probabilidade de sucesso aumenta?
+c. Explique como o suporte se modifica quando $\theta$ varia.
 
-d. Qual propriedade distingue esse modelo de muitas outras distribuições discretas?
+d. Suponha que tenha sido observado um valor $x_0>0$. Quais valores de $\theta$ são incompatíveis com essa observação? Justifique.
+
+O objetivo é reconhecer uma característica particular desse modelo: o suporte depende do parâmetro.
 :::
 
 
 ::: {.callout-note title="Exercício 5"}
 
-Considere uma variável contínua $X$ limitada ao intervalo $(0,1)$.
+Considere duas formas de retirar $20$ bolas de uma urna contendo $100$ bolas, das quais $30$ são vermelhas:
 
-Explique por que essa informação, isoladamente, não é suficiente para concluir que $X$ possui distribuição beta.
+1. cada bola retirada é devolvida à urna antes da retirada seguinte;
+2. as bolas são retiradas sem reposição.
 
-Indique quais outros aspectos do problema devem ser considerados para justificar a escolha de um modelo probabilístico.
+Defina $X$ como o número de bolas vermelhas observadas.
+
+a. Especifique a distribuição de $X$ em cada mecanismo.
+
+b. Compare $E(X)$ nos dois casos.
+
+c. Compare $\operatorname{Var}(X)$ nos dois casos.
+
+d. Explique a origem da diferença entre as variâncias.
+
+e. Relacione essa diferença à independência, ou não, das retiradas.
 :::
-
 
 ::: {.callout-note title="Exercício 6"}
-
-Compare as distribuições exponencial e gama quanto a:
-
-a. suporte;
-
-b. parâmetros;
-
-c. forma da densidade;
-
-d. esperança;
-
-e. relação entre os dois modelos.
-:::
-
-
-### Probabilidade, esperança e variância {.unnumbered}
-
-::: {.callout-note title="Exercício 7"}
-
-Considere eventos $A$ e $B$ tais que
-
-$$
-P(A)=0{,}4,
-\qquad
-P(B)=0{,}5
-$$
-
-e
-
-$$
-P(A\cap B)=0{,}2.
-$$
-
-Calcule
-
-$$
-P(A\mid B)
-$$
-
-e
-
-$$
-P(B\mid A).
-$$
-
-Verifique se $A$ e $B$ são independentes.
-:::
-
-
-::: {.callout-note title="Exercício 8"}
-
-Uma condição ocorre em $1\%$ de determinada população. Um teste apresenta sensibilidade de $90\%$ e especificidade de $95\%$.
-
-Calcule a probabilidade de uma pessoa apresentar a condição dado que recebeu resultado positivo no teste.
-:::
-
-
-::: {.callout-note title="Exercício 9"}
-
-Se
-
-$$
-X\sim\operatorname{Binomial}(20,0{,}3),
-$$
-
-obtenha
-
-$$
-E(X),
-$$
-
-$$
-\operatorname{Var}(X)
-$$
-
-e
-
-$$
-P(X\leq4).
-$$
-:::
-
-
-::: {.callout-note title="Exercício 10"}
-
-Se
-
-$$
-X\sim\operatorname{Poisson}(4),
-$$
-
-calcule
-
-$$
-P(X=0),
-$$
-
-$$
-P(X\leq2)
-$$
-
-e
-
-$$
-P(X>5).
-$$
-
-Interprete cada probabilidade em um contexto no qual $X$ representa o número de ocorrências observadas em determinado intervalo.
-:::
-
-
-::: {.callout-note title="Exercício 11"}
 
 Considere
 
 $$
-X\sim\operatorname{Exponencial}(\lambda).
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+F.
 $$
 
-Mostre, a partir da função de distribuição, que
+a. Explique separadamente o significado de **independentes** e **identicamente distribuídas**.
+
+b. Explique por que a condição i.i.d. não significa que $X_1=\cdots=X_n$.
+
+c. Suponha que a distribuição comum seja absolutamente contínua, com densidade $f_X$. Escreva a densidade conjunta de $(X_1,\ldots,X_n)$.
+
+d. Suponha ainda que $E(X_i)=\mu$ e $\operatorname{Var}(X_i)=\sigma^2$, para todo $i$, e defina
 
 $$
-P(X>s+t\mid X>s)
+\overline X_n
 =
-P(X>t),
-\qquad
-s,t>0.
+\frac{1}{n}\sum_{i=1}^nX_i.
 $$
+
+Obtenha $E(\overline X_n)$ e $\operatorname{Var}(\overline X_n)$.
+
+e. Explique por que a estrutura i.i.d. será particularmente útil quando forem estudadas amostras aleatórias.
 :::
 
 
-::: {.callout-note title="Exercício 12"}
+::: {.callout-note title="Exercício 7"}
 
-Se
-
-$$
-X\sim N(100,15^2),
-$$
-
-obtenha:
-
-a.
-
-$$
-P(X\leq115);
-$$
-
-b.
-
-$$
-P(85<X<115);
-$$
-
-c. o valor $x$ tal que
-
-$$
-P(X\leq x)=0{,}975.
-$$
-:::
-
-
-::: {.callout-note title="Exercício 13"}
-
-Se
-
-$$
-X\sim\operatorname{Beta}(2,5),
-$$
-
-obtenha
-
-$$
-E(X)
-$$
-
-e
-
-$$
-\operatorname{Var}(X).
-$$
-
-Compare a média obtida com a média de
-
-$$
-Y\sim\operatorname{Beta}(5,2).
-$$
-
-Explique a relação entre as duas distribuições.
-:::
-
-
-### Distribuições conjuntas e dependência {.unnumbered}
-
-::: {.callout-note title="Exercício 14"}
-
-Considere a função de probabilidade conjunta
+Considere a função de massa de probabilidade conjunta:
 
 | $X$ | $Y=0$ | $Y=1$ |
 |:---:|:---:|:---:|
 | $0$ | $0{,}10$ | $0{,}20$ |
 | $1$ | $0{,}30$ | $0{,}40$ |
 
-a. Obtenha as distribuições marginais de $X$ e $Y$.
+a. Identifique o suporte conjunto de $(X,Y)$ e os suportes marginais de $X$ e $Y$.
 
-b. Calcule
+b. Obtenha as funções de massa marginais de $X$ e $Y$.
+
+c. Calcule $P(X=1\mid Y=1)$.
+
+d. Verifique se $X$ e $Y$ são independentes.
+
+e. Calcule $E(X)$, $E(Y)$ e $E(XY)$.
+
+f. Determine $\operatorname{Cov}(X,Y)$.
+:::
+
+
+::: {.callout-note title="Exercício 8"}
+
+Considere uma variável $Y$ que assume os valores $0$ e $1$, com $P(Y=1)=p$. Suponha que
 
 $$
-P(X=1\mid Y=1).
-$$
-
-c. Verifique se $X$ e $Y$ são independentes.
-
-d. Calcule
-
-$$
-E(X),
+E(X\mid Y=0)=\mu_0,
 \qquad
-E(Y)
+E(X\mid Y=1)=\mu_1
 $$
 
 e
 
 $$
-E(XY).
-$$
-
-e. Determine
-
-$$
-\operatorname{Cov}(X,Y).
-$$
-:::
-
-
-::: {.callout-note title="Exercício 15"}
-
-Mostre que, se $X$ e $Y$ são independentes e possuem segundos momentos finitos, então
-
-$$
-\operatorname{Cov}(X,Y)=0.
-$$
-
-Apresente um exemplo mostrando que a recíproca não é válida em geral.
-:::
-
-
-::: {.callout-note title="Exercício 16"}
-
-Considere uma variável $Y$ que assume os valores $0$ e $1$, com
-
-$$
-P(Y=1)=p.
-$$
-
-Suponha que
-
-$$
-E(X\mid Y=0)=\mu_0
-$$
-
-e
-
-$$
-E(X\mid Y=1)=\mu_1.
-$$
-
-Utilize a lei da esperança total para obter $E(X)$.
-:::
-
-
-::: {.callout-note title="Exercício 17"}
-
-Nas condições do exercício anterior, suponha ainda que
-
-$$
-\operatorname{Var}(X\mid Y=0)=\sigma_0^2
-$$
-
-e
-
-$$
+\operatorname{Var}(X\mid Y=0)=\sigma_0^2,
+\qquad
 \operatorname{Var}(X\mid Y=1)=\sigma_1^2.
 $$
 
-Utilize a lei da variância total para obter uma expressão para
+a. Utilize a lei da esperança total para obter $E(X)$.
+
+b. Utilize a lei da variância total para obter $\operatorname{Var}(X)$.
+
+c. Mostre que
 
 $$
-\operatorname{Var}(X).
+\operatorname{Var}(X)
+=
+(1-p)\sigma_0^2
++
+p\sigma_1^2
++
+p(1-p)(\mu_1-\mu_0)^2.
 $$
+
+d. Interprete as duas fontes de variabilidade presentes nessa decomposição.
 :::
 
 
-::: {.callout-note title="Exercício 18"}
+::: {.callout-note title="Exercício 9"}
+
+Mostre que, se $X$ e $Y$ são independentes e possuem segundos momentos finitos, então $\operatorname{Cov}(X,Y)=0$.
+
+A recíproca é verdadeira? Apresente um exemplo de duas variáveis aleatórias com covariância zero que não sejam independentes.
+:::
+
+
+::: {.callout-note title="Exercício 10"}
 
 Considere
 
 $$
 (X_1,X_2,X_3)
 \sim
-\operatorname{Multinomial}
-(20;0{,}2,0{,}3,0{,}5).
+\operatorname{Multinomial}(20;0{,}2,0{,}3,0{,}5).
 $$
 
-Obtenha:
+a. Obtenha $E(X_1)$, $E(X_2)$ e $E(X_3)$.
 
-a.
+b. Determine $\operatorname{Var}(X_1)$, $\operatorname{Var}(X_2)$ e $\operatorname{Var}(X_3)$.
 
-$$
-E(X_1),\quad E(X_2),\quad E(X_3);
-$$
+c. Calcule $\operatorname{Cov}(X_1,X_2)$.
 
-b.
+d. Determine a distribuição marginal de $X_3$.
 
-$$
-\operatorname{Var}(X_1),
-\quad
-\operatorname{Var}(X_2),
-\quad
-\operatorname{Var}(X_3);
-$$
+e. Explique por que $X_1$, $X_2$ e $X_3$ não são independentes.
 
-c.
+f. Relacione essa dependência à restrição $X_1+X_2+X_3=20$.
+:::
 
-$$
-\operatorname{Cov}(X_1,X_2);
-$$
+::: {.callout-note title="Exercício 11"}
 
-d. a distribuição marginal de $X_3$.
+Efetue os seguintes cálculos utilizando as propriedades das distribuições estudadas no capítulo.
 
-Explique por que as três contagens não são independentes.
+a. Se $X\sim\operatorname{Binomial}(20,0{,}3)$, obtenha $E(X)$, $\operatorname{Var}(X)$ e $P(X\leq4)$.
+
+b. Se $Y\sim\operatorname{Poisson}(4)$, obtenha $P(Y=0)$ e $P(Y>5)$.
+
+c. Se $Z\sim N(100,15^2)$, obtenha $P(85<Z<115)$ e o valor $c$ tal que $P(Z\leq c)=0{,}975$.
 :::
 
 
-### Função geradora de momentos e relações entre modelos {.unnumbered}
-
-::: {.callout-note title="Exercício 19"}
-
-Se
-
-$$
-X\sim\operatorname{Bernoulli}(p),
-$$
-
-obtenha diretamente
-
-$$
-M_X(t).
-$$
-
-Utilize a FGM para recuperar
-
-$$
-E(X)
-$$
-
-e
-
-$$
-\operatorname{Var}(X).
-$$
-:::
-
-
-::: {.callout-note title="Exercício 20"}
+::: {.callout-note title="Exercício 12"}
 
 Considere
 
@@ -7156,314 +6950,91 @@ X_1,\ldots,X_n
 \operatorname{Bernoulli}(p).
 $$
 
-Utilize funções geradoras de momentos para identificar a distribuição de
+a. Obtenha a função geradora de momentos de $X_i$.
+
+b. Utilize a função geradora de momentos para recuperar $E(X_i)$ e $\operatorname{Var}(X_i)$.
+
+c. Defina $S_n=\sum_{i=1}^nX_i$. Utilize funções geradoras de momentos para identificar a distribuição de $S_n$.
+
+d. Mostre que $S_n/n=\overline X_n$ representa a proporção de sucessos.
+
+e. Obtenha $E(S_n/n)$ e $\operatorname{Var}(S_n/n)$.
+
+Esse resultado será retomado posteriormente no estudo da proporção amostral.
+:::
+
+
+::: {.callout-note title="Exercício 13"}
+
+Utilize funções geradoras de momentos para estabelecer as seguintes relações.
+
+a. Se $X_1,\ldots,X_k$ são independentes e $X_i\sim\operatorname{Poisson}(\lambda_i)$, identifique a distribuição de
 
 $$
-S_n
+S
 =
-\sum_{i=1}^nX_i.
-$$
-:::
-
-
-::: {.callout-note title="Exercício 21"}
-
-Considere variáveis independentes
-
-$$
-X_1\sim\operatorname{Poisson}(\lambda_1)
+\sum_{i=1}^kX_i.
 $$
 
-e
+b. Se
 
 $$
-X_2\sim\operatorname{Poisson}(\lambda_2).
-$$
-
-Utilize funções geradoras de momentos para identificar a distribuição de
-
-$$
-X_1+X_2.
-$$
-
-Generalize o resultado para $k$ variáveis Poisson independentes.
-:::
-
-
-::: {.callout-note title="Exercício 22"}
-
-Se
-
-$$
-X_1,\ldots,X_n
+Y_1,\ldots,Y_n
 \overset{\mathrm{iid}}{\sim}
 \operatorname{Exponencial}(\lambda),
 $$
 
-use funções geradoras de momentos para obter a distribuição de
+identifique a distribuição de $T_n=\sum_{i=1}^nY_i$.
 
-$$
-S_n
-=
-\sum_{i=1}^nX_i.
-$$
+c. No item anterior, obtenha $E(T_n)$ e $\operatorname{Var}(T_n)$.
 
-Determine também
+d. Compare os resultados dos itens (a) e (b): em ambos os casos estamos somando variáveis independentes, mas a família da distribuição resultante se comporta da mesma forma? Explique.
 
-$$
-E(S_n)
-$$
+e. Indique o papel da independência na propriedade multiplicativa das funções geradoras de momentos.
+:::
 
-e
+::: {.callout-note title="Exercício 14"}
 
-$$
-\operatorname{Var}(S_n).
-$$
+Considere $X\sim\operatorname{Exponencial}(\lambda)$ e $Y=cX$, com $c>0$.
+
+a. Determine o suporte $\mathcal Y$ de $Y$.
+
+b. Obtenha a função de distribuição de $Y$.
+
+c. Obtenha a densidade de $Y$ pelo método da transformação.
+
+d. Identifique a distribuição resultante e seu parâmetro.
 :::
 
 
-::: {.callout-note title="Exercício 23"}
+::: {.callout-note title="Exercício 15"}
 
-Se
+Considere $X\sim N(0,1)$ e defina $Y=X^2$.
 
-$$
-X_1,\ldots,X_n
-$$
+a. Determine o suporte $\mathcal Y$ de $Y$.
 
-são independentes e
+b. Para $y>0$, escreva o evento $\{Y\leq y\}$ em termos de $X$.
 
-$$
-X_i\sim N(\mu_i,\sigma_i^2),
-$$
+c. Obtenha a função de distribuição de $Y$.
 
-utilize funções geradoras de momentos para mostrar que
+d. Diferencie a expressão obtida para encontrar sua densidade.
 
-$$
-\sum_{i=1}^nX_i
-$$
-
-possui distribuição normal e determine seus parâmetros.
+A distribuição resultante será identificada posteriormente no estudo das distribuições amostrais associadas ao modelo normal.
 :::
 
+::: {.callout-note title="Exercício 16"}
 
-### Transformações de variáveis aleatórias {.unnumbered}
+Escolha uma situação aplicada de uma área de interesse e formule um modelo probabilístico para uma variável observável.
 
-::: {.callout-note title="Exercício 24"}
+Em sua resposta:
 
-Se
+1. defina claramente a variável aleatória $X$;
+2. indique seu suporte $\mathcal X$;
+3. proponha uma distribuição probabilística;
+4. descreva o mecanismo que justifica a escolha dessa distribuição;
+5. interprete os parâmetros do modelo no contexto do problema;
+6. indique qual parâmetro ou função dos parâmetros poderia constituir uma quantidade desconhecida de interesse;
+7. se várias observações da variável fossem obtidas, discuta se a hipótese de que sejam independentes e identicamente distribuídas seria plausível e justifique.
 
-$$
-X\sim\operatorname{Exponencial}(\lambda)
-$$
-
-e
-
-$$
-Y=cX,
-\qquad
-c>0,
-$$
-
-obtenha a densidade de $Y$ pelo método da transformação.
-
-Identifique a distribuição resultante e seu parâmetro.
+O objetivo é formular e interpretar a estrutura probabilística do problema. Os procedimentos utilizados para obter informação sobre as quantidades desconhecidas a partir dos dados serão desenvolvidos nos capítulos de Inferência Estatística.
 :::
-
-
-::: {.callout-note title="Exercício 25"}
-
-Se
-
-$$
-X\sim N(\mu,\sigma^2)
-$$
-
-e
-
-$$
-Y=aX+b,
-\qquad
-a\neq0,
-$$
-
-obtenha a distribuição de $Y$ pelo método da transformação.
-
-Compare o resultado com a propriedade apresentada na seção da distribuição normal.
-:::
-
-
-::: {.callout-note title="Exercício 26"}
-
-Considere
-
-$$
-X\sim N(0,1)
-$$
-
-e
-
-$$
-Y=X^2.
-$$
-
-a. Obtenha a função de distribuição de $Y$.
-
-b. Diferencie a expressão obtida para encontrar sua densidade.
-
-c. Determine o suporte de $Y$.
-
-A distribuição resultante será retomada posteriormente no estudo das distribuições amostrais.
-:::
-
-
-### Exploração computacional {.unnumbered}
-
-::: {.callout-note title="Exercício 27"}
-
-Utilize R para representar, em uma mesma figura, as funções de massa de
-
-$$
-X\sim\operatorname{Binomial}(20,p)
-$$
-
-para
-
-$$
-p=0{,}1,
-\qquad
-p=0{,}5
-$$
-
-e
-
-$$
-p=0{,}9.
-$$
-
-Para cada distribuição:
-
-a. determine teoricamente $E(X)$ e $\operatorname{Var}(X)$;
-
-b. localize a região de maior concentração da massa no gráfico;
-
-c. descreva o efeito de $p$ sobre a localização e a assimetria.
-:::
-
-
-::: {.callout-note title="Exercício 28"}
-
-Represente graficamente as densidades de
-
-$$
-X\sim\operatorname{Gama}(\alpha,\lambda)
-$$
-
-para as combinações
-
-$$
-(\alpha,\lambda)
-=
-(1,1),
-$$
-
-$$
-(3,1)
-$$
-
-e
-
-$$
-(6,1).
-$$
-
-Compare as formas das densidades e relacione as diferenças observadas com
-
-$$
-E(X)=\frac{\alpha}{\lambda}
-$$
-
-e
-
-$$
-\operatorname{Var}(X)
-=
-\frac{\alpha}{\lambda^2}.
-$$
-:::
-
-
-::: {.callout-note title="Exercício 29"}
-
-Simule amostras de tamanho
-
-$$
-n=1000
-$$
-
-das distribuições
-
-$$
-\operatorname{Poisson}(5)
-$$
-
-e
-
-$$
-\operatorname{Exponencial}(2).
-$$
-
-Para cada amostra:
-
-a. calcule a média e a variância amostrais;
-
-b. compare-as com a esperança e a variância teóricas;
-
-c. represente a distribuição dos valores simulados;
-
-d. descreva as diferenças entre uma variável de contagem e uma variável contínua de tempo de espera.
-:::
-
-
-::: {.callout-note title="Exercício 30"}
-
-Escolha uma situação aplicada de uma área de interesse e:
-
-1. defina claramente a variável aleatória;
-2. indique seu suporte;
-3. proponha uma das distribuições estudadas neste capítulo;
-4. identifique o significado de seus parâmetros;
-5. indique qual parâmetro ou função dos parâmetros poderia constituir uma quantidade de interesse em um problema inferencial;
-6. justifique a escolha do modelo a partir do mecanismo que produz os dados.
-
-O objetivo deste exercício é formular o modelo probabilístico, sem realizar ainda estimação ou teste de hipóteses.
-:::
-
-
-## Da Probabilidade à Inferência Estatística {.unnumbered}
-
-Ao longo deste capítulo, partimos de modelos probabilísticos especificados e estudamos as consequências desses modelos.
-
-Por exemplo, se $X\sim\operatorname{Poisson}(\lambda)$ e o valor de $\lambda$ é conhecido, podemos calcular probabilidades como $P(X\leq x)$ determinar $E(X)=\lambda$ e $\operatorname{Var}(X)=\lambda$, ou estudar a distribuição de somas de variáveis Poisson independentes.
-
-Esse é o sentido predominante da teoria da Probabilidade: especificado um mecanismo probabilístico, estudam-se as propriedades das variáveis aleatórias que ele produz.
-
-Nos problemas de Inferência Estatística, a situação se modifica. Os dados são observados, mas uma ou mais características do mecanismo probabilístico que os produziu são desconhecidas.
-
-Considere novamente o número de clientes atendidos durante o turno da manhã de uma agência bancária. Admitindo um modelo de Poisson, observamos contagens como 
-
-$$
-8,\;11,\;9,\;13,\;10,\ldots
-$$
-
-em diferentes turnos, mas a taxa média de atendimentos $\lambda$ não é conhecida.
-
-Da mesma forma, se tempos de espera são representados por uma distribuição exponencial, $X\sim\operatorname{Exponencial}(\lambda)$, podemos observar os tempos de vários clientes sem conhecer a taxa $\lambda$ ou o tempo médio $\frac{1}{\lambda}$.
-
-No caso normal, $X\sim N(\mu,\sigma^2)$, podemos observar uma amostra de pesos, comprimentos ou outras medidas sem conhecer $\mu$, $\sigma^2$ ou ambos.
-
-
-Essa passagem exige uma nova linguagem. Será necessário distinguir população, parâmetro, amostra, estatística, estimador e estimativa, além de definir o que significa representar um mecanismo de produção dos dados por um modelo estatístico.
-
-Antes de introduzir formalmente esses conceitos, o próximo capítulo reúne as ferramentas matemáticas e assintóticas utilizadas nos desenvolvimentos posteriores. Serão revisados resultados de cálculo e álgebra linear, modos de convergência, teorema do mapeamento contínuo, lema de Slutsky, Lei dos Grandes Números, Teorema Central do Limite, método delta e ordens estocásticas.
-
-Depois dessa preparação, o capítulo **Fundamentos da Inferência Estatística** inicia a construção do problema inferencial a partir do Processo Gerador de Dados, da população, dos parâmetros, da amostra e da variabilidade decorrente da obtenção de diferentes amostras.

@@ -1,4 +1,4 @@
-# Resultados Matemáticos e Assintóticos para Inferência {.unnumbered}
+# Resultados Matemáticos e Assintóticos para Inferência 
 
 Este capítulo reúne ferramentas matemáticas e assintóticas que serão utilizadas ao longo do estudo de Inferência Estatística. O objetivo é estabelecer uma base comum de notação e revisar resultados de cálculo, álgebra linear e teoria assintótica necessários para estudar distribuições amostrais, propriedades de estimadores, métodos de estimação, intervalos de confiança e testes de hipóteses [@rice2007mathematical, caps. 1--6; @ramachandran2021r, caps. 2--4; @lauritzen2023fundamentals, ap. A].
 
@@ -21,7 +21,7 @@ O objetivo não é desenvolver novamente cursos completos de Cálculo ou Álgebr
 :::
 
 
-## Mapa de dependências {.unnumbered}
+## Mapa de dependências 
 
 As ferramentas deste capítulo reaparecerão em diferentes partes do livro. O quadro seguinte resume suas principais conexões.
 
@@ -69,12 +69,12 @@ tema_matematico <- theme_bw(base_size = 16) +
 ```
 
 
-## Notação e ferramentas de cálculo {.unnumbered}
+## Notação e ferramentas de cálculo 
 
 Diversos desenvolvimentos inferenciais podem ser expressos de forma compacta por meio de somatórios, produtos, logaritmos e derivadas. Essas operações aparecerão repetidamente quando uma estatística for construída a partir de uma amostra ou quando uma função de vários parâmetros precisar ser analisada.
 
 
-### Somatórios e produtos {.unnumbered}
+### Somatórios e produtos 
 
 Para uma sequência
 
@@ -226,7 +226,7 @@ A notação de somatório permite escrever essas estatísticas sem depender de u
 :::
 
 
-### Produtos e logaritmos {.unnumbered}
+### Produtos e logaritmos 
 
 Produtos aparecem naturalmente quando várias contribuições individuais são combinadas. Uma transformação particularmente útil nesses casos é o logaritmo.
 
@@ -309,12 +309,12 @@ Essa transformação será utilizada posteriormente na passagem da função de v
 :::
 
 
-## Diferenciação {.unnumbered}
+## Diferenciação 
 
 A diferenciação permite estudar como uma função varia quando seus argumentos são modificados. Em Inferência Estatística, derivadas aparecem em problemas de otimização, aproximações locais e análise da sensibilidade de funções em relação aos parâmetros.
 
 
-### Funções de uma variável {.unnumbered}
+### Funções de uma variável 
 
 Considere uma função diferenciável
 
@@ -385,7 +385,7 @@ Essa distinção será relevante em alguns problemas de estimação nos quais o 
 :::
 
 
-### Funções de várias variáveis {.unnumbered}
+### Funções de várias variáveis 
 
 Considere agora uma função escalar
 
@@ -542,14 +542,14 @@ Essas estruturas serão utilizadas posteriormente na função escore, na informa
 :::
 
 
-## Fórmula de Taylor {.unnumbered}
+## Fórmula de Taylor 
 
 A fórmula de Taylor permite representar localmente uma função por meio de um polinômio construído a partir de suas derivadas.
 
 Na Inferência Estatística, a ideia principal não é substituir permanentemente uma função por uma série infinita. O interesse está em utilizar **aproximações locais com termos de resto controlados**.
 
 
-### Aproximação de primeira ordem {.unnumbered}
+### Aproximação de primeira ordem 
 
 Se $g$ é diferenciável em $a$, então
 
@@ -723,7 +723,7 @@ e acompanha seu comportamento em uma vizinhança desse ponto. À medida que $x$ 
 Esse caráter **local** da aproximação é o aspecto que será utilizado nos resultados assintóticos: quando uma sequência de estatísticas se aproxima de determinado valor, uma função dessas estatísticas pode ser aproximada por sua expansão de Taylor em torno do valor limite.
 
 
-### Aproximação de segunda ordem {.unnumbered}
+### Aproximação de segunda ordem 
 
 Se $g$ possui segunda derivada contínua em uma vizinhança de $a$, então
 
@@ -806,7 +806,7 @@ Expansões desse tipo serão utilizadas posteriormente para estudar funções de
 :::
 
 
-## Taylor em várias dimensões {.unnumbered}
+## Taylor em várias dimensões 
 
 A mesma ideia se estende a funções de vetores.
 
@@ -876,7 +876,7 @@ $$
 é uma forma quadrática e incorpora a curvatura da função em diferentes direções.
 
 
-### Funções vetoriais {.unnumbered}
+### Funções vetoriais 
 
 Considere agora
 
@@ -1007,14 +1007,14 @@ $$
 Essa estrutura será utilizada posteriormente no **método delta multivariado** para obter a distribuição assintótica de funções de estimadores vetoriais [@lauritzen2023fundamentals, ap. A.3.2].
 :::
 
-## Vetores e matrizes {.unnumbered}
+## Vetores e matrizes 
 
 Muitos resultados inferenciais envolvem várias quantidades simultaneamente. Parâmetros podem ser vetoriais, estatísticas podem ser organizadas em vetores e estruturas de variabilidade podem ser representadas por matrizes.
 
 A notação matricial permite expressar essas relações de forma compacta e será particularmente útil no estudo de parâmetros multidimensionais, distribuições conjuntas, informação de Fisher e modelos lineares.
 
 
-### Vetores e operações {.unnumbered}
+### Vetores e operações 
 
 Um vetor coluna em $\mathbb R^k$ será representado por
 
@@ -1069,7 +1069,7 @@ ax_k
 $$
 
 
-### Produto interno e norma {.unnumbered}
+### Produto interno e norma 
 
 O produto interno entre $\mathbf x$ e $\mathbf y$ é
 
@@ -1151,7 +1151,7 @@ serão utilizadas para representar a aproximação de uma estatística vetorial 
 :::
 
 
-## Matrizes {.unnumbered}
+## Matrizes 
 
 Uma matriz com $m$ linhas e $k$ colunas será representada por
 
@@ -1184,7 +1184,7 @@ $$
 $$
 
 
-### Matriz identidade e inversa {.unnumbered}
+### Matriz identidade e inversa 
 
 A matriz identidade de ordem $k$ é
 
@@ -1222,7 +1222,7 @@ $$
 $$
 
 
-### Matrizes simétricas {.unnumbered}
+### Matrizes simétricas 
 
 Uma matriz quadrada $\mathbf A$ é **simétrica** quando
 
@@ -1235,7 +1235,7 @@ $$
 Matrizes de covariâncias e matrizes hessianas sob condições adequadas são exemplos importantes de matrizes simétricas que aparecerão ao longo do livro.
 
 
-### Posto e independência linear {.unnumbered}
+### Posto e independência linear 
 
 O **posto** de uma matriz corresponde ao número máximo de colunas, ou equivalentemente de linhas, linearmente independentes.
 
@@ -1314,7 +1314,7 @@ podem ser utilizadas no método de mínimos quadrados.
 :::
 
 
-## Formas quadráticas {.unnumbered}
+## Formas quadráticas 
 
 Considere uma matriz simétrica
 
@@ -1360,7 +1360,7 @@ $$
 Assim, uma soma de quadrados é um caso particular de forma quadrática.
 
 
-### Matrizes positivas semidefinidas e positivas definidas {.unnumbered}
+### Matrizes positivas semidefinidas e positivas definidas 
 
 Uma matriz simétrica $\mathbf A$ é **positiva semidefinida** quando
 
@@ -1504,7 +1504,7 @@ Formas desse tipo aparecem em distribuições normais multivariadas e em diferen
 :::
 
 
-## Projeções {.unnumbered}
+## Projeções 
 
 A ideia de projeção permite decompor um vetor em uma componente pertencente a determinado subespaço e outra componente ortogonal a ele.
 
@@ -1527,7 +1527,7 @@ $$
 A primeira condição estabelece simetria. A segunda estabelece **idempotência**: aplicar a projeção novamente não modifica um vetor que já foi projetado.
 
 
-### Projeção sobre o espaço coluna {.unnumbered}
+### Projeção sobre o espaço coluna 
 
 Considere
 
@@ -1852,7 +1852,7 @@ Assim, ajustar o modelo por mínimos quadrados corresponde geometricamente a pro
 :::
 
 
-## Transformações vetoriais e matriz jacobiana {.unnumbered}
+## Transformações vetoriais e matriz jacobiana 
 
 No capítulo anterior, transformações univariadas foram consideradas na forma
 
@@ -1987,7 +1987,7 @@ $$
 :::
 
 
-## Transformações multivariadas e jacobiano {.unnumbered}
+## Transformações multivariadas e jacobiano 
 
 Considere um vetor aleatório
 
@@ -2068,7 +2068,7 @@ $$
 corrige a alteração local de volume produzida pela transformação.
 
 
-### Relação com o caso univariado {.unnumbered}
+### Relação com o caso univariado 
 
 No caso
 
@@ -2102,7 +2102,7 @@ $$
 que é exatamente a fórmula de transformação univariada apresentada no capítulo anterior [@rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
 
 
-### Transformação linear {.unnumbered}
+### Transformação linear 
 
 Considere
 
@@ -2319,7 +2319,7 @@ descreve sua aproximação linear local.
 Portanto, o mesmo objeto matemático participa de dois procedimentos diferentes: transformação de densidades e aproximação assintótica de funções.
 :::
 
-## Ferramentas assintóticas {.unnumbered}
+## Ferramentas assintóticas 
 
 Em muitos problemas de Inferência Estatística, uma estatística depende do tamanho da amostra. Para cada valor de $n$, podemos ter uma quantidade diferente,
 
@@ -2377,7 +2377,7 @@ Os dois tipos de resultado serão utilizados ao longo do livro.
 :::
 
 
-## Modos de convergência {.unnumbered}
+## Modos de convergência 
 
 A expressão informal "$T_n$ se aproxima de $T$" pode assumir significados matemáticos diferentes. Nesta seção serão utilizados quatro modos de convergência: quase certa, em média quadrática, em probabilidade e em distribuição.
 
@@ -2390,7 +2390,7 @@ $$
 e uma variável aleatória $X$.
 
 
-### Convergência quase certa {.unnumbered}
+### Convergência quase certa 
 
 ::: {.callout-important title="Convergência quase certa"}
 
@@ -2431,7 +2431,7 @@ $$
 Portanto, a convergência quase certa descreve o comportamento das trajetórias da sequência para quase todos os resultados do experimento aleatório.
 
 
-### Convergência em média quadrática {.unnumbered}
+### Convergência em média quadrática 
 
 ::: {.callout-important title="Convergência em média quadrática"}
 
@@ -2466,7 +2466,7 @@ $$
 mede o erro quadrático médio entre $X_n$ e $X$. A convergência em média quadrática exige que esse erro tenda a zero.
 
 
-### Convergência em probabilidade {.unnumbered}
+### Convergência em probabilidade 
 
 ::: {.callout-important title="Convergência em probabilidade"}
 
@@ -2507,7 +2507,7 @@ $$
 essa forma de convergência será utilizada posteriormente na definição de **consistência** de estimadores.
 
 
-### Convergência em distribuição {.unnumbered}
+### Convergência em distribuição 
 
 ::: {.callout-important title="Convergência em distribuição"}
 
@@ -2563,7 +2563,7 @@ Os dois resultados possuem funções diferentes. O primeiro descreve aproximaç�
 :::
 
 
-## Relações entre os modos de convergência {.unnumbered}
+## Relações entre os modos de convergência 
 
 Os quatro modos de convergência não são equivalentes em geral.
 
@@ -2654,7 +2654,7 @@ A Lei Fraca dos Grandes Números fornecerá um resultado do primeiro tipo. O Teo
 :::
 
 
-## Lei Fraca dos Grandes Números {.unnumbered}
+## Lei Fraca dos Grandes Números 
 
 Considere
 
@@ -2727,7 +2727,7 @@ Existem versões fortes da Lei dos Grandes Números que estabelecem convergênci
 :::
 
 
-### Interpretação {.unnumbered}
+### Interpretação 
 
 A Lei Fraca dos Grandes Números é um resultado de **estabilização** da média.
 
@@ -2892,7 +2892,7 @@ $$
 A figura ilustra a estabilização da média, mas não constitui uma demonstração da Lei Fraca dos Grandes Números.
 
 
-## Teorema Central do Limite {.unnumbered}
+## Teorema Central do Limite 
 
 A Lei Fraca dos Grandes Números descreve a aproximação
 
@@ -2958,7 +2958,7 @@ $$
 O resultado descreve a distribuição limite das flutuações padronizadas da média ou da soma em torno de seus respectivos valores esperados [@rice2007mathematical, sec. 5.3; @ramachandran2021r, sec. 3.5; @chihara2022, sec. 4.3].
 
 
-### Centralização e mudança de escala {.unnumbered}
+### Centralização e mudança de escala 
 
 A quantidade
 
@@ -3041,7 +3041,7 @@ A qualidade da aproximação para um valor finito de $n$ depende da distribuiç�
 :::
 
 
-### Visualização da convergência {.unnumbered}
+### Visualização da convergência 
 
 A aproximação produzida pelo Teorema Central do Limite pode ser visualizada a partir de uma distribuição que não é normal.
 
@@ -3195,7 +3195,7 @@ Para $n=30$, a diferença entre as duas curvas já é consideravelmente menor do
 A figura destaca que o objeto que se aproxima da normal é a **distribuição da média padronizada**, e não a distribuição das observações individuais.
 
 
-## Lei Fraca dos Grandes Números e Teorema Central do Limite {.unnumbered}
+## Lei Fraca dos Grandes Números e Teorema Central do Limite 
 
 Os dois resultados descrevem aspectos diferentes do comportamento da média amostral.
 
@@ -3282,7 +3282,7 @@ A primeira descreve para onde a estatística converge. A segunda descreve como s
 :::
 
 
-## Teorema do mapeamento contínuo {.unnumbered}
+## Teorema do mapeamento contínuo 
 
 Depois de obter um resultado de convergência para uma sequência, frequentemente é necessário estudar uma função dessa sequência.
 
@@ -3421,7 +3421,7 @@ Essa propriedade será utilizada quando a quantidade de interesse for uma funç�
 :::
 
 
-## Lema de Slutsky {.unnumbered}
+## Lema de Slutsky 
 
 O teorema do mapeamento contínuo permite transformar uma sequência convergente. O **lema de Slutsky** permite combinar sequências com diferentes tipos de limite.
 
@@ -3642,7 +3642,7 @@ $$
 O próximo resultado acrescentará uma nova operação a esse fluxo: utilizar uma **aproximação de Taylor** para obter a distribuição assintótica de uma função de uma estatística.
 :::
 
-## Método delta {.unnumbered}
+## Método delta 
 
 O teorema do mapeamento contínuo permite concluir que, se
 
@@ -3663,7 +3663,7 @@ Esse resultado informa **para onde** $g(T_n)$ converge, mas não descreve a dist
 Quando já conhecemos uma distribuição assintótica para $T_n$, o **método delta** permite obter uma distribuição assintótica para $g(T_n)$. A ferramenta matemática que produz essa passagem é a aproximação de Taylor.
 
 
-### Método delta univariado {.unnumbered}
+### Método delta univariado 
 
 Suponha que
 
@@ -3701,7 +3701,7 @@ N
 $$
 
 
-### De Taylor ao método delta {.unnumbered}
+### De Taylor ao método delta 
 
 Como $g$ é diferenciável em $\theta$,
 
@@ -3988,7 +3988,7 @@ Assim, uma distribuição assintótica para o estimador do parâmetro original p
 :::
 
 
-### Visualização do método delta {.unnumbered}
+### Visualização do método delta 
 
 O efeito do método delta pode ser observado em um exemplo no qual a estatística original possui uma distribuição assintótica conhecida.
 
@@ -4156,7 +4156,7 @@ como previsto pelo método delta.
 O resultado é assintótico. A qualidade da aproximação para um tamanho de amostra específico depende do modelo, da transformação e do valor de $n$.
 
 
-### Quando a primeira derivada é nula {.unnumbered}
+### Quando a primeira derivada é nula 
 
 A versão de primeira ordem do método delta depende da derivada
 
@@ -4216,7 +4216,7 @@ Resultados desse tipo exigem tratamento específico e não serão necessários p
 :::
 
 
-## Método delta multivariado {.unnumbered}
+## Método delta multivariado 
 
 O método delta também se aplica quando a estatística e o parâmetro são vetoriais.
 
@@ -4309,7 +4309,7 @@ Dg(\boldsymbol\theta)^\mathsf T.
 $$
 
 
-### Caso escalar {.unnumbered}
+### Caso escalar 
 
 Quando
 
@@ -4456,7 +4456,7 @@ O método delta utiliza o gradiente de $g$ e a matriz de covariâncias assintót
 :::
 
 
-## Ordens estocásticas {.unnumbered}
+## Ordens estocásticas 
 
 Resultados assintóticos frequentemente envolvem vários termos cujas magnitudes precisam ser comparadas.
 
@@ -4487,7 +4487,7 @@ a_n>0.
 $$
 
 
-### Ordem em probabilidade {.unnumbered}
+### Ordem em probabilidade 
 
 ::: {.callout-important title="Ordem em probabilidade"}
 
@@ -4551,7 +4551,7 @@ $$
 significa que a sequência é limitada em probabilidade.
 
 
-### Pequena ordem em probabilidade {.unnumbered}
+### Pequena ordem em probabilidade 
 
 ::: {.callout-important title="Pequena ordem em probabilidade"}
 
@@ -4587,7 +4587,7 @@ X_n\xrightarrow{P}0.
 $$
 
 
-### Diferença entre \(O_P\) e \(o_P\) {.unnumbered}
+### Diferença entre \(O_P\) e \(o_P\) 
 
 As expressões
 
@@ -4632,7 +4632,7 @@ $$
 A implicação inversa não é válida em geral.
 
 
-### Taxa de convergência {.unnumbered}
+### Taxa de convergência 
 
 Considere uma estatística $T_n$ que se aproxima de $\theta$.
 
@@ -4694,7 +4694,7 @@ Assim, a média amostral se aproxima de $\mu$ com erro de ordem probabilística 
 :::
 
 
-### Algumas regras de cálculo {.unnumbered}
+### Algumas regras de cálculo 
 
 As ordens estocásticas obedecem a regras que facilitam a manipulação de expansões assintóticas.
 
@@ -4841,7 +4841,7 @@ Esse tipo de representação será utilizado posteriormente em expansões envolv
 :::
 
 
-## Mapa das ferramentas assintóticas {.unnumbered}
+## Mapa das ferramentas assintóticas 
 
 Os resultados desenvolvidos nesta parte possuem funções diferentes e podem ser organizados segundo o tipo de questão que respondem.
 
@@ -4898,7 +4898,7 @@ $$
 As ordens estocásticas fornecem uma linguagem compacta para escrever os erros e termos de resto que aparecem nessas aproximações.
 
 
-## Síntese {.unnumbered}
+## Síntese 
 
 Os resultados deste capítulo podem ser organizados em duas partes complementares.
 
@@ -4972,9 +4972,9 @@ registram de forma compacta a magnitude de erros e termos de resto.
 Os capítulos seguintes utilizarão essas ferramentas sem redefini-las. As hipóteses e interpretações específicas serão retomadas no contexto em que cada resultado for aplicado.
 
 
-## Exercícios de consolidação {.unnumbered}
+## Exercícios de consolidação 
 
-### Ferramentas de cálculo e álgebra linear {.unnumbered}
+### Ferramentas de cálculo e álgebra linear 
 
 ::: {.callout-note title="Exercício 1"}
 
@@ -5141,7 +5141,7 @@ d. Calcule o valor absoluto do determinante jacobiano utilizado na mudança de v
 :::
 
 
-### Convergência e resultados limites {.unnumbered}
+### Convergência e resultados limites 
 
 ::: {.callout-note title="Exercício 7"}
 
@@ -5249,7 +5249,7 @@ $$
 :::
 
 
-### Mapeamento contínuo e Slutsky {.unnumbered}
+### Mapeamento contínuo e Slutsky 
 
 ::: {.callout-note title="Exercício 11"}
 
@@ -5347,7 +5347,7 @@ $$
 :::
 
 
-### Método delta {.unnumbered}
+### Método delta 
 
 ::: {.callout-note title="Exercício 14"}
 
@@ -5463,7 +5463,7 @@ $$
 :::
 
 
-### Ordens estocásticas {.unnumbered}
+### Ordens estocásticas 
 
 ::: {.callout-note title="Exercício 18"}
 
@@ -5538,7 +5538,7 @@ $$
 :::
 
 
-### Exploração computacional {.unnumbered}
+### Exploração computacional 
 
 ::: {.callout-note title="Exercício 21"}
 
