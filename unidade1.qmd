@@ -2,9 +2,9 @@
 
 A inferência estatística utiliza informações obtidas em uma amostra para estudar características desconhecidas de uma população ou de um processo que produz dados. Como diferentes amostras podem gerar resultados diferentes, as conclusões obtidas a partir dos dados estão associadas à variabilidade e à incerteza.
 
-Neste capítulo, serão apresentados os conceitos que estruturam esse processo. Inicialmente, serão discutidos o processo gerador de dados, a população, os parâmetros, a amostra e a variabilidade amostral. Em seguida, um experimento de amostragem será realizado em sala de aula e reproduzido computacionalmente para observar como os resultados variam entre diferentes amostras.
+Este capítulo apresenta os conceitos que estruturam esse processo. Inicialmente, são discutidos o problema inferencial, o processo gerador de dados, a população, os parâmetros e a amostragem. Um experimento com uma urna permite observar diretamente a variabilidade produzida por diferentes amostras. A partir dessa experiência, são formalizados os conceitos de estatística, estimador, estimativa, modelo estatístico e verossimilhança.
 
-A partir dessas ideias, serão introduzidos os conceitos de estatística, estimador, estimativa, modelo estatístico e verossimilhança. Esses elementos fornecem a linguagem utilizada nos capítulos seguintes para estudar distribuições amostrais, propriedades de estimadores, métodos de estimação, intervalos de confiança e testes de hipóteses.
+Ao final do capítulo, o experimento da urna é reproduzido e ampliado computacionalmente. Essa seção foi organizada de forma autônoma: pode ser utilizada logo após o experimento em sala de aula, de forma intercalada com o desenvolvimento conceitual ou depois da apresentação da teoria.
 
 ## O problema da inferência estatística
 
@@ -31,295 +31,125 @@ Para representar essa variabilidade e estabelecer procedimentos inferenciais, é
 
 ## Processo Gerador de Dados (PGD)
 
-O PGD é o mecanismo teórico, físico ou biológico que produz os dados que observamos. Imagine que o mundo é uma "caixa preta" que segue certas regras (leis da física, comportamento humano, algoritmos de mercado), portanto o PGD são essas regras em funcionamento.
+Os dados observados resultam de algum mecanismo que determina quais valores podem ocorrer e como esses valores são produzidos. Esse mecanismo será denominado **Processo Gerador de Dados (PGD)**.
 
-::: {.callout-note title="Realidade vs. Observação"}
-- O PGD (A causa): É a distribuição de probabilidade teórica e os parâmetros fixos (mas desconhecidos) que regem um fenômeno.
+O PGD pode envolver diferentes componentes, como características da população, seleção das unidades observadas, condições de medição, fontes de variabilidade e relações de dependência entre as observações. Em um experimento controlado, parte desse processo pode ser estabelecida pelo pesquisador. Em estudos observacionais, vários de seus componentes podem ser desconhecidos ou apenas parcialmente conhecidos.
 
-- Os Dados (O Efeito): É a amostra específica que coletamos. É apenas uma realização de infinitas possibilidades que o PGD poderia ter gerado.
+Podemos representar esquematicamente esse processo por
+
+$$
+\text{fenômeno}
+\longrightarrow
+\text{PGD}
+\longrightarrow
+\text{dados observados}.
+$$
+
+Os dados constituem uma realização particular do processo. Se o mecanismo fosse repetido sob as mesmas condições, outros conjuntos de dados poderiam ser observados.
+
+O PGD real raramente é conhecido em todos os seus detalhes. Por essa razão, a análise estatística utiliza posteriormente um **modelo estatístico**, que fornece uma representação probabilística simplificada dos aspectos do PGD considerados relevantes para o problema estudado.
+
+::: {.callout-note title="PGD e hipótese i.i.d."}
+Em muitos modelos estatísticos, as observações são representadas por
+
+$$
+X_1,\ldots,X_n \overset{\mathrm{iid}}{\sim} F.
+$$
+
+A condição i.i.d. estabelece que as variáveis são independentes e possuem a mesma distribuição. Essa é uma hipótese sobre o mecanismo de geração dos dados e não uma condição que define todo Processo Gerador de Dados.
+
+Outros mecanismos podem produzir observações dependentes, distribuições diferentes entre unidades ou estruturas amostrais determinadas pelo plano de coleta.
 :::
 
-::: {.callout-tip title="Representação Matemática"}
-O PGD pode ser definido pela distribuição de probabilidade conjunta desconhecida $P(X, Y)$ (ou simplemente $P(Z)$).
+## Conceitos fundamentais
 
-Dizemos que nossa amostra $\mathcal{D} = \{z_1, z_2, \dots, z_n \}$ é composta por variáveis aleatórias independentes e identicamentes distribuídas (i.i.d) retiradas desse processo:
+Uma **população** é o conjunto de unidades sobre as quais se deseja obter informação. Dependendo do problema, pode ser formada por pessoas, animais, objetos, empresas, municípios, medições ou outras unidades de interesse.
 
-$$z_i \sim P(Z).$$ Nesta visão, o PGD é o "mecanismo" que dita:
+Quando a população é finita, seu tamanho será representado por $N$.
 
-1.  A Região de Suporte: Quais valores são possíveis de ocorrer?
+Uma característica numérica da população ou do processo de interesse é denominada **parâmetro**. O parâmetro é tratado, na abordagem frequentista desenvolvida neste livro, como uma quantidade fixa cujo valor é desconhecido.
 
-2.  A Densidade: Com que frequência cada valor ocorre?
+Por exemplo, podem constituir parâmetros:
 
-3.  As Dependências: Como o corrência de $X$ altera a probabilidade de $Y$?
-:::
+- a média populacional $\mu$;
+- a variância populacional $\sigma^2$;
+- uma proporção populacional $p$.
 
-## Pacote Necessários
+Um **censo** consiste na observação de todas as unidades de uma população finita. Quando o censo é possível e as medições são obtidas sem erro, uma característica da população pode ser calculada diretamente. Em muitas aplicações, observar toda a população é inviável em razão de custo, tempo, disponibilidade das unidades ou do próprio processo de medição.
 
-Neste capítulo iremos utilizar os pacotes `R` `tidyverse`[@tidyverse] e `moderndive` [@moderndive]. Por exemplo, para instalar o pacote basta usar `install.packages("tidyverse")` e podemos carregar o pacote por meio do comando `library(tidyverse)`. São carregados, de uma só vez, os seguinte pacotes amplamente utilizados em ciência de dados:
+Uma **amostra** é um subconjunto de unidades ou observações utilizado para obter informação sobre a população. Seu tamanho será representado por $n$. A **amostragem** corresponde ao procedimento utilizado para selecionar essas unidades.
 
-- `ggplot2` para visualização de dados;
+No experimento que será realizado em sala de aula, a população é formada por $N=2400$ bolas de mesmo tamanho, das quais 900 são vermelhas e 1500 são brancas. A característica de interesse é a proporção populacional de bolas vermelhas,
 
-- `dplyr` para manipulação de dados;
+$$
+p = \frac{900}{2400} = 0{,}375.
+$$
 
-- `tidyr` para converter dados para o formato “tidy”;
+Conhecemos $p$ nesse experimento porque a composição completa da urna é conhecida. Essa informação será utilizada como referência para estudar o que ocorre quando apenas uma amostra da urna é observada.
 
-- `readr` para importar dados de planilhas para o `R`,
+Se uma amostra de tamanho $n$ contém $R$ bolas vermelhas, sua proporção de bolas vermelhas é
 
-além dos pacotes mais avançados `purrr`, `tibble`, `stringr` e `forcats`.
+$$
+\widehat p
+=
+\frac{R}{n}.
+$$
 
-```{r}
-#| message: false
-#| warning: false
+Neste momento, $\widehat p$ será utilizado apenas como uma quantidade calculada a partir da amostra. Seu papel formal como estatística, estimador e estimativa será desenvolvido depois do experimento.
 
+### Mecanismo de seleção da amostra {.unnumbered}
 
-library(tidyverse)
-library(moderndive)
-```
+A possibilidade de generalizar resultados da amostra para a população depende do mecanismo utilizado para selecionar as unidades.
 
-## Experimento em Sala de Aula
+Uma seleção que favoreça sistematicamente determinados elementos pode produzir **viés de seleção**. Por exemplo, se a retirada das bolas favorecer determinadas regiões da urna, as probabilidades de inclusão podem deixar de corresponder ao plano amostral pretendido.
 
-Iremos realizar o seguinte experimento em sala de aula:
+Na **amostragem aleatória**, a seleção das unidades é realizada segundo um mecanismo probabilístico conhecido. Em uma amostragem aleatória simples sem reposição, todas as amostras de tamanho $n$ possuem a mesma probabilidade de seleção.
 
-1.  Organização
+A aleatorização não garante que cada amostra observada reproduza exatamente a composição da população. Amostras diferentes apresentam variação natural. Sua função é estabelecer um mecanismo de seleção que permita caracterizar probabilisticamente essa variabilidade e sustentar a inferência para a população considerada.
 
-- A turma é dividida em grupos independentes (por exemplo, 20 grupos).
+## Experimento em sala de aula
 
-- Cada grupo realiza uma única amostragem.
+O objetivo do experimento é observar como amostras diferentes, obtidas da mesma população pelo mesmo procedimento, podem produzir valores diferentes para a proporção amostral.
 
-2.  Protocolo experimental (por grupo)
+A população é a urna com $N=2400$ bolas, das quais 900 são vermelhas. Portanto, a proporção populacional conhecida é $p=0{,}375$.
 
-- A urna é misturada cuidadosamente, garantindo aleatoriedade.
+Cada grupo realizará uma amostragem seguindo o mesmo protocolo:
 
-- O grupo retira uma amostra de tamanho fixo $n$ (por exemplo, $n=50$) sem reposição durante a retirada.
+1. misturar cuidadosamente as bolas da urna;
+2. retirar, com uma pá de amostragem com 50 espaços, $n=50$ bolas, sem reposição durante a formação da amostra;
+3. contar o número $R$ de bolas vermelhas;
+4. calcular a proporção amostral $\widehat p=R/50$;
+5. registrar os valores de $R$ e $\widehat p$;
+6. devolver todas as bolas à urna antes da amostragem do grupo seguinte e misturá-las novamente.
 
-- As bolas retiradas são observadas e classificadas por cor.
+Cada grupo realiza uma amostragem separada. Os resultados dos grupos serão reunidos somente depois que todas as amostras tiverem sido obtidas.
 
-- O grupo registra:
+Ao final, teremos valores
 
-  - $R:$ o número de bolas vermelhas na amostra;
-  - $\hat{p} = R/n:$ proporção amostral de bolas vermelhas.
+$$
+\widehat p_1,\widehat p_2,\ldots,\widehat p_m,
+$$
 
-- Todas as bolas são devolvidas à urna.
+em que $m$ corresponde ao número de grupos.
 
-- A urna é novamente misturada antes da próxima amostragem.
+Essas proporções serão organizadas em uma tabela e representadas por um histograma. A figura resultante mostra a **distribuição empírica das estimativas obtidas pelos grupos** e permite observar a variabilidade produzida pela repetição da amostragem.
 
-**Cada grupo deve atuar de forma independente, sem acesso aos resultados dos demais.**
+Mesmo que todos os grupos utilizem a mesma população, o mesmo tamanho amostral e o mesmo procedimento, os valores de $\widehat p$ não precisam coincidir. Essa variação decorre da seleção de conjuntos diferentes de bolas em cada amostra.
 
-3.  Coleta e organização dos dados
-
-- Cada grupo fornece sua estimativa de $\hat{p}$.
-
-- O conjunto de estimativas é reunido em uma tabela ou planilha.
-
-- A proporções são representadas graficamente por meio de um histograma.
-
-**Esse histograma representa a distribuição amostral da proporção para uma tamanho de amostra fixo** $n$.
+A distribuição amostral de $\widehat p$ será definida formalmente no capítulo **Distribuições Amostrais**. O experimento fornece uma primeira representação empírica desse conceito.
 
 ### Verificação de aprendizagem {.unnumbered}
 
-1.  Por que foi importante misturar a tigela antes de retirarmos as bolas?
-
-2.  Por que os 20 grupos de amigos não obtiveram todos o mesmo número de bolas vermelhas entre as 50 retiradas e, consequentemente, proporções diferentes de bolas vermelhas?
-
-## Experimento Virtual
-
-No pacote `moderndive` existe um *data frame* chamado `bowl`. As linhas de `bowl` correspondem exatamente ao conteúdo da urna real apresentada em sala de aula.
-
-```{r}
-bowl
-```
-
-Observe que `bowl` possui 2400 linhas, o que nos indica que a urna contém 2400 bolas de mesmo tamanho. A primeira variável, `ball_ID`, é usada como uma variável de identificação, conforme discutido em sala de aula, nenhuma das bolas da urna real possui números marcados. A segunda variável, `color`, indica se uma determinada bola virtual é **vermelha** ou **branca**. Visualize o conteúdo de `bowl` no **visualizador de dados do RStudio** e percorra as linhas para se convencer de que `bowl` é, de fato, um **análogo virtual** da urna real apresentada em sala.
-
-Agora precisamos de um **análogo virtual da pá** para gerar **amostras virtuais de 50 bolas**. Para isso, vamos utilizar a função `rep_sample_n()`, incluída no pacote `moderndive`. Essa função permite realizar **amostragens com repetição** de tamanho $n$.
-
-```{r}
-set.seed(2026) #fixando semente
-pa_virtual <- bowl %>%
-rep_sample_n(size = 50)
-
-pa_virtual
-```
-
-A variável `ball_ID` identifica quais das 2400 bolas do objeto `bowl` foram incluídas na nossa amostra de 50 bolas, enquanto `color` indica a cor de cada bola. No entanto, o que indica a variável `replicate`?
-
-No caso de `pa_virtual`, a variável `replicate` é igual a 1 em todas as 50 linhas. Isso nos informa que essas 50 linhas correspondem à nossa primeira amostra. Veremos em breve que, quando realizarmos 20 amostragens virtuais, a variável `replicate` assumirá valores entre 1 e 20.
-
-Vamos agora calcular a **proporção de bolas vermelhas** em nossa amostra virtual utilizando os verbos de manipulação de dados do `dplyr`. Primeiro, para cada uma das 50 bolas amostradas, vamos identificar se ela é vermelha ou não, utilizando um teste de igualdade com `==`. Em seguida, criaremos uma nova variável booleana `is_red` usando a função `mutate()`:
-
-```{r}
-pa_virtual <- pa_virtual %>%
-mutate(is_red = (color == "red"))
-
-pa_virtual
-```
-
-Observe que, para cada linha em que `color == "red"`, é retornado o valor lógico (booleano) `TRUE`, e para cada linha em que `color` não é igual a `"red"`, é retornado o valor lógico `FALSE`.
-
-Em seguida, vamos calcular o número de bolas vermelhas, dentre as 50, utilizando a função `summarize()`. Note que `summarize()` recebe um *data frame* com várias linhas e retorna um *data frame* com **uma única linha**, contendo estatísticas-resumo, como `mean()` ou `median()`. Neste caso, utilizaremos a função `sum()`:
-
-```{r}
-n_red <- pa_virtual %>%
-mutate(is_red = (color == "red")) %>%
-summarize(num_red = sum(is_red))
-
-n_red
-```
-
-Por que isso funciona? Porque o `R` trata `TRUE` como o número 1 e `FALSE` como o número 0. Assim, somar valores `TRUE` e `FALSE` é equivalente a somar 1’s e 0’s. Ao final, essa operação conta o número de bolas para as quais a variável color é igual a "red". No nosso caso, `r n_red[2]` das 50 bolas eram vermelhas. No entanto, você pode ter obtido um número diferente de bolas vermelhas devido ao caráter aleatório da amostragem virtual.
-
-Por fim, vamos calcular a proporção das 50 bolas amostradas que são vermelhas, dividindo `num_red` por 50:
-
-```{r}
-n_prop_red <- pa_virtual %>%
-mutate(is_red = color == "red") %>%
-summarize(num_red = sum(is_red)) %>%
-mutate(prop_red = num_red / 50)
-
-n_prop_red
-```
-
-Em outras palavras, `r n_prop_red$num_red` das bolas dessa amostra virtual eram vermelhas. Vamos tornar esse código um pouco mais **compacto e conciso**, combinando as etapas de `mutate()` e `summarize()` da seguinte forma:
-
-```{r}
-
-n_prop_red <- pa_virtual %>%
-summarize(num_red = sum(color == "red")) %>%
-mutate(prop_red = num_red / 50)
-
-n_prop_red
-```
-
-Ótimo! `r n_prop_red$num_red` das 50 bolas da pá virtual eram vermelhas! Assim, com base nessa amostra específica de 50 bolas, nossa estimativa da proporção de bolas vermelhas na urna é `r n_prop_red$prop_red`. Porém, lembre-se da atividade de amostragem realizada em sala de aula: se repetirmos essa amostragem, não necessariamente obteremos novamente o valor de `r n_prop_red$prop_red`. É provável que haja alguma variação. De fato, nossos 20 grupos de amigos calcularam 20 proporções desse tipo, cuja distribuição visualizamos em sala de aula, e vimos que essas estimativas variaram.
-
-Vamos agora realizar o **análogo virtual** de ter 20 grupos de estudantes usando a pá de amostragem!
-
-Lembre-se de que, no exercício de amostragem realizada em sala de aula, tivemos **20 grupos de estudantes**, cada um utilizando a pá, o que resultou em **20 amostras de tamanho 50**. Em seguida, usamos essas 20 amostras para calcular **20 proporções**. Em outras palavras, **repetimos/replicamos o uso da pá 20 vezes**.
-
-Podemos realizar essa amostragem repetida/replicada de forma virtual utilizando novamente a função `rep_sample_n()`, mas agora adicionando o argumento `reps = 20`. Isso indica ao `R` que desejamos repetir a amostragem 20 vezes.
-
-Vamos salvar esses resultados em um `data frame` chamado `virtual_samples`. Embora apresentemos a seguir uma prévia das primeiras 10 linhas de `virtual_samples`, recomendamos fortemente que você explore todo o seu conteúdo utilizando o visualizador de planilhas do `RStudio`, executando o comando `View(virtual_samples)`.
-
-```{r}
-set.seed(2026)
-amostra_virtual <- bowl %>%
-rep_sample_n(size = 50, reps = 20)
-
-amostra_virtual
-```
-
-Observe, no visualizador de planilhas, que as primeiras 50 linhas da variável `replicate` são iguais a 1, enquanto as 50 linhas seguintes de `replicate` são iguais a 2. Isso nos indica que as primeiras 50 linhas correspondem à primeira amostra de 50 bolas, enquanto as próximas 50 linhas correspondem à segunda amostra de 50 bolas. Esse padrão se repete para todas as 20 replicações (`reps = 20`) e, portanto, o `data frame` `amostra_virtual` possui (20 $\times$ 50 = 1000) linhas.
-
-Vamos agora usar `amostra_virtual` para calcular as 20 proporções de bolas vermelhas resultantes. Utilizaremos os mesmos verbos do `dplyr` de antes, mas agora com um `group_by()` adicional na variável `replicate`. Ao definir previamente a variável de agrupamento como *metadado* antes de aplicar `summarize()`, obteremos 20 proporções diferentes de bolas vermelhas. A seguir, exibimos uma prévia das primeiras 10 das 20 linhas resultantes:
-
-```{r}
-virtual_prop_red <- amostra_virtual %>%
-group_by(replicate) %>%
-summarize(red = sum(color == "red")) %>%
-mutate(prop_red = red / 50)
-
-virtual_prop_red
-```
-
-Assim como ocorreu com as 20 amostras coletadas em sala de aula, há variação nas 20 proporções de bolas vermelhas obtidas virtualmente. Vamos visualizar essa variação por meio de um histograma. Note que também adicionamos os argumentos `binwidth = 0.05` e `boundary = 0.4`.
-
-Lembre-se de que definir `boundary = 0.4` garante um esquema de classes em que um dos limites dos intervalos esteja em 0,4. Como o `binwidth = 0.05` também foi especificado, isso criará intervalos com limites em **0,30, 0,35, 0,40, 0,45, 0,50**, entre outros.
-
-```{r}
-ggplot(virtual_prop_red, aes(x = prop_red)) +
-geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
-labs(x = "Proporção de bolas vermelhas", y = "Frequência",
-title = "Distribuição das proporções") 
-```
-
-Observe que, ocasionalmente, obtivemos proporções de bolas vermelhas inferiores a 30%. Por outro lado, em alguns casos, obtivemos proporções superiores a 50%. No entanto, as proporções que ocorreram com maior frequência ficaram entre 35% e 40% (em **5 das 20 amostras**). Por que temos essas diferenças nas proporções de bolas vermelhas? **Por causa da variação amostral**.
-
-### Verificação de aprendizagem {.unnumbered}
-
-1.  Por que não foi possível estudar os efeitos da variação amostral quando utilizamos a pá virtual apenas uma vez? Por que foi necessário coletar **mais de uma amostra virtual** (no nosso caso, **20 amostras virtuais**)?
-
-### Lista Semanal Obrigatória {.unnumbered}
-
-1.  Agora suponha que queiramos estudar os efeitos da variação amostral não para 20 amostras, mas para um número maior, digamos 1000 amostras. Vamos novamente utilizar a função `rep_sample_n()`, com o tamanho da amostra definido como 50, mas agora com o número de repetições `reps` definido como 1000.
-
-2.  Temos 1000 réplicas de `prop_red`, a proporção de bolas vermelhas em amostras de 50 bolas. Utilizando o mesmo código de antes, vamos agora visualizar a distribuição dessas 1000 réplicas de `prop_red` por meio de um histograma.
-
-3.  Observando o histograma produzido no item 2), você diria que amostrar 50 bolas em que 30% são vermelhas é provável ou improvável? E quanto a amostrar 50 bolas em que 10% são vermelhas?
-
-## Conceitos Importantes
-
-Primeiramente, uma **população** é um conjunto de indivíduos ou observações de interesse. Isso também é comumente denominado **população de estudo**. Denotamos matematicamente o tamanho da população utilizando a letra maiúscula $N$.
-
-Um **parâmetro populacional** é algum resumo numérico sobre a população que é desconhecido, mas que você gostaria de saber. Por exemplo, quando essa quantidade é uma média, como a altura média de todos os canadenses, o parâmetro populacional de interesse é a média populacional.
-
-Um **censo** é uma enumeração exaustiva ou contagem de todos os $N$ indivíduos da população. Fazemos isso para calcular o valor exato do parâmetro populacional. Vale notar que, à medida que o número $N$ de indivíduos em nossa população aumenta, a realização de um censo se torna mais cara (em termos de tempo, energia e dinheiro).
-
-Na nossa atividade de amostragem, a **população (de estudo)** é o conjunto de $N = 2400$ bolas vermelhas e brancas, todas de mesmo tamanho, contidas na urna. Lembre-se de que também representamos a urna "virtualmente" no data frame `bowl`.
-
-```{r}
-bowl
-```
-
-O **parâmetro populacional** aqui é a proporção de bolas na urna que são vermelhas. Sempre que estamos interessados em uma proporção de algum valor em uma população, o parâmetro populacional tem um nome específico: a proporção populacional. Comumente denotamos as proporções populacionais com a letra $p$.
-
-Para calcular essa proporção populacional $p$ de forma exata, precisamos primeiro realizar um censo, analisando todos os $N = 2400$ e contando o número de bolas vermelhas. Em seguida, dividimos essa contagem por 2400 para obter a proporção de vermelhas.
-
-Você pode estar se perguntando agora: "Espere. Eu entendo que realizar um censo na urna real levaria muito tempo. Mas não podemos realizar um censo "virtual" usando a urna virtual?" Você está absolutamente correto! De fato, quando os autores do pacote `moderndive` criaram o data frame `bowl`, eles fizeram com que seu conteúdo correspondesse ao da urna real não fazendo um censo, mas lendo o conteúdo escrito na caixa em que a urna veio! Vamos realizar este censo "virtual" usando os mesmos códigos do pacote `dplyr` que você usou anteriormente para contar o número de bolas que são vermelhas:
-
-```{r}
-bowl %>%   
-  summarize(red = sum(color == "red")) 
-```
-
-Como 900 das 2400 são vermelhas, a proporção é 900/2400 = 0,375 = 37,5%. Portanto, sabemos o valor do parâmetro populacional: em nosso caso, a proporção populacional $p$ é igual a 0,375.
-
-Neste ponto, você pode estar se perguntando: *"Se tínhamos uma maneira de saber que a proporção de bolas vermelhas é de 37,5%, então por que fizemos alguma amostragem?"* Ótima pergunta! Normalmente, você não faria amostragem alguma! No entanto, as atividades de amostragem que fizemos neste capítulo são meras simulações de como a amostragem é feita na vida real! Realizamos essas simulações a fim de estudar:
-
-1.  O efeito da variação amostral (ou variabilidade de amostragem) em nossas estimativas.
-
-2.  O efeito do tamanho da amostra na variação amostral.
-
-Como veremos adiante em pesquisas de opinião, na amostragem da vida real não apenas o tamanho da população $N$ será muito grande, tornando um censo caro, mas, às vezes, nem sequer saberemos qual é o tamanho da população! Por enquanto, no entanto, prosseguiremos com nosso próximo conjunto de termos e notação.
-
-**Amostragem** é o ato de coletar uma amostra da população, o que geralmente fazemos apenas quando não podemos realizar um censo. Denotamos matematicamente o tamanho da amostra usando o $n$ minúsculo, em oposição ao $N$ maiúsculo, que denota o tamanho da população. Normalmente, o tamanho da amostra $n$ é muito menor que o tamanho da população $N$. Assim, a amostragem é uma alternativa muito mais barata do que a realização de um censo.
-
-Uma **estimativa pontual**, também conhecida como estatística (ou estatística amostral), é uma estatística calculada a partir de uma amostra que estima o parâmetro populacional desconhecido.
-
-Então, em sala de aula, realizamos a amostragem usando uma pá com 50 espaços para extrair amostras de tamanho $n = 50$. Para realizar o análogo virtual desta amostragem, lembre-se de que usamos a função `rep_sample_n()` da seguinte maneira:
-
-```{r}
-set.seed(2026)
-pa_virtual <- bowl %>%   
-  rep_sample_n(size = 50)
-```
-
-Usando a amostra de 50 bolas contidas em `pa_virtual`, geramos uma estimativa da proporção de bolas na urna que são vermelhas, `prop_red`.
-
-```{r}
-pa_virtual %>%   
-  summarize(num_red = sum(color == "red")) %>%   
-  mutate(prop_red = num_red / 50)
-```
-
-Então, em nosso caso, o valor de `prop_red` é a estimativa pontual da proporção populacional $p$, pois ela estima o valor desta última. Além disso, essa estimativa pontual tem um nome específico quando se considera proporções: **a proporção amostral**. Ela é denotada usando $\hat{p}$, porque é uma convenção comum em estatística usar um símbolo de "chapéu" para denotar estimativas pontuais.
-
-Iremos observa ao longo desta disciplina que a maneira como você coleta as amostras influencia diretamente a qualidade delas.
-
-- Diz-se que uma amostra é **representativa** se ela "se parecer" aproximadamente com a população. Em outras palavras, se as características da amostra forem uma "boa" representação das características da população.
-
-- Dizemos que uma amostra é **generalizável** se quaisquer resultados baseados na amostra puderem ser generalizados para a população. Em outras palavras, se pudermos fazer "bons" palpites sobre a população usando a amostra.
-
-- Dizemos que um procedimento de amostragem é **viesado** (ou tendencioso) se certos indivíduos em uma população tiverem uma chance maior de serem incluídos em uma amostra do que outros. Dizemos que um procedimento de amostragem é **não viesado** (ou imparcial) se cada indivíduo em uma população tiver chances iguais de ser amostrado.
-
-Dizemos que uma amostra de $n$ bolas extraídas usando nossa pá é **representativa** da população se o seu conteúdo "se assemelhar aproximadamente" ao conteúdo da urna. Se sim, então a proporção de bolas vermelhas da pá pode ser **generalizada** para a proporção das $N = 2400$ bolas da urna que são vermelhas. Ou expresso de forma diferente, $\hat{p}$ é um "bom palpite" de $p$. Agora digamos que trapaceamos ao usar a pá e removemos um número de bolas brancas em favor de bolas vermelhas. Então, essa amostra seria viesada em relação às bolas vermelhas e, portanto, a amostra não seria mais representativa da urna.
-
-Uma maneira de garantir que uma amostra seja não viesada e representativa da população é usar a **amostragem aleatória**. Temos que **Inferência** é o ato de "dar um palpite" sobre algo desconhecido. Portanto, **Inferência estatística** é o ato de fazer um palpite sobre uma população usando uma amostra.
-
-Em nosso caso, como a função `rep_sample_n()` usa o gerador de números aleatórios do seu computador, estávamos, de fato, realizando "amostragem aleatória".
+1. Explique a função da mistura da urna antes de cada amostragem.
+2. Explique por que diferentes grupos podem obter valores distintos de $R$ e de $\widehat p$, mesmo utilizando o mesmo tamanho amostral.
+3. Compare os valores de $\widehat p$ obtidos pelos grupos com a proporção populacional $p=0{,}375$.
+4. A partir dos resultados da turma, descreva o que permaneceu fixo e o que variou entre as diferentes amostras.
 
 ## Estatísticas, estimadores e estimativas
 
-A inferência estatística começa pela distinção entre o mecanismo probabilístico postulado para os dados e a realização efetivamente observada. Antes da coleta, representamos a amostra por um vetor aleatório
+Os resultados do experimento podem agora ser formalizados distinguindo a amostra antes da observação dos valores e a amostra efetivamente observada.
+
+Antes da coleta, representamos a amostra por um vetor aleatório
 
 $$\mathbf{X}=(X_1,\ldots,X_n).$$
 
@@ -330,9 +160,11 @@ $$\mathbf{x}=(x_1,\ldots,x_n).$$
 A convenção de usar letras maiúsculas para variáveis aleatórias e minúsculas para suas realizações permite separar o procedimento inferencial, definido antes de observar os dados, do resultado numérico obtido em uma amostra particular [@cox2006principles, seção 1.1; @ramachandran2021r, seção 5.2, pp. 180--182].
 
 ::: {.callout-important title="Distinção fundamental"}
-Uma **estatística** é uma função da amostra que não depende de parâmetros desconhecidos:
+Uma **estatística** é uma função das variáveis aleatórias que compõem a amostra e que não depende de parâmetros desconhecidos:
 
-$$T=g(X_1,\ldots,X_n).$$
+$$
+T=g(X_1,\ldots,X_n).
+$$
 
 Quando uma estatística é utilizada para estimar uma quantidade populacional $\tau(\theta)$, ela recebe o nome de **estimador**. Antes da observação dos dados, o estimador $\widehat\tau=T(\mathbf X)$ é uma variável aleatória.
 
@@ -353,9 +185,13 @@ Assim, o estimador é a regra inferencial; a estimativa é o número produzido p
 
 O papel inferencial depende do objetivo. Por exemplo, $\overline X$ é sempre uma estatística, mas somente é um estimador de $\mu$ quando a média populacional é a quantidade de interesse. A mesma estatística pode ainda ser empregada para estimar outras funções do parâmetro, dependendo do modelo adotado [@chihara2022, seção 1.6 e definição 4.2; @ramachandran2021r, seção 5.2].
 
-## Exemplo-guia: experimento da urna
+## Exemplo-guia: modelo Bernoulli para a urna
 
-Considere inicialmente um experimento idealizado no qual cada retirada é realizada **com reposição**, ou de maneira equivalente, no qual os resultados sucessivos podem ser tratados como independentes. Defina
+Considere agora uma versão idealizada do experimento em que cada retirada é realizada **com reposição** e todas as bolas possuem a mesma probabilidade de seleção em cada retirada. Nesse modelo, as retiradas são independentes e a probabilidade de selecionar uma bola vermelha permanece constante.
+
+Na urna utilizada em sala de aula, a proporção $p=0{,}375$ é conhecida porque sua composição foi previamente estabelecida. Para introduzir o problema inferencial, consideraremos agora $p$ como desconhecido e utilizaremos os resultados das retiradas para obter informação sobre essa proporção.
+
+Defina
 
 $$X_i=
 \begin{cases}
@@ -365,7 +201,7 @@ $$X_i=
 
 Se a probabilidade de uma bola vermelha em cada retirada é $p$, então
 
-$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Bernoulli}(p).$$
+$$X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Bernoulli}(p).$$
 
 O total de bolas vermelhas e a proporção correspondente são
 
@@ -397,12 +233,12 @@ Essa divisão evita repetir aqui as derivações probabilísticas que constituem
 
 Diferentes estimadores podem ser propostos para o mesmo parâmetro. A escolha entre eles exige critérios que descrevam tanto o desempenho em amostras finitas quanto o comportamento quando o tamanho amostral aumenta [@chihara2022, seção 6.3; @ramachandran2021r, seção 5.2].
 
-| Critério | Pergunta orientadora |
+| Critério | Aspecto avaliado |
 |:-----------------------------------|:-----------------------------------|
-| viés | O estimador está centrado, em média, no parâmetro de interesse? |
-| variância | Quanto o estimador varia entre amostras? |
-| erro quadrático médio | Qual é o efeito conjunto do viés e da variabilidade? |
-| consistência | O estimador se aproxima do parâmetro quando $n$ aumenta? |
+| viés | diferença entre o valor esperado do estimador e a quantidade estimada |
+| variância | variabilidade do estimador entre diferentes amostras |
+| erro quadrático médio | efeito conjunto do viés e da variabilidade |
+| consistência | aproximação do estimador ao parâmetro quando o tamanho amostral aumenta |
 
 Para um estimador $\widehat\tau$ de $\tau(\theta)$, o viés e o erro quadrático médio são
 
@@ -450,7 +286,7 @@ Na distribuição $f_{\mathbf X}(\mathbf x;\theta)$, fixa-se $\theta$ e estudam-
 Consequentemente, a verossimilhança não é, em geral, uma distribuição de probabilidade para $\theta$. Ela expressa **compatibilidade relativa** entre valores paramétricos e os dados no modelo adotado, não a probabilidade de o parâmetro assumir determinado valor [@cox2006principles, seção 2.1].
 :::
 
-### Verossimilhança no experimento da urna {.unnumbered}
+### Verossimilhança no modelo Bernoulli da urna {.unnumbered}
 
 No modelo de retiradas independentes,
 
@@ -500,13 +336,219 @@ No modelo de Bernoulli, $\widehat p=R/n$ é simultaneamente:
 Os três papéis são conceitualmente distintos, embora sejam desempenhados pela mesma expressão matemática.
 :::
 
+A máxima verossimilhança será desenvolvida como método geral de estimação no capítulo **Métodos de Estimação Pontual**. A ideia de suficiência, antecipada pela redução da sequência observada ao total $R$, será formalizada no capítulo dedicado à avaliação e à redução de dados.
+
 ### Verificação de aprendizagem {.unnumbered}
 
 1.  Explique a diferença entre o estimador $\widehat p$ e a estimativa obtida depois de observar os dados.
 2.  Por que $R=\sum_iX_i$ é uma estatística? Em que situação ele poderia ser tratado como estimador?
-3.  Qual hipótese do experimento da urna permite escrever $X_1,\ldots,X_n$ como uma amostra i.i.d. de Bernoulli?
+3. Que modificação no mecanismo de amostragem da urna permite representar $X_1,\ldots,X_n$ como variáveis i.i.d. de Bernoulli?
 4.  Por que a forma $\prod_i f(x_i;\theta)$ não é válida para qualquer plano amostral?
 5.  Na função $L(\theta;\mathbf x)$, quais elementos permanecem fixos e quais variam?
 6.  Por que as verossimilhanças baseadas na sequência de retiradas e apenas no total $R$ conduzem ao mesmo estimador de $p$?
+
+
+## Exploração computacional do experimento da urna
+
+O experimento realizado em sala de aula pode ser reproduzido computacionalmente. O objetivo é repetir o mesmo mecanismo de amostragem um número maior de vezes e examinar com mais detalhes a variabilidade da proporção amostral.
+
+Esta seção pode ser utilizada imediatamente após o experimento físico ou depois do desenvolvimento conceitual das seções anteriores.
+
+
+### Preparação do ambiente computacional {.unnumbered}
+
+A exploração utiliza os pacotes `tidyverse` [@tidyverse] e `moderndive` [@moderndive]. O primeiro fornece ferramentas para manipulação e visualização de dados, enquanto o segundo contém a população virtual utilizada no experimento e a função de amostragem repetida.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(moderndive)
+```
+
+
+### População virtual e uma amostra {.unnumbered}
+
+O pacote `moderndive` contém o *data frame* `bowl`, que representa virtualmente a composição da urna utilizada no experimento.
+
+```{r}
+bowl
+```
+
+Cada linha corresponde a uma bola. A variável `ball_ID` identifica a unidade e `color` informa sua cor.
+
+Podemos obter a composição completa da população virtual por meio de um censo:
+
+```{r}
+censo_virtual <- bowl %>%
+  summarize(
+    N = n(),
+    N_red = sum(color == "red"),
+    p = N_red / N
+  )
+
+censo_virtual
+```
+
+O resultado fornece $N=2400$ bolas, das quais 900 são vermelhas. Portanto,
+
+$$
+p
+=
+\frac{900}{2400}
+=
+0{,}375.
+$$
+
+Como essa composição é conhecida, o experimento permite comparar as estimativas obtidas nas amostras com o valor populacional conhecido $p=0{,}375$.
+
+Para reproduzir computacionalmente uma amostra de $n=50$ bolas sem reposição, utilizamos `rep_sample_n()`:
+
+```{r}
+set.seed(2026)
+
+pa_virtual <- bowl %>%
+  rep_sample_n(
+    size = 50,
+    replace = FALSE
+  )
+
+pa_virtual
+```
+
+A função `set.seed()` fixa o estado inicial do gerador de números pseudoaleatórios e permite reproduzir a mesma amostra ao executar novamente o código.
+
+A variável `replicate` identifica a repetição da amostragem. Como foi solicitada uma única amostra, seu valor é igual a 1 em todas as linhas.
+
+Podemos identificar cada bola vermelha por meio da expressão lógica `color == "red"`:
+
+```{r}
+pa_virtual <- pa_virtual %>%
+  mutate(
+    is_red = color == "red"
+  )
+
+pa_virtual
+```
+
+O R representa `TRUE` e `FALSE` como valores lógicos. Em operações de soma, `TRUE` é tratado como 1 e `FALSE` como 0. Dessa forma, a soma da variável `is_red` fornece diretamente o número de bolas vermelhas da amostra.
+
+```{r}
+resumo_amostra <- pa_virtual %>%
+  summarize(
+    R = sum(is_red),
+    p_hat = R / n()
+  )
+
+resumo_amostra
+```
+
+Nesta amostra, foram observadas `r resumo_amostra$R` bolas vermelhas. A proporção amostral foi `r format(resumo_amostra$p_hat, decimal.mark = ",", nsmall = 2)`.
+
+Esse valor corresponde a uma realização de
+
+$$
+\widehat p
+=
+\frac{R}{n}.
+$$
+
+Uma nova amostra de 50 bolas pode produzir outro valor de $\widehat p$.
+
+
+### Repetição da amostragem e variabilidade {.unnumbered}
+
+Para examinar a variação entre amostras, repetiremos o procedimento 20 vezes. Cada repetição utiliza uma amostra de tamanho $n=50$ sem reposição e começa novamente a partir da população completa.
+
+```{r}
+set.seed(2026)
+
+amostra_virtual <- bowl %>%
+  rep_sample_n(
+    size = 50,
+    reps = 20,
+    replace = FALSE
+  )
+
+amostra_virtual
+```
+
+O objeto possui $20\times50=1000$ linhas. A variável `replicate` identifica a amostra à qual cada linha pertence.
+
+As 20 proporções amostrais são obtidas agrupando os dados por repetição:
+
+```{r}
+virtual_prop_red <- amostra_virtual %>%
+  group_by(replicate) %>%
+  summarize(
+    R = sum(color == "red"),
+    p_hat = R / n(),
+    .groups = "drop"
+  )
+
+virtual_prop_red
+```
+
+Cada linha corresponde agora a uma amostra e contém seu número de bolas vermelhas e sua proporção amostral.
+
+A distribuição empírica desses 20 valores pode ser visualizada por meio de um histograma:
+
+```{r}
+ggplot(
+  virtual_prop_red,
+  aes(x = p_hat)
+) +
+  geom_histogram(
+    binwidth = 0.05,
+    boundary = 0.40,
+    color = "white"
+  ) +
+  geom_vline(
+    xintercept = 0.375,
+    linetype = "dashed"
+  ) +
+  labs(
+    x = "Proporção de bolas vermelhas",
+    y = "Frequência",
+    title = "Distribuição empírica das proporções amostrais"
+  )
+```
+
+O argumento `binwidth = 0.05` estabelece classes de amplitude $0{,}05$, enquanto `boundary = 0.40` posiciona um dos limites de classe em $0{,}40$. Assim, o histograma utiliza limites como $0{,}30$, $0{,}35$, $0{,}40$, $0{,}45$ e $0{,}50$.
+
+O código utiliza ponto como separador decimal porque essa é a sintaxe do R; no texto matemático, os mesmos valores são escritos com vírgula.
+
+O histograma mostra que as proporções obtidas não são iguais entre as repetições. O valor populacional $p=0{,}375$ permanece fixo, enquanto $\widehat p$ varia de uma amostra para outra.
+
+Com apenas 20 repetições, o histograma apresenta uma distribuição empírica relativamente irregular. O aumento do número de repetições permite visualizar com maior clareza o comportamento da proporção amostral sob o mecanismo de amostragem considerado.
+
+
+### Verificação de aprendizagem {.unnumbered}
+
+1. Compare o valor de $p=0{,}375$ com os diferentes valores de $\widehat p$ obtidos nas 20 amostras.
+2. Identifique no código quais elementos permanecem fixos em todas as repetições e quais variam.
+3. Explique por que uma única amostra não permite visualizar a variabilidade amostral de $\widehat p$.
+4. Compare conceitualmente o experimento computacional com o experimento realizado em sala de aula.
+
+
+### Atividade computacional de consolidação {.unnumbered}
+
+1. Repita o experimento utilizando `rep_sample_n()` com `size = 50` e `reps = 1000`.
+
+2. Para cada uma das 1000 amostras, calcule $R$ e $\widehat p$.
+
+3. Construa um histograma das 1000 proporções amostrais e acrescente uma linha vertical indicando $p=0{,}375$.
+
+4. Compare esse histograma com o obtido a partir de apenas 20 amostras.
+
+5. Utilize as 1000 repetições para avaliar empiricamente a frequência com que $\widehat p\leq0{,}30$.
+
+6. Avalie também a frequência com que $\widehat p\leq0{,}20$ e compare os dois resultados.
+
+7. Escreva uma interpretação relacionando o resultado à variabilidade amostral.
+
+O experimento físico e sua reprodução computacional mostram que o parâmetro populacional permanece fixo, enquanto as estatísticas calculadas a partir das amostras variam. A inferência estatística utiliza essa variabilidade, descrita por um modelo probabilístico, para obter informação sobre quantidades desconhecidas. Os capítulos seguintes desenvolverão as distribuições das estatísticas, os critérios para avaliar estimadores e os métodos de estimação e quantificação da incerteza.
+
 
 ## Referências {.unnumbered}
