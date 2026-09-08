@@ -2,23 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>4&nbsp; Distribuições Amostrais</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -95,18 +89,19 @@ div.csl-indent {
 <link href="./unidade1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-4c6d65c679321d81af7ec8b61b1d5a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -136,7 +131,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -352,14 +347,18 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
         </div>
         </div>
-        <div class="sidebar-tools-collapse">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
-</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -454,7 +453,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#objetivos-do-capítulo" id="toc-objetivos-do-capítulo" class="nav-link" data-scroll-target="#objetivos-do-capítulo">Objetivos do capítulo</a></li>
   </ul></li>
-  <li><a href="#população-parâmetro-amostra-e-estatística" id="toc-população-parâmetro-amostra-e-estatística" class="nav-link" data-scroll-target="#população-parâmetro-amostra-e-estatística"><span class="header-section-number">4.2</span> População, parâmetro, amostra e estatística</a></li>
+  <li><a href="#amostra-e-estatística-recordação" id="toc-amostra-e-estatística-recordação" class="nav-link" data-scroll-target="#amostra-e-estatística-recordação"><span class="header-section-number">4.2</span> Amostra e estatística: recordação</a></li>
   <li><a href="#dois-referenciais-para-a-geração-da-amostra" id="toc-dois-referenciais-para-a-geração-da-amostra" class="nav-link" data-scroll-target="#dois-referenciais-para-a-geração-da-amostra"><span class="header-section-number">4.3</span> Dois referenciais para a geração da amostra</a>
   <ul class="collapse">
   <li><a href="#amostragem-no-modelo-i.i.d." id="toc-amostragem-no-modelo-i.i.d." class="nav-link" data-scroll-target="#amostragem-no-modelo-i.i.d."><span class="header-section-number">4.3.1</span> Amostragem no modelo i.i.d.</a></li>
@@ -462,7 +461,10 @@ window.Quarto = {
   </ul></li>
   <li><a href="#construção-de-uma-distribuição-amostral-por-enumeração" id="toc-construção-de-uma-distribuição-amostral-por-enumeração" class="nav-link" data-scroll-target="#construção-de-uma-distribuição-amostral-por-enumeração"><span class="header-section-number">4.4</span> Construção de uma distribuição amostral por enumeração</a></li>
   <li><a href="#somas-transformações-e-funções-geradoras-de-momentos" id="toc-somas-transformações-e-funções-geradoras-de-momentos" class="nav-link" data-scroll-target="#somas-transformações-e-funções-geradoras-de-momentos"><span class="header-section-number">4.5</span> Somas, transformações e funções geradoras de momentos</a></li>
-  <li><a href="#distribuição-amostral-da-média" id="toc-distribuição-amostral-da-média" class="nav-link" data-scroll-target="#distribuição-amostral-da-média"><span class="header-section-number">4.6</span> Distribuição amostral da média</a></li>
+  <li><a href="#distribuição-amostral-da-média" id="toc-distribuição-amostral-da-média" class="nav-link" data-scroll-target="#distribuição-amostral-da-média"><span class="header-section-number">4.6</span> Distribuição amostral da média</a>
+  <ul class="collapse">
+  <li><a href="#diferença-de-médias-de-duas-amostras-independentes" id="toc-diferença-de-médias-de-duas-amostras-independentes" class="nav-link" data-scroll-target="#diferença-de-médias-de-duas-amostras-independentes"><span class="header-section-number">4.6.1</span> Diferença de médias de duas amostras independentes</a></li>
+  </ul></li>
   <li><a href="#lei-dos-grandes-números" id="toc-lei-dos-grandes-números" class="nav-link" data-scroll-target="#lei-dos-grandes-números"><span class="header-section-number">4.7</span> Lei dos Grandes Números</a></li>
   <li><a href="#teorema-central-do-limite" id="toc-teorema-central-do-limite" class="nav-link" data-scroll-target="#teorema-central-do-limite"><span class="header-section-number">4.8</span> Teorema Central do Limite</a>
   <ul class="collapse">
@@ -568,15 +570,15 @@ t=g(x_1,\ldots,x_n)
 <li>distinguir o modelo iid da amostragem aleatória simples sem reposição em uma população finita;</li>
 <li>obter distribuições amostrais por enumeração, transformação, convolução e propriedades de distribuições conhecidas;</li>
 <li>utilizar propriedades de somas e funções geradoras de momentos para identificar distribuições amostrais exatas;</li>
-<li>determinar distribuições exatas e aproximações assintóticas para médias e proporções amostrais;</li>
+<li>determinar distribuições exatas e aproximações assintóticas para médias, diferenças de médias e proporções amostrais;</li>
 <li>relacionar a variância amostral às distribuições derivadas do modelo normal;</li>
 <li>obter distribuições de estatísticas de ordem;</li>
 <li>aproximar e visualizar distribuições amostrais por simulação.</li>
 </ol>
 </section>
 </section>
-<section id="população-parâmetro-amostra-e-estatística" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="população-parâmetro-amostra-e-estatística"><span class="header-section-number">4.2</span> População, parâmetro, amostra e estatística</h2>
+<section id="amostra-e-estatística-recordação" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="amostra-e-estatística-recordação"><span class="header-section-number">4.2</span> Amostra e estatística: recordação</h2>
 <div class="callout callout-style-default callout-important callout-titled" title="Definição — Modelo estatístico e parâmetro">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -631,7 +633,7 @@ S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})^2,\]</span></p>
 \quad\text{e}\quad
 X_{(1)}\leq\cdots\leq X_{(n)}.
 \]</span></p>
-<p>A definição e os exemplos seguem a apresentação usual de estatísticas como funções da amostra <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.1</a>; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, definições 4.1–4.2)</span>.</p>
+<p>A definição e os exemplos seguem a apresentação usual de estatísticas como funções da amostra <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, definições 4.1–4.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.1</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Observação — Estatística e estimador">
@@ -658,7 +660,7 @@ X_{(1)}\leq\cdots\leq X_{(n)}.
 =
 \prod_{i=1}^n f(x_i;\theta).
 \]</span></p>
-<p>Para dados observados <span class="math inline">\(\mathbf{x}\)</span>, a mesma expressão, considerada como função de <span class="math inline">\(\theta\)</span>, define a verossimilhança <span class="citation" data-cites="cox2006principles casella2002statistical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002, seç. 6.3</a>; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006, seç. 2.1</a>)</span>:</p>
+<p>Retomando a introdução à verossimilhança feita no capítulo anterior, para dados observados <span class="math inline">\(\mathbf{x}\)</span>, a mesma expressão, considerada como função de <span class="math inline">\(\theta\)</span>, define a verossimilhança <span class="citation" data-cites="cox2006principles casella2002statistical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002, seç. 6.3</a>; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006, seç. 2.1</a>)</span>:</p>
 <p><span class="math display">\[
 L(\theta;\mathbf{x}) =\prod_{i=1}^n f(x_i;\theta).
 \]</span></p>
@@ -1218,6 +1220,48 @@ Y\sim\operatorname{Binomial}(2,p).
 <p>O exemplo mostra diretamente como a distribuição binomial surge da soma de variáveis Bernoulli independentes.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Exemplo — Média de variáveis Poisson">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Exemplo — Média de variáveis Poisson
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Poisson}(\lambda),
+\]</span></p>
+<p>então</p>
+<p><span class="math display">\[
+Y=\sum_{i=1}^nX_i
+\sim
+\operatorname{Poisson}(n\lambda).
+\]</span></p>
+<p>Como</p>
+<p><span class="math display">\[
+\overline X=\frac Yn,
+\]</span></p>
+<p>a média amostral não possui, em geral, distribuição Poisson. Seus valores possíveis são <span class="math inline">\(0,1/n,2/n,\ldots\)</span>, e</p>
+<p><span class="math display">\[
+P\left(\overline X=\frac{k}{n}\right)
+=
+e^{-n\lambda}
+\frac{(n\lambda)^k}{k!},
+\qquad k=0,1,\ldots
+\]</span></p>
+<p>Além disso,</p>
+<p><span class="math display">\[
+E(\overline X)=\lambda,
+\qquad
+\operatorname{Var}(\overline X)=\frac{\lambda}{n}.
+\]</span></p>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled" title="Teorema — FGM da soma e da média">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1291,6 +1335,31 @@ t&lt;\frac{1}{\beta}.
 <p>A conclusão usa a FGM da distribuição gama e a regra de escala <span class="citation" data-cites="larsen2012 ramachandran2021r">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.12</a> e 4.6; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, cap. 3–4</a>)</span>.</p>
 </div>
 </div>
+<p>Como caso particular, considere uma distribuição exponencial parametrizada pela média,</p>
+<p><span class="math display">\[
+X_i
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exp}(\mu),
+\qquad
+E(X_i)=\mu.
+\]</span></p>
+<p>Como uma exponencial com média <span class="math inline">\(\mu\)</span> corresponde a uma distribuição gama com forma <span class="math inline">\(1\)</span> e escala <span class="math inline">\(\mu\)</span>,</p>
+<p><span class="math display">\[
+\sum_{i=1}^nX_i
+\sim
+\operatorname{Gama}(n,\mu)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\boxed{
+\overline X
+\sim
+\operatorname{Gama}
+\left(
+n,\frac{\mu}{n}
+\right).
+}
+\]</span></p>
 </section>
 <section id="distribuição-amostral-da-média" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="distribuição-amostral-da-média"><span class="header-section-number">4.6</span> Distribuição amostral da média</h2>
@@ -1331,7 +1400,7 @@ t&lt;\frac{1}{\beta}.
 <p>Se a população é normal, então, para todo <span class="math inline">\(n\geq 1\)</span>,</p>
 <p><span class="math display">\[\overline{X}\sim N\left(\mu,\frac{\sigma^2}{n}\right).
 \]</span></p>
-<p>Esses resultados são exatos no modelo normal e, para os dois primeiros momentos, válidos para qualquer população com variância finita <span class="citation" data-cites="ramachandran2021r kerns2010 chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, teorema 4.1.1; <a href="#ref-kerns2010" role="doc-biblioref">Kerns, 2010, seç. 8.2</a>; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, apêndices A.5–A.6)</span>.</p>
+<p>Esses resultados são exatos no modelo normal e, para os dois primeiros momentos, válidos para qualquer população com variância finita <span class="citation" data-cites="ramachandran2021r kerns2010 chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, teorema 4.1.1; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, apêndices A.5–A.6; <a href="#ref-kerns2010" role="doc-biblioref">Kerns, 2010, seç. 8.2</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Interpretação — Efeito do tamanho amostral">
@@ -1388,6 +1457,99 @@ t&lt;\frac{1}{\beta}.
 <p>Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança, pois <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma\)</span> foram tratados como conhecidos. A construção de intervalos de confiança será desenvolvida posteriormente.</p>
 </div>
 </div>
+<section id="diferença-de-médias-de-duas-amostras-independentes" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="diferença-de-médias-de-duas-amostras-independentes"><span class="header-section-number">4.6.1</span> Diferença de médias de duas amostras independentes</h3>
+<p>Considere duas amostras independentes,</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n,
+\qquad
+Y_1,\ldots,Y_m,
+\]</span></p>
+<p>tais que</p>
+<p><span class="math display">\[
+E(X_i)=\mu_1,
+\qquad
+\operatorname{Var}(X_i)=\sigma_1^2
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+E(Y_j)=\mu_2,
+\qquad
+\operatorname{Var}(Y_j)=\sigma_2^2.
+\]</span></p>
+<p>A diferença entre as médias amostrais é a estatística</p>
+<p><span class="math display">\[
+D=\overline X-\overline Y.
+\]</span></p>
+<p>Pela linearidade da esperança,</p>
+<p><span class="math display">\[
+E(D)
+=
+E(\overline X)-E(\overline Y)
+=
+\mu_1-\mu_2.
+\]</span></p>
+<p>Como as duas amostras são independentes,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(\overline X,\overline Y)=0,
+\]</span></p>
+<p>e, portanto,</p>
+<p><span class="math display">\[
+\operatorname{Var}(D)
+=
+\operatorname{Var}(\overline X)
++
+\operatorname{Var}(\overline Y),
+\]</span></p>
+<p>isto é,</p>
+<p><span class="math display">\[
+\boxed{
+\operatorname{Var}(\overline X-\overline Y)
+=
+\frac{\sigma_1^2}{n}
++
+\frac{\sigma_2^2}{m}.
+}
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Resultado — Duas populações normais">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Resultado — Duas populações normais
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu_1,\sigma_1^2)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y_1,\ldots,Y_m
+\overset{\mathrm{iid}}{\sim}
+N(\mu_2,\sigma_2^2),
+\]</span></p>
+<p>com as duas amostras independentes, então</p>
+<p><span class="math display">\[
+\boxed{
+\overline X-\overline Y
+\sim
+N\left(
+\mu_1-\mu_2,\,
+\frac{\sigma_1^2}{n}
++
+\frac{\sigma_2^2}{m}
+\right).
+}
+\]</span></p>
+<p>A normalidade é exata porque <span class="math inline">\(\overline X\)</span> e <span class="math inline">\(\overline Y\)</span> são variáveis normais independentes.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="lei-dos-grandes-números" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="lei-dos-grandes-números"><span class="header-section-number">4.7</span> Lei dos Grandes Números</h2>
@@ -1790,7 +1952,7 @@ E(S^2)=\sigma^2.
 \right].
 \]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Variância de $S^2$">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1799,7 +1961,7 @@ E(S^2)=\sigma^2.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Defina <span class="math inline">\(Y_i=X_i-\mu\)</span> e</p>
 <p><span class="math display">\[A=\sum_{i=1}^nY_i^2,
@@ -1851,7 +2013,7 @@ B=\frac{1}{n}\left(\sum_{i=1}^nY_i\right)^2.
 </section>
 <section id="distribuições-derivadas-do-modelo-normal" class="level2" data-number="4.11">
 <h2 data-number="4.11" class="anchored" data-anchor-id="distribuições-derivadas-do-modelo-normal"><span class="header-section-number">4.11</span> Distribuições derivadas do modelo normal</h2>
-<p>As distribuições <span class="math inline">\(\chi^2\)</span>, <span class="math inline">\(t\)</span> e <span class="math inline">\(F\)</span> surgem de transformações de variáveis normais e desempenham papel central na inferência exata para médias e variâncias <span class="citation" data-cites="rice2007mathematical larsen2012 ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 6</a>; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 7</a> e 9; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.2</a>)</span>.</p>
+<p>As distribuições <span class="math inline">\(\chi^2\)</span>, <span class="math inline">\(t\)</span> e <span class="math inline">\(F\)</span> surgem de transformações de variáveis normais e desempenham papel central na inferência exata para médias e variâncias <span class="citation" data-cites="rice2007mathematical larsen2012 ramachandran2021r">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 7</a> e 9; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.2</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 6</a>)</span>.</p>
 <section id="distribuição-qui-quadrado" class="level3" data-number="4.11.1">
 <h3 data-number="4.11.1" class="anchored" data-anchor-id="distribuição-qui-quadrado"><span class="header-section-number">4.11.1</span> Distribuição qui-quadrado</h3>
 <div class="callout callout-style-default callout-important callout-titled" title="Definição — Distribuição $\chi^2$">
@@ -2178,6 +2340,20 @@ P(X_1\leq x,\ldots,X_n\leq x)
 =
 n[F(x)]^{n-1}f(x).
 \]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Parâmetro no suporte">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Parâmetro no suporte
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As fórmulas para o mínimo e o máximo também se aplicam quando o suporte da distribuição depende de um parâmetro. Para obter a distribuição amostral, considera-se <span class="math inline">\(\theta\)</span> fixado e calcula-se a distribuição da estatística sob <span class="math inline">\(P_\theta\)</span>.</p>
+<p>Nesses modelos, deve-se observar cuidadosamente o conjunto de valores possíveis da estatística, pois seus limites também podem depender de <span class="math inline">\(\theta\)</span>.</p>
+</div>
+</div>
 </section>
 <section id="k-ésima-estatística-de-ordem" class="level3" data-number="4.12.2">
 <h3 data-number="4.12.2" class="anchored" data-anchor-id="k-ésima-estatística-de-ordem"><span class="header-section-number">4.12.2</span> <span class="math inline">\(k\)</span>-ésima estatística de ordem</h3>
@@ -2245,7 +2421,7 @@ x^{k-1}(1-x)^{n-k},
 \]</span></p>
 <p>Em particular,</p>
 <p><span class="math display">\[E[X_{(k)}]=\frac{k}{n+1}.\]</span></p>
-<p>O caso uniforme é uma aplicação direta da densidade geral e identifica uma distribuição beta <span class="citation" data-cites="larsen2012 hogg1978">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.10</a>; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, seção sobre estatísticas de ordem)</span>.</p>
+<p>O caso uniforme é uma aplicação direta da densidade geral e identifica uma distribuição beta <span class="citation" data-cites="larsen2012 hogg1978">(<a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, seção sobre estatísticas de ordem; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.10</a>)</span>.</p>
 </div>
 </div>
 </section>
@@ -2498,24 +2674,34 @@ Figura&nbsp;4.1: Distribuições simuladas da média de amostras exponenciais.
 <td><span class="math inline">\(N(0,1)\)</span>, assintoticamente</td>
 </tr>
 <tr class="even">
+<td>Poisson iid</td>
+<td><span class="math inline">\(n\overline X=\sum X_i\)</span></td>
+<td><span class="math inline">\(\operatorname{Poisson}(n\lambda)\)</span></td>
+</tr>
+<tr class="odd">
 <td>Bernoulli iid</td>
 <td><span class="math inline">\(Y=\sum X_i\)</span></td>
 <td><span class="math inline">\(\operatorname{Binomial}(n,p)\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Bernoulli iid</td>
 <td><span class="math inline">\(\widehat p=Y/n\)</span></td>
 <td><span class="math inline">\(E(\widehat p)=p\)</span>, <span class="math inline">\(\operatorname{Var}(\widehat p)=p(1-p)/n\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>População normal</td>
 <td><span class="math inline">\((n-1)S^2/\sigma^2\)</span></td>
 <td><span class="math inline">\(\chi^2_{n-1}\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>População normal</td>
 <td><span class="math inline">\((\overline{X}-\mu)/(S/\sqrt n)\)</span></td>
 <td><span class="math inline">\(t_{n-1}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Exponencial iid, parametrizada pela média</td>
+<td><span class="math inline">\(\overline X\)</span></td>
+<td><span class="math inline">\(\operatorname{Gama}(n,\mu/n)\)</span></td>
 </tr>
 <tr class="even">
 <td>Duas populações normais independentes</td>
@@ -2523,16 +2709,21 @@ Figura&nbsp;4.1: Distribuições simuladas da média de amostras exponenciais.
 <td><span class="math inline">\(F_{n_1-1,n_2-1}\)</span></td>
 </tr>
 <tr class="odd">
+<td>Duas populações normais independentes</td>
+<td><span class="math inline">\(\overline X-\overline Y\)</span></td>
+<td><span class="math inline">\(N\left(\mu_1-\mu_2,\sigma_1^2/n+\sigma_2^2/m\right)\)</span></td>
+</tr>
+<tr class="even">
 <td>Amostra iid de uma distribuição contínua</td>
 <td><span class="math inline">\(X_{(k)}\)</span></td>
 <td>densidade da <span class="math inline">\(k\)</span>-ésima estatística de ordem</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>População finita, AAS sem reposição</td>
 <td><span class="math inline">\(\overline X\)</span></td>
 <td><span class="math inline">\(E(\overline X)=\mu_N\)</span>, <span class="math inline">\(\operatorname{Var}(\overline X)=\dfrac{\sigma_N^2}{n}\dfrac{N-n}{N-1}\)</span></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Proporção em população finita sem reposição</td>
 <td><span class="math inline">\(\widehat p\)</span></td>
 <td><span class="math inline">\(E(\widehat p)=p\)</span>, <span class="math inline">\(\operatorname{Var}(\widehat p)=\dfrac{p(1-p)}{n}\dfrac{N-n}{N-1}\)</span></td>
@@ -2561,18 +2752,65 @@ Figura&nbsp;4.1: Distribuições simuladas da média de amostras exponenciais.
 <li><p>Calcule <span class="math inline">\(E(\overline{X})\)</span> e <span class="math inline">\(\operatorname{Var}(\overline{X})\)</span>.</p></li>
 <li><p>Repita sem reposição e verifique a correção de população finita.</p></li>
 </ol></li>
-<li><p><strong>Média exponencial.</strong> Seja <span class="math inline">\(X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\beta)\)</span> na parametrização por escala.</p>
-<ol type="a">
-<li><p>Obtenha a distribuição de <span class="math inline">\(\sum X_i\)</span>.</p></li>
-<li><p>Obtenha a distribuição de <span class="math inline">\(\overline{X}\)</span>.</p></li>
-<li><p>Calcule <span class="math inline">\(P(\overline{X}&gt;c)\)</span> em termos da função de distribuição gama.</p></li>
-</ol></li>
+<li><p><strong>Média exponencial.</strong> Seja</p></li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exp}(\mu),
+\qquad E(X_i)=\mu,
+\]</span></p>
+<p>na parametrização pela média.</p>
+<pre><code>a.  Obtenha a distribuição de $\sum X_i$.
+
+b.  Obtenha a distribuição de $\overline{X}$.
+
+c.  Calcule $P(\overline{X}&gt;c)$ em termos da função de distribuição gama.</code></pre>
+<ol start="8" type="1">
+<li><strong>Média Poisson.</strong> Seja</li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Poisson}(\lambda).
+\]</span></p>
+<pre><code>a.  Obtenha a distribuição de</code></pre>
+<p><span class="math display">\[
+Y=\sum_{i=1}^n X_i.
+\]</span></p>
+<ol start="2" type="a">
+<li><p>A partir desse resultado, obtenha a distribuição de <span class="math inline">\(\overline X\)</span>.</p></li>
+<li><p>Determine <span class="math inline">\(E(\overline X)\)</span> e <span class="math inline">\(\operatorname{Var}(\overline X)\)</span>.</p></li>
+</ol>
+<ol start="9" type="1">
 <li><p><strong>Média normal.</strong> Uma variável tem distribuição <span class="math inline">\(N(50,12^2)\)</span>. Para uma amostra de tamanho <span class="math inline">\(36\)</span>:</p>
 <ol type="a">
 <li><p>determine a distribuição de <span class="math inline">\(\overline{X}\)</span>;</p></li>
 <li><p>calcule <span class="math inline">\(P(48&lt;\overline{X}&lt;53)\)</span>;</p></li>
 <li><p>encontre <span class="math inline">\(c\)</span> tal que <span class="math inline">\(P(|\overline{X}-50|&lt;c)=0{,}95\)</span>.</p></li>
 </ol></li>
+<li><p><strong>Diferença de médias.</strong> Considere duas amostras independentes,</p></li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu_1,\sigma_1^2)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+Y_1,\ldots,Y_m
+\overset{\mathrm{iid}}{\sim}
+N(\mu_2,\sigma_2^2).
+\]</span></p>
+<pre><code>a.  Determine as distribuições de $\overline X$ e $\overline Y$.
+
+b.  Obtenha a distribuição de</code></pre>
+<p><span class="math display">\[
+\overline X-\overline Y.
+\]</span></p>
+<pre><code>c.  Determine $E(\overline X-\overline Y)$ e</code></pre>
+<p><span class="math inline">\(\operatorname{Var}(\overline X-\overline Y)\)</span>.</p>
+<ol start="11" type="1">
 <li><p><strong>TCL para uma população não normal.</strong> Seja <span class="math inline">\(X_1,\ldots,X_{64}\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(1)\)</span>, na parametrização por taxa. Use o TCL para aproximar <span class="math inline">\(P(0{,}8&lt;\overline{X}&lt;1{,}2)\)</span>.</p></li>
 <li><p><strong>Proporção.</strong> Em uma população, <span class="math inline">\(p=0{,}12\)</span>. Para <span class="math inline">\(n=200\)</span>:</p>
 <ol type="a">
@@ -2599,13 +2837,13 @@ N(\mu,\sigma^2),
 <pre><code>a.  $P(S^2&gt;6)$;
 
 b.  os quantis $a$ e $b$ tais que $P(a&lt;S^2&lt;b)=0{,}95$ com caudas iguais.</code></pre>
-<ol start="13" type="1">
+<ol start="15" type="1">
 <li><strong>Distribuição</strong> <span class="math inline">\(t\)</span>. Se uma amostra normal possui <span class="math inline">\(n=16\)</span>, determine <span class="math inline">\(c\)</span> tal que</li>
 </ol>
 <p><span class="math display">\[P\left(
 \left|\frac{\overline{X}-\mu}{S/4}\right|&lt;c
 \right)=0{,}95.\]</span></p>
-<ol start="14" type="1">
+<ol start="16" type="1">
 <li><p><strong>Razão de variâncias.</strong> Duas amostras normais independentes possuem tamanhos <span class="math inline">\(n_1=12\)</span> e <span class="math inline">\(n_2=18\)</span>.</p>
 <ol type="a">
 <li><p>determine a distribuição de <span class="math inline">\((S_1^2/\sigma_1^2)/(S_2^2/\sigma_2^2)\)</span>;</p></li>
@@ -2616,15 +2854,42 @@ b.  os quantis $a$ e $b$ tais que $P(a&lt;S^2&lt;b)=0{,}95$ com caudas iguais.</
 <li><p>obtenha a função de distribuição de <span class="math inline">\(X_{(n)}\)</span>;</p></li>
 <li><p>obtenha sua densidade;</p></li>
 <li><p>calcule <span class="math inline">\(E[X_{(n)}]\)</span>;</p></li>
-<li><p>proponha uma transformação de <span class="math inline">\(X_{(n)}\)</span> que seja não viesada para <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>proponha uma transformação, <span class="math inline">\(T(\cdot)\)</span>, de <span class="math inline">\(X_{(n)}\)</span> tal que <span class="math inline">\(E[T(X_{(n)})] = \theta\)</span>.</p></li>
 </ol></li>
-<li><p><strong>Mínimo exponencial.</strong> Se <span class="math inline">\(X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\lambda)\)</span> na parametrização por taxa, mostre que</p></li>
+<li><p><strong>Parâmetro no suporte.</strong> Seja</p></li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+f(x\mid\theta),
+\]</span></p>
+<p>em que, para <span class="math inline">\(a&gt;0\)</span> conhecido,</p>
+<p><span class="math display">\[
+f(x\mid\theta)
+=
+\frac{a x^{a-1}}{\theta^a},
+\qquad
+0&lt;x&lt;\theta,
+\]</span></p>
+<p>e <span class="math inline">\(f(x\mid\theta)=0\)</span> fora desse intervalo.</p>
+<ol type="a">
+<li><p>Obtenha a função de distribuição de <span class="math inline">\(X_i\)</span>.</p></li>
+<li><p>Obtenha a função de distribuição de <span class="math inline">\(X_{(n)}\)</span>.</p></li>
+<li><p>Obtenha a densidade de <span class="math inline">\(X_{(n)}\)</span>.</p></li>
+<li><p>Obtenha a distribuição de</p></li>
+</ol>
+<p><span class="math display">\[
+\frac{X_{(n)}}{\theta}.
+\]</span></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 5.</em></p>
+<ol start="19" type="1">
+<li><strong>Mínimo exponencial.</strong> Se <span class="math inline">\(X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\lambda)\)</span> na parametrização por taxa, mostre que</li>
 </ol>
 <p><span class="math display">\[X_{(1)}\sim\operatorname{Exp}(n\lambda).\]</span></p>
 </section>
 <section id="exercícios-teóricos-e-computacionais" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercícios-teóricos-e-computacionais">Exercícios teóricos e computacionais</h3>
-<ol start="17" type="1">
+<ol start="20" type="1">
 <li><strong>Variância de</strong> <span class="math inline">\(S^2\)</span>. Usando a fórmula geral demonstrada neste capítulo,</li>
 </ol>
 <p><span class="math display">\[\operatorname{Var}(S^2)
@@ -2634,7 +2899,7 @@ b.  os quantis $a$ e $b$ tais que $P(a&lt;S^2&lt;b)=0{,}95$ com caudas iguais.</
 \mu_4-\frac{n-3}{n-1}\sigma^4
 \right],\]</span></p>
 <p>verifique que, para uma população normal, <span class="math inline">\(\operatorname{Var}(S^2)=2\sigma^4/(n-1)\)</span>.</p>
-<ol start="18" type="1">
+<ol start="21" type="1">
 <li><strong>Simulação do TCL.</strong> Repita a simulação deste capítulo para populações uniforme, Bernoulli, lognormal e Cauchy padrão.</li>
 </ol>
 <!-- -->
@@ -2644,12 +2909,12 @@ b.  os quantis $a$ e $b$ tais que $P(a&lt;S^2&lt;b)=0{,}95$ com caudas iguais.</
 <li><p>Relacione o resultado às hipóteses do TCL.</p></li>
 </ol>
 <!-- -->
-<ol start="19" type="1">
+<ol start="22" type="1">
 <li><strong>Aproximação Monte Carlo.</strong> Para <span class="math inline">\(X_i\sim\operatorname{Beta}(2,5)\)</span> e <span class="math inline">\(n=15\)</span>, estime por simulação a distribuição de</li>
 </ol>
 <p><span class="math display">\[T=\frac{\overline{X}-E(X)}{S/\sqrt{n}}.\]</span></p>
 <p>Compare o histograma com as densidades <span class="math inline">\(N(0,1)\)</span> e <span class="math inline">\(t_{14}\)</span>.</p>
-<ol start="20" type="1">
+<ol start="23" type="1">
 <li><p><strong>Demonstração por FGM.</strong> Demonstre que, se <span class="math inline">\(X_i\sim N(\mu,\sigma^2)\)</span> são independentes, então <span class="math inline">\(\overline{X}\sim N(\mu,\sigma^2/n)\)</span>.</p></li>
 <li><p><strong>Demonstração da Lei Fraca.</strong> Use a desigualdade de Chebyshev para demonstrar a Lei Fraca dos Grandes Números sob variância finita.</p></li>
 <li><p><strong>Distribuição da estatística de ordem.</strong> Demonstre a fórmula da densidade de <span class="math inline">\(X_{(k)}\)</span> contando as maneiras de obter <span class="math inline">\(k-1\)</span> observações abaixo de <span class="math inline">\(x\)</span>, uma observação em <span class="math inline">\((x,x+dx)\)</span> e <span class="math inline">\(n-k\)</span> observações acima de <span class="math inline">\(x+dx\)</span>.</p></li>

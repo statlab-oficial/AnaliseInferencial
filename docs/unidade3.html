@@ -2,23 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>5&nbsp; Avaliação de Estimadores e Princípios de Redução de Dados</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -60,18 +54,19 @@ div.csl-indent {
 <link href="./unidade2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-4c6d65c679321d81af7ec8b61b1d5a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -101,7 +96,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -317,14 +312,18 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
         </div>
         </div>
-        <div class="sidebar-tools-collapse">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
-</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -449,7 +448,10 @@ window.Quarto = {
   <li><a href="#eficiência" id="toc-eficiência" class="nav-link" data-scroll-target="#eficiência">Eficiência</a></li>
   </ul></li>
   <li><a href="#síntese-conceitual" id="toc-síntese-conceitual" class="nav-link" data-scroll-target="#síntese-conceitual"><span class="header-section-number">5.4</span> Síntese conceitual</a></li>
-  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">5.5</span> Exercícios</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">5.5</span> Exercícios</a>
+  <ul class="collapse">
+  <li><a href="#exercícios-extras" id="toc-exercícios-extras" class="nav-link" data-scroll-target="#exercícios-extras">Exercícios extras</a></li>
+  </ul></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 </nav>
@@ -486,16 +488,19 @@ window.Quarto = {
 <p>A comparação entre estimadores depende do critério adotado. Uma forma geral de formalizar esse critério consiste em especificar uma <strong>função de perda</strong> <span class="math inline">\(L(\tau(\theta),a)\)</span>, que quantifica a consequência de utilizar a ação <span class="math inline">\(a\)</span> quando o valor verdadeiro é <span class="math inline">\(\tau(\theta)\)</span>. O risco do estimador <span class="math inline">\(\delta\)</span> é</p>
 <p><span class="math display">\[R(\theta,\delta)
 =
-E_\theta\left[L\bigl(\tau(\theta),\delta(\mathbf{X})\bigr)\right].\]</span></p>
+E_\theta\left[L\bigl(\tau(\theta),\delta(\mathbf{X})\bigr)\right].
+\]</span></p>
 <p>Essa formulação pertence ao quadro da teoria da decisão estatística <span class="citation" data-cites="rasch2018 bickel2016volume2">(<a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, secs. 1.5 and 2.4; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, chap.&nbsp;1)</span>.</p>
 <p>Sob perda quadrática,</p>
 <p><span class="math display">\[L\bigl(\tau(\theta),a\bigr)
 =
-\bigl(a-\tau(\theta)\bigr)^2,\]</span></p>
+\bigl(a-\tau(\theta)\bigr)^2,
+\]</span></p>
 <p>o risco coincide com o <strong>erro quadrático médio</strong> (EQM):</p>
 <p><span class="math display">\[\operatorname{EQM}_\theta(\delta)
 =
-E_\theta\left[\bigl(\delta-\tau(\theta)\bigr)^2\right].\]</span></p>
+E_\theta\left[\bigl(\delta-\tau(\theta)\bigr)^2\right].
+\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Interpretação">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -526,9 +531,11 @@ E_\theta\left[\bigl(\delta-\tau(\theta)\bigr)^2\right].\]</span></p>
 <p>O <strong>viés</strong> de <span class="math inline">\(\delta\)</span> como estimador de <span class="math inline">\(\tau(\theta)\)</span> é</p>
 <p><span class="math display">\[B_\theta(\delta)
 =
-E_\theta(\delta)-\tau(\theta).\]</span></p>
+E_\theta(\delta)-\tau(\theta).
+\]</span></p>
 <p>O estimador é <strong>não viesado</strong> quando</p>
-<p><span class="math display">\[E_\theta(\delta)=\tau(\theta)\]</span></p>
+<p><span class="math display">\[E_\theta(\delta)=\tau(\theta)
+\]</span></p>
 <p>para todo <span class="math inline">\(\theta\in\Theta\)</span>.</p>
 </div>
 </div>
@@ -536,11 +543,13 @@ E_\theta(\delta)-\tau(\theta).\]</span></p>
 <p>A variância e o erro-padrão do estimador são</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\delta)
 =
-E_\theta\left[\bigl(\delta-E_\theta(\delta)\bigr)^2\right]\]</span></p>
+E_\theta\left[\bigl(\delta-E_\theta(\delta)\bigr)^2\right]
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\operatorname{EP}_\theta(\delta)
 =
-\sqrt{\operatorname{Var}_\theta(\delta)}.\]</span></p>
+\sqrt{\operatorname{Var}_\theta(\delta)}.
+\]</span></p>
 <p>O erro-padrão mede a variabilidade da distribuição amostral de <span class="math inline">\(\delta\)</span>. Ele não deve ser confundido com o desvio-padrão da variável observada.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Decomposição viés--variância">
 <div class="callout-header d-flex align-content-center">
@@ -557,7 +566,8 @@ E_\theta\left[\bigl(\delta-E_\theta(\delta)\bigr)^2\right]\]</span></p>
 =
 \operatorname{Var}_\theta(\delta)
 +
-B_\theta(\delta)^2.\]</span></p>
+B_\theta(\delta)^2.
+\]</span></p>
 </div>
 </div>
 <p><strong>Demonstração.</strong> Somando e subtraindo <span class="math inline">\(E_\theta(\delta)\)</span>,</p>
@@ -565,9 +575,11 @@ B_\theta(\delta)^2.\]</span></p>
 =
 \bigl[\delta-E_\theta(\delta)\bigr]
 +
-\bigl[E_\theta(\delta)-\tau(\theta)\bigr].\]</span></p>
+\bigl[E_\theta(\delta)-\tau(\theta)\bigr].
+\]</span></p>
 <p>Ao elevar ao quadrado e tomar esperança, o termo cruzado é nulo, pois</p>
-<p><span class="math display">\[E_\theta\bigl[\delta-E_\theta(\delta)\bigr]=0.\]</span></p>
+<p><span class="math display">\[E_\theta\bigl[\delta-E_\theta(\delta)\bigr]=0.
+\]</span></p>
 <p>Logo, obtém-se a decomposição anterior.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Observação — Compromisso entre viés e variância">
 <div class="callout-header d-flex align-content-center">
@@ -590,19 +602,22 @@ B_\theta(\delta)^2.\]</span></p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Unif}(0,\theta),
-\qquad \theta&gt;0,\]</span></p>
+\qquad \theta&gt;0,
+\]</span></p>
 <p>e os estimadores</p>
 <p><span class="math display">\[\delta_1=2\overline{X},
 \qquad
 \delta_2=X_{(n)}=\max(X_1,\ldots,X_n),
 \qquad
-\delta_3=\frac{n+1}{n}X_{(n)}.\]</span></p>
+\delta_3=\frac{n+1}{n}X_{(n)}.
+\]</span></p>
 <p>Para <span class="math inline">\(\delta_1\)</span>,</p>
 <p><span class="math display">\[E_\theta(\delta_1)=\theta\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\delta_1)
 =
-\frac{\theta^2}{3n}.\]</span></p>
+\frac{\theta^2}{3n}.
+\]</span></p>
 <p>Portanto,</p>
 <p><span class="math display">\[\operatorname{EQM}_\theta(\delta_1)
 =
@@ -611,31 +626,38 @@ B_\theta(\delta)^2.\]</span></p>
 <p><span class="math display">\[P_\theta\bigl(X_{(n)}\leq x\bigr)
 =
 \left(\frac{x}{\theta}\right)^n,
-\qquad 0\leq x\leq\theta.\]</span></p>
+\qquad 0\leq x\leq\theta.
+\]</span></p>
 <p>Consequentemente,</p>
 <p><span class="math display">\[E_\theta\bigl(X_{(n)}\bigr)
 =
-\frac{n}{n+1}\theta\]</span></p>
+\frac{n}{n+1}\theta
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\operatorname{Var}_\theta\bigl(X_{(n)}\bigr)
 =
-\frac{n\theta^2}{(n+1)^2(n+2)}.\]</span></p>
+\frac{n\theta^2}{(n+1)^2(n+2)}.
+\]</span></p>
 <p>Assim,</p>
 <p><span class="math display">\[B_\theta(\delta_2)
 =
--\frac{\theta}{n+1}\]</span></p>
+-\frac{\theta}{n+1}
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\operatorname{EQM}_\theta(\delta_2)
 =
-\frac{2\theta^2}{(n+1)(n+2)}.\]</span></p>
+\frac{2\theta^2}{(n+1)(n+2)}.
+\]</span></p>
 <p>O estimador corrigido <span class="math inline">\(\delta_3\)</span> é não viesado e possui</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\delta_3)
 =
-\frac{\theta^2}{n(n+2)}.\]</span></p>
+\frac{\theta^2}{n(n+2)}.
+\]</span></p>
 <p>Para <span class="math inline">\(n&gt;1\)</span>,</p>
 <p><span class="math display">\[\frac{\theta^2}{n(n+2)}
 &lt;
-\frac{\theta^2}{3n},\]</span></p>
+\frac{\theta^2}{3n},
+\]</span></p>
 <p>mostrando que <span class="math inline">\(\delta_3\)</span> tem menor EQM do que <span class="math inline">\(\delta_1\)</span>. Além disso, <span class="math inline">\(\delta_2\)</span>, embora viesado, possui EQM de ordem <span class="math inline">\(n^{-2}\)</span>, enquanto o EQM de <span class="math inline">\(\delta_1\)</span> é de ordem <span class="math inline">\(n^{-1}\)</span>. O exemplo mostra por que não se deve selecionar estimadores exclusivamente pelo não viés. A construção e a comparação dos estimadores foram adaptadas de <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>)</span> [ex. 4.2]; a interpretação em termos de não viés, eficiência e EQM também é discutida por <span class="citation" data-cites="chihara2022">Chihara; Hesterberg (<a href="#ref-chihara2022" role="doc-biblioref">2022</a>, secs. 6.3.1–6.3.3)</span>.</p>
 </section>
 <section id="consistência" class="level3 unnumbered">
@@ -654,9 +676,11 @@ B_\theta(\delta)^2.\]</span></p>
 <p><span class="math display">\[P_\theta\left(
 \left|\delta_n-\tau(\theta)\right|&gt;\varepsilon
 \right)
-\longrightarrow 0\]</span></p>
+\longrightarrow 0
+\]</span></p>
 <p>quando <span class="math inline">\(n\to\infty\)</span>. Escreve-se</p>
-<p><span class="math display">\[\delta_n\xrightarrow{p}\tau(\theta).\]</span></p>
+<p><span class="math display">\[\delta_n\xrightarrow{p}\tau(\theta).
+\]</span></p>
 </div>
 </div>
 <p>A consistência é uma propriedade assintótica: ela afirma que, à medida que o tamanho amostral cresce, o estimador se concentra arbitrariamente perto do valor verdadeiro. Ela não implica que o estimador seja não viesado para cada tamanho amostral finito.</p>
@@ -672,7 +696,8 @@ B_\theta(\delta)^2.\]</span></p>
 <div class="callout-body-container callout-body">
 <p>A sequência <span class="math inline">\(\{\delta_n\}\)</span> é <strong>consistente em erro quadrático médio</strong> para <span class="math inline">\(\tau(\theta)\)</span> se</p>
 <p><span class="math display">\[\operatorname{EQM}_\theta(\delta_n)
-\longrightarrow 0.\]</span></p>
+\longrightarrow 0.
+\]</span></p>
 </div>
 </div>
 <p>A consistência em EQM implica consistência em probabilidade. De fato, pela desigualdade de Markov,</p>
@@ -680,7 +705,8 @@ B_\theta(\delta)^2.\]</span></p>
 |\delta_n-\tau(\theta)|&gt;\varepsilon
 \right)
 \leq
-\frac{\operatorname{EQM}_\theta(\delta_n)}{\varepsilon^2}.\]</span></p>
+\frac{\operatorname{EQM}_\theta(\delta_n)}{\varepsilon^2}.
+\]</span></p>
 <div class="callout callout-style-default callout-important callout-titled" title="Critério suficiente para consistência">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -716,7 +742,8 @@ B_\theta(\delta)^2.\]</span></p>
 P_\theta\left(X_{(n)}&lt;\theta-\varepsilon\right)
 =
 \left(1-\frac{\varepsilon}{\theta}\right)^n
-\longrightarrow 0;\]</span></p>
+\longrightarrow 0;
+\]</span></p>
 <ol start="4" type="1">
 <li><span class="math inline">\(X_1/2\)</span> é viesado e não consistente.</li>
 </ol>
@@ -741,14 +768,18 @@ P_\theta\left(X_{(n)}&lt;\theta-\varepsilon\right)
 <p>Se</p>
 <p><span class="math display">\[A_n\xrightarrow{p}a
 \qquad\text{e}\qquad
-B_n\xrightarrow{p}b,\]</span></p>
+B_n\xrightarrow{p}b,
+\]</span></p>
 <p>então:</p>
-<p><span class="math display">\[A_n+B_n\xrightarrow{p}a+b,\]</span></p>
+<p><span class="math display">\[A_n+B_n\xrightarrow{p}a+b,
+\]</span></p>
 <p><span class="math display">\[A_nB_n\xrightarrow{p}ab,\]</span></p>
 <p>e, se <span class="math inline">\(b\neq0\)</span>,</p>
-<p><span class="math display">\[\frac{A_n}{B_n}\xrightarrow{p}\frac{a}{b}.\]</span></p>
+<p><span class="math display">\[\frac{A_n}{B_n}\xrightarrow{p}\frac{a}{b}.
+\]</span></p>
 <p>Além disso, se <span class="math inline">\(g\)</span> é contínua em <span class="math inline">\(a\)</span>, o teorema da aplicação contínua garante</p>
-<p><span class="math display">\[g(A_n)\xrightarrow{p}g(a).\]</span></p>
+<p><span class="math display">\[g(A_n)\xrightarrow{p}g(a).
+\]</span></p>
 <p>Esses resultados permitem estabelecer a consistência de estimadores construídos por transformações, somas, produtos e quocientes de estatísticas consistentes. Eles são consequências do teorema da aplicação contínua e das propriedades elementares da convergência em probabilidade <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, app. A.2)</span>.</p>
 </section>
 <section id="eficiência-em-amostras-finitas" class="level3 unnumbered">
@@ -756,13 +787,15 @@ B_n\xrightarrow{p}b,\]</span></p>
 <p>A variância permite comparar estimadores não viesados de um mesmo alvo. Um estimador não viesado <span class="math inline">\(\delta^*\)</span> de <span class="math inline">\(\tau(\theta)\)</span> é denominado <strong>estimador não viesado de variância uniformemente mínima</strong> (ENVUM; em inglês, UMVU) quando</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\delta^*)
 \leq
-\operatorname{Var}_\theta(\delta)\]</span></p>
+\operatorname{Var}_\theta(\delta)
+\]</span></p>
 <p>para todo <span class="math inline">\(\theta\in\Theta\)</span> e para todo estimador não viesado <span class="math inline">\(\delta\)</span> de <span class="math inline">\(\tau(\theta)\)</span> <span class="citation" data-cites="bickel2016volume2 rasch2018">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2.3; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;2.4)</span>.</p>
 <p>Para dois estimadores não viesados, define-se, neste texto, a eficiência relativa de <span class="math inline">\(\delta_1\)</span> em relação a <span class="math inline">\(\delta_2\)</span> por</p>
 <p><span class="math display">\[e_\theta(\delta_1;\delta_2)
 =
 \frac{\operatorname{Var}_\theta(\delta_2)}
-{\operatorname{Var}_\theta(\delta_1)}.\]</span></p>
+{\operatorname{Var}_\theta(\delta_1)}.
+\]</span></p>
 <p>Valores maiores do que <span class="math inline">\(1\)</span> indicam que <span class="math inline">\(\delta_1\)</span> possui menor variância. Como existem convenções inversas na literatura, a orientação do quociente deve sempre ser explicitada <span class="citation" data-cites="rasch2018">(<a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;2.4.1)</span>.</p>
 </section>
 <section id="informação-de-fisher" class="level3 unnumbered">
@@ -771,7 +804,8 @@ B_n\xrightarrow{p}b,\]</span></p>
 <p><span class="math display">\[U_\theta(X)
 =
 \frac{\partial}{\partial\theta}
-\log f_\theta(X).\]</span></p>
+\log f_\theta(X).
+\]</span></p>
 <p>Sob condições de regularidade,</p>
 <p><span class="math display">\[E_\theta\bigl[U_\theta(X)\bigr]=0.\]</span></p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Definição: informação de Fisher">
@@ -787,14 +821,16 @@ B_n\xrightarrow{p}b,\]</span></p>
 <p>A informação de Fisher de uma observação é</p>
 <p><span class="math display">\[I_1(\theta)
 =
-E_\theta\left[U_\theta(X)^2\right].\]</span></p>
+E_\theta\left[U_\theta(X)^2\right].
+\]</span></p>
 <p>Quando é permitido intercambiar diferenciação e integração,</p>
 <p><span class="math display">\[I_1(\theta)
 =
 -E_\theta\left[
 \frac{\partial^2}{\partial\theta^2}
 \log f_\theta(X)
-\right].\]</span></p>
+\right].
+\]</span></p>
 <p>Para uma amostra i.i.d. de tamanho <span class="math inline">\(n\)</span>,</p>
 <p><span class="math display">\[I_n(\theta)=nI_1(\theta).\]</span></p>
 <p>Essas identidades pressupõem as condições de regularidade indicadas acima <span class="citation" data-cites="lauritzen2023fundamentals rasch2018">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;1.2.2; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;1.4)</span>.</p>
@@ -826,15 +862,18 @@ E_\theta\left[U_\theta(X)^2\right].\]</span></p>
 <p>então, sob as condições de regularidade,</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\delta)
 \geq
-\frac{\bigl[g'(\theta)\bigr]^2}{I_n(\theta)}.\]</span></p>
+\frac{\bigl[g'(\theta)\bigr]^2}{I_n(\theta)}.
+\]</span></p>
 <p>Em particular, se <span class="math inline">\(\delta\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>,</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\delta)
 \geq
-\frac{\bigl[\tau'(\theta)\bigr]^2}{I_n(\theta)}.\]</span></p>
+\frac{\bigl[\tau'(\theta)\bigr]^2}{I_n(\theta)}.
+\]</span></p>
 <p>Para <span class="math inline">\(\tau(\theta)=\theta\)</span>,</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\delta)
 \geq
-\frac{1}{I_n(\theta)}.\]</span></p>
+\frac{1}{I_n(\theta)}.
+\]</span></p>
 </div>
 </div>
 <p>Um estimador não viesado que atinge o limite de Cramér–Rao para todo <span class="math inline">\(\theta\)</span> é denominado <strong>eficiente no sentido de Cramér–Rao</strong>. Sua eficiência é</p>
@@ -842,7 +881,8 @@ E_\theta\left[U_\theta(X)^2\right].\]</span></p>
 =
 \frac{\bigl[\tau'(\theta)\bigr]^2}
 {I_n(\theta)\operatorname{Var}_\theta(\delta)}
-\leq1.\]</span></p>
+\leq1.
+\]</span></p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Observações">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -868,11 +908,13 @@ E_\theta\left[U_\theta(X)^2\right].\]</span></p>
 <p>Considere</p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-N(\mu,\sigma^2),\]</span></p>
+N(\mu,\sigma^2),
+\]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida. Para uma observação,</p>
 <p><span class="math display">\[U_\mu(X)
 =
-\frac{X-\mu}{\sigma^2}\]</span></p>
+\frac{X-\mu}{\sigma^2}
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[I_1(\mu)
 =
@@ -880,21 +922,26 @@ E_\mu\left[
 \left(\frac{X-\mu}{\sigma^2}\right)^2
 \right]
 =
-\frac{1}{\sigma^2}.\]</span></p>
+\frac{1}{\sigma^2}.
+\]</span></p>
 <p>Portanto,</p>
 <p><span class="math display">\[I_n(\mu)
 =
-\frac{n}{\sigma^2}\]</span></p>
+\frac{n}{\sigma^2}
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\frac{1}{I_n(\mu)}
 =
-\frac{\sigma^2}{n}.\]</span></p>
+\frac{\sigma^2}{n}.
+\]</span></p>
 <p>Como</p>
-<p><span class="math display">\[E_\mu(\overline{X})=\mu\]</span></p>
+<p><span class="math display">\[E_\mu(\overline{X})=\mu
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\operatorname{Var}_\mu(\overline{X})
 =
-\frac{\sigma^2}{n},\]</span></p>
+\frac{\sigma^2}{n},
+\]</span></p>
 <p><span class="math inline">\(\overline{X}\)</span> é eficiente para <span class="math inline">\(\mu\)</span>.</p>
 </section>
 <section id="exemplo-parâmetro-de-uma-distribuição-de-poisson" class="level3 unnumbered">
@@ -902,23 +949,28 @@ E_\mu\left[
 <p>Considere <span class="math inline">\(n\geq1\)</span> e</p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-\operatorname{Poisson}(\theta).\]</span></p>
+\operatorname{Poisson}(\theta).
+\]</span></p>
 <p>A função escore de uma observação é</p>
 <p><span class="math display">\[U_\theta(X)
 =
-\frac{X}{\theta}-1,\]</span></p>
+\frac{X}{\theta}-1,
+\]</span></p>
 <p>portanto</p>
 <p><span class="math display">\[I_1(\theta)
 =
-\frac{1}{\theta}.\]</span></p>
+\frac{1}{\theta}.
+\]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[\frac{1}{I_n(\theta)}
 =
-\frac{\theta}{n}.\]</span></p>
+\frac{\theta}{n}.
+\]</span></p>
 <p>Como <span class="math inline">\(\overline{X}\)</span> é não viesado e</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\overline{X})
 =
-\frac{\theta}{n},\]</span></p>
+\frac{\theta}{n},
+\]</span></p>
 <p>a média amostral é eficiente para <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.7; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 4.4)</span>.</p>
 </section>
 <section id="eficiência-assintótica" class="level3 unnumbered">
@@ -926,15 +978,39 @@ E_\mu\left[
 <p>A eficiência de Cramér–Rao descrita anteriormente é uma propriedade de amostra finita. Uma noção distinta é a <strong>eficiência assintótica</strong>. Se</p>
 <p><span class="math display">\[\sqrt{n}\bigl(\delta_n-\theta\bigr)
 \xrightarrow{d}
-N\bigl(0,V(\theta)\bigr),\]</span></p>
+N\bigl(0,V(\theta)\bigr),
+\]</span></p>
 <p>então, em modelos regulares, a variância assintótica é comparada com <span class="math inline">\(I_1(\theta)^{-1}\)</span>. O estimador é assintoticamente eficiente quando</p>
-<p><span class="math display">\[V(\theta)=I_1(\theta)^{-1}.\]</span></p>
+<p><span class="math display">\[V(\theta)=I_1(\theta)^{-1}.
+\]</span></p>
 <p>Sob condições regulares, estimadores de máxima verossimilhança frequentemente possuem essa propriedade. Essa afirmação não se estende automaticamente a modelos irregulares, a parâmetros na fronteira do espaço paramétrico ou a situações nas quais a taxa de convergência difere de <span class="math inline">\(\sqrt{n}\)</span> <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 5.11)</span>.</p>
 </section>
 </section>
 <section id="princípios-de-redução-de-dados" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="princípios-de-redução-de-dados"><span class="header-section-number">5.2</span> Princípios de redução de dados</h2>
 <p>A amostra completa pode conter componentes irrelevantes para a inferência sobre <span class="math inline">\(\theta\)</span>. Um princípio de redução procura substituir <span class="math inline">\(\mathbf{X}\)</span> por uma estatística de menor dimensão sem eliminar informação pertinente ao parâmetro. Suficiência, suficiência mínima, completude e ancilaridade desempenham papéis distintos nesse processo <span class="citation" data-cites="cox2006principles casella2002statistical">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 2.2 and 4.3.1; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, chap.&nbsp;6)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Recordação — Função de verossimilhança">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Recordação — Função de verossimilhança
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere uma família dominada com densidade ou função de probabilidade conjunta <span class="math inline">\(f_\theta(\mathbf{x})\)</span>. Depois de observados os dados <span class="math inline">\(\mathbf{x}\)</span>, a expressão</p>
+<p><span class="math display">\[
+L(\theta;\mathbf{x})
+=
+f_\theta(\mathbf{x}),
+\qquad
+\theta\in\Theta,
+\]</span></p>
+<p>considerada como função de <span class="math inline">\(\theta\)</span>, é denominada <strong>função de verossimilhança</strong>.</p>
+<p>Nesta unidade, a verossimilhança será utilizada para estudar como a informação sobre o parâmetro está representada nos dados. Sua maximização como método de estimação será desenvolvida posteriormente.</p>
+</div>
+</div>
 <section id="estatística-suficiente" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="estatística-suficiente">Estatística suficiente</h3>
 <div class="callout callout-style-default callout-important callout-titled" title="Definição — Suficiência">
@@ -980,7 +1056,8 @@ N\bigl(0,V(\theta)\bigr),\]</span></p>
 <p>Considere uma família dominada por uma medida comum, com densidade ou função de probabilidade conjunta <span class="math inline">\(f_\theta(\mathbf{x})\)</span>. A estatística <span class="math inline">\(T(\mathbf{X})\)</span> é suficiente para <span class="math inline">\(\theta\)</span> se, e somente se, existem funções não negativas <span class="math inline">\(g_\theta\)</span> e <span class="math inline">\(h\)</span> tais que</p>
 <p><span class="math display">\[f_\theta(\mathbf{x})
 =
-g_\theta\bigl(T(\mathbf{x})\bigr)h(\mathbf{x}),\]</span></p>
+g_\theta\bigl(T(\mathbf{x})\bigr)h(\mathbf{x}),
+\]</span></p>
 <p>em que <span class="math inline">\(h\)</span> não depende de <span class="math inline">\(\theta\)</span>.</p>
 </div>
 </div>
@@ -991,14 +1068,16 @@ g_\theta\bigl(T(\mathbf{x})\bigr)h(\mathbf{x}),\]</span></p>
 <p>Se</p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-\operatorname{Bernoulli}(p),\]</span></p>
+\operatorname{Bernoulli}(p),
+\]</span></p>
 <p>então</p>
 <p><span class="math display">\[f_p(\mathbf{x})
 =
 \prod_{i=1}^n
 p^{x_i}(1-p)^{1-x_i}
 =
-p^{\sum_i x_i}(1-p)^{n-\sum_i x_i}.\]</span></p>
+p^{\sum_i x_i}(1-p)^{n-\sum_i x_i}.
+\]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[T=\sum_{i=1}^nX_i\]</span></p>
 <p>é suficiente para <span class="math inline">\(p\)</span>.</p>
@@ -1007,7 +1086,8 @@ p^{\sum_i x_i}(1-p)^{n-\sum_i x_i}.\]</span></p>
 \mathbf{X}=\mathbf{x}\mid T=t
 \right)
 =
-\frac{1}{\binom{n}{t}},\]</span></p>
+\frac{1}{\binom{n}{t}},
+\]</span></p>
 <p>sempre que <span class="math inline">\(\sum_i x_i=t\)</span>. Essa probabilidade não depende de <span class="math inline">\(p\)</span>.</p>
 </section>
 <section id="suficiência-mínima" class="level3 unnumbered">
@@ -1043,22 +1123,26 @@ p^{\sum_i x_i}(1-p)^{n-\sum_i x_i}.\]</span></p>
 <p><span class="math display">\[f_\theta(\mathbf{x})
 =
 c(\mathbf{x},\mathbf{y})f_\theta(\mathbf{y})
-\quad\text{para todo }\theta\]</span></p>
+\quad\text{para todo }\theta
+\]</span></p>
 <p>se, e somente se,</p>
-<p><span class="math display">\[T(\mathbf{x})=T(\mathbf{y}).\]</span></p>
+<p><span class="math display">\[T(\mathbf{x})=T(\mathbf{y}).
+\]</span></p>
 <p>Quando o quociente <span class="math inline">\(f_\theta(\mathbf{x})/f_\theta(\mathbf{y})\)</span> está bem definido, essa condição equivale a exigir que o quociente seja independente de <span class="math inline">\(\theta\)</span> exatamente quando <span class="math inline">\(T(\mathbf{x})=T(\mathbf{y})\)</span> <span class="citation" data-cites="casella2002statistical ramachandran2009">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.2; <a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.5.3)</span>.</p>
 </div>
 </div>
 <p>No modelo Bernoulli, a razão das verossimilhanças é independente de <span class="math inline">\(p\)</span> exatamente quando</p>
 <p><span class="math display">\[\sum_{i=1}^n x_i
 =
-\sum_{i=1}^n y_i.\]</span></p>
+\sum_{i=1}^n y_i.
+\]</span></p>
 <p>Portanto, <span class="math inline">\(\sum_iX_i\)</span> é suficiente minimal. No modelo <span class="math inline">\(\operatorname{Unif}(0,\theta)\)</span>, a verossimilhança pode ser escrita como</p>
 <p><span class="math display">\[L(\theta;\mathbf{x})
 =
 \theta^{-n}
 I\{x_{(1)}\geq0\}
-I\{x_{(n)}\leq\theta\}.\]</span></p>
+I\{x_{(n)}\leq\theta\}.
+\]</span></p>
 <p>O primeiro indicador não depende de <span class="math inline">\(\theta\)</span>. Pelo teorema da fatoração, <span class="math inline">\(X_{(n)}\)</span> é suficiente; pelo critério da razão de verossimilhanças, é também suficiente minimal para <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="ramachandran2009 casella2002statistical">(<a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.5.3; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.2)</span>.</p>
 </section>
 <section id="famílias-exponenciais" class="level3 unnumbered">
@@ -1079,7 +1163,8 @@ I\{x_{(n)}\leq\theta\}.\]</span></p>
 h(x)
 \exp\left\{
 \eta^\top t(x)-A(\eta)
-\right\},\]</span></p>
+\right\},
+\]</span></p>
 <p>em que <span class="math inline">\(\eta\in\mathcal{H}\subseteq\mathbb{R}^k\)</span> é o parâmetro natural, <span class="math inline">\(t(x)\)</span> é a estatística canônica e o suporte não depende de <span class="math inline">\(\eta\)</span>.</p>
 </div>
 </div>
@@ -1089,11 +1174,13 @@ h(x)
 \left[\prod_{i=1}^nh(x_i)\right]
 \exp\left\{
 \eta^\top\sum_{i=1}^nt(x_i)-nA(\eta)
-\right\}.\]</span></p>
+\right\}.
+\]</span></p>
 <p>Pelo teorema da fatoração,</p>
 <p><span class="math display">\[T(\mathbf{X})
 =
-\sum_{i=1}^nt(X_i)\]</span></p>
+\sum_{i=1}^nt(X_i)
+\]</span></p>
 <p>é suficiente para <span class="math inline">\(\eta\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Exemplos">
 <div class="callout-header d-flex align-content-center">
@@ -1106,16 +1193,59 @@ h(x)
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Bernoulli: <span class="math inline">\(t(x)=x\)</span> e <span class="math inline">\(T=\sum_iX_i\)</span>;</li>
-<li>Poisson: <span class="math inline">\(t(x)=x\)</span> e <span class="math inline">\(T=\sum_iX_i\)</span>;</li>
-<li>normal com média e variância desconhecidas: <span class="math inline">\(t(x)=(x,x^2)^\top\)</span> e</li>
+<li><p>Bernoulli: <span class="math inline">\(t(x)=x\)</span> e <span class="math inline">\(T=\sum_iX_i\)</span>;</p></li>
+<li><p>Poisson: <span class="math inline">\(t(x)=x\)</span> e <span class="math inline">\(T=\sum_iX_i\)</span>;</p></li>
+<li><p>geométrica em <span class="math inline">\(\{1,2,\ldots\}\)</span>:</p></li>
 </ul>
-<p><span class="math display">\[T(\mathbf{X})
+<p><span class="math display">\[
+P_p(X=x)
+=
+p(1-p)^{x-1},
+\qquad
+0&lt;p&lt;1.
+\]</span></p>
+<p>Tomando</p>
+<p><span class="math display">\[
+\eta=\log(1-p)&lt;0,
+\]</span></p>
+<p>a função de probabilidade pode ser escrita na forma exponencial com estatística canônica <span class="math inline">\(t(x)=x-1\)</span>. Para uma amostra i.i.d., a estatística canônica é, portanto,</p>
+<p><span class="math display">\[
+\sum_{i=1}^n(X_i-1),
+\]</span></p>
+<p>que é equivalente a <span class="math inline">\(\sum_{i=1}^nX_i\)</span>.</p>
+<ul>
+<li>normal com média e variância desconhecidas:</li>
+</ul>
+<p><span class="math display">\[
+t(x)
+=
+(x,x^2)^\top,
+\]</span></p>
+<p>de modo que</p>
+<p><span class="math display">\[
+T(\mathbf{X})
 =
 \left(
 \sum_{i=1}^nX_i,
 \sum_{i=1}^nX_i^2
-\right).\]</span></p>
+\right).
+\]</span></p>
+<p>Uma parametrização natural da família normal de dois parâmetros é</p>
+<p><span class="math display">\[
+\eta_1
+=
+\frac{\mu}{\sigma^2},
+\qquad
+\eta_2
+=
+-\frac{1}{2\sigma^2},
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+\eta_1\in\mathbb R,
+\qquad
+\eta_2&lt;0.
+\]</span></p>
 </div>
 </div>
 <p>A família uniforme <span class="math inline">\(\operatorname{Unif}(0,\theta)\)</span> não possui essa forma regular, pois seu suporte depende de <span class="math inline">\(\theta\)</span>. Ainda assim, ela possui uma estatística suficiente de dimensão um, <span class="math inline">\(X_{(n)}\)</span>.</p>
@@ -1135,14 +1265,15 @@ h(x)
 <div class="callout-body-container callout-body">
 <p>Uma estatística <span class="math inline">\(T\)</span> é <strong>completa</strong> para <span class="math inline">\(\{P_\theta:\theta\in\Theta\}\)</span> se, para toda função mensurável <span class="math inline">\(a\)</span> tal que <span class="math inline">\(E_\theta|a(T)|&lt;\infty\)</span>,</p>
 <p><span class="math display">\[E_\theta[a(T)]=0
-\quad\text{para todo }\theta\in\Theta\]</span></p>
+\quad\text{para todo }\theta\in\Theta
+\]</span></p>
 <p>implica</p>
 <p><span class="math display">\[P_\theta\bigl(a(T)=0\bigr)=1
-\quad\text{para todo }\theta\in\Theta.\]</span></p>
+\quad\text{para todo }\theta\in\Theta.
+\]</span></p>
 <p>Essa é a definição usual de completude para a família de distribuições induzida por <span class="math inline">\(T\)</span> <span class="citation" data-cites="bickel2016volume2 casella2002statistical">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, def. 8.2.2; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.4)</span>.</p>
 </div>
 </div>
-<p>A completude impede a existência de duas funções distintas de <span class="math inline">\(T\)</span> que sejam não viesadas para o mesmo alvo. Ela é, portanto, uma propriedade de unicidade, e não uma medida de quantidade de informação.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Teorema — Completude em famílias exponenciais">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1153,10 +1284,32 @@ h(x)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Em uma família exponencial natural de posto completo, se o espaço do parâmetro natural contém um conjunto aberto de <span class="math inline">\(\mathbb{R}^k\)</span>, a estatística canônica é completa, sob as condições usuais de integrabilidade <span class="citation" data-cites="bickel2016volume2">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.2)</span>.</p>
+<p>Considere uma família exponencial <span class="math inline">\(k\)</span>-paramétrica de posto completo, com estatística canônica</p>
+<p><span class="math display">\[
+T(\mathbf X)
+=
+\sum_{i=1}^n t(X_i).
+\]</span></p>
+<p>Se o espaço do parâmetro natural contém um conjunto aberto não vazio de <span class="math inline">\(\mathbb R^k\)</span>, então <span class="math inline">\(T\)</span> é uma estatística completa para a família.</p>
+<p>Esse resultado fornece uma condição suficiente para completude. A condição sobre o espaço do parâmetro natural é parte essencial do teorema e não deve ser omitida <span class="citation" data-cites="lauritzen2023fundamentals bickel2016volume2">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, chap.&nbsp;3; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2)</span>.</p>
 </div>
 </div>
-<p>Essa conclusão não deve ser estendida automaticamente a famílias exponenciais curvas, nas quais o parâmetro natural está restrito a uma subvariedade de dimensão menor. Nessas famílias, a estatística suficiente pode não ser completa <span class="citation" data-cites="bickel2016volume2 lauritzen2023fundamentals">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;3.6)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Completude e espaço paramétrico">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Aviso</span>Completude e espaço paramétrico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A completude é uma propriedade da <strong>família de distribuições considerada</strong>, incluindo seu espaço paramétrico. Portanto, ela não depende apenas da expressão funcional da densidade ou da função de probabilidade.</p>
+<p>Uma restrição do espaço paramétrico pode destruir a completude de uma família que era completa no espaço original. Em particular, o teorema anterior exige que o espaço do parâmetro natural contenha um conjunto aberto de <span class="math inline">\(\mathbb R^k\)</span>; essa condição deve ser verificada antes de utilizar o resultado.</p>
+</div>
+</div>
+<p>A completude impede a existência de duas funções distintas de <span class="math inline">\(T\)</span> que sejam não viesadas para o mesmo alvo. Ela é, portanto, uma propriedade de unicidade, e não uma medida de quantidade de informação.</p>
+<p>Essa conclusão não deve ser estendida automaticamente a famílias exponenciais curvas, nas quais o parâmetro natural está restrito a uma subvariedade de dimensão menor. Nesse caso, o conjunto de valores possíveis do parâmetro natural pode não conter um conjunto aberto de <span class="math inline">\(\mathbb R^k\)</span>, mesmo quando a família exponencial completa que contém a subfamília possui essa propriedade. Consequentemente, a completude da estatística canônica da família completa não é transferida automaticamente para a subfamília <span class="citation" data-cites="bickel2016volume2 lauritzen2023fundamentals">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;3.6)</span>.</p>
 </section>
 <section id="teorema-de-raoblackwell" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="teorema-de-raoblackwell">Teorema de Rao–Blackwell</h3>
@@ -1173,13 +1326,16 @@ h(x)
 <p>Seja <span class="math inline">\(T\)</span> uma estatística suficiente para <span class="math inline">\(\theta\)</span> e seja <span class="math inline">\(\delta(\mathbf{X})\)</span> um estimador de <span class="math inline">\(\tau(\theta)\)</span> com segundo momento finito. Defina</p>
 <p><span class="math display">\[\delta^*(T)
 =
-E_\theta\bigl[\delta(\mathbf{X})\mid T\bigr].\]</span></p>
+E_\theta\bigl[\delta(\mathbf{X})\mid T\bigr].
+\]</span></p>
 <p>A suficiência garante que se pode escolher uma versão de <span class="math inline">\(\delta^*\)</span> que seja função de <span class="math inline">\(T\)</span> e não dependa de <span class="math inline">\(\theta\)</span>. Então:</p>
-<p><span class="math display">\[E_\theta(\delta^*)=E_\theta(\delta),\]</span></p>
+<p><span class="math display">\[E_\theta(\delta^*)=E_\theta(\delta),
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\operatorname{EQM}_\theta(\delta^*)
 \leq
-\operatorname{EQM}_\theta(\delta).\]</span></p>
+\operatorname{EQM}_\theta(\delta).
+\]</span></p>
 <p>A igualdade ocorre se, e somente se, <span class="math inline">\(\delta\)</span> já é função de <span class="math inline">\(T\)</span> quase certamente <span class="citation" data-cites="rice2007mathematical bickel2016volume2">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8.2; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.6)</span>.</p>
 </div>
 </div>
@@ -1190,7 +1346,8 @@ E_\theta\bigl[\delta(\mathbf{X})\mid T\bigr].\]</span></p>
 +
 E_\theta\left[
 \operatorname{Var}_\theta(\delta\mid T)
-\right].\]</span></p>
+\right].
+\]</span></p>
 <p>Se <span class="math inline">\(\delta\)</span> é não viesado, <span class="math inline">\(\delta^*\)</span> também é não viesado e possui variância não superior. Assim, condicionar em uma estatística suficiente elimina variabilidade que não contribui para a estimação de <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="rice2007mathematical bickel2016volume2">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8.2; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.6)</span>.</p>
 </section>
 <section id="exemplo-adaptado-estimação-no-modelo-de-poisson" class="level3 unnumbered">
@@ -1198,13 +1355,17 @@ E_\theta\left[
 <p>Considere <span class="math inline">\(n\geq2\)</span> e</p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-\operatorname{Poisson}(\theta).\]</span></p>
+\operatorname{Poisson}(\theta).
+\]</span></p>
 <p>Deseja-se estimar</p>
-<p><span class="math display">\[P_\theta(X=0)=e^{-\theta}.\]</span></p>
+<p><span class="math display">\[P_\theta(X=0)=e^{-\theta}.
+\]</span></p>
 <p>O estimador</p>
-<p><span class="math display">\[\delta=I\{X_1=0\}\]</span></p>
+<p><span class="math display">\[\delta=I\{X_1=0\}
+\]</span></p>
 <p>é não viesado. A estatística</p>
-<p><span class="math display">\[T=\sum_{i=1}^nX_i\]</span></p>
+<p><span class="math display">\[T=\sum_{i=1}^nX_i
+\]</span></p>
 <p>é suficiente para <span class="math inline">\(\theta\)</span>. Condicionalmente a <span class="math inline">\(T=t\)</span>, o vetor <span class="math inline">\((X_1,\ldots,X_n)\)</span> possui distribuição multinomial com total <span class="math inline">\(t\)</span> e probabilidades <span class="math inline">\(1/n\)</span>. Portanto,</p>
 <p><span class="math display">\[\begin{aligned}
 \delta^*(T)
@@ -1214,13 +1375,15 @@ E(\delta\mid T) \\
 P(X_1=0\mid T) \\
 &amp;=
 \left(1-\frac{1}{n}\right)^T.
-\end{aligned}\]</span></p>
+\end{aligned}
+\]</span></p>
 <p>Pelo teorema de Rao–Blackwell, <span class="math inline">\(\delta^*\)</span> possui variância não superior à de <span class="math inline">\(\delta\)</span>. Como <span class="math inline">\(T\)</span> é também completa para a família de Poisson,</p>
 <p><span class="math display">\[\boxed{
 \delta^*(T)
 =
 \left(1-\frac{1}{n}\right)^{\sum_{i=1}^nX_i}
-}\]</span></p>
+}
+\]</span></p>
 <p>é o ENVUM de <span class="math inline">\(e^{-\theta}\)</span>. O exemplo é uma aplicação direta do método de Rao–Blackwell e do teorema de Lehmann–Scheffé discutidos por <span class="citation" data-cites="bickel2016volume2">Bickel; Doksum (<a href="#ref-bickel2016volume2" role="doc-biblioref">2016</a>, sec.&nbsp;8.2.3)</span>.</p>
 </section>
 <section id="teorema-de-lehmannscheffé" class="level3 unnumbered">
@@ -1250,35 +1413,43 @@ P(X_1=0\mid T) \\
 <p>Considere</p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-\operatorname{Exp}(\theta),\]</span></p>
+\operatorname{Exp}(\theta),
+\]</span></p>
 <p>em que <span class="math inline">\(\theta&gt;0\)</span> é a taxa e</p>
-<p><span class="math display">\[f_\theta(x)=\theta e^{-\theta x}I_{(0,\infty)}(x).\]</span></p>
+<p><span class="math display">\[f_\theta(x)=\theta e^{-\theta x}I_{(0,\infty)}(x).
+\]</span></p>
 <p>A estatística</p>
 <p><span class="math display">\[T=\sum_{i=1}^nX_i\]</span></p>
 <p>é suficiente e completa, e</p>
-<p><span class="math display">\[T\sim\operatorname{Gama}(n,\text{taxa }\theta).\]</span></p>
+<p><span class="math display">\[T\sim\operatorname{Gama}(n,\text{taxa }\theta).
+\]</span></p>
 <p>Para <span class="math inline">\(n&gt;1\)</span>,</p>
 <p><span class="math display">\[E_\theta\left(\frac{1}{T}\right)
 =
-\frac{\theta}{n-1}.\]</span></p>
+\frac{\theta}{n-1}.
+\]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[\widehat{\theta}_{\text{ENVUM}}
 =
-\frac{n-1}{T}\]</span></p>
+\frac{n-1}{T}
+\]</span></p>
 <p>é não viesado e, pelo teorema de Lehmann–Scheffé, é o ENVUM de <span class="math inline">\(\theta\)</span>. Para <span class="math inline">\(n&gt;2\)</span>,</p>
 <p><span class="math display">\[\operatorname{Var}_\theta\left(
 \widehat{\theta}_{\text{ENVUM}}
 \right)
 =
-\frac{\theta^2}{n-2}.\]</span></p>
+\frac{\theta^2}{n-2}.
+\]</span></p>
 <p>A informação de Fisher da amostra é</p>
 <p><span class="math display">\[I_n(\theta)
 =
-\frac{n}{\theta^2},\]</span></p>
+\frac{n}{\theta^2},
+\]</span></p>
 <p>portanto o limite de Cramér–Rao é <span class="math inline">\(\theta^2/n\)</span>. Como</p>
 <p><span class="math display">\[\frac{\theta^2}{n-2}
 &gt;
-\frac{\theta^2}{n},\]</span></p>
+\frac{\theta^2}{n},
+\]</span></p>
 <p>o ENVUM não atinge o limite. Esse exemplo evidencia que ser ENVUM não implica ser eficiente no sentido de Cramér–Rao. A derivação utiliza a completude da soma em uma família gama de um parâmetro e os momentos negativos dessa distribuição <span class="citation" data-cites="bickel2016volume2 ramachandran2021r">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.2 and sec.&nbsp;8.2.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;5.3.2)</span>.</p>
 </section>
 <section id="estatísticas-ancilares-e-teorema-de-basu" class="level3 unnumbered">
@@ -1315,12 +1486,14 @@ P(X_1=0\mid T) \\
 <p>Considere</p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-N(\mu,\sigma^2),\]</span></p>
+N(\mu,\sigma^2),
+\]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida. A média <span class="math inline">\(\overline{X}\)</span> é suficiente e completa para <span class="math inline">\(\mu\)</span>. A variância amostral</p>
 <p><span class="math display">\[S^2
 =
 \frac{1}{n-1}
-\sum_{i=1}^n(X_i-\overline{X})^2\]</span></p>
+\sum_{i=1}^n(X_i-\overline{X})^2
+\]</span></p>
 <p>possui distribuição que não depende de <span class="math inline">\(\mu\)</span>; portanto, é ancilar para <span class="math inline">\(\mu\)</span>. Pelo teorema de Basu, <span class="math inline">\(\overline{X}\)</span> e <span class="math inline">\(S^2\)</span> são independentes.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Observação">
 <div class="callout-header d-flex align-content-center">
@@ -1344,17 +1517,20 @@ N(\mu,\sigma^2),\]</span></p>
 <p>Considere</p>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-\operatorname{Gama}(\alpha,\theta),\]</span></p>
+\operatorname{Gama}(\alpha,\theta),
+\]</span></p>
 <p>em que <span class="math inline">\(\alpha&gt;0\)</span> é conhecido e <span class="math inline">\(\theta&gt;0\)</span> é o parâmetro de escala. A densidade é</p>
 <p><span class="math display">\[f(x;\theta)
 =
 \frac{x^{\alpha-1}e^{-x/\theta}}
 {\Gamma(\alpha)\theta^\alpha},
-\qquad x&gt;0.\]</span></p>
+\qquad x&gt;0.
+\]</span></p>
 <section id="redução-por-suficiência-e-completude" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="redução-por-suficiência-e-completude">Redução por suficiência e completude</h3>
 <p>A densidade conjunta depende da amostra por meio de</p>
-<p><span class="math display">\[T=\sum_{i=1}^nX_i.\]</span></p>
+<p><span class="math display">\[T=\sum_{i=1}^nX_i.
+\]</span></p>
 <p>A estatística <span class="math inline">\(T\)</span> é suficiente. Além disso, essa é uma família exponencial regular de posto completo, e o espaço do parâmetro natural contém um intervalo aberto. Assim, <span class="math inline">\(T\)</span> é completa.</p>
 <p>Como</p>
 <p><span class="math display">\[T\sim\operatorname{Gama}(n\alpha,\theta),\]</span></p>
@@ -1367,11 +1543,13 @@ N(\mu,\sigma^2),\]</span></p>
 =
 \frac{T}{n\alpha}
 =
-\frac{\overline{X}}{\alpha}\]</span></p>
+\frac{\overline{X}}{\alpha}
+\]</span></p>
 <p>é não viesado e possui</p>
 <p><span class="math display">\[\operatorname{Var}_\theta(\widehat{\theta})
 =
-\frac{\theta^2}{n\alpha}.\]</span></p>
+\frac{\theta^2}{n\alpha}.
+\]</span></p>
 <p>Pelo teorema de Lehmann–Scheffé, <span class="math inline">\(\widehat{\theta}\)</span> é o ENVUM de <span class="math inline">\(\theta\)</span>.</p>
 </section>
 <section id="eficiência" class="level3 unnumbered">
@@ -1381,21 +1559,25 @@ N(\mu,\sigma^2),\]</span></p>
 =
 -\frac{\alpha}{\theta}
 +
-\frac{X}{\theta^2}.\]</span></p>
+\frac{X}{\theta^2}.
+\]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[I_1(\theta)
 =
-\frac{\alpha}{\theta^2}\]</span></p>
+\frac{\alpha}{\theta^2}
+\]</span></p>
 <p>e</p>
 <p><span class="math display">\[\frac{1}{I_n(\theta)}
 =
-\frac{\theta^2}{n\alpha}.\]</span></p>
+\frac{\theta^2}{n\alpha}.
+\]</span></p>
 <p>Como a variância de <span class="math inline">\(\widehat{\theta}\)</span> coincide com o limite de Cramér–Rao,</p>
 <p><span class="math display">\[\boxed{
 \widehat{\theta}
 =
 \frac{\overline{X}}{\alpha}
-}\]</span></p>
+}
+\]</span></p>
 <p>é simultaneamente não viesado, consistente, eficiente e ENVUM. O exemplo integra resultados de suficiência, completude e eficiência apresentados por <span class="citation" data-cites="ramachandran2021r">Ramachandran; Tsokos (<a href="#ref-ramachandran2021r" role="doc-biblioref">2021</a>)</span> [chap.&nbsp;5] e <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>, chaps. 3–5)</span>.</p>
 </section>
 </section>
@@ -1480,14 +1662,14 @@ N(\mu,\sigma^2),\]</span></p>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nos exercícios, explicite o modelo, o parâmetro de interesse, o estimador e o critério de comparação. Quando utilizar a desigualdade de Cramér–Rao, verifique previamente as condições de regularidade.</p>
+<p>Quando pertinente, explicite o modelo, o parâmetro de interesse, o estimador e o critério de comparação. Ao utilizar a desigualdade de Cramér–Rao, verifique previamente as condições de regularidade.</p>
 </div>
 </div>
 <ol type="1">
 <li><strong>Viés e EQM.</strong> Sejam <span class="math inline">\(X_1,\ldots,X_n\)</span> i.i.d. com <span class="math inline">\(E(X_i)=\mu\)</span> e <span class="math inline">\(\operatorname{Var}(X_i)=\sigma^2\)</span>. Para constantes <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>, considere</li>
 </ol>
 <p><span class="math display">\[\delta=a\overline{X}+b.\]</span></p>
-<p>Calcule o viés, a variância e o EQM de <span class="math inline">\(\delta\)</span> como estimador de <span class="math inline">\(\mu\)</span>. Determine as condições sobre <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> para que <span class="math inline">\(\delta\)</span> seja não viesado e consistente.</p>
+<p>Calcule o viés, a variância e o EQM de <span class="math inline">\(\delta\)</span> como estimador de <span class="math inline">\(\mu\)</span>. Determine as condições sobre <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span> para que <span class="math inline">\(\delta\)</span> seja não viesado para <span class="math inline">\(\mu\)</span> e consistente para <span class="math inline">\(\mu\)</span>, para todo <span class="math inline">\(\mu\)</span>.</p>
 <ol start="2" type="1">
 <li><strong>Uniforme e compromisso viés–variância.</strong> No modelo <span class="math inline">\(\operatorname{Unif}(0,\theta)\)</span>, compare os EQM de</li>
 </ol>
@@ -1495,16 +1677,21 @@ N(\mu,\sigma^2),\]</span></p>
 \qquad
 X_{(n)},
 \qquad
-\frac{n+1}{n}X_{(n)}.\]</span></p>
-<p>Determine qual estimador possui menor EQM para <span class="math inline">\(n&gt;1\)</span>.</p>
+\frac{n+1}{n}X_{(n)}.
+\]</span></p>
+<ol type="a">
+<li><p>Determine qual estimador possui menor EQM para <span class="math inline">\(n&gt;1\)</span>.</p></li>
+<li><p>O suporte da distribuição depende de <span class="math inline">\(\theta\)</span>. Explique por que a forma clássica da desigualdade de Cramér–Rao apresentada no capítulo não pode ser aplicada diretamente a esse modelo.</p></li>
+</ol>
 <ol start="3" type="1">
 <li><p><strong>Consistência por EQM.</strong> Se <span class="math inline">\(E_\theta(\delta_n)=\theta+n^{-1}\)</span> e <span class="math inline">\(\operatorname{Var}_\theta(\delta_n)=4/n\)</span>, mostre que <span class="math inline">\(\delta_n\)</span> é consistente para <span class="math inline">\(\theta\)</span>.</p></li>
-<li><p><strong>Cramér–Rao no modelo exponencial.</strong> Para uma amostra da distribuição exponencial com média <span class="math inline">\(\theta\)</span>, calcule a informação de Fisher e mostre que <span class="math inline">\(\overline{X}\)</span> atinge o limite de Cramér–Rao para a estimação de <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p><strong>Cramér–Rao no modelo exponencial.</strong> Para uma amostra da distribuição exponencial com média <span class="math inline">\(\theta\)</span>, calcule a informação de Fisher de uma observação e da amostra e mostre que <span class="math inline">\(\overline{X}\)</span> atinge o limite de Cramér–Rao para a estimação de <span class="math inline">\(\theta\)</span>.</p></li>
 <li><p><strong>Suficiência no modelo normal.</strong> Se</p></li>
 </ol>
 <p><span class="math display">\[X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
-N(\mu,\sigma^2),\]</span></p>
+N(\mu,\sigma^2),
+\]</span></p>
 <p>identifique uma estatística suficiente para:</p>
 <ol type="a">
 <li><p><span class="math inline">\(\mu\)</span>, quando <span class="math inline">\(\sigma^2\)</span> é conhecida;</p></li>
@@ -1514,18 +1701,43 @@ N(\mu,\sigma^2),\]</span></p>
 <!-- -->
 <ol start="6" type="1">
 <li><p><strong>Suficiência mínima.</strong> Utilize o critério da razão de verossimilhanças para mostrar que <span class="math inline">\(X_{(n)}\)</span> é suficiente minimal para <span class="math inline">\(\theta\)</span> no modelo <span class="math inline">\(\operatorname{Unif}(0,\theta)\)</span>.</p></li>
+<li><p><strong>Suficiência e completude no modelo geométrico.</strong> Seja</p></li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Geom}(p),
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+P_p(X_i=x) = p(1-p)^{x-1}, \qquad x=1,2,\ldots, \qquad 0&lt;p&lt;1.
+\]</span></p>
+<ol type="a">
+<li><p>Mostre, pelo teorema da fatoração, que <span class="math inline">\(T=\sum_{i=1}^nX_i\)</span> é suficiente para <span class="math inline">\(p\)</span>.</p></li>
+<li><p>Determine a distribuição de <span class="math inline">\(T\)</span>.</p></li>
+<li><p>Mostre que a família de distribuições de <span class="math inline">\(T\)</span> é completa.</p></li>
+</ol>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+<ol start="8" type="1">
 <li><p><strong>Rao–Blackwell.</strong> Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são i.i.d. <span class="math inline">\(\operatorname{Poisson}(\theta)\)</span>, parta do estimador <span class="math inline">\(I\{X_1=1\}\)</span> de <span class="math inline">\(\theta e^{-\theta}\)</span> e calcule sua versão de Rao–Blackwell condicionando em <span class="math inline">\(T=\sum_iX_i\)</span>.</p></li>
 <li><p><strong>Lehmann–Scheffé no modelo binomial.</strong> Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são i.i.d. <span class="math inline">\(\operatorname{Bin}(m,p)\)</span>, com <span class="math inline">\(m\)</span> conhecido, mostre que</p></li>
 </ol>
 <p><span class="math display">\[\widehat{p}
 =
-\frac{\sum_{i=1}^nX_i}{nm}\]</span></p>
+\frac{\sum_{i=1}^nX_i}{nm}
+\]</span></p>
 <p>é o ENVUM de <span class="math inline">\(p\)</span>. Verifique também se o estimador é eficiente.</p>
-<ol start="9" type="1">
-<li><p><strong>Taxa exponencial.</strong> No modelo <span class="math inline">\(\operatorname{Exp}(\theta)\)</span> parametrizado pela taxa, mostre que <span class="math inline">\((n-1)/\sum_iX_i\)</span> é o ENVUM de <span class="math inline">\(\theta\)</span>. Calcule sua variância e explique por que ele não atinge o limite de Cramér–Rao.</p></li>
+<ol start="10" type="1">
+<li><strong>Taxa exponencial.</strong> No modelo <span class="math inline">\(\operatorname{Exp}(\theta)\)</span> parametrizado pela taxa, com <span class="math inline">\(n&gt;2\)</span>, mostre que</li>
+</ol>
+<p><span class="math display">\[
+\frac{n-1}{\sum_{i=1}^n X_i}
+\]</span></p>
+<p>é o ENVUM de <span class="math inline">\(\theta\)</span>. Calcule sua variância e explique por que ele não atinge o limite de Cramér–Rao.</p>
+<ol start="11" type="1">
 <li><p><strong>Ancilaridade e Basu.</strong> No modelo normal com variância conhecida, mostre que <span class="math inline">\(S^2\)</span> é ancilar para <span class="math inline">\(\mu\)</span>. Use o teorema de Basu para justificar a independência entre <span class="math inline">\(\overline{X}\)</span> e <span class="math inline">\(S^2\)</span>.</p></li>
 <li><p><strong>Família exponencial curva.</strong> Considere uma família normal <span class="math inline">\(N(\mu,\mu^2)\)</span>, com <span class="math inline">\(\mu&gt;0\)</span>. Mostre que ela pode ser vista como uma subfamília curva da família normal de dois parâmetros. Discuta por que a completude da estatística canônica da família completa não pode ser transferida automaticamente para essa subfamília.</p></li>
-<li><p><strong>Comparação integrada.</strong> Para cada um dos estimadores abaixo, classifique as propriedades de não viés, consistência, eficiência de Cramér–Rao e condição de ENVUM, justificando cada resposta:</p></li>
+<li><p><strong>Comparação integrada.</strong> Para cada estimador abaixo, determine se é não viesado, consistente e ENVUM e, quando aplicável, se atinge o limite de Cramér–Rao. Justifique cada resposta:</p></li>
 </ol>
 <!-- -->
 <ol type="a">
@@ -1534,7 +1746,150 @@ N(\mu,\sigma^2),\]</span></p>
 <li><p><span class="math inline">\((n+1)X_{(n)}/n\)</span> para <span class="math inline">\(\theta\)</span> em <span class="math inline">\(\operatorname{Unif}(0,\theta)\)</span>;</p></li>
 <li><p><span class="math inline">\((n-1)/\sum_iX_i\)</span> para a taxa de uma distribuição exponencial.</p></li>
 </ol>
-<p>Os exercícios foram elaborados ou adaptados a partir das discussões e listas de problemas de <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>)</span> [chaps. 4–5], <span class="citation" data-cites="rice2007mathematical">Rice (<a href="#ref-rice2007mathematical" role="doc-biblioref">2007</a>, chap.&nbsp;8)</span>, <span class="citation" data-cites="ramachandran2021r">Ramachandran; Tsokos (<a href="#ref-ramachandran2021r" role="doc-biblioref">2021</a>)</span> [chap.&nbsp;5], <span class="citation" data-cites="larsen2012">Larsen; Marx (<a href="#ref-larsen2012" role="doc-biblioref">2012</a>, chap.&nbsp;5)</span> e <span class="citation" data-cites="bickel2016volume2">Bickel; Doksum (<a href="#ref-bickel2016volume2" role="doc-biblioref">2016</a>, chap.&nbsp;8)</span>.</p>
+<p>Os exercícios foram elaborados ou adaptados a partir das discussões e listas de problemas de <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>, chaps. 4–5)</span>, <span class="citation" data-cites="rice2007mathematical">Rice (<a href="#ref-rice2007mathematical" role="doc-biblioref">2007</a>, chap.&nbsp;8)</span>, <span class="citation" data-cites="ramachandran2021r">Ramachandran; Tsokos (<a href="#ref-ramachandran2021r" role="doc-biblioref">2021</a>, chap.&nbsp;5)</span>, <span class="citation" data-cites="larsen2012">Larsen; Marx (<a href="#ref-larsen2012" role="doc-biblioref">2012</a>, chap.&nbsp;5)</span>, <span class="citation" data-cites="bickel2016volume2">Bickel; Doksum (<a href="#ref-bickel2016volume2" role="doc-biblioref">2016</a>, chap.&nbsp;8)</span> e <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>, chap.&nbsp;6)</span>.</p>
+<section id="exercícios-extras" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="exercícios-extras">Exercícios extras</h3>
+<ol start="14" type="1">
+<li><strong>Eficiência no modelo Bernoulli.</strong> Seja</li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Bernoulli}(p).
+\]</span></p>
+<ol type="a">
+<li><p>Mostre que <span class="math inline">\(\widehat p=\overline X\)</span> é não viesado para <span class="math inline">\(p\)</span>.</p></li>
+<li><p>Calcule sua variância.</p></li>
+<li><p>Obtenha o limite inferior de Cramér–Rao para estimadores não viesados de <span class="math inline">\(p\)</span>.</p></li>
+<li><p>Verifique se <span class="math inline">\(\widehat p\)</span> atinge esse limite.</p></li>
+<li><p>Para <span class="math inline">\(n\geq4\)</span>, mostre que <span class="math inline">\(X_1X_2X_3X_4\)</span> é não viesado para <span class="math inline">\(p^4\)</span> e use Rao–Blackwell e Lehmann–Scheffé para obter o ENVUM de <span class="math inline">\(p^4\)</span>.</p></li>
+</ol>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 7.</em></p>
+<ol start="15" type="1">
+<li><strong>ENVUM sem atingir Cramér–Rao.</strong> Seja</li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\theta,1).
+\]</span></p>
+<ol type="a">
+<li>Mostre que</li>
+</ol>
+<p><span class="math display">\[
+\overline X^2-\frac1n
+\]</span></p>
+<p>é não viesado para <span class="math inline">\(\theta^2\)</span>.</p>
+<ol start="2" type="a">
+<li><p>Mostre que ele é o ENVUM de <span class="math inline">\(\theta^2\)</span>.</p></li>
+<li><p>Calcule sua variância.</p></li>
+<li><p>Obtenha o limite inferior de Cramér–Rao para estimadores não viesados de <span class="math inline">\(\theta^2\)</span>.</p></li>
+</ol>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 7.</em></p>
+<ol start="16" type="1">
+<li><strong>Melhoria de um estimador exponencial.</strong> Seja</li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exp}(\theta),
+\qquad E(X_i)=\theta,
+\]</span></p>
+<p>e defina</p>
+<p><span class="math display">\[
+Y=X_{(1)}=\min\{X_1,\ldots,X_n\}.
+\]</span></p>
+<ol type="a">
+<li><p>Encontre uma função de <span class="math inline">\(Y\)</span> que seja não viesada para <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>Calcule sua variância.</p></li>
+<li><p>Compare-a com <span class="math inline">\(\overline X\)</span>.</p></li>
+<li><p>Mostre que <span class="math inline">\(\overline X\)</span> possui menor variância.</p></li>
+<li><p>Relacione essa melhoria ao princípio de Rao–Blackwell.</p></li>
+</ol>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 7.</em></p>
+<ol start="17" type="1">
+<li><strong>Completude e espaço paramétrico.</strong> Considere</li>
+</ol>
+<p><span class="math display">\[
+X\sim\operatorname{Poisson}(\lambda),
+\]</span></p>
+<p>mas suponha que o espaço paramétrico seja restrito a</p>
+<p><span class="math display">\[
+\lambda\in\{0,1\}.
+\]</span></p>
+<p>Mostre que essa família não é completa.</p>
+<p>Em seguida, explique por que esse resultado mostra que a completude depende não apenas da forma da distribuição, mas também do espaço paramétrico.</p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+<ol start="18" type="1">
+<li><strong>Completude no modelo Poisson.</strong> Seja</li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Poisson}(\lambda),
+\qquad
+\lambda&gt;0,
+\]</span></p>
+<p>e considere</p>
+<p><span class="math display">\[
+T=\sum_{i=1}^nX_i.
+\]</span></p>
+<ol type="a">
+<li><p>Determine a distribuição de <span class="math inline">\(T\)</span>.</p></li>
+<li><p>Seja <span class="math inline">\(g\)</span> uma função tal que</p></li>
+</ol>
+<p><span class="math display">\[
+E_\lambda[g(T)]=0
+\]</span></p>
+<p>para todo <span class="math inline">\(\lambda&gt;0\)</span>. Mostre diretamente, sem utilizar o teorema geral de completude para famílias exponenciais, que</p>
+<p><span class="math display">\[
+g(T)=0
+\]</span></p>
+<p>quase certamente.</p>
+<ol start="3" type="a">
+<li><p>Conclua que a família de distribuições de <span class="math inline">\(T\)</span> é completa.</p></li>
+<li><p>Compare esse resultado com o exercício em que o espaço paramétrico é restrito a <span class="math inline">\(\lambda\in\{0,1\}\)</span>.</p></li>
+</ol>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+<ol start="19" type="1">
+<li><strong>Ancilaridade em uma família de locação–escala.</strong> Seja</li>
+</ol>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\]</span></p>
+<p>uma amostra de uma família de locação–escala e considere a transformação</p>
+<p><span class="math display">\[
+X_i=a+bZ_i,
+\qquad
+a\in\mathbb R,\quad b&gt;0,
+\]</span></p>
+<p>em que a distribuição de <span class="math inline">\(Z_i\)</span> não depende de <span class="math inline">\(a\)</span> nem de <span class="math inline">\(b\)</span>.</p>
+<p>Sejam</p>
+<p><span class="math display">\[
+R=X_{(n)}-X_{(1)}
+\]</span></p>
+<p>a amplitude amostral e <span class="math inline">\(S\)</span> o desvio-padrão amostral.</p>
+<ol type="a">
+<li>Mostre que, sob a transformação anterior,</li>
+</ol>
+<p><span class="math display">\[
+R_X=bR_Z
+\qquad\text{e}\qquad
+S_X=bS_Z.
+\]</span></p>
+<ol start="2" type="a">
+<li>Mostre que</li>
+</ol>
+<p><span class="math display">\[
+\frac{R_X}{S_X}
+=
+\frac{R_Z}{S_Z}.
+\]</span></p>
+<ol start="3" type="a">
+<li>Conclua que <span class="math inline">\(R/S\)</span> é uma estatística ancilar para os parâmetros de locação e escala.</li>
+</ol>
+<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+</section>
 </section>
 <section id="referências" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>

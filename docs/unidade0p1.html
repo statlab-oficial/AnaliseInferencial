@@ -2,23 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>1&nbsp; Revisão de Probabilidade e Modelos Probabilísticos</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -60,18 +54,19 @@ div.csl-indent {
 <link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-4c6d65c679321d81af7ec8b61b1d5a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -101,7 +96,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -317,14 +312,18 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
         </div>
         </div>
-        <div class="sidebar-tools-collapse">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
-</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -965,7 +964,7 @@ P(a&lt;X\leq b)
 <p><span class="math display">\[
 P(X=x)=0.
 \]</span></p>
-<p>A probabilidade pontual é nula porque conjuntos unitários possuem comprimento nulo, e não simplesmente porque uma variável contínua pode assumir infinitos valores <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 2</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1–3.2)</span>.</p>
+<p>A probabilidade pontual é nula porque conjuntos unitários possuem comprimento nulo, e não simplesmente porque uma variável contínua pode assumir infinitos valores <span class="citation" data-cites="rice2007mathematical ramachandran2021r">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1–3.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 2</a>)</span>.</p>
 <p>Em modelos paramétricos, o suporte pode depender do parâmetro. Quando for necessário explicitar essa dependência, utilizaremos uma notação como</p>
 <p><span class="math display">\[
 \mathcal X_\theta.
@@ -2194,7 +2193,7 @@ Figura&nbsp;1.1: Função de massa de probabilidade e função de distribuição
 </div>
 </div>
 </div>
-<p>A <a href="#fig-uniforme-discreta-fmp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-uniforme-discreta-fmp-fda</span></a> mostra que todos os valores do suporte possuem a mesma massa de probabilidade. À medida que <span class="math inline">\(m\)</span> aumenta, essa massa individual diminui, pois a probabilidade total igual a <span class="math inline">\(1\)</span> é distribuída entre um número maior de valores. A função de distribuição apresenta saltos de mesma magnitude, iguais a <span class="math inline">\(1/m\)</span>. Assim, quanto maior o número de valores possíveis, menores são os saltos da função de distribuição.</p>
+<p>A <a href="#fig-uniforme-discreta-fmp-fda" class="quarto-xref">Figura&nbsp;<span>1.1</span></a> mostra que todos os valores do suporte possuem a mesma massa de probabilidade. À medida que <span class="math inline">\(m\)</span> aumenta, essa massa individual diminui, pois a probabilidade total igual a <span class="math inline">\(1\)</span> é distribuída entre um número maior de valores. A função de distribuição apresenta saltos de mesma magnitude, iguais a <span class="math inline">\(1/m\)</span>. Assim, quanto maior o número de valores possíveis, menores são os saltos da função de distribuição.</p>
 </section>
 <section id="distribuição-de-bernoulli" class="level3" data-number="1.6.2">
 <h3 data-number="1.6.2" class="anchored" data-anchor-id="distribuição-de-bernoulli"><span class="header-section-number">1.6.2</span> Distribuição de Bernoulli</h3>
@@ -2287,7 +2286,7 @@ Figura&nbsp;1.2: Função de massa de probabilidade e função de distribuição
 </div>
 </div>
 </div>
-<p>A <a href="#fig-bernoulli-fmp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-bernoulli-fmp-fda</span></a> mostra que o parâmetro <span class="math inline">\(p\)</span> redistribui a massa entre os dois valores possíveis. Quando <span class="math inline">\(p\)</span> é pequeno, a maior massa está em <span class="math inline">\(X=0\)</span>; quando <span class="math inline">\(p\)</span> é grande, concentra-se em <span class="math inline">\(X=1\)</span>. Para <span class="math inline">\(p=0{,}5\)</span>, os dois resultados possuem a mesma probabilidade. Na função de distribuição, o primeiro salto possui magnitude <span class="math inline">\(1-p\)</span> e ocorre em <span class="math inline">\(x=0\)</span>; o segundo completa a probabilidade acumulada em <span class="math inline">\(x=1\)</span>.</p>
+<p>A <a href="#fig-bernoulli-fmp-fda" class="quarto-xref">Figura&nbsp;<span>1.2</span></a> mostra que o parâmetro <span class="math inline">\(p\)</span> redistribui a massa entre os dois valores possíveis. Quando <span class="math inline">\(p\)</span> é pequeno, a maior massa está em <span class="math inline">\(X=0\)</span>; quando <span class="math inline">\(p\)</span> é grande, concentra-se em <span class="math inline">\(X=1\)</span>. Para <span class="math inline">\(p=0{,}5\)</span>, os dois resultados possuem a mesma probabilidade. Na função de distribuição, o primeiro salto possui magnitude <span class="math inline">\(1-p\)</span> e ocorre em <span class="math inline">\(x=0\)</span>; o segundo completa a probabilidade acumulada em <span class="math inline">\(x=1\)</span>.</p>
 </section>
 <section id="distribuição-binomial" class="level3" data-number="1.6.3">
 <h3 data-number="1.6.3" class="anchored" data-anchor-id="distribuição-binomial"><span class="header-section-number">1.6.3</span> Distribuição binomial</h3>
@@ -2436,7 +2435,7 @@ Figura&nbsp;1.3: Função de massa de probabilidade e função de distribuição
 </div>
 </div>
 </div>
-<p>A <a href="#fig-binomial-fmp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-binomial-fmp-fda</span></a> mostra como <span class="math inline">\(p\)</span> modifica a localização e a forma da distribuição para um mesmo número de ensaios. Como</p>
+<p>A <a href="#fig-binomial-fmp-fda" class="quarto-xref">Figura&nbsp;<span>1.3</span></a> mostra como <span class="math inline">\(p\)</span> modifica a localização e a forma da distribuição para um mesmo número de ensaios. Como</p>
 <p><span class="math display">\[
 E(X)=np,
 \]</span></p>
@@ -2548,7 +2547,7 @@ Figura&nbsp;1.4: Função de massa de probabilidade e função de distribuição
 </div>
 </div>
 </div>
-<p>A <a href="#fig-hipergeometrica-fmp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-hipergeometrica-fmp-fda</span></a> mantém fixados o tamanho da população e o tamanho da amostra e altera o número <span class="math inline">\(M\)</span> de sucessos existentes na população. Como</p>
+<p>A <a href="#fig-hipergeometrica-fmp-fda" class="quarto-xref">Figura&nbsp;<span>1.4</span></a> mantém fixados o tamanho da população e o tamanho da amostra e altera o número <span class="math inline">\(M\)</span> de sucessos existentes na população. Como</p>
 <p><span class="math display">\[
 E(X)
 =
@@ -2730,7 +2729,7 @@ Figura&nbsp;1.5: Função de massa de probabilidade e função de distribuição
 </div>
 </div>
 </div>
-<p>A <a href="#fig-geometrica-fmp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-geometrica-fmp-fda</span></a> mostra que a distribuição concentra sua maior massa em <span class="math inline">\(x=1\)</span> e decresce à medida que o número de tentativas aumenta. Para valores maiores de <span class="math inline">\(p\)</span>, o primeiro sucesso tende a ocorrer mais cedo. Essa relação também aparece em</p>
+<p>A <a href="#fig-geometrica-fmp-fda" class="quarto-xref">Figura&nbsp;<span>1.5</span></a> mostra que a distribuição concentra sua maior massa em <span class="math inline">\(x=1\)</span> e decresce à medida que o número de tentativas aumenta. Para valores maiores de <span class="math inline">\(p\)</span>, o primeiro sucesso tende a ocorrer mais cedo. Essa relação também aparece em</p>
 <p><span class="math display">\[
 E(X)=\frac{1}{p}.
 \]</span></p>
@@ -2848,7 +2847,7 @@ Figura&nbsp;1.6: Função de massa de probabilidade e função de distribuição
 </div>
 </div>
 </div>
-<p>A <a href="#fig-binomial-negativa-fmp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-binomial-negativa-fmp-fda</span></a> permite observar separadamente os efeitos de <span class="math inline">\(r\)</span> e <span class="math inline">\(p\)</span>. Mantendo <span class="math inline">\(p=0{,}4\)</span>, a passagem de <span class="math inline">\(r=2\)</span> para <span class="math inline">\(r=5\)</span> desloca a distribuição para valores maiores, pois mais sucessos precisam ser acumulados. Mantendo <span class="math inline">\(r=5\)</span>, o aumento de <span class="math inline">\(p\)</span> de <span class="math inline">\(0{,}4\)</span> para <span class="math inline">\(0{,}7\)</span> desloca a distribuição para valores menores, pois os sucessos passam a ocorrer com maior frequência. Essas relações são compatíveis com</p>
+<p>A <a href="#fig-binomial-negativa-fmp-fda" class="quarto-xref">Figura&nbsp;<span>1.6</span></a> permite observar separadamente os efeitos de <span class="math inline">\(r\)</span> e <span class="math inline">\(p\)</span>. Mantendo <span class="math inline">\(p=0{,}4\)</span>, a passagem de <span class="math inline">\(r=2\)</span> para <span class="math inline">\(r=5\)</span> desloca a distribuição para valores maiores, pois mais sucessos precisam ser acumulados. Mantendo <span class="math inline">\(r=5\)</span>, o aumento de <span class="math inline">\(p\)</span> de <span class="math inline">\(0{,}4\)</span> para <span class="math inline">\(0{,}7\)</span> desloca a distribuição para valores menores, pois os sucessos passam a ocorrer com maior frequência. Essas relações são compatíveis com</p>
 <p><span class="math display">\[
 E(X)=\frac{r}{p}.
 \]</span></p>
@@ -2970,7 +2969,7 @@ Figura&nbsp;1.7: Função de massa de probabilidade e função de distribuição
 </div>
 </div>
 </div>
-<p>A <a href="#fig-poisson-fmp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-poisson-fmp-fda</span></a> mostra que o aumento de <span class="math inline">\(\lambda\)</span> desloca a distribuição para contagens maiores e também aumenta sua dispersão. Isso decorre das relações</p>
+<p>A <a href="#fig-poisson-fmp-fda" class="quarto-xref">Figura&nbsp;<span>1.7</span></a> mostra que o aumento de <span class="math inline">\(\lambda\)</span> desloca a distribuição para contagens maiores e também aumenta sua dispersão. Isso decorre das relações</p>
 <p><span class="math display">\[
 E(X)=\lambda
 \]</span></p>
@@ -3382,7 +3381,7 @@ Figura&nbsp;1.8: Função de massa de probabilidade conjunta de uma distribuiç�
 </div>
 </div>
 </div>
-<p>Na parte superior da <a href="#fig-multinomial" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-multinomial</span></a>, cada posição representa uma combinação possível de contagens</p>
+<p>Na parte superior da <a href="#fig-multinomial" class="quarto-xref">Figura&nbsp;<span>1.8</span></a>, cada posição representa uma combinação possível de contagens</p>
 <p><span class="math display">\[
 (x_1,x_2,x_3)
 \]</span></p>
@@ -3551,7 +3550,7 @@ Figura&nbsp;1.9: Função densidade de probabilidade e função de distribuiçã
 </div>
 </div>
 </div>
-<p>A <a href="#fig-uniforme-fdp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-uniforme-fdp-fda</span></a> mostra separadamente os efeitos da posição e do comprimento do intervalo. As distribuições <span class="math inline">\(\operatorname{U}(-2,2)\)</span> e <span class="math inline">\(\operatorname{U}(0,4)\)</span> possuem a mesma amplitude, igual a <span class="math inline">\(4\)</span>, e consequentemente a mesma altura da densidade e a mesma variância. A segunda distribuição está apenas deslocada para a direita.</p>
+<p>A <a href="#fig-uniforme-fdp-fda" class="quarto-xref">Figura&nbsp;<span>1.9</span></a> mostra separadamente os efeitos da posição e do comprimento do intervalo. As distribuições <span class="math inline">\(\operatorname{U}(-2,2)\)</span> e <span class="math inline">\(\operatorname{U}(0,4)\)</span> possuem a mesma amplitude, igual a <span class="math inline">\(4\)</span>, e consequentemente a mesma altura da densidade e a mesma variância. A segunda distribuição está apenas deslocada para a direita.</p>
 <p>Para <span class="math inline">\(\operatorname{U}(-1,1)\)</span>, a amplitude é menor. Como a área total sob a densidade deve permanecer igual a <span class="math inline">\(1\)</span>, a redução do comprimento do intervalo aumenta a altura da densidade. Na função de distribuição, intervalos menores produzem um crescimento mais rápido de <span class="math inline">\(0\)</span> até <span class="math inline">\(1\)</span>.</p>
 </section>
 <section id="distribuição-exponencial" class="level3" data-number="1.8.2">
@@ -3656,7 +3655,7 @@ Figura&nbsp;1.10: Função densidade de probabilidade e função de distribuiç�
 </div>
 </div>
 </div>
-<p>A <a href="#fig-exponencial-fdp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-exponencial-fdp-fda</span></a> mostra que o aumento de <span class="math inline">\(\lambda\)</span> concentra a distribuição em tempos menores. Essa relação decorre de</p>
+<p>A <a href="#fig-exponencial-fdp-fda" class="quarto-xref">Figura&nbsp;<span>1.10</span></a> mostra que o aumento de <span class="math inline">\(\lambda\)</span> concentra a distribuição em tempos menores. Essa relação decorre de</p>
 <p><span class="math display">\[
 E(X)=\frac{1}{\lambda}.
 \]</span></p>
@@ -3807,7 +3806,7 @@ Figura&nbsp;1.11: Função densidade de probabilidade e função de distribuiç�
 </div>
 </div>
 </div>
-<p>A <a href="#fig-gama-fdp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-gama-fdp-fda</span></a> permite observar separadamente os efeitos dos parâmetros de forma e taxa. Para</p>
+<p>A <a href="#fig-gama-fdp-fda" class="quarto-xref">Figura&nbsp;<span>1.11</span></a> permite observar separadamente os efeitos dos parâmetros de forma e taxa. Para</p>
 <p><span class="math display">\[
 \alpha=1
 \quad\text{e}\quad
@@ -3985,7 +3984,7 @@ Figura&nbsp;1.12: Função densidade de probabilidade e função de distribuiç�
 </div>
 </div>
 </div>
-<p>A <a href="#fig-normal-fdp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-normal-fdp-fda</span></a> mostra separadamente os efeitos dos parâmetros <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma\)</span>. Mantendo <span class="math inline">\(\sigma=1\)</span>, a alteração de <span class="math inline">\(\mu\)</span> desloca a distribuição ao longo do eixo horizontal sem modificar sua forma. Mantendo <span class="math inline">\(\mu=0\)</span>, o aumento de <span class="math inline">\(\sigma\)</span> produz maior dispersão e reduz a altura máxima da densidade.</p>
+<p>A <a href="#fig-normal-fdp-fda" class="quarto-xref">Figura&nbsp;<span>1.12</span></a> mostra separadamente os efeitos dos parâmetros <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma\)</span>. Mantendo <span class="math inline">\(\sigma=1\)</span>, a alteração de <span class="math inline">\(\mu\)</span> desloca a distribuição ao longo do eixo horizontal sem modificar sua forma. Mantendo <span class="math inline">\(\mu=0\)</span>, o aumento de <span class="math inline">\(\sigma\)</span> produz maior dispersão e reduz a altura máxima da densidade.</p>
 <p>Na função de distribuição, mudanças em <span class="math inline">\(\mu\)</span> deslocam a curva horizontalmente, enquanto valores maiores de <span class="math inline">\(\sigma\)</span> tornam a transição entre probabilidades próximas de <span class="math inline">\(0\)</span> e de <span class="math inline">\(1\)</span> mais gradual.</p>
 <section id="padronização" class="level4" data-number="1.8.4.1">
 <h4 data-number="1.8.4.1" class="anchored" data-anchor-id="padronização"><span class="header-section-number">1.8.4.1</span> Padronização</h4>
@@ -4209,7 +4208,7 @@ Figura&nbsp;1.13: Função densidade de probabilidade e função de distribuiç�
 </div>
 </div>
 </div>
-<p>A <a href="#fig-beta-fdp-fda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-beta-fdp-fda</span></a> mostra a flexibilidade da distribuição beta. Para</p>
+<p>A <a href="#fig-beta-fdp-fda" class="quarto-xref">Figura&nbsp;<span>1.13</span></a> mostra a flexibilidade da distribuição beta. Para</p>
 <p><span class="math display">\[
 \alpha=\beta=2,
 \]</span></p>

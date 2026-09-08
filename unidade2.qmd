@@ -42,12 +42,12 @@ Ao final deste capítulo, o leitor deverá ser capaz de:
 2. distinguir o modelo iid da amostragem aleatória simples sem reposição em uma população finita;
 3. obter distribuições amostrais por enumeração, transformação, convolução e propriedades de distribuições conhecidas;
 4. utilizar propriedades de somas e funções geradoras de momentos para identificar distribuições amostrais exatas;
-5. determinar distribuições exatas e aproximações assintóticas para médias e proporções amostrais;
+5. determinar distribuições exatas e aproximações assintóticas para médias, diferenças de médias e proporções amostrais;
 6. relacionar a variância amostral às distribuições derivadas do modelo normal;
 7. obter distribuições de estatísticas de ordem;
 8. aproximar e visualizar distribuições amostrais por simulação.
 
-## População, parâmetro, amostra e estatística
+## Amostra e estatística: recordação
 
 ::: {.callout-important title="Definição — Modelo estatístico e parâmetro"}
 Um **modelo estatístico paramétrico** é uma família de distribuições
@@ -107,7 +107,7 @@ $$f_{\mathbf{X}}(\mathbf{x};\theta)
 \prod_{i=1}^n f(x_i;\theta).
 $$
 
-Para dados observados $\mathbf{x}$, a mesma expressão, considerada como função de $\theta$, define a verossimilhança [@cox2006principles, seção 2.1; @casella2002statistical, seção 6.3]:
+Retomando a introdução à verossimilhança feita no capítulo anterior, para dados observados $\mathbf{x}$, a mesma expressão, considerada como função de $\theta$, define a verossimilhança [@cox2006principles, seção 2.1; @casella2002statistical, seção 6.3]:
 
 $$
 L(\theta;\mathbf{x}) =\prod_{i=1}^n f(x_i;\theta).
@@ -654,6 +654,52 @@ $$
 O exemplo mostra diretamente como a distribuição binomial surge da soma de variáveis Bernoulli independentes.
 :::
 
+::: {.callout-tip title="Exemplo — Média de variáveis Poisson"}
+
+Se
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Poisson}(\lambda),
+$$
+
+então
+
+$$
+Y=\sum_{i=1}^nX_i
+\sim
+\operatorname{Poisson}(n\lambda).
+$$
+
+Como
+
+$$
+\overline X=\frac Yn,
+$$
+
+a média amostral não possui, em geral, distribuição Poisson. Seus valores possíveis
+são $0,1/n,2/n,\ldots$, e
+
+$$
+P\left(\overline X=\frac{k}{n}\right)
+=
+e^{-n\lambda}
+\frac{(n\lambda)^k}{k!},
+\qquad k=0,1,\ldots
+$$
+
+Além disso,
+
+$$
+E(\overline X)=\lambda,
+\qquad
+\operatorname{Var}(\overline X)=\frac{\lambda}{n}.
+$$
+
+:::
+
+
 ::: {.callout-important title="Teorema — FGM da soma e da média"}
 Se $X_1,\ldots,X_n$ são independentes e possuem funções geradoras de momentos $M_{X_i}(t)$, então
 
@@ -715,6 +761,37 @@ $$
 
 A conclusão usa a FGM da distribuição gama e a regra de escala [@larsen2012, seções 3.12 e 4.6; @ramachandran2021r, capítulos 3--4].
 :::
+
+Como caso particular, considere uma distribuição exponencial parametrizada pela média,
+
+$$
+X_i
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exp}(\mu),
+\qquad
+E(X_i)=\mu.
+$$
+
+Como uma exponencial com média $\mu$ corresponde a uma distribuição gama com forma $1$ e escala $\mu$,
+
+$$
+\sum_{i=1}^nX_i
+\sim
+\operatorname{Gama}(n,\mu)
+$$
+
+e
+
+$$
+\boxed{
+\overline X
+\sim
+\operatorname{Gama}
+\left(
+n,\frac{\mu}{n}
+\right).
+}
+$$
 
 ## Distribuição amostral da média
 
@@ -794,6 +871,114 @@ A menor amplitude do segundo intervalo reflete a menor variabilidade das médias
 ::: {.callout-note title="Intervalo de probabilidade e intervalo de confiança"}
 Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança, pois $\mu$ e $\sigma$ foram tratados como conhecidos. A construção de intervalos de confiança será desenvolvida posteriormente.
 :::
+
+### Diferença de médias de duas amostras independentes
+
+Considere duas amostras independentes,
+
+$$
+X_1,\ldots,X_n,
+\qquad
+Y_1,\ldots,Y_m,
+$$
+
+tais que
+
+$$
+E(X_i)=\mu_1,
+\qquad
+\operatorname{Var}(X_i)=\sigma_1^2
+$$
+
+e
+
+$$
+E(Y_j)=\mu_2,
+\qquad
+\operatorname{Var}(Y_j)=\sigma_2^2.
+$$
+
+A diferença entre as médias amostrais é a estatística
+
+$$
+D=\overline X-\overline Y.
+$$
+
+Pela linearidade da esperança,
+
+$$
+E(D)
+=
+E(\overline X)-E(\overline Y)
+=
+\mu_1-\mu_2.
+$$
+
+Como as duas amostras são independentes,
+
+$$
+\operatorname{Cov}(\overline X,\overline Y)=0,
+$$
+
+e, portanto,
+
+$$
+\operatorname{Var}(D)
+=
+\operatorname{Var}(\overline X)
++
+\operatorname{Var}(\overline Y),
+$$
+
+isto é,
+
+$$
+\boxed{
+\operatorname{Var}(\overline X-\overline Y)
+=
+\frac{\sigma_1^2}{n}
++
+\frac{\sigma_2^2}{m}.
+}
+$$
+
+::: {.callout-important title="Resultado — Duas populações normais"}
+
+Se
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu_1,\sigma_1^2)
+$$
+
+e
+
+$$
+Y_1,\ldots,Y_m
+\overset{\mathrm{iid}}{\sim}
+N(\mu_2,\sigma_2^2),
+$$
+
+com as duas amostras independentes, então
+
+$$
+\boxed{
+\overline X-\overline Y
+\sim
+N\left(
+\mu_1-\mu_2,\,
+\frac{\sigma_1^2}{n}
++
+\frac{\sigma_2^2}{m}
+\right).
+}
+$$
+
+A normalidade é exata porque $\overline X$ e $\overline Y$ são variáveis normais independentes.
+
+:::
+
 
 ## Lei dos Grandes Números
 
@@ -1592,6 +1777,14 @@ $$f_{X_{(n)}}(x)
 n[F(x)]^{n-1}f(x).
 $$
 
+::: {.callout-note title="Parâmetro no suporte"}
+
+As fórmulas para o mínimo e o máximo também se aplicam quando o suporte da distribuição depende de um parâmetro. Para obter a distribuição amostral, considera-se $\theta$ fixado e calcula-se a distribuição da estatística sob $P_\theta$.
+
+Nesses modelos, deve-se observar cuidadosamente o conjunto de valores possíveis da estatística, pois seus limites também podem depender de $\theta$.
+
+:::
+
 ### $k$-ésima estatística de ordem
 
 ::: {.callout-important title="Teorema — Densidade de $X_{(k)}$"}
@@ -1798,11 +1991,14 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 | Amostra i.i.d., $E(X)=\mu$, $\operatorname{Var}(X)=\sigma^2$ | $\overline{X}$ | $E(\overline{X})=\mu$, $\operatorname{Var}(\overline{X})=\sigma^2/n$ |
 | População normal | $\overline{X}$ | $N(\mu,\sigma^2/n)$, exatamente |
 | Amostra iid, $E(X)=\mu$ e $0<\operatorname{Var}(X)=\sigma^2<\infty$ | $\sqrt n(\overline{X}-\mu)/\sigma$ | $N(0,1)$, assintoticamente |
+| Poisson iid | $n\overline X=\sum X_i$ | $\operatorname{Poisson}(n\lambda)$ |
 | Bernoulli iid | $Y=\sum X_i$ | $\operatorname{Binomial}(n,p)$ |
 | Bernoulli iid | $\widehat p=Y/n$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=p(1-p)/n$ |
 | População normal | $(n-1)S^2/\sigma^2$ | $\chi^2_{n-1}$ |
 | População normal | $(\overline{X}-\mu)/(S/\sqrt n)$ | $t_{n-1}$ |
+| Exponencial iid, parametrizada pela média | $\overline X$ | $\operatorname{Gama}(n,\mu/n)$ |
 | Duas populações normais independentes | $(S_1^2/\sigma_1^2)/(S_2^2/\sigma_2^2)$ | $F_{n_1-1,n_2-1}$ |
+| Duas populações normais independentes | $\overline X-\overline Y$ | $N\left(\mu_1-\mu_2,\sigma_1^2/n+\sigma_2^2/m\right)$ |
 | Amostra iid de uma distribuição contínua | $X_{(k)}$ | densidade da $k$-ésima estatística de ordem |
 | População finita, AAS sem reposição | $\overline X$ | $E(\overline X)=\mu_N$, $\operatorname{Var}(\overline X)=\dfrac{\sigma_N^2}{n}\dfrac{N-n}{N-1}$ |
 | Proporção em população finita sem reposição | $\widehat p$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=\dfrac{p(1-p)}{n}\dfrac{N-n}{N-1}$ |
@@ -1831,7 +2027,16 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 
     c.  Repita sem reposição e verifique a correção de população finita.
 
-7.  **Média exponencial.** Seja $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\beta)$ na parametrização por escala.
+7.  **Média exponencial.** Seja
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exp}(\mu),
+\qquad E(X_i)=\mu,
+$$
+
+na parametrização pela média.
 
     a.  Obtenha a distribuição de $\sum X_i$.
 
@@ -1839,7 +2044,25 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 
     c.  Calcule $P(\overline{X}>c)$ em termos da função de distribuição gama.
 
-8.  **Média normal.** Uma variável tem distribuição $N(50,12^2)$. Para uma amostra de tamanho $36$:
+8.  **Média Poisson.** Seja
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Poisson}(\lambda).
+$$
+
+    a.  Obtenha a distribuição de
+
+$$
+Y=\sum_{i=1}^n X_i.
+$$
+
+b.  A partir desse resultado, obtenha a distribuição de $\overline X$.
+
+c.  Determine $E(\overline X)$ e $\operatorname{Var}(\overline X)$.
+
+9.  **Média normal.** Uma variável tem distribuição $N(50,12^2)$. Para uma amostra de tamanho $36$:
 
     a.  determine a distribuição de $\overline{X}$;
 
@@ -1847,9 +2070,36 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 
     c.  encontre $c$ tal que $P(|\overline{X}-50|<c)=0{,}95$.
 
-9.  **TCL para uma população não normal.** Seja $X_1,\ldots,X_{64}\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(1)$, na parametrização por taxa. Use o TCL para aproximar $P(0{,}8<\overline{X}<1{,}2)$.
+10. **Diferença de médias.** Considere duas amostras independentes,
 
-10. **Proporção.** Em uma população, $p=0{,}12$. Para $n=200$:
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu_1,\sigma_1^2)
+$$
+
+e
+
+$$
+Y_1,\ldots,Y_m
+\overset{\mathrm{iid}}{\sim}
+N(\mu_2,\sigma_2^2).
+$$
+
+    a.  Determine as distribuições de $\overline X$ e $\overline Y$.
+
+    b.  Obtenha a distribuição de
+
+$$
+\overline X-\overline Y.
+$$
+
+    c.  Determine $E(\overline X-\overline Y)$ e
+$\operatorname{Var}(\overline X-\overline Y)$.
+
+11.  **TCL para uma população não normal.** Seja $X_1,\ldots,X_{64}\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(1)$, na parametrização por taxa. Use o TCL para aproximar $P(0{,}8<\overline{X}<1{,}2)$.
+
+12. **Proporção.** Em uma população, $p=0{,}12$. Para $n=200$:
 
     a.  determine $E(\widehat p)$ e $\operatorname{EP}(\widehat p)$;
 
@@ -1857,7 +2107,7 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 
     c.  compare a aproximação com a probabilidade binomial exata no R.
 
-11. **Correção de continuidade.** Seja $Y\sim\operatorname{Binomial}(150,0{,}5)$. Calcule aproximadamente:
+13. **Correção de continuidade.** Seja $Y\sim\operatorname{Binomial}(150,0{,}5)$. Calcule aproximadamente:
 
     a.  $P(Y\geq90)$;
 
@@ -1865,7 +2115,7 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 
     c.  compare os resultados com `pbinom()`.
 
-12. **Variância amostral normal.** Se
+14. **Variância amostral normal.** Se
 
 $$
 X_1,\ldots,X_{20}
@@ -1881,19 +2131,19 @@ calcule:
 
     b.  os quantis $a$ e $b$ tais que $P(a<S^2<b)=0{,}95$ com caudas iguais.
 
-13. **Distribuição** $t$. Se uma amostra normal possui $n=16$, determine $c$ tal que
+15. **Distribuição** $t$. Se uma amostra normal possui $n=16$, determine $c$ tal que
 
 $$P\left(
 \left|\frac{\overline{X}-\mu}{S/4}\right|<c
 \right)=0{,}95.$$
 
-14. **Razão de variâncias.** Duas amostras normais independentes possuem tamanhos $n_1=12$ e $n_2=18$.
+16. **Razão de variâncias.** Duas amostras normais independentes possuem tamanhos $n_1=12$ e $n_2=18$.
 
     a.  determine a distribuição de $(S_1^2/\sigma_1^2)/(S_2^2/\sigma_2^2)$;
 
     b.  sob $\sigma_1^2=\sigma_2^2$, calcule $P(S_1^2/S_2^2>2)$.
 
-15. **Estatísticas de ordem.** Seja $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Unif}(0,\theta)$.
+17. **Estatísticas de ordem.** Seja $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Unif}(0,\theta)$.
 
     a.  obtenha a função de distribuição de $X_{(n)}$;
 
@@ -1901,15 +2151,49 @@ $$P\left(
 
     c.  calcule $E[X_{(n)}]$;
 
-    d.  proponha uma transformação de $X_{(n)}$ que seja não viesada para $\theta$.
+    d.  proponha uma transformação, $T(\cdot)$, de $X_{(n)}$ tal que  $E[T(X_{(n)})] = \theta$.
 
-16. **Mínimo exponencial.** Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\lambda)$ na parametrização por taxa, mostre que
+18. **Parâmetro no suporte.** Seja
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+f(x\mid\theta),
+$$
+
+em que, para $a>0$ conhecido,
+
+$$
+f(x\mid\theta)
+=
+\frac{a x^{a-1}}{\theta^a},
+\qquad
+0<x<\theta,
+$$
+
+e $f(x\mid\theta)=0$ fora desse intervalo.
+
+a. Obtenha a função de distribuição de $X_i$.
+
+b. Obtenha a função de distribuição de $X_{(n)}$.
+
+c. Obtenha a densidade de $X_{(n)}$.
+
+d. Obtenha a distribuição de
+
+$$
+\frac{X_{(n)}}{\theta}.
+$$
+
+*Adaptado de @casella2002statistical, cap. 5.*
+
+19. **Mínimo exponencial.** Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\lambda)$ na parametrização por taxa, mostre que
 
 $$X_{(1)}\sim\operatorname{Exp}(n\lambda).$$
 
 ### Exercícios teóricos e computacionais {.unnumbered}
 
-17. **Variância de** $S^2$. Usando a fórmula geral demonstrada neste capítulo,
+20. **Variância de** $S^2$. Usando a fórmula geral demonstrada neste capítulo,
 
 $$\operatorname{Var}(S^2)
 =
@@ -1920,7 +2204,7 @@ $$\operatorname{Var}(S^2)
 
 verifique que, para uma população normal, $\operatorname{Var}(S^2)=2\sigma^4/(n-1)$.
 
-18. **Simulação do TCL.** Repita a simulação deste capítulo para populações uniforme, Bernoulli, lognormal e Cauchy padrão. 
+21. **Simulação do TCL.** Repita a simulação deste capítulo para populações uniforme, Bernoulli, lognormal e Cauchy padrão. 
 
 <!-- -->
 
@@ -1932,16 +2216,16 @@ c.  Relacione o resultado às hipóteses do TCL.
 
 <!-- -->
 
-19. **Aproximação Monte Carlo.** Para $X_i\sim\operatorname{Beta}(2,5)$ e $n=15$, estime por simulação a distribuição de
+22. **Aproximação Monte Carlo.** Para $X_i\sim\operatorname{Beta}(2,5)$ e $n=15$, estime por simulação a distribuição de
 
 $$T=\frac{\overline{X}-E(X)}{S/\sqrt{n}}.$$
 
 Compare o histograma com as densidades $N(0,1)$ e $t_{14}$.
 
-20. **Demonstração por FGM.** Demonstre que, se $X_i\sim N(\mu,\sigma^2)$ são independentes, então $\overline{X}\sim N(\mu,\sigma^2/n)$.
+23. **Demonstração por FGM.** Demonstre que, se $X_i\sim N(\mu,\sigma^2)$ são independentes, então $\overline{X}\sim N(\mu,\sigma^2/n)$.
 
-21. **Demonstração da Lei Fraca.** Use a desigualdade de Chebyshev para demonstrar a Lei Fraca dos Grandes Números sob variância finita.
+24. **Demonstração da Lei Fraca.** Use a desigualdade de Chebyshev para demonstrar a Lei Fraca dos Grandes Números sob variância finita.
 
-22. **Distribuição da estatística de ordem.** Demonstre a fórmula da densidade de $X_{(k)}$ contando as maneiras de obter $k-1$ observações abaixo de $x$, uma observação em $(x,x+dx)$ e $n-k$ observações acima de $x+dx$.
+25. **Distribuição da estatística de ordem.** Demonstre a fórmula da densidade de $X_{(k)}$ contando as maneiras de obter $k-1$ observações abaixo de $x$, uma observação em $(x,x+dx)$ e $n-k$ observações acima de $x+dx$.
 
 ## Referências {.unnumbered}

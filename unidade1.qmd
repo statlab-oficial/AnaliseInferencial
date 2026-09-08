@@ -2,7 +2,7 @@
 
 A inferência estatística utiliza informações obtidas em uma amostra para estudar características desconhecidas de uma população ou de um processo que produz dados. Como diferentes amostras podem gerar resultados diferentes, as conclusões obtidas a partir dos dados estão associadas à variabilidade e à incerteza.
 
-Este capítulo apresenta os conceitos que estruturam esse processo. Inicialmente, são discutidos o problema inferencial, o processo gerador de dados, a população, os parâmetros e a amostragem. Um experimento com uma urna permite observar diretamente a variabilidade produzida por diferentes amostras. A partir dessa experiência, são formalizados os conceitos de estatística, estimador, estimativa, modelo estatístico e verossimilhança.
+Este capítulo apresenta os conceitos que estruturam esse processo. Inicialmente, são discutidos o problema inferencial, o processo gerador de dados, a população, os parâmetros e a amostragem. Um experimento com uma urna permite observar diretamente a variabilidade produzida por diferentes amostras. A partir dessa experiência, são formalizados os conceitos de estatística, estimador, estimativa e modelo estatístico.
 
 Ao final do capítulo, o experimento da urna é reproduzido e ampliado computacionalmente. Essa seção foi organizada de forma autônoma: pode ser utilizada logo após o experimento em sala de aula, de forma intercalada com o desenvolvimento conceitual ou depois da apresentação da teoria.
 
@@ -61,6 +61,11 @@ A condição i.i.d. estabelece que as variáveis são independentes e possuem a 
 Outros mecanismos podem produzir observações dependentes, distribuições diferentes entre unidades ou estruturas amostrais determinadas pelo plano de coleta.
 :::
 
+A adequação da hipótese i.i.d. depende do mecanismo que produz os dados. A condição de distribuições idênticas requer que as observações possam ser representadas pelo mesmo modelo probabilístico, enquanto a independência requer que o comportamento de uma observação não altere probabilisticamente o das demais.
+
+Por exemplo, componentes selecionados aleatoriamente de uma produção mantida sob condições estáveis podem ser razoavelmente representados como i.i.d. Em contrapartida, medições sucessivas de uma mesma variável ao longo do tempo podem apresentar dependência e exigir outro modelo.
+
+
 ## Conceitos fundamentais
 
 Uma **população** é o conjunto de unidades sobre as quais se deseja obter informação. Dependendo do problema, pode ser formada por pessoas, animais, objetos, empresas, municípios, medições ou outras unidades de interesse.
@@ -102,6 +107,8 @@ Neste momento, $\widehat p$ será utilizado apenas como uma quantidade calculada
 A possibilidade de generalizar resultados da amostra para a população depende do mecanismo utilizado para selecionar as unidades.
 
 Uma seleção que favoreça sistematicamente determinados elementos pode produzir **viés de seleção**. Por exemplo, se a retirada das bolas favorecer determinadas regiões da urna, as probabilidades de inclusão podem deixar de corresponder ao plano amostral pretendido.
+
+O mecanismo de participação também pode afetar a composição da amostra. Em levantamentos de resposta voluntária, por exemplo, mesmo que o convite seja dirigido a toda a população, os indivíduos que respondem podem diferir sistematicamente dos que não respondem. Nesse caso, o conjunto de respondentes não constitui automaticamente uma representação adequada da população.
 
 Na **amostragem aleatória**, a seleção das unidades é realizada segundo um mecanismo probabilístico conhecido. Em uma amostragem aleatória simples sem reposição, todas as amostras de tamanho $n$ possuem a mesma probabilidade de seleção.
 
@@ -261,6 +268,8 @@ $$
 Esses conceitos são apresentados aqui como um mapa da teoria. Sua análise detalhada, incluindo eficiência, suficiência e resultados de melhoria de estimadores, pertence ao capítulo dedicado à avaliação de estimadores.
 
 ## Modelo estatístico e função de verossimilhança
+
+A função de verossimilhança é apresentada nesta unidade em caráter introdutório. Seu uso como princípio de redução e como método geral de construção de estimadores será desenvolvido nos capítulos posteriores.
 
 O processo gerador de dados de um fenômeno real raramente é conhecido em todos os seus detalhes. A análise começa, portanto, com um **modelo estatístico**: uma família de distribuições que representa os aspectos do mecanismo considerados relevantes para a pergunta científica. Em um modelo paramétrico,
 
@@ -561,7 +570,91 @@ Com apenas 20 repetições, o histograma apresenta uma distribuição empírica 
 
 7. Escreva uma interpretação relacionando o resultado à variabilidade amostral.
 
-O experimento físico e sua reprodução computacional mostram que o parâmetro populacional permanece fixo, enquanto as estatísticas calculadas a partir das amostras variam. A inferência estatística utiliza essa variabilidade, descrita por um modelo probabilístico, para obter informação sobre quantidades desconhecidas. Os capítulos seguintes desenvolverão as distribuições das estatísticas, os critérios para avaliar estimadores e os métodos de estimação e quantificação da incerteza.
+O experimento físico e sua reprodução computacional mostram que o parâmetro populacional permanece fixo, enquanto as estatísticas calculadas a partir das amostras variam. A inferência estatística utiliza essa variabilidade, representada por modelos probabilísticos, para obter informação sobre quantidades desconhecidas. O próximo capítulo desenvolverá formalmente as distribuições das estatísticas sob repetição do mecanismo amostral.
+
+
+## Questões de revisão {.unnumbered}
+
+**1.** Uma indústria produziu 12.000 embalagens durante um turno. Para avaliar a qualidade da selagem, 240 embalagens foram selecionadas aleatoriamente e 18 apresentaram falha.
+
+a. Identifique a população, a unidade observacional e a amostra.
+
+b. Qual parâmetro populacional está sendo estudado?
+
+c. Calcule uma estatística amostral adequada para obter informação sobre esse parâmetro.
+
+
+**2.** Considere um lote com 800 recipientes.
+
+a. Se todos os recipientes forem avaliados e sua massa média for calculada, essa média é um parâmetro ou uma estatística?
+
+b. Se apenas 50 recipientes forem selecionados e sua massa média for calculada, como esse valor deve ser classificado?
+
+c. Explique a diferença entre as duas situações.
+
+
+**3.** Seja $X_1,\ldots,X_n$ uma amostra e seja $\mu$ um parâmetro desconhecido. Determine quais expressões são estatísticas:
+
+a. $\displaystyle \overline X=\frac{1}{n}\sum_{i=1}^nX_i$;
+
+b. $\displaystyle \max\{X_1,\ldots,X_n\}$;
+
+c. $\overline X-\mu$;
+
+d. $\displaystyle \sum_{i=1}^n(X_i-\overline X)^2$.
+
+Justifique as respostas.
+
+
+**4.** Para estimar a média populacional $\mu$, utiliza-se
+
+$$
+\widehat\mu=\overline X.
+$$
+
+Uma amostra apresentou os valores
+
+$$
+7,\quad 8,\quad 8,\quad 9.
+$$
+
+a. Qual é o parâmetro?
+
+b. Qual é o estimador?
+
+c. Qual é a estimativa obtida?
+
+
+**5.** Duas amostras de mesmo tamanho, obtidas da mesma população pelo mesmo procedimento, produziram médias iguais a $12{,}4$ e $13{,}1$.
+
+a. Por que as duas médias podem ser diferentes?
+
+b. O que permanece fixo e o que varia entre as duas amostras?
+
+
+**6.** Considere retiradas sucessivas de uma urna com bolas vermelhas e brancas.
+
+a. Em qual situação, com ou sem reposição, as observações podem ser representadas como i.i.d.?
+
+b. Qual condição deixa de ser satisfeita na amostragem sem reposição?
+
+c. Se $X_i=1$ indicar uma bola vermelha e $X_i=0$ uma bola branca, escreva o modelo Bernoulli para a situação em que as observações são i.i.d. e indique o significado de $p$.
+
+
+**7.** Avalie se a suposição de observações i.i.d. parece adequada em cada situação.
+
+a. Trinta componentes são selecionados aleatoriamente de uma produção realizada sob condições estáveis.
+
+b. A temperatura de um mesmo local é registrada a cada minuto durante duas horas.
+
+Justifique brevemente.
+
+
+**8.** Uma universidade envia um questionário a todos os seus estudantes, mas analisa apenas as respostas daqueles que decidiram participar.
+
+a. Os respondentes podem ser considerados automaticamente representativos de todos os estudantes? Justifique.
+
+b. Que aspecto do Processo Gerador de Dados deve ser considerado antes de realizar inferências para toda a população?
 
 
 ## Referências {.unnumbered}
