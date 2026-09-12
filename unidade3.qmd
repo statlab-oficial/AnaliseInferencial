@@ -10,7 +10,8 @@ A avaliação de um estimador exige distinguir propriedades de amostra finita, c
 
 A comparação entre estimadores depende do critério adotado. Uma forma geral de formalizar esse critério consiste em especificar uma **função de perda** $L(\tau(\theta),a)$, que quantifica a consequência de utilizar a ação $a$ quando o valor verdadeiro é $\tau(\theta)$. O risco do estimador $\delta$ é
 
-$$R(\theta,\delta)
+$$
+R(\theta,\delta)
 =
 E_\theta\left[L\bigl(\tau(\theta),\delta(\mathbf{X})\bigr)\right].
 $$
@@ -19,14 +20,16 @@ Essa formulação pertence ao quadro da teoria da decisão estatística [@rasch2
 
 Sob perda quadrática,
 
-$$L\bigl(\tau(\theta),a\bigr)
+$$
+L\bigl(\tau(\theta),a\bigr)
 =
 \bigl(a-\tau(\theta)\bigr)^2,
 $$
 
 o risco coincide com o **erro quadrático médio** (EQM):
 
-$$\operatorname{EQM}_\theta(\delta)
+$$
+\operatorname{EQM}_\theta(\delta)
 =
 E_\theta\left[\bigl(\delta-\tau(\theta)\bigr)^2\right].
 $$
@@ -42,14 +45,16 @@ O uso da perda quadrática é particularmente conveniente devido à sua tratabil
 ::: {.callout-important title="Definição — Viés"}
 O **viés** de $\delta$ como estimador de $\tau(\theta)$ é
 
-$$B_\theta(\delta)
+$$
+B_\theta(\delta)
 =
 E_\theta(\delta)-\tau(\theta).
 $$
 
 O estimador é **não viesado** quando
 
-$$E_\theta(\delta)=\tau(\theta)
+$$
+E_\theta(\delta)=\tau(\theta)
 $$
 
 para todo $\theta\in\Theta$.
@@ -59,14 +64,16 @@ Um viés positivo significa que o estimador **superestima o parâmetro em média
 
 A variância e o erro-padrão do estimador são
 
-$$\operatorname{Var}_\theta(\delta)
+$$
+\operatorname{Var}_\theta(\delta)
 =
 E_\theta\left[\bigl(\delta-E_\theta(\delta)\bigr)^2\right]
 $$
 
 e
 
-$$\operatorname{EP}_\theta(\delta)
+$$
+\operatorname{EP}_\theta(\delta)
 =
 \sqrt{\operatorname{Var}_\theta(\delta)}.
 $$
@@ -76,7 +83,8 @@ O erro-padrão mede a variabilidade da distribuição amostral de $\delta$. Ele 
 ::: {.callout-important title="Decomposição viés--variância"}
 Para qualquer estimador com segundo momento finito,
 
-$$\operatorname{EQM}_\theta(\delta)
+$$
+\operatorname{EQM}_\theta(\delta)
 =
 \operatorname{Var}_\theta(\delta)
 +
@@ -86,7 +94,8 @@ $$
 
 **Demonstração.** Somando e subtraindo $E_\theta(\delta)$,
 
-$$\delta-\tau(\theta)
+$$
+\delta-\tau(\theta)
 =
 \bigl[\delta-E_\theta(\delta)\bigr]
 +
@@ -95,7 +104,8 @@ $$
 
 Ao elevar ao quadrado e tomar esperança, o termo cruzado é nulo, pois
 
-$$E_\theta\bigl[\delta-E_\theta(\delta)\bigr]=0.
+$$
+E_\theta\bigl[\delta-E_\theta(\delta)\bigr]=0.
 $$
 
 Logo, obtém-se a decomposição anterior.
@@ -110,7 +120,8 @@ As definições de viés, variância e EQM, bem como a decomposição viés--var
 
 Considere
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Unif}(0,\theta),
 \qquad \theta>0,
@@ -118,7 +129,8 @@ $$
 
 e os estimadores
 
-$$\delta_1=2\overline{X},
+$$
+\delta_1=2\overline{X},
 \qquad
 \delta_2=X_{(n)}=\max(X_1,\ldots,X_n),
 \qquad
@@ -127,24 +139,30 @@ $$
 
 Para $\delta_1$,
 
-$$E_\theta(\delta_1)=\theta$$
+$$
+E_\theta(\delta_1)=\theta
+$$
 
 e
 
-$$\operatorname{Var}_\theta(\delta_1)
+$$
+\operatorname{Var}_\theta(\delta_1)
 =
 \frac{\theta^2}{3n}.
 $$
 
 Portanto,
 
-$$\operatorname{EQM}_\theta(\delta_1)
+$$
+\operatorname{EQM}_\theta(\delta_1)
 =
-\frac{\theta^2}{3n}.$$
+\frac{\theta^2}{3n}.
+$$
 
 A função de distribuição de $X_{(n)}$ é
 
-$$P_\theta\bigl(X_{(n)}\leq x\bigr)
+$$
+P_\theta\bigl(X_{(n)}\leq x\bigr)
 =
 \left(\frac{x}{\theta}\right)^n,
 \qquad 0\leq x\leq\theta.
@@ -152,42 +170,48 @@ $$
 
 Consequentemente,
 
-$$E_\theta\bigl(X_{(n)}\bigr)
+$$
+E_\theta\bigl(X_{(n)}\bigr)
 =
 \frac{n}{n+1}\theta
 $$
 
 e
 
-$$\operatorname{Var}_\theta\bigl(X_{(n)}\bigr)
+$$
+\operatorname{Var}_\theta\bigl(X_{(n)}\bigr)
 =
 \frac{n\theta^2}{(n+1)^2(n+2)}.
 $$
 
 Assim,
 
-$$B_\theta(\delta_2)
+$$
+B_\theta(\delta_2)
 =
 -\frac{\theta}{n+1}
 $$
 
 e
 
-$$\operatorname{EQM}_\theta(\delta_2)
+$$
+\operatorname{EQM}_\theta(\delta_2)
 =
 \frac{2\theta^2}{(n+1)(n+2)}.
 $$
 
 O estimador corrigido $\delta_3$ é não viesado e possui
 
-$$\operatorname{Var}_\theta(\delta_3)
+$$
+\operatorname{Var}_\theta(\delta_3)
 =
 \frac{\theta^2}{n(n+2)}.
 $$
 
 Para $n>1$,
 
-$$\frac{\theta^2}{n(n+2)}
+$$
+\frac{\theta^2}{n(n+2)}
 <
 \frac{\theta^2}{3n},
 $$
@@ -199,7 +223,8 @@ mostrando que $\delta_3$ tem menor EQM do que $\delta_1$. Além disso, $\delta_2
 ::: {.callout-important title="Definição — Consistência em probabilidade"}
 Uma sequência de estimadores $\{\delta_n\}$ é **consistente em probabilidade** para $\tau(\theta)$ se, para todo $\varepsilon>0$ e todo $\theta\in\Theta$,
 
-$$P_\theta\left(
+$$
+P_\theta\left(
 \left|\delta_n-\tau(\theta)\right|>\varepsilon
 \right)
 \longrightarrow 0
@@ -207,7 +232,8 @@ $$
 
 quando $n\to\infty$. Escreve-se
 
-$$\delta_n\xrightarrow{p}\tau(\theta).
+$$
+\delta_n\xrightarrow{p}\tau(\theta).
 $$
 :::
 
@@ -216,14 +242,16 @@ A consistência é uma propriedade assintótica: ela afirma que, à medida que o
 ::: {.callout-important title="Definição — Consistência em erro quadrático médio"}
 A sequência $\{\delta_n\}$ é **consistente em erro quadrático médio** para $\tau(\theta)$ se
 
-$$\operatorname{EQM}_\theta(\delta_n)
+$$
+\operatorname{EQM}_\theta(\delta_n)
 \longrightarrow 0.
 $$
 :::
 
 A consistência em EQM implica consistência em probabilidade. De fato, pela desigualdade de Markov,
 
-$$P_\theta\left(
+$$
+P_\theta\left(
 |\delta_n-\tau(\theta)|>\varepsilon
 \right)
 \leq
@@ -233,15 +261,21 @@ $$
 ::: {.callout-important title="Critério suficiente para consistência"}
 Se
 
-$$B_\theta(\delta_n)\longrightarrow 0$$
+$$
+B_\theta(\delta_n)\longrightarrow 0
+$$
 
 e
 
-$$\operatorname{Var}_\theta(\delta_n)\longrightarrow 0,$$
+$$
+\operatorname{Var}_\theta(\delta_n)\longrightarrow 0,
+$$
 
 então
 
-$$\operatorname{EQM}_\theta(\delta_n)\longrightarrow 0,$$
+$$
+\operatorname{EQM}_\theta(\delta_n)\longrightarrow 0,
+$$
 
 portanto $\delta_n$ é consistente em probabilidade [@rice2007mathematical, sec. 8.5; @lauritzen2023fundamentals, sec. 5.1].
 :::
@@ -256,7 +290,8 @@ No modelo $\operatorname{Unif}(0,\theta)$:
 2.  $2X_1$ é não viesado, mas não é consistente, pois sua distribuição não se concentra com o crescimento de $n$;
 3.  $X_{(n)}$ é viesado, mas consistente, pois, para $0<\varepsilon<\theta$,
 
-$$P_\theta\left(
+$$
+P_\theta\left(
 |X_{(n)}-\theta|>\varepsilon
 \right)
 =
@@ -278,26 +313,32 @@ A distinção entre não viés e consistência, assim como os critérios anterio
 
 Se
 
-$$A_n\xrightarrow{p}a
+$$
+A_n\xrightarrow{p}a
 \qquad\text{e}\qquad
 B_n\xrightarrow{p}b,
 $$
 
 então:
 
-$$A_n+B_n\xrightarrow{p}a+b,
+$$
+A_n+B_n\xrightarrow{p}a+b,
 $$
 
-$$A_nB_n\xrightarrow{p}ab,$$
+$$
+A_nB_n\xrightarrow{p}ab,
+$$
 
 e, se $b\neq0$,
 
-$$\frac{A_n}{B_n}\xrightarrow{p}\frac{a}{b}.
+$$
+\frac{A_n}{B_n}\xrightarrow{p}\frac{a}{b}.
 $$
 
 Além disso, se $g$ é contínua em $a$, o teorema da aplicação contínua garante
 
-$$g(A_n)\xrightarrow{p}g(a).
+$$
+g(A_n)\xrightarrow{p}g(a).
 $$
 
 Esses resultados permitem estabelecer a consistência de estimadores construídos por transformações, somas, produtos e quocientes de estatísticas consistentes. Eles são consequências do teorema da aplicação contínua e das propriedades elementares da convergência em probabilidade [@lauritzen2023fundamentals, app. A.2].
@@ -306,7 +347,8 @@ Esses resultados permitem estabelecer a consistência de estimadores construído
 
 A variância permite comparar estimadores não viesados de um mesmo alvo. Um estimador não viesado $\delta^*$ de $\tau(\theta)$ é denominado **estimador não viesado de variância uniformemente mínima** (ENVUM; em inglês, UMVU) quando
 
-$$\operatorname{Var}_\theta(\delta^*)
+$$
+\operatorname{Var}_\theta(\delta^*)
 \leq
 \operatorname{Var}_\theta(\delta)
 $$
@@ -315,7 +357,8 @@ para todo $\theta\in\Theta$ e para todo estimador não viesado $\delta$ de $\tau
 
 Para dois estimadores não viesados, define-se, neste texto, a eficiência relativa de $\delta_1$ em relação a $\delta_2$ por
 
-$$e_\theta(\delta_1;\delta_2)
+$$
+e_\theta(\delta_1;\delta_2)
 =
 \frac{\operatorname{Var}_\theta(\delta_2)}
 {\operatorname{Var}_\theta(\delta_1)}.
@@ -327,7 +370,8 @@ Valores maiores do que $1$ indicam que $\delta_1$ possui menor variância. Como 
 
 Considere um modelo dominado com densidade ou função de probabilidade $f_\theta(x)$. A função escore de uma observação é
 
-$$U_\theta(X)
+$$
+U_\theta(X)
 =
 \frac{\partial}{\partial\theta}
 \log f_\theta(X).
@@ -335,19 +379,23 @@ $$
 
 Sob condições de regularidade,
 
-$$E_\theta\bigl[U_\theta(X)\bigr]=0.$$
+$$
+E_\theta\bigl[U_\theta(X)\bigr]=0.
+$$
 
 ::: {.callout-tip title="Definição: informação de Fisher"}
 A informação de Fisher de uma observação é
 
-$$I_1(\theta)
+$$
+I_1(\theta)
 =
 E_\theta\left[U_\theta(X)^2\right].
 $$
 
 Quando é permitido intercambiar diferenciação e integração,
 
-$$I_1(\theta)
+$$
+I_1(\theta)
 =
 -E_\theta\left[
 \frac{\partial^2}{\partial\theta^2}
@@ -357,7 +405,9 @@ $$
 
 Para uma amostra i.i.d. de tamanho $n$,
 
-$$I_n(\theta)=nI_1(\theta).$$
+$$
+I_n(\theta)=nI_1(\theta).
+$$
 
 Essas identidades pressupõem as condições de regularidade indicadas acima [@lauritzen2023fundamentals, sec. 1.2.2; @rasch2018, sec. 1.4].
 :::
@@ -376,25 +426,30 @@ A forma clássica da desigualdade de Cramér--Rao utilizada nesta seção exige 
 ::: {.callout-important title="Teorema — Desigualdade de Cramér--Rao"}
 Se $\delta$ possui esperança
 
-$$E_\theta(\delta)=g(\theta),$$
+$$
+E_\theta(\delta)=g(\theta),
+$$
 
 então, sob as condições de regularidade,
 
-$$\operatorname{Var}_\theta(\delta)
+$$
+\operatorname{Var}_\theta(\delta)
 \geq
 \frac{\bigl[g'(\theta)\bigr]^2}{I_n(\theta)}.
 $$
 
 Em particular, se $\delta$ é não viesado para $\tau(\theta)$,
 
-$$\operatorname{Var}_\theta(\delta)
+$$
+\operatorname{Var}_\theta(\delta)
 \geq
 \frac{\bigl[\tau'(\theta)\bigr]^2}{I_n(\theta)}.
 $$
 
 Para $\tau(\theta)=\theta$,
 
-$$\operatorname{Var}_\theta(\delta)
+$$
+\operatorname{Var}_\theta(\delta)
 \geq
 \frac{1}{I_n(\theta)}.
 $$
@@ -402,7 +457,8 @@ $$
 
 Um estimador não viesado que atinge o limite de Cramér--Rao para todo $\theta$ é denominado **eficiente no sentido de Cramér--Rao**. Sua eficiência é
 
-$$\operatorname{ef}_\theta(\delta)
+$$
+\operatorname{ef}_\theta(\delta)
 =
 \frac{\bigl[\tau'(\theta)\bigr]^2}
 {I_n(\theta)\operatorname{Var}_\theta(\delta)}
@@ -422,21 +478,24 @@ A formulação geral, a demonstração e as condições do resultado podem ser e
 
 Considere
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 N(\mu,\sigma^2),
 $$
 
 com $\sigma^2$ conhecida. Para uma observação,
 
-$$U_\mu(X)
+$$
+U_\mu(X)
 =
 \frac{X-\mu}{\sigma^2}
 $$
 
 e
 
-$$I_1(\mu)
+$$
+I_1(\mu)
 =
 E_\mu\left[
 \left(\frac{X-\mu}{\sigma^2}\right)^2
@@ -447,26 +506,30 @@ $$
 
 Portanto,
 
-$$I_n(\mu)
+$$
+I_n(\mu)
 =
 \frac{n}{\sigma^2}
 $$
 
 e
 
-$$\frac{1}{I_n(\mu)}
+$$
+\frac{1}{I_n(\mu)}
 =
 \frac{\sigma^2}{n}.
 $$
 
 Como
 
-$$E_\mu(\overline{X})=\mu
+$$
+E_\mu(\overline{X})=\mu
 $$
 
 e
 
-$$\operatorname{Var}_\mu(\overline{X})
+$$
+\operatorname{Var}_\mu(\overline{X})
 =
 \frac{\sigma^2}{n},
 $$
@@ -477,35 +540,40 @@ $\overline{X}$ é eficiente para $\mu$.
 
 Considere $n\geq1$ e
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Poisson}(\theta).
 $$
 
 A função escore de uma observação é
 
-$$U_\theta(X)
+$$
+U_\theta(X)
 =
 \frac{X}{\theta}-1,
 $$
 
 portanto
 
-$$I_1(\theta)
+$$
+I_1(\theta)
 =
 \frac{1}{\theta}.
 $$
 
 Logo,
 
-$$\frac{1}{I_n(\theta)}
+$$
+\frac{1}{I_n(\theta)}
 =
 \frac{\theta}{n}.
 $$
 
 Como $\overline{X}$ é não viesado e
 
-$$\operatorname{Var}_\theta(\overline{X})
+$$
+\operatorname{Var}_\theta(\overline{X})
 =
 \frac{\theta}{n},
 $$
@@ -516,14 +584,16 @@ a média amostral é eficiente para $\theta$ [@rice2007mathematical, sec. 8.7; @
 
 A eficiência de Cramér--Rao descrita anteriormente é uma propriedade de amostra finita. Uma noção distinta é a **eficiência assintótica**. Se
 
-$$\sqrt{n}\bigl(\delta_n-\theta\bigr)
+$$
+\sqrt{n}\bigl(\delta_n-\theta\bigr)
 \xrightarrow{d}
 N\bigl(0,V(\theta)\bigr),
 $$
 
 então, em modelos regulares, a variância assintótica é comparada com $I_1(\theta)^{-1}$. O estimador é assintoticamente eficiente quando
 
-$$V(\theta)=I_1(\theta)^{-1}.
+$$
+V(\theta)=I_1(\theta)^{-1}.
 $$
 
 Sob condições regulares, estimadores de máxima verossimilhança frequentemente possuem essa propriedade. Essa afirmação não se estende automaticamente a modelos irregulares, a parâmetros na fronteira do espaço paramétrico ou a situações nas quais a taxa de convergência difere de $\sqrt{n}$ [@lauritzen2023fundamentals, thm. 5.11].
@@ -572,7 +642,8 @@ Suficiência é uma propriedade relativa ao modelo. Uma estatística pode ser su
 ::: {.callout-important title="Teorema — Fatoração de Neyman--Fisher"}
 Considere uma família dominada por uma medida comum, com densidade ou função de probabilidade conjunta $f_\theta(\mathbf{x})$. A estatística $T(\mathbf{X})$ é suficiente para $\theta$ se, e somente se, existem funções não negativas $g_\theta$ e $h$ tais que
 
-$$f_\theta(\mathbf{x})
+$$
+f_\theta(\mathbf{x})
 =
 g_\theta\bigl(T(\mathbf{x})\bigr)h(\mathbf{x}),
 $$
@@ -586,14 +657,16 @@ A dependência da verossimilhança em $\theta$ ocorre, portanto, apenas por meio
 
 Se
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Bernoulli}(p),
 $$
 
 então
 
-$$f_p(\mathbf{x})
+$$
+f_p(\mathbf{x})
 =
 \prod_{i=1}^n
 p^{x_i}(1-p)^{1-x_i}
@@ -603,13 +676,16 @@ $$
 
 Logo,
 
-$$T=\sum_{i=1}^nX_i$$
+$$
+T=\sum_{i=1}^nX_i
+$$
 
 é suficiente para $p$.
 
 A definição condicional produz a mesma conclusão. Dado $T=t$, todas as sequências binárias contendo exatamente $t$ sucessos são equiprováveis, de modo que
 
-$$P_p\left(
+$$
+P_p\left(
 \mathbf{X}=\mathbf{x}\mid T=t
 \right)
 =
@@ -625,7 +701,9 @@ Uma estatística suficiente pode conter redundâncias. Por exemplo, se $T$ é su
 ::: {.callout-important title="Definição — Estatística suficiente minimal"}
 Uma estatística $T$ é **suficiente minimal** se é suficiente e, para toda estatística suficiente $S$, existe uma função mensurável $r$ tal que
 
-$$T=r(S)$$
+$$
+T=r(S)
+$$
 
 quase certamente, para todo $\theta$.
 :::
@@ -635,7 +713,8 @@ Assim, toda estatística suficiente determina a estatística suficiente minimal.
 ::: {.callout-important title="Critério da razão de verossimilhanças"}
 Considere uma família dominada com densidades $f_\theta$. Para pontos $\mathbf{x}$ e $\mathbf{y}$ do espaço amostral efetivo — isto é, tais que $f_\theta(\mathbf{x})+f_\theta(\mathbf{y})>0$ para algum $\theta$ —, uma estatística $T$ é suficiente minimal quando existe uma constante $c(\mathbf{x},\mathbf{y})>0$, independente de $\theta$, tal que
 
-$$f_\theta(\mathbf{x})
+$$
+f_\theta(\mathbf{x})
 =
 c(\mathbf{x},\mathbf{y})f_\theta(\mathbf{y})
 \quad\text{para todo }\theta
@@ -643,7 +722,8 @@ $$
 
 se, e somente se,
 
-$$T(\mathbf{x})=T(\mathbf{y}).
+$$
+T(\mathbf{x})=T(\mathbf{y}).
 $$
 
 Quando o quociente $f_\theta(\mathbf{x})/f_\theta(\mathbf{y})$ está bem definido, essa condição equivale a exigir que o quociente seja independente de $\theta$ exatamente quando $T(\mathbf{x})=T(\mathbf{y})$ [@casella2002statistical, sec. 6.2.2; @ramachandran2009, sec. 5.5.3].
@@ -651,14 +731,16 @@ Quando o quociente $f_\theta(\mathbf{x})/f_\theta(\mathbf{y})$ está bem definid
 
 No modelo Bernoulli, a razão das verossimilhanças é independente de $p$ exatamente quando
 
-$$\sum_{i=1}^n x_i
+$$
+\sum_{i=1}^n x_i
 =
 \sum_{i=1}^n y_i.
 $$
 
 Portanto, $\sum_iX_i$ é suficiente minimal. No modelo $\operatorname{Unif}(0,\theta)$, a verossimilhança pode ser escrita como
 
-$$L(\theta;\mathbf{x})
+$$
+L(\theta;\mathbf{x})
 =
 \theta^{-n}
 I\{x_{(1)}\geq0\}
@@ -672,7 +754,8 @@ O primeiro indicador não depende de $\theta$. Pelo teorema da fatoração, $X_{
 ::: {.callout-important title="Definição — Forma exponencial canônica"}
 Uma família de distribuições possui forma exponencial $k$-paramétrica quando sua densidade ou função de probabilidade pode ser escrita como
 
-$$f_\eta(x)
+$$
+f_\eta(x)
 =
 h(x)
 \exp\left\{
@@ -685,7 +768,8 @@ em que $\eta\in\mathcal{H}\subseteq\mathbb{R}^k$ é o parâmetro natural, $t(x)$
 
 Para uma amostra i.i.d.,
 
-$$f_\eta(\mathbf{x})
+$$
+f_\eta(\mathbf{x})
 =
 \left[\prod_{i=1}^nh(x_i)\right]
 \exp\left\{
@@ -695,7 +779,8 @@ $$
 
 Pelo teorema da fatoração,
 
-$$T(\mathbf{X})
+$$
+T(\mathbf{X})
 =
 \sum_{i=1}^nt(X_i)
 $$
@@ -783,13 +868,15 @@ A apresentação de famílias exponenciais e de suas estatísticas canônicas se
 ::: {.callout-important title="Definição — Completude"}
 Uma estatística $T$ é **completa** para $\{P_\theta:\theta\in\Theta\}$ se, para toda função mensurável $a$ tal que $E_\theta|a(T)|<\infty$,
 
-$$E_\theta[a(T)]=0
+$$
+E_\theta[a(T)]=0
 \quad\text{para todo }\theta\in\Theta
 $$
 
 implica
 
-$$P_\theta\bigl(a(T)=0\bigr)=1
+$$
+P_\theta\bigl(a(T)=0\bigr)=1
 \quad\text{para todo }\theta\in\Theta.
 $$
 
@@ -830,19 +917,22 @@ Essa conclusão não deve ser estendida automaticamente a famílias exponenciais
 ::: {.callout-important title="Teorema — Rao--Blackwell"}
 Seja $T$ uma estatística suficiente para $\theta$ e seja $\delta(\mathbf{X})$ um estimador de $\tau(\theta)$ com segundo momento finito. Defina
 
-$$\delta^*(T)
+$$
+\delta^*(T)
 =
 E_\theta\bigl[\delta(\mathbf{X})\mid T\bigr].
 $$
 
 A suficiência garante que se pode escolher uma versão de $\delta^*$ que seja função de $T$ e não dependa de $\theta$. Então:
 
-$$E_\theta(\delta^*)=E_\theta(\delta),
+$$
+E_\theta(\delta^*)=E_\theta(\delta),
 $$
 
 e
 
-$$\operatorname{EQM}_\theta(\delta^*)
+$$
+\operatorname{EQM}_\theta(\delta^*)
 \leq
 \operatorname{EQM}_\theta(\delta).
 $$
@@ -852,7 +942,8 @@ A igualdade ocorre se, e somente se, $\delta$ já é função de $T$ quase certa
 
 A identidade fundamental é
 
-$$\operatorname{EQM}_\theta(\delta)
+$$
+\operatorname{EQM}_\theta(\delta)
 =
 \operatorname{EQM}_\theta(\delta^*)
 +
@@ -867,29 +958,34 @@ Se $\delta$ é não viesado, $\delta^*$ também é não viesado e possui variân
 
 Considere $n\geq2$ e
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Poisson}(\theta).
 $$
 
 Deseja-se estimar
 
-$$P_\theta(X=0)=e^{-\theta}.
+$$
+P_\theta(X=0)=e^{-\theta}.
 $$
 
 O estimador
 
-$$\delta=I\{X_1=0\}
+$$
+\delta=I\{X_1=0\}
 $$
 
 é não viesado. A estatística
 
-$$T=\sum_{i=1}^nX_i
+$$
+T=\sum_{i=1}^nX_i
 $$
 
 é suficiente para $\theta$. Condicionalmente a $T=t$, o vetor $(X_1,\ldots,X_n)$ possui distribuição multinomial com total $t$ e probabilidades $1/n$. Portanto,
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \delta^*(T)
 &=
 E(\delta\mid T) \\
@@ -902,7 +998,8 @@ $$
 
 Pelo teorema de Rao--Blackwell, $\delta^*$ possui variância não superior à de $\delta$. Como $T$ é também completa para a família de Poisson,
 
-$$\boxed{
+$$
+\boxed{
 \delta^*(T)
 =
 \left(1-\frac{1}{n}\right)^{\sum_{i=1}^nX_i}
@@ -928,42 +1025,50 @@ A suficiência produz a melhoria de Rao--Blackwell; a completude garante a unici
 
 Considere
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Exp}(\theta),
 $$
 
 em que $\theta>0$ é a taxa e
 
-$$f_\theta(x)=\theta e^{-\theta x}I_{(0,\infty)}(x).
+$$
+f_\theta(x)=\theta e^{-\theta x}I_{(0,\infty)}(x).
 $$
 
 A estatística
 
-$$T=\sum_{i=1}^nX_i$$
+$$
+T=\sum_{i=1}^nX_i
+$$
 
 é suficiente e completa, e
 
-$$T\sim\operatorname{Gama}(n,\text{taxa }\theta).
+$$
+T\sim\operatorname{Gama}(n,\text{taxa }\theta).
 $$
 
 Para $n>1$,
 
-$$E_\theta\left(\frac{1}{T}\right)
+$$
+E_\theta\left(\frac{1}{T}\right)
 =
 \frac{\theta}{n-1}.
 $$
 
 Logo,
 
-$$\widehat{\theta}_{\text{ENVUM}}
+$$
+\widehat{\theta}_{\text{ENVUM}}
 =
 \frac{n-1}{T}
 $$
 
 é não viesado e, pelo teorema de Lehmann--Scheffé, é o ENVUM de $\theta$. Para $n>2$,
 
-$$\operatorname{Var}_\theta\left(
+$$
+\operatorname{Var}_\theta\left(
 \widehat{\theta}_{\text{ENVUM}}
 \right)
 =
@@ -972,14 +1077,16 @@ $$
 
 A informação de Fisher da amostra é
 
-$$I_n(\theta)
+$$
+I_n(\theta)
 =
 \frac{n}{\theta^2},
 $$
 
 portanto o limite de Cramér--Rao é $\theta^2/n$. Como
 
-$$\frac{\theta^2}{n-2}
+$$
+\frac{\theta^2}{n-2}
 >
 \frac{\theta^2}{n},
 $$
@@ -1002,14 +1109,16 @@ Se $T$ é suficiente e completa para $\theta$ e $A$ é ancilar, então $T$ e $A$
 
 Considere
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 N(\mu,\sigma^2),
 $$
 
 com $\sigma^2$ conhecida. A média $\overline{X}$ é suficiente e completa para $\mu$. A variância amostral
 
-$$S^2
+$$
+S^2
 =
 \frac{1}{n-1}
 \sum_{i=1}^n(X_i-\overline{X})^2
@@ -1027,14 +1136,16 @@ A definição de ancilaridade e o teorema de Basu são apresentados em @bickel20
 
 Considere
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 \operatorname{Gama}(\alpha,\theta),
 $$
 
 em que $\alpha>0$ é conhecido e $\theta>0$ é o parâmetro de escala. A densidade é
 
-$$f(x;\theta)
+$$
+f(x;\theta)
 =
 \frac{x^{\alpha-1}e^{-x/\theta}}
 {\Gamma(\alpha)\theta^\alpha},
@@ -1045,26 +1156,34 @@ $$
 
 A densidade conjunta depende da amostra por meio de
 
-$$T=\sum_{i=1}^nX_i.
+$$
+T=\sum_{i=1}^nX_i.
 $$
 
 A estatística $T$ é suficiente. Além disso, essa é uma família exponencial regular de posto completo, e o espaço do parâmetro natural contém um intervalo aberto. Assim, $T$ é completa.
 
 Como
 
-$$T\sim\operatorname{Gama}(n\alpha,\theta),$$
+$$
+T\sim\operatorname{Gama}(n\alpha,\theta),
+$$
 
 temos
 
-$$E_\theta(T)=n\alpha\theta$$
+$$
+E_\theta(T)=n\alpha\theta
+$$
 
 e
 
-$$\operatorname{Var}_\theta(T)=n\alpha\theta^2.$$
+$$
+\operatorname{Var}_\theta(T)=n\alpha\theta^2.
+$$
 
 Portanto,
 
-$$\widehat{\theta}
+$$
+\widehat{\theta}
 =
 \frac{T}{n\alpha}
 =
@@ -1073,7 +1192,8 @@ $$
 
 é não viesado e possui
 
-$$\operatorname{Var}_\theta(\widehat{\theta})
+$$
+\operatorname{Var}_\theta(\widehat{\theta})
 =
 \frac{\theta^2}{n\alpha}.
 $$
@@ -1084,7 +1204,8 @@ Pelo teorema de Lehmann--Scheffé, $\widehat{\theta}$ é o ENVUM de $\theta$.
 
 A função escore de uma observação é
 
-$$U_\theta(X)
+$$
+U_\theta(X)
 =
 -\frac{\alpha}{\theta}
 +
@@ -1093,21 +1214,24 @@ $$
 
 Logo,
 
-$$I_1(\theta)
+$$
+I_1(\theta)
 =
 \frac{\alpha}{\theta^2}
 $$
 
 e
 
-$$\frac{1}{I_n(\theta)}
+$$
+\frac{1}{I_n(\theta)}
 =
 \frac{\theta^2}{n\alpha}.
 $$
 
 Como a variância de $\widehat{\theta}$ coincide com o limite de Cramér--Rao,
 
-$$\boxed{
+$$
+\boxed{
 \widehat{\theta}
 =
 \frac{\overline{X}}{\alpha}
@@ -1141,13 +1265,16 @@ Quando pertinente, explicite o modelo, o parâmetro de interesse, o estimador e 
 
 1.  **Viés e EQM.** Sejam $X_1,\ldots,X_n$ i.i.d. com $E(X_i)=\mu$ e $\operatorname{Var}(X_i)=\sigma^2$. Para constantes $a$ e $b$, considere
 
-$$\delta=a\overline{X}+b.$$
+$$
+\delta=a\overline{X}+b.
+$$
 
 Calcule o viés, a variância e o EQM de $\delta$ como estimador de $\mu$. Determine as condições sobre $a$ e $b$ para que $\delta$ seja não viesado para $\mu$ e consistente para $\mu$, para todo $\mu$.
 
 2.  **Uniforme e compromisso viés--variância.** No modelo $\operatorname{Unif}(0,\theta)$, compare os EQM de
 
-$$2\overline{X},
+$$
+2\overline{X},
 \qquad
 X_{(n)},
 \qquad
@@ -1164,7 +1291,8 @@ b. O suporte da distribuição depende de $\theta$. Explique por que a forma cl�
 
 5.  **Suficiência no modelo normal.** Se
 
-$$X_1,\ldots,X_n
+$$
+X_1,\ldots,X_n
 \overset{\mathrm{i.i.d.}}{\sim}
 N(\mu,\sigma^2),
 $$
@@ -1207,7 +1335,8 @@ c.  Mostre que a família de distribuições de $T$ é completa.
 
 9.  **Lehmann--Scheffé no modelo binomial.** Se $X_1,\ldots,X_n$ são i.i.d. $\operatorname{Bin}(m,p)$, com $m$ conhecido, mostre que
 
-$$\widehat{p}
+$$
+\widehat{p}
 =
 \frac{\sum_{i=1}^nX_i}{nm}
 $$
