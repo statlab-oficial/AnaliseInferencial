@@ -532,7 +532,7 @@ window.Quarto = {
 
 <section id="introdução" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">4.1</span> Introdução</h2>
-<p>Na unidade anterior, o experimento da urna mostrou que diferentes amostras obtidas pelo mesmo mecanismo podem produzir valores distintos para uma mesma estatística. Essa variabilidade entre amostras constitui o ponto de partida deste capítulo.</p>
+<p>Em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a>, o experimento da urna mostrou que diferentes amostras obtidas pelo mesmo mecanismo podem produzir valores distintos para uma mesma estatística. Essa variabilidade entre amostras constitui o ponto de partida para o estudo das distribuições amostrais.</p>
 <p>Considere uma amostra aleatória</p>
 <p><span class="math display">\[
 \mathbf X=(X_1,\ldots,X_n)
@@ -561,7 +561,7 @@ t=g(x_1,\ldots,x_n)
 </div>
 </div>
 <p>A distribuição populacional e a distribuição amostral descrevem objetos diferentes. A distribuição populacional caracteriza o comportamento de uma observação <span class="math inline">\(X\)</span>. A distribuição amostral caracteriza o comportamento de uma função de várias observações. Em situações particulares, ambas podem pertencer à mesma família de distribuições, possivelmente com parâmetros diferentes.</p>
-<p>As ferramentas probabilísticas e assintóticas utilizadas neste capítulo, como transformações, funções geradoras de momentos, Lei dos Grandes Números e Teorema Central do Limite, foram estabelecidas nos capítulos preliminares. O objetivo agora é utilizá-las para obter distribuições exatas ou aproximações para estatísticas de interesse.</p>
+<p>Transformações e funções geradoras de momentos permitem obter distribuições amostrais exatas, enquanto a Lei dos Grandes Números e o Teorema Central do Limite descrevem a concentração e o comportamento assintótico de estatísticas quando o tamanho amostral aumenta.</p>
 <section id="objetivos-do-capítulo" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="objetivos-do-capítulo">Objetivos do capítulo</h3>
 <p>Ao final deste capítulo, o leitor deverá ser capaz de:</p>
@@ -592,7 +592,7 @@ T=g(\mathbf X).
 </section>
 <section id="dois-referenciais-para-a-geração-da-amostra" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="dois-referenciais-para-a-geração-da-amostra"><span class="header-section-number">4.3</span> Dois referenciais para a geração da amostra</h2>
-<p>Ao longo deste livro, serão utilizados dois referenciais de geração da amostra que precisam ser distinguidos: o modelo iid e a amostragem aleatória simples sem reposição em uma população finita. A distinção evita confundir independência probabilística com aleatorização de um plano amostral.</p>
+<p>Duas estruturas de geração da amostra precisam ser distinguidas: o modelo i.i.d. e a amostragem aleatória simples sem reposição em uma população finita. A distinção evita confundir independência probabilística com aleatorização de um plano amostral.</p>
 <section id="amostragem-no-modelo-i.i.d." class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="amostragem-no-modelo-i.i.d."><span class="header-section-number">4.3.1</span> Amostragem no modelo i.i.d.</h3>
 <p>No modelo i.i.d., cada observação é gerada independentemente pela mesma distribuição. Esse referencial é apropriado para repetições independentes de um experimento, amostragem com reposição ou modelagem de uma população conceitualmente infinita <span class="citation" data-cites="casella2002statistical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002, seç. 5.1</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.1</a>)</span>. Se <span class="math inline">\(f(x;\theta)\)</span> representa a função de massa de probabilidade ou a densidade comum das observações, a função de massa ou densidade conjunta da amostra é</p>
@@ -995,7 +995,11 @@ n(n-1)
 \quad\text{e}\quad
 \operatorname{Var}(\overline{X})=\frac{0{,}0125}{2}=0{,}00625.
 \]</span></p>
-<p>Sem reposição, existem <span class="math inline">\(\binom{4}{2}=6\)</span> subconjuntos equiprováveis.</p>
+<p>Sem reposição, como a média amostral não depende da ordem em que as duas unidades são selecionadas, podemos enumerar os</p>
+<p><span class="math display">\[
+\binom{4}{2}=6
+\]</span></p>
+<p>subconjuntos equiprováveis. Se a amostra fosse representada de forma ordenada, haveria <span class="math inline">\(4(3)=12\)</span> sequências equiprováveis; cada subconjunto apareceria em duas ordens e produziria o mesmo valor de <span class="math inline">\(\overline X\)</span>. Portanto, as duas formas de enumeração induzem a mesma distribuição amostral da média.</p>
 <p>Os seis subconjuntos e suas médias são</p>
 <table class="caption-top table">
 <thead>
@@ -1245,7 +1249,7 @@ M_{\overline X}(t)
 M_X\left(\frac{t}{n}\right)
 \right]^n.
 \]</span></p>
-<p>Em U2, essas identidades serão usadas para reconhecer distribuições amostrais exatas <span class="citation" data-cites="larsen2012 rice2007mathematical">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.12</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 4.5</a>)</span>.</p>
+<p>Essas identidades permitem reconhecer distribuições amostrais exatas a partir das funções geradoras de momentos das variáveis que compõem a amostra <span class="citation" data-cites="larsen2012 rice2007mathematical">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.12</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 4.5</a>)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Exemplo — Média de variáveis normais">
@@ -1419,7 +1423,7 @@ n,\frac{\mu}{n}
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança, pois <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma\)</span> foram tratados como conhecidos. A construção de intervalos de confiança será desenvolvida posteriormente.</p>
+<p>Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança, pois <span class="math inline">\(\mu\)</span> e <span class="math inline">\(\sigma\)</span> foram tratados como conhecidos. Um intervalo de confiança é um procedimento inferencial aleatório cuja probabilidade de cobertura é definida sob repetição amostral e, portanto, não se confunde com uma região central calculada para uma distribuição com parâmetros conhecidos.</p>
 </div>
 </div>
 <section id="diferença-de-médias-de-duas-amostras-independentes" class="level3" data-number="4.6.1">
@@ -1823,13 +1827,13 @@ np(1-p)
 \frac{N-n}{N-1}.
 \]</span></p>
 <p>Na variância de <span class="math inline">\(\widehat p\)</span>, a diferença em relação ao modelo Bernoulli iid aparece por meio da correção de população finita. As distribuições exatas também são diferentes: no modelo iid, <span class="math inline">\(Y\)</span> é binomial; na amostragem sem reposição de uma população finita, <span class="math inline">\(Y\)</span> é hipergeométrica.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Exemplo — Urna da unidade anterior">
+<div class="callout callout-style-default callout-tip callout-titled" title="Exemplo — Urna do experimento físico">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Exemplo — Urna da unidade anterior
+<span class="screen-reader-only">Dica</span>Exemplo — Urna do experimento físico
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1856,7 +1860,7 @@ E(\widehat p)=0{,}375
 \approx
 0{,}0678.
 \]</span></p>
-<p>Esse é o modelo probabilístico de referência para o experimento físico da Unidade 1 quando o procedimento de seleção é representado como uma amostragem aleatória simples sem reposição.</p>
+<p>Esse é o modelo probabilístico de referência para o experimento físico de <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a> quando o procedimento de seleção é representado como uma amostragem aleatória simples sem reposição.</p>
 </div>
 </div>
 <p>No modelo Bernoulli iid, pelo TCL,</p>
@@ -1934,7 +1938,11 @@ Y\sim\operatorname{Binomial}(1000,0{,}53).
 <p><span class="math display">\[S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})^2.\]</span></p>
 <p>Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são i.i.d. e <span class="math inline">\(\operatorname{Var}(X_i)=\sigma^2&lt;\infty\)</span>, então</p>
 <p><span class="math display">\[E(S^2)=\sigma^2.\]</span></p>
-<p>Logo, <span class="math inline">\(S^2\)</span> é um estimador não viesado de <span class="math inline">\(\sigma^2\)</span> <span class="citation" data-cites="ramachandran2021r rice2007mathematical">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.1</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 6</a>)</span>.</p>
+<p>A igualdade</p>
+<p><span class="math display">\[
+E(S^2)=\sigma^2
+\]</span></p>
+<p>mostra que a distribuição amostral de <span class="math inline">\(S^2\)</span> está centrada em <span class="math inline">\(\sigma^2\)</span> <span class="citation" data-cites="ramachandran2021r rice2007mathematical">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.1</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 6</a>)</span>.</p>
 <div class="collapse" title="Demonstração">
 <p>Utilize a identidade</p>
 <p><span class="math display">\[
@@ -2142,7 +2150,7 @@ n(\overline X-\mu)^2
 \sim
 \chi^2_{n-1}.
 \]</span></p>
-<p>A mesma decomposição é a base para a independência entre <span class="math inline">\(\overline X\)</span> e <span class="math inline">\(S^2\)</span> apresentada na subseção seguinte.</p>
+<p>Em conjunto com o teorema de Cochran, a mesma decomposição também sustenta a independência entre <span class="math inline">\(\overline X\)</span> e <span class="math inline">\(S^2\)</span> no modelo normal.</p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Interpretação dos graus de liberdade">
 <div class="callout-header d-flex align-content-center">
@@ -2181,12 +2189,16 @@ N(0,1),
 \sim
 \chi^2_{n-1}.
 \]</span></p>
-<p>De maneira mais geral, os graus de liberdade podem ser interpretados como a dimensão do espaço de variação que resta após a imposição de restrições. Em modelos lineares com <span class="math inline">\(n\)</span> observações e uma matriz de delineamento de posto <span class="math inline">\(p\)</span>, por exemplo, os resíduos possuem</p>
+<div class="collapse" title="Outras interpretações de graus de liberdade">
+<p>De maneira mais geral, os graus de liberdade podem ser interpretados como a dimensão do espaço de variação que resta após a imposição de restrições.</p>
+<p>Em modelos lineares com <span class="math inline">\(n\)</span> observações e uma matriz de delineamento de posto <span class="math inline">\(p\)</span>, por exemplo, os resíduos possuem</p>
 <p><span class="math display">\[
 n-p
 \]</span></p>
-<p>graus de liberdade. Em testes da razão de verossimilhanças, sob condições de regularidade, os graus de liberdade da distribuição assintótica correspondem à diferença entre as dimensões dos modelos irrestrito e restrito.</p>
-<p>Essa interpretação deve ser usada com cautela em procedimentos aproximados. No teste de Welch, por exemplo, os graus de liberdade podem não ser inteiros: eles constituem uma aproximação de Satterthwaite utilizada para calibrar uma distribuição (t), e não uma contagem literal de observações independentes <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 6.2–6.3 and 9.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;7.1)</span>.</p>
+<p>graus de liberdade.</p>
+<p>Em testes da razão de verossimilhanças, sob condições de regularidade, os graus de liberdade da distribuição assintótica correspondem à diferença entre as dimensões dos modelos irrestrito e restrito.</p>
+<p>Essa interpretação deve ser usada com cautela em procedimentos aproximados. No teste de Welch, por exemplo, os graus de liberdade podem não ser inteiros: eles constituem uma aproximação de Satterthwaite utilizada para calibrar uma distribuição <span class="math inline">\(t\)</span>, e não uma contagem literal de observações independentes <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 6.2–6.3</a> e 9.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, seç. 7.1</a>)</span>.</p>
+</div>
 </div>
 </div>
 </section>
@@ -2338,13 +2350,25 @@ T
 \sim
 t_9.
 \]</span></p>
-<p>O quantil</p>
+<p>O quantil <span class="math inline">\(t_{0{,}975;9}\)</span> determina uma região central com probabilidade <span class="math inline">\(0{,}95\)</span>:</p>
+<p><span class="math display">\[
+P\left(
+-t_{0{,}975;9}
+\leq
+T
+\leq
+t_{0{,}975;9}
+\right)
+=
+0{,}95.
+\]</span></p>
+<p>Como</p>
 <p><span class="math display">\[
 t_{0{,}975;9}
 \approx
-2{,}262
+2{,}262,
 \]</span></p>
-<p>determina uma região central com probabilidade <span class="math inline">\(0{,}95\)</span>:</p>
+<p>numericamente,</p>
 <p><span class="math display">\[
 P\left(
 -2{,}262
@@ -2353,7 +2377,7 @@ T
 \leq
 2{,}262
 \right)
-=
+\approx
 0{,}95.
 \]</span></p>
 <p>Esse cálculo descreve uma propriedade da distribuição amostral exata de <span class="math inline">\(T\)</span> <span class="citation" data-cites="larsen2012 rice2007mathematical">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 7.2–7.3</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 6</a>)</span>.</p>
@@ -2753,11 +2777,15 @@ Figura&nbsp;4.1: Distribuições simuladas da média de amostras exponenciais.
 <p><span class="math display">\[
 \lambda=1.
 \]</span></p>
-<p>Como a taxa e a escala se relacionam por</p>
+<p>Na parametrização pela média,</p>
 <p><span class="math display">\[
-\beta=\frac{1}{\lambda},
+\mu=\frac{1}{\lambda}.
 \]</span></p>
-<p>esse caso corresponde também à escala <span class="math inline">\(\beta=1\)</span>. A coincidência numérica ocorre porque o parâmetro utilizado é igual a <span class="math inline">\(1\)</span>.</p>
+<p>Portanto, neste exemplo,</p>
+<p><span class="math display">\[
+\mu=1.
+\]</span></p>
+<p>A parametrização por taxa e a parametrização pela média coincidem numericamente apenas porque <span class="math inline">\(\lambda=1\)</span>.</p>
 </div>
 </div>
 </section>

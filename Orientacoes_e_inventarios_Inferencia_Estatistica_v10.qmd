@@ -260,11 +260,15 @@ Antes de deslocar conteúdo:
 
 Não executar vários recortes antes das respectivas colagens.
 
-Quando forem propostas alterações manuais, utilizar o padrão:
+Quando forem propostas alterações manuais, utilizar sempre o padrão:
 
 **LOCALIZAR EXATAMENTE → SUBSTITUIR POR**
 
 O trecho de localização deve ser copiado literalmente da versão corrente do arquivo. Não utilizar texto semelhante, reconstituído ou aproximado.
+
+Essa regra vale também para inserções, exclusões e movimentações. Não orientar apenas “inserir depois de...” ou “colocar antes de...”. Para uma inserção, o bloco **LOCALIZAR EXATAMENTE** deve conter uma âncora literal da versão corrente e o bloco **SUBSTITUIR POR** deve reproduzir essa âncora já com o novo conteúdo na posição correta. Para exclusões, o trecho a retirar deve aparecer integralmente em **LOCALIZAR EXATAMENTE**. Para movimentações, identificar literalmente o início e o fim do bloco e o ponto de destino.
+
+Antes de propor qualquer substituição, reler a versão mais recente do arquivo. Quando a fonte for atualizada, instruções anteriores só podem ser reutilizadas depois de confirmar que os trechos continuam existindo exatamente na nova versão. A passagem seguinte da auditoria deve partir do arquivo efetivamente atualizado, e não de uma versão hipotética resultante das alterações propostas.
 
 # 10. Sequência de desenvolvimento dos conceitos
 
@@ -1902,6 +1906,8 @@ Quando houver identificador estável, preferir uma relação explícita, por exe
 
 A referência cruzada não substitui a explicação: a frase deve indicar **por que** o resultado anterior é pertinente no novo contexto.
 
+Uma referência cruzada só deve ser introduzida quando o identificador de destino existir efetivamente na versão corrente do arquivo correspondente. Se o ID estiver apenas planejado, manter temporariamente a referência textual. Depois que o ID for implantado, revisar também os capítulos anteriores que mencionem textualmente aquele conteúdo e substituir essas menções por referências cruzadas quando isso melhorar a precisão da ligação.
+
 ## Construções artificiais e ênfase vazia
 
 Evitar:
@@ -1986,12 +1992,25 @@ Enquanto `styles.css` não estiver disponível, a política abaixo define a **fu
 | Aprofundamento | seção ou bloco explicitamente marcado **Aprofundamento — Mestrado** | conforme extensão |
 | Exercício | tratamento estável próprio; não alternar `note` e `tip` sem função | não |
 
-### Regra específica para demonstrações
 
-Quando a demonstração não for necessária para a primeira leitura do núcleo, preferir:
+### SUBSTITUIR POR
+
+````markdown
+### Regra específica para blocos colapsáveis
+
+Um bloco colapsável pode ser utilizado quando o caminho até um resultado for instrutivo, mas não for necessário para acompanhar a primeira leitura do desenvolvimento principal. São candidatos naturais:
+
+- demonstrações;
+- derivações algébricas;
+- justificativas técnicas;
+- resolução detalhada de exemplos;
+- desenvolvimento intermediário de um resultado;
+- extensões que esclarecem o resultado principal sem serem necessárias para o encadeamento imediato.
+
+Utilizar o padrão:
 
 ```markdown
-::: {.callout-note collapse="true" title="Demonstração"}
+::: {.collapse title="Demonstração"}
 ...
 :::
 ```
@@ -2749,11 +2768,17 @@ Objetivos:
 
 - conferir terminologia global;
 - conferir notação;
-- conferir callouts;
-- conferir referências cruzadas;
-- verificar se retomadas acrescentam função nova;
+- realizar varredura explícita de metadiscurso, construções artificiais, ênfase vazia e repetições sucessivas;
+- conferir callouts e sua função semântica;
+- identificar resultados, derivações, demonstrações ou resoluções detalhadas que possam ser melhor apresentados em blocos `collapse`;
+- verificar se os elementos essenciais permanecem visíveis e se os blocos colapsáveis não duplicam o texto principal;
+- conferir referências cruzadas e substituir referências textuais quando o ID de destino já existir efetivamente;
+- verificar se a criação de novos IDs exige ajustes retroativos em capítulos já revisados;
+- verificar se retomadas acrescentam função nova em vez de redefinir conteúdo canônico;
 - verificar se o capítulo entrega corretamente o que o próximo pressupõe;
 - revisar síntese, exercícios e transições;
+- conferir consistência entre texto, fórmulas, tabelas, figuras e código;
+- conferir integridade mecânica de callouts, `collapse`, cercas de código, IDs e crossrefs;
 - realizar auditoria final de código quando houver computação.
 
 # Critério de consolidação de um capítulo
