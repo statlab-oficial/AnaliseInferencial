@@ -434,9 +434,8 @@ window.Quarto = {
   <li><a href="#lei-dos-grandes-números-e-teorema-central-do-limite" id="toc-lei-dos-grandes-números-e-teorema-central-do-limite" class="nav-link" data-scroll-target="#lei-dos-grandes-números-e-teorema-central-do-limite"><span class="header-section-number">2.3.5</span> Lei dos Grandes Números e Teorema Central do Limite</a></li>
   <li><a href="#teorema-do-mapeamento-contínuo" id="toc-teorema-do-mapeamento-contínuo" class="nav-link" data-scroll-target="#teorema-do-mapeamento-contínuo"><span class="header-section-number">2.3.6</span> Teorema do mapeamento contínuo</a></li>
   <li><a href="#lema-de-slutsky" id="toc-lema-de-slutsky" class="nav-link" data-scroll-target="#lema-de-slutsky"><span class="header-section-number">2.3.7</span> Lema de Slutsky</a></li>
-  <li><a href="#método-delta" id="toc-método-delta" class="nav-link" data-scroll-target="#método-delta"><span class="header-section-number">2.3.8</span> Método delta</a></li>
-  <li><a href="#método-delta-multivariado" id="toc-método-delta-multivariado" class="nav-link" data-scroll-target="#método-delta-multivariado"><span class="header-section-number">2.3.9</span> Método delta multivariado</a></li>
-  <li><a href="#ordens-estocásticas" id="toc-ordens-estocásticas" class="nav-link" data-scroll-target="#ordens-estocásticas"><span class="header-section-number">2.3.10</span> Ordens estocásticas</a></li>
+  <li><a href="#aprofundamento-mestrado" id="toc-aprofundamento-mestrado" class="nav-link" data-scroll-target="#aprofundamento-mestrado"><span class="header-section-number">2.3.8</span> Aprofundamento — Mestrado</a></li>
+  <li><a href="#ordens-estocásticas" id="toc-ordens-estocásticas" class="nav-link" data-scroll-target="#ordens-estocásticas"><span class="header-section-number">2.3.9</span> Ordens estocásticas</a></li>
   </ul></li>
   <li><a href="#síntese" id="toc-síntese" class="nav-link" data-scroll-target="#síntese"><span class="header-section-number">2.4</span> Síntese</a></li>
   <li><a href="#exercícios-de-consolidação" id="toc-exercícios-de-consolidação" class="nav-link" data-scroll-target="#exercícios-de-consolidação"><span class="header-section-number">2.5</span> Exercícios de consolidação</a>
@@ -453,7 +452,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Resultados Matemáticos e Assintóticos para Inferência</span></h1>
+<h1 class="title"><span id="sec-prelim-matematica-assintotica" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Resultados Matemáticos e Assintóticos para Inferência</span></span></h1>
 </div>
 
 
@@ -483,7 +482,8 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <p>Os resultados apresentados neste capítulo podem ser utilizados como ferramentas. O objetivo não é desenvolver novamente conteúdos de Cálculo ou Álgebra Linear nem apresentar demonstrações dos resultados assintóticos.</p>
-<p>A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e interpretados aqui. Suas consequências para distribuições de estatísticas serão desenvolvidas no capítulo <strong>Distribuições Amostrais</strong>. O método delta será apresentado como ferramenta para transformar distribuições assintóticas e será aplicado posteriormente aos problemas inferenciais correspondentes.</p>
+<p>A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e interpretados aqui. Suas consequências para distribuições de estatísticas serão desenvolvidas no capítulo <strong>Distribuições Amostrais</strong>.</p>
+<p>O método delta e sua versão multivariada também são estabelecidos neste capítulo, mas constituem <strong>Aprofundamento — Mestrado</strong>, em consonância com o percurso curricular do livro. Esses resultados serão aplicados posteriormente nos desenvolvimentos inferenciais correspondentes.</p>
 </div>
 </div>
 <section id="mapa-de-dependências" class="level2" data-number="2.1">
@@ -546,7 +546,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td style="text-align: left;">Método delta</td>
-<td style="text-align: left;">distribuições assintóticas de funções</td>
+<td style="text-align: left;">distribuições assintóticas de funções — <strong>Aprofundamento — Mestrado</strong></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ordens estocásticas</td>
@@ -723,7 +723,16 @@ n\log\theta
 <section id="diferenciação" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="diferenciação"><span class="header-section-number">2.2.3</span> Diferenciação</h3>
 <p>Diversos procedimentos posteriores envolverão a maximização ou minimização de funções.</p>
-<p>Para uma função real diferenciável <span class="math inline">\(g\)</span>, um ponto interior <span class="math inline">\(x_0\)</span> candidato a extremo satisfaz <span class="math inline">\(g'(x_0)=0\)</span>. Quando <span class="math inline">\(g''(x_0)&lt;0\)</span>, o ponto corresponde a um máximo local; quando <span class="math inline">\(g''(x_0)&gt;0\)</span>, corresponde a um mínimo local.</p>
+<p>Para uma função real diferenciável <span class="math inline">\(g\)</span>, todo ponto interior <span class="math inline">\(x_0\)</span> em que <span class="math inline">\(g\)</span> apresente um extremo local satisfaz</p>
+<p><span class="math display">\[
+g'(x_0)=0.
+\]</span></p>
+<p>Se, além disso, a segunda derivada existe em <span class="math inline">\(x_0\)</span>, então:</p>
+<ul>
+<li>se <span class="math inline">\(g''(x_0)&lt;0\)</span>, o ponto corresponde a um máximo local;</li>
+<li>se <span class="math inline">\(g''(x_0)&gt;0\)</span>, o ponto corresponde a um mínimo local;</li>
+<li>se <span class="math inline">\(g''(x_0)=0\)</span>, o teste da segunda derivada é inconclusivo.</li>
+</ul>
 <section id="gradiente-e-hessiana" class="level4" data-number="2.2.3.1">
 <h4 data-number="2.2.3.1" class="anchored" data-anchor-id="gradiente-e-hessiana"><span class="header-section-number">2.2.3.1</span> Gradiente e hessiana</h4>
 <p>Para uma função escalar</p>
@@ -875,7 +884,7 @@ Figura&nbsp;2.1: Função logarítmica e sua aproximação de Taylor de primeira
 <p>Esse caráter <strong>local</strong> da aproximação será utilizado nos resultados assintóticos: quando uma sequência de quantidades aleatórias se aproxima de determinado valor, uma função dessas quantidades pode ser aproximada por sua expansão de Taylor em torno do valor limite.</p>
 <section id="taylor-em-várias-dimensões" class="level4" data-number="2.2.4.1">
 <h4 data-number="2.2.4.1" class="anchored" data-anchor-id="taylor-em-várias-dimensões"><span class="header-section-number">2.2.4.1</span> Taylor em várias dimensões</h4>
-<p>Para uma função diferenciável <span class="math inline">\(g:\mathbb R^k\to\mathbb R^m\)</span>,</p>
+<p>Se <span class="math inline">\(g:\mathbb R^k\to\mathbb R^m\)</span> é diferenciável em <span class="math inline">\(\boldsymbol\xi\)</span>, então</p>
 <p><span class="math display">\[
 g(\mathbf x)
 =
@@ -886,9 +895,11 @@ Dg(\boldsymbol\xi)
 +
 o\left(
 \|\mathbf x-\boldsymbol\xi\|
-\right).
+\right),
+\qquad
+\mathbf x\to\boldsymbol\xi.
 \]</span></p>
-<p>Quando <span class="math inline">\(g:\mathbb R^k\to\mathbb R\)</span>, a aproximação de primeira ordem é</p>
+<p>Quando <span class="math inline">\(g:\mathbb R^k\to\mathbb R\)</span>, a aproximação de primeira ordem pode ser escrita como</p>
 <p><span class="math display">\[
 g(\mathbf x)
 =
@@ -899,9 +910,11 @@ g(\boldsymbol\xi)
 +
 o\left(
 \|\mathbf x-\boldsymbol\xi\|
-\right).
+\right),
+\qquad
+\mathbf x\to\boldsymbol\xi.
 \]</span></p>
-<p>A aproximação de segunda ordem utiliza a hessiana:</p>
+<p>Se <span class="math inline">\(g\)</span> possui derivadas de segunda ordem contínuas em uma vizinhança de <span class="math inline">\(\boldsymbol\xi\)</span>, a aproximação de segunda ordem utiliza a hessiana:</p>
 <p><span class="math display">\[
 g(\mathbf x)
 \approx
@@ -965,7 +978,7 @@ g(\boldsymbol\xi)
 </div>
 <section id="critério-de-segunda-ordem" class="level4" data-number="2.2.5.1">
 <h4 data-number="2.2.5.1" class="anchored" data-anchor-id="critério-de-segunda-ordem"><span class="header-section-number">2.2.5.1</span> Critério de segunda ordem</h4>
-<p>Considere uma função <span class="math inline">\(g:\mathbb R^k\to\mathbb R\)</span> e um ponto <span class="math inline">\(\boldsymbol\theta_0\)</span> no qual</p>
+<p>Considere uma função <span class="math inline">\(g:\mathbb R^k\to\mathbb R\)</span> com derivadas de segunda ordem contínuas em uma vizinhança de <span class="math inline">\(\boldsymbol\theta_0\)</span> e suponha que</p>
 <p><span class="math display">\[
 \nabla g(\boldsymbol\theta_0)
 =
@@ -975,7 +988,8 @@ g(\boldsymbol\xi)
 <ul>
 <li>se <span class="math inline">\(\nabla^2g(\boldsymbol\theta_0)\)</span> é positiva definida, <span class="math inline">\(\boldsymbol\theta_0\)</span> é um mínimo local;</li>
 <li>se <span class="math inline">\(\nabla^2g(\boldsymbol\theta_0)\)</span> é negativa definida, <span class="math inline">\(\boldsymbol\theta_0\)</span> é um máximo local;</li>
-<li>se <span class="math inline">\(\nabla^2g(\boldsymbol\theta_0)\)</span> é indefinida, <span class="math inline">\(\boldsymbol\theta_0\)</span> é um ponto de sela.</li>
+<li>se <span class="math inline">\(\nabla^2g(\boldsymbol\theta_0)\)</span> é indefinida, <span class="math inline">\(\boldsymbol\theta_0\)</span> é um ponto de sela;</li>
+<li>se <span class="math inline">\(\nabla^2g(\boldsymbol\theta_0)\)</span> é apenas positiva ou negativa semidefinida, sem ser definida, o critério de segunda ordem pode ser inconclusivo.</li>
 </ul>
 <p>Esse critério será utilizado posteriormente na análise de funções que precisam ser maximizadas ou minimizadas.</p>
 </section>
@@ -1647,13 +1661,21 @@ N(0,1).
 <section id="teorema-do-mapeamento-contínuo" class="level3" data-number="2.3.6">
 <h3 data-number="2.3.6" class="anchored" data-anchor-id="teorema-do-mapeamento-contínuo"><span class="header-section-number">2.3.6</span> Teorema do mapeamento contínuo</h3>
 <p>O teorema do mapeamento contínuo permite transportar um resultado de convergência através de uma função contínua.</p>
-<p>Se <span class="math inline">\(X_n\xrightarrow{P}X\)</span> e <span class="math inline">\(g\)</span> é contínua nos valores relevantes, então</p>
+<p>Se</p>
+<p><span class="math display">\[
+X_n\xrightarrow{P}X
+\]</span></p>
+<p>e <span class="math inline">\(g\)</span> é contínua em <span class="math inline">\(X\)</span> com probabilidade <span class="math inline">\(1\)</span>, então</p>
 <p><span class="math display">\[
 g(X_n)
 \xrightarrow{P}
 g(X).
 \]</span></p>
-<p>De forma análoga, se <span class="math inline">\(X_n\xrightarrow{d}X\)</span> e <span class="math inline">\(g\)</span> é contínua com probabilidade um sob a distribuição limite, então</p>
+<p>De forma análoga, se</p>
+<p><span class="math display">\[
+X_n\xrightarrow{d}X
+\]</span></p>
+<p>e <span class="math inline">\(g\)</span> é contínua em <span class="math inline">\(X\)</span> com probabilidade <span class="math inline">\(1\)</span>, então</p>
 <p><span class="math display">\[
 g(X_n)
 \xrightarrow{d}
@@ -1748,8 +1770,11 @@ N(0,1).
 <p>Esse mecanismo será utilizado posteriormente quando uma quantidade desconhecida presente em uma padronização for substituída por uma aproximação consistente.</p>
 </div>
 </section>
-<section id="método-delta" class="level3" data-number="2.3.8">
-<h3 data-number="2.3.8" class="anchored" data-anchor-id="método-delta"><span class="header-section-number">2.3.8</span> Método delta</h3>
+<section id="aprofundamento-mestrado" class="level3" data-number="2.3.8">
+<h3 data-number="2.3.8" class="anchored" data-anchor-id="aprofundamento-mestrado"><span class="header-section-number">2.3.8</span> Aprofundamento — Mestrado</h3>
+<p>As subseções seguintes apresentam o método delta em suas versões univariada e multivariada. Esse bloco utiliza conjuntamente expansão de Taylor, convergência em distribuição e o lema de Slutsky e integra o percurso específico do mestrado.</p>
+<section id="método-delta" class="level4" data-number="2.3.8.1">
+<h4 data-number="2.3.8.1" class="anchored" data-anchor-id="método-delta"><span class="header-section-number">2.3.8.1</span> Método delta</h4>
 <p>O método delta permite obter a distribuição assintótica de uma transformação a partir da distribuição assintótica da quantidade original.</p>
 <p>Suponha que</p>
 <p><span class="math display">\[
@@ -1769,7 +1794,7 @@ N\left(
 \right).
 \]</span></p>
 <p>Quando <span class="math inline">\(g'(\theta)\neq0\)</span>, o resultado fornece uma distribuição limite não degenerada de primeira ordem.</p>
-<p>Se <span class="math inline">\(g'(\theta)=0\)</span>, a aproximação de primeira ordem produz variância limite igual a zero. Nesse caso, uma expansão de ordem superior e uma escala diferente podem ser necessárias.</p>
+<p>Se <span class="math inline">\(g'(\theta)=0\)</span>, a aproximação de primeira ordem produz variância limite igual a zero. Nesse caso, uma expansão de ordem superior e uma escala diferente podem ser necessárias <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;7.7)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Relação com Taylor">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1812,8 +1837,8 @@ N\left(
 \]</span></p>
 <p>Esse resultado mostra como uma distribuição assintótica conhecida pode ser transportada para uma escala transformada.</p>
 </div>
-<section id="visualização-do-método-delta" class="level4" data-number="2.3.8.1">
-<h4 data-number="2.3.8.1" class="anchored" data-anchor-id="visualização-do-método-delta"><span class="header-section-number">2.3.8.1</span> Visualização do método delta</h4>
+<section id="visualização-do-método-delta" class="level5" data-number="2.3.8.1.1">
+<h5 data-number="2.3.8.1.1" class="anchored" data-anchor-id="visualização-do-método-delta"><span class="header-section-number">2.3.8.1.1</span> Visualização do método delta</h5>
 <p>A aproximação fornecida pelo método delta pode ser observada no mesmo modelo exponencial utilizado para ilustrar o Teorema Central do Limite.</p>
 <p>Considere</p>
 <p><span class="math display">\[
@@ -1853,8 +1878,8 @@ Figura&nbsp;2.5: Distribuição simulada da transformação da média amostral e
 <p>O resultado é assintótico. A qualidade da aproximação para um tamanho de amostra específico depende do modelo, da transformação e do valor de <span class="math inline">\(n\)</span>.</p>
 </section>
 </section>
-<section id="método-delta-multivariado" class="level3" data-number="2.3.9">
-<h3 data-number="2.3.9" class="anchored" data-anchor-id="método-delta-multivariado"><span class="header-section-number">2.3.9</span> Método delta multivariado</h3>
+<section id="método-delta-multivariado" class="level4" data-number="2.3.8.2">
+<h4 data-number="2.3.8.2" class="anchored" data-anchor-id="método-delta-multivariado"><span class="header-section-number">2.3.8.2</span> Método delta multivariado</h4>
 <p>Considere um vetor <span class="math inline">\(\mathbf T_n\in\mathbb R^k\)</span> tal que</p>
 <p><span class="math display">\[
 \sqrt n
@@ -1924,8 +1949,9 @@ V
 \]</span></p>
 </div>
 </section>
-<section id="ordens-estocásticas" class="level3" data-number="2.3.10">
-<h3 data-number="2.3.10" class="anchored" data-anchor-id="ordens-estocásticas"><span class="header-section-number">2.3.10</span> Ordens estocásticas</h3>
+</section>
+<section id="ordens-estocásticas" class="level3" data-number="2.3.9">
+<h3 data-number="2.3.9" class="anchored" data-anchor-id="ordens-estocásticas"><span class="header-section-number">2.3.9</span> Ordens estocásticas</h3>
 <p>As ordens estocásticas fornecem uma notação compacta para descrever a magnitude de sequências aleatórias.</p>
 <p>Seja <span class="math inline">\(a_n&gt;0\)</span> uma sequência determinística.</p>
 <p>Escrevemos</p>
@@ -1998,19 +2024,21 @@ O_P(n^{-1/2}).
 <h2 data-number="2.4" class="anchored" data-anchor-id="síntese"><span class="header-section-number">2.4</span> Síntese</h2>
 <p>Os resultados deste capítulo podem ser organizados em dois componentes.</p>
 <p>O primeiro reúne <strong>ferramentas matemáticas</strong>. Somatórios, produtos e logaritmos permitem reorganizar expressões; vetores e matrizes fornecem a linguagem necessária para parâmetros e estatísticas multidimensionais; diferenciação, gradientes, hessianas e expansões de Taylor permitem estudar localmente funções; formas quadráticas e projeções serão utilizadas principalmente em distribuições associadas ao modelo normal e em mínimos quadrados; e o jacobiano permite trabalhar com transformações multivariadas.</p>
-<p>O segundo reúne <strong>ferramentas assintóticas</strong>. Os modos de convergência formalizam diferentes sentidos em que uma sequência aleatória pode aproximar um limite. A Lei dos Grandes Números descreve a estabilização de médias, enquanto o Teorema Central do Limite descreve suas flutuações padronizadas. O teorema do mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes. O método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias, e as ordens <span class="math inline">\(O_P\)</span> e <span class="math inline">\(o_P\)</span> registram de forma compacta a magnitude dos termos envolvidos.</p>
-<p>A estrutura assintótica central pode ser resumida por</p>
+<p>O segundo reúne <strong>ferramentas assintóticas</strong>. Os modos de convergência formalizam diferentes sentidos em que uma sequência aleatória pode aproximar um limite. A Lei dos Grandes Números descreve a estabilização de médias, enquanto o Teorema Central do Limite descreve suas flutuações padronizadas. O teorema do mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes, e as ordens <span class="math inline">\(O_P\)</span> e <span class="math inline">\(o_P\)</span> registram de forma compacta a magnitude dos termos envolvidos.</p>
+<p>No <strong>Aprofundamento — Mestrado</strong>, o método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias. Sua versão multivariada realiza a mesma operação por meio da matriz jacobiana.</p>
+<p>A estrutura assintótica do núcleo pode ser resumida por</p>
 <p><span class="math display">\[
 \text{Lei dos Grandes Números}
 \longrightarrow
-\text{convergência para uma constante},
+\text{convergência para uma constante}
 \]</span></p>
+<p>e</p>
 <p><span class="math display">\[
 \text{Teorema Central do Limite}
 \longrightarrow
-\text{distribuição das flutuações},
+\text{distribuição das flutuações}.
 \]</span></p>
-<p>e</p>
+<p>No aprofundamento do mestrado, essas ferramentas se articulam segundo o esquema</p>
 <p><span class="math display">\[
 \text{distribuição assintótica}
 +

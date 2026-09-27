@@ -1,0 +1,2825 @@
+# Orientações, diretrizes, estrutura e inventários — Inferência Estatística
+
+Este arquivo é um documento interno e temporário de orientação editorial, matemática, estatística, computacional e bibliográfica para a revisão do livro de Inferência Estatística. Ele não integra, por si só, o corpo do livro. Sua função é registrar as regras de auditoria, a arquitetura vigente, as dependências entre capítulos, o estado das decisões e o inventário do manuscrito.
+
+A estrutura deste documento foi inspirada no arquivo de orientações utilizado no projeto de Estatística Multivariada, mas todas as regras abaixo foram adaptadas ao manuscrito de Inferência Estatística. Nenhuma decisão de conteúdo do projeto de Multivariada é automaticamente transferida para este livro.
+
+# 1. Fontes normativas e hierarquia de consulta
+
+A revisão deve utilizar a seguinte hierarquia.
+
+1. **`intro.qmd` — fonte normativa do conteúdo programático.** Define os objetivos, a ementa e os conteúdos previstos para graduação e mestrado. A auditoria não deve retirar do livro um conteúdo exigido pelo programa sem registrar explicitamente a incompatibilidade e a decisão correspondente.
+2. **`_quarto.yml` — fonte da arquitetura física vigente.** Define a ordem dos arquivos no livro e deve ser usado para conferir a sequência efetiva de leitura.
+3. **Manuscrito atual — objeto primário da revisão.** Os arquivos `.qmd` representam o conteúdo que deve ser preservado, corrigido, articulado e melhorado. O manuscrito não deve ser reconstruído apenas para reproduzir a organização de outra obra.
+4. **Casella e Berger — fonte teórica principal de organização e controle.** *Statistical Inference*, 2nd ed., deve orientar a verificação de definições, resultados, condições, relações entre conceitos, exemplos clássicos e profundidade do núcleo de inferência estatística.
+5. **Demais referências já utilizadas no manuscrito.** Lauritzen, Rice, Cox, Chihara, Ramachandran, Larsen, Shao, Bickel--Doksum e as demais obras cadastradas em `references.bib` continuam válidas quando sustentarem diretamente o conteúdo em questão.
+6. **`deep-research-report (10).md` — diagnóstico auxiliar.** Suas recomendações devem ser reavaliadas contra a versão atual dos arquivos antes de qualquer alteração.
+7. **`Orientações e inventarios(20260903-215228)_corrigido.qmd` — precedente metodológico.** Serve somente como modelo de protocolo de auditoria, organização de inventários, proteção de dependências e forma de entrega.
+
+A hierarquia não significa que `intro.qmd` substitui o rigor teórico nem que Casella e Berger substitui o manuscrito. O programa define o que precisa ser contemplado; o manuscrito define o que já foi construído; as fontes teóricas controlam a correção e a fundamentação.
+
+# 2. Princípios de preservação do manuscrito
+
+## Preservação antes de substituição
+
+A revisão deve partir da intenção de **preservar e integrar** o material existente. Não deve partir da intenção de reduzir, reescrever ou uniformizar o texto por preferência estilística.
+
+Se um trecho estiver correto, bem escrito, adequadamente localizado e sustentado, ele deve permanecer.
+
+Antes de excluir, fundir, deslocar ou reescrever um desenvolvimento, verificar:
+
+1. sua função no próprio capítulo;
+2. sua função didática naquele ponto da sequência;
+3. suas dependências internas;
+4. suas utilizações posteriores;
+5. as referências bibliográficas associadas;
+6. se a repetição é meramente redundante ou se o conceito reaparece com nova função inferencial;
+7. se uma referência cruzada pode resolver a sobreposição sem empobrecer o desenvolvimento local.
+
+## Proteção reforçada para conteúdo com fonte
+
+Conteúdo já acompanhado de referência bibliográfica recebe presunção forte de permanência. Isso não significa que esteja automaticamente correto, mas significa que sua alteração exige auditoria bibliográfica explícita.
+
+Para qualquer trecho referenciado que seja alterado de modo substantivo, registrar internamente:
+
+- afirmação atual;
+- fonte citada;
+- localização verificada na fonte, quando disponível;
+- natureza do problema encontrado;
+- alteração proposta;
+- efeito da alteração sobre a fonte;
+- destino do conteúdo, caso seja realocado.
+
+Não excluir um conteúdo apenas porque ele não aparece em Casella e Berger. Casella e Berger é a fonte geral principal, não a única fonte autorizada do livro.
+
+## Repetição funcional não é redundância automática
+
+Um conceito pode aparecer em mais de um capítulo quando sua função muda. Por exemplo, uma distribuição pode ser apresentada como modelo probabilístico nos preliminares, como distribuição de uma estatística na Unidade 2, como ferramenta para construir um intervalo na Unidade 5 e como distribuição de referência de um teste na Unidade 6.
+
+O objetivo da auditoria é evitar **redefinições incompatíveis, repetições sem ganho e duplicações que fragmentem a responsabilidade conceitual**, e não eliminar retomadas didaticamente necessárias.
+
+# 3. Classes de intervenção
+
+Toda proposta de mudança deve ser classificada, sempre que aplicável, em uma das seguintes categorias:
+
+- **P — Preservar:** conteúdo correto, pertinente e adequadamente localizado;
+- **A — Ajustar:** conteúdo que permanece no mesmo lugar, mas precisa de correção, precisão, transição, notação, hipótese ou redação;
+- **R — Reposicionar:** conteúdo pertinente que deve ser movido sem perda de conteúdo, fonte, identificadores ou dependências;
+- **C — Complementar:** conteúdo correto que deve permanecer e receber uma definição, hipótese, justificativa, referência, exemplo ou conexão necessária;
+- **E — Excluir:** conteúdo comprovadamente incorreto, obsoleto, estranho ao escopo ou duplicado sem função local ou posterior.
+
+A categoria **E** é excepcional. Toda exclusão de conteúdo matemático, estatístico ou referenciado exige justificativa explícita.
+
+Além disso, cada problema identificado deve ser classificado quanto à natureza:
+
+- **A — estrutural ou conceitual:** erro, contradição, lacuna, dependência ausente, crossref quebrada ou posição inadequada;
+- **B — editorial relevante:** ambiguidade real, terminologia incompatível, metadiscurso ou formulação que prejudica a compreensão;
+- **C — cosmético:** preferência estilística sem efeito substantivo.
+
+Problemas de nível C não justificam ciclos sucessivos de revisão.
+
+# 4. Arquitetura vigente do livro
+
+A ordem atualmente declarada em `_quarto.yml` é:
+
+1. `index.qmd`;
+2. `intro.qmd`;
+3. `unidade0p1.qmd`;
+4. `unidade0p2.qmd`;
+5. `unidade1.qmd`;
+6. `unidade2.qmd`;
+7. `unidade3.qmd`;
+8. `unidade4.qmd`;
+9. `unidade5.qmd`;
+10. `unidade6.qmd`;
+11. `unidade7.qmd`;
+12. `Unidade8.qmd`;
+13. `demo.qmd`.
+
+O arquivo `demo.qmd` não integra o inventário desta versão porque não foi incluído no conjunto de fontes examinado para a criação deste documento. Sua função deve ser verificada antes de qualquer decisão arquitetural que o envolva.
+
+## Função provisória das partes
+
+| Parte | Função editorial e conceitual atual |
+|---|---|
+| `index.qmd` | elementos legais, declaração sobre IA e prefácio |
+| `intro.qmd` | identificação das disciplinas, ementas, objetivos, conteúdo programático, metodologia, avaliação e bibliografia |
+| `unidade0p1.qmd` | revisão probabilística e famílias de modelos necessárias à inferência |
+| `unidade0p2.qmd` | ferramentas matemáticas e assintóticas utilizadas nos capítulos inferenciais |
+| `unidade1.qmd` | formulação do problema inferencial, PGD, conceitos fundamentais, estatística/estimador/estimativa, modelo e verossimilhança |
+| `unidade2.qmd` | distribuição das estatísticas sob repetição amostral, resultados exatos, aproximações e simulação |
+| `unidade3.qmd` | critérios de avaliação de estimadores e princípios de redução de dados |
+| `unidade4.qmd` | métodos de construção de estimadores e extensões de estimação |
+| `unidade5.qmd` | construção e interpretação de intervalos de confiança |
+| `unidade6.qmd` | formulação e teoria de testes, testes usuais, poder e análise de dados categóricos |
+| `unidade7.qmd` | integração das etapas inferenciais em projeto aplicado |
+| `Unidade8.qmd` | execução de exemplos aplicados completos com apoio computacional |
+
+Essa distribuição é ponto de partida. Nenhuma mudança de numeração, divisão ou fusão de capítulos está aprovada nesta versão do documento.
+
+# 5. Graduação, mestrado, núcleo e aprofundamentos
+
+O mesmo livro atende dois níveis. A separação entre **núcleo** e **aprofundamento** deve seguir uma regra objetiva: **aprofundamento corresponde aos tópicos previstos apenas para o mestrado**. A dificuldade matemática, o tamanho de uma demonstração ou a sofisticação de um exemplo, isoladamente, não autorizam classificar um conteúdo como aprofundamento.
+
+## Núcleo
+
+O núcleo corresponde ao percurso de graduação e deve ser autossuficiente para o encadeamento inferencial completo. Nele permanecem os conteúdos comuns ou necessários à graduação, incluindo:
+
+- população, amostra, parâmetro, estatística, estimador e estimativa;
+- modelo estatístico e função de verossimilhança;
+- distribuições amostrais, Lei dos Grandes Números e Teorema Central do Limite;
+- propriedades básicas de estimadores, como viés, variância e erro quadrático médio;
+- método dos momentos, máxima verossimilhança e mínimos quadrados;
+- estimação intervalar;
+- fundamentos de testes de hipóteses, erros Tipo I e II, valor-p e poder em seu nível básico;
+- testes de homogeneidade e independência em dados categóricos;
+- interpretação, simulação e integração aplicada.
+
+Um conteúdo do núcleo não deve ser deslocado para aprofundamento apenas porque possui uma demonstração mais exigente. Quando necessário, a prova pode ser condensada, adiada ou apresentada em caixa própria, mas o tema continua pertencendo ao núcleo se estiver previsto para a graduação.
+
+## Aprofundamentos do mestrado
+
+Os aprofundamentos serão formados **somente pelos tópicos que a ementa do mestrado acrescenta ao percurso da graduação**. A comparação das duas ementas estabelece, como referência inicial, os seguintes blocos:
+
+| Bloco | Tópicos de aprofundamento vinculados ao mestrado | Observação de fronteira |
+|---|---|---|
+| **U3 — Avaliação e redução** | suficiência minimal; completude; resultados associados de suficiência/completude, incluindo família exponencial completa e suficiente, Rao--Blackwell, Lehmann--Scheffé, ENVVUM e resultados diretamente dependentes desses princípios | propriedades básicas de estimadores permanecem no núcleo |
+| **U4 — Estimação pontual** | minimax; equivariância; distribuição assintótica dos estimadores; método delta; algoritmo EM | momentos, máxima verossimilhança e mínimos quadrados permanecem no núcleo |
+| **U6 — Testes** | testes mais poderosos; Lema de Neyman--Pearson; testes uniformemente mais poderosos; teste da razão de verossimilhanças e versão generalizada; teoria de testes assintóticos; testes de aderência | fundamentos de testes, erros, valor-p, poder básico, homogeneidade e independência permanecem no núcleo |
+| **0.2 / U4** | método delta e ferramentas apresentadas especificamente para sustentar a distribuição assintótica dos estimadores | LGN e TCL permanecem no núcleo porque já integram o percurso da graduação |
+
+Essa tabela é uma **regra de nível**, não uma ordem automática de movimentação. A posição concreta dos conteúdos será decidida nos chats específicos de cada capítulo, preservando o texto já existente e suas fontes.
+
+### Conteúdos avançados não previstos exclusivamente para o mestrado
+
+Um conteúdo já presente no manuscrito não será classificado como aprofundamento apenas por parecer avançado. Testes exatos, permutação, robustez, medidas de efeito, exemplos computacionais, ordens estocásticas ou outros desenvolvimentos já existentes devem ser avaliados pela função que exercem no capítulo. Se não forem parte de um tópico explicitamente exclusivo do mestrado, permanecem no percurso principal ou recebem outra organização editorial, mas **não o rótulo de aprofundamento** por dificuldade.
+
+### Regra para subresultados
+
+Teoremas, exemplos ou extensões que dependem essencialmente de um tópico exclusivo do mestrado podem integrar o respectivo aprofundamento mesmo quando seus nomes não aparecem literalmente na ementa. É o caso, por exemplo, de resultados cuja função é desenvolver os princípios de suficiência e completude. Essa inclusão deve ser justificada conceitualmente no chat específico, e não por mera dificuldade técnica.
+
+# 6. Casella e Berger como referência de controle
+
+A correspondência estrutural principal a ser utilizada nas auditorias é:
+
+| Casella e Berger | Relação principal com o manuscrito |
+|---|---|
+| Cap. 5 — *Properties of a Random Sample* | Unidade 2 e partes dos preliminares |
+| Cap. 6 — *Principles of Data Reduction* | Unidade 3 e conceito de verossimilhança |
+| Cap. 7 — *Point Estimation* | Unidades 3 e 4 |
+| Cap. 8 — *Hypothesis Testing* | Unidade 6 |
+| Cap. 9 — *Interval Estimation* | Unidade 5 |
+| Cap. 10 — *Asymptotic Evaluations* | Preliminares 0.2 e retomadas em U3--U6 |
+| Caps. 11--12 — ANOVA e regressão | apoio seletivo ao bloco de mínimos quadrados; não autorizam expansão automática de escopo |
+
+A organização do manuscrito não deve ser alterada apenas para coincidir com essa ordem. A obra será usada para controlar o núcleo teórico, as condições dos resultados e as relações entre conceitos.
+
+Toda atribuição importante a Casella e Berger deve ser conferida diretamente no PDF. Como o arquivo disponível é digitalizado por imagem, a verificação deve utilizar as páginas renderizadas quando a extração textual não for suficiente.
+
+# 7. Responsabilidade conceitual e retomadas
+
+A expressão **capítulo responsável** significa local de desenvolvimento principal, não exclusividade de uso. Retomar um conceito em outro capítulo é adequado quando a nova ocorrência produz uma função inferencial distinta.
+
+| Conceito | Desenvolvimento principal | Retomadas esperadas |
+|---|---|---|
+| probabilidade, variáveis aleatórias, momentos e distribuições | 0.1 | U1--U8 conforme necessidade |
+| cálculo, Taylor, convergência, LGN, TCL, Slutsky e delta | 0.2 | U2--U6 em aplicações específicas |
+| PGD, população, amostra, parâmetro, estatística, estimador e estimativa | U1 | U2--U8 |
+| modelo estatístico e verossimilhança | U1 | U3, U4 e U6 |
+| distribuição amostral | U2 | U3--U6 e U8 |
+| LGN e TCL na inferência | U2, com base teórica em 0.2 | U3--U6 |
+| viés, variância, EQM e risco | U3 | U4 e U8 quando comparados estimadores |
+| consistência | U3 | U4 para estimadores específicos |
+| informação de Fisher e Cramér--Rao | U3 | U4 na máxima verossimilhança e U5--U6 quando necessário |
+| suficiência, completude e redução | U3 | U4 em exemplos ou propriedades de estimadores |
+| método dos momentos | U4 | U8 quando aplicado |
+| máxima verossimilhança | U4 | U5, U6 e U8 |
+| mínimos quadrados | U4 | exemplos aplicados quando pertinente |
+| minimax e equivariância | exigidos em `intro.qmd`; local definitivo a confirmar | ainda não localizados como bloco explícito na versão atual de U4 |
+| algoritmo EM | U4 | aplicações futuras, se existirem |
+| intervalos de confiança | U5 | U6 pela dualidade e U8 na aplicação |
+| bootstrap para intervalos | U5 | U8 quando utilizado |
+| hipótese, função de teste, tamanho, nível, erros e poder | U6 | U8 |
+| valor-p | U6 | U8 |
+| Neyman--Pearson e UMP | U6 | aprofundamentos e exercícios |
+| razão de verossimilhanças e Wilks | U6 | U8 quando o procedimento for aplicado |
+| testes usuais de médias e proporções | U6 | U8 |
+| qui-quadrado, Fisher e tabelas de contingência | U6 | projetos e exemplos aplicados |
+| permutação e robustez | U6 | U8, quando usados |
+| ciclo inferencial integrado | U7 | U8 como execução concreta |
+
+Esse mapa deverá ser atualizado depois de cada capítulo consolidado.
+
+# 8. Fluxo obrigatório de revisão de cada capítulo
+
+Antes de propor alteração textual, ler o capítulo completo.
+
+O fluxo é:
+
+1. congelar a versão do arquivo que está sendo auditada;
+2. ler integralmente o `.qmd`;
+3. identificar a função do capítulo;
+4. mapear as seções atuais;
+5. levantar os conteúdos corretos e os conteúdos que devem ser protegidos;
+6. levantar as referências bibliográficas atuais;
+7. identificar dependências anteriores e posteriores;
+8. realizar a auditoria estrutural e conceitual;
+9. realizar a auditoria matemática/estatística;
+10. realizar a auditoria de escopo graduação/mestrado;
+11. realizar a auditoria de notação e terminologia;
+12. realizar a auditoria dos ambientes do Quarto, crossrefs, figuras, tabelas e código;
+13. realizar a auditoria bibliográfica e verificar diretamente as fontes necessárias;
+14. apresentar a proposta de estrutura e as alterações antes de executá-las;
+15. revisar seção por seção somente após aprovação;
+16. integrar o capítulo;
+17. realizar uma varredura transversal final;
+18. renderizar e executar os códigos, quando o estágio da revisão exigir.
+
+## Três passagens
+
+A auditoria deve ser encerrada depois de três passagens bem definidas:
+
+1. **Passagem 1 — estrutural e conceitual:** escopo, função, sequência, lacunas, duplicações, contradições, dependências, conceitos utilizados antes de definição e resíduos de versões anteriores;
+2. **Passagem 2 — bibliográfica e de dependências:** verificação direta das fontes, condições dos resultados e impacto sobre capítulos anteriores e posteriores;
+3. **Passagem 3 — transversal final:** terminologia, notação, metadiscurso, crossrefs, consistência entre texto/fórmula/código, síntese e integridade mecânica.
+
+A auditoria termina quando não restarem problemas estruturais/conceituais ou editoriais relevantes. Preferências cosméticas não justificam uma nova rodada.
+
+# 9. Regras para movimentação, exclusão e substituição
+
+Antes de deslocar conteúdo:
+
+1. identificar exatamente o início e o fim do bloco;
+2. preparar o destino;
+3. recortar um único bloco;
+4. colar imediatamente no destino;
+5. preservar títulos, IDs, equações, figuras, tabelas, chunks, callouts, citações e demonstrações;
+6. conferir a origem;
+7. conferir o destino;
+8. pesquisar todas as referências cruzadas afetadas.
+
+Não executar vários recortes antes das respectivas colagens.
+
+Quando forem propostas alterações manuais, utilizar o padrão:
+
+**LOCALIZAR EXATAMENTE → SUBSTITUIR POR**
+
+O trecho de localização deve ser copiado literalmente da versão corrente do arquivo. Não utilizar texto semelhante, reconstituído ou aproximado.
+
+# 10. Sequência de desenvolvimento dos conceitos
+
+Sempre que compatível com o tema, utilizar a progressão:
+
+1. motivação ou problema;
+2. objeto ou definição;
+3. hipóteses e condições;
+4. resultado ou procedimento;
+5. propriedades;
+6. demonstração ou justificativa, quando pertinente;
+7. interpretação inferencial;
+8. exemplo;
+9. consequência e conexão com o próximo conceito.
+
+Não iniciar uma seção por uma fórmula sem preparar o objeto e sua função.
+
+# 11. Linguagem e precisão inferencial
+
+A redação deve ser direta, objetiva, tecnicamente rigorosa e progressiva.
+
+Distinguir sistematicamente:
+
+- população e amostra;
+- parâmetro e estatística;
+- estimador e estimativa;
+- variável aleatória e valor observado;
+- modelo e dados;
+- distribuição populacional e distribuição amostral;
+- probabilidade calculada sob uma hipótese e probabilidade de a hipótese ser verdadeira;
+- nível, tamanho e poder de um teste;
+- resultado exato, aproximação e resultado assintótico;
+- significância estatística e magnitude/relevância do efeito.
+
+Quando houver nome ou símbolo específico para o objeto, preferi-lo a expressões vagas como “essa quantidade”, “esse resultado”, “essa relação” ou “essa informação”.
+
+Eliminar metadiscurso que apenas descreva a organização do texto sem acrescentar conteúdo. Referências cruzadas específicas devem substituir menções genéricas sempre que o objeto já estiver formalizado.
+
+Se o trecho estiver correto, preciso e bem escrito, deve permanecer.
+
+# 12. Notação matemática
+
+Utilizar `$...$` para matemática em linha e `$$...$$` para equações destacadas.
+
+Registrar as dimensões e o espaço paramétrico quando necessários para conferir uma operação ou uma definição.
+
+Não reutilizar o mesmo símbolo para objetos conceitualmente diferentes dentro de um mesmo desenvolvimento.
+
+A auditoria de notação deve verificar especialmente:
+
+- parametrizações de distribuições, sobretudo gama e exponencial;
+- uso de $\theta$, $\boldsymbol\theta$, $\Theta$ e estimadores correspondentes;
+- $X$, $X_i$, $\mathbf X$ e realizações observadas;
+- $\mu$, $\sigma^2$, $p$, $\lambda$ e símbolos de parâmetros específicos;
+- $L(\theta)$, $\ell(\theta)$, escore e informação;
+- $\alpha$, $\beta(\theta)$, poder e nível de significância;
+- notação para intervalos, regiões críticas e valores críticos.
+
+# 13. Hipóteses, condições e rigor
+
+Explicitar, quando aplicável:
+
+- independência;
+- distribuição idêntica;
+- existência de momentos;
+- normalidade;
+- suporte e sua dependência do parâmetro;
+- identificabilidade;
+- parâmetro interior;
+- diferenciabilidade;
+- troca de derivação e integração;
+- informação de Fisher finita e não singular;
+- condições de regularidade;
+- dimensão fixa;
+- tamanho amostral e graus de liberdade;
+- validade exata ou assintótica do procedimento;
+- condições para aproximações normais e qui-quadrado.
+
+Não apresentar como geral um resultado que depende de normalidade, regularidade ou grande amostra.
+
+# 14. Ambientes do Quarto e referências cruzadas
+
+Os objetos formais devem possuir identificadores semânticos estáveis quando precisarem ser referenciados posteriormente. Utilizar, conforme o caso:
+
+- `#def-` para definições;
+- `#prp-` para proposições e resultados formais equivalentes;
+- `#thm-` para teoremas;
+- `#exm-` para exemplos de referência;
+- `#exr-` para exercícios quando houver necessidade real de referência cruzada.
+
+Demonstrações devem preferencialmente utilizar **callout colapsável** no HTML quando a leitura do núcleo puder prosseguir sem a prova. O uso de `{.proof}` não deve ser introduzido como novo padrão enquanto a política visual global não for verificada com `styles.css`; blocos existentes não devem ser alterados apenas por estética.
+
+Identificadores devem ser únicos, estáveis, descritivos, em minúsculas e com hífens.
+
+Antes de excluir, fundir, deslocar ou renomear qualquer objeto com identificador, pesquisar sua utilização no projeto inteiro.
+
+Equações citadas posteriormente devem possuir identificadores `eq-`. Figuras e tabelas devem possuir identificadores `fig-` e `tbl-`, ser apresentadas, referenciadas e interpretadas.
+
+# 15. Computação
+
+A política transversal adotada é **preservar R e Python** durante a revisão, sem conversão automática para uma única linguagem. Essa política descreve a direção editorial atual e só poderá ser revista depois da auditoria executável dos capítulos computacionais.
+
+Regras:
+
+- preservar códigos que já cumprem função didática;
+- não converter automaticamente R para Python nem Python para R;
+- distinguir código usado para ensinar sintaxe de código usado para investigar um conceito inferencial;
+- não transformar os capítulos em tutoriais elementares de linguagem;
+- exigir coerência entre fórmula, parametrização, opções da função, resultado numérico e interpretação;
+- executar códigos antes de declarar que funcionam;
+- classificar como **verificação computacional necessária** qualquer exemplo ainda não executado;
+- exigir que estimativas, erros-padrão, valor-p, intervalos, graus de liberdade, nível de significância e conclusão sejam coerentes entre texto e código;
+- não duplicar uma implementação em R e Python apenas por uniformização estética.
+
+A coerência computacional do livro será estatística e editorial, não a imposição de uma única linguagem.
+
+# 16. Política bibliográfica
+
+Antes de inserir ou manter uma citação substantiva:
+
+1. identificar a afirmação que ela sustenta;
+2. verificar se a chave existe em `references.bib`;
+3. localizar diretamente o conteúdo na obra, quando a verificação for necessária;
+4. conferir hipóteses, parametrização, edição e ano;
+5. evitar acumular referências sem função individual clara;
+6. registrar a ausência de fonte adequada em vez de inventar uma referência.
+
+Para a verificação direta, utilizar internamente:
+
+- **B1 — sustentação direta:** a fonte apresenta a mesma afirmação com condições compatíveis;
+- **B2 — sustentação equivalente:** a fonte apresenta formulação matematicamente equivalente;
+- **B3 — sustentação parcial:** a fonte sustenta apenas parte da afirmação ou assume condições mais restritivas;
+- **B0 — não localizado:** a sustentação não foi localizada na fonte examinada.
+
+Uma citação correta deve ser preservada mesmo que outra referência também pudesse sustentar o mesmo ponto. Não trocar fontes apenas para uniformizar o capítulo.
+
+# 17. Formato das entregas durante a auditoria
+
+Diagnósticos e propostas podem ser apresentados em Markdown normal.
+
+Quando for solicitado texto final para um `.qmd`, fornecer um bloco copiável e manter fora dele os comentários de auditoria.
+
+Nenhuma alteração de capítulo deve ser apresentada como definitiva sem distinguir:
+
+- o texto atual;
+- o diagnóstico;
+- a intervenção proposta;
+- a justificativa;
+- as fontes afetadas;
+- as dependências afetadas.
+
+# 18. Estado inicial das decisões
+
+## Decisões já fixadas
+
+1. O projeto preservará a identidade de **inferência estatística frequentista**, com teoria, interpretação e integração computacional.
+2. O manuscrito atual é o ponto de partida e deve ser preservado sempre que estiver correto.
+3. Conteúdo referenciado recebe proteção reforçada.
+4. Casella e Berger é a fonte teórica principal de organização e consulta, mas não é a única fonte admitida.
+5. A Unidade 6 existe, está disponível e integra plenamente a auditoria.
+6. Repetições funcionais são permitidas; redefinições incompatíveis ou duplicações sem ganho devem ser corrigidas.
+7. O livro deve atender graduação e mestrado sem desvirtuar o percurso principal.
+8. Recomendações do relatório de pesquisa anterior devem ser revalidadas contra os arquivos atuais.
+9. Aprofundamento é uma categoria de **nível de ensino**: somente tópicos previstos exclusivamente para o mestrado recebem esse rótulo.
+10. A terminologia canônica do corpo do livro será: **completude**, **suficiência minimal**, **valor-p**, **ENVVUM** e **razão de verossimilhanças**.
+11. Para indicar variáveis aleatórias independentes e identicamente distribuídas em expressões matemáticas, utilizar `\mathrm{iid}`.
+12. Os nomes das distribuições podem aparecer por extenso ou em forma abreviada, conforme o contexto. Não se deve promover uniformização meramente editorial entre essas formas quando não houver ambiguidade ou erro.
+13. Na distribuição exponencial, quando o parâmetro representar diretamente a média, utilizar o símbolo $\mu$. Quando a parametrização utilizar o inverso da média, empregar outro símbolo, como $\lambda$ para a taxa, deixando explícito o significado do parâmetro.
+14. A parametrização geral da distribuição gama utilizará os parâmetros $\alpha$ e $\beta$. Quando a distribuição gama surgir diretamente como soma de variáveis exponenciais parametrizadas de outra forma, poderá ser mantida uma parametrização compatível com esse desenvolvimento, desde que seu significado seja explicitado.
+15. Exercícios não devem ser alterados apenas por uniformização de notação, estilo, escolha de símbolos ou preferência pedagógica. Intervenções em exercícios exigem erro matemático, inconsistência, ambiguidade que afete a resolução ou outro problema substantivo.
+
+## Decisões ainda abertas ou dependentes de verificação
+
+1. posição concreta dos aprofundamentos dentro de cada capítulo, respeitando a classificação de nível já fixada;
+2. eventual divisão ou manutenção integral da Unidade 4;
+3. posição e extensão de minimax e equivariância dentro da U4;
+4. confirmação final da política R/Python depois da auditoria executável, mantendo-se até lá a decisão de preservar as duas linguagens;
+5. forma permanente da Unidade 7 e separação, ou não, de instruções administrativas;
+6. estrutura definitiva da Unidade 8 após auditoria executável;
+7. função de `demo.qmd`;
+8. divergência bibliográfica de Bolfarine--Sandoval, que depende de fonte verificável;
+9. comportamento visual e técnico dos estilos personalizados, macros e capa, pois `styles.css`, `macros.tex` e `cover.tex` ainda não estão disponíveis nas fontes desta auditoria.
+
+# Inventário inicial do manuscrito
+
+Este inventário registra a versão disponível no início do projeto. **Não equivale à auditoria final dos capítulos.** Sua função é impedir que a revisão perca conteúdos existentes, fontes, exemplos ou dependências antes que sua função seja examinada.
+
+# Elementos editoriais iniciais
+
+**Arquivo:** `index.qmd`  
+**Extensão atual:** 35 linhas.
+
+## Função atual
+
+Abrir o livro com a capa em HTML, informações legais, declaração de uso de IA e prefácio.
+
+## Conteúdo atual a preservar até auditoria
+
+- declaração de direitos autorais;
+- explicitação de responsabilidade científica dos autores;
+- apresentação institucional e didática do projeto;
+- descrição do papel da computação no livro.
+
+## Pontos já identificados para Passagem 1
+
+- há resíduos textuais ligados a **modelos de regressão** no prefácio e na declaração de IA que precisam ser confrontados com a identidade atual do livro;
+- a frase que declara implementação “integralmente no R (ou Python)” precisa ser compatibilizada com a realidade computacional do manuscrito;
+- a afirmação de que fundamentos densos estão em “apêndices específicos” deve ser conferida com a posição atual de `unidade0p1.qmd` e `unidade0p2.qmd` como capítulos regulares.
+
+Nenhuma dessas observações autoriza reescrita imediata; são pontos para a primeira auditoria estrutural/editorial.
+
+## Mapa atual de seções principais
+
+- linha 7: **Direitos Autorais e Uso da Obra {.unnumbered}**
+- linha 15: **Declaração sobre o Uso de Ferramentas de Inteligência Artificial {.unnumbered}**
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Identificação, ementa e conteúdo programático
+
+**Arquivo:** `intro.qmd`  
+**Extensão atual:** 152 linhas.
+
+## Função normativa
+
+Registrar as duas disciplinas atendidas, objetivos, ementas, conteúdo programático, metodologia, avaliação e bibliografia.
+
+## Conteúdo programático que deve ser protegido
+
+### Graduação
+
+- população, amostra, parâmetro, estatística e estimador;
+- distribuições amostrais;
+- momentos, máxima verossimilhança e mínimos quadrados;
+- estimação intervalar;
+- testes de hipóteses;
+- homogeneidade e independência.
+
+### Mestrado
+
+Além do núcleo anterior:
+
+- suficiência e completividade;
+- minimax e equivariância;
+- distribuição assintótica de estimadores e método delta;
+- algoritmo EM;
+- testes mais poderosos;
+- razão de verossimilhanças e testes assintóticos;
+- aderência e independência.
+
+## Regra de uso
+
+Sempre que a auditoria detectar que um conteúdo programático não aparece no manuscrito, registrar **lacuna programa–manuscrito** antes de decidir onde incluí-lo. O caso já visível é “Estimadores Minimax e Equivariância”, previstos em U4 no programa e ainda não localizados como bloco explícito na versão atual de `unidade4.qmd`.
+
+## Mapa atual de seções principais
+
+- linha 19: **EMENTA {.unnumbered}**
+- linha 26: **OBJETIVO GERAL {.unnumbered}**
+- linha 30: **OBJETIVOS ESPECÍFICOS {.unnumbered}**
+- linha 48: **CONTEÚDO PROGRAMÁTICO {.unnumbered}**
+- linha 116: **METODOLOGIA {.unnumbered}**
+- linha 120: **AVALIAÇÃO {.unnumbered}**
+- linha 131: **CRITÉRIOS DE AVALIAÇÃO {.unnumbered}**
+- linha 140: **BIBLIOGRAFIA BÁSICA {.unnumbered}**
+- linha 147: **BIBLIOGRAFIA COMPLEMENTAR {.unnumbered}**
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Revisão de Probabilidade e Modelos Probabilísticos
+
+**Arquivo:** `unidade0p1.qmd`  
+**Extensão atual:** 7040 linhas.
+
+## Função do capítulo
+
+Fornecer a revisão probabilística necessária para que as unidades inferenciais possam utilizar modelos, momentos, dependência, FGM e transformações sem reconstruir toda a teoria de Probabilidade.
+
+## Blocos atuais
+
+- probabilidade e condicionamento;
+- variáveis aleatórias e distribuições;
+- esperança, variância e momentos;
+- distribuições conjuntas, marginais, condicionais e dependência;
+- função geradora de momentos;
+- modelos discretos;
+- multinomial;
+- modelos contínuos;
+- transformações;
+- quadros de relações e síntese;
+- exercícios de consolidação.
+
+## Conteúdo a proteger
+
+- distinções entre modelos com e sem reposição;
+- parametrizações explicitadas nos modelos;
+- relações entre famílias de distribuições;
+- figuras comparativas das distribuições;
+- fundamentação já construída com livros de Probabilidade e Estatística Matemática.
+
+## Pontos para auditoria posterior
+
+- conferir fronteira com U2 para evitar redefinições desnecessárias de FGM e distribuições derivadas;
+- conferir parametrizações que serão reutilizadas em U3--U6;
+- conferir se todo modelo apresentado possui função posterior ou função pedagógica clara;
+- proteger exemplos e figuras já referenciados internamente.
+
+## Mapa atual de seções principais
+
+- linha 56: **Probabilidade e condicionamento**
+- linha 427: **Variáveis aleatórias e distribuições**
+- linha 747: **Esperança, variância e momentos**
+- linha 867: **Distribuições conjuntas e dependência**
+- linha 1836: **Função geradora de momentos**
+- linha 2003: **Modelos probabilísticos discretos**
+- linha 3981: **Modelo multinomial**
+- linha 4469: **Modelos probabilísticos contínuos**
+- linha 6065: **Transformações de variáveis aleatórias**
+- linha 6445: **Quadro-síntese dos modelos probabilísticos**
+- linha 6497: **Relações entre os principais modelos**
+- linha 6663: **Síntese**
+- linha 6711: **Exercícios de consolidação**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@chihara2022`, `@dantas1997`, `@magalhaes2006`, `@meyer1983`, `@ramachandran2021r`, `@rice2007mathematical`, `@ross2006`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Resultados Matemáticos e Assintóticos para Inferência
+
+**Arquivo:** `unidade0p2.qmd`  
+**Extensão atual:** 2640 linhas.
+
+## Função do capítulo
+
+Fornecer as ferramentas matemáticas e assintóticas utilizadas no desenvolvimento posterior: cálculo, matrizes, Taylor, jacobiano, formas quadráticas, projeções, convergência, LGN, TCL, Slutsky, método delta e ordens estocásticas.
+
+## Blocos atuais
+
+- mapa de dependências;
+- ferramentas matemáticas;
+- transformações multivariadas e jacobiano;
+- modos de convergência;
+- relações entre convergências;
+- Lei Fraca dos Grandes Números;
+- Teorema Central do Limite;
+- mapeamento contínuo;
+- Slutsky;
+- método delta univariado e multivariado;
+- ordens estocásticas;
+- síntese e exercícios.
+
+## Regra de fronteira
+
+O capítulo estabelece ferramentas gerais. U2--U6 podem retomá-las para mostrar seu **papel inferencial específico**, mas não devem criar versões incompatíveis das definições ou teoremas.
+
+## Pontos para auditoria posterior
+
+- verificar dependências reais de cada ferramenta nos capítulos seguintes;
+- conferir condições dos resultados assintóticos diretamente nas fontes;
+- conferir consistência entre o método delta aqui e suas aplicações em U4/U5;
+- preservar figuras de estabilização e aproximação quando cumprirem função conceitual.
+
+## Mapa atual de seções principais
+
+- linha 14: **Mapa de dependências**
+- linha 57: **Ferramentas matemáticas**
+- linha 1085: **Ferramentas assintóticas**
+- linha 2181: **Síntese**
+- linha 2218: **Exercícios de consolidação**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@chihara2022`, `@lauritzen2023fundamentals`, `@ramachandran2021r`, `@rice2007mathematical`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Fundamentos da Inferência Estatística
+
+**Arquivo:** `unidade1.qmd`  
+**Extensão atual:** 660 linhas.
+
+## Função do capítulo
+
+Introduzir o problema inferencial e criar a linguagem comum usada no restante do livro.
+
+## Arquitetura atual
+
+- problema da inferência estatística;
+- Processo Gerador de Dados (PGD);
+- conceitos fundamentais;
+- experimento em sala de aula;
+- estatística, estimador e estimativa;
+- exemplo-guia Bernoulli/urna;
+- antecipação da variabilidade dos estimadores;
+- visão panorâmica dos critérios de avaliação;
+- modelo estatístico e verossimilhança;
+- exploração computacional da urna;
+- questões de revisão.
+
+## Conteúdo a proteger
+
+- PGD como organizador conceitual;
+- experimento da urna e exemplo-guia Bernoulli;
+- distinção entre estatística, estimador e estimativa;
+- introdução explícita da verossimilhança antes dos métodos de estimação;
+- integração entre experimento físico/conceitual e simulação.
+
+## Pontos para Passagem 1
+
+- conferir se população, amostra, parâmetro, estatística, estimador e estimativa são introduzidos em ordem coerente e sem definições provisórias conflitantes;
+- verificar a transição entre a parte conceitual e a parte computacional;
+- distinguir antecipações legítimas de conteúdos que pertencem formalmente à U3;
+- manter a urna como exemplo longitudinal, salvo erro específico.
+
+## Mapa atual de seções principais
+
+- linha 9: **O problema da inferência estatística**
+- linha 32: **Processo Gerador de Dados (PGD)**
+- linha 69: **Conceitos fundamentais**
+- linha 117: **Experimento em sala de aula**
+- linha 155: **Estatísticas, estimadores e estimativas**
+- linha 195: **Exemplo-guia: modelo Bernoulli para a urna**
+- linha 227: **A variabilidade dos estimadores: uma antecipação**
+- linha 241: **Critérios para avaliar estimadores: visão panorâmica**
+- linha 270: **Modelo estatístico e função de verossimilhança**
+- linha 373: **Exploração computacional do experimento da urna**
+- linha 576: **Questões de revisão {.unnumbered}**
+- linha 660: **Referências {.unnumbered}**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@casella2002statistical`, `@chihara2022`, `@cox2006principles`, `@moderndive`, `@ramachandran2021r`, `@rice2007mathematical`, `@tidyverse`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Distribuições Amostrais
+
+**Arquivo:** `unidade2.qmd`  
+**Extensão atual:** 2240 linhas.
+
+## Função do capítulo
+
+Desenvolver a distribuição das estatísticas sob repetição amostral e ligar resultados probabilísticos gerais aos objetos centrais da inferência.
+
+## Arquitetura atual
+
+- recordação de amostra e estatística;
+- modelo i.i.d. e amostragem aleatória simples sem reposição;
+- enumeração de distribuições amostrais;
+- somas, transformações e FGM;
+- distribuição da média e diferença de médias;
+- LGN e TCL;
+- distribuição da proporção e correção para população finita;
+- distribuição da variância;
+- qui-quadrado, $t$ e $F$ derivados do modelo normal;
+- estatísticas de ordem;
+- simulação;
+- síntese e exercícios.
+
+## Conteúdo a proteger
+
+- coexistência dos dois referenciais de geração da amostra: i.i.d. e população finita;
+- distinção entre resultados exatos e aproximações;
+- derivação das distribuições clássicas a partir do modelo normal;
+- enumeração e simulação como recursos pedagógicos, não apenas computacionais.
+
+## Pontos para Passagem 1
+
+- conferir o limite entre “enunciar ferramenta” em 0.2 e “usar ferramenta para obter distribuição amostral” em U2;
+- verificar se LGN/TCL são retomados com ganho inferencial, e não apenas repetidos;
+- conferir a coerência das correções para população finita;
+- conferir se estatísticas de ordem permanecem justificadas por uso posterior e/ou formação teórica pretendida.
+
+## Mapa atual de seções principais
+
+- linha 3: **Introdução**
+- linha 50: **Amostra e estatística: recordação**
+- linha 97: **Dois referenciais para a geração da amostra**
+- linha 479: **Construção de uma distribuição amostral por enumeração**
+- linha 547: **Somas, transformações e funções geradoras de momentos**
+- linha 796: **Distribuição amostral da média**
+- linha 983: **Lei dos Grandes Números**
+- linha 1051: **Teorema Central do Limite**
+- linha 1114: **Distribuição amostral da proporção**
+- linha 1291: **Distribuição amostral da variância**
+- linha 1448: **Distribuições derivadas do modelo normal**
+- linha 1733: **Estatísticas de ordem**
+- linha 1862: **Distribuições amostrais por simulação**
+- linha 1997: **Quadro-síntese**
+- linha 2016: **Exercícios**
+- linha 2240: **Referências {.unnumbered}**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@casella2002statistical`, `@chihara2022`, `@cox2006principles`, `@hogg1978`, `@kerns2010`, `@larsen2012`, `@lauritzen2023fundamentals`, `@ramachandran2021r`, `@rice2007mathematical`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Avaliação de Estimadores e Princípios de Redução de Dados
+
+**Arquivo:** `unidade3.qmd`  
+**Extensão atual:** 1552 linhas.
+
+## Função do capítulo
+
+Responder a duas perguntas relacionadas: como avaliar a qualidade de um estimador e como reduzir os dados preservando a informação relevante sobre o parâmetro.
+
+## Arquitetura atual
+
+### Avaliação de estimadores
+
+- perda, risco e EQM;
+- viés, variância e erro-padrão;
+- consistência;
+- resultados operacionais de convergência;
+- eficiência em amostras finitas;
+- informação de Fisher;
+- Cramér--Rao;
+- eficiência assintótica;
+- exemplos normal, Poisson e uniforme.
+
+### Redução de dados
+
+- suficiência;
+- fatoração de Neyman--Fisher;
+- suficiência mínima;
+- famílias exponenciais;
+- completude;
+- Rao--Blackwell;
+- Lehmann--Scheffé;
+- ancilaridade e Basu;
+- exemplo integrado gama;
+- síntese e exercícios.
+
+## Conteúdo a proteger
+
+- articulação risco/EQM/viés/variância;
+- resultados de suficiência e completude já fundamentados;
+- sequência Rao--Blackwell → Lehmann--Scheffé;
+- exemplos que demonstram melhoria de estimadores;
+- referências já associadas a resultados teóricos.
+
+## Pontos para Passagem 1
+
+- verificar a transição entre avaliação e redução sem presumir que devam virar capítulos separados;
+- conferir a responsabilidade conceitual de informação de Fisher em relação à U4;
+- verificar a posição de eficiência assintótica;
+- decidir, apenas depois da auditoria, quais resultados são núcleo de graduação e quais funcionam como aprofundamento de mestrado;
+- proteger Basu e outros resultados avançados até que sua função no percurso do mestrado seja examinada.
+
+## Mapa atual de seções principais
+
+- linha 7: **Avaliação de estimadores**
+- linha 601: **Princípios de redução de dados**
+- linha 1135: **Exemplo integrado adaptado — Distribuição gama com forma conhecida**
+- linha 1243: **Síntese conceitual**
+- linha 1258: **Exercícios**
+- linha 1552: **Referências {.unnumbered}**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@bickel2016volume2`, `@casella2002statistical`, `@chihara2022`, `@cox2006principles`, `@larsen2012`, `@lauritzen2023fundamentals`, `@ramachandran2009`, `@ramachandran2021r`, `@rasch2018`, `@rice2007mathematical`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Métodos de Estimação Pontual
+
+**Arquivo:** `unidade4.qmd`  
+**Extensão atual:** 4283 linhas.
+
+## Função do capítulo
+
+Desenvolver métodos de construção de estimadores e conectar métodos clássicos a extensões importantes de estimação.
+
+## Arquitetura atual
+
+- método dos momentos;
+- máxima verossimilhança;
+- função escore e informação;
+- condições de regularidade;
+- propriedades assintóticas do EMV;
+- exemplos regulares e não regulares;
+- mínimos quadrados e relação com máxima verossimilhança;
+- algoritmo EM, dados latentes e exemplos;
+- exercícios complementares.
+
+## Conteúdo a proteger
+
+- exemplos de momentos para famílias distintas;
+- separação entre existência/unicidade do EMV e cálculo formal;
+- explicitação das condições de regularidade;
+- exemplo não regular da uniforme;
+- relação entre mínimos quadrados e MV sob erro normal;
+- desenvolvimento do EM como método de máxima verossimilhança com dados incompletos/latentes;
+- fontes específicas associadas ao EM e aos métodos de estimação.
+
+## Lacuna programa–manuscrito já registrada
+
+`intro.qmd` prevê **Estimadores Minimax e Equivariância**, mas essa matéria não aparece como bloco explícito na versão atual de U4. A auditoria deve verificar se há desenvolvimento parcial em outro local e, somente depois, decidir a inclusão e a posição.
+
+## Pontos para Passagem 1
+
+- verificar sobreposição com U3 em Fisher, consistência e eficiência;
+- verificar se o intervalo de Wald deve permanecer aqui como consequência assintótica ou ser apenas antecipado e remetido a U5;
+- verificar equilíbrio entre momentos/MV e os blocos de MQ/EM sem presumir divisão do capítulo;
+- corrigir problemas mecânicos de chaves bibliográficas antes de qualquer avaliação de conteúdo;
+- não reduzir o bloco EM apenas por extensão: primeiro verificar função, fontes e nível do mestrado.
+
+## Mapa atual de seções principais
+
+- linha 3: **Método dos Momentos {#sec-metodo-momentos}**
+- linha 364: **Máxima Verossimilhança {#sec-maxima-verossimilhanca}**
+- linha 1856: **Mínimos Quadrados {#sec-minimos-quadrados}**
+- linha 3134: **Algoritmo Expectation-Maximization (EM) {#sec-algoritmo-em}**
+- linha 4283: **Referências {.unnumbered}**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@chihara2022`, `@chihara2022.`, `@cox2006principles`, `@diez2014introductory`, `@gupta2011em`, `@gupta2011em.`, `@hastie2009elements`, `@larsen2012`, `@lauritzen2023fundamentals`, `@lauritzen2023fundamentals.`, `@ramachandran2009`, `@ramachandran2021r`, `@ramachandran2021r.`, `@rice2007mathematical`, `@shao2005`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Estimação Intervalar
+
+**Arquivo:** `unidade5.qmd`  
+**Extensão atual:** 785 linhas.
+
+## Função do capítulo
+
+Desenvolver a construção, interpretação e avaliação de intervalos de confiança, articulando procedimentos exatos, assintóticos e computacionais.
+
+## Arquitetura atual
+
+- definição e interpretação frequentista;
+- quantis e valores críticos;
+- quantidades pivotais;
+- intervalos no modelo normal;
+- pivô exponencial;
+- Wald;
+- proporção binomial: Wald, Wilson e Clopper--Pearson;
+- intervalos unilaterais;
+- dualidade com testes;
+- precisão e tamanho amostral;
+- cobertura por simulação;
+- bootstrap;
+- distinção entre confiança e predição;
+- síntese, exercícios e gabarito.
+
+## Conteúdo a proteger
+
+- interpretação frequentista explícita;
+- princípio de quantidade pivotal;
+- contraste entre métodos para proporção;
+- simulação de cobertura;
+- relação com tamanho amostral;
+- bootstrap como extensão computacional já integrada.
+
+## Pontos para Passagem 1
+
+- conferir fronteira com U4 para Wald;
+- manter a dualidade com U6 sem antecipar indevidamente todo o conteúdo de testes;
+- conferir se a diferença entre intervalo exato, aproximado e assintótico permanece explícita;
+- verificar coerência entre procedimentos ensinados e procedimentos usados em U8.
+
+## Mapa atual de seções principais
+
+- linha 23: **Definição formal**
+- linha 46: **Interpretação frequentista**
+- linha 64: **Quantis e valores críticos**
+- linha 104: **Construção por quantidade pivotal**
+- linha 132: **Intervalos para parâmetros da distribuição normal**
+- linha 298: **Exemplo de intervalo exato por pivô: distribuição exponencial**
+- linha 334: **Intervalos assintóticos e método de Wald**
+- linha 377: **Intervalos para uma proporção binomial**
+- linha 449: **Intervalos unilaterais**
+- linha 474: **Dualidade entre intervalos de confiança e testes de hipóteses**
+- linha 503: **Amplitude, precisão e tamanho amostral**
+- linha 545: **Cobertura por simulação**
+- linha 590: **Métodos bootstrap**
+- linha 625: **Intervalo de confiança não é intervalo de predição**
+- linha 639: **Roteiro para construção e apresentação**
+- linha 655: **Síntese dos principais procedimentos**
+- linha 668: **Exercícios**
+- linha 772: **Gabarito sucinto**
+- linha 785: **Referências {.unnumbered}**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@chihara2022`, `@cox2006principles`, `@larsen2012`, `@lauritzen2023fundamentals`, `@ramachandran2009`, `@ramachandran2021r`, `@rasch2018`, `@rice2007mathematical`, `@rosner2011fundamentals`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Testes de Hipóteses e Análise de Dados Categóricos
+
+**Arquivo:** `unidade6.qmd`  
+**Extensão atual:** 1273 linhas.
+
+## Função do capítulo
+
+Desenvolver a formulação de testes de hipóteses, a teoria de erros e poder, resultados clássicos de otimalidade, testes usuais e análise de dados categóricos.
+
+## Arquitetura atual
+
+### Fundamentos e teoria
+
+- motivação por moeda;
+- formulação estatística;
+- função de teste e região crítica;
+- poder, tamanho e nível;
+- erros I e II;
+- valor-p e regra de decisão;
+- Neyman--Pearson;
+- UMP e razão de verossimilhanças monótona;
+- teste da razão de verossimilhanças e Wilks.
+
+### Procedimentos e aplicações
+
+- testes para uma média, uma proporção, duas médias, pareamento e duas proporções;
+- Welch e caso de variância comum;
+- binomial exato;
+- permutação e robustez;
+- planejamento amostral e poder;
+- qui-quadrado de Pearson e razão de verossimilhanças;
+- aderência, homogeneidade e independência;
+- resíduos;
+- tabelas esparsas e Fisher;
+- tamanho de efeito;
+- poder em qui-quadrado;
+- relação teste--IC;
+- boas práticas e erros de interpretação;
+- exercícios.
+
+## Conteúdo a proteger
+
+- distinção entre tamanho, nível, erro tipo I, erro tipo II e poder;
+- desenvolvimento já existente de valor-p e seus limites interpretativos;
+- sequência Neyman--Pearson → UMP → TRV;
+- resultado assintótico de Wilks;
+- presença conjunta de teoria de testes e dados categóricos, conforme o programa;
+- Welch, testes exatos, permutação e robustez como extensões já incorporadas;
+- diagnóstico por resíduos e tamanho de efeito em tabelas.
+
+## Consequência para recomendações antigas
+
+A recomendação anterior de “tornar explícita a diferença entre significância e Neyman--Pearson” não deve ser executada automaticamente. A versão atual já possui função de teste, erros, poder, valor-p, regra de decisão, Neyman--Pearson, boas práticas e erros frequentes. A Passagem 1 deve verificar **se ainda existe alguma lacuna real**, e não pressupor que exista.
+
+## Pontos para Passagem 1
+
+- conferir continuidade entre a parte teórica e a coleção de testes usuais;
+- verificar a precisão da terminologia “teste de significância”, “nível”, “tamanho” e “regra de decisão”;
+- conferir quando os resultados são exatos ou assintóticos;
+- conferir condições de aproximação nos testes de proporções e qui-quadrado;
+- proteger todas as referências teóricas até verificação direta das afirmações correspondentes.
+
+## Mapa atual de seções principais
+
+- linha 5: **Objetivos de aprendizagem**
+- linha 20: **Motivação: uma moeda aparentemente honesta**
+- linha 60: **Formulação estatística do problema**
+- linha 168: **Valor-$p$**
+- linha 222: **Procedimento recomendado**
+- linha 235: **Exemplo motivacional**
+- linha 269: **Lema de Neyman--Pearson**
+- linha 328: **Testes uniformemente mais poderosos**
+- linha 438: **Teste da razão de verossimilhanças**
+- linha 554: **Testes usuais para parâmetros populacionais**
+- linha 705: **Testes exatos, de permutação e robustez**
+- linha 722: **Planejamento amostral e poder**
+- linha 765: **Análise de dados categóricos**
+- linha 795: **Teste qui-quadrado de aderência**
+- linha 846: **Tabelas de contingência**
+- linha 920: **Diagnóstico por resíduos**
+- linha 941: **Pressupostos e tabelas esparsas**
+- linha 960: **Teste exato de Fisher**
+- linha 982: **Medidas de tamanho do efeito em tabelas**
+- linha 1007: **Poder e tamanho amostral em testes qui-quadrado**
+- linha 1065: **Relação entre testes e intervalos de confiança**
+- linha 1078: **Boas práticas de apresentação**
+- linha 1095: **Erros frequentes de interpretação**
+- linha 1106: **Quadro-síntese**
+- linha 1120: **Exercícios**
+- linha 1271: **Referências {.unnumbered}**
+
+## Chaves bibliográficas atualmente utilizadas
+
+`@borovkov1998`, `@casella2002statistical`, `@chihara2022`, `@cox2006principles`, `@hogg1978`, `@larsen2012`, `@lauritzen2023fundamentals`, `@ramachandran2021r`, `@rasch2018`, `@rice2007mathematical`, `@rosner2011fundamentals`, `@shao2005`, `@wilcox2022`.
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Projetos Aplicados
+
+**Arquivo:** `unidade7.qmd`  
+**Extensão atual:** 244 linhas.
+
+## Função atual
+
+Organizar um projeto aplicado que percorre problema, planejamento, coleta, descrição, estimação, teste, verificação e conclusão.
+
+## Conteúdo atual
+
+- exemplos de temas e variáveis;
+- definição do problema;
+- planejamento amostral;
+- coleta;
+- análise descritiva;
+- estimação pontual;
+- estimação intervalar;
+- testes;
+- verificação de condições;
+- conclusões;
+- estrutura do relatório;
+- entrega;
+- critérios de avaliação e observações.
+
+## Conteúdo a proteger
+
+A sequência de etapas já representa quase todo o ciclo inferencial e deve ser preservada como base de integração do livro.
+
+## Ponto aberto
+
+A auditoria deve decidir se as regras circunstanciais de uma oferta da disciplina permanecem no corpo do livro, são transformadas em material mais permanente ou são separadas. Essa decisão não deve eliminar o roteiro inferencial já construído.
+
+## Mapa atual de seções principais
+
+- linha 3: **Objetivo**
+- linha 7: **Descrição Geral**
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Exemplos Aplicados
+
+**Arquivo:** `Unidade8.qmd`  
+**Extensão atual:** 831 linhas.
+
+## Função atual
+
+Apresentar exemplos completos com preparação de dados, planejamento amostral, testes, intervalos e interpretação utilizando Python.
+
+## Conteúdo atual
+
+- uma média com variância populacional conhecida;
+- uma média com variância desconhecida;
+- uma proporção;
+- aplicação com duas médias e procedimentos associados;
+- duas médias independentes com variâncias desiguais;
+- planejamento/tamanho amostral;
+- verificações e uso de `scipy`.
+
+## Conteúdo a proteger
+
+- intenção de realizar análises completas, e não apenas apresentar fórmulas;
+- vínculo entre planejamento amostral, estimação e teste;
+- presença de código executável como parte da aprendizagem aplicada.
+
+## Regra especial de auditoria
+
+Nesta unidade, texto, fórmula e código devem ser tratados como um único objeto. Não é suficiente que a fórmula esteja correta se o código calcula outra cauda, utiliza outro nível de significância ou produz uma interpretação incompatível.
+
+## Pontos para auditoria técnica
+
+- executar integralmente os códigos;
+- conferir hipóteses e alternativas;
+- conferir caudas do valor-p;
+- conferir graus de liberdade;
+- conferir nível de significância e intervalo correspondente;
+- conferir variáveis usadas em cálculos de tamanho amostral;
+- conferir linguagem causal em relação ao desenho;
+- harmonizar os procedimentos aplicados com os princípios apresentados em U5 e U6.
+
+## Mapa atual de seções principais
+
+- linha 145: **Exemplo Aplicado**
+- linha 467: **Observação**
+- linha 697: **Inferências para duas médias populacionais com amostras independentes e variâncias desiguais**
+- linha 756: **Cálculo do tamanho amostral**
+- linha 831: **Referências**
+
+## Estado
+
+**Inventariado; auditoria ainda não iniciada.**
+
+# Inventário bibliográfico inicial
+
+O arquivo `references.bib` contém 34 entradas declaradas e 33 chaves únicas na versão examinada.
+
+## Problemas mecânicos já confirmados
+
+1. A chave `casella2002statistical` está declarada duas vezes no `.bib`. As duas entradas são equivalentes na inspeção inicial e devem ser reconciliadas em uma única entrada durante a manutenção global da bibliografia.
+2. Uma verificação adicional com o parser do Pandoc confirmou que formas como `@gupta2011em.` ou `@lauritzen2023fundamentals.` são interpretadas corretamente: o ponto final é pontuação da frase e **não** faz parte da chave bibliográfica. Portanto, elas não constituem erro e não devem ser alteradas apenas por uma busca textual simples.
+3. Excluindo referências cruzadas do Quarto, não foi identificada, nesta varredura inicial, chave bibliográfica efetivamente citada nos capítulos e ausente de `references.bib`.
+
+## Regra para a auditoria bibliográfica
+
+Não substituir em massa as referências atuais. Para cada definição, proposição, teorema ou afirmação substantiva:
+
+- identificar a fonte atual;
+- verificar o trecho diretamente;
+- classificar a sustentação B1/B2/B3/B0;
+- preservar a fonte quando adequada;
+- somente substituir ou complementar quando houver motivo objetivo.
+
+# Matriz inicial de dependências entre partes
+
+| Origem | Dependência principal posterior |
+|---|---|
+| 0.1 | modelos e distribuições usados em U1--U6 |
+| 0.2 | convergência e assintótica usadas em U2--U6 |
+| U1 | linguagem inferencial, modelo e verossimilhança usados em U2--U8 |
+| U2 | distribuições amostrais usadas em U3--U6 e U8 |
+| U3 | critérios de avaliação e informação usados na discussão de estimadores em U4 |
+| U4 | estimadores pontuais e propriedades usadas em U5, U6 e U8 |
+| U5 | intervalos, cobertura e precisão retomados em U6 e U8 |
+| U6 | testes, poder e dados categóricos retomados em U7 e U8 |
+| U7 | roteiro de integração inferencial executado e exemplificado em U8 |
+
+Essa matriz registra apenas dependências conceituais de alto nível. A matriz de IDs, equações, figuras e referências cruzadas explícitas deverá ser construída na Passagem 2, antes de movimentações estruturais.
+
+# Pontos prioritários para o início da auditoria
+
+1. **Congelar notação e responsabilidades de 0.1, 0.2, U1 e U2.** A fronteira entre ferramenta probabilística, ferramenta assintótica e distribuição amostral precisa ficar clara sem eliminar retomadas úteis.
+2. **Auditar U1 preservando PGD, urna e verossimilhança.** O objetivo é unificar a progressão conceitual, não substituir o capítulo.
+3. **Auditar U3--U4 como par.** Verificar sobreposição de informação, eficiência e assintótica, preservando os desenvolvimentos e fontes que cumprem funções distintas.
+4. **Registrar a lacuna de minimax/equivância.** Não inserir conteúdo antes de verificar fontes e posição adequada.
+5. **Auditar U5--U6 como sequência articulada.** Preservar a dualidade entre IC e testes e reconhecer que U6 já possui um desenvolvimento substancial e bibliograficamente apoiado.
+6. **Executar U8 como auditoria matemática e computacional.** Nenhuma conclusão aplicada deve ser considerada consolidada sem teste de código.
+7. **Revisar `index.qmd` somente depois de a identidade editorial do livro estar congelada.** Assim o prefácio poderá descrever corretamente o livro final.
+
+# Critério de atualização deste documento
+
+Depois de cada capítulo consolidado:
+
+1. atualizar sua função e arquitetura final;
+2. registrar conteúdos preservados, ajustados, reposicionados, complementados e excluídos;
+3. atualizar dependências;
+4. atualizar decisões bibliográficas;
+5. registrar novos identificadores relevantes;
+6. remover do estado “aberto” somente decisões efetivamente aprovadas;
+7. não apagar o histórico de decisões que explique uma mudança estrutural importante.
+
+# Estado do projeto nesta versão
+
+- arquitetura física: **inventariada**;
+- conteúdo programático: **inventariado**;
+- U6: **incluída e inventariada**;
+- política de preservação: **fixada**;
+- Casella e Berger como fonte principal: **fixado**;
+- inventário inicial dos capítulos: **concluído**;
+- auditoria estrutural/conceitual dos capítulos: **não iniciada**;
+- auditoria bibliográfica direta no PDF, capítulo a capítulo: **não iniciada**;
+- auditoria computacional integral: **não iniciada**.
+
+# Governança dos chats do projeto
+
+Este projeto será desenvolvido em chats com funções distintas.
+
+## Chat principal
+
+O chat principal é responsável por decisões **gerais e transversais** do livro. Permanecem nele:
+
+- identidade e escopo da obra;
+- arquitetura geral e ordem dos capítulos;
+- conteúdo programático e sua cobertura global;
+- política núcleo/aprofundamento;
+- notação canônica do livro;
+- terminologia inferencial global;
+- política bibliográfica;
+- política de computação e linguagens;
+- convenções de Quarto, identificadores e referências cruzadas;
+- matriz de dependências entre capítulos;
+- decisões que afetem duas ou mais unidades;
+- atualização deste arquivo de orientações e inventários.
+
+## Chats específicos dos capítulos
+
+Alterações locais devem ser desenvolvidas no chat específico do respectivo arquivo. Isso inclui:
+
+- reordenação interna de seções;
+- reescrita de definições, exemplos, provas e exercícios;
+- correção de código local;
+- inserção ou remoção de conteúdo em uma unidade;
+- auditoria detalhada de citações daquele capítulo;
+- ajustes de figuras, tabelas e equações locais.
+
+Quando o chat principal identificar um problema local, ele deverá fornecer um bloco de encaminhamento copiável contendo:
+
+1. arquivo;
+2. ponto identificado;
+3. evidência/localização;
+4. fonte de controle, quando aplicável;
+5. tarefa a realizar no chat específico;
+6. restrições de preservação;
+7. impacto transversal, se houver.
+
+Nenhum chat específico deve redefinir isoladamente uma convenção global. Quando uma revisão local revelar uma questão transversal, a decisão volta ao chat principal e depois é propagada aos capítulos envolvidos.
+
+# Auditoria transversal preliminar do projeto
+
+Esta seção registra verificações mecânicas globais realizadas antes das auditorias locais. Elas não substituem a leitura conceitual dos capítulos.
+
+## Bibliografia
+
+Na versão atualmente examinada:
+
+- `references.bib` possui 34 entradas declaradas e 33 chaves únicas;
+- `casella2002statistical` aparece duas vezes, com conteúdo equivalente na inspeção inicial;
+- as chaves bibliográficas utilizadas nos arquivos examinados foram localizadas em `references.bib`; a pontuação imediatamente após uma citação (por exemplo, `@gupta2011em.`) é interpretada corretamente pelo Pandoc e não constitui chave malformada.
+
+A duplicação de `casella2002statistical` deve ser resolvida como manutenção global do `.bib`, sem alterar a fundamentação dos capítulos que utilizam a chave.
+
+## Referências cruzadas
+
+A varredura inicial encontrou:
+
+- nenhum identificador de referência cruzada duplicado entre os arquivos examinados;
+- referências como `@fig-projecao-ortogonal.` em que o ponto final funciona como pontuação da frase, não como parte do identificador;
+- vários rótulos de figuras definidos por células Quarto (`#| label:`), que não devem ser classificados como ausentes por scanners que procurem apenas IDs no formato `{#...}`.
+
+Logo, não deve ser feita qualquer correção em massa de crossrefs com base apenas em busca textual simples. A auditoria precisa reconhecer rótulos de células Quarto, IDs de seções e demais formas válidas de identificação.
+
+## Computação
+
+A versão atual contém códigos em ambas as linguagens:
+
+- R aparece nos capítulos preliminares 0.1 e 0.2 e nas Unidades 1, 2 e 4;
+- Python aparece nas Unidades 5, 6 e, de forma predominante, 8.
+
+A presença das duas linguagens é estruturalmente real no manuscrito atual. Portanto, a política R/Python permanece decisão editorial global aberta; nenhuma unidade deverá ser convertida de linguagem de forma isolada antes dessa decisão.
+
+## Consequências para as próximas auditorias
+
+1. problemas mecânicos locais serão encaminhados aos chats dos respectivos capítulos;
+2. decisões sobre notação, linguagem de programação e convenções de referências cruzadas permanecem no chat principal;
+3. o arquivo `.bib` será auditado globalmente, mas cada afirmação continuará sendo verificada contra sua fonte no chat do capítulo em que ocorre;
+4. recomendações automatizadas baseadas em contagem de ocorrências não autorizam exclusão de conteúdo.
+
+# Convenções terminológicas globais fixadas
+
+A terminologia abaixo passa a ser a convenção canônica do corpo autoral do livro e deve orientar todas as auditorias locais. As alterações concretas serão feitas somente nos chats específicos dos capítulos.
+
+| Conceito | Forma canônica |
+|---|---|
+| completeness | **completude** |
+| minimal sufficiency | **suficiência minimal** |
+| p-value | **valor-p** |
+| uniformly minimum-variance unbiased estimator | **ENVVUM** |
+| likelihood ratio | **razão de verossimilhanças** |
+
+## Regras de aplicação
+
+1. **Completude** substitui `completividade` no texto autoral quando os capítulos forem revisados.
+2. **Suficiência minimal** substitui `suficiência mínima` como forma técnica preferencial do projeto.
+3. **Valor-p** será escrito em texto corrido com hífen. Em expressões matemáticas, a letra $p$ continua sendo usada normalmente quando necessário.
+4. **ENVVUM** é a sigla portuguesa canônica. `UMVU` pode aparecer quando a literatura em inglês for discutida explicitamente, mas não deve substituir a sigla adotada no livro.
+5. **Razão de verossimilhanças** é a expressão canônica; a sigla **TRV** permanece adequada para `teste da razão de verossimilhanças`.
+6. Não realizar substituições globais automáticas sem inspeção de contexto, pois ocorrências podem estar em títulos de obras, citações literais, código, nomes de objetos ou transcrições normativas.
+
+## Texto normativo do `intro.qmd`
+
+O `intro.qmd` atualmente contém algumas formas diferentes das convenções acima. Durante a revisão desse arquivo, deve-se distinguir entre texto autoral editável e eventual transcrição institucional que precise permanecer literal. A convenção canônica do livro já está fixada; a decisão sobre alterar literalmente um trecho normativo será tomada apenas quando a natureza desse trecho for confirmada.
+
+# Matriz global de nível por unidade
+
+A matriz abaixo deve orientar os chats específicos. Ela não substitui a auditoria de conteúdo nem autoriza movimentações automáticas.
+
+| Parte | Núcleo de graduação | Aprofundamento do mestrado |
+|---|---|---|
+| **0.1** | probabilidade e modelos probabilísticos necessários à inferência | nenhum bloco exclusivo identificado a priori |
+| **0.2** | ferramentas matemáticas gerais, LGN e TCL | método delta quando desenvolvido como ferramenta da teoria assintótica de estimadores |
+| **U1** | integralmente núcleo quanto aos tópicos programáticos | nenhum bloco exclusivo identificado |
+| **U2** | distribuições amostrais e aproximações necessárias ao percurso da graduação | nenhum bloco exclusivo identificado |
+| **U3** | propriedades básicas de estimadores | suficiência minimal, completude e resultados diretamente associados; família exponencial completa/suficiente; Rao--Blackwell; Lehmann--Scheffé; ENVVUM; extensões dependentes desses princípios |
+| **U4** | momentos, máxima verossimilhança e mínimos quadrados | minimax, equivariância, distribuição assintótica dos estimadores, método delta e algoritmo EM |
+| **U5** | estimação intervalar | nenhum bloco exclusivo identificado a priori |
+| **U6** | fundamentos de testes, erros, valor-p, poder básico, homogeneidade e independência | Neyman--Pearson, testes mais poderosos/UMP, teste da razão de verossimilhanças, teoria de testes assintóticos e testes de aderência |
+| **U7** | integração do processo inferencial | apenas quando um projeto aplicar explicitamente conteúdo exclusivo do mestrado |
+| **U8** | exemplos aplicados do núcleo | apenas exemplos que dependam explicitamente de tópicos exclusivos do mestrado |
+
+A matriz deve ser revisitada apenas se o conteúdo programático institucional mudar. A auditoria de um capítulo pode refinar a **posição** de um aprofundamento, mas não redefinir isoladamente quais tópicos são exclusivos do mestrado.
+
+
+
+# Diretrizes transversais consolidadas
+
+Esta seção registra decisões e propostas globais surgidas da varredura conjunta dos arquivos do livro. Seu objetivo é orientar as auditorias locais sem antecipar reescritas de capítulos.
+
+## Regra de percurso graduação–mestrado
+
+O livro terá um **percurso principal de graduação** e blocos identificáveis de **Aprofundamento**, reservados aos tópicos previstos apenas para o mestrado.
+
+A classificação como aprofundamento não decorre da dificuldade matemática de um tema. Um resultado permanece no núcleo sempre que fizer parte do percurso necessário da graduação, ainda que exija demonstração ou formalismo. Inversamente, um tema previsto exclusivamente para o mestrado deve ser reconhecível como aprofundamento mesmo quando sua exposição for curta.
+
+Regras operacionais:
+
+1. o percurso de graduação deve poder ser lido sem depender logicamente de um aprofundamento posterior;
+2. o aprofundamento pode utilizar resultados do núcleo, mas o núcleo não deve exigir um resultado apresentado somente no aprofundamento;
+3. quando um aprofundamento precisar aparecer próximo do conceito que o motiva, ele poderá permanecer localmente, desde que esteja claramente identificado como conteúdo do mestrado;
+4. sempre que a estrutura permitir, reunir os aprofundamentos em bloco próprio antes da síntese/exercícios favorece a leitura em dois níveis;
+5. nenhum conteúdo corretamente desenvolvido e referenciado será excluído apenas por ser exclusivo do mestrado: ele será preservado e organizado como aprofundamento.
+
+## Política de referências cruzadas entre capítulos
+
+A varredura inicial mostrou que o manuscrito possui diversas retomadas em linguagem natural, como “no capítulo anterior”, “no capítulo Distribuições Amostrais” e “nos capítulos posteriores”, mas praticamente não utiliza referências cruzadas Quarto entre arquivos.
+
+A direção global passa a ser: **substituir progressivamente referências nominais frágeis por referências cruzadas estáveis, sem tornar a leitura artificial**.
+
+IDs de capítulo propostos:
+
+| Arquivo | ID global proposto |
+|---|---|
+| `unidade0p1.qmd` | `sec-prelim-probabilidade` |
+| `unidade0p2.qmd` | `sec-prelim-matematica-assintotica` |
+| `unidade1.qmd` | `sec-fundamentos-inferencia` |
+| `unidade2.qmd` | `sec-distribuicoes-amostrais` |
+| `unidade3.qmd` | `sec-avaliacao-reducao` |
+| `unidade4.qmd` | `sec-estimacao-pontual` |
+| `unidade5.qmd` | `sec-estimacao-intervalar` |
+| `unidade6.qmd` | `sec-testes-categoricos` |
+| `unidade7.qmd` | `sec-projetos-aplicados` |
+| `Unidade8.qmd` | `sec-exemplos-aplicados` |
+
+Os IDs devem ser considerados estáveis depois de aprovados. As auditorias locais poderão criar IDs internos adicionais, mas não redefinir a convenção global.
+
+## Organização editorial no `_quarto.yml`
+
+A ordem atual dos capítulos é conceitualmente adequada e deve ser preservada como ponto de partida. Para tornar a arquitetura visível ao leitor, recomenda-se avaliar a organização do sumário em três partes, sem alterar a sequência dos arquivos:
+
+- **Preliminares**: 0.1 e 0.2;
+- **Fundamentos e métodos de inferência**: U1–U6;
+- **Integração e aplicações**: U7–U8.
+
+Essa mudança, se aprovada, é apenas de navegação e identidade editorial; não cria novos capítulos nem altera conteúdos.
+
+O arquivo `demo.qmd` aparece na configuração atual do livro, mas não integra o conjunto de fontes disponibilizado para esta auditoria. Sua função deve ser verificada antes de mantê-lo na publicação final.
+
+## Política computacional provisoriamente adotada
+
+A existência de R e Python no manuscrito será **preservada** durante as auditorias. Não haverá conversão automática de capítulos para uma única linguagem.
+
+A coerência computacional será obtida por princípios comuns:
+
+- o código deve servir ao argumento estatístico e não se transformar em tutorial elementar de linguagem;
+- símbolos e nomes de objetos devem permanecer próximos da notação matemática sempre que isso melhorar a leitura;
+- resultados numéricos exibidos no texto devem ser reproduzíveis pelo código;
+- uma mesma fórmula não precisa ser implementada em duas linguagens apenas por padronização;
+- quando R e Python forem mantidos, o prefácio/metodologia deve dizer explicitamente **R e Python**, e não “integralmente em R (ou Python)”.
+
+A política pode ser revista após a auditoria computacional de U5, U6 e U8, mas nenhuma conversão de linguagem deve anteceder essa etapa.
+
+## Política para ambientes didáticos e teóricos
+
+O livro já utiliza amplamente callouts. A padronização deverá ser semântica, não meramente visual.
+
+Direção proposta:
+
+| Função | Tratamento preferencial |
+|---|---|
+| Definição | callout identificável como **Definição**, não colapsado |
+| Teorema/Resultado/Proposição | callout identificável como resultado formal, não colapsado |
+| Demonstração | bloco colapsável no HTML quando a leitura puder prosseguir sem abri-lo; integral no PDF |
+| Exemplo | callout de exemplo |
+| Interpretação/Observação | note/tip segundo a função pedagógica |
+| Cuidado/limitação | warning |
+| Aprofundamento | bloco/seção explicitamente marcado como **Aprofundamento — Mestrado** |
+
+A auditoria local não deve trocar callouts apenas por preferência estética. O objetivo é que a mesma função tenha tratamento reconhecível ao longo do livro.
+
+## Política bibliográfica global
+
+O arquivo `references.bib` é a base bibliográfica canônica do projeto, mas sua presença não substitui a verificação da obra.
+
+Regras adicionais:
+
+1. `casella2002statistical` está duplicada e deve permanecer apenas uma vez;
+2. referências não citadas não serão removidas automaticamente, pois podem estar reservadas para aprofundamentos ou revisões ainda não realizadas;
+3. divergências entre ano, edição, editora ou tradução no `intro.qmd` e no `.bib` serão tratadas como questões bibliográficas a verificar, não corrigidas por memória;
+4. Casella–Berger permanece a principal fonte geral de controle;
+5. uma afirmação sustentada adequadamente por outra fonte não será alterada apenas porque não aparece em Casella–Berger;
+6. quando um trecho já possui fonte, a primeira tarefa é verificar a aderência da fonte ao trecho antes de propor reescrita.
+
+## Direção para `index.qmd`
+
+O prefácio e a declaração sobre IA contêm resíduos de uma obra de Modelos de Regressão. A revisão global deverá preservar a estrutura e a intenção desses textos, mas substituir referências específicas a regressão por uma descrição fiel do livro de Inferência Estatística.
+
+Também deverá ser corrigida a afirmação de que a implementação é “integralmente no R (ou Python)”, pois o manuscrito atual usa as duas linguagens em capítulos distintos.
+
+A revisão do prefácio deve ocorrer somente depois de consolidada a política computacional e a arquitetura graduação–mestrado, para que o texto descreva a obra efetivamente construída.
+
+## Direção para `intro.qmd`
+
+O `intro.qmd` permanece como fonte normativa do conteúdo programático e como registro das duas disciplinas atendidas pelo material.
+
+As convenções terminológicas do livro devem ser aplicadas ao texto editável desse arquivo:
+
+- **completude**;
+- **suficiência minimal**;
+- **valor-p**;
+- **ENVVUM**;
+- **razão de verossimilhanças**.
+
+A distinção graduação–mestrado deve ser utilizada como referência para classificar os aprofundamentos. As informações administrativas de período, docentes, avaliação e carga horária não devem ser usadas para limitar o conteúdo permanente do livro; sua permanência editorial será decidida separadamente da função do arquivo como fonte programática.
+
+## Diagnóstico de equilíbrio entre capítulos
+
+A extensão atual é bastante desigual, especialmente em 0.1 e U4. Essa constatação não autoriza cortes. Ela servirá apenas como indicador durante as auditorias locais.
+
+A prioridade não é equalizar capítulos por número de páginas, palavras, exemplos ou exercícios. Um capítulo só deverá ser encurtado quando houver redundância sem função, conteúdo fora do escopo ou organização que prejudique a progressão. Da mesma forma, um capítulo curto só deverá ser ampliado quando houver lacuna programática ou pedagógica real.
+
+## Continuidade entre capítulos
+
+A coerência longitudinal será construída por três mecanismos complementares:
+
+1. **terminologia canônica**, já fixada;
+2. **referências cruzadas estáveis**, a serem implantadas;
+3. **retomadas funcionais**, em que um conceito reaparece com nova finalidade sem ser redefinido desnecessariamente.
+
+Exemplos recorrentes já existentes — especialmente urna/Bernoulli, modelo normal e modelos exponenciais — devem ser reaproveitados quando isso fortalecer a continuidade, sem obrigar todos os capítulos a usar os mesmos exemplos.
+
+## Estado das decisões transversais após esta rodada
+
+| Tema | Estado |
+|---|---|
+| terminologia canônica | **fechada** |
+| definição de aprofundamento | **fechada: conteúdo exclusivo do mestrado** |
+| ordem conceitual geral | **preservada** |
+| IDs globais de capítulos | **aprovados para implantação progressiva** |
+| partes no `_quarto.yml` | **proposta** |
+| coexistência R/Python durante auditoria | **fechada provisoriamente** |
+| padronização semântica de callouts | **direção estabelecida; detalhes locais pendentes** |
+| duplicação `casella2002statistical` | **correção global pendente** |
+| revisão de `index.qmd` | **necessária após congelar arquitetura** |
+| função administrativa de `intro.qmd` na publicação final | **aberta** |
+| `demo.qmd` | **função a verificar** |
+
+# Diretrizes transversais adicionais — notação e responsabilidades conceituais
+
+## Notação matemática canônica do livro
+
+A padronização deve preservar a notação já dominante no manuscrito e evitar substituições puramente cosméticas. A convenção abaixo funciona como referência para as auditorias locais; exceções são permitidas quando uma seção exige notação específica, desde que sejam explicitadas.
+
+### Amostra, realização e estatísticas
+
+- Vetor aleatório da amostra: $\mathbf X=(X_1,\ldots,X_n)$.
+- Realização observada: $\mathbf x=(x_1,\ldots,x_n)$.
+- Letras maiúsculas representam variáveis aleatórias; letras minúsculas representam valores observados, sempre que essa distinção for relevante.
+- Estatística genérica: $T=T(\mathbf X)$; valor observado: $T(\mathbf x)$.
+- Média amostral: $\bar X$ antes da observação e $\bar x$ para o valor observado quando a distinção precisar ser explícita.
+- Variância amostral: $S^2$ como estatística e $s^2$ como valor observado quando necessário.
+
+### Parâmetro, alvo, estimador e estimativa
+
+- Parâmetro escalar genérico: $\theta\in\Theta$.
+- Vetor de parâmetros: $\boldsymbol\theta\in\Theta\subseteq\mathbb R^q$.
+- Quantidade escalar de interesse: $\tau(\theta)$ ou, no caso multiparamétrico, $\tau(\boldsymbol\theta)$.
+- Estimador: $\widehat\tau=T(\mathbf X)$ ou $\widehat\theta$ quando o alvo é o próprio parâmetro.
+- Estimativa: valor do estimador após substituir $\mathbf X$ por $\mathbf x$; quando necessário, escrever $T(\mathbf x)$ ou explicitar verbalmente que se trata da estimativa observada.
+- Sobrescritos de método podem ser usados quando acrescentam informação, por exemplo $\widehat\theta^{\mathrm{MM}}$ e $\widehat\theta^{\mathrm{MV}}$.
+- O índice $n$ em $\widehat\theta_n$ deve ser usado quando a natureza sequencial/assintótica for relevante; não precisa ser incluído em todo estimador de forma meramente decorativa.
+
+### Modelo, densidade e verossimilhança
+
+- Família paramétrica: $\mathcal P=\{P_\theta:\theta\in\Theta\}$; usar $\boldsymbol\theta$ quando o caráter vetorial for material à discussão.
+- Forma preferencial para densidade/função de probabilidade em desenvolvimentos inferenciais: $f(x;\theta)$ ou $f(\mathbf x;\boldsymbol\theta)$.
+- A notação $f_\theta(x)$ pode ser mantida localmente quando tornar fórmulas teóricas mais legíveis, especialmente em derivadas, escores e expectativas, mas não deve gerar uma segunda convenção concorrente sem necessidade.
+- Verossimilhança: $L(\theta;\mathbf x)$ no caso escalar e $L(\boldsymbol\theta;\mathbf x)$ no caso vetorial.
+- Verossimilhança de uma amostra de tamanho $n$: $L_n$ quando o índice $n$ tiver utilidade real.
+- Log-verossimilhança: $\ell(\theta)$ ou $\ell_n(\theta)$; manter $\ell$ minúsculo para não confundir com a verossimilhança $L$.
+- A função de perda não deve competir visualmente com a verossimilhança. Nas futuras revisões, preferir $\mathcal L(\tau(\theta),a)$ para a perda quando isso puder ser feito sem comprometer a leitura ou a fidelidade a um desenvolvimento já referenciado.
+
+### Probabilidade, esperança e variância
+
+- Probabilidade sob o valor paramétrico $\theta$: $P_\theta$.
+- Esperança: $E_\theta$ quando a dependência do parâmetro for importante; $E$ pode ser usado em exemplos locais nos quais não haja ambiguidade.
+- Variância: $\operatorname{Var}_\theta$ quando a dependência paramétrica for material; $\operatorname{Var}$ quando o parâmetro estiver fixado ou evidente no contexto.
+- Erro quadrático médio: $\operatorname{EQM}_\theta$ quando formulado como função do parâmetro.
+
+### Escore e informação de Fisher
+
+- Escore de uma observação, no caso escalar: $U_\theta(X)$ ou forma equivalente explicitamente definida.
+- Escore da amostra: $U_n(\theta)$.
+- Informação de Fisher de uma observação: $I_1(\theta)$.
+- Informação da amostra i.i.d.: $I_n(\theta)=nI_1(\theta)$.
+- Informação observada: $J_n(\theta)$ quando essa notação for adotada na seção.
+- No caso vetorial, usar uma notação matricial explícita, preferencialmente $\mathcal I(\boldsymbol\theta)$, e defini-la antes do uso.
+
+### Testes de hipóteses
+
+- Hipótese nula: $H_0$.
+- Hipótese alternativa: $H_1$.
+- Subconjuntos paramétricos: $\Theta_0$ e $\Theta_1$.
+- Nível nominal: $\alpha$.
+- Função de teste: $\varphi$.
+- Função poder: $\pi_\varphi(\theta)$.
+- Probabilidade de erro do tipo II no ponto $\theta$: $\beta_\varphi(\theta)$, quando for necessário distingui-la do uso informal de $\beta$.
+- Terminologia canônica: **valor-p**.
+- Para razão de verossimilhanças em testes, manter a terminologia **razão de verossimilhanças** e definir explicitamente a convenção para $\Lambda$ antes de discutir regiões críticas.
+- A decisão deve ser redigida como “rejeitar $H_0$” ou “não rejeitar $H_0$”; evitar “aceitar $H_0$” como conclusão padrão.
+
+### Intervalos e conjuntos de confiança
+
+- Conjunto de confiança aleatório: $C(\mathbf X)$; conjunto observado: $C(\mathbf x)$ quando necessário.
+- Limites aleatórios: $L(\mathbf X)$ e $U(\mathbf X)$ são aceitáveis dentro da U5, apesar de $L$ também denotar verossimilhança em outros capítulos, pois o contexto é inequívoco. Evitar misturar as duas funções na mesma passagem.
+- Nível de confiança: $1-\alpha$.
+- Função de cobertura: $c(\theta)=P_\theta\{\theta\in C(\mathbf X)\}$.
+
+### Convenções auxiliares
+
+- Independência e distribuição idêntica: usar em fórmulas $\overset{\mathrm{iid}}{\sim}$ e, em texto, “i.i.d.”.
+- Indicador: preferir $\mathbf 1\{\cdot\}$ como convenção global. Formas locais $I\{\cdot\}$ devem ser harmonizadas apenas quando a revisão da respectiva seção ocorrer.
+- Distribuição normal: manter $N(\mu,\sigma^2)$, que é a forma dominante no manuscrito.
+- Para nomes de distribuições escritos como operadores, preservar a convenção predominante de cada família e harmonizar apenas inconsistências reais, não variações tipográficas sem consequência conceitual.
+
+## Regra para conflitos de símbolos
+
+O mesmo símbolo pode ter significados diferentes em capítulos distintos quando o contexto for inequivocamente separado. Contudo, quando dois significados aparecem próximos na progressão do livro e podem induzir confusão, deve-se preferir a desambiguação. O caso prioritário já identificado é $L$: verossimilhança em U1/U4, função de perda em U3 e limite inferior de confiança em U5. A prioridade é preservar $L(\theta;\mathbf x)$ para a verossimilhança; a função de perda é a candidata natural a receber notação distinta.
+
+## Matriz transversal de responsabilidade conceitual
+
+A tabela a seguir estabelece o **local de desenvolvimento principal** de cada conceito. Retomadas posteriores são esperadas e desejáveis quando acrescentarem nova função inferencial. O objetivo é impedir redefinições concorrentes, e não eliminar continuidade vertical.
+
+| Conceito | Desenvolvimento principal | Retomadas permitidas / função posterior |
+|---|---|---|
+| probabilidade, variáveis aleatórias, distribuições e transformações | Preliminar 0.1 | todos os capítulos como ferramentas |
+| convergências, LGN, TCL, Slutsky | Preliminar 0.2 | U2–U6 como aplicação |
+| método delta | Preliminar 0.2 — aprofundamento do mestrado | U4–U6 quando aplicado |
+| PGD, população, parâmetro, amostra, realização | U1 | U2–U8 como linguagem do problema |
+| estatística, estimador e estimativa | U1 | U2–U8 sem redefinições concorrentes |
+| modelo estatístico e espaço paramétrico | U1 | todos os capítulos inferenciais |
+| função de verossimilhança | U1, em caráter introdutório | U3 como redução; U4 como método de estimação; U6 em testes |
+| distribuição amostral | U2 | U3–U6 em propriedades e procedimentos |
+| distribuições $\chi^2$, $t$ e $F$ como objetos probabilísticos | Preliminar 0.1 | U2 como origem inferencial no modelo normal; U5/U6 em procedimentos |
+| viés, variância, EQM e risco | U3 | U4 em comparação de estimadores; aprofundamentos de decisão |
+| consistência | U3 | U4 para estimadores concretos e condições específicas |
+| informação de Fisher e Cramér--Rao | U3 | U4 em máxima verossimilhança e assintótica; U5/U6 quando necessário |
+| eficiência e eficiência assintótica | U3 | U4 ao demonstrar propriedades do EMV |
+| suficiência, suficiência minimal e completude | U3 — aprofundamentos de mestrado quando aplicável | U4 em exemplos pontuais |
+| Rao--Blackwell, Lehmann--Scheffé, ENVVUM, Basu | U3 — aprofundamento do mestrado | retomadas apenas quando realmente necessárias |
+| método dos momentos | U4 | aplicações posteriores |
+| máxima verossimilhança como método | U4 | U5/U6 em procedimentos; U8 em aplicações |
+| mínimos quadrados | U4 | aplicações que dependam do modelo correspondente |
+| minimax e equivariância | U4 — aprofundamento do mestrado | aplicações futuras se necessárias |
+| algoritmo EM | U4 — aprofundamento do mestrado | aplicações específicas |
+| normalidade assintótica do EMV | U4 — aprofundamento do mestrado, usando ferramentas de 0.2 e critérios de U3 | U5/U6 para Wald e outros procedimentos assintóticos |
+| conjuntos/intervalos de confiança e cobertura | U5 | U6 pela dualidade; U8 em aplicação |
+| quantidade pivotal | U5 | aplicações em U8 |
+| Wald como intervalo | U5 | U8 em aplicações; U4 apenas prepara erro-padrão assintótico |
+| Wilson, Clopper--Pearson e bootstrap para intervalos | U5 | U8 em aplicações quando pertinentes |
+| hipótese nula/alternativa, função de teste, nível, tamanho, erros e poder | U6 | U8 em aplicações |
+| valor-p | U6 | U8 em interpretação aplicada |
+| Neyman--Pearson, UMP e razão de verossimilhanças em testes | U6 — aprofundamento do mestrado | U8 somente se necessário |
+| Wilks e testes assintóticos | U6 — aprofundamento do mestrado | U8 em aplicações avançadas |
+| testes exatos, permutação e robustez | U6 | U8 em aplicações; não classificar automaticamente como aprofundamento |
+| dados categóricos, aderência, independência e homogeneidade | U6, respeitando a divisão graduação/mestrado definida no programa | U8 em aplicações |
+| ciclo inferencial completo | U7 | U8 como execução de estudos completos |
+| exemplos completos e comunicação de resultados | U8 | fechamento do livro; não criar nova teoria salvo necessidade explícita |
+
+## Regra de dependência entre núcleo e aprofundamento
+
+1. O núcleo da graduação não pode exigir um resultado apresentado apenas no bloco de aprofundamento do mestrado.
+2. Um aprofundamento pode depender livremente do núcleo anterior.
+3. Quando um resultado de mestrado for necessário para justificar uma observação destinada à graduação, a versão básica deve ser apresentada sem depender da demonstração avançada, com encaminhamento ao aprofundamento.
+4. A classificação núcleo/aprofundamento não autoriza exclusão, resumo automático ou deslocamento para o fim do capítulo. A posição deve respeitar a lógica matemática e pedagógica já existente.
+5. Conteúdos não mencionados explicitamente no programa não são automaticamente excluídos nem enviados ao aprofundamento; sua função no manuscrito, sustentação bibliográfica e dependências devem ser avaliadas primeiro.
+
+## Regra de implementação nos chats específicos
+
+Antes de alterar uma definição ou notação local, o chat do capítulo deve confrontar a forma existente com estas convenções. Se a forma local for matematicamente equivalente e estiver bem sustentada por fonte, preferir ajuste mínimo. Mudanças de símbolo que afetem equações, exercícios, código, referências cruzadas ou capítulos posteriores devem ser registradas como impacto transversal antes de serem executadas em massa.
+
+
+# Política bibliográfica e de rastreabilidade das fontes
+
+## Princípio geral
+
+A bibliografia deve funcionar como **sistema de controle da construção teórica**, e não apenas como uma lista final de referências. A revisão do manuscrito deve preservar a genealogia das exposições já existentes: quando uma definição, teorema, demonstração, exemplo, interpretação ou exercício está adequadamente associado a uma fonte, a revisão deve melhorar a forma sem apagar a origem intelectual do bloco.
+
+A presença de uma referência no texto estabelece uma **presunção de preservação**, mas não equivale, por si só, a uma verificação direta do conteúdo da obra. Sempre que a fonte integral estiver disponível no projeto, a afirmação deve ser confrontada diretamente com ela antes de se declarar a referência como verificada.
+
+## Hierarquia prática das fontes
+
+1. **Fonte diretamente utilizada pelo bloco atual.** Deve ser preservada quando realmente sustenta a formulação, o exemplo, a demonstração ou a interpretação já construída.
+2. **Casella e Berger.** É a principal fonte de controle geral para a organização da inferência e para o núcleo clássico do livro. Sua função não é substituir automaticamente as referências locais, mas verificar coerência, terminologia, hipóteses e posicionamento conceitual quando o trecho correspondente estiver disponível.
+3. **Referências especializadas.** Devem ser mantidas quando fornecem tratamento mais específico ou mais adequado ao tópico, como EM, robustez, bootstrap, aplicações computacionais ou desenvolvimentos de decisão.
+4. **Fontes primárias.** Quando já estiverem disponíveis e forem relevantes para a origem de um procedimento ou resultado, podem ser preferidas em passagens históricas ou em justificações específicas. A ausência de uma fonte primária não autoriza substituir silenciosamente a fonte já usada no manuscrito.
+5. **Referências computacionais.** Artigos, livros ou manuais de software devem ser citados quando o método, pacote ou implementação tiver relevância substantiva; não é necessário repetir a citação a cada chamada de função.
+
+## Casella--Berger como fonte de controle, não como fonte única
+
+O livro não deve ser reescrito para reproduzir a organização de Casella--Berger. A obra serve como referência principal para o núcleo de estatística matemática, mas referências já empregadas em exposições locais devem ser preservadas quando forem pertinentes. Em particular:
+
+- não substituir uma referência local por Casella--Berger apenas para uniformizar a bibliografia;
+- não acrescentar Casella--Berger a toda definição ou resultado se outra fonte já sustenta adequadamente o desenvolvimento;
+- usar Casella--Berger como fonte adicional quando ele ajuda a conferir condições, nomenclatura, dependências ou posição do resultado no curso;
+- quando a exposição do manuscrito divergir de Casella--Berger por opção pedagógica legítima, registrar a diferença em vez de impor a organização da referência.
+
+## Estado real do PDF de Casella--Berger disponível no projeto
+
+O arquivo `Casella_Berger_Statistical_Inference.pdf` disponível nesta versão do projeto **não contém o livro completo**. O sumário presente no arquivo lista os capítulos 1 a 12, incluindo propriedades de amostras, redução de dados, estimação pontual, testes, estimação intervalar e assintótica, mas o PDF efetivamente disponível termina ainda no Capítulo 3, em `Common Families of Distributions`.
+
+Consequências para a auditoria:
+
+- capítulos 1--3 podem ser verificados diretamente no PDF atual;
+- o sumário pode ser usado para confirmar a arquitetura geral dos capítulos posteriores;
+- citações do manuscrito a capítulos/seções 5--10 de Casella--Berger **não podem ser declaradas diretamente verificadas** com o PDF atualmente disponível;
+- essas citações devem ser preservadas como referências existentes e marcadas como pendentes de verificação direta, salvo se outra fonte disponível sustentar o mesmo resultado;
+- se futuramente for disponibilizada uma cópia integral da obra, a verificação direta dessas citações passa a ter prioridade na auditoria das U2--U6.
+
+Essa limitação deve impedir afirmações como “verificado diretamente em Casella--Berger, seção 8.3” enquanto apenas o sumário da obra estiver disponível para essa parte.
+
+## Níveis de verificação bibliográfica
+
+Durante as auditorias, cada referência relevante pode ser tratada implicitamente segundo quatro estados:
+
+- **Verificada diretamente:** a fonte integral disponível foi consultada e sustenta a afirmação/resultados utilizados.
+- **Controlada por fonte principal:** a formulação foi conferida em uma fonte de controle disponível, ainda que a referência local permaneça outra.
+- **Referência existente, verificação pendente:** a citação já faz parte do manuscrito, mas a obra não está disponível para confronto direto no projeto atual.
+- **Autoral:** exemplo, exercício, interpretação ou síntese produzidos pelos autores a partir de resultados previamente estabelecidos; quando houver inspiração identificável em uma fonte, ela deve ser declarada.
+
+Não é necessário imprimir esses rótulos no livro. Eles servem ao inventário e à auditoria.
+
+## Quando citar
+
+### Definições e resultados formais
+
+Definições não triviais, teoremas, proposições, lemas e resultados clássicos devem trazer fonte na primeira apresentação formal quando houver uma fonte efetivamente utilizada. Retomadas posteriores não precisam repetir a mesma referência se estiverem apenas aplicando o resultado e houver referência cruzada clara ao desenvolvimento principal.
+
+### Condições e limitações
+
+Afirmações sobre condições de regularidade, validade, existência, unicidade, optimalidade, comportamento assintótico, limitações ou falhas de métodos devem ser especialmente bem fundamentadas. Esses são pontos nos quais pequenas omissões mudam o conteúdo matemático.
+
+### Demonstrações
+
+Se uma demonstração acompanha substancialmente a estrutura de uma fonte, registrar a origem de forma explícita, por exemplo “Demonstração baseada em ...” ou uma citação na abertura/fechamento do bloco. Se a prova é desenvolvida autonomamente a partir de resultados anteriores do próprio livro, não é necessário atribuí-la artificialmente a uma obra apenas porque o teorema também aparece nela.
+
+### Exemplos e exercícios
+
+- **Adaptado de:** usar quando o exemplo ou exercício preserva de modo reconhecível a estrutura, o problema, os dados ou a sequência argumentativa da fonte, ainda que haja alterações de notação, valores ou contexto.
+- **Elaboração própria com base em:** usar quando o item é novo, mas foi construído a partir de um método, tipo de problema ou desenvolvimento identificado na fonte.
+- **Baseado em:** pode ser usado em exposição ou exemplo quando a dependência é conceitual, sem reprodução próxima da estrutura original.
+- **Autoral:** pode ser usado sem citação quando o item deriva diretamente do conteúdo já estabelecido no capítulo e não depende de uma fonte identificável externa; se houver inspiração concreta, preferir transparência e indicar a fonte.
+
+### Figuras e tabelas
+
+Figuras ou tabelas adaptadas de uma fonte devem declarar a origem na legenda ou em texto imediatamente associado. Figuras produzidas autonomamente a partir de resultados matemáticos gerais não precisam ser atribuídas a uma obra apenas por representarem um conceito clássico.
+
+### Interpretações
+
+Interpretações matemáticas diretamente decorrentes de uma equação não exigem citação repetida. Afirmações metodológicas, históricas, comparativas ou sobre comportamento prático de procedimentos devem receber fonte quando não forem consequências imediatas do desenvolvimento apresentado.
+
+## Granularidade das citações
+
+Sempre que possível, manter a prática já presente no manuscrito de indicar **seção, capítulo ou páginas** quando a referência sustenta um resultado localizado. A precisão deve ser real: não inserir números de seção ou página não verificados apenas para tornar a citação mais específica.
+
+Evitar dois extremos:
+
+1. citações genéricas demais, colocadas apenas no fim de longos blocos com várias afirmações de naturezas distintas;
+2. repetição da mesma referência em toda frase de uma sequência cuja origem já foi claramente estabelecida.
+
+## Uso de múltiplas fontes
+
+Múltiplas referências são úteis quando cumprem funções diferentes, por exemplo uma para o resultado teórico e outra para uma interpretação computacional. Não acumular referências apenas para demonstrar quantidade de bibliografia. Quando várias fontes são equivalentes, preferir as que efetivamente orientaram a redação e as que podem ser verificadas.
+
+## Preservação de conteúdo já referenciado
+
+A revisão de um bloco com citação existente deve seguir esta ordem:
+
+1. identificar exatamente o que a referência pretende sustentar;
+2. verificar diretamente a fonte quando disponível;
+3. separar problemas de redação de problemas de conteúdo;
+4. corrigir apenas o necessário;
+5. preservar a referência se ela continuar pertinente;
+6. se a fonte não estiver disponível, não remover a citação apenas por impossibilidade de conferência; marcar a verificação como pendente;
+7. se houver conflito demonstrável entre texto e fonte, corrigir o texto ou trocar a fonte, registrando a razão da alteração.
+
+## Auditoria do arquivo `references.bib`
+
+A varredura atual do arquivo bibliográfico encontrou **34 registros e 33 chaves únicas**. Há uma duplicação técnica que precisa ser corrigida:
+
+- `casella2002statistical` aparece duas vezes com o mesmo registro bibliográfico.
+
+A correção recomendada é manter **uma única entrada** com a chave atual `casella2002statistical`, pois essa chave já é utilizada no manuscrito. Não há razão para renomeá-la e alterar várias citações.
+
+Há também um caso de **mesma obra cadastrada sob duas chaves distintas**:
+
+- `magalhaes2006probabilidade`;
+- `magalhaes2006`.
+
+Ambas representam *Probabilidade e Variáveis Aleatórias*, de Marcos Nascimento Magalhães, 2006. No manuscrito atual, a chave utilizada é `magalhaes2006`. Para minimizar alterações, a futura limpeza bibliográfica deve preferencialmente manter essa chave, incorporar nela os metadados mais completos da outra entrada e remover o registro redundante após confirmar que não existe dependência externa.
+
+A varredura dos arquivos que compõem efetivamente o livro encontrou **25 chaves bibliográficas utilizadas e nenhuma citação bibliográfica sem entrada correspondente em `references.bib`**. Isso é um resultado positivo: o problema atual é de higienização e verificação, não de chaves quebradas no corpo principal.
+
+Existem registros do `.bib` que não são chamados pela sintaxe de citação do manuscrito atual. Isso **não autoriza removê-los automaticamente**, pois alguns pertencem à bibliografia curricular, a materiais auxiliares ou a conteúdos ainda em revisão.
+
+## `intro.qmd` e `references.bib` cumprem funções diferentes
+
+A bibliografia escrita manualmente em `intro.qmd` corresponde ao plano das disciplinas e não deve ser confundida automaticamente com a bibliografia efetivamente citada pelo livro. Portanto:
+
+- uma obra pode constar do plano de ensino sem ser citada no corpo do livro;
+- uma obra pode ser utilizada na redação do livro sem integrar a bibliografia básica da disciplina;
+- não é necessário fazer as duas listas coincidirem item a item;
+- metadados objetivos, entretanto, devem ser coerentes quando a mesma edição é indicada nas duas partes.
+
+## Inconsistências bibliográficas já identificadas
+
+### Casella--Berger
+
+`intro.qmd` registra *Statistical Inference*, 2nd ed., como 2001, enquanto `references.bib` usa 2002. O frontispício/copyright do PDF disponível identifica a segunda edição com copyright **2002** pela Wadsworth Group/Duxbury. Para a referência bibliográfica do livro, 2002 deve ser a forma canônica, salvo descoberta posterior de uma razão documental específica para manter 2001 no plano institucional.
+
+Essa é uma correção de metadado, não uma alteração do conteúdo programático.
+
+### Bolfarine--Sandoval
+
+`references.bib` registra 2000, enquanto `intro.qmd` apresenta 2001. As fontes atualmente disponíveis no projeto não permitem resolver essa divergência com segurança. Portanto, **não normalizar por suposição**. Manter o ponto pendente até consulta bibliográfica verificável.
+
+### Shao
+
+A entrada `shao2005` do `.bib` é *Mathematical Statistics: Exercises and Solutions* (2005), enquanto a bibliografia do mestrado em `intro.qmd` menciona *Mathematical Statistics*, 2nd ed. (2004). São obras distintas e não devem ser tratadas como variantes do mesmo registro. A U4 cita `shao2005`; essa citação precisa continuar apontando para a obra de exercícios enquanto for essa a fonte efetivamente utilizada.
+
+### Bickel--Doksum
+
+O `.bib` contém o Volume II de 2016 (`bickel2016volume2`), enquanto `intro.qmd` lista o Volume I, 2nd ed., 2007. Novamente, são itens distintos. Não fundir nem substituir automaticamente um pelo outro.
+
+## Regra para novas referências
+
+Uma nova chave só deve ser introduzida quando houver necessidade real de citar a obra. Antes de usá-la no manuscrito:
+
+1. verificar a referência bibliográfica;
+2. criar uma entrada BibTeX completa e coerente com o padrão do projeto;
+3. quando a obra estiver disponível em PDF no projeto, verificar diretamente o trecho que sustentará a afirmação;
+4. somente então inserir a chave no `.qmd`.
+
+Referências avançadas não devem ser usadas como justificativa para inflar o escopo do livro. Elas servem sobretudo para controle de rigor, condições e aprofundamentos já previstos no programa.
+
+## Política de limpeza bibliográfica
+
+A limpeza do `.bib` deverá ser conservadora:
+
+- remover duplicatas exatas;
+- consolidar aliases da mesma obra somente quando estiver claro qual chave deve permanecer;
+- corrigir metadados verificáveis;
+- não remover registros apenas por estarem temporariamente sem citação;
+- não renomear chaves amplamente utilizadas apenas por preferência estética;
+- após qualquer alteração, executar uma busca global para garantir que nenhuma citação tenha sido quebrada.
+
+## Consequência para as auditorias dos capítulos
+
+Nos chats específicos, a auditoria bibliográfica não deve perguntar apenas “há uma citação?”. Deve perguntar:
+
+1. qual afirmação essa citação sustenta?;
+2. a fonte está disponível para verificação direta?;
+3. a formulação preserva as hipóteses e o escopo do resultado?;
+4. a referência é a fonte efetivamente usada ou apenas uma citação genérica?;
+5. a revisão proposta manterá ou melhorará a rastreabilidade?
+
+A ausência de acesso direto a uma referência secundária já citada não constitui motivo para excluir um conteúdo estabelecido. Nesse caso, preservar o bloco e marcar a conferência como pendente, usando Casella--Berger como controle apenas nas partes efetivamente disponíveis no PDF atual.
+
+
+# Auditoria de completude documental e regras editoriais finais desta etapa
+
+## Resultado da verificação da versão 6
+
+A versão 6 já reunia as decisões substantivas centrais do projeto, mas ainda não constituía uma fonte operacional totalmente consolidada. A verificação desta versão identificou quatro classes de pendência:
+
+1. havia decisões antigas ainda descritas como abertas apesar de decisões posteriores já terem definido uma direção provisória ou canônica;
+2. algumas orientações estavam registradas em blocos históricos sucessivos, o que podia produzir duplicação documental;
+3. faltavam regras editoriais transversais presentes no documento orientador de Multivariada e pertinentes também a este projeto;
+4. a auditoria técnica do projeto Quarto não pode ser considerada completa enquanto arquivos auxiliares referenciados por `_quarto.yml` não estiverem disponíveis.
+
+Esta versão corrige as contradições já identificadas e acrescenta as regras editoriais transversais abaixo.
+
+## Arquivos auxiliares ainda ausentes da auditoria
+
+O `_quarto.yml` referencia arquivos que não constam do conjunto atualmente disponível:
+
+- `styles.css`;
+- `macros.tex`;
+- `cover.tex`;
+- `demo.qmd`.
+
+Consequências:
+
+- não é possível auditar integralmente a aparência dos callouts personalizados;
+- não é possível verificar macros LaTeX eventualmente utilizadas no PDF;
+- não é possível verificar a capa nem dependências criadas por `cover.tex`;
+- não é possível decidir a permanência de `demo.qmd` na estrutura final.
+
+A ausência desses arquivos **não impede a auditoria conceitual, matemática, estatística e bibliográfica** dos capítulos disponíveis, mas impede declarar concluída a auditoria técnica de renderização do livro.
+
+# Linguagem, precisão e auditoria editorial
+
+A redação do livro deve ser direta, afirmativa, objetiva, tecnicamente rigorosa, progressiva e adequada ao nível de graduação, com os aprofundamentos claramente identificados para o mestrado.
+
+Para cada afirmação, verificar simultaneamente:
+
+- qual objeto probabilístico ou inferencial está sendo discutido;
+- qual propriedade está sendo atribuída ao objeto;
+- se a afirmação é geral ou depende de condições que devem ser explicitadas;
+- se população, amostra, parâmetro, estatística, estimador, estimativa e realização observada estão corretamente distinguidos;
+- se uma conclusão é exata, aproximada ou assintótica;
+- se a interpretação realmente decorre da definição, equação, resultado, figura, simulação ou análise apresentada;
+- se um conceito está sendo utilizado apenas depois de definido ou explicitamente remetido ao local em que foi definido;
+- se o conteúdo pertence ao núcleo ou ao aprofundamento de mestrado;
+- se uma propriedade de um modelo particular está sendo indevidamente generalizada.
+
+Quando um objeto já possui nome ou símbolo definido, preferir retomá-lo pelo nome ou símbolo. Expressões genéricas como “essa estrutura”, “esse resultado”, “essa relação”, “essa informação” ou “essa quantidade” devem ser evitadas quando o referente não for imediato e inequívoco.
+
+## Metadiscurso
+
+Evitar frases que apenas descrevem a organização do texto sem acrescentar conteúdo, especialmente quando uma referência cruzada pode estabelecer a ligação de maneira mais precisa. Formulações como “como veremos”, “como vimos anteriormente”, “será discutido mais adiante” e “o resultado acima” devem ser usadas apenas quando tiverem função real.
+
+Quando houver identificador estável, preferir uma relação explícita, por exemplo:
+
+`A consistência definida em @sec-avaliacao-reducao será verificada aqui para o estimador obtido por máxima verossimilhança.`
+
+A referência cruzada não substitui a explicação: a frase deve indicar **por que** o resultado anterior é pertinente no novo contexto.
+
+## Construções artificiais e ênfase vazia
+
+Evitar:
+
+* “não é apenas..., mas...”;
+* “não apenas..., como também...”;
+* “mais do que...”, quando utilizada apenas para produzir ênfase;
+* “é crucial”;
+* “é fundamental”, quando não houver explicação da razão;
+* “é bastante importante”;
+* “vale ressaltar”;
+* “vale destacar”;
+* “é importante notar”;
+* “é importante observar”;
+* “podemos perceber”;
+* “possui uma estrutura rica”;
+* “substantivo”, “substantiva” e formas semelhantes quando não houver conteúdo específico associado ao termo;
+* perguntas retóricas seguidas da própria resposta;
+* listas utilizadas no lugar de desenvolvimento conceitual;
+* repetição da mesma ideia em formulações sucessivas.
+
+Preferir formulações que nomeiem diretamente o objeto e a relação:
+
+* “O objetivo é...”;
+* “A expressão representa...”;
+* “A matriz contém...”;
+* “O vetor determina...”;
+* “A condição garante...”;
+* “A hipótese implica...”;
+* “O resultado decorre de...”;
+* “A figura mostra...”;
+* “O exemplo ilustra...”.
+
+## Reescrita somente quando necessária
+
+Se um trecho estiver correto, preciso, bem situado e adequadamente fundamentado, ele deve permanecer. Não reescrever apenas para produzir uma formulação diferente.
+
+A auditoria deve corrigir problemas reais, não transformar-se em busca indefinida por alterações marginais.
+
+# Estrutura física dos capítulos
+
+Cada arquivo definitivo deve iniciar diretamente pelo título do capítulo, salvo exigência técnica aprovada no projeto. A configuração geral deve permanecer em `_quarto.yml`.
+
+A abertura de cada capítulo deve ser breve e cumprir quatro funções:
+
+1. situar o problema;
+2. indicar os principais objetos utilizados;
+3. delimitar o escopo;
+4. esclarecer, quando necessário, a relação com o percurso de graduação e os aprofundamentos do mestrado.
+
+Utilizar `##` para seções principais, `###` para subseções e `####` apenas quando a hierarquia conceitual realmente exigir. Evitar criar subseções muito curtas apenas para acomodar uma definição isolada.
+
+## Organização dos aprofundamentos
+
+A classificação **Aprofundamento — Mestrado** é curricular, não uma medida informal de dificuldade.
+
+Regras físicas:
+
+- quando vários tópicos exclusivos do mestrado formarem uma sequência autônoma, reuni-los em uma seção `## Aprofundamento — Mestrado`;
+- quando um resultado exclusivo do mestrado depender diretamente de uma definição ou exemplo local e sua remoção quebrar a continuidade, ele poderá permanecer próximo do ponto de uso, claramente identificado como aprofundamento;
+- o percurso de graduação deve continuar compreensível quando os aprofundamentos forem omitidos;
+- não deslocar conteúdo apenas para concentrar visualmente todos os aprofundamentos se isso prejudicar a coerência matemática.
+
+# Semântica editorial dos callouts
+
+A padronização dos callouts será **semântica**. A mesma função deve ter tratamento reconhecível ao longo do livro, mas não se deve modificar um bloco correto apenas para mudar sua aparência.
+
+Enquanto `styles.css` não estiver disponível, a política abaixo define a **função** dos ambientes; a classe visual definitiva dos ambientes personalizados continua sujeita à auditoria técnica.
+
+| Função | Tratamento editorial | Colapso |
+|---|---|---|
+| Definição | bloco formal, título iniciado por **Definição** | não |
+| Teorema | bloco formal, título iniciado por **Teorema** | não |
+| Proposição/Resultado/Propriedade | bloco formal identificado pela função | não |
+| Demonstração | callout de demonstração | preferencialmente sim no HTML |
+| Exemplo/Situação inferencial | ambiente de exemplo | não |
+| Interpretação | `note` ou ambiente equivalente | não |
+| Observação | `note` | não |
+| Condição/limitação/erro comum | `warning` | não |
+| Orientação metodológica/computacional | `tip` quando houver ganho didático claro | não |
+| Síntese | `note` breve ao final de blocos extensos, apenas quando acrescentar organização real | não |
+| Aprofundamento | seção ou bloco explicitamente marcado **Aprofundamento — Mestrado** | conforme extensão |
+| Exercício | tratamento estável próprio; não alternar `note` e `tip` sem função | não |
+
+### Regra específica para demonstrações
+
+Quando a demonstração não for necessária para a primeira leitura do núcleo, preferir:
+
+```markdown
+::: {.callout-note collapse="true" title="Demonstração"}
+...
+:::
+```
+
+A demonstração deve continuar disponível integralmente no PDF. Antes de adotar esse padrão de forma massiva, confirmar seu comportamento com os arquivos de estilo e a configuração PDF.
+
+### Situação de `callout-example`
+
+O manuscrito utiliza amplamente `.callout-example` nos preliminares. Como essa classe não pertence ao conjunto padrão de callouts do Quarto e `styles.css` ainda não está disponível, **não converter nem eliminar esses blocos por enquanto**. Sua renderização deve ser verificada quando o arquivo de estilos for disponibilizado.
+
+# Equações, figuras, tabelas e código
+
+## Equações
+
+- utilizar matemática em linha com `$...$` e equações destacadas com `$$...$$`;
+- identificar com `eq-` apenas equações que precisem ser retomadas;
+- não criar identificadores para toda expressão apenas por uniformidade;
+- distinguir cuidadosamente igualdade, definição, aproximação e convergência;
+- indicar condições e domínio sempre que forem necessários para a validade da expressão;
+- usar vírgula como separador decimal na prosa e nos valores apresentados ao leitor, preservando a sintaxe exigida pelas linguagens de programação.
+
+## Figuras
+
+Toda figura que permaneça no livro deve:
+
+1. ter função didática identificável;
+2. possuir legenda informativa;
+3. possuir identificador `fig-` quando for referenciada;
+4. ser apresentada no texto antes ou no ponto de sua primeira ocorrência;
+5. ser interpretada no texto;
+6. ser compatível com HTML e PDF.
+
+Figuras meramente decorativas ou que apenas repetem uma equação sem acrescentar leitura devem ser reavaliadas, não removidas automaticamente.
+
+## Tabelas
+
+Toda tabela deve organizar informação que seria menos clara em texto corrido. Quando houver referência posterior, utilizar identificador `tbl-` e legenda clara. Cabeçalhos, símbolos e casas decimais devem ser coerentes com o texto.
+
+## Código R e Python
+
+Todo código executável deve:
+
+- funcionar em sessão/ambiente limpo com dependências declaradas;
+- utilizar rótulos de chunk únicos;
+- ocultar mensagens e avisos que não sejam didaticamente relevantes;
+- produzir exatamente os números e figuras interpretados no texto;
+- explicitar sementes quando a reprodutibilidade de uma simulação depender delas;
+- utilizar opções do Quarto em minúsculas (`true`, `false`);
+- respeitar a sintaxe própria da linguagem dentro do código;
+- evitar objetos com nomes incompatíveis com a notação matemática quando isso gerar ambiguidade.
+
+Não afirmar que um código funciona sem executá-lo. Quando a execução não puder ser feita, registrar **verificação computacional necessária**.
+
+# Referências cruzadas e proteção de dependências
+
+Antes de excluir, fundir, deslocar ou renomear qualquer definição, teorema, proposição, equação, exemplo, figura, tabela ou seção que possua identificador:
+
+1. pesquisar o identificador em todo o projeto;
+2. identificar todos os capítulos que o utilizam;
+3. verificar dependências conceituais mesmo quando não houver crossref explícito;
+4. preservar o identificador no novo local quando o objeto permanecer essencialmente o mesmo;
+5. atualizar todas as referências se a alteração do identificador for realmente necessária;
+6. não eliminar um conteúdo apenas porque parece repetido localmente quando capítulos posteriores dependem dele.
+
+A ausência de crossref explícito não implica ausência de dependência conceitual.
+
+# Critério de encerramento da auditoria de um capítulo
+
+Uma auditoria local pode ser encerrada quando, após a leitura sequencial e uma varredura transversal final, não permanecer problema objetivo relevante nas categorias abaixo:
+
+1. correção matemática e estatística;
+2. hipóteses e condições de validade;
+3. distinção entre resultado exato, aproximado e assintótico;
+4. terminologia e notação canônicas;
+5. sequência conceitual e dependências;
+6. classificação núcleo/aprofundamento;
+7. referências bibliográficas e rastreabilidade;
+8. referências cruzadas;
+9. figuras e tabelas;
+10. código e resultados numéricos;
+11. síntese e exercícios;
+12. redação e metadiscurso;
+13. consistência com os capítulos anteriores e posteriores.
+
+Depois de resolvidos esses pontos, a revisão deve ser encerrada, salvo aparecimento posterior de erro concreto. O objetivo não é reescrever indefinidamente um capítulo já correto.
+
+# Formato de encaminhamento entre este chat e os chats específicos
+
+Quando uma decisão transversal gerar trabalho local, utilizar o seguinte registro:
+
+> **ENCAMINHAMENTO PARA O CHAT DA UNIDADE X**  
+> **Arquivo:** `unidadeX.qmd`  
+> **Ponto identificado:** problema ou oportunidade objetiva.  
+> **Evidência no manuscrito:** seção, identificador ou trecho envolvido.  
+> **Fonte de controle:** referência pertinente, quando houver.  
+> **Decisão transversal já fixada:** regra que o chat local deve respeitar.  
+> **Tarefa local:** auditoria ou alteração específica.  
+> **Restrições:** conteúdo, fontes, IDs e dependências a preservar.  
+> **Impacto transversal:** capítulos ou conceitos afetados.
+
+O chat específico não deve redefinir terminologia, notação, política de fontes, classificação graduação/mestrado ou arquitetura global sem devolver a questão a este chat principal.
+
+# Estado de completude desta versão
+
+Com as regras acrescentadas nesta versão, o documento está **completo como protocolo conceitual, editorial e bibliográfico para iniciar as auditorias individuais** dos capítulos disponíveis.
+
+Permanecem fora de fechamento apenas pendências que dependem de informação ainda não disponível ou de execução técnica posterior:
+
+- auditoria de `styles.css`, `macros.tex`, `cover.tex` e `demo.qmd`;
+- auditoria executável completa dos códigos de U5, U6 e U8 e dos demais chunks relevantes;
+- decisão local sobre a arquitetura interna da U4;
+- definição da forma permanente da U7 e U8;
+- verificação bibliográfica de itens cuja obra não está disponível;
+- conferência direta de Casella--Berger nos capítulos 4--12, ausentes do PDF atualmente disponível.
+
+Essas pendências não devem ser preenchidas por suposição.
+
+
+# Convenções probabilísticas e exemplos-guia transversais
+
+## Parametrizações das distribuições
+
+As distribuições apresentadas no preliminar probabilístico devem funcionar como referência notacional e paramétrica para os capítulos inferenciais. Parametrizações diferentes podem ser utilizadas quando forem matematicamente ou didaticamente convenientes, mas devem ser **declaradas explicitamente no ponto de uso** e não podem produzir mudança silenciosa no significado de um parâmetro.
+
+Convenções de referência do livro:
+
+| Distribuição | Notação de referência | Convenção principal |
+|---|---|---|
+| Bernoulli | $\operatorname{Ber}(p)$ | $P(X=1)=p$ |
+| Binomial | $\operatorname{Binom}(n,p)$ | número de sucessos em $n$ ensaios Bernoulli independentes |
+| Hipergeométrica | $\operatorname{Hiper}(N,M,n)$ | população $N$, sucessos populacionais $M$, amostra sem reposição de tamanho $n$ |
+| Geométrica | $\operatorname{Geo}(p)$ | número de ensaios até o primeiro sucesso; suporte $\{1,2,\ldots\}$ |
+| Binomial negativa | $\operatorname{BN}(r,p)$ | número total de ensaios até o $r$-ésimo sucesso; suporte $\{r,r+1,\ldots\}$ |
+| Poisson | $\operatorname{Poisson}(\lambda)$ | $\lambda$ é o número esperado na exposição considerada; usar $\rho$ quando for necessário distinguir taxa por unidade de exposição |
+| Multinomial | $\operatorname{Mult}(n,\mathbf p)$ ou notação equivalente já adotada no capítulo | $\sum_j p_j=1$ |
+| Uniforme contínua | $\operatorname U(a,b)$ | densidade constante no intervalo; diferenças de inclusão dos extremos são irrelevantes para probabilidades contínuas |
+| Exponencial | $\operatorname{Exp}(\mu)$ ou $\operatorname{Exp}(\lambda)$, conforme a parametrização declarada | usar $\mu$ quando o parâmetro representar diretamente a média; quando o parâmetro representar o inverso da média, utilizar outro símbolo, como $\lambda$ para a taxa |
+| Gama | $\operatorname{Gama}(\alpha,\beta)$ | parametrização geral por forma $\alpha>0$ e escala $\beta>0$; parametrizações alternativas podem ser utilizadas em desenvolvimentos específicos quando explicitadas |
+| Normal | $N(\mu,\sigma^2)$ | média $\mu$ e variância $\sigma^2$ |
+| Beta | $\operatorname{Beta}(\alpha,\beta)$ | parâmetros de forma $\alpha,\beta>0$ |
+
+### Parametrizações alternativas
+
+O uso de outra parametrização é permitido quando tiver função conceitual clara. Em particular, quando a distribuição gama surgir diretamente como soma de variáveis exponenciais parametrizadas pela taxa $\lambda$, pode ser conveniente utilizar a parametrização forma-taxa, desde que essa escolha seja explicitada.
+
+Nesses casos:
+
+1. anunciar explicitamente a parametrização antes da fórmula;
+2. fornecer a relação entre as parametrizações quando isso for relevante, como $\lambda=1/\mu$ na exponencial ou $\beta=1/\lambda$ entre escala e taxa na gama;
+3. não reutilizar o mesmo símbolo com significados diferentes dentro da mesma seção;
+4. ao utilizar software, verificar se a função empregada recebe taxa, escala, média ou outro parâmetro e fazer a correspondência explicitamente quando necessário;
+5. verificar se fórmulas de esperança, variância, FGM, verossimilhança e distribuição amostral continuam coerentes com a parametrização anunciada.
+
+A mudança explícita de parametrização pode ser pedagogicamente útil; a mudança silenciosa é um erro editorial e potencialmente matemático.
+
+## Variância amostral
+
+A convenção canônica para a variância amostral é
+
+$$
+S^2
+=
+\frac{1}{n-1}
+\sum_{i=1}^n
+(X_i-\overline X)^2.
+$$
+
+Essa é a estatística utilizada nos desenvolvimentos de distribuições amostrais, intervalos e testes baseados em $t$ e $\chi^2$.
+
+Quando surgir a quantidade com divisor $n$, ela deve receber símbolo diferente, como $\widetilde S_n^2$, ou aparecer explicitamente como estimador de máxima verossimilhança de $\sigma^2$ no modelo normal. Não chamar indistintamente as duas quantidades de $S^2$.
+
+Em código, utilizar de modo deliberado a convenção correspondente. Por exemplo, funções que diferenciam `ddof=0` e `ddof=1` devem ser configuradas de acordo com o objeto estatístico definido no texto.
+
+# Política de continuidade por exemplos-guia
+
+O livro já possui exemplos recorrentes suficientes para construir continuidade vertical sem criar estudos de caso artificiais. Três famílias serão tratadas como **exemplos-guia preferenciais**, sem exclusividade.
+
+## Exemplo-guia 1 — Bernoulli, urna e proporção
+
+A urna introduz o mecanismo gerador e a distinção entre amostragem com e sem reposição. A estrutura Bernoulli/binomial/proporção permite acompanhar a mesma pergunta inferencial ao longo do livro.
+
+Usos naturais:
+
+| Parte | Função do exemplo |
+|---|---|
+| U1 | PGD, população, parâmetro $p$, amostra, estatística $\widehat p$ |
+| U2 | distribuição de $\widehat p$, binomial/hipergeométrica, aproximação normal |
+| U3 | viés, variância, EQM, consistência, suficiência quando pertinente |
+| U4 | momentos e máxima verossimilhança de $p$ |
+| U5 | Wald, Wilson, Clopper--Pearson e cobertura |
+| U6 | $H_0:p=p_0$, valor-p, poder e teste exato |
+| U8 | análise completa de uma proporção, quando pertinente |
+
+O objeto “urna” não precisa ser repetido literalmente em todas as unidades; a continuidade pode ocorrer pela estrutura Bernoulli/proporção.
+
+## Exemplo-guia 2 — Modelo normal
+
+O modelo normal fornece continuidade entre distribuições amostrais exatas, suficiência, informação de Fisher, máxima verossimilhança, mínimos quadrados, intervalos e testes.
+
+Usos naturais:
+
+| Parte | Função do exemplo |
+|---|---|
+| U1 | modelo paramétrico e parâmetros $(\mu,\sigma^2)$ |
+| U2 | $\overline X$, $S^2$, $\chi^2$, $t$ e $F$ |
+| U3 | Fisher, Cramér--Rao, suficiência, completude/ancilaridade conforme o modelo |
+| U4 | momentos, MV e relação com mínimos quadrados |
+| U5 | intervalos para $\mu$ e $\sigma^2$ |
+| U6 | testes para médias, variâncias e comparação de grupos |
+| U8 | análises completas de uma e duas amostras |
+
+## Exemplo-guia 3 — Modelo exponencial
+
+O modelo exponencial oferece um exemplo contínuo não normal, analiticamente manejável e útil para verificar parametrizações.
+
+Usos naturais:
+
+| Parte | Função do exemplo |
+|---|---|
+| 0.1 | distribuição com taxa $\lambda$ |
+| 0.2 | somas, transformações e aproximações |
+| U2 | distribuição da soma/média e TCL |
+| U3 | risco, informação, suficiência e estimadores não viesados quando pertinente |
+| U4 | momentos e máxima verossimilhança da taxa |
+| U5 | pivô exato para a taxa |
+| U6 | teste sobre a taxa apenas se acrescentar função real ao capítulo |
+
+## Regra de preservação dos exemplos locais
+
+Os exemplos-guia **não substituem** exemplos locais já existentes e bem fundamentados. Sua função é produzir continuidade entre capítulos. Não inserir um exemplo-guia em uma seção apenas para cumprir uma quota editorial.
+
+Quando um exemplo local é melhor para determinada propriedade — por exemplo, suporte dependente do parâmetro, mistura, censura, robustez ou tabelas de contingência — ele deve permanecer.
+
+# Arquitetura recomendada para o fechamento dos capítulos
+
+A estrutura dos capítulos não precisa ser idêntica, mas o leitor deve reconhecer um percurso editorial estável.
+
+Quando compatível com o conteúdo, preferir:
+
+1. abertura e delimitação;
+2. desenvolvimento do núcleo;
+3. exemplos e computação integrados ao ponto em que são necessários;
+4. aprofundamentos do mestrado, localmente ou em bloco próprio;
+5. síntese final ou quadro-síntese quando houver ganho real de organização;
+6. exercícios de consolidação.
+
+## Exceções justificadas
+
+- U4 pode manter sínteses e exercícios intermediários por método, devido à extensão e à autonomia dos blocos internos;
+- U7 deve funcionar prioritariamente como integração do processo inferencial e não precisa imitar a estrutura de um capítulo teórico;
+- U8 deve privilegiar análises completas e reprodutíveis e não precisa terminar com uma nova lista de exercícios se sua própria função for de aplicação integradora.
+
+Não criar sínteses redundantes. Uma síntese deve reorganizar relações, condições ou escolhas de procedimento, e não repetir em lista tudo o que já foi dito.
+
+# Decisões transversais aprovadas nesta etapa
+
+Além das decisões anteriores, ficam aprovadas para orientar os chats específicos:
+
+1. os IDs de capítulo propostos em `Política de referências cruzadas entre capítulos` passam a ser a convenção global a implementar progressivamente;
+2. na distribuição exponencial, usar $\mu$ quando o parâmetro representar diretamente a média e utilizar outro símbolo, como $\lambda$, quando o parâmetro representar o inverso da média; para a distribuição gama, utilizar como parametrização geral $\operatorname{Gama}(\alpha,\beta)$, admitindo parametrizações alternativas explicitamente declaradas quando forem funcionais ao desenvolvimento, em particular na relação com somas de variáveis exponenciais;
+3. a variância amostral canônica será $S^2$ com divisor $n-1$;
+4. parametrizações alternativas continuam permitidas quando explicitamente anunciadas e justificadas;
+5. Bernoulli/proporção, normal e exponencial serão exemplos-guia preferenciais, sem exclusão dos exemplos locais;
+6. a estrutura de fechamento dos capítulos será estável, mas não rígida: síntese e exercícios serão usados quando cumprirem função didática real.
+
+# Auditoria transversal das fronteiras entre capítulos
+
+Esta seção estabelece contratos de entrada e saída entre as partes do livro. O objetivo é evitar dois problemas opostos: repetir integralmente conceitos já estabelecidos e, no extremo contrário, pressupor resultados que ainda não foram apresentados ao leitor.
+
+A regra geral é:
+
+> **cada capítulo pode retomar brevemente conceitos anteriores, mas deve acrescentar uma função nova ao objeto retomado.**
+
+Uma retomada pode assumir a forma de uma recordação curta, uma referência cruzada ou um exemplo já conhecido reinterpretado em nova função inferencial. Não se exige que todo capítulo seja totalmente autossuficiente.
+
+## Tipos de dependência
+
+As dependências entre capítulos serão classificadas em três tipos.
+
+1. **Pré-requisito conceitual:** o capítulo posterior pressupõe que o conceito já tenha sido apresentado e compreendido.
+2. **Ferramenta consultável:** o resultado anterior pode ser retomado sob demanda e não precisa constituir barreira para a leitura sequencial.
+3. **Antecipação controlada:** um capítulo pode introduzir operacionalmente um conceito que será formalizado depois, desde que sinalize essa antecipação e não dependa de resultados ainda não estabelecidos.
+
+Essa classificação é especialmente importante para o capítulo 0.2 e para a relação entre estimação intervalar e testes de hipóteses.
+
+# Contratos de fronteira
+
+## 0.1 → 0.2
+
+### O capítulo 0.1 deve entregar
+
+- linguagem básica de probabilidade;
+- condicionamento e independência;
+- variáveis aleatórias discretas e contínuas;
+- esperança, variância, covariância e momentos;
+- distribuições conjuntas;
+- transformações de variáveis aleatórias;
+- função geradora de momentos;
+- famílias probabilísticas necessárias nos capítulos posteriores.
+
+O próprio capítulo 0.1 declara que resultados de convergência, LGN, TCL, Slutsky, método delta e ordens estocásticas serão tratados no capítulo seguinte. Essa fronteira deve ser preservada.
+
+### O capítulo 0.2 pode pressupor
+
+- manipulação de probabilidades e esperanças;
+- noções de distribuição e independência;
+- familiaridade com as distribuições introduzidas em 0.1;
+- transformações elementares de variáveis aleatórias.
+
+### O capítulo 0.2 deve acrescentar
+
+- ferramentas de cálculo e álgebra linear necessárias à inferência;
+- jacobianos e transformações multivariadas quando pertinentes;
+- convergência de sequências de variáveis aleatórias;
+- LGN e TCL como resultados gerais;
+- mapeamento contínuo e Slutsky;
+- método delta;
+- ordens estocásticas.
+
+### Regra de fronteira
+
+0.2 não deve reabrir a revisão geral de probabilidade. Quando um objeto probabilístico de 0.1 for necessário, deve ser retomado apenas no nível exigido pela nova ferramenta.
+
+## 0.2 → U1
+
+Esta fronteira exige uma regra especial.
+
+**O capítulo 0.2 é uma caixa de ferramentas, não um gargalo obrigatório para compreender a U1.** A U1 introduz os fundamentos da Inferência Estatística e deve continuar legível para um estudante que tenha a formação probabilística de 0.1 mesmo que ainda não domine toda a teoria assintótica de 0.2.
+
+Assim, U1 não deve pressupor:
+
+- método delta;
+- Slutsky;
+- ordens estocásticas;
+- expansão de Taylor;
+- formas quadráticas avançadas;
+- teoria assintótica geral.
+
+A ordem física 0.1 → 0.2 → U1 pode ser mantida no livro, mas a apresentação editorial deve deixar claro que várias seções de 0.2 funcionam como referência consultável ao longo das unidades posteriores.
+
+### Consequência curricular
+
+No percurso da graduação, LGN e TCL permanecem núcleo. O método delta e desenvolvimentos exclusivamente associados à teoria assintótica de estimadores pertencem ao aprofundamento do mestrado conforme a política já estabelecida.
+
+## U1 → U2
+
+### U1 deve entregar
+
+- problema inferencial e Processo Gerador de Dados;
+- população, unidade observacional e amostra;
+- parâmetro e espaço paramétrico;
+- amostra aleatória e distinção entre variável aleatória e realização;
+- estatística;
+- estimador e estimativa;
+- modelo estatístico;
+- introdução à função de verossimilhança;
+- distinção entre amostragem i.i.d. e estruturas amostrais que não são i.i.d.
+
+A U1 já estabelece explicitamente a diferença entre $\mathbf X$ e $\mathbf x$, bem como entre estatística, estimador e estimativa. Essa formulação deve ser considerada canônica para o restante do livro.
+
+### U2 deve pressupor
+
+- modelo estatístico, parâmetro, amostra e estatística já conhecidos;
+- distinção entre amostra aleatória e amostra observada;
+- noção de repetição do mecanismo gerador.
+
+### U2 deve acrescentar
+
+- distribuição amostral como distribuição de uma estatística;
+- mecanismos exatos de obtenção de distribuições amostrais;
+- distribuição da média, proporção e variância;
+- estatísticas de ordem;
+- relações $\chi^2$, $t$ e $F$ associadas ao modelo normal;
+- aproximações assintóticas de estatísticas;
+- interpretação da simulação como aproximação da distribuição amostral.
+
+### Regra de fronteira
+
+A seção atual de U2 intitulada "Amostra e estatística: recordação" pode permanecer, mas deve funcionar como **recordação condensada**, não como segunda apresentação completa de modelo, amostra e estatística. Na revisão específica da U2, avaliar substituição parcial por referências cruzadas para U1 quando isso não prejudicar a leitura local.
+
+## U2 → U3
+
+### U2 deve entregar
+
+- distribuição exata ou aproximada das estatísticas centrais do curso;
+- cálculo de esperança e variância de estatísticas relevantes;
+- entendimento da variabilidade sob amostragens repetidas;
+- distinção entre resultado exato e assintótico.
+
+### U3 deve pressupor
+
+- o estimador é uma estatística e, portanto, possui distribuição amostral;
+- esperança, variância e convergência podem ser usadas para avaliar seu comportamento;
+- propriedades de amostras normais, Bernoulli/binomial, Poisson e exponencial já podem ser convocadas em exemplos.
+
+### U3 deve acrescentar
+
+- função de perda e risco;
+- viés, variância, EQM e erro-padrão como critérios de avaliação;
+- consistência e eficiência;
+- informação de Fisher e desigualdade de Cramér--Rao;
+- suficiência, suficiência minimal e completude;
+- Rao--Blackwell, Lehmann--Scheffé, ENVVUM e resultados associados;
+- ancilaridade e Basu quando pertinentes ao aprofundamento.
+
+### Regra de fronteira
+
+U3 pode calcular uma distribuição amostral quando isso for indispensável para avaliar um estimador, mas não deve se tornar uma repetição da U2. A nova pergunta é **qual a qualidade do procedimento?**, não simplesmente **qual a distribuição da estatística?**
+
+## U3 → U4
+
+Esta é uma das fronteiras centrais do livro.
+
+### U3 é responsável por responder
+
+> **Como avaliar e comparar estimadores?**
+
+Ela estabelece critérios de desempenho e princípios de redução.
+
+### U4 é responsável por responder
+
+> **Como construir estimadores a partir de um modelo e dos dados?**
+
+Ela desenvolve método dos momentos, máxima verossimilhança, mínimos quadrados e, no aprofundamento do mestrado, minimax, equivariância, teoria assintótica específica e EM.
+
+### U4 pode pressupor de U3
+
+- viés, variância, EQM e risco;
+- consistência;
+- informação de Fisher e Cramér--Rao;
+- eficiência;
+- suficiência e completude quando usadas em exemplos;
+- função de perda para o desenvolvimento de minimax.
+
+### Regra de fronteira
+
+U4 pode **verificar** que um estimador obtido por um método é consistente, eficiente ou suficiente, mas deve evitar redefinir essas propriedades. Quando necessário, fazer uma recordação de uma ou duas frases e remeter ao desenvolvimento canônico em U3.
+
+A informação de Fisher pode reaparecer dentro da teoria de máxima verossimilhança porque adquire função operacional específica, mas sua definição conceitual permanece em U3.
+
+A introdução de minimax e equivariância na U4 deverá aproveitar diretamente a função de perda e o risco já definidos em U3. Não criar uma teoria da decisão paralela na U4.
+
+## U4 → U5
+
+### U4 deve entregar
+
+- estimadores pontuais e sua construção;
+- propriedades relevantes dos EMV;
+- normalidade assintótica dos estimadores quando disponível;
+- estimativas de erro-padrão/informação necessárias a aproximações posteriores;
+- invariância e reparametrização em nível necessário.
+
+### U5 deve acrescentar
+
+- conjunto de confiança e função de cobertura;
+- interpretação frequentista do nível de confiança;
+- construção por pivôs;
+- intervalos exatos, conservadores e assintóticos;
+- intervalos de Wald como aplicação de normalidade assintótica;
+- Wilson, Clopper--Pearson e outros procedimentos específicos;
+- bootstrap para estimação intervalar, quando aplicável;
+- precisão, amplitude e tamanho amostral.
+
+### Regra de fronteira
+
+O intervalo de Wald pertence conceitualmente à U5. U4 pode entregar a distribuição assintótica e o erro-padrão que o tornam possível, mas não precisa desenvolver o procedimento intervalar completo.
+
+## U5 → U6
+
+Esta fronteira contém uma antecipação controlada importante porque a ordem do livro apresenta intervalos antes da teoria formal de testes.
+
+A U5 já utiliza a **inversão de testes** para mostrar a dualidade entre intervalos de confiança e testes de hipóteses. Essa escolha é pedagogicamente defensável e não exige inverter a ordem dos capítulos.
+
+### Política aprovada
+
+Na U5:
+
+- apresentar a inversão de testes em nível operacional e conceitual suficiente para construir conjuntos de confiança;
+- não desenvolver ali toda a teoria de função de teste, tamanho, poder, Neyman--Pearson ou optimalidade;
+- sinalizar por referência prospectiva que a estrutura formal de testes será desenvolvida em U6.
+
+Na U6:
+
+- formalizar função de teste, região crítica, tamanho, nível, erros e poder;
+- retomar a dualidade com U5 sem reconstruir a teoria de intervalos;
+- usar intervalos de confiança como complemento de interpretação dos testes.
+
+### Regra de fronteira
+
+A duplicação atual da dualidade em U5 e U6 é **funcionalmente justificável** se os dois capítulos tiverem papéis distintos:
+
+- U5: dualidade como **método de construção e interpretação de conjuntos de confiança**;
+- U6: dualidade como **relação entre decisão de teste e conjunto de valores paramétricos compatíveis**.
+
+Não eliminar uma das ocorrências apenas por repetição textual; harmonizar e estabelecer referências cruzadas.
+
+## U6 → U7
+
+### U6 deve entregar
+
+- formulação completa do problema de teste;
+- valor-p, tamanho, nível, poder e erros;
+- testes usuais para médias, proporções e comparações;
+- testes categóricos;
+- noções de reamostragem/robustez quando mantidas;
+- boas práticas de interpretação e comunicação.
+
+### U7 deve acrescentar
+
+- integração do ciclo inferencial;
+- conexão entre pergunta científica, PGD/desenho, população, parâmetro, amostra, modelo, estimativa, intervalo, teste e interpretação;
+- planejamento amostral e reprodutibilidade;
+- organização de uma análise completa.
+
+### Regra de fronteira
+
+U7 não deve introduzir nova teoria inferencial por padrão. Seu papel é **orquestrar** ferramentas já aprendidas.
+
+A versão atual mistura conteúdo permanente de integração com regras circunstanciais de uma disciplina (número de integrantes, entrega por SIGAA, atendimento e rubrica). Na revisão específica da U7, preservar a utilidade dessas orientações, mas separar claramente:
+
+1. **capítulo permanente do livro** — ciclo inferencial e projeto aplicado;
+2. **instruções operacionais da oferta da disciplina** — bloco, apêndice ou material circunstancial.
+
+Não excluir silenciosamente as orientações existentes.
+
+## U7 → U8
+
+### U7 deve entregar um roteiro de análise
+
+A sequência global a ser usada como referência é:
+
+$$
+\text{pergunta}
+\rightarrow
+\text{PGD/desenho}
+\rightarrow
+\text{população e parâmetro}
+\rightarrow
+\text{amostra/dados}
+\rightarrow
+\text{descrição}
+\rightarrow
+\text{modelo}
+\rightarrow
+\text{estimativa}
+\rightarrow
+\text{incerteza}
+\rightarrow
+\text{teste, quando pertinente}
+\rightarrow
+\text{verificação de condições}
+\rightarrow
+\text{interpretação}.
+$$
+
+### U8 deve transformar esse roteiro em exemplos completos
+
+Cada exemplo aplicado deverá, quando pertinente, explicitar:
+
+- pergunta de interesse;
+- população, unidade e desenho;
+- parâmetro;
+- amostra;
+- modelo e condições;
+- estimativa pontual;
+- erro-padrão;
+- intervalo de confiança;
+- hipóteses e teste;
+- tamanho de efeito quando pertinente;
+- conclusão contextual;
+- limites impostos pelo desenho.
+
+### Regra de fronteira
+
+U8 não deve reapresentar como nova teoria fórmulas já desenvolvidas em U5/U6. Pode recordá-las brevemente e deve remeter aos capítulos responsáveis.
+
+A terminologia e a lógica de U7 e U8 devem ser idênticas. Em particular, U8 deverá usar a terminologia global já aprovada (`H_0`, `H_1`, `valor-p`, `não rejeitar H_0`) e não variantes locais como `H_A` ou `p-valor`, salvo quando houver razão documental explícita.
+
+# Dependências não estritamente lineares
+
+Embora o livro seja lido sequencialmente, várias dependências atravessam mais de uma unidade.
+
+| Conceito | Origem principal | Uso posterior |
+|---|---|---|
+| independência e distribuições | 0.1 | U1--U8 |
+| LGN/TCL/Slutsky/delta | 0.2 | U2--U6 |
+| PGD/modelo/parâmetro | U1 | U2--U8 |
+| distribuição amostral | U2 | U3--U8 |
+| risco e critérios de avaliação | U3 | U4 e aplicações |
+| Fisher/Cramér--Rao | U3 | U4--U6 |
+| suficiência/completude | U3 | U4 e aprofundamentos |
+| máxima verossimilhança | U4 | U5--U6 |
+| normalidade assintótica/erro-padrão | U4 | U5--U6 |
+| intervalo de confiança | U5 | U6--U8 |
+| testes e valor-p | U6 | U7--U8 |
+| ciclo inferencial integrado | U7 | U8 |
+
+# Percursos de leitura
+
+## Percurso principal da graduação
+
+A sequência conceitual principal será:
+
+$$
+0.1
+\rightarrow
+U1
+\rightarrow
+U2
+\rightarrow
+U3_{\text{núcleo}}
+\rightarrow
+U4_{\text{núcleo}}
+\rightarrow
+U5
+\rightarrow
+U6_{\text{núcleo}}
+\rightarrow
+U7
+\rightarrow
+U8.
+$$
+
+O capítulo 0.2 permanece disponível antes de U1 no sumário, mas funciona parcialmente como caixa de ferramentas. LGN e TCL integram o percurso de graduação e devem ser mobilizados antes ou durante U2. Seções de 0.2 que não são necessárias à primeira leitura podem ser consultadas quando convocadas pelos capítulos posteriores.
+
+## Percurso do mestrado
+
+O mestrado percorre a mesma espinha dorsal, acrescentando os blocos identificados como **Aprofundamento — Mestrado**, especialmente:
+
+- suficiência minimal e completude em maior profundidade;
+- Rao--Blackwell, Lehmann--Scheffé, ENVVUM e resultados associados;
+- minimax e equivariância;
+- teoria assintótica dos estimadores e método delta em nível correspondente;
+- EM;
+- Neyman--Pearson, UMP, razão de verossimilhanças e testes assintóticos.
+
+O aprofundamento não constitui um segundo livro paralelo: ele se encaixa no mesmo fluxo conceitual e pode pressupor integralmente o núcleo anterior.
+
+# Decisões transversais aprovadas na auditoria de fronteiras
+
+1. A sequência física atual dos capítulos será preservada neste estágio.
+2. O capítulo 0.2 será tratado editorialmente como **caixa de ferramentas matemáticas e assintóticas**, não como pré-requisito integral obrigatório para U1.
+3. U2 pode manter uma seção curta de recordação de U1, mas não deve competir com U1 na definição canônica de modelo, amostra, estatística, estimador e estimativa.
+4. U3 é o capítulo canônico para critérios de avaliação e redução; U4 constrói estimadores e aplica esses critérios.
+5. Minimax e equivariância em U4 devem reutilizar risco/perda de U3, evitando teoria paralela.
+6. U4 fornece a base assintótica; U5 é responsável pelos intervalos de Wald e demais construções intervalares.
+7. A ordem U5 → U6 será mantida. A inversão de testes em U5 constitui antecipação controlada; a teoria formal de testes permanece em U6.
+8. A dualidade IC–teste pode aparecer em U5 e U6, desde que cada ocorrência cumpra função distinta e haja referência cruzada.
+9. U7 deve se tornar a referência canônica do **ciclo inferencial integrado**, preservando separadamente suas instruções circunstanciais de disciplina.
+10. U8 deverá implementar, em cada exemplo completo, o roteiro conceitual estabelecido em U7 e remeter à teoria de U2--U6 em vez de recriá-la.
+
+# Plano de implementação das revisões individuais
+
+A auditoria transversal define a direção; os chats específicos implementam e testam essa direção em cada capítulo. Para reduzir retrabalho, a revisão individual deve respeitar as dependências conceituais identificadas acima.
+
+## Blocos de revisão
+
+### Bloco A — Preliminares
+
+1. `unidade0p1.qmd`
+2. `unidade0p2.qmd`
+
+Objetivo do bloco: consolidar a linguagem probabilística, as parametrizações e a caixa de ferramentas matemáticas/assintóticas sem antecipar teoria inferencial desnecessária.
+
+Ao final do bloco, verificar especificamente:
+
+- se 0.1 entrega todos os objetos probabilísticos usados em 0.2;
+- se 0.2 não reabre definições já suficientemente estabelecidas em 0.1;
+- se núcleo e aprofundamento do mestrado estão identificados sem quebrar a continuidade do texto;
+- se 0.2 pode ser consultado seletivamente sem impedir a leitura da U1.
+
+### Bloco B — Linguagem inferencial e distribuições amostrais
+
+3. `unidade1.qmd`
+4. `unidade2.qmd`
+
+A U1 deve ser revisada antes da U2 porque é a fonte canônica para população, parâmetro, amostra, estatística, estimador, estimativa, modelo e verossimilhança introdutória.
+
+Ao revisar U2, usar a versão consolidada de U1 para decidir o que deve permanecer como recordação e o que pode ser substituído por referência cruzada.
+
+### Bloco C — Avaliação e construção de estimadores
+
+5. `unidade3.qmd`
+6. `unidade4.qmd`
+
+A U3 deve ser consolidada antes da U4 porque risco, função de perda, Fisher, Cramér--Rao, eficiência, suficiência e completude são ferramentas conceituais que U4 reutiliza.
+
+A revisão da U4 deverá ser feita **sem remover os blocos atuais por antecipação**. Primeiro:
+
+1. reduzir apenas duplicações comprovadas com U3;
+2. preservar momentos, MV, mínimos quadrados e EM;
+3. incorporar minimax/equivariança no lugar conceitualmente adequado;
+4. separar núcleo e aprofundamento;
+5. somente então avaliar se a arquitetura interna da unidade continua excessivamente longa.
+
+Nenhuma divisão de U4 em novos capítulos será realizada sem decisão transversal posterior.
+
+### Bloco D — Incerteza e testes
+
+7. `unidade5.qmd`
+8. `unidade6.qmd`
+
+As duas unidades devem ser tratadas como um par editorial.
+
+U5 pode ser auditada primeiro na ordem física do livro, preservando a antecipação controlada da inversão de testes. Após a revisão da U6, realizar obrigatoriamente uma checagem de retorno U5 ↔ U6 para:
+
+- harmonizar nível/tamanho/valor-p;
+- evitar duplicação desnecessária da dualidade;
+- conferir terminologia;
+- conferir procedimentos de Wald;
+- verificar se IC e testes correspondentes usam exatamente as mesmas condições e parametrizações.
+
+### Bloco E — Integração e aplicação
+
+9. `unidade7.qmd`
+10. `Unidade8.qmd`
+
+U7 deve ser consolidada antes da U8, pois será a referência canônica para o roteiro de análise inferencial completa.
+
+A auditoria matemática e computacional de U8 deve ocorrer somente depois que U5, U6 e U7 estiverem estabilizadas, para que os exemplos aplicados possam ser avaliados contra procedimentos e linguagem já consolidados.
+
+# Três passagens em cada chat específico
+
+## Passagem 1 — Estrutural e conceitual
+
+Objetivos:
+
+- inventariar a estrutura real do capítulo;
+- identificar núcleo e aprofundamento;
+- verificar progressão pedagógica;
+- identificar lacunas, repetições funcionais e repetições dispensáveis;
+- localizar inconsistências matemáticas ou terminológicas;
+- conferir a fronteira com os capítulos adjacentes;
+- propor P/A/R/C/E sem ainda fazer alterações extensas.
+
+A Passagem 1 termina com uma lista explícita das mudanças propostas e das partes que serão preservadas.
+
+## Passagem 2 — Bibliográfica, matemática e de dependências
+
+Objetivos:
+
+- verificar as fontes já citadas;
+- conferir diretamente PDFs disponíveis quando possível;
+- registrar verificações pendentes quando a fonte não estiver disponível;
+- conferir hipóteses e condições de resultados;
+- verificar parametrizações;
+- conferir IDs, crossrefs e dependências externas;
+- executar cálculos ou códigos necessários à validação do capítulo.
+
+Nenhuma citação atual deve ser eliminada apenas porque outra fonte parece mais conveniente.
+
+## Passagem 3 — Coerência transversal e acabamento
+
+Objetivos:
+
+- conferir terminologia global;
+- conferir notação;
+- conferir callouts;
+- conferir referências cruzadas;
+- verificar se retomadas acrescentam função nova;
+- verificar se o capítulo entrega corretamente o que o próximo pressupõe;
+- revisar síntese, exercícios e transições;
+- realizar auditoria final de código quando houver computação.
+
+# Critério de consolidação de um capítulo
+
+Um capítulo somente será marcado como **consolidado** quando:
+
+1. sua estrutura interna estiver aprovada;
+2. o conteúdo referenciado tiver sido preservado ou qualquer alteração estiver justificada;
+3. suas definições estiverem coerentes com as versões canônicas do projeto;
+4. suas dependências anteriores estiverem satisfeitas;
+5. suas entregas ao capítulo seguinte estiverem explícitas;
+6. códigos, fórmulas e conclusões forem consistentes entre si;
+7. não houver pendência transversal que possa exigir reestruturação substancial.
+
+A aprovação de um capítulo não impede correções pontuais futuras, mas impede reestruturações silenciosas durante a revisão de capítulos posteriores.
+
+# Retorno obrigatório do chat específico ao chat principal
+
+Ao final de cada passagem relevante, o chat específico deve produzir um bloco de retorno para o chat principal contendo:
+
+> **RETORNO AO CHAT PRINCIPAL — [capítulo]**
+>
+> **Estado:** Passagem 1 / Passagem 2 / Passagem 3 / consolidado.
+>
+> **Decisões implementadas:** resumo das alterações estruturais e conceituais.
+>
+> **Conteúdo preservado:** blocos que foram mantidos deliberadamente por função pedagógica ou fundamentação bibliográfica.
+>
+> **IDs/crossrefs alterados ou criados:** lista completa.
+>
+> **Novas referências/chaves BibTeX:** lista e justificativa.
+>
+> **Dependências com outros capítulos:** o que outro capítulo precisa conhecer ou ajustar.
+>
+> **Pendências transversais:** questões que não devem ser decididas localmente.
+>
+> **Arquivo-base da revisão:** nome exato da versão revisada.
+
+Esse retorno permite atualizar o inventário global sem importar para este chat toda a discussão linha a linha.
+
+# Regra de não propagação automática
+
+Uma decisão tomada num chat específico **não deve ser aplicada automaticamente aos demais capítulos** quando tiver efeito transversal. Primeiro, ela deve retornar ao chat principal e ser incorporada às orientações globais. Só depois deve ser propagada aos outros capítulos envolvidos.
+
+Exemplos:
+
+- mudança de notação de informação de Fisher;
+- alteração da sigla ENVVUM;
+- mudança de parametrização da exponencial;
+- criação de um novo ambiente de aprofundamento;
+- alteração de um ID usado em vários capítulos;
+- mudança da interpretação canônica de valor-p.
+
+# Ordem recomendada de abertura dos chats específicos
+
+Salvo necessidade prática diferente, a ordem recomendada é:
+
+1. Preliminar 0.1;
+2. Preliminar 0.2;
+3. U1;
+4. U2;
+5. U3;
+6. U4;
+7. U5;
+8. U6;
+9. U7;
+10. U8.
+
+Após U6, fazer uma pequena auditoria transversal de U5 ↔ U6 antes de avançar para U7. Após U8, realizar uma auditoria transversal final do livro completo.

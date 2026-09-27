@@ -1,8 +1,8 @@
-# Fundamentos da Inferência Estatística
+# Fundamentos da Inferência Estatística {#sec-fundamentos-inferencia}
 
 A inferência estatística utiliza informações obtidas em uma amostra para estudar características desconhecidas de uma população ou de um processo que produz dados. Como diferentes amostras podem gerar resultados diferentes, as conclusões obtidas a partir dos dados estão associadas à variabilidade e à incerteza.
 
-Este capítulo apresenta os conceitos que estruturam esse processo. Inicialmente, são discutidos o problema inferencial, o processo gerador de dados, a população, os parâmetros e a amostragem. Um experimento com uma urna permite observar diretamente a variabilidade produzida por diferentes amostras. A partir dessa experiência, são formalizados os conceitos de estatística, estimador, estimativa e modelo estatístico.
+O desenvolvimento parte do problema inferencial, do processo gerador de dados, da população, dos parâmetros e da amostragem. Um experimento com uma urna permite observar diretamente a variabilidade produzida por diferentes amostras e fornece a base para distinguir estatística, estimador, estimativa e modelo estatístico.
 
 Ao final do capítulo, o experimento da urna é reproduzido e ampliado computacionalmente. Essa seção foi organizada de forma autônoma: pode ser utilizada logo após o experimento em sala de aula, de forma intercalada com o desenvolvimento conceitual ou depois da apresentação da teoria.
 
@@ -47,7 +47,7 @@ $$
 
 Os dados constituem uma realização particular do processo. Se o mecanismo fosse repetido sob as mesmas condições, outros conjuntos de dados poderiam ser observados.
 
-O PGD real raramente é conhecido em todos os seus detalhes. Por essa razão, a análise estatística utiliza posteriormente um **modelo estatístico**, que fornece uma representação probabilística simplificada dos aspectos do PGD considerados relevantes para o problema estudado.
+O PGD real raramente é conhecido em todos os seus detalhes. Por essa razão, o **modelo estatístico** fornece uma representação probabilística simplificada dos aspectos do PGD considerados relevantes para o problema estudado.
 
 ::: {.callout-note title="PGD e hipótese i.i.d."}
 Em muitos modelos estatísticos, as observações são representadas por
@@ -70,9 +70,11 @@ Por exemplo, componentes selecionados aleatoriamente de uma produção mantida s
 
 Uma **população** é o conjunto de unidades sobre as quais se deseja obter informação. Dependendo do problema, pode ser formada por pessoas, animais, objetos, empresas, municípios, medições ou outras unidades de interesse.
 
+A **unidade observacional** é o elemento da população sobre o qual uma ou mais características são observadas ou medidas. Por exemplo, pode corresponder a uma pessoa, um animal, uma embalagem, um município ou uma bola da urna utilizada no experimento deste capítulo.
+
 Quando a população é finita, seu tamanho será representado por $N$.
 
-Uma característica numérica da população ou do processo de interesse é denominada **parâmetro**. O parâmetro é tratado, na abordagem frequentista desenvolvida neste livro, como uma quantidade fixa cujo valor é desconhecido.
+Uma característica numérica da população ou do processo de interesse é denominada **parâmetro**. Na abordagem frequentista desenvolvida neste livro, o parâmetro é tratado como uma quantidade fixa. Em um problema inferencial, seu valor é, em geral, desconhecido e deve ser estudado a partir dos dados observados.
 
 Por exemplo, podem constituir parâmetros:
 
@@ -100,11 +102,11 @@ $$
 \frac{R}{n}.
 $$
 
-Neste momento, $\widehat p$ será utilizado apenas como uma quantidade calculada a partir da amostra. Seu papel formal como estatística, estimador e estimativa será desenvolvido depois do experimento.
+A quantidade $\widehat p$ é calculada a partir da amostra. Seu papel como estatística, estimador ou estimativa depende da função que desempenha no problema inferencial.
 
 ### Mecanismo de seleção da amostra {.unnumbered}
 
-A possibilidade de generalizar resultados da amostra para a população depende do mecanismo utilizado para selecionar as unidades.
+A possibilidade de generalizar resultados da amostra para a população depende, entre outros aspectos, do mecanismo utilizado para selecionar as unidades.
 
 Uma seleção que favoreça sistematicamente determinados elementos pode produzir **viés de seleção**. Por exemplo, se a retirada das bolas favorecer determinadas regiões da urna, as probabilidades de inclusão podem deixar de corresponder ao plano amostral pretendido.
 
@@ -139,11 +141,11 @@ $$
 
 em que $m$ corresponde ao número de grupos.
 
-Essas proporções serão organizadas em uma tabela e representadas por um histograma. A figura resultante mostra a **distribuição empírica das estimativas obtidas pelos grupos** e permite observar a variabilidade produzida pela repetição da amostragem.
+Essas proporções serão organizadas em uma tabela e representadas por um histograma. A figura resultante mostra a **distribuição empírica dos valores de $\widehat p$ obtidos pelos grupos** e permite observar a variabilidade produzida pela repetição da amostragem.
 
 Mesmo que todos os grupos utilizem a mesma população, o mesmo tamanho amostral e o mesmo procedimento, os valores de $\widehat p$ não precisam coincidir. Essa variação decorre da seleção de conjuntos diferentes de bolas em cada amostra.
 
-A distribuição amostral de $\widehat p$ será definida formalmente no capítulo **Distribuições Amostrais**. O experimento fornece uma primeira representação empírica desse conceito.
+O experimento fornece uma primeira representação empírica da variabilidade que será descrita probabilisticamente pela distribuição amostral de $\widehat p$ em @sec-distribuicoes-amostrais.
 
 ### Verificação de aprendizagem {.unnumbered}
 
@@ -166,7 +168,7 @@ $$\mathbf{x}=(x_1,\ldots,x_n).$$
 
 A convenção de usar letras maiúsculas para variáveis aleatórias e minúsculas para suas realizações permite separar o procedimento inferencial, definido antes de observar os dados, do resultado numérico obtido em uma amostra particular [@cox2006principles, seção 1.1; @ramachandran2021r, seção 5.2, pp. 180--182].
 
-::: {.callout-important title="Distinção fundamental"}
+::: {.callout-important title="Estatística, estimador e estimativa"}
 Uma **estatística** é uma função das variáveis aleatórias que compõem a amostra e que não depende de parâmetros desconhecidos:
 
 $$
@@ -220,25 +222,85 @@ $$
 
 Nesse exemplo, $R$ e $\widehat p$ são estatísticas. Quando o objetivo é estimar $p$, a proporção amostral $\widehat p$ funciona como estimador da proporção populacional [@chihara2022, seção 1.5, seção 1.6 e apêndice B.1].
 
-::: {.callout-warning title="Com ou sem reposição?"}
-A representação i.i.d. de Bernoulli exige retiradas independentes, como ocorre na amostragem com reposição. Em uma urna finita amostrada **sem reposição**, as observações não são independentes e o total de bolas vermelhas possui distribuição hipergeométrica. A distinção entre esses dois planos amostrais e a correção para população finita são desenvolvidas no capítulo **Distribuições Amostrais** [@chihara2022, seção 1.5, pp. 5--6; @rice2007mathematical, seção 7.3].
+::: {.callout-warning title="Amostragem com e sem reposição"}
+A representação i.i.d. de Bernoulli exige retiradas independentes, como ocorre na amostragem com reposição. Em uma urna finita amostrada **sem reposição**, as observações não são independentes e o total de bolas vermelhas possui distribuição hipergeométrica. A distinção entre esses dois planos amostrais e a correção para população finita são desenvolvidas em @sec-distribuicoes-amostrais [@chihara2022, seção 1.5, pp. 5--6; @rice2007mathematical, seção 7.3].
 :::
 
-## A variabilidade dos estimadores: uma antecipação
+::: {.collapse title="Por que a independência se perde sem reposição?"}
 
-Como um estimador é uma função de variáveis aleatórias, amostras diferentes podem produzir estimativas diferentes. A distribuição de probabilidade do estimador sob repetições do mecanismo amostral é denominada **distribuição amostral** [@chihara2022, definições 4.1--4.2, pp. 77--79; @ramachandran2021r, seção 4.1, pp. 147--151].
+Considere uma urna com $N$ bolas, das quais $K$ são vermelhas.
 
-Neste capítulo, essa ideia é utilizada apenas para justificar por que uma estimativa deve ser acompanhada de uma avaliação de incerteza. O capítulo **Distribuições Amostrais** desenvolve formalmente:
+Antes de qualquer retirada,
 
-- as distribuições de $\overline X$, $S^2$ e $\widehat p$;
+$$
+P(X_1=1)
+=
+\frac{K}{N}.
+$$
+
+Se a primeira bola retirada for vermelha e ela não for devolvida à urna,
+restam $K-1$ bolas vermelhas entre $N-1$ bolas. Portanto,
+
+$$
+P(X_2=1\mid X_1=1)
+=
+\frac{K-1}{N-1}.
+$$
+
+Em geral,
+
+$$
+\frac{K-1}{N-1}
+\neq
+\frac{K}{N}.
+$$
+
+Logo,
+
+$$
+P(X_2=1\mid X_1=1)
+\neq
+P(X_2=1),
+$$
+
+e as retiradas não são independentes.
+
+Na urna do experimento,
+
+$$
+P(X_2=1)
+=
+\frac{900}{2400},
+$$
+
+enquanto
+
+$$
+P(X_2=1\mid X_1=1)
+=
+\frac{899}{2399}.
+$$
+
+A ausência de reposição modifica a composição da urna após cada retirada,
+criando dependência entre as observações.
+
+:::
+
+## Variabilidade dos estimadores
+
+Como um estimador é uma função de variáveis aleatórias, amostras diferentes podem produzir estimativas diferentes. A repetição do mecanismo amostral permite estudar probabilisticamente essa variabilidade e conduz ao conceito de **distribuição amostral**.
+
+A relação é formalizada em @sec-distribuicoes-amostrais por meio dos seguintes elementos:
+
+- distribuições de $\overline X$, $S^2$ e $\widehat p$;
 - esperança, variância e erro-padrão das estatísticas;
-- o efeito do tamanho amostral;
-- a amostragem sem reposição e a correção para população finita;
+- efeito do tamanho amostral;
+- amostragem sem reposição e correção para população finita;
 - resultados exatos, aproximações assintóticas e simulação.
 
-Essa divisão evita repetir aqui as derivações probabilísticas que constituem o objeto central do capítulo seguinte.
+Esses resultados transformam a variabilidade observada entre amostras em uma descrição probabilística das estatísticas sob repetição do mecanismo amostral.
 
-## Critérios para avaliar estimadores: visão panorâmica
+## Critérios para avaliar estimadores
 
 Diferentes estimadores podem ser propostos para o mesmo parâmetro. A escolha entre eles exige critérios que descrevam tanto o desempenho em amostras finitas quanto o comportamento quando o tamanho amostral aumenta [@chihara2022, seção 6.3; @ramachandran2021r, seção 5.2].
 
@@ -249,34 +311,21 @@ Diferentes estimadores podem ser propostos para o mesmo parâmetro. A escolha en
 | erro quadrático médio | efeito conjunto do viés e da variabilidade |
 | consistência | aproximação do estimador ao parâmetro quando o tamanho amostral aumenta |
 
-Para um estimador $\widehat\tau$ de $\tau(\theta)$, o viés e o erro quadrático médio são
-
-$$B_\theta(\widehat\tau)
-=
-E_\theta(\widehat\tau)-\tau(\theta)
-$$
-
-e
-
-$$\operatorname{EQM}_\theta(\widehat\tau)
-=
-\operatorname{Var}_\theta(\widehat\tau)
-+
-B_\theta(\widehat\tau)^2.
-$$
-
-Esses conceitos são apresentados aqui como um mapa da teoria. Sua análise detalhada, incluindo eficiência, suficiência e resultados de melhoria de estimadores, pertence ao capítulo dedicado à avaliação de estimadores.
+Viés, variância, erro quadrático médio e consistência descrevem aspectos distintos do desempenho de um estimador. O capítulo **Avaliação de Estimadores e Princípios de Redução de Dados** formaliza esses critérios e acrescenta eficiência, suficiência e resultados de melhoria de estimadores.
 
 ## Modelo estatístico e função de verossimilhança
 
-A função de verossimilhança é apresentada nesta unidade em caráter introdutório. Seu uso como princípio de redução e como método geral de construção de estimadores será desenvolvido nos capítulos posteriores.
+A função de verossimilhança relaciona os dados observados aos diferentes valores do parâmetro permitidos pelo modelo. Essa relação sustenta tanto a redução de dados por meio da informação sobre o parâmetro quanto a construção de estimadores por máxima verossimilhança.
 
 O processo gerador de dados de um fenômeno real raramente é conhecido em todos os seus detalhes. A análise começa, portanto, com um **modelo estatístico**: uma família de distribuições que representa os aspectos do mecanismo considerados relevantes para a pergunta científica. Em um modelo paramétrico,
 
-$$\mathcal P=\{P_\theta:\theta\in\Theta\},
+$$
+\mathcal P
+=
+\{P_\theta:\theta\in\Theta\},
 $$
 
-em que $\theta$ é o parâmetro, ou vetor de parâmetros, e $\Theta$ é o espaço paramétrico. Cada valor de $\theta$ determina uma distribuição possível para os dados. O modelo é uma representação deliberadamente simplificada e sua adequação deve ser examinada no contexto da aplicação [@cox2006principles, seção 1.1; @casella2002statistical, cap. 1].
+em que $\theta$ é o parâmetro, ou vetor de parâmetros, e $\Theta$ é o espaço paramétrico. Cada valor de $\theta$ determina uma distribuição possível para os dados. O modelo é uma representação deliberadamente simplificada e sua adequação deve ser examinada no contexto da aplicação [@cox2006principles, seção 1.1].
 
 ### Função de verossimilhança {.unnumbered}
 
@@ -294,7 +343,59 @@ $$L(\theta;\mathbf x)
 \prod_{i=1}^n f(x_i;\theta).
 $$
 
-A forma em produto é consequência da independência, não parte da definição geral. Além disso, multiplicar $L(\theta;\mathbf x)$ por uma função positiva dos dados que não dependa de $\theta$ não altera as comparações de verossimilhança nem seus maximizadores [@cox2006principles, seção 2.1, pp. 17--18; @casella2002statistical, seção 6.3].
+A forma em produto é consequência da independência, não parte da definição geral. Além disso, multiplicar $L(\theta;\mathbf x)$ por uma função positiva dos dados que não dependa de $\theta$ não altera as comparações de verossimilhança nem seus maximizadores [@cox2006principles, seção 2.1, pp. 17--18; @casella2002statistical, seção 6.3.1].
+
+::: {.collapse title="Demonstração"}
+
+Considere uma função de verossimilhança $L(\theta;\mathbf x)$ e uma função
+$c(\mathbf x)>0$ que não depende de $\theta$. Defina
+
+$$
+\widetilde L(\theta;\mathbf x)
+=
+c(\mathbf x)L(\theta;\mathbf x).
+$$
+
+Para dois valores $\theta_1$ e $\theta_2$,
+
+$$
+\frac{
+\widetilde L(\theta_1;\mathbf x)
+}{
+\widetilde L(\theta_2;\mathbf x)
+}
+=
+\frac{
+c(\mathbf x)L(\theta_1;\mathbf x)
+}{
+c(\mathbf x)L(\theta_2;\mathbf x)
+}
+=
+\frac{
+L(\theta_1;\mathbf x)
+}{
+L(\theta_2;\mathbf x)
+}.
+$$
+
+Portanto, multiplicar a verossimilhança por um fator positivo que não
+depende de $\theta$ preserva todas as comparações relativas entre valores
+do parâmetro.
+
+Pela mesma razão,
+
+$$
+\operatorname*{arg\,max}_{\theta}
+\widetilde L(\theta;\mathbf x)
+=
+\operatorname*{arg\,max}_{\theta}
+L(\theta;\mathbf x).
+$$
+
+Assim, fatores que dependem apenas dos dados podem ser omitidos quando o
+objetivo é comparar valores de $\theta$ ou maximizar a verossimilhança.
+
+:::
 
 ::: {.callout-warning title="Probabilidade e verossimilhança"}
 Na distribuição $f_{\mathbf X}(\mathbf x;\theta)$, fixa-se $\theta$ e estudam-se os possíveis valores de $\mathbf X$. Na verossimilhança $L(\theta;\mathbf x)$, os dados observados são fixados e os valores de $\theta$ são comparados.
@@ -323,6 +424,58 @@ p^r(1-p)^{n-r},
 \qquad 0\leq p\leq1.
 $$
 
+::: {.collapse title="Derivação da verossimilhança Bernoulli"}
+
+Como as observações são independentes,
+
+$$
+L(p;\mathbf x)
+=
+\prod_{i=1}^n
+p^{x_i}(1-p)^{1-x_i}.
+$$
+
+Usando as propriedades de potências,
+
+$$
+L(p;\mathbf x)
+=
+p^{\sum_{i=1}^n x_i}
+(1-p)^{\sum_{i=1}^n(1-x_i)}.
+$$
+
+Como
+
+$$
+r
+=
+\sum_{i=1}^n x_i
+$$
+
+e
+
+$$
+\sum_{i=1}^n(1-x_i)
+=
+n-\sum_{i=1}^n x_i
+=
+n-r,
+$$
+
+obtemos
+
+$$
+L(p;\mathbf x)
+=
+p^r(1-p)^{n-r}.
+$$
+
+A expressão mostra que, para comparar valores de $p$, a sequência
+observada influencia a verossimilhança apenas por meio do número total
+$r$ de sucessos.
+
+:::
+
 Se apenas o total $R=r$ for registrado, sua função de probabilidade é
 
 $$P_p(R=r)
@@ -346,6 +499,74 @@ $$\widehat p_{\mathrm{MV}}
 \frac{r}{n}.
 $$
 
+::: {.collapse title="Derivação do estimador de máxima verossimilhança"}
+
+Para $0<r<n$, derivamos a log-verossimilhança em relação a $p$:
+
+$$
+\ell'(p)
+=
+\frac{r}{p}
+-
+\frac{n-r}{1-p}.
+$$
+
+Colocando os termos sobre o mesmo denominador,
+
+$$
+\ell'(p)
+=
+\frac{
+r(1-p)-(n-r)p
+}{
+p(1-p)
+}
+=
+\frac{
+r-np
+}{
+p(1-p)
+}.
+$$
+
+Um ponto crítico satisfaz
+
+$$
+\ell'(p)=0.
+$$
+
+Como $0<p<1$, o denominador é positivo. Portanto,
+
+$$
+r-np=0,
+$$
+
+o que fornece
+
+$$
+p
+=
+\frac rn.
+$$
+
+Além disso,
+
+$$
+\ell''(p)
+=
+-\frac{r}{p^2}
+-
+\frac{n-r}{(1-p)^2}
+<
+0,
+$$
+
+para $0<r<n$. Assim, o ponto crítico corresponde a um máximo.
+
+Isso demonstra o resultado para $0<r<n$.
+
+:::
+
 O mesmo resultado permanece válido nos casos de fronteira: se $r=0$, então $\widehat p_{\mathrm{MV}}=0$; se $r=n$, então $\widehat p_{\mathrm{MV}}=1$ [@chihara2022, seção 6.1.1, pp. 148--150; @ramachandran2021r, seção 5.3].
 
 ::: {.callout-note title="Três papéis da proporção amostral"}
@@ -358,7 +579,37 @@ No modelo de Bernoulli, $\widehat p=R/n$ é simultaneamente:
 Os três papéis são conceitualmente distintos, embora sejam desempenhados pela mesma expressão matemática.
 :::
 
-A máxima verossimilhança será desenvolvida como método geral de estimação no capítulo **Métodos de Estimação Pontual**. A ideia de suficiência, antecipada pela redução da sequência observada ao total $R$, será formalizada no capítulo dedicado à avaliação e à redução de dados.
+::: {.collapse title="Do estimador à estimativa"}
+
+Antes de observar a amostra,
+
+$$
+R=\sum_{i=1}^nX_i
+$$
+
+é uma variável aleatória. Portanto,
+
+$$
+\widehat p
+=
+\frac{R}{n}
+$$
+
+também é uma variável aleatória e funciona como estimador de $p$.
+
+Depois de observar os dados, se $R=r$, obtemos
+
+$$
+\widehat p(\mathbf x)
+=
+\frac rn,
+$$
+
+que é a estimativa produzida pelo estimador naquela amostra.
+
+:::
+
+No capítulo **Métodos de Estimação Pontual**, a maximização da verossimilhança é desenvolvida como método geral de construção de estimadores. No capítulo **Avaliação de Estimadores e Princípios de Redução de Dados**, a redução da sequência observada ao total $R$ é formalizada por meio do conceito de suficiência.
 
 ### Verificação de aprendizagem {.unnumbered}
 
@@ -570,7 +821,7 @@ Com apenas 20 repetições, o histograma apresenta uma distribuição empírica 
 
 7. Escreva uma interpretação relacionando o resultado à variabilidade amostral.
 
-O experimento físico e sua reprodução computacional mostram que o parâmetro populacional permanece fixo, enquanto as estatísticas calculadas a partir das amostras variam. A inferência estatística utiliza essa variabilidade, representada por modelos probabilísticos, para obter informação sobre quantidades desconhecidas. O próximo capítulo desenvolverá formalmente as distribuições das estatísticas sob repetição do mecanismo amostral.
+O experimento físico e sua reprodução computacional mostram que o parâmetro populacional permanece fixo, enquanto as estatísticas calculadas a partir das amostras variam. A inferência estatística utiliza essa variabilidade, representada por modelos probabilísticos, para obter informação sobre quantidades desconhecidas. A passagem dessa variabilidade empírica para a distribuição de uma estatística constitui o objeto de @sec-distribuicoes-amostrais.
 
 
 ## Questões de revisão {.unnumbered}

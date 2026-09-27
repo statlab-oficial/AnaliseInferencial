@@ -1,4 +1,4 @@
-# Revisão de Probabilidade e Modelos Probabilísticos 
+# Revisão de Probabilidade e Modelos Probabilísticos {#sec-prelim-probabilidade}
 
 Este capítulo revisa conceitos de Probabilidade e modelos probabilísticos que serão utilizados ao longo do estudo de Inferência Estatística. O conteúdo pressupõe uma formação anterior em Probabilidade e concentra-se nas definições, propriedades e relações necessárias aos capítulos seguintes.
 
@@ -805,7 +805,7 @@ Essa propriedade não exige independência entre as variáveis.
 
 ### Momentos 
 
-O **momento de ordem $r$ em torno da origem** é
+Para $r=1,2,\ldots$, o **momento de ordem $r$ em torno da origem** é
 
 $$
 E(X^r),
@@ -818,12 +818,14 @@ O **momento centrado (na média) de ordem $r$** é
 $$
 E\left[
 \{X-E(X)\}^r
-\right].
+\right],
 $$
+
+quando existe.
 
 A média corresponde ao primeiro momento em torno da origem. A variância corresponde ao segundo momento centrado.
 
-Medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados [@rice2007mathematical, sec. 4.1; @ramachandran2021r, secs. 3.1 e 3.3].
+Medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados [@casella2002statistical, ex. 2.28; @ramachandran2021r, secs. 3.1 e 3.3].
 
 
 ### Variância 
@@ -1091,7 +1093,9 @@ f_{X,Y}(x,y)
 f_{X\mid Y}(x\mid y)f_Y(y).
 $$
 
-Distribuições condicionais serão utilizadas posteriormente em resultados como o teorema de Rao--Blackwell e no algoritmo EM [@rice2007mathematical, secs. 3.2--3.5; @ramachandran2021r, sec. 3.3].
+A construção de distribuições marginais e condicionais a partir da distribuição conjunta é tratada, por exemplo, em [@rice2007mathematical, secs. 3.2--3.5; @ramachandran2021r, sec. 3.3].
+
+Distribuições condicionais serão utilizadas posteriormente em resultados como o teorema de Rao--Blackwell [@rice2007mathematical, sec. 8.8.2] e no algoritmo EM [@gupta2011em].
 
 
 ::: {.callout-example title="Exemplo: distribuição conjunta discreta"}
@@ -1323,7 +1327,7 @@ A estrutura i.i.d. será utilizada repetidamente ao longo do livro e, posteriorm
 
 ### Covariância e correlação 
 
-A **covariância** entre $X$ e $Y$ é
+Se $X$ e $Y$ possuem segundos momentos finitos, a **covariância** entre $X$ e $Y$ é
 
 $$
 \operatorname{Cov}(X,Y)
@@ -1409,9 +1413,9 @@ $$
 indica ausência de associação linear. Correlação nula, entretanto, não implica ausência de dependência.
 
 ::: {.callout-note title="Independência e correlação"}
-Independência implica correlação nula quando as variâncias existem. A implicação inversa não vale para distribuições arbitrárias.
+Independência implica covariância nula quando os segundos momentos são finitos. Se, além disso, ambas as variâncias são positivas, a correlação está definida e é igual a zero. A implicação inversa não vale para distribuições arbitrárias.
 
-Para variáveis conjuntamente normais, correlação nula implica independência.
+Para variáveis conjuntamente normais com variâncias positivas, correlação nula implica independência.
 :::
 
 
@@ -1868,7 +1872,7 @@ A fgm será utilizada neste capítulo para três finalidades: obter momentos, es
 
 ### Obtenção de momentos 
 
-Quando a fgm é finita em uma vizinhança de zero, sua derivada de ordem $r$ é
+Para $r=1,2,\ldots$, quando a fgm é finita em uma vizinhança de zero, sua derivada de ordem $r$ é
 
 $$
 M_X^{(r)}(t)
@@ -1970,9 +1974,15 @@ $$
 Se, além disso,
 
 $$
-S_n=X_1,\ldots,X_n
+X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-X,
+X
+$$
+
+e
+
+$$
+S_n=X_1+\cdots+X_n,
 $$
 
 então
@@ -2332,7 +2342,7 @@ Em uma situação inferencial, podem ser observadas respostas de várias pessoas
 #| fig-width: 5
 #| fig-height: 10
 #| fig-align: center
-#| fig-cap: "Função de massa de probabilidade e função de distribuição acumulada da distribuição de Bernoullipara diferentes parâmetros."
+#| fig-cap: "Função de massa de probabilidade e função de distribuição acumulada da distribuição de Bernoulli para diferentes parâmetros."
 #| warning: false
 #| message: false
 
@@ -2807,10 +2817,10 @@ $$
 a esperança é
 
 $$
-E(X)=np,
+E(X)=np.
 $$
 
-e a variância é
+Para $N>1$, a variância é
 
 $$
 \operatorname{Var}(X)
@@ -2826,6 +2836,12 @@ $$
 $$
 
 é denominado **correção para população finita**. Ele surge porque as retiradas sem reposição não são independentes.
+
+No caso degenerado $N=1$, a variável $X$ é constante e, portanto,
+
+$$
+\operatorname{Var}(X)=0.
+$$
 
 A função geradora de momentos pode ser escrita como a soma finita
 
@@ -4990,21 +5006,47 @@ Essa propriedade é a versão contínua da falta de memória apresentada para a 
 
 
 ::: {.callout-note title="Parametrização"}
-Neste livro, a distribuição exponencial será parametrizada pela **taxa** $\lambda$.
-
-Outra convenção utiliza a escala
+Nesta seção, a distribuição exponencial está parametrizada pela **taxa** $\lambda$, de modo que
 
 $$
-\beta=\frac{1}{\lambda}.
+E(X)=\frac{1}{\lambda}.
 $$
 
-Nessa parametrização,
+Quando a distribuição exponencial for parametrizada diretamente pela média, utilizaremos o símbolo
 
 $$
-E(X)=\beta.
+\mu>0,
 $$
 
-As duas formas descrevem a mesma família de distribuições, mas as expressões envolvendo os parâmetros devem ser interpretadas segundo a convenção adotada.
+escrevendo
+
+$$
+X\sim\operatorname{Exp}(\mu),
+$$
+
+com
+
+$$
+E(X)=\mu
+$$
+
+e densidade
+
+$$
+f_X(x)
+=
+\frac{1}{\mu}
+e^{-x/\mu}
+\mathbf 1_{(0,\infty)}(x).
+$$
+
+As duas parametrizações descrevem a mesma família e estão relacionadas por
+
+$$
+\lambda=\frac{1}{\mu}.
+$$
+
+O uso de símbolos distintos permite identificar explicitamente qual parametrização está sendo adotada em cada contexto.
 :::
 
 
@@ -5012,22 +5054,22 @@ As duas formas descrevem a mesma família de distribuições, mas as expressões
 
 A distribuição gama generaliza a distribuição exponencial e permite representar diferentes formas para variáveis aleatórias positivas.
 
-Neste livro será utilizada a parametrização por **forma**
+Como parametrização geral, utilizaremos a **forma**
 
 $$
 \alpha>0
 $$
 
-e **taxa**
+e a **escala**
 
 $$
-\lambda>0.
+\beta>0.
 $$
 
 Escrevemos
 
 $$
-X\sim\operatorname{Gama}(\alpha,\lambda)
+X\sim\operatorname{Gama}(\alpha,\beta)
 $$
 
 quando sua densidade é
@@ -5035,9 +5077,11 @@ quando sua densidade é
 $$
 f_X(x)
 =
-\frac{\lambda^\alpha}{\Gamma(\alpha)}
+\frac{1}{
+\Gamma(\alpha)\beta^\alpha
+}
 x^{\alpha-1}
-e^{-\lambda x}
+e^{-x/\beta}
 \mathbf 1_{(0,\infty)}(x),
 $$
 
@@ -5063,7 +5107,7 @@ A esperança é
 $$
 E(X)
 =
-\frac{\alpha}{\lambda},
+\alpha\beta,
 $$
 
 e a variância é
@@ -5071,7 +5115,7 @@ e a variância é
 $$
 \operatorname{Var}(X)
 =
-\frac{\alpha}{\lambda^2}.
+\alpha\beta^2.
 $$
 
 A função geradora de momentos é
@@ -5079,11 +5123,9 @@ A função geradora de momentos é
 $$
 M_X(t)
 =
-\left(
-\frac{\lambda}{\lambda-t}
-\right)^\alpha,
+(1-\beta t)^{-\alpha},
 \qquad
-t<\lambda.
+t<\frac{1}{\beta}.
 $$
 
 Quando
@@ -5092,13 +5134,19 @@ $$
 \alpha=1,
 $$
 
-temos
+a distribuição gama coincide com uma distribuição exponencial cuja média satisfaz
 
 $$
-\operatorname{Gama}(1,\lambda)
-=
-\operatorname{Exp}(\lambda).
+\mu=\beta.
 $$
+
+Assim,
+
+$$
+X\sim\operatorname{Gama}(1,\beta)
+$$
+
+é equivalente a uma variável exponencial com média $\mu=\beta$.
 
 
 ::: {.callout-example title="Situação inferencial: duração total de etapas"}
@@ -5119,10 +5167,12 @@ $$
 T=X_1+X_2+X_3
 $$
 
-possui distribuição
+possui distribuição gama. Como esse modelo surge diretamente da soma de variáveis exponenciais com taxa $\lambda$, utilizaremos neste desenvolvimento a parametrização forma-taxa:
 
 $$
-T\sim\operatorname{Gama}(3,\lambda).
+T\sim\operatorname{Gama}(3,\lambda),
+\qquad
+\text{com $\lambda$ representando a taxa}.
 $$
 
 Ao observar tempos totais de atendimento de vários clientes, pode haver interesse inferencial em obter informação sobre $\lambda$ e, consequentemente, sobre
@@ -5156,14 +5206,14 @@ Nesse caso, observações de diferentes unidades podem ser utilizadas para obter
 parametros_gama <- tibble(
   id = 1:3,
   alpha = c(1, 3, 3),
-  lambda = c(1, 1, 2),
+  beta = c(1, 1, 0.5),
   parametro = factor(
     1:3,
     levels = 1:3,
     labels = c(
-      "\u03b1 = 1, \u03bb = 1",
-      "\u03b1 = 3, \u03bb = 1",
-      "\u03b1 = 3, \u03bb = 2"
+      "\u03b1 = 1, \u03b2 = 1",
+      "\u03b1 = 3, \u03b2 = 1",
+      "\u03b1 = 3, \u03b2 = 0,5"
     )
   )
 )
@@ -5176,17 +5226,17 @@ dados_gama <- tidyr::crossing(
 ) |>
   mutate(
     alpha = parametros_gama$alpha[id],
-    lambda = parametros_gama$lambda[id],
+    beta = parametros_gama$beta[id],
     parametro = parametros_gama$parametro[id],
     fdp = dgamma(
       x,
       shape = alpha,
-      rate = lambda
+      scale = beta
     ),
     fda = pgamma(
       x,
       shape = alpha,
-      rate = lambda
+      scale = beta
     )
   )
 
@@ -5242,20 +5292,20 @@ g_fda <- ggplot(
 g_fdp / g_fda
 ```
 
-A @fig-gama-fdp-fda permite observar separadamente os efeitos dos parâmetros de forma e taxa. Para
+A @fig-gama-fdp-fda permite observar separadamente os efeitos dos parâmetros de forma e escala. Para
 
 $$
 \alpha=1
 \quad\text{e}\quad
-\lambda=1,
+\beta=1,
 $$
 
-a distribuição gama coincide com a distribuição exponencial e sua densidade é decrescente.
+a distribuição gama coincide com uma distribuição exponencial de média $1$, e sua densidade é decrescente.
 
-Mantendo $\lambda=1$ e aumentando $\alpha$ de $1$ para $3$, a massa da distribuição desloca-se para valores maiores e a forma da densidade deixa de ser monotonicamente decrescente. Mantendo $\alpha=3$ e aumentando $\lambda$ de $1$ para $2$, a distribuição se concentra em valores menores, resultado compatível com
+Mantendo $\beta=1$ e aumentando $\alpha$ de $1$ para $3$, a massa da distribuição desloca-se para valores maiores e a forma da densidade deixa de ser monotonicamente decrescente. Mantendo $\alpha=3$ e reduzindo $\beta$ de $1$ para $0{,}5$, a distribuição se concentra em valores menores, resultado compatível com
 
 $$
-E(X)=\frac{\alpha}{\lambda}.
+E(X)=\alpha\beta.
 $$
 
 
@@ -5275,8 +5325,16 @@ $$
 S_n
 =
 \sum_{i=1}^nX_i
+$$
+
+possui distribuição gama. Como o modelo surge diretamente de variáveis exponenciais com taxa $\lambda$, utilizaremos neste desenvolvimento a parametrização forma-taxa:
+
+$$
+S_n
 \sim
-\operatorname{Gama}(n,\lambda).
+\operatorname{Gama}(n,\lambda),
+\qquad
+\text{com $\lambda$ representando a taxa}.
 $$
 
 Esse resultado pode ser obtido diretamente pelas funções geradoras de momentos. Como
@@ -5297,11 +5355,7 @@ M_{S_n}(t)
 \right)^n.
 $$
 
-Essa é a FGM de uma distribuição
-
-$$
-\operatorname{Gama}(n,\lambda).
-$$
+Essa é a FGM de uma distribuição gama com forma $n$ e taxa $\lambda$.
 
 Consequentemente,
 
@@ -5320,39 +5374,34 @@ $$
 $$
 
 
-::: {.callout-note title="Forma e taxa"}
-A literatura também utiliza a parametrização por forma $\alpha$ e escala $\beta$, com
+::: {.callout-note title="Forma, escala e taxa"}
+Na parametrização geral adotada nesta seção,
+
+$$
+X\sim\operatorname{Gama}(\alpha,\beta),
+$$
+
+o segundo parâmetro $\beta$ representa a **escala**.
+
+Quando a distribuição gama surge como soma de variáveis exponenciais parametrizadas pela taxa $\lambda$, pode ser mais conveniente descrever o mesmo modelo em termos da **forma** e da **taxa**, usando a relação
 
 $$
 \beta=\frac{1}{\lambda}.
 $$
 
-Nesse caso, a densidade pode ser escrita como
+Nesse contexto,
 
 $$
-f_X(x)
-=
-\frac{1}{
-\Gamma(\alpha)\beta^\alpha
-}
-x^{\alpha-1}
-e^{-x/\beta}
-\mathbf 1_{(0,\infty)}(x).
-$$
-
-A esperança e a variância tornam-se
-
-$$
-E(X)=\alpha\beta
+E(X)=\frac{\alpha}{\lambda}
 $$
 
 e
 
 $$
-\operatorname{Var}(X)=\alpha\beta^2.
+\operatorname{Var}(X)=\frac{\alpha}{\lambda^2}.
 $$
 
-Neste livro será utilizada, salvo indicação contrária, a parametrização por forma e taxa.
+A parametrização utilizada deve ser indicada explicitamente sempre que houver possibilidade de ambiguidade.
 :::
 
 
@@ -6009,7 +6058,7 @@ Se
 $$
 X
 \sim
-\operatorname{Gama}(\alpha,\lambda)
+\operatorname{Gama}(\alpha,\theta)
 $$
 
 e
@@ -6017,16 +6066,16 @@ e
 $$
 Y
 \sim
-\operatorname{Gama}(\beta,\lambda),
+\operatorname{Gama}(\beta,\theta),
 $$
 
-independentes, então
+independentes, com o mesmo parâmetro de escala $\theta>0$, então
 
 $$
 X+Y
 \sim
 \operatorname{Gama}
-(\alpha+\beta,\lambda),
+(\alpha+\beta,\theta),
 $$
 
 enquanto
@@ -6128,15 +6177,15 @@ $$
 Y=g(X),
 $$
 
-em que $g$ é estritamente monótona e diferenciável no suporte de $X$.
-
-Nesse caso existe a função inversa
+em que $g$ é estritamente monótona no suporte de $X$. Suponha ainda que a função inversa
 
 $$
-x=g^{-1}(y).
+x=g^{-1}(y)
 $$
 
-A densidade de $Y$ é
+seja continuamente diferenciável no suporte da variável transformada.
+
+Então, a densidade de $Y$ é
 
 $$
 f_Y(y)
@@ -6149,7 +6198,7 @@ g^{-1}(y)
 \right|,
 $$
 
-para $y$ pertencente ao suporte da variável transformada [@rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
+para $y$ pertencente ao suporte da variável transformada [@casella2002statistical, sec. 2.1; @rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
 
 O termo
 
@@ -6456,7 +6505,7 @@ A escolha de uma distribuição não deve ser determinada apenas pela semelhanç
 | Uniforme discreta | $\{1,\ldots,m\}$ | $m$ | $\dfrac{m+1}{2}$ | $\dfrac{m^2-1}{12}$ |
 | Bernoulli | $\{0,1\}$ | $p$ | $p$ | $p(1-p)$ |
 | Binomial | $\{0,\ldots,n\}$ | $n,p$ | $np$ | $np(1-p)$ |
-| Hipergeométrica | $\{\max(0,n-N+M),$ $\ldots,\min(n,M)\}$ | $N,M,n$ | $np$, $p=M/N$ | $np(1-p)\dfrac{N-n}{N-1}$ |
+| Hipergeométrica | $\{\max(0,n-N+M),$ $\ldots,\min(n,M)\}$ | $N,M,n$ | $np$, $p=M/N$ | $np(1-p)\dfrac{N-n}{N-1}$, para $N>1$; $0$, para $N=1$ |
 | Geométrica | $\{1,2,\ldots\}$ | $p$ | $\dfrac{1}{p}$ | $\dfrac{1-p}{p^2}$ |
 | Binomial negativa | $\{r,r+1,\ldots\}$ | $r,p$ | $\dfrac{r}{p}$ | $\dfrac{r(1-p)}{p^2}$ |
 | Poisson | $\{0,1,2,\ldots\}$ | $\lambda$ | $\lambda$ | $\lambda$ |
@@ -6468,7 +6517,7 @@ A escolha de uma distribuição não deve ser determinada apenas pela semelhanç
 |:---|:---|:---|:---:|:---:|
 | Uniforme | $(a,b)$ | $a,b$ | $\dfrac{a+b}{2}$ | $\dfrac{(b-a)^2}{12}$ |
 | Exponencial | $(0,\infty)$ | $\lambda$ | $\dfrac{1}{\lambda}$ | $\dfrac{1}{\lambda^2}$ |
-| Gama | $(0,\infty)$ | $\alpha,\lambda$ | $\dfrac{\alpha}{\lambda}$ | $\dfrac{\alpha}{\lambda^2}$ |
+| Gama | $(0,\infty)$ | $\alpha,\beta$ | $\alpha\beta$ | $\alpha\beta^2$ |
 | Normal | $\mathbb R$ | $\mu,\sigma^2$ | $\mu$ | $\sigma^2$ |
 | Beta | $(0,1)$ | $\alpha,\beta$ | $\dfrac{\alpha}{\alpha+\beta}$ | $\dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$ |
 
@@ -6488,7 +6537,7 @@ As funções geradoras de momentos apresentadas no capítulo podem ser reunidas 
 | Poisson$(\lambda)$ | $\exp\{\lambda(e^t-1)\}$ | $t\in\mathbb R$ |
 | Uniforme$(a,b)$ | $\dfrac{e^{bt}-e^{at}}{t(b-a)}$ | $t\neq0$; $M_X(0)=1$ |
 | Exponencial$(\lambda)$ | $\dfrac{\lambda}{\lambda-t}$ | $t<\lambda$ |
-| Gama$(\alpha,\lambda)$ | $\left(\dfrac{\lambda}{\lambda-t}\right)^\alpha$ | $t<\lambda$ |
+| Gama$(\alpha,\beta)$ | $(1-\beta t)^{-\alpha}$ | $t<1/\beta$ |
 | Normal$(\mu,\sigma^2)$ | $\exp\left(\mu t+\dfrac{\sigma^2t^2}{2}\right)$ | $t\in\mathbb R$ |
 
 A distribuição beta não aparece nessa tabela porque sua função geradora de momentos, embora exista para todo $t\in\mathbb R$, envolve uma função especial que não será utilizada nos capítulos seguintes.
@@ -6576,13 +6625,15 @@ $$
 
 ### Modelos contínuos 
 
-A distribuição exponencial é um caso particular da distribuição gama:
+Na relação entre a distribuição exponencial e a distribuição gama, utilizaremos a parametrização forma-taxa da gama para evidenciar a taxa comum $\lambda$. Assim, a distribuição exponencial é um caso particular da distribuição gama:
 
 $$
 \boxed{
 \operatorname{Exp}(\lambda)
 =
-\operatorname{Gama}(1,\lambda).
+\operatorname{Gama}(1,\lambda),
+\qquad
+\text{com $\lambda$ representando a taxa}.
 }
 $$
 
@@ -6596,7 +6647,9 @@ X_1,\ldots,X_n
 \quad\Longrightarrow\quad
 \sum_{i=1}^nX_i
 \sim
-\operatorname{Gama}(n,\lambda).
+\operatorname{Gama}(n,\lambda),
+\qquad
+\text{com $\lambda$ representando a taxa}.
 }
 $$
 
@@ -6613,22 +6666,22 @@ $$
 Se
 
 $$
-X\sim\operatorname{Gama}(\alpha,\lambda)
+X\sim\operatorname{Gama}(\alpha,\theta)
 $$
 
 e
 
 $$
-Y\sim\operatorname{Gama}(\beta,\lambda)
+Y\sim\operatorname{Gama}(\beta,\theta)
 $$
 
-são independentes, então
+são independentes e possuem o mesmo parâmetro de escala $\theta>0$, então
 
 $$
 \boxed{
 X+Y
 \sim
-\operatorname{Gama}(\alpha+\beta,\lambda)
+\operatorname{Gama}(\alpha+\beta,\theta)
 }
 $$
 
@@ -6681,7 +6734,7 @@ As situações inferenciais apresentadas ao longo do capítulo mostram como par�
 - em um modelo Bernoulli ou binomial, $p$ pode representar uma proporção populacional;
 - em um modelo hipergeométrico, $M$ pode representar uma quantidade desconhecida de unidades com determinada característica em uma população finita;
 - em um modelo Poisson, $\lambda$ representa o número esperado de ocorrências na exposição considerada e, quando $\lambda=\rho t$, $\rho$ representa a taxa média por unidade de exposição;
-- em um modelo exponencial, $1/\lambda$ representa o valor esperado da variável, podendo corresponder, por exemplo, a um tempo médio;
+- em um modelo exponencial parametrizado pela taxa $\lambda$, $1/\lambda$ representa o valor esperado da variável, podendo corresponder, por exemplo, a um tempo médio; quando a parametrização utiliza diretamente a média, essa quantidade é representada por $\mu$;
 - em um modelo normal, $\mu$ e $\sigma^2$ descrevem localização e variabilidade;
 - em um modelo multinomial, $p_1,\ldots,p_m$ descrevem as probabilidades associadas às diferentes categorias.
 

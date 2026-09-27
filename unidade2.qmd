@@ -1,8 +1,8 @@
-# Distribuições Amostrais
+# Distribuições Amostrais {#sec-distribuicoes-amostrais}
 
 ## Introdução
 
-Na unidade anterior, o experimento da urna mostrou que diferentes amostras obtidas pelo mesmo mecanismo podem produzir valores distintos para uma mesma estatística. Essa variabilidade entre amostras constitui o ponto de partida deste capítulo.
+Em @sec-fundamentos-inferencia, o experimento da urna mostrou que diferentes amostras obtidas pelo mesmo mecanismo podem produzir valores distintos para uma mesma estatística. Essa variabilidade entre amostras constitui o ponto de partida para o estudo das distribuições amostrais.
 
 Considere uma amostra aleatória
 
@@ -32,7 +32,7 @@ A **distribuição amostral** de uma estatística $T=g(X_1,\ldots,X_n)$ é sua d
 
 A distribuição populacional e a distribuição amostral descrevem objetos diferentes. A distribuição populacional caracteriza o comportamento de uma observação $X$. A distribuição amostral caracteriza o comportamento de uma função de várias observações. Em situações particulares, ambas podem pertencer à mesma família de distribuições, possivelmente com parâmetros diferentes.
 
-As ferramentas probabilísticas e assintóticas utilizadas neste capítulo, como transformações, funções geradoras de momentos, Lei dos Grandes Números e Teorema Central do Limite, foram estabelecidas nos capítulos preliminares. O objetivo agora é utilizá-las para obter distribuições exatas ou aproximações para estatísticas de interesse.
+Transformações e funções geradoras de momentos permitem obter distribuições amostrais exatas, enquanto a Lei dos Grandes Números e o Teorema Central do Limite descrevem a concentração e o comportamento assintótico de estatísticas quando o tamanho amostral aumenta.
 
 ### Objetivos do capítulo {.unnumbered}
 
@@ -49,54 +49,25 @@ Ao final deste capítulo, o leitor deverá ser capaz de:
 
 ## Amostra e estatística: recordação
 
-::: {.callout-important title="Definição — Modelo estatístico e parâmetro"}
-Um **modelo estatístico paramétrico** é uma família de distribuições
+Em @sec-fundamentos-inferencia foram estabelecidas as distinções entre amostra aleatória e amostra observada, estatística, estimador e estimativa.
 
-$$\mathcal{P}=\{P_\theta:\theta\in\Theta\},$$
-
-em que $\theta$ é um parâmetro desconhecido e $\Theta$ é o espaço paramétrico. Quando existem densidades ou funções de probabilidade, a família pode ser representada por $\{f(x;\theta):\theta\in\Theta\}$ [@casella2002statistical, cap. 1; @cox2006principles, seção 1.7].
-:::
-
-::: {.callout-important title="Definição — Amostra aleatória no modelo i.i.d."}
-As variáveis aleatórias $X_1,\ldots,X_n$ formam uma **amostra aleatória de tamanho** $n$ da distribuição $F$ quando são independentes e identicamente distribuídas, isto é,
-
-$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}F.$$
-
-Quando $F$ possui densidade ou função de probabilidade $f$, a distribuição conjunta da amostra é
+Se
 
 $$
-f_{\mathbf{X}}(x_1,\ldots,x_n)=\prod_{i=1}^n f(x_i).
+\mathbf X=(X_1,\ldots,X_n)
 $$
 
-Essa é a formulação usual de uma amostra aleatória no modelo i.i.d. [@casella2002statistical, seção 5.1; @kerns2010, seção 8.1; @ramachandran2021r, seção 4.1].
-:::
+representa a amostra antes da observação dos dados, uma estatística é uma função
 
-::: {.callout-important title="Definição — Estatística"}
-Uma **estatística** é uma função mensurável da amostra que não depende de parâmetros desconhecidos:
-
-$$T=g(X_1,\ldots,X_n).$$
-
-Exemplos incluem
-
-$$\overline{X}=\frac{1}{n}\sum_{i=1}^n X_i,
-\qquad
-S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline{X})^2,$$
-
-$$\widehat p=\frac{1}{n}\sum_{i=1}^n I(X_i\in A)
-\quad\text{e}\quad
-X_{(1)}\leq\cdots\leq X_{(n)}.
+$$
+T=g(\mathbf X).
 $$
 
-A definição e os exemplos seguem a apresentação usual de estatísticas como funções da amostra [@ramachandran2021r, seção 4.1; @chihara2022, definições 4.1--4.2].
-:::
-
-::: {.callout-warning title="Observação — Estatística e estimador"}
-Toda estatística é uma variável aleatória, mas ela somente recebe a interpretação de **estimador** quando é utilizada para estimar uma quantidade populacional. Por exemplo, $\overline{X}$ é uma estatística e pode ser usada como estimador de $\mu=E(X)$ [@chihara2022, definição 4.2, p. 79].
-:::
+Como $T$ é uma variável aleatória, seu valor pode mudar de uma amostra para outra. O objeto central desta unidade é justamente a distribuição de probabilidade induzida em $T$ pelo mecanismo que gera a amostra.
 
 ## Dois referenciais para a geração da amostra
 
-Ao longo deste livro, serão utilizados dois referenciais de geração da amostra que precisam ser distinguidos: o modelo iid e a amostragem aleatória simples sem reposição em uma população finita. A distinção evita confundir independência probabilística com aleatorização de um plano amostral.
+Duas estruturas de geração da amostra precisam ser distinguidas: o modelo i.i.d. e a amostragem aleatória simples sem reposição em uma população finita. A distinção evita confundir independência probabilística com aleatorização de um plano amostral.
 
 ### Amostragem no modelo i.i.d.
 
@@ -107,7 +78,7 @@ $$f_{\mathbf{X}}(\mathbf{x};\theta)
 \prod_{i=1}^n f(x_i;\theta).
 $$
 
-Retomando a introdução à verossimilhança feita no capítulo anterior, para dados observados $\mathbf{x}$, a mesma expressão, considerada como função de $\theta$, define a verossimilhança [@cox2006principles, seção 2.1; @casella2002statistical, seção 6.3]:
+Em @sec-fundamentos-inferencia, a mesma expressão, depois de observados os dados $\mathbf{x}$, foi interpretada como função de $\theta$ e denominada função de verossimilhança [@cox2006principles, seção 2.1; @casella2002statistical, seção 6.3.1]:
 
 $$
 L(\theta;\mathbf{x}) =\prod_{i=1}^n f(x_i;\theta).
@@ -116,22 +87,44 @@ $$
 A distribuição amostral é uma distribuição de uma estatística sob $P_\theta$; a verossimilhança, por sua vez, mantém os dados fixos e compara valores de $\theta$. Esses objetos são relacionados, mas não devem ser identificados [@cox2006principles, seções 1.3 e 2.1].
 
 ::: {.callout-tip title="Exemplo — Tempos de vida exponenciais"}
-Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\beta)$, na parametrização por escala,
+Se
 
 $$
-f(x;\beta)=\frac{1}{\beta}e^{-x/\beta}I(x>0),
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Exp}(\mu),
 $$
 
-então
+na parametrização pela média, então
 
 $$
-f_{\mathbf{X}}(\mathbf{x};\beta) =\beta^{-n}\exp\left(-\frac{1}{\beta}\sum_{i=1}^n x_i\right)\prod_{i=1}^n I(x_i>0).
+f(x;\mu)
+=
+\frac{1}{\mu}e^{-x/\mu}I(x>0),
 $$
 
-A probabilidade de que todas as unidades durem mais de dois anos é
+com $E(X_i)=\mu$.
+
+Pela independência,
 
 $$
-P(X_1>2,\ldots,X_n>2) =\prod_{i=1}^n P(X_i>2)=e^{-2n/\beta}.
+f_{\mathbf X}(\mathbf x;\mu)
+=
+\mu^{-n}
+\exp\left(
+-\frac{1}{\mu}\sum_{i=1}^n x_i
+\right)
+\prod_{i=1}^n I(x_i>0).
+$$
+
+Além disso,
+
+$$
+P(X_1>2,\ldots,X_n>2)
+=
+\prod_{i=1}^nP(X_i>2)
+=
+e^{-2n/\mu}.
 $$
 :::
 
@@ -505,7 +498,13 @@ $$E(\overline{X})=3{,}95
 \operatorname{Var}(\overline{X})=\frac{0{,}0125}{2}=0{,}00625.
 $$
 
-Sem reposição, existem $\binom{4}{2}=6$ subconjuntos equiprováveis.
+Sem reposição, como a média amostral não depende da ordem em que as duas unidades são selecionadas, podemos enumerar os
+
+$$
+\binom{4}{2}=6
+$$
+
+subconjuntos equiprováveis. Se a amostra fosse representada de forma ordenada, haveria $4(3)=12$ sequências equiprováveis; cada subconjunto apareceria em duas ordens e produziria o mesmo valor de $\overline X$. Portanto, as duas formas de enumeração induzem a mesma distribuição amostral da média.
 
 Os seis subconjuntos e suas médias são
 
@@ -700,24 +699,30 @@ $$
 :::
 
 
-::: {.callout-important title="Teorema — FGM da soma e da média"}
-Se $X_1,\ldots,X_n$ são independentes e possuem funções geradoras de momentos $M_{X_i}(t)$, então
+::: {.callout-note title="Recordação — FGM da soma e da média"}
+As propriedades da função geradora de momentos fornecem, para variáveis independentes,
 
-$$M_{\sum X_i}(t)=\prod_{i=1}^n M_{X_i}(t).
 $$
-
-Se, adicionalmente, são identicamente distribuídas com FGM $M_X(t)$, então
-
-$$M_{\overline{X}}(t)
+M_{\sum X_i}(t)
 =
-\left[M_X\left(\frac{t}{n}\right)\right]^n.
+\prod_{i=1}^nM_{X_i}(t).
 $$
 
-O resultado decorre da independência e da propriedade de transformação da FGM [@larsen2012, seção 3.12; @rice2007mathematical, seção 4.5].
+Se, adicionalmente, $X_1,\ldots,X_n$ são identicamente distribuídas com FGM $M_X(t)$, então
+
+$$
+M_{\overline X}(t)
+=
+\left[
+M_X\left(\frac{t}{n}\right)
+\right]^n.
+$$
+
+Essas identidades permitem reconhecer distribuições amostrais exatas a partir das funções geradoras de momentos das variáveis que compõem a amostra [@larsen2012, seção 3.12; @rice2007mathematical, seção 4.5].
 :::
 
 ::: {.callout-tip title="Exemplo — Média de variáveis normais"}
-Se $X_i\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2)$, então
+Se $X_i\overset{\mathrm{iid}}{\sim}N(\mu,\sigma^2)$, então
 
 $$M_X(t)=\exp\left(\mu t+\frac{\sigma^2t^2}{2}\right).$$
 
@@ -740,7 +745,7 @@ Essa dedução por FGM é apresentada em tratamentos clássicos de transformaç�
 Adote a parametrização por forma $\alpha$ e escala $\beta$:
 
 $$
-X_i\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Gama}(\alpha,\beta),
+X_i\overset{\mathrm{iid}}{\sim}\operatorname{Gama}(\alpha,\beta),
 \qquad
 M_X(t)=(1-\beta t)^{-\alpha},
 \quad
@@ -869,7 +874,7 @@ A menor amplitude do segundo intervalo reflete a menor variabilidade das médias
 :::
 
 ::: {.callout-note title="Intervalo de probabilidade e intervalo de confiança"}
-Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança, pois $\mu$ e $\sigma$ foram tratados como conhecidos. A construção de intervalos de confiança será desenvolvida posteriormente.
+Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança, pois $\mu$ e $\sigma$ foram tratados como conhecidos. Um intervalo de confiança é um procedimento inferencial aleatório cuja probabilidade de cobertura é definida sob repetição amostral e, portanto, não se confunde com uma região central calculada para uma distribuição com parâmetros conhecidos.
 :::
 
 ### Diferença de médias de duas amostras independentes
@@ -979,111 +984,162 @@ A normalidade é exata porque $\overline X$ e $\overline Y$ são variáveis norm
 
 :::
 
-
 ## Lei dos Grandes Números
 
-A Lei dos Grandes Números descreve a convergência da média amostral para a média populacional. Ela trata da **concentração** de $\overline{X}_n$ em torno de $\mu$, e não da forma da distribuição dos erros [@rice2007mathematical, seção 5.2, pp. 177--181].
+Para uma amostra i.i.d. com média $\mu$ e variância finita, a Lei dos Grandes Números descreve a concentração da média amostral em torno de $\mu$.
 
-::: {.callout-important title="Teorema — Lei Fraca dos Grandes Números"}
-Se $X_1,X_2,\ldots$ são i.i.d., $E(X_i)=\mu$ e $\operatorname{Var}(X_i)=\sigma^2<\infty$, então, para todo $\varepsilon>0$,
+::: {.callout-important title="Aplicação — Concentração da média amostral"}
+Se $X_1,X_2,\ldots$ são i.i.d.,
 
-$$P\left(|\overline{X}_n-\mu|>\varepsilon\right)
-\longrightarrow 0,$$
+$$
+E(X_i)=\mu
+\quad\text{e}\quad
+\operatorname{Var}(X_i)=\sigma^2<\infty,
+$$
+
+então, para todo $\varepsilon>0$,
+
+$$
+P\left(
+|\overline X_n-\mu|>\varepsilon
+\right)
+\longrightarrow0,
+$$
 
 isto é,
 
-$$\overline{X}_n\xrightarrow{p}\mu.
 $$
+\overline X_n\xrightarrow{p}\mu.
+$$
+
+Assim, à medida que $n$ aumenta, a distribuição amostral de $\overline X_n$ concentra progressivamente sua massa em torno da média populacional [@rice2007mathematical, seção 5.2, pp. 177--181].
 :::
 
-A desigualdade de Chebyshev fornece uma demonstração direta:
+::: {.collapse title="Demonstração via desigualdade de Chebyshev"}
 
-$$P\left(|\overline{X}_n-\mu|>\varepsilon\right)
-\leq
-\frac{\operatorname{Var}(\overline{X}_n)}{\varepsilon^2}
-=
-\frac{\sigma^2}{n\varepsilon^2}
-\longrightarrow 0.
-$$
-
-::: {.callout-important title="Teorema — Lei Forte dos Grandes Números"}
-Sob condições usuais, por exemplo quando $X_1,X_2,\ldots$ são i.i.d. e $E(|X_1|)<\infty$,
-
-$$\overline{X}_n\xrightarrow{q.c.}\mu,
-$$
-
-ou seja, a convergência ocorre com probabilidade $1$ [@rice2007mathematical, seção 5.2].
-:::
-
-::: {.callout-tip title="Exemplo — Frequência relativa"}
-Considere
+Como
 
 $$
-X_1,X_2,\ldots
-\overset{\mathrm{i.i.d.}}{\sim}
-\operatorname{Bernoulli}(p),
-$$
-
-em que $X_i=I(A_i)$ indica a ocorrência do evento de interesse na $i$-ésima repetição. A quantidade
-
-$$
-\overline{X}_n
-=
-\frac{1}{n}
-\sum_{i=1}^n I(A_i)
-$$
-
-é a frequência relativa do evento.
-
-Pela Lei Fraca dos Grandes Números,
-
-$$
-\overline{X}_n\xrightarrow{p}p.
-$$
-
-Como $E(|X_i|)=p<\infty$, a Lei Forte fornece também
-
-$$
-\overline{X}_n\xrightarrow{q.c.}p.
-$$
-:::
-
-## Teorema Central do Limite
-
-A Lei dos Grandes Números afirma que $\overline{X}_n$ se aproxima de $\mu$. O Teorema Central do Limite descreve a escala e a forma aproximada das flutuações de $\overline{X}_n$ em torno de $\mu$ [@chihara2022, seção 4.3, pp. 85--93; @kerns2010, seção 8.3; @rice2007mathematical, seção 5.3].
-
-::: {.callout-important title="Teorema — Teorema Central do Limite de Lindeberg--Lévy"}
-Se $X_1,X_2,\ldots$ são i.i.d., com
-
-$$E(X_i)=\mu
-\quad\text{e}\quad
-0<\sigma^2=\operatorname{Var}(X_i)<\infty,
-$$
-
-então
-
-$$Z_n
-=
-\frac{\sqrt{n}(\overline{X}_n-\mu)}{\sigma}
-=
-\frac{\sum_{i=1}^nX_i-n\mu}{\sigma\sqrt{n}}
-\xrightarrow{d}N(0,1).
-$$
-:::
-
-Assim, para $n$ suficientemente grande,
-
-$$\overline{X}_n
-\overset{\cdot}{\sim}
-N\left(\mu,\frac{\sigma^2}{n}\right)
+E(\overline X_n)=\mu
 $$
 
 e
 
-$$\sum_{i=1}^nX_i
-\overset{\cdot}{\sim}
-N(n\mu,n\sigma^2).
 $$
+\operatorname{Var}(\overline X_n)
+=
+\frac{\sigma^2}{n},
+$$
+
+a desigualdade de Chebyshev fornece
+
+$$
+P\left(
+|\overline X_n-\mu|>\varepsilon
+\right)
+\leq
+\frac{
+\operatorname{Var}(\overline X_n)
+}{
+\varepsilon^2
+}.
+$$
+
+Portanto,
+
+$$
+P\left(
+|\overline X_n-\mu|>\varepsilon
+\right)
+\leq
+\frac{\sigma^2}{n\varepsilon^2}
+\longrightarrow0.
+$$
+
+Logo,
+
+$$
+\overline X_n\xrightarrow{p}\mu.
+$$
+
+:::
+
+::: {.callout-tip title="Exemplo — Frequência relativa"}
+Se
+
+$$
+X_1,X_2,\ldots
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Bernoulli}(p),
+$$
+
+então
+
+$$
+\widehat p_n
+=
+\overline X_n
+=
+\frac{1}{n}
+\sum_{i=1}^nX_i
+$$
+
+é a frequência relativa de sucessos.
+
+Como $E(X_i)=p$, a Lei dos Grandes Números implica
+
+$$
+\widehat p_n
+\xrightarrow{p}
+p.
+$$
+
+Assim, a proporção amostral concentra-se em torno da proporção populacional conforme o tamanho amostral aumenta.
+:::
+
+## Teorema Central do Limite
+
+Para uma amostra i.i.d. com
+
+$$
+E(X_i)=\mu
+\quad\text{e}\quad
+0<\sigma^2=\operatorname{Var}(X_i)<\infty,
+$$
+
+o Teorema Central do Limite fornece
+
+$$
+Z_n
+=
+\frac{
+\sqrt n(\overline X_n-\mu)
+}{
+\sigma
+}
+\xrightarrow{d}
+N(0,1).
+$$
+
+No contexto das distribuições amostrais, esse resultado produz as aproximações
+
+$$
+\overline X_n
+\overset{\cdot}{\sim}
+N\left(
+\mu,\frac{\sigma^2}{n}
+\right)
+$$
+
+e
+
+$$
+\sum_{i=1}^nX_i
+\overset{\cdot}{\sim}
+N(n\mu,n\sigma^2),
+$$
+
+para $n$ suficientemente grande [@chihara2022, seção 4.3, pp. 85--93; @kerns2010, seção 8.3; @rice2007mathematical, seção 5.3].
 
 ::: {.callout-warning title="Observação — O que converge"}
 A formulação rigorosa do TCL é a convergência da variável **padronizada** $Z_n$ para $N(0,1)$. Não se deve dizer, sem qualificação, que $\overline{X}_n$ converge para uma normal com variância $\sigma^2/n$, pois essa variância depende de $n$ e tende a zero. De fato, pela Lei dos Grandes Números, $\overline{X}_n$ converge para a constante $\mu$.
@@ -1095,13 +1151,93 @@ A qualidade da aproximação normal depende da assimetria, do peso das caudas, d
 
 ### Padronização com variância estimada
 
-Para uma amostra iid com $0<\sigma^2<\infty$, a variância amostral é consistente, de modo que
+Para uma amostra i.i.d. com $0<\sigma^2<\infty$,
+
+$$
+S^2\xrightarrow{p}\sigma^2
+$$
+
+e, consequentemente,
 
 $$
 S\xrightarrow{p}\sigma.
 $$
 
-Combinando esse resultado com o TCL, o teorema de Slutsky fornece [@lauritzen2023fundamentals, apêndice A.2.2]
+::: {.collapse title="Derivação de $S^2\xrightarrow{p}\sigma^2$"}
+
+A variância amostral pode ser escrita como
+
+$$
+S^2
+=
+\frac{n}{n-1}
+\left[
+\frac{1}{n}
+\sum_{i=1}^nX_i^2
+-
+\overline X_n^2
+\right].
+$$
+
+Como $E(X_i^2)<\infty$, a Lei dos Grandes Números fornece
+
+$$
+\frac{1}{n}
+\sum_{i=1}^nX_i^2
+\xrightarrow{p}
+E(X^2)
+$$
+
+e
+
+$$
+\overline X_n
+\xrightarrow{p}
+\mu.
+$$
+
+Pelo teorema do mapeamento contínuo,
+
+$$
+\overline X_n^2
+\xrightarrow{p}
+\mu^2.
+$$
+
+Logo,
+
+$$
+\frac{1}{n}
+\sum_{i=1}^nX_i^2
+-
+\overline X_n^2
+\xrightarrow{p}
+E(X^2)-\mu^2
+=
+\sigma^2.
+$$
+
+Como
+
+$$
+\frac{n}{n-1}\longrightarrow1,
+$$
+
+o lema de Slutsky fornece
+
+$$
+S^2\xrightarrow{p}\sigma^2.
+$$
+
+Finalmente, como $\sigma>0$ e a função raiz quadrada é contínua,
+
+$$
+S\xrightarrow{p}\sigma.
+$$
+
+:::
+
+Combinando $S\xrightarrow{p}\sigma$ com o TCL, o teorema de Slutsky fornece [@lauritzen2023fundamentals, apêndice A.2.2]
 
 $$\frac{\overline{X}-\mu}{S/\sqrt{n}}
 \xrightarrow{d}N(0,1).
@@ -1113,7 +1249,7 @@ Para amostras normais, a estatística acima possui exatamente distribuição $t_
 
 ## Distribuição amostral da proporção
 
-Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Bernoulli}(p)$, então [@chihara2022, seções 4.1 e 4.3.1; @ramachandran2021r, seção 4.5]
+Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Bernoulli}(p)$, então [@chihara2022, seções 4.1 e 4.3.1; @ramachandran2021r, seção 4.5]
 
 $$Y=\sum_{i=1}^nX_i\sim\operatorname{Binomial}(n,p)
 $$
@@ -1191,7 +1327,7 @@ $$
 
 Na variância de $\widehat p$, a diferença em relação ao modelo Bernoulli iid aparece por meio da correção de população finita. As distribuições exatas também são diferentes: no modelo iid, $Y$ é binomial; na amostragem sem reposição de uma população finita, $Y$ é hipergeométrica.
 
-::: {.callout-tip title="Exemplo — Urna da unidade anterior"}
+::: {.callout-tip title="Exemplo — Urna do experimento físico"}
 
 Na urna com $N=2400$ bolas, das quais $M=900$ são vermelhas,
 
@@ -1224,7 +1360,7 @@ $$
 0{,}0678.
 $$
 
-Esse é o modelo probabilístico de referência para o experimento físico da Unidade 1 quando o procedimento de seleção é representado como uma amostragem aleatória simples sem reposição.
+Esse é o modelo probabilístico de referência para o experimento físico de @sec-fundamentos-inferencia quando o procedimento de seleção é representado como uma amostragem aleatória simples sem reposição.
 :::
 
 No modelo Bernoulli iid, pelo TCL,
@@ -1298,7 +1434,13 @@ Se $X_1,\ldots,X_n$ são i.i.d. e $\operatorname{Var}(X_i)=\sigma^2<\infty$, ent
 
 $$E(S^2)=\sigma^2.$$
 
-Logo, $S^2$ é um estimador não viesado de $\sigma^2$ [@ramachandran2021r, seção 4.1; @rice2007mathematical, capítulo 6].
+A igualdade
+
+$$
+E(S^2)=\sigma^2
+$$
+
+mostra que a distribuição amostral de $S^2$ está centrada em $\sigma^2$ [@ramachandran2021r, seção 4.1; @rice2007mathematical, capítulo 6].
 
 ::: {.collapse title="Demonstração"}
 
@@ -1381,7 +1523,7 @@ $$\operatorname{Var}(S^2)
 \right].
 $$
 
-::: {.callout-note title="Demonstração — Variância de $S^2$" collapse="true"}
+::: {.collapse title="Demonstração"}
 Defina $Y_i=X_i-\mu$ e
 
 $$A=\sum_{i=1}^nY_i^2,
@@ -1466,25 +1608,35 @@ $$E(W)=\nu,
 \operatorname{Var}(W)=2\nu.
 $$
 
-Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2)$, então
-
-$$\sum_{i=1}^n\left(\frac{X_i-\mu}{\sigma}\right)^2
-\sim\chi^2_n.
-$$
-
-A decomposição
+Se
 
 $$
-\sum_{i=1}^n(X_i-\mu)^2
-=
-\sum_{i=1}^n(X_i-\overline{X})^2
-+
-n(\overline{X}-\mu)^2
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
 $$
 
-separa a soma de quadrados total em duas componentes.
+então
+
+$$
+\frac{(n-1)S^2}{\sigma^2}
+\sim
+\chi^2_{n-1}.
+$$
+
+Esse resultado é específico do modelo normal [@rice2007mathematical, seções 6.2--6.3; @larsen2012, capítulo 7; @ramachandran2021r, seção 4.2].
+
+::: {.collapse title="Como o teorema de Cochran conduz ao resultado"}
 
 Como
+
+$$
+\frac{X_i-\mu}{\sigma}
+\sim
+N(0,1),
+$$
+
+temos
 
 $$
 \sum_{i=1}^n
@@ -1492,14 +1644,26 @@ $$
 \frac{X_i-\mu}{\sigma}
 \right)^2
 \sim
-\chi^2_n,
+\chi^2_n.
 $$
 
-o teorema de Cochran fornece, no modelo normal, a independência entre as duas componentes e as distribuições
+A identidade
+
+$$
+\sum_{i=1}^n(X_i-\mu)^2
+=
+\sum_{i=1}^n(X_i-\overline X)^2
++
+n(\overline X-\mu)^2
+$$
+
+decompõe a soma de quadrados em duas componentes.
+
+No modelo normal, o teorema de Cochran garante que essas componentes são independentes e que seus graus de liberdade somam $n$. Assim,
 
 $$
 \frac{
-\sum_{i=1}^n(X_i-\overline{X})^2
+\sum_{i=1}^n(X_i-\overline X)^2
 }{
 \sigma^2
 }
@@ -1511,7 +1675,7 @@ e
 
 $$
 \frac{
-n(\overline{X}-\mu)^2
+n(\overline X-\mu)^2
 }{
 \sigma^2
 }
@@ -1522,7 +1686,7 @@ $$
 Como
 
 $$
-\sum_{i=1}^n(X_i-\overline{X})^2
+\sum_{i=1}^n(X_i-\overline X)^2
 =
 (n-1)S^2,
 $$
@@ -1535,7 +1699,9 @@ $$
 \chi^2_{n-1}.
 $$
 
-Esse resultado e a independência usada em sua obtenção são específicos do modelo normal [@rice2007mathematical, seções 6.2--6.3; @larsen2012, capítulo 7; @ramachandran2021r, seção 4.2].
+Em conjunto com o teorema de Cochran, a mesma decomposição também sustenta a independência entre $\overline X$ e $S^2$ no modelo normal.
+
+:::
 
 ::: {.callout-note title="Interpretação dos graus de liberdade"}
 
@@ -1545,7 +1711,7 @@ Essa interpretação aparece naturalmente na distribuição qui-quadrado. Se
 
 $$
 Z_1,\ldots,Z_\nu
-\overset{\mathrm{i.i.d.}}{\sim}
+\overset{\mathrm{iid}}{\sim}
 N(0,1),
 $$
 
@@ -1577,21 +1743,29 @@ $$
 \chi^2_{n-1}.
 $$
 
-De maneira mais geral, os graus de liberdade podem ser interpretados como a dimensão do espaço de variação que resta após a imposição de restrições. Em modelos lineares com $n$ observações e uma matriz de delineamento de posto $p$, por exemplo, os resíduos possuem
+::: {.collapse title="Outras interpretações de graus de liberdade"}
+
+De maneira mais geral, os graus de liberdade podem ser interpretados como a dimensão do espaço de variação que resta após a imposição de restrições.
+
+Em modelos lineares com $n$ observações e uma matriz de delineamento de posto $p$, por exemplo, os resíduos possuem
 
 $$
 n-p
 $$
 
-graus de liberdade. Em testes da razão de verossimilhanças, sob condições de regularidade, os graus de liberdade da distribuição assintótica correspondem à diferença entre as dimensões dos modelos irrestrito e restrito.
+graus de liberdade.
 
-Essa interpretação deve ser usada com cautela em procedimentos aproximados. No teste de Welch, por exemplo, os graus de liberdade podem não ser inteiros: eles constituem uma aproximação de Satterthwaite utilizada para calibrar uma distribuição (t), e não uma contagem literal de observações independentes [@rice2007mathematical, secs. 6.2--6.3 and 9.5; @chihara2022, sec. 7.1].
+Em testes da razão de verossimilhanças, sob condições de regularidade, os graus de liberdade da distribuição assintótica correspondem à diferença entre as dimensões dos modelos irrestrito e restrito.
+
+Essa interpretação deve ser usada com cautela em procedimentos aproximados. No teste de Welch, por exemplo, os graus de liberdade podem não ser inteiros: eles constituem uma aproximação de Satterthwaite utilizada para calibrar uma distribuição $t$, e não uma contagem literal de observações independentes [@rice2007mathematical, seções 6.2--6.3 e 9.5; @chihara2022, seção 7.1].
+
+:::
 :::
 
 ### Independência entre média e variância
 
 ::: {.callout-important title="Teorema — Independência no modelo normal"}
-Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2)$, então
+Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}N(\mu,\sigma^2)$, então
 
 $$\overline{X}\ \perp\!\!\!\perp\ S^2.$$
 
@@ -1655,18 +1829,122 @@ $$\frac{\overline{X}-\mu}{S/\sqrt{n}}
 \sim t_{n-1}.
 $$
 
-::: {.callout-tip title="Exemplo — Média normal com variância desconhecida"}
-Para uma amostra normal de tamanho $n=10$,
+::: {.collapse title="Derivação da estatística $t$ no modelo normal"}
 
-$$T=\frac{\overline{X}-\mu}{S/\sqrt{10}}
-\sim t_9.
+No modelo normal,
+
+$$
+Z
+=
+\frac{
+\overline X-\mu
+}{
+\sigma/\sqrt n
+}
+\sim
+N(0,1).
 $$
 
-Como $P(-t_{0{,}975;9}\leq T\leq t_{0{,}975;9})=0{,}95$, a inversão dessa desigualdade produz o intervalo de confiança bilateral de $95\%$ para $\mu$:
+Além disso,
 
-$$\overline{X}\pm t_{0{,}975;9}\frac{S}{\sqrt{10}},$$
+$$
+W
+=
+\frac{(n-1)S^2}{\sigma^2}
+\sim
+\chi^2_{n-1}.
+$$
 
-em que $t_{0{,}975;9}\approx2{,}262$ [@larsen2012, seção 7.4; @rice2007mathematical, capítulo 6].
+A independência entre $\overline X$ e $S^2$ implica que $Z$ e $W$ são independentes.
+
+Pela definição da distribuição $t$,
+
+$$
+\frac{
+Z
+}{
+\sqrt{W/(n-1)}
+}
+\sim
+t_{n-1}.
+$$
+
+Substituindo $Z$ e $W$,
+
+$$
+\frac{
+\dfrac{\overline X-\mu}{\sigma/\sqrt n}
+}{
+\sqrt{
+\dfrac{(n-1)S^2/\sigma^2}{n-1}
+}
+}
+=
+\frac{
+\overline X-\mu
+}{
+S/\sqrt n
+}.
+$$
+
+Portanto,
+
+$$
+\frac{\overline X-\mu}{S/\sqrt n}
+\sim
+t_{n-1}.
+$$
+
+:::
+
+::: {.callout-tip title="Exemplo — Região central da distribuição $t$"}
+Para uma amostra normal de tamanho $n=10$,
+
+$$
+T
+=
+\frac{\overline X-\mu}{S/\sqrt{10}}
+\sim
+t_9.
+$$
+
+O quantil $t_{0{,}975;9}$ determina uma região central com probabilidade $0{,}95$:
+
+$$
+P\left(
+-t_{0{,}975;9}
+\leq
+T
+\leq
+t_{0{,}975;9}
+\right)
+=
+0{,}95.
+$$
+
+Como
+
+$$
+t_{0{,}975;9}
+\approx
+2{,}262,
+$$
+
+numericamente,
+
+$$
+P\left(
+-2{,}262
+\leq
+T
+\leq
+2{,}262
+\right)
+\approx
+0{,}95.
+$$
+
+Esse cálculo descreve uma propriedade da distribuição amostral exata de $T$ [@larsen2012, seções 7.2--7.3; @rice2007mathematical, capítulo 6].
 :::
 
 ### Distribuição $F$
@@ -1698,17 +1976,83 @@ $$
 
 Se duas amostras normais são independentes,
 
-$$X_1,\ldots,X_{n_1}\overset{\mathrm{i.i.d.}}{\sim}N(\mu_1,\sigma_1^2)$$
+$$X_1,\ldots,X_{n_1}\overset{\mathrm{iid}}{\sim}N(\mu_1,\sigma_1^2)$$
 
 e
 
-$$Y_1,\ldots,Y_{n_2}\overset{\mathrm{i.i.d.}}{\sim}N(\mu_2,\sigma_2^2),$$
+$$Y_1,\ldots,Y_{n_2}\overset{\mathrm{iid}}{\sim}N(\mu_2,\sigma_2^2),$$
 
 então
 
 $$\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}
 \sim F_{n_1-1,n_2-1}.
 $$
+
+::: {.collapse title="Derivação da razão de variâncias"}
+
+Para duas amostras normais independentes,
+
+$$
+W_1
+=
+\frac{(n_1-1)S_1^2}{\sigma_1^2}
+\sim
+\chi^2_{n_1-1}
+$$
+
+e
+
+$$
+W_2
+=
+\frac{(n_2-1)S_2^2}{\sigma_2^2}
+\sim
+\chi^2_{n_2-1}.
+$$
+
+Como as amostras são independentes, $W_1$ e $W_2$ também são independentes.
+
+Pela definição da distribuição $F$,
+
+$$
+\frac{
+W_1/(n_1-1)
+}{
+W_2/(n_2-1)
+}
+\sim
+F_{n_1-1,n_2-1}.
+$$
+
+Mas
+
+$$
+\frac{
+W_1/(n_1-1)
+}{
+W_2/(n_2-1)
+}
+=
+\frac{
+S_1^2/\sigma_1^2
+}{
+S_2^2/\sigma_2^2
+}.
+$$
+
+Logo,
+
+$$
+\frac{
+S_1^2/\sigma_1^2
+}{
+S_2^2/\sigma_2^2
+}
+\sim
+F_{n_1-1,n_2-1}.
+$$
+
+:::
 
 Sob a hipótese $\sigma_1^2=\sigma_2^2$,
 
@@ -1837,7 +2181,7 @@ $$
 :::
 
 ::: {.callout-tip title="Exemplo — Amostra uniforme"}
-Se $X_i\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Unif}(0,1)$, então $F(x)=x$ e $f(x)=1$ para $0<x<1$. Assim,
+Se $X_i\overset{\mathrm{iid}}{\sim}\operatorname{Unif}(0,1)$, então $F(x)=x$ e $f(x)=1$ para $0<x<1$. Assim,
 
 $$
 f_{X_{(k)}}(x)
@@ -1934,13 +2278,19 @@ $$
 \lambda=1.
 $$
 
-Como a taxa e a escala se relacionam por
+Na parametrização pela média,
 
 $$
-\beta=\frac{1}{\lambda},
+\mu=\frac{1}{\lambda}.
 $$
 
-esse caso corresponde também à escala $\beta=1$. A coincidência numérica ocorre porque o parâmetro utilizado é igual a $1$.
+Portanto, neste exemplo,
+
+$$
+\mu=1.
+$$
+
+A parametrização por taxa e a parametrização pela média coincidem numericamente apenas porque $\lambda=1$.
 :::
 
 ### Exemplo computacional: distribuição exata em população finita {.unnumbered}
@@ -2106,7 +2456,7 @@ $$
 
 c.  Determine $E(\overline X-\overline Y)$ e $\operatorname{Var}(\overline X-\overline Y)$.
 
-11.  **TCL para uma população não normal.** Seja $X_1,\ldots,X_{64}\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(1)$, na parametrização por taxa. Use o TCL para aproximar $P(0{,}8<\overline{X}<1{,}2)$.
+11.  **TCL para uma população não normal.** Seja $X_1,\ldots,X_{64}\overset{\mathrm{iid}}{\sim}\operatorname{Exp}(1)$, na parametrização por taxa. Use o TCL para aproximar $P(0{,}8<\overline{X}<1{,}2)$.
 
 12. **Proporção.** Em uma população, $p=0{,}12$. Para $n=200$:
 
@@ -2152,7 +2502,7 @@ a.  determine a distribuição de $(S_1^2/\sigma_1^2)/(S_2^2/\sigma_2^2)$;
 
 b.  sob $\sigma_1^2=\sigma_2^2$, calcule $P(S_1^2/S_2^2>2)$.
 
-17. **Estatísticas de ordem.** Seja $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Unif}(0,\theta)$.
+17. **Estatísticas de ordem.** Seja $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Unif}(0,\theta)$.
 
 a.  obtenha a função de distribuição de $X_{(n)}$;
 
@@ -2196,7 +2546,7 @@ $$
 
 *Adaptado de @casella2002statistical, cap. 5.*
 
-19. **Mínimo exponencial.** Se $X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}\operatorname{Exp}(\lambda)$ na parametrização por taxa, mostre que
+19. **Mínimo exponencial.** Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Exp}(\lambda)$ na parametrização por taxa, mostre que
 
 $$X_{(1)}\sim\operatorname{Exp}(n\lambda).$$
 

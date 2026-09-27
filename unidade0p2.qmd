@@ -1,4 +1,4 @@
-# Resultados Matemáticos e Assintóticos para Inferência 
+# Resultados Matemáticos e Assintóticos para Inferência {#sec-prelim-matematica-assintotica}
 
 Este capítulo reúne ferramentas matemáticas e assintóticas que podem ser utilizadas nos desenvolvimentos posteriores de Inferência Estatística. O objetivo é estabelecer uma notação comum e registrar resultados de cálculo, álgebra linear e teoria assintótica importantes no estudo de distribuições amostrais, propriedades de estimadores, métodos de estimação, intervalos de confiança e testes de hipóteses [@rice2007mathematical, caps. 1--6; @ramachandran2021r, caps. 2--4; @lauritzen2023fundamentals, ap. A].
 
@@ -7,7 +7,9 @@ Os conceitos e modelos probabilísticos foram apresentados no capítulo anterior
 ::: {.callout-note title="Delimitação do capítulo"}
 Os resultados apresentados neste capítulo podem ser utilizados como ferramentas. O objetivo não é desenvolver novamente conteúdos de Cálculo ou Álgebra Linear nem apresentar demonstrações dos resultados assintóticos.
 
-A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e interpretados aqui. Suas consequências para distribuições de estatísticas serão desenvolvidas no capítulo **Distribuições Amostrais**. O método delta será apresentado como ferramenta para transformar distribuições assintóticas e será aplicado posteriormente aos problemas inferenciais correspondentes.
+A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e interpretados aqui. Suas consequências para distribuições de estatísticas serão desenvolvidas no capítulo **Distribuições Amostrais**.
+
+O método delta e sua versão multivariada também são estabelecidos neste capítulo, mas constituem **Aprofundamento — Mestrado**, em consonância com o percurso curricular do livro. Esses resultados serão aplicados posteriormente nos desenvolvimentos inferenciais correspondentes.
 :::
 
 
@@ -26,7 +28,7 @@ A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e int
 | Lei dos Grandes Números | médias e momentos amostrais, consistência |
 | Teorema Central do Limite | aproximações normais e normalidade assintótica |
 | Mapeamento contínuo e Slutsky | transformação e combinação de sequências convergentes |
-| Método delta | distribuições assintóticas de funções |
+| Método delta | distribuições assintóticas de funções — **Aprofundamento — Mestrado** |
 | Ordens estocásticas | representação da magnitude de erros e termos de aproximação |
 
 ```{r}
@@ -275,7 +277,17 @@ $$
 
 Diversos procedimentos posteriores envolverão a maximização ou minimização de funções.
 
-Para uma função real diferenciável $g$, um ponto interior $x_0$ candidato a extremo satisfaz $g'(x_0)=0$. Quando $g''(x_0)<0$, o ponto corresponde a um máximo local; quando $g''(x_0)>0$, corresponde a um mínimo local.
+Para uma função real diferenciável $g$, todo ponto interior $x_0$ em que $g$ apresente um extremo local satisfaz
+
+$$
+g'(x_0)=0.
+$$
+
+Se, além disso, a segunda derivada existe em $x_0$, então:
+
+- se $g''(x_0)<0$, o ponto corresponde a um máximo local;
+- se $g''(x_0)>0$, o ponto corresponde a um mínimo local;
+- se $g''(x_0)=0$, o teste da segunda derivada é inconclusivo.
 
 
 #### Gradiente e hessiana 
@@ -516,7 +528,7 @@ Esse caráter **local** da aproximação será utilizado nos resultados assintó
 
 #### Taylor em várias dimensões 
 
-Para uma função diferenciável $g:\mathbb R^k\to\mathbb R^m$,
+Se $g:\mathbb R^k\to\mathbb R^m$ é diferenciável em $\boldsymbol\xi$, então
 
 $$
 g(\mathbf x)
@@ -528,10 +540,12 @@ Dg(\boldsymbol\xi)
 +
 o\left(
 \|\mathbf x-\boldsymbol\xi\|
-\right).
+\right),
+\qquad
+\mathbf x\to\boldsymbol\xi.
 $$
 
-Quando $g:\mathbb R^k\to\mathbb R$, a aproximação de primeira ordem é
+Quando $g:\mathbb R^k\to\mathbb R$, a aproximação de primeira ordem pode ser escrita como
 
 $$
 g(\mathbf x)
@@ -543,10 +557,12 @@ g(\boldsymbol\xi)
 +
 o\left(
 \|\mathbf x-\boldsymbol\xi\|
-\right).
+\right),
+\qquad
+\mathbf x\to\boldsymbol\xi.
 $$
 
-A aproximação de segunda ordem utiliza a hessiana:
+Se $g$ possui derivadas de segunda ordem contínuas em uma vizinhança de $\boldsymbol\xi$, a aproximação de segunda ordem utiliza a hessiana:
 
 $$
 g(\mathbf x)
@@ -628,7 +644,7 @@ $$
 
 #### Critério de segunda ordem 
 
-Considere uma função $g:\mathbb R^k\to\mathbb R$ e um ponto $\boldsymbol\theta_0$ no qual
+Considere uma função $g:\mathbb R^k\to\mathbb R$ com derivadas de segunda ordem contínuas em uma vizinhança de $\boldsymbol\theta_0$ e suponha que
 
 $$
 \nabla g(\boldsymbol\theta_0)
@@ -640,7 +656,8 @@ A matriz hessiana permite classificar o comportamento local da função:
 
 - se $\nabla^2g(\boldsymbol\theta_0)$ é positiva definida, $\boldsymbol\theta_0$ é um mínimo local;
 - se $\nabla^2g(\boldsymbol\theta_0)$ é negativa definida, $\boldsymbol\theta_0$ é um máximo local;
-- se $\nabla^2g(\boldsymbol\theta_0)$ é indefinida, $\boldsymbol\theta_0$ é um ponto de sela.
+- se $\nabla^2g(\boldsymbol\theta_0)$ é indefinida, $\boldsymbol\theta_0$ é um ponto de sela;
+- se $\nabla^2g(\boldsymbol\theta_0)$ é apenas positiva ou negativa semidefinida, sem ser definida, o critério de segunda ordem pode ser inconclusivo.
 
 Esse critério será utilizado posteriormente na análise de funções que precisam ser maximizadas ou minimizadas.
 
@@ -789,9 +806,9 @@ vetores <- tibble(
     1.4
   ),
   x1 = c(
-    3.8,
+    1.8,
     2.8,
-    3.8
+    1.8
   ),
   y1 = c(
     3.4,
@@ -830,7 +847,7 @@ ggplot() +
   ) +
   annotate(
     "text",
-    x = 4,
+    x = 1.55,
     y = 3.6,
     label = "y",
     size = 5
@@ -844,8 +861,8 @@ ggplot() +
   ) +
   annotate(
     "text",
-    x = 3.55,
-    y = 2.35,
+    x = 2.05,
+    y = 2.55,
     label = "e",
     size = 5
   ) +
@@ -1672,7 +1689,13 @@ Assim, a Lei dos Grandes Números descreve **estabilização**, enquanto o Teore
 
 O teorema do mapeamento contínuo permite transportar um resultado de convergência através de uma função contínua.
 
-Se $X_n\xrightarrow{P}X$ e $g$ é contínua nos valores relevantes, então
+Se
+
+$$
+X_n\xrightarrow{P}X
+$$
+
+e $g$ é contínua em $X$ com probabilidade $1$, então
 
 $$
 g(X_n)
@@ -1680,7 +1703,13 @@ g(X_n)
 g(X).
 $$
 
-De forma análoga, se $X_n\xrightarrow{d}X$ e $g$ é contínua com probabilidade um sob a distribuição limite, então
+De forma análoga, se
+
+$$
+X_n\xrightarrow{d}X
+$$
+
+e $g$ é contínua em $X$ com probabilidade $1$, então
 
 $$
 g(X_n)
@@ -1803,7 +1832,11 @@ Esse mecanismo será utilizado posteriormente quando uma quantidade desconhecida
 :::
 
 
-### Método delta 
+### Aprofundamento — Mestrado
+
+As subseções seguintes apresentam o método delta em suas versões univariada e multivariada. Esse bloco utiliza conjuntamente expansão de Taylor, convergência em distribuição e o lema de Slutsky e integra o percurso específico do mestrado.
+
+#### Método delta 
 
 O método delta permite obter a distribuição assintótica de uma transformação a partir da distribuição assintótica da quantidade original.
 
@@ -1831,7 +1864,7 @@ $$
 
 Quando $g'(\theta)\neq0$, o resultado fornece uma distribuição limite não degenerada de primeira ordem.
 
-Se $g'(\theta)=0$, a aproximação de primeira ordem produz variância limite igual a zero. Nesse caso, uma expansão de ordem superior e uma escala diferente podem ser necessárias.
+Se $g'(\theta)=0$, a aproximação de primeira ordem produz variância limite igual a zero. Nesse caso, uma expansão de ordem superior e uma escala diferente podem ser necessárias [@chihara2022, sec. 7.7].
 
 ::: {.callout-note title="Relação com Taylor"}
 O método delta utiliza localmente a aproximação
@@ -1875,7 +1908,7 @@ $$
 Esse resultado mostra como uma distribuição assintótica conhecida pode ser transportada para uma escala transformada.
 :::
 
-#### Visualização do método delta 
+##### Visualização do método delta 
 
 A aproximação fornecida pelo método delta pode ser observada no mesmo modelo exponencial utilizado para ilustrar o Teorema Central do Limite.
 
@@ -1998,7 +2031,7 @@ A @fig-metodo-delta mostra que, para amostras pequenas, a distribuição de $\sq
 
 O resultado é assintótico. A qualidade da aproximação para um tamanho de amostra específico depende do modelo, da transformação e do valor de $n$.
 
-### Método delta multivariado 
+#### Método delta multivariado 
 
 Considere um vetor $\mathbf T_n\in\mathbb R^k$ tal que
 
@@ -2184,23 +2217,27 @@ Os resultados deste capítulo podem ser organizados em dois componentes.
 
 O primeiro reúne **ferramentas matemáticas**. Somatórios, produtos e logaritmos permitem reorganizar expressões; vetores e matrizes fornecem a linguagem necessária para parâmetros e estatísticas multidimensionais; diferenciação, gradientes, hessianas e expansões de Taylor permitem estudar localmente funções; formas quadráticas e projeções serão utilizadas principalmente em distribuições associadas ao modelo normal e em mínimos quadrados; e o jacobiano permite trabalhar com transformações multivariadas.
 
-O segundo reúne **ferramentas assintóticas**. Os modos de convergência formalizam diferentes sentidos em que uma sequência aleatória pode aproximar um limite. A Lei dos Grandes Números descreve a estabilização de médias, enquanto o Teorema Central do Limite descreve suas flutuações padronizadas. O teorema do mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes. O método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias, e as ordens $O_P$ e $o_P$ registram de forma compacta a magnitude dos termos envolvidos.
+O segundo reúne **ferramentas assintóticas**. Os modos de convergência formalizam diferentes sentidos em que uma sequência aleatória pode aproximar um limite. A Lei dos Grandes Números descreve a estabilização de médias, enquanto o Teorema Central do Limite descreve suas flutuações padronizadas. O teorema do mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes, e as ordens $O_P$ e $o_P$ registram de forma compacta a magnitude dos termos envolvidos.
 
-A estrutura assintótica central pode ser resumida por
+No **Aprofundamento — Mestrado**, o método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias. Sua versão multivariada realiza a mesma operação por meio da matriz jacobiana.
+
+A estrutura assintótica do núcleo pode ser resumida por
 
 $$
 \text{Lei dos Grandes Números}
 \longrightarrow
-\text{convergência para uma constante},
+\text{convergência para uma constante}
 $$
+
+e
 
 $$
 \text{Teorema Central do Limite}
 \longrightarrow
-\text{distribuição das flutuações},
+\text{distribuição das flutuações}.
 $$
 
-e
+No aprofundamento do mestrado, essas ferramentas se articulam segundo o esquema
 
 $$
 \text{distribuição assintótica}
