@@ -1,5 +1,13 @@
 # Métodos de Estimação Pontual
 
+Na @sec-avaliacao-reducao, foram estabelecidos os principais critérios para avaliar estimadores, incluindo viés, erro quadrático médio, consistência, informação de Fisher e eficiência. Nesta unidade, o foco passa da avaliação para a **construção de estimadores**: dado um modelo estatístico e um parâmetro de interesse, como obter uma regra de estimação a partir da amostra?
+
+No percurso principal, serão estudados três métodos de estimação: o **método dos momentos**, a **máxima verossimilhança** e os **mínimos quadrados**. As propriedades apresentadas anteriormente serão retomadas apenas quando forem necessárias para compreender ou comparar os estimadores obtidos.
+
+Os tópicos de **Aprofundamento** incluem critérios minimax e equivariância, distribuição assintótica de estimadores, aplicações do método delta e o algoritmo EM. Esses desenvolvimentos utilizam resultados anteriores sobre risco, convergência e informação de Fisher e podem ser omitidos em uma primeira leitura sem interromper o percurso principal da unidade.
+
+Quando resultados assintóticos fornecerem aproximações para a distribuição ou para o erro-padrão de um estimador, essas propriedades serão registradas nesta unidade. A construção e a interpretação de intervalos de confiança, incluindo o intervalo de Wald, serão desenvolvidas na unidade seguinte.
+
 ## Método dos Momentos {#sec-metodo-momentos}
 
 O **método dos momentos** estima os parâmetros de um modelo igualando momentos populacionais, escritos como funções dos parâmetros, aos momentos correspondentes calculados na amostra. O procedimento costuma ser algebricamente simples e fornece estimadores úteis como valores iniciais para métodos numéricos. Sua definição não depende da Lei dos Grandes Números; essa lei, juntamente com condições de identificabilidade e continuidade, é utilizada para justificar a consistência dos estimadores obtidos [@rice2007mathematical, sec. 8.4; @ramachandran2021r, sec. 5.2.1; @chihara2022, sec. 6.2].
@@ -134,81 +142,8 @@ Como $\overline X>1$ quase certamente, a expressão está bem definida. Além di
 
 $$\widehat\theta^{\mathrm{MM}}\xrightarrow{p}\theta.$$
 
-#### Variância assintótica pelo método delta {.unnumbered}
-
-Se $\theta>2$, então
-
-$$\operatorname{Var}(X)
-=\frac{\theta}{(\theta-1)^2(\theta-2)}.$$
-
-Como
-
-$$g'(u)=-\frac{1}{(u-1)^2},$$
-
-temos
-
-$$g'\left(\frac{\theta}{\theta-1}\right)=-(\theta-1)^2.$$
-
-Pelo método delta,
-
-$$\sqrt n
-(\widehat\theta^{\mathrm{MM}}-\theta)
-\xrightarrow{d}
-N\left(
-0,
-\frac{\theta(\theta-1)^2}{\theta-2}
-\right),$$
-
-e, consequentemente,
-
-$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
-\approx
-\frac{\theta(\theta-1)^2}{n(\theta-2)}.$$
-
-O requisito $\theta>2$ é essencial para esta aplicação, pois a variância da população é infinita quando $1<\theta\leq2$ [@lauritzen2023fundamentals, app. A.2.3; @chihara2022, sec. 7.7].
-
-Para $\theta=3$ e $n=100$,
-
-$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
-\approx\frac{3(3-1)^2}{100(3-2)}=0{,}12,$$
-
-de modo que o desvio-padrão assintótico é aproximadamente $0{,}346$.
-
-#### Simulação em R {.unnumbered}
-
-O exemplo numérico e o código abaixo são autorais. A geração utiliza a transformação inversa: se $U\sim\operatorname{Unif}(0,1)$, então $U^{-1/\theta}$ possui a distribuição de Pareto adotada.
-
-```{r}
-#| label: sim-momentos-pareto
-#| warning: false
-#| message: false
-
-set.seed(14)
-
-B <- 1000
-n <- 100
-theta <- 3
-
-estimativas <- replicate(B, {
-  x <- runif(n)^(-1 / theta)
-  x_barra <- mean(x)
-  x_barra / (x_barra - 1)
-})
-
-hist(
-  estimativas,
-  probability = TRUE,
-  breaks = 35,
-  xlab = expression(hat(theta)[MM]),
-  main = ""
-)
-
-mean(estimativas)
-sd(estimativas)
-```
-
-::: {.callout-note title="Interpretação"}
-A função $g(u)=u/(u-1)$ é estritamente convexa para $u>1$. Assim, quando as esperanças relevantes existem, a desigualdade de Jensen ajuda a explicar o viés positivo observado em amostras finitas. Esse viés não impede a consistência do estimador.
+::: {.callout-note title="Aprofundamento"}
+A distribuição assintótica deste estimador pode ser obtida pelo método delta. Essa aplicação será retomada em @sec-delta-mm-pareto, após a apresentação dos métodos de estimação do percurso principal.
 :::
 
 ### Exemplo — distribuição uniforme contínua {.unnumbered}
@@ -565,6 +500,35 @@ c(\mathbf{x})L_n(\boldsymbol\theta),
 então $L_n$ e $\widetilde L_n$ possuem os mesmos maximizadores.
 :::
 
+### Invariância
+
+::: {.callout-important title="Propriedade — invariância"}
+Se $\widehat{\boldsymbol\theta}$ maximiza $L(\boldsymbol\theta)$ e $\boldsymbol\eta=g(\boldsymbol\theta)$, então
+
+$$\widehat{\boldsymbol\eta}
+=g(\widehat{\boldsymbol\theta})$$
+
+é um estimador de máxima verossimilhança de $\boldsymbol\eta$. Quando $g$ não é injetiva, a verossimilhança induzida de $\boldsymbol\eta$ é definida por
+
+$$L^*(\boldsymbol\eta)
+=\sup_{\boldsymbol\theta:g(\boldsymbol\theta)=\boldsymbol\eta}
+L(\boldsymbol\theta).$$
+:::
+
+Por exemplo, se $\widehat\lambda$ é o estimador da taxa de uma distribuição exponencial, o estimador de máxima verossimilhança da escala
+
+$$\beta
+=
+\frac{1}{\lambda}$$
+
+é
+
+$$\widehat\beta
+=
+\frac{1}{\widehat\lambda}.$$
+
+A propriedade de invariância é apresentada por @chihara2022 \[pp. 171--173\] e @ramachandran2009 [pp. 243--244].
+
 ### Função escore e informação
 
 #### Função escore
@@ -669,391 +633,6 @@ $$\mathbf{I}_n(\boldsymbol\theta)
 n\mathbf{I}_1(\boldsymbol\theta).$$
 
 A informação de Fisher aparece tanto na desigualdade de Cramér--Rao quanto na distribuição assintótica dos estimadores de máxima verossimilhança [@ramachandran2009, sec. 5.2.2; @chihara2022, sec. 6.1].
-
-#### Condições de regularidade
-
-As propriedades assintóticas dos estimadores de máxima verossimilhança não são consequências automáticas da maximização da verossimilhança. Elas dependem de hipóteses sobre a estrutura e a suavidade do modelo.
-
-::: {.callout-warning title="Observação — não existe uma lista universal de condições"}
-As condições de regularidade dependem do teorema e da classe de modelos considerados. A lista a seguir reúne hipóteses suficientes recorrentes e deve ser interpretada como um roteiro de verificação, não como um enunciado universal. O resultado formal adotado como referência deve sempre ser declarado; por exemplo, @lauritzen2023fundamentals [thm. 5.11] estabelece a normalidade assintótica em famílias exponenciais mínimas e regulares.
-:::
-
-#### Identificabilidade
-
-O modelo deve ser identificável:
-
-$$P_{\boldsymbol\theta_1}
-=
-P_{\boldsymbol\theta_2}
-\quad\Longrightarrow\quad
-\boldsymbol\theta_1
-=
-\boldsymbol\theta_2.$$
-
-Equivalentemente, valores paramétricos distintos devem produzir distribuições distintas.
-
-Sem identificabilidade, dois ou mais valores do parâmetro geram exatamente a mesma distribuição dos dados e não podem ser distinguidos por qualquer procedimento estatístico.
-
-#### Parâmetro verdadeiro interior
-
-O verdadeiro valor $\boldsymbol\theta_0$ deve pertencer ao interior de $\Theta$. Em particular, deve existir uma vizinhança aberta de $\boldsymbol\theta_0$ inteiramente contida no espaço paramétrico.
-
-Quando o parâmetro verdadeiro está na fronteira, a distribuição limite do estimador pode ser assimétrica, truncada ou constituída por uma mistura de distribuições.
-
-#### Suporte localmente independente do parâmetro
-
-Uma condição suficiente frequentemente adotada é que o suporte
-
-$$\mathcal{X}_{\boldsymbol\theta}
-=
-\left\{
-x:f(x;\boldsymbol\theta)>0
-\right\}$$
-
-não dependa de $\boldsymbol\theta$ em uma vizinhança do verdadeiro valor.
-
-Quando o suporte depende do parâmetro, a diferenciação de
-
-$$\int f(x;\boldsymbol\theta)\,dx=1$$
-
-pode produzir termos adicionais de fronteira. Nesses casos, identidades envolvendo o escore e a informação de Fisher podem não ser válidas.
-
-#### Diferenciabilidade
-
-A função
-
-$$\boldsymbol\theta
-\longmapsto
-\log f(x;\boldsymbol\theta)$$
-
-deve possuir derivadas de ordem suficiente em uma vizinhança de $\boldsymbol\theta_0$. A demonstração usual da normalidade assintótica emprega uma expansão de Taylor da função escore e requer controle das derivadas de segunda e, frequentemente, de terceira ordem.
-
-#### Diferenciação sob o sinal de integração
-
-Deve ser possível permutar diferenciação e integração, por exemplo,
-
-$$\frac{\partial}{\partial\theta}
-\int f(x;\theta)\,dx
-=
-\int
-\frac{\partial}{\partial\theta}
-f(x;\theta)\,dx.$$
-
-Uma condição suficiente consiste na existência de funções integráveis que dominem as derivadas de $f(x;\theta)$ em uma vizinhança do verdadeiro parâmetro.
-
-#### Informação de Fisher finita e não singular
-
-A matriz
-
-$$\mathbf{I}_1(\boldsymbol\theta_0)$$
-
-deve existir, possuir elementos finitos e ser positiva definida. Para um parâmetro escalar,
-
-$$0<I_1(\theta_0)<\infty.$$
-
-Se a informação for nula ou singular, algumas componentes do parâmetro podem não ser estimáveis à taxa usual $\sqrt n$.
-
-#### Convergência uniforme da função objetivo
-
-Para demonstrar a consistência do estimador como um maximizador, é usual exigir que a log-verossimilhança média
-
-$$\frac{1}{n}\ell_n(\boldsymbol\theta)$$
-
-convirja uniformemente para uma função determinística que tenha máximo único em $\boldsymbol\theta_0$.
-
-Condições adicionais de compacidade, continuidade ou controle do comportamento da verossimilhança fora de vizinhanças compactas podem ser necessárias.
-
-::: {.callout-note title="Modelos não regulares"}
-Exemplos de situações em que a teoria regular pode falhar incluem:
-
-- suporte dependente do parâmetro;
-- parâmetro verdadeiro na fronteira;
-- falta de identificabilidade;
-- informação de Fisher singular;
-- máximos não únicos;
-- verossimilhança ilimitada;
-- modelos de mistura;
-- separação completa em regressão logística.
-
-Nesses casos, o estimador pode continuar sendo consistente, mas sua taxa de convergência ou sua distribuição limite pode ser diferente da usual.
-:::
-
-### Propriedades assintóticas
-
-Considere uma amostra aleatória $X_1,\ldots,X_n$ proveniente de uma distribuição $f(x;\boldsymbol\theta_0)$, em que $\boldsymbol\theta_0$ representa o verdadeiro valor do parâmetro.
-
-#### Consistência
-
-::: {.callout-important title="Propriedade: consistência"}
-Sob condições de identificabilidade, convergência uniforme e existência de um máximo adequadamente comportado,
-
-$$\widehat{\boldsymbol\theta}_n
-\xrightarrow{p}
-\boldsymbol\theta_0.$$
-:::
-
-Uma justificativa conceitual pode ser obtida por meio da divergência de Kullback--Leibler. Defina
-
-$$M(\boldsymbol\theta)
-=
-\operatorname{E}_{\boldsymbol\theta_0}
-\left[
-\log f(X;\boldsymbol\theta)
-\right].$$
-
-Então,
-
-$$\begin{aligned}
-M(\boldsymbol\theta)
--
-M(\boldsymbol\theta_0)
-&=
-\operatorname{E}_{\boldsymbol\theta_0}
-\left[
-\log
-\frac{
-f(X;\boldsymbol\theta)
-}{
-f(X;\boldsymbol\theta_0)
-}
-\right]\\
-&=
--
-D_{\mathrm{KL}}
-\left(
-f_{\boldsymbol\theta_0}
-\,\Vert\,
-f_{\boldsymbol\theta}
-\right)
-\leq 0.
-\end{aligned}$$
-
-Portanto, a log-verossimilhança média populacional é maximizada em $\boldsymbol\theta_0$. Quando o modelo é identificável, esse máximo é único. A convergência uniforme permite transferir essa propriedade para o máximo da log-verossimilhança amostral.
-
-::: {.callout-warning title="Observação — alcance do argumento"}
-A identidade com a divergência de Kullback--Leibler identifica o máximo da função objetivo populacional. A consistência do maximizador amostral requer ainda uma lei uniforme dos grandes números, separação ou unicidade do máximo e controle da existência do estimador [@lauritzen2023fundamentals, sec. 5.3.1].
-:::
-
-#### Normalidade assintótica: parâmetro escalar
-
-Suponha que $\widehat\theta_n$ seja uma solução consistente da equação de verossimilhança. Expandindo $U_n(\widehat\theta_n)$ em torno de $\theta_0$,
-
-$$0
-=
-U_n(\widehat\theta_n)
-=
-U_n(\theta_0)
-+
-\ell_n''(\widetilde\theta_n)
-(\widehat\theta_n-\theta_0),$$
-
-em que $\widetilde\theta_n$ está entre $\widehat\theta_n$ e $\theta_0$. Logo,
-
-$$\sqrt n
-(\widehat\theta_n-\theta_0)
-=
-\left[
--\frac{1}{n}
-\ell_n''(\widetilde\theta_n)
-\right]^{-1}
-\frac{U_n(\theta_0)}{\sqrt n}.$$
-
-Sob as condições de regularidade, o teorema central do limite fornece
-
-$$\frac{U_n(\theta_0)}{\sqrt n}
-\xrightarrow{d}
-N
-\left(
-0,I_1(\theta_0)
-\right),$$
-
-enquanto a lei dos grandes números implica
-
-$$-\frac{1}{n}
-\ell_n''(\widetilde\theta_n)
-\xrightarrow{p}
-I_1(\theta_0).$$
-
-Pelo teorema de Slutsky [@lauritzen2023fundamentals, app. A.2.2],
-
-$$\sqrt n
-(\widehat\theta_n-\theta_0)
-\xrightarrow{d}
-N
-\left(
-0,
-I_1(\theta_0)^{-1}
-\right).$$
-
-Equivalentemente, para $n$ suficientemente grande,
-
-$$\widehat\theta_n
-\overset{\cdot}{\sim}
-N
-\left(
-\theta_0,
-\frac{1}{nI_1(\theta_0)}
-\right).$$
-
-Essa aproximação e sua relação com a informação de Fisher são apresentadas por @chihara2022 \[pp. 173--174\], @lauritzen2023fundamentals [thm. 5.11] e @ramachandran2009 [pp. 334--336].
-
-#### Normalidade assintótica: parâmetro vetorial
-
-Se $\boldsymbol\theta\in\mathbb{R}^q$, então, sob condições análogas,
-
-$$\sqrt n
-\left(
-\widehat{\boldsymbol\theta}_n
--
-\boldsymbol\theta_0
-\right)
-\xrightarrow{d}
-N_q
-\left(
-\mathbf{0},
-\mathbf{I}_1(\boldsymbol\theta_0)^{-1}
-\right).$$
-
-Consequentemente,
-
-$$\operatorname{Cov}
-\left(
-\widehat{\boldsymbol\theta}_n
-\right)
-\approx
-\frac{1}{n}
-\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.$$
-
-Como
-
-$$\mathbf{I}_n(\boldsymbol\theta_0)
-=
-n\mathbf{I}_1(\boldsymbol\theta_0),$$
-
-também se pode escrever
-
-$$\operatorname{Cov}
-\left(
-\widehat{\boldsymbol\theta}_n
-\right)
-\approx
-\mathbf{I}_n(\boldsymbol\theta_0)^{-1}.$$
-
-#### Eficiência assintótica
-
-Em modelos paramétricos regulares, o estimador de máxima verossimilhança atinge assintoticamente o limite determinado pela informação de Fisher:
-
-$$\operatorname{Avar}
-\left[
-\sqrt n
-\left(
-\widehat{\boldsymbol\theta}_n
--
-\boldsymbol\theta_0
-\right)
-\right]
-=
-\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.$$
-
-Nesse sentido, o estimador é assintoticamente eficiente na classe de estimadores regulares. A relação entre informação de Fisher, limite de Cramér--Rao e eficiência é discutida por @ramachandran2009 [pp. 273--276].
-
-::: {.callout-warning title="Interpretação"}
-Eficiência assintótica não implica que o estimador de máxima verossimilhança:
-
-- seja não viesado em amostras finitas;
-- tenha variância mínima para todo tamanho amostral;
-- tenha distribuição aproximadamente normal em amostras pequenas;
-- seja robusto contra valores atípicos;
-- seja robusto contra erros de especificação do modelo.
-
-@chihara2022 [p. 173] observam explicitamente que, em amostras finitas, a variância pode ser maior do que a aproximação assintótica e a distribuição pode ser não normal.
-:::
-
-#### Estimação do erro-padrão
-
-A matriz de covariâncias assintótica pode ser estimada pela inversa da informação observada:
-
-$$\widehat{\operatorname{Cov}}
-\left(
-\widehat{\boldsymbol\theta}_n
-\right)
-=
-\mathbf{J}_n
-\left(
-\widehat{\boldsymbol\theta}_n
-\right)^{-1}.$$
-
-Alternativamente, pode-se utilizar
-
-$$\left[
-n\mathbf{I}_1
-\left(
-\widehat{\boldsymbol\theta}_n
-\right)
-\right]^{-1}.$$
-
-Para um parâmetro escalar,
-
-$$\widehat{\operatorname{EP}}
-(\widehat\theta_n)
-=
-\left[
-J_n(\widehat\theta_n)
-\right]^{-1/2}.$$
-
-#### Intervalo de Wald
-
-A normalidade assintótica conduz ao intervalo aproximado
-
-$$\widehat\theta_n
-\pm
-z_{1-\alpha/2}
-\widehat{\operatorname{EP}}
-(\widehat\theta_n),$$
-
-com nível de confiança assintótico $1-\alpha$.
-
-::: {.callout-warning title="Observação"}
-Intervalos de Wald podem apresentar desempenho inadequado quando:
-
-- a amostra é pequena;
-- a distribuição do estimador é assimétrica;
-- o parâmetro está próximo da fronteira;
-- existem restrições como $\theta>0$ ou $0<p<1$;
-- a log-verossimilhança é pouco curvada;
-- o modelo é não regular.
-
-Nessas situações, intervalos baseados no escore, na razão de verossimilhanças ou em reparametrizações podem ser mais adequados.
-:::
-
-#### Invariância
-
-::: {.callout-important title="Propriedade — invariância"}
-Se $\widehat{\boldsymbol\theta}$ maximiza $L(\boldsymbol\theta)$ e $\boldsymbol\eta=g(\boldsymbol\theta)$, então
-
-$$\widehat{\boldsymbol\eta}
-=g(\widehat{\boldsymbol\theta})$$
-
-é um estimador de máxima verossimilhança de $\boldsymbol\eta$. Quando $g$ não é injetiva, a verossimilhança induzida de $\boldsymbol\eta$ é definida por
-
-$$L^*(\boldsymbol\eta)
-=\sup_{\boldsymbol\theta:g(\boldsymbol\theta)=\boldsymbol\eta}
-L(\boldsymbol\theta).$$
-:::
-
-Por exemplo, se $\widehat\lambda$ é o estimador da taxa de uma distribuição exponencial, o estimador de máxima verossimilhança da escala
-
-$$\beta
-=
-\frac{1}{\lambda}$$
-
-é
-
-$$\widehat\beta
-=
-\frac{1}{\widehat\lambda}.$$
-
-A propriedade de invariância é apresentada por @chihara2022 \[pp. 171--173\] e @ramachandran2009 [pp. 243--244].
 
 ### Exemplos {.unnumbered}
 
@@ -3131,13 +2710,456 @@ Geometricamente, o vetor ajustado é a projeção ortogonal de $\mathbf{Y}$ no e
 Sob erros normais, independentes e homoscedásticos, os estimadores dos coeficientes obtidos por mínimos quadrados coincidem com os estimadores de máxima verossimilhança. Se as variâncias são diferentes e conhecidas, a máxima verossimilhança conduz ao método dos mínimos quadrados ponderados.
 :::
 
-## Algoritmo Expectation-Maximization (EM) {#sec-algoritmo-em}
+## Aprofundamento
+
+Os tópicos desta seção ampliam os métodos de estimação apresentados no percurso principal. Eles utilizam resultados desenvolvidos anteriormente sobre risco, convergência, informação de Fisher e aproximações assintóticas.
+
+O bloco reúne três direções complementares. A primeira considera critérios de construção e escolha de estimadores baseados em **minimax e equivariância**. A segunda estuda a **distribuição assintótica dos estimadores**, incluindo aplicações do método delta e as propriedades assintóticas dos estimadores de máxima verossimilhança. A terceira apresenta o **algoritmo EM** como procedimento computacional para problemas de máxima verossimilhança envolvendo dados incompletos ou variáveis latentes.
+
+A leitura desta seção pressupõe os resultados assintóticos estabelecidos anteriormente e pode ser omitida em uma primeira leitura voltada ao percurso principal da unidade.
+
+### Distribuição assintótica de estimadores e método delta {#sec-aprofundamento-assintotica}
+
+O método delta, apresentado anteriormente como ferramenta assintótica, permite transportar uma distribuição limite conhecida para funções diferenciáveis de estimadores. Nesta unidade, seu papel é aplicado: parte-se de um estimador já construído e utiliza-se o método para caracterizar aproximadamente sua distribuição quando o tamanho amostral cresce.
+
+#### Aplicação ao estimador de momentos de Pareto {#sec-delta-mm-pareto}
+
+Retomando o exemplo da distribuição de Pareto em @sec-metodo-momentos,
+
+$$
+\widehat\theta^{\mathrm{MM}}
+=
+\frac{\overline X}{\overline X-1},
+$$
+
+de modo que
+
+$$
+\widehat\theta^{\mathrm{MM}}
+=
+g(\overline X),
+\qquad
+g(u)=\frac{u}{u-1}.
+$$
+
+Se $\theta>2$, então
+
+$$\operatorname{Var}(X)
+=\frac{\theta}{(\theta-1)^2(\theta-2)}.$$
+
+Como
+
+$$g'(u)=-\frac{1}{(u-1)^2},$$
+
+temos
+
+$$g'\left(\frac{\theta}{\theta-1}\right)=-(\theta-1)^2.$$
+
+Pelo método delta,
+
+$$\sqrt n
+(\widehat\theta^{\mathrm{MM}}-\theta)
+\xrightarrow{d}
+N\left(
+0,
+\frac{\theta(\theta-1)^2}{\theta-2}
+\right),$$
+
+e, consequentemente,
+
+$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
+\approx
+\frac{\theta(\theta-1)^2}{n(\theta-2)}.$$
+
+O requisito $\theta>2$ é essencial para esta aplicação, pois a variância da população é infinita quando $1<\theta\leq2$ [@lauritzen2023fundamentals, app. A.2.3; @chihara2022, sec. 7.7].
+
+Para $\theta=3$ e $n=100$,
+
+$$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
+\approx\frac{3(3-1)^2}{100(3-2)}=0{,}12,$$
+
+de modo que o desvio-padrão assintótico é aproximadamente $0{,}346$.
+
+##### Simulação em R {.unnumbered}
+
+O exemplo numérico e o código abaixo são autorais. A geração utiliza a transformação inversa: se $U\sim\operatorname{Unif}(0,1)$, então $U^{-1/\theta}$ possui a distribuição de Pareto adotada.
+
+```{r}
+#| label: sim-momentos-pareto
+#| warning: false
+#| message: false
+
+set.seed(14)
+
+B <- 1000
+n <- 100
+theta <- 3
+
+estimativas <- replicate(B, {
+  x <- runif(n)^(-1 / theta)
+  x_barra <- mean(x)
+  x_barra / (x_barra - 1)
+})
+
+hist(
+  estimativas,
+  probability = TRUE,
+  breaks = 35,
+  xlab = expression(hat(theta)[MM]),
+  main = ""
+)
+
+mean(estimativas)
+sd(estimativas)
+```
+
+::: {.callout-note title="Interpretação"}
+A função $g(u)=u/(u-1)$ é estritamente convexa para $u>1$. Assim, quando as esperanças relevantes existem, a desigualdade de Jensen ajuda a explicar o viés positivo observado em amostras finitas. Esse viés não impede a consistência do estimador.
+:::
+
+### Condições de regularidade
+
+As propriedades assintóticas dos estimadores de máxima verossimilhança não são consequências automáticas da maximização da verossimilhança. Elas dependem de hipóteses sobre a estrutura e a suavidade do modelo.
+
+::: {.callout-warning title="Observação — não existe uma lista universal de condições"}
+As condições de regularidade dependem do teorema e da classe de modelos considerados. A lista a seguir reúne hipóteses suficientes recorrentes e deve ser interpretada como um roteiro de verificação, não como um enunciado universal. O resultado formal adotado como referência deve sempre ser declarado; por exemplo, @lauritzen2023fundamentals [thm. 5.11] estabelece a normalidade assintótica em famílias exponenciais mínimas e regulares.
+:::
+
+#### Identificabilidade
+
+O modelo deve ser identificável:
+
+$$P_{\boldsymbol\theta_1}
+=
+P_{\boldsymbol\theta_2}
+\quad\Longrightarrow\quad
+\boldsymbol\theta_1
+=
+\boldsymbol\theta_2.$$
+
+Equivalentemente, valores paramétricos distintos devem produzir distribuições distintas.
+
+Sem identificabilidade, dois ou mais valores do parâmetro geram exatamente a mesma distribuição dos dados e não podem ser distinguidos por qualquer procedimento estatístico.
+
+#### Parâmetro verdadeiro interior
+
+O verdadeiro valor $\boldsymbol\theta_0$ deve pertencer ao interior de $\Theta$. Em particular, deve existir uma vizinhança aberta de $\boldsymbol\theta_0$ inteiramente contida no espaço paramétrico.
+
+Quando o parâmetro verdadeiro está na fronteira, a distribuição limite do estimador pode ser assimétrica, truncada ou constituída por uma mistura de distribuições.
+
+#### Suporte localmente independente do parâmetro
+
+Uma condição suficiente frequentemente adotada é que o suporte
+
+$$\mathcal{X}_{\boldsymbol\theta}
+=
+\left\{
+x:f(x;\boldsymbol\theta)>0
+\right\}$$
+
+não dependa de $\boldsymbol\theta$ em uma vizinhança do verdadeiro valor.
+
+Quando o suporte depende do parâmetro, a diferenciação de
+
+$$\int f(x;\boldsymbol\theta)\,dx=1$$
+
+pode produzir termos adicionais de fronteira. Nesses casos, identidades envolvendo o escore e a informação de Fisher podem não ser válidas.
+
+#### Diferenciabilidade
+
+A função
+
+$$\boldsymbol\theta
+\longmapsto
+\log f(x;\boldsymbol\theta)$$
+
+deve possuir derivadas de ordem suficiente em uma vizinhança de $\boldsymbol\theta_0$. A demonstração usual da normalidade assintótica emprega uma expansão de Taylor da função escore e requer controle das derivadas de segunda e, frequentemente, de terceira ordem.
+
+#### Diferenciação sob o sinal de integração
+
+Deve ser possível permutar diferenciação e integração, por exemplo,
+
+$$\frac{\partial}{\partial\theta}
+\int f(x;\theta)\,dx
+=
+\int
+\frac{\partial}{\partial\theta}
+f(x;\theta)\,dx.$$
+
+Uma condição suficiente consiste na existência de funções integráveis que dominem as derivadas de $f(x;\theta)$ em uma vizinhança do verdadeiro parâmetro.
+
+#### Informação de Fisher finita e não singular
+
+A matriz
+
+$$\mathbf{I}_1(\boldsymbol\theta_0)$$
+
+deve existir, possuir elementos finitos e ser positiva definida. Para um parâmetro escalar,
+
+$$0<I_1(\theta_0)<\infty.$$
+
+Se a informação for nula ou singular, algumas componentes do parâmetro podem não ser estimáveis à taxa usual $\sqrt n$.
+
+#### Convergência uniforme da função objetivo
+
+Para demonstrar a consistência do estimador como um maximizador, é usual exigir que a log-verossimilhança média
+
+$$\frac{1}{n}\ell_n(\boldsymbol\theta)$$
+
+convirja uniformemente para uma função determinística que tenha máximo único em $\boldsymbol\theta_0$.
+
+Condições adicionais de compacidade, continuidade ou controle do comportamento da verossimilhança fora de vizinhanças compactas podem ser necessárias.
+
+::: {.callout-note title="Modelos não regulares"}
+Exemplos de situações em que a teoria regular pode falhar incluem:
+
+- suporte dependente do parâmetro;
+- parâmetro verdadeiro na fronteira;
+- falta de identificabilidade;
+- informação de Fisher singular;
+- máximos não únicos;
+- verossimilhança ilimitada;
+- modelos de mistura;
+- separação completa em regressão logística.
+
+Nesses casos, o estimador pode continuar sendo consistente, mas sua taxa de convergência ou sua distribuição limite pode ser diferente da usual.
+:::
+
+### Propriedades assintóticas
+
+Considere uma amostra aleatória $X_1,\ldots,X_n$ proveniente de uma distribuição $f(x;\boldsymbol\theta_0)$, em que $\boldsymbol\theta_0$ representa o verdadeiro valor do parâmetro.
+
+#### Consistência
+
+::: {.callout-important title="Propriedade: consistência"}
+Sob condições de identificabilidade, convergência uniforme e existência de um máximo adequadamente comportado,
+
+$$\widehat{\boldsymbol\theta}_n
+\xrightarrow{p}
+\boldsymbol\theta_0.$$
+:::
+
+Uma justificativa conceitual pode ser obtida por meio da divergência de Kullback--Leibler. Defina
+
+$$M(\boldsymbol\theta)
+=
+\operatorname{E}_{\boldsymbol\theta_0}
+\left[
+\log f(X;\boldsymbol\theta)
+\right].$$
+
+Então,
+
+$$\begin{aligned}
+M(\boldsymbol\theta)
+-
+M(\boldsymbol\theta_0)
+&=
+\operatorname{E}_{\boldsymbol\theta_0}
+\left[
+\log
+\frac{
+f(X;\boldsymbol\theta)
+}{
+f(X;\boldsymbol\theta_0)
+}
+\right]\\
+&=
+-
+D_{\mathrm{KL}}
+\left(
+f_{\boldsymbol\theta_0}
+\,\Vert\,
+f_{\boldsymbol\theta}
+\right)
+\leq 0.
+\end{aligned}$$
+
+Portanto, a log-verossimilhança média populacional é maximizada em $\boldsymbol\theta_0$. Quando o modelo é identificável, esse máximo é único. A convergência uniforme permite transferir essa propriedade para o máximo da log-verossimilhança amostral.
+
+::: {.callout-warning title="Observação — alcance do argumento"}
+A identidade com a divergência de Kullback--Leibler identifica o máximo da função objetivo populacional. A consistência do maximizador amostral requer ainda uma lei uniforme dos grandes números, separação ou unicidade do máximo e controle da existência do estimador [@lauritzen2023fundamentals, sec. 5.3.1].
+:::
+
+#### Normalidade assintótica: parâmetro escalar
+
+Suponha que $\widehat\theta_n$ seja uma solução consistente da equação de verossimilhança. Expandindo $U_n(\widehat\theta_n)$ em torno de $\theta_0$,
+
+$$0
+=
+U_n(\widehat\theta_n)
+=
+U_n(\theta_0)
++
+\ell_n''(\widetilde\theta_n)
+(\widehat\theta_n-\theta_0),$$
+
+em que $\widetilde\theta_n$ está entre $\widehat\theta_n$ e $\theta_0$. Logo,
+
+$$\sqrt n
+(\widehat\theta_n-\theta_0)
+=
+\left[
+-\frac{1}{n}
+\ell_n''(\widetilde\theta_n)
+\right]^{-1}
+\frac{U_n(\theta_0)}{\sqrt n}.$$
+
+Sob as condições de regularidade, o teorema central do limite fornece
+
+$$\frac{U_n(\theta_0)}{\sqrt n}
+\xrightarrow{d}
+N
+\left(
+0,I_1(\theta_0)
+\right),$$
+
+enquanto a lei dos grandes números implica
+
+$$-\frac{1}{n}
+\ell_n''(\widetilde\theta_n)
+\xrightarrow{p}
+I_1(\theta_0).$$
+
+Pelo teorema de Slutsky [@lauritzen2023fundamentals, app. A.2.2],
+
+$$\sqrt n
+(\widehat\theta_n-\theta_0)
+\xrightarrow{d}
+N
+\left(
+0,
+I_1(\theta_0)^{-1}
+\right).$$
+
+Equivalentemente, para $n$ suficientemente grande,
+
+$$\widehat\theta_n
+\overset{\cdot}{\sim}
+N
+\left(
+\theta_0,
+\frac{1}{nI_1(\theta_0)}
+\right).$$
+
+Essa aproximação e sua relação com a informação de Fisher são apresentadas por @chihara2022 \[pp. 173--174\], @lauritzen2023fundamentals [thm. 5.11] e @ramachandran2009 [pp. 334--336].
+
+#### Normalidade assintótica: parâmetro vetorial
+
+Se $\boldsymbol\theta\in\mathbb{R}^q$, então, sob condições análogas,
+
+$$\sqrt n
+\left(
+\widehat{\boldsymbol\theta}_n
+-
+\boldsymbol\theta_0
+\right)
+\xrightarrow{d}
+N_q
+\left(
+\mathbf{0},
+\mathbf{I}_1(\boldsymbol\theta_0)^{-1}
+\right).$$
+
+Consequentemente,
+
+$$\operatorname{Cov}
+\left(
+\widehat{\boldsymbol\theta}_n
+\right)
+\approx
+\frac{1}{n}
+\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.$$
+
+Como
+
+$$\mathbf{I}_n(\boldsymbol\theta_0)
+=
+n\mathbf{I}_1(\boldsymbol\theta_0),$$
+
+também se pode escrever
+
+$$\operatorname{Cov}
+\left(
+\widehat{\boldsymbol\theta}_n
+\right)
+\approx
+\mathbf{I}_n(\boldsymbol\theta_0)^{-1}.$$
+
+#### Eficiência assintótica
+
+Em modelos paramétricos regulares, o estimador de máxima verossimilhança atinge assintoticamente o limite determinado pela informação de Fisher:
+
+$$\operatorname{Avar}
+\left[
+\sqrt n
+\left(
+\widehat{\boldsymbol\theta}_n
+-
+\boldsymbol\theta_0
+\right)
+\right]
+=
+\mathbf{I}_1(\boldsymbol\theta_0)^{-1}.$$
+
+Nesse sentido, o estimador é assintoticamente eficiente na classe de estimadores regulares. A relação entre informação de Fisher, limite de Cramér--Rao e eficiência é discutida por @ramachandran2009 [pp. 273--276].
+
+::: {.callout-warning title="Interpretação"}
+Eficiência assintótica não implica que o estimador de máxima verossimilhança:
+
+- seja não viesado em amostras finitas;
+- tenha variância mínima para todo tamanho amostral;
+- tenha distribuição aproximadamente normal em amostras pequenas;
+- seja robusto contra valores atípicos;
+- seja robusto contra erros de especificação do modelo.
+
+@chihara2022 [p. 173] observam explicitamente que, em amostras finitas, a variância pode ser maior do que a aproximação assintótica e a distribuição pode ser não normal.
+:::
+
+#### Estimação do erro-padrão
+
+A matriz de covariâncias assintótica pode ser estimada pela inversa da informação observada:
+
+$$\widehat{\operatorname{Cov}}
+\left(
+\widehat{\boldsymbol\theta}_n
+\right)
+=
+\mathbf{J}_n
+\left(
+\widehat{\boldsymbol\theta}_n
+\right)^{-1}.$$
+
+Alternativamente, pode-se utilizar
+
+$$\left[
+n\mathbf{I}_1
+\left(
+\widehat{\boldsymbol\theta}_n
+\right)
+\right]^{-1}.$$
+
+Para um parâmetro escalar,
+
+$$\widehat{\operatorname{EP}}
+(\widehat\theta_n)
+=
+\left[
+J_n(\widehat\theta_n)
+\right]^{-1/2}.$$
+
+::: {.callout-note title="Ponte para a estimação intervalar"}
+A normalidade assintótica e a estimativa do erro-padrão obtidas nesta seção fornecem os elementos necessários para a construção de intervalos de confiança aproximados. Os intervalos assintóticos, incluindo o intervalo de Wald, sua interpretação em termos de cobertura e suas limitações serão estudados na unidade seguinte.
+:::
+
+
+### Algoritmo Expectation-Maximization (EM) {#sec-algoritmo-em}
 
 O algoritmo *Expectation-Maximization* (EM) é um procedimento iterativo para maximização da verossimilhança — ou de uma versão penalizada/MAP — em problemas com dados ausentes, censura, variáveis latentes ou outra representação por dados incompletos. A apresentação adotada combina a formulação rigorosa e as propriedades computacionais de @gupta2011em \[secs. 1--2\], as aplicações a misturas de @hastie2009elements [secs. 6.8 e 8.5], a exposição de dados incompletos de @ramachandran2021r \[sec. 13.4\] e o tratamento didático de @chihara2022 [sec. 13.8].
 
 A exposição técnica desta seção segue @gupta2011em, @hastie2009elements, @ramachandran2021r e @chihara2022. As propriedades assintóticas do estimador de máxima verossimilhança eventualmente alcançado pelo algoritmo são tratadas com base em @lauritzen2023fundamentals.
 
-### Exemplo motivacional: mistura de duas populações normais
+#### Exemplo motivacional: mistura de duas populações normais
 
 Considere uma amostra $Y_1,\ldots,Y_n$ obtida de uma população heterogênea formada por duas subpopulações. Condicionalmente à subpopulação de origem, suponha que
 
@@ -3211,7 +3233,7 @@ Essa expressão é simples de maximizar quando $Z_{ij}$ é conhecido. O EM explo
 O EM não realiza uma classificação rígida das observações durante as iterações. Cada observação recebe uma responsabilidade probabilística para cada componente. Essa característica distingue o ajuste de misturas gaussianas por EM de métodos de agrupamento com atribuição exclusiva, como o $k$-means [@gupta2011em, sec. 3.2].
 :::
 
-### Definição formal
+#### Definição formal
 
 #### Dados observados, dados latentes e dados completos
 
@@ -3410,7 +3432,7 @@ $$\mathcal{F}(q,\boldsymbol{\theta})
 
 Na etapa E, escolhe-se a distribuição condicional corrente das variáveis latentes, fazendo com que o limite inferior toque a log-verossimilhança no valor atual. Na etapa M, maximiza-se esse limite inferior em relação a $\boldsymbol{\theta}$. Essa interpretação aproxima o EM dos procedimentos de *minorization-maximization* ou maximização sucessiva [@hastie2009elements; @gupta2011em].
 
-### Condições de uso
+#### Condições de uso
 
 É útil distinguir as condições que tornam o EM **computacionalmente conveniente** das condições matemáticas utilizadas para justificar suas propriedades.
 
@@ -3481,7 +3503,7 @@ Como a log-verossimilhança observada pode ser não côncava, diferentes valores
 A monotonicidade da log-verossimilhança não garante convergência ao máximo global. Também não garante, por si só, a convergência da sequência de parâmetros. Teoremas mais fortes exigem hipóteses adicionais sobre continuidade, compacidade de conjuntos de nível, regularidade da aplicação de atualização e comportamento na fronteira do espaço paramétrico. A formulação precisa dessas hipóteses deve ser verificada em uma referência especializada para o modelo considerado.
 :::
 
-### Propriedades importantes
+#### Propriedades importantes
 
 #### Monotonicidade da log-verossimilhança
 
@@ -3630,7 +3652,7 @@ $$\widehat{Q}_M(\boldsymbol{\theta}\mid\boldsymbol{\theta}^{(t)})
 
 Essas variantes são discutidas por @gupta2011em, e o MCEM também é apresentado por @ramachandran2021r [sec. 13.4].
 
-### Exemplos
+#### Exemplos
 
 #### Exemplo multinomial com informação agregada
 
@@ -3707,7 +3729,7 @@ $$\pi_j>0,
 
 Introduza $Z_{ij}$ como indicador de pertencimento ao componente $j$.
 
-##### Etapa E
+###### Etapa E
 
 As responsabilidades são
 
@@ -3731,7 +3753,7 @@ $$\gamma_{ij}^{(t)}
 (\boldsymbol{y}_i;\boldsymbol{\mu}_\ell^{(t)},\boldsymbol{\Sigma}_\ell^{(t)})
 }.$$
 
-##### Etapa M
+###### Etapa M
 
 Defina
 
@@ -3769,7 +3791,7 @@ $$\boldsymbol{\Sigma}_j^{(t+1)}
 n_j^{(t)}
 }.$$
 
-##### Implementação em R
+###### Implementação em R
 
 O código a seguir implementa uma mistura normal univariada. As atualizações são as anteriores; a regularização mínima das variâncias e as verificações numéricas são decisões de implementação.
 
@@ -4068,7 +4090,7 @@ em_normal_ausentes <- function(y,
 O exemplo acima considera um mecanismo de ausência compatível com a formulação utilizada pela fonte. Em aplicações reais, a validade da análise depende da modelagem do processo que gerou os dados ausentes. Uma discussão completa dos mecanismos de ausência exige bibliografia específica e não é desenvolvida nesta seção.
 :::
 
-### Exercícios
+#### Exercícios
 
 Os exercícios são autorais ou adaptados das estruturas de problemas apresentadas nas fontes indicadas. Quando um enunciado deriva diretamente de uma fonte, isso é explicitado.
 
@@ -4212,7 +4234,7 @@ Avalie as afirmações seguintes.
 **Fonte:** elaborado com base em @gupta2011em e @lauritzen2023fundamentals.
 :::
 
-### Síntese
+#### Síntese
 
 O algoritmo EM reorganiza um problema de máxima verossimilhança com dados incompletos em duas operações alternadas:
 
@@ -4226,7 +4248,7 @@ Sua principal garantia geral é a monotonicidade da log-verossimilhança observa
 
 O EM deve ser interpretado simultaneamente como um método de estimação por máxima verossimilhança com dados aumentados e como um algoritmo local de otimização.
 
-# Exercícios Complementares {.unnumbered}
+## Exercícios Complementares {.unnumbered}
 
 1.  Considere $X_1, \ldots, X_n \overset{iid}{\sim} \text{Exp}(\mu^{-1})$. Defina $T = X_{(1)} = \min\{X_1, \ldots, X_n\}$.
 
