@@ -885,7 +885,7 @@ $$
 Considere o escore da amostra,
 
 $$
-U_\theta(\mathbf X)
+U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
 \log f_\theta(\mathbf X).
@@ -894,13 +894,13 @@ $$
 Sob as condições de regularidade,
 
 $$
-E_\theta[U_\theta(\mathbf X)]=0
+E_\theta[U_n(\theta)]=0
 $$
 
 e
 
 $$
-E_\theta[U_\theta(\mathbf X)^2]
+E_\theta[U_n(\theta)^2]
 =
 I_n(\theta).
 $$
@@ -917,7 +917,7 @@ $$
 g'(\theta)
 =
 E_\theta\left[
-\delta\,U_\theta(\mathbf X)
+\delta\,U_n(\theta)
 \right].
 $$
 
@@ -929,7 +929,7 @@ g'(\theta)
 \operatorname{Cov}_\theta
 \left(
 \delta,
-U_\theta(\mathbf X)
+U_n(\theta)
 \right).
 $$
 
@@ -939,13 +939,13 @@ $$
 \operatorname{Cov}_\theta
 \left(
 \delta,
-U_\theta(\mathbf X)
+U_n(\theta)
 \right)^2
 \leq
 \operatorname{Var}_\theta(\delta)
 \operatorname{Var}_\theta
 \left(
-U_\theta(\mathbf X)
+U_n(\theta)
 \right).
 $$
 
@@ -954,7 +954,7 @@ Como
 $$
 \operatorname{Var}_\theta
 \left(
-U_\theta(\mathbf X)
+U_n(\theta)
 \right)
 =
 I_n(\theta),
@@ -997,7 +997,7 @@ $$
 4.  Para um estimador viesado, com $E_\theta(\delta)=g(\theta)$ e viés $b(\theta)=g(\theta)-\tau(\theta)$, a desigualdade limita a variância por $[g'(\theta)]^2/I_n(\theta)$; consequentemente, o EQM satisfaz $\operatorname{EQM}_\theta(\delta)\geq[g'(\theta)]^2/I_n(\theta)+b(\theta)^2$. Não é correto aplicar automaticamente $1/I_n(\theta)$ ao EQM.
 :::
 
-A formulação geral, a demonstração e as condições do resultado podem ser encontradas em @lauritzen2023fundamentals \[thm. 4.4\], @rice2007mathematical [sec. 8.7] e @rasch2018 [secs. 1.4 and 2.4.1].
+A formulação geral, a demonstração e as condições do resultado podem ser encontradas em @casella2011inferencia [teorema 7.3.9], @lauritzen2023fundamentals [thm. 4.4], @rice2007mathematical [sec. 8.7] e @rasch2018 [secs. 1.4 and 2.4.1].
 
 ### Exemplo — Média de uma distribuição normal com variância conhecida {.unnumbered}
 
@@ -1305,7 +1305,7 @@ $$
 
 A eficiência exata e a eficiência assintótica são propriedades distintas. Um estimador pode não atingir a cota de Cramér--Rao para cada tamanho amostral e, ainda assim, possuir variância assintótica correspondente a essa cota no regime regular considerado.
 
-Sob condições regulares, estimadores de máxima verossimilhança frequentemente possuem essa propriedade. Essa conclusão exige hipóteses próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações cuja taxa de convergência difere de $\sqrt n$ [@casella2002statistical, def. 10.1.11; @lauritzen2023fundamentals, thm. 5.11].
+Sob condições regulares, estimadores de máxima verossimilhança frequentemente possuem essa propriedade. Essa conclusão exige hipóteses próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações cuja taxa de convergência difere de $\sqrt n$ [@casella2011inferencia, def. 10.1.11; @lauritzen2023fundamentals, thm. 5.11].
 
 ## Aprofundamento: Princípios de redução de dados
 
@@ -1313,7 +1313,7 @@ Até aqui, a avaliação partiu de um estimador já construído e perguntou como
 
 Se uma estatística $T(\mathbf X)$ retém toda a informação relevante sobre $\theta$, procedimentos inferenciais podem ser construídos a partir de $T$ sem necessidade de conservar a amostra completa. Essa ideia conecta redução e avaliação: uma estatística suficiente pode ser utilizada para remover de um estimador a variabilidade associada a aspectos dos dados que não acrescentam informação sobre o parâmetro.
 
-A noção básica que formaliza essa redução é a **suficiência** [@cox2006principles, secs. 2.2 and 4.3.1; @casella2002statistical, chap. 6].
+A noção básica que formaliza essa redução é a **suficiência** [@cox2006principles, secs. 2.2 and 4.3.1; @casella2011inferencia, chap. 6].
 
 ::: {.callout-note title="Recordação — Função de verossimilhança"}
 
@@ -1335,7 +1335,7 @@ Na redução de dados, a verossimilhança permite identificar quais característ
 ### Estatística suficiente {.unnumbered}
 
 ::: {.callout-important title="Definição — Suficiência"}
-Uma estatística $T=T(\mathbf{X})$ é **suficiente** para $\theta$ se a distribuição condicional de $\mathbf{X}$ dado $T=t$ não depende de $\theta$ [@casella2002statistical, def. 6.2.1; @cox2006principles, sec. 2.2; @rice2007mathematical, sec. 8.8].
+Uma estatística $T=T(\mathbf{X})$ é **suficiente** para $\theta$ se a distribuição condicional de $\mathbf{X}$ dado $T=t$ não depende de $\theta$ [@casella2011inferencia, def. 6.2.1; @cox2006principles, sec. 2.2; @rice2007mathematical, sec. 8.8].
 :::
 
 ::: {.callout-note title="Observação — Condicionamento quando $T$ é contínua"}
@@ -1346,9 +1346,9 @@ $$
 T=t
 $$
 
-tem probabilidade zero. Nesse caso, a definição é entendida em termos de uma **distribuição condicional regular**.
+tem probabilidade zero. Nesse caso, uma formalização completa da distribuição condicional exige ferramentas de probabilidade condicional mais avançadas do que as desenvolvidas neste livro.
 
-Nos modelos dominados tratados neste capítulo, o teorema da fatoração fornece normalmente uma forma mais conveniente de verificar suficiência sem precisar construir explicitamente essa distribuição condicional [@casella2002statistical, sec. 6.2.1].
+Nos modelos dominados tratados neste capítulo, essa dificuldade não precisa ser enfrentada diretamente: o teorema da fatoração fornece uma forma mais conveniente de verificar suficiência sem construir explicitamente a distribuição condicional de $\mathbf X$ dado $T=t$ [@casella2011inferencia, sec. 6.2.1].
 
 :::
 
@@ -1372,7 +1372,7 @@ $$
 em que $h$ não depende de $\theta$.
 :::
 
-A dependência da verossimilhança em $\theta$ ocorre, portanto, apenas por meio de $T(\mathbf{x})$. O teorema é o método mais utilizado para identificar estatísticas suficientes [@rice2007mathematical, sec. 8.8.1; @ramachandran2021r, sec. 5.3.2; @casella2002statistical, sec. 6.2.1].
+A dependência da verossimilhança em $\theta$ ocorre, portanto, apenas por meio de $T(\mathbf{x})$. O teorema é o método mais utilizado para identificar estatísticas suficientes [@rice2007mathematical, sec. 8.8.1; @ramachandran2021r, sec. 5.3.2; @casella2011inferencia, sec. 6.2.1].
 
 ::: {.callout-note collapse="true" title="Esboço da demonstração"}
 
@@ -1488,7 +1488,7 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p),
+\operatorname{Ber}(p),
 \qquad
 0<p<1.
 $$
@@ -1572,7 +1572,7 @@ Além disso,
 $$
 T
 \sim
-\operatorname{Binomial}(n,p),
+\operatorname{Binom}(n,p),
 $$
 
 portanto
@@ -1646,7 +1646,7 @@ $$
 T(\mathbf{x})=T(\mathbf{y}).
 $$
 
-Quando o quociente $f_\theta(\mathbf{x})/f_\theta(\mathbf{y})$ está bem definido, essa condição equivale a exigir que o quociente seja independente de $\theta$ exatamente quando $T(\mathbf{x})=T(\mathbf{y})$ [@casella2002statistical, sec. 6.2.2; @ramachandran2009, sec. 5.5.3].
+Quando o quociente $f_\theta(\mathbf{x})/f_\theta(\mathbf{y})$ está bem definido, essa condição equivale a exigir que o quociente seja independente de $\theta$ exatamente quando $T(\mathbf{x})=T(\mathbf{y})$ [@casella2011inferencia, sec. 6.2.2; @ramachandran2009, sec. 5.5.3].
 :::
 
 ::: {.callout-note collapse="true" title="Esboço da demonstração"}
@@ -1852,7 +1852,7 @@ $$
 X_{(n)}
 $$
 
-é suficiente minimal para $\theta$ [@ramachandran2009, sec. 5.5.3; @casella2002statistical, sec. 6.2.2].
+é suficiente minimal para $\theta$ [@ramachandran2009, sec. 5.5.3; @casella2011inferencia, sec. 6.2.2].
 
 :::
 
@@ -1990,7 +1990,7 @@ A forma exponencial permite, portanto, identificar diretamente um resumo suficie
 Retomemos
 
 $$
-X\sim\operatorname{Bernoulli}(p),
+X\sim\operatorname{Ber}(p),
 \qquad
 0<p<1.
 $$
@@ -2440,7 +2440,7 @@ P_\theta\bigl(a(T)=0\bigr)=1
 \quad\text{para todo }\theta\in\Theta.
 $$
 
-Essa é a definição usual de completude para a família de distribuições induzida por $T$ [@bickel2016volume2, def. 8.2.2; @casella2002statistical, sec. 6.2.4].
+Essa é a definição usual de completude para a família de distribuições induzida por $T$ [@bickel2016volume2, def. 8.2.2; @casella2011inferencia, sec. 6.2.4].
 :::
 
 ::: {.callout-important title="Teorema — Completude em famílias exponenciais"}
@@ -2466,15 +2466,15 @@ $$
 
 Se o espaço natural de parâmetros contém um conjunto aberto não vazio de $\mathbb R^k$, então $T$ é completa para a família.
 
-Esse resultado fornece uma condição suficiente para completude. A condição sobre o espaço natural é essencial: reconhecer uma expressão na forma exponencial não é suficiente, por si só, para concluir completude [@casella2002statistical, thm. 6.2.25; @lauritzen2023fundamentals, chap. 3; @bickel2016volume2, sec. 8.2].
+Esse resultado fornece uma condição suficiente para completude. A condição sobre o espaço natural é essencial: reconhecer uma expressão na forma exponencial não é suficiente, por si só, para concluir completude [@casella2011inferencia, thm. 6.2.25; @lauritzen2023fundamentals, chap. 3; @bickel2016volume2, sec. 8.2].
 
 :::
 
 ::: {.callout-note collapse="true" title="Ideia da demonstração"}
 
-A ideia central pode ser observada sem desenvolver os detalhes técnicos do teorema de unicidade utilizado na prova geral.
+A demonstração geral desse resultado utiliza um teorema de unicidade para transformadas de Laplace e não será desenvolvida aqui. Essa é também a estratégia adotada por Casella e Berger ao apresentar o resultado [@casella2011inferencia, teorema 6.2.25].
 
-Considere a estatística canônica
+A ideia central, entretanto, pode ser descrita de forma simples. Suponha que uma função $a$ da estatística canônica
 
 $$
 T
@@ -2482,7 +2482,7 @@ T
 \sum_{i=1}^nt(X_i)
 $$
 
-e suponha que uma função mensurável $a$ satisfaça
+satisfaça
 
 $$
 E_\eta[a(T)]=0
@@ -2490,51 +2490,17 @@ $$
 
 para todo $\eta$ no espaço natural.
 
-Na família exponencial, a distribuição de $T$ possui a estrutura
-
-$$
-dP_\eta^T(t)
-=
-\exp\left\{
-\eta^\top t-nA(\eta)
-\right\}
-\,d\nu(t),
-$$
-
-para uma medida $\nu$ que não depende de $\eta$. Assim,
-
-$$
-0
-=
-E_\eta[a(T)]
-=
-e^{-nA(\eta)}
-\int
-a(t)e^{\eta^\top t}\,d\nu(t).
-$$
-
-Como $e^{-nA(\eta)}>0$,
-
-$$
-\int
-a(t)e^{\eta^\top t}\,d\nu(t)
-=
-0
-$$
-
-para todo $\eta$ em um conjunto aberto.
-
-A expressão do lado esquerdo é uma transformada do produto entre $a(t)$ e a medida que determina a distribuição de $T$. Um resultado de unicidade para esse tipo de transformada implica que, se ela é nula em um conjunto aberto de valores do parâmetro natural, então
+Devido à forma exponencial da distribuição, essa igualdade pode ser escrita como uma transformada envolvendo $a(T)$ e o parâmetro natural $\eta$. Quando o espaço natural contém um conjunto aberto, a unicidade dessa transformada implica que ela só pode ser identicamente nula se
 
 $$
 a(T)=0
 $$
 
-quase certamente para toda distribuição da família.
+quase certamente para todas as distribuições da família.
 
-Esse é o mecanismo que produz a completude da estatística canônica. A condição de que o espaço natural contenha um conjunto aberto é essencial justamente para que o argumento de unicidade possa ser aplicado.
+Esse é o mecanismo que produz a completude. A condição sobre o espaço natural é importante porque fornece o conjunto de valores do parâmetro necessário para aplicar o resultado de unicidade.
 
-A demonstração técnica do resultado de unicidade não é necessária para os desenvolvimentos seguintes. No exemplo de Poisson apresentado a seguir, a completude será verificada diretamente por uma série de potências, sem recorrer a esse resultado geral.
+Nos exemplos seguintes não será necessário utilizar esse argumento técnico. Para o modelo Poisson, por exemplo, a completude será verificada diretamente por meio de uma série de potências.
 
 :::
 
@@ -2621,7 +2587,7 @@ $$
 \operatorname{Var}_\theta(\delta)
 $$
 
-para todo $\theta\in\Theta$ e para todo estimador não viesado $\delta$ de $\tau(\theta)$ com variância finita [@casella2002statistical, def. 7.3.7; @bickel2016volume2, sec. 8.2.3; @rasch2018, sec. 2.4].
+para todo $\theta\in\Theta$ e para todo estimador não viesado $\delta$ de $\tau(\theta)$ com variância finita [@casella2011inferencia, def. 7.3.7; @bickel2016volume2, sec. 8.2.3; @rasch2018, sec. 2.4].
 :::
 
 A definição estabelece o objetivo, mas não fornece por si só um procedimento para encontrar $\delta^*$. A suficiência permite construir melhorias por condicionamento, e a combinação entre suficiência e completude fornece uma caracterização de optimalidade e unicidade.
@@ -2878,7 +2844,7 @@ Essa é a função de probabilidade multinomial com probabilidades iguais a $1/n
 $$
 X_1\mid T=t
 \sim
-\operatorname{Binomial}
+\operatorname{Binom}
 \left(t,\frac1n\right),
 $$
 
@@ -2911,7 +2877,7 @@ Rao--Blackwell garante que $\delta^*$ não possui variância maior que a do esti
 ### Teorema de Lehmann--Scheffé {.unnumbered}
 
 ::: {.callout-important title="Teorema — Lehmann--Scheffé"}
-Se $T$ é suficiente e completa para $\theta$ e $\phi(T)$ é não viesado para $\tau(\theta)$, com segundo momento finito para todo $\theta$, então $\phi(T)$ é o ENVVUM de $\tau(\theta)$ e é único a menos de equivalência $P_\theta$-quase certa, para todo $\theta$ [@casella2002statistical, thm. 7.3.23; @bickel2016volume2, cor. 8.2.2].
+Se $T$ é suficiente e completa para $\theta$ e $\phi(T)$ é não viesado para $\tau(\theta)$, com segundo momento finito para todo $\theta$, então $\phi(T)$ é o ENVVUM de $\tau(\theta)$ e é único a menos de equivalência $P_\theta$-quase certa, para todo $\theta$ [@casella2011inferencia, thm. 7.3.23; @bickel2016volume2, cor. 8.2.2].
 :::
 
 ::: {.callout-note collapse="true" title="Demonstração"}
@@ -3043,12 +3009,15 @@ $$
 
 um intervalo aberto. Portanto, o teorema de completude para famílias exponenciais também garante que $T$ é completa.
 
-Além disso,
+Além disso, como $\theta$ é a taxa exponencial e a parametrização da distribuição gama adotada neste livro utiliza o segundo parâmetro como escala,
 
 $$
 T
 \sim
-\operatorname{Gama}(n,\text{taxa }\theta).
+\operatorname{Gama}
+\left(
+n,\frac{1}{\theta}
+\right).
 $$
 
 Para construir uma função não viesada de $T$ que estime $\theta$, observamos que, para $n>1$,
@@ -3103,7 +3072,10 @@ Como
 $$
 T
 \sim
-\operatorname{Gama}(n,\text{taxa }\theta),
+\operatorname{Gama}
+\left(
+n,\frac{1}{\theta}
+\right),
 $$
 
 sua densidade é
@@ -3216,49 +3188,65 @@ Uma estatística $A=A(\mathbf{X})$ é **ancilar** para $\theta$ quando sua distr
 Uma estatística ancilar não informa diretamente sobre o parâmetro de interesse, mas pode descrever aspectos do desenho amostral, da precisão ou da configuração dos dados. Em argumentos condicionais, ela pode indicar uma forma relevante de comparar resultados observados [@cox2006principles, sec. 4.3.1].
 
 ::: {.callout-important title="Teorema — Basu"}
-Se $T$ é suficiente e completa para $\theta$ e $A$ é ancilar, então $T$ e $A$ são independentes [@bickel2016volume2, thm. 8.2.3; @casella2002statistical, sec. 6.2.4].
+Se $T$ é suficiente e completa para $\theta$ e $A$ é ancilar, então $T$ e $A$ são independentes [@bickel2016volume2, thm. 8.2.3; @casella2011inferencia, teoremas 6.2.24 e 6.2.28].
 :::
 
-::: {.callout-note collapse="true" title="Esboço da demonstração"}
+::: {.callout-note collapse="true" title="Demonstração — Caso discreto"}
 
-Considere uma função limitada $b(A)$.
+Acompanhemos o argumento de Casella e Berger no caso discreto.
 
-Como $A$ é ancilar, sua distribuição não depende de $\theta$. Portanto,
+Fixe um valor possível $a$ da estatística ancilar $A$. Como $A$ é ancilar,
 
 $$
-E_\theta[b(A)]
+P_\theta(A=a)
+$$
+
+não depende de $\theta$. Denote essa probabilidade por
+
+$$
+c_a=P(A=a).
+$$
+
+Como $T$ é suficiente, a probabilidade condicional
+
+$$
+P_\theta(A=a\mid T=t)
+$$
+
+também não depende de $\theta$. Defina
+
+$$
+g_a(t)
 =
-c
+P(A=a\mid T=t)-c_a.
 $$
 
-para alguma constante $c$ que não depende de $\theta$.
-
-Defina
+Pela fórmula da probabilidade total,
 
 $$
-g(T)
+P(A=a)
 =
-E_\theta[b(A)\mid T].
+\sum_t
+P(A=a\mid T=t)
+P_\theta(T=t).
 $$
 
-Como $T$ é suficiente, a distribuição condicional da amostra dado $T$ não depende de $\theta$. Assim, pode-se escolher $g$ de modo que ela seja uma função de $T$ sem dependência adicional em $\theta$.
-
-Pela propriedade da esperança iterada,
+Como também
 
 $$
-E_\theta[g(T)]
+P(A=a)
 =
-E_\theta[b(A)]
+\sum_t
+c_a\,P_\theta(T=t),
+$$
+
+temos
+
+$$
+\sum_t
+g_a(t)P_\theta(T=t)
 =
-c
-$$
-
-para todo $\theta$.
-
-Logo,
-
-$$
-E_\theta[g(T)-c]
+E_\theta[g_a(T)]
 =
 0
 $$
@@ -3268,26 +3256,28 @@ para todo $\theta$.
 Como $T$ é completa,
 
 $$
-g(T)-c=0
+g_a(T)=0
 $$
 
 $P_\theta$-quase certamente. Portanto,
 
 $$
-E_\theta[b(A)\mid T]
+P(A=a\mid T=t)
 =
-E_\theta[b(A)]
+P(A=a)
 $$
 
-quase certamente.
+para todos os valores relevantes de $t$.
 
-Essa igualdade vale para toda função limitada $b$. Em particular, tomando indicadores de eventos determinados por $A$, a distribuição condicional de $A$ dado $T$ coincide com sua distribuição marginal. Consequentemente,
+Essa igualdade é precisamente a condição de independência entre $A$ e $T$. Logo,
 
 $$
 A\perp T.
 $$
 
-O argumento mostra o papel de cada hipótese: a ancilaridade torna a esperança independente de $\theta$, a suficiência retira $\theta$ da distribuição condicional e a completude força a função resultante de $T$ a ser constante.
+O argumento evidencia o papel de cada hipótese: a ancilaridade torna a distribuição de $A$ livre de $\theta$, a suficiência torna a distribuição condicional de $A$ dado $T$ livre de $\theta$, e a completude força a diferença entre as probabilidades condicional e marginal a ser nula.
+
+No caso contínuo, o mesmo princípio é formulado por meio das distribuições condicionais correspondentes.
 
 :::
 
@@ -3377,7 +3367,7 @@ O resultado recupera, por um princípio de redução de dados, a independência 
 Se $\sigma^2$ também for desconhecida e fizer parte do parâmetro, $S^2$ não será ancilar para o vetor $(\mu,\sigma^2)$, pois sua distribuição depende de $\sigma^2$. A ancilaridade deve sempre ser especificada em relação ao parâmetro e ao modelo considerados.
 :::
 
-A definição de ancilaridade e o teorema de Basu são apresentados em @bickel2016volume2 \[def. 8.2.3 and thm. 8.2.3\] e @casella2002statistical [secs. 6.2.3--6.2.4].
+A definição de ancilaridade e o teorema de Basu são apresentados em @bickel2016volume2 \[def. 8.2.3 and thm. 8.2.3\] e @casella2011inferencia [secs. 6.2.3--6.2.4].
 
 ### Exemplo integrado — Avaliação e redução no modelo gama {.unnumbered}
 
@@ -3814,7 +3804,7 @@ c.  $(\mu,\sigma^2)$, quando ambos são desconhecidos.
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Geom}(p),
+\operatorname{Geo}(p),
 $$
 
 com
@@ -3829,11 +3819,11 @@ b.  Determine a distribuição de $T$.
 
 c.  Mostre que a família de distribuições de $T$ é completa.
 
-*Adaptado de @casella2002statistical, cap. 6.*
+*Adaptado de @casella2011inferencia, cap. 6.*
 
 8.  **Rao--Blackwell.** Se $X_1,\ldots,X_n$ são i.i.d. $\operatorname{Poisson}(\theta)$, parta do estimador $\mathbf 1\{X_1=1\}$ de $\theta e^{-\theta}$ e calcule sua versão de Rao--Blackwell condicionando em $T=\sum_iX_i$.
 
-9.  **Lehmann--Scheffé no modelo binomial.** Se $X_1,\ldots,X_n$ são i.i.d. $\operatorname{Bin}(m,p)$, com $m$ conhecido e $0<p<1$, mostre que
+9.  **Lehmann--Scheffé no modelo binomial.** Se $X_1,\ldots,X_n$ são i.i.d. $\operatorname{Binom}(m,p)$, com $m$ conhecido e $0<p<1$, mostre que
 
 $$
 \widehat{p}
@@ -3869,7 +3859,7 @@ c.  $(n+1)X_{(n)}/n$ para $\theta$ em $\operatorname{Unif}(0,\theta)$;
 
 d.  $(n-1)/\sum_iX_i$ para a taxa de uma distribuição exponencial.
 
-Os exercícios foram elaborados ou adaptados a partir das discussões e listas de problemas de @lauritzen2023fundamentals [chaps. 4--5], @rice2007mathematical [chap. 8], @ramachandran2021r [chap. 5], @larsen2012 [chap. 5], @bickel2016volume2 [chap. 8] e @casella2002statistical [chap. 6].
+Os exercícios foram elaborados ou adaptados a partir das discussões e listas de problemas de @lauritzen2023fundamentals [chaps. 4--5], @rice2007mathematical [chap. 8], @ramachandran2021r [chap. 5], @larsen2012 [chap. 5], @bickel2016volume2 [chap. 8] e @casella2011inferencia [chap. 6].
 
 
 ### Exercícios extras {.unnumbered}
@@ -3879,7 +3869,7 @@ Os exercícios foram elaborados ou adaptados a partir das discussões e listas d
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p),
+\operatorname{Ber}(p),
 \qquad
 0<p<1.
 $$
@@ -3894,7 +3884,7 @@ d. Verifique se $\widehat p$ atinge esse limite.
 
 e. Para $n\geq4$, mostre que $X_1X_2X_3X_4$ é não viesado para $p^4$ e use Rao--Blackwell e Lehmann--Scheffé para obter o ENVVUM de $p^4$.
 
-*Adaptado de @casella2002statistical, cap. 7.*
+*Adaptado de @casella2011inferencia, cap. 7.*
 
 15. **ENVVUM sem atingir Cramér--Rao.** Seja
 
@@ -3918,7 +3908,7 @@ c. Calcule sua variância.
 
 d. Obtenha o limite inferior de Cramér--Rao para estimadores não viesados de $\theta^2$.
 
-*Adaptado de @casella2002statistical, cap. 7.*
+*Adaptado de @casella2011inferencia, cap. 7.*
 
 
 16. **Melhoria de um estimador exponencial.** Seja
@@ -3926,11 +3916,11 @@ d. Obtenha o limite inferior de Cramér--Rao para estimadores não viesados de $
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exp}(\theta),
+\operatorname{Exp}\left(\frac{1}{\theta}\right),
 \qquad E(X_i)=\theta,
 $$
 
-e defina
+em que a distribuição exponencial está escrita na parametrização por taxa adotada neste livro, e defina
 
 $$
 Y=X_{(1)}=\min\{X_1,\ldots,X_n\}.
@@ -3946,7 +3936,7 @@ d. Mostre que $\overline X$ possui menor variância.
 
 e. Relacione essa melhoria ao princípio de Rao--Blackwell.
 
-*Adaptado de @casella2002statistical, cap. 7.*
+*Adaptado de @casella2011inferencia, cap. 7.*
 
 17. **Completude e espaço paramétrico.** Considere
 
@@ -3964,7 +3954,7 @@ Mostre que essa família não é completa.
 
 Em seguida, explique por que esse resultado mostra que a completude depende não apenas da forma da distribuição, mas também do espaço paramétrico.
 
-*Adaptado de @casella2002statistical, cap. 6.*
+*Adaptado de @casella2011inferencia, cap. 6.*
 
 18. **Completude no modelo Poisson.** Seja
 
@@ -4004,7 +3994,7 @@ c. Conclua que a família de distribuições de $T$ é completa.
 d. Compare esse resultado com o exercício em que o espaço paramétrico é
 restrito a $\lambda\in\{0,1\}$.
 
-*Adaptado de @casella2002statistical, cap. 6.*
+*Adaptado de @casella2011inferencia, cap. 6.*
 
 19. **Ancilaridade em uma família de locação--escala.** Seja
 
@@ -4051,6 +4041,6 @@ $$
 c. Conclua que $R/S$ é uma estatística ancilar para os parâmetros de
 locação e escala.
 
-*Adaptado de @casella2002statistical, cap. 6.*
+*Adaptado de @casella2011inferencia, cap. 6.*
 
 ## Referências {.unnumbered}

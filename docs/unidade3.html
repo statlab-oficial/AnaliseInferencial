@@ -478,7 +478,7 @@ window.Quarto = {
 
 <p>Em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a>, um estimador foi definido como uma estatística utilizada para estimar uma função paramétrica <span class="math inline">\(\tau(\theta)\)</span>. Em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>, a distribuição dessas estatísticas permitiu descrever sua variabilidade sob repetição do mecanismo amostral.</p>
 <p>Conhecida essa variabilidade, surgem duas questões complementares. A primeira é <strong>como avaliar a qualidade de um estimador</strong>: seu erro, sua dispersão, seu comportamento quando o tamanho amostral aumenta e os limites de desempenho impostos pelo modelo. A segunda é <strong>como identificar quais aspectos da amostra concentram a informação relevante sobre o parâmetro</strong>, permitindo reduzir os dados sem perda inferencial.</p>
-<p>A primeira questão conduz aos conceitos de risco, viés, erro quadrático médio, consistência e eficiência e integra o percurso comum do capítulo. A segunda, correspondente ao aprofundamento do mestrado, conduz à suficiência, à suficiência minimal, às famílias exponenciais, à completude, ao ENVVUM, aos teoremas de Rao–Blackwell e Lehmann–Scheffé e à relação entre ancilaridade e o teorema de Basu. As duas linhas voltam a se encontrar quando a redução dos dados é utilizada para melhorar e caracterizar estimadores <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals cox2006principles">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, chap.&nbsp;8; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, chaps. 4–5; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 2.2 and 4.3)</span>.</p>
+<p>A primeira questão conduz aos conceitos de risco, viés, erro quadrático médio, consistência e eficiência e integra o percurso comum do capítulo. A segunda, correspondente ao aprofundamento, conduz à suficiência, à suficiência minimal, às famílias exponenciais, à completude, ao ENVVUM, aos teoremas de Rao–Blackwell e Lehmann–Scheffé e à relação entre ancilaridade e o teorema de Basu. As duas linhas voltam a se encontrar quando a redução dos dados é utilizada para melhorar e caracterizar estimadores <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals cox2006principles">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, chap.&nbsp;8; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, chaps. 4–5; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 2.2 and 4.3)</span>.</p>
 <section id="avaliação-de-estimadores" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="avaliação-de-estimadores"><span class="header-section-number">5.1</span> Avaliação de estimadores</h2>
 <section id="função-de-perda-risco-e-erro-quadrático-médio" class="level3 unnumbered">
@@ -1423,18 +1423,18 @@ E_\theta(\delta)=g(\theta),
 <div class="callout-body-container callout-body">
 <p>Considere o escore da amostra,</p>
 <p><span class="math display">\[
-U_\theta(\mathbf X)
+U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
 \log f_\theta(\mathbf X).
 \]</span></p>
 <p>Sob as condições de regularidade,</p>
 <p><span class="math display">\[
-E_\theta[U_\theta(\mathbf X)]=0
+E_\theta[U_n(\theta)]=0
 \]</span></p>
 <p>e</p>
 <p><span class="math display">\[
-E_\theta[U_\theta(\mathbf X)^2]
+E_\theta[U_n(\theta)^2]
 =
 I_n(\theta).
 \]</span></p>
@@ -1447,7 +1447,7 @@ E_\theta(\delta)=g(\theta),
 g'(\theta)
 =
 E_\theta\left[
-\delta\,U_\theta(\mathbf X)
+\delta\,U_n(\theta)
 \right].
 \]</span></p>
 <p>Como o escore possui esperança zero,</p>
@@ -1457,7 +1457,7 @@ g'(\theta)
 \operatorname{Cov}_\theta
 \left(
 \delta,
-U_\theta(\mathbf X)
+U_n(\theta)
 \right).
 \]</span></p>
 <p>Pela desigualdade de Cauchy–Schwarz,</p>
@@ -1465,20 +1465,20 @@ U_\theta(\mathbf X)
 \operatorname{Cov}_\theta
 \left(
 \delta,
-U_\theta(\mathbf X)
+U_n(\theta)
 \right)^2
 \leq
 \operatorname{Var}_\theta(\delta)
 \operatorname{Var}_\theta
 \left(
-U_\theta(\mathbf X)
+U_n(\theta)
 \right).
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta
 \left(
-U_\theta(\mathbf X)
+U_n(\theta)
 \right)
 =
 I_n(\theta),
@@ -1526,7 +1526,7 @@ I_n(\theta),
 </ol>
 </div>
 </div>
-<p>A formulação geral, a demonstração e as condições do resultado podem ser encontradas em <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>)</span> [thm. 4.4], <span class="citation" data-cites="rice2007mathematical">Rice (<a href="#ref-rice2007mathematical" role="doc-biblioref">2007</a>, sec.&nbsp;8.7)</span> e <span class="citation" data-cites="rasch2018">Rasch; Schott (<a href="#ref-rasch2018" role="doc-biblioref">2018</a>, secs. 1.4 and 2.4.1)</span>.</p>
+<p>A formulação geral, a demonstração e as condições do resultado podem ser encontradas em <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>, teorema 7.3.9)</span>, <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>, thm. 4.4)</span>, <span class="citation" data-cites="rice2007mathematical">Rice (<a href="#ref-rice2007mathematical" role="doc-biblioref">2007</a>, sec.&nbsp;8.7)</span> e <span class="citation" data-cites="rasch2018">Rasch; Schott (<a href="#ref-rasch2018" role="doc-biblioref">2018</a>, secs. 1.4 and 2.4.1)</span>.</p>
 </section>
 <section id="exemplo-média-de-uma-distribuição-normal-com-variância-conhecida" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exemplo-média-de-uma-distribuição-normal-com-variância-conhecida">Exemplo — Média de uma distribuição normal com variância conhecida</h3>
@@ -1802,14 +1802,14 @@ V(\theta)
 I_1(\theta)^{-1}.
 \]</span></p>
 <p>A eficiência exata e a eficiência assintótica são propriedades distintas. Um estimador pode não atingir a cota de Cramér–Rao para cada tamanho amostral e, ainda assim, possuir variância assintótica correspondente a essa cota no regime regular considerado.</p>
-<p>Sob condições regulares, estimadores de máxima verossimilhança frequentemente possuem essa propriedade. Essa conclusão exige hipóteses próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações cuja taxa de convergência difere de <span class="math inline">\(\sqrt n\)</span> <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, def. 10.1.11; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 5.11)</span>.</p>
+<p>Sob condições regulares, estimadores de máxima verossimilhança frequentemente possuem essa propriedade. Essa conclusão exige hipóteses próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações cuja taxa de convergência difere de <span class="math inline">\(\sqrt n\)</span> <span class="citation" data-cites="casella2011inferencia lauritzen2023fundamentals">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, def. 10.1.11; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 5.11)</span>.</p>
 </section>
 </section>
 <section id="aprofundamento-princípios-de-redução-de-dados" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="aprofundamento-princípios-de-redução-de-dados"><span class="header-section-number">5.2</span> Aprofundamento: Princípios de redução de dados</h2>
 <p>Até aqui, a avaliação partiu de um estimador já construído e perguntou como medir seu desempenho. Uma segunda estratégia consiste em voltar à própria amostra e perguntar <strong>quais aspectos dos dados carregam informação sobre o parâmetro</strong>.</p>
 <p>Se uma estatística <span class="math inline">\(T(\mathbf X)\)</span> retém toda a informação relevante sobre <span class="math inline">\(\theta\)</span>, procedimentos inferenciais podem ser construídos a partir de <span class="math inline">\(T\)</span> sem necessidade de conservar a amostra completa. Essa ideia conecta redução e avaliação: uma estatística suficiente pode ser utilizada para remover de um estimador a variabilidade associada a aspectos dos dados que não acrescentam informação sobre o parâmetro.</p>
-<p>A noção básica que formaliza essa redução é a <strong>suficiência</strong> <span class="citation" data-cites="cox2006principles casella2002statistical">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 2.2 and 4.3.1; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, chap.&nbsp;6)</span>.</p>
+<p>A noção básica que formaliza essa redução é a <strong>suficiência</strong> <span class="citation" data-cites="cox2006principles casella2011inferencia">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 2.2 and 4.3.1; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, chap.&nbsp;6)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Recordação — Função de verossimilhança">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1843,7 +1843,7 @@ f_\theta(\mathbf x),
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uma estatística <span class="math inline">\(T=T(\mathbf{X})\)</span> é <strong>suficiente</strong> para <span class="math inline">\(\theta\)</span> se a distribuição condicional de <span class="math inline">\(\mathbf{X}\)</span> dado <span class="math inline">\(T=t\)</span> não depende de <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="casella2002statistical cox2006principles rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, def. 6.2.1; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;2.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8)</span>.</p>
+<p>Uma estatística <span class="math inline">\(T=T(\mathbf{X})\)</span> é <strong>suficiente</strong> para <span class="math inline">\(\theta\)</span> se a distribuição condicional de <span class="math inline">\(\mathbf{X}\)</span> dado <span class="math inline">\(T=t\)</span> não depende de <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="casella2011inferencia cox2006principles rice2007mathematical">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, def. 6.2.1; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;2.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Observação — Condicionamento quando $T$ é contínua">
@@ -1860,8 +1860,8 @@ f_\theta(\mathbf x),
 <p><span class="math display">\[
 T=t
 \]</span></p>
-<p>tem probabilidade zero. Nesse caso, a definição é entendida em termos de uma <strong>distribuição condicional regular</strong>.</p>
-<p>Nos modelos dominados tratados neste capítulo, o teorema da fatoração fornece normalmente uma forma mais conveniente de verificar suficiência sem precisar construir explicitamente essa distribuição condicional <span class="citation" data-cites="casella2002statistical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.1)</span>.</p>
+<p>tem probabilidade zero. Nesse caso, uma formalização completa da distribuição condicional exige ferramentas de probabilidade condicional mais avançadas do que as desenvolvidas neste livro.</p>
+<p>Nos modelos dominados tratados neste capítulo, essa dificuldade não precisa ser enfrentada diretamente: o teorema da fatoração fornece uma forma mais conveniente de verificar suficiência sem construir explicitamente a distribuição condicional de <span class="math inline">\(\mathbf X\)</span> dado <span class="math inline">\(T=t\)</span> <span class="citation" data-cites="casella2011inferencia">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;6.2.1)</span>.</p>
 </div>
 </div>
 <p>A definição significa que, depois de conhecido <span class="math inline">\(T\)</span>, a distribuição da parte restante dos dados não contém informação adicional sobre <span class="math inline">\(\theta\)</span>. Em termos inferenciais, procedimentos que dependem da amostra apenas por meio de <span class="math inline">\(T\)</span> não perdem informação sobre o parâmetro dentro do modelo considerado <span class="citation" data-cites="cox2006principles rice2007mathematical">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;2.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8)</span>.</p>
@@ -1900,7 +1900,7 @@ g_\theta\bigl(T(\mathbf{x})\bigr)h(\mathbf{x}),
 <p>em que <span class="math inline">\(h\)</span> não depende de <span class="math inline">\(\theta\)</span>.</p>
 </div>
 </div>
-<p>A dependência da verossimilhança em <span class="math inline">\(\theta\)</span> ocorre, portanto, apenas por meio de <span class="math inline">\(T(\mathbf{x})\)</span>. O teorema é o método mais utilizado para identificar estatísticas suficientes <span class="citation" data-cites="rice2007mathematical ramachandran2021r casella2002statistical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8.1; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;5.3.2; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.1)</span>.</p>
+<p>A dependência da verossimilhança em <span class="math inline">\(\theta\)</span> ocorre, portanto, apenas por meio de <span class="math inline">\(T(\mathbf{x})\)</span>. O teorema é o método mais utilizado para identificar estatísticas suficientes <span class="citation" data-cites="rice2007mathematical ramachandran2021r casella2011inferencia">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8.1; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;5.3.2; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;6.2.1)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Esboço da demonstração">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1994,7 +1994,7 @@ f_\theta(\mathbf x)
 g_\theta\bigl(T(\mathbf x)\bigr)
 h(\mathbf x).
 \]</span></p>
-<p>No caso contínuo e em famílias dominadas gerais, a mesma ideia é formalizada utilizando densidades condicionais e derivadas de Radon–Nikodym.</p>
+<p>No caso contínuo, a mesma ideia é expressa por meio de densidades condicionais. Para famílias dominadas, essa argumentação conduz à forma geral do teorema da fatoração apresentada acima.</p>
 </div>
 </div>
 </div>
@@ -2005,7 +2005,7 @@ h(\mathbf x).
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p),
+\operatorname{Ber}(p),
 \qquad
 0&lt;p&lt;1.
 \]</span></p>
@@ -2090,7 +2090,7 @@ p^t(1-p)^{n-t}.
 <p><span class="math display">\[
 T
 \sim
-\operatorname{Binomial}(n,p),
+\operatorname{Binom}(n,p),
 \]</span></p>
 <p>portanto</p>
 <p><span class="math display">\[
@@ -2168,7 +2168,7 @@ c(\mathbf{x},\mathbf{y})f_\theta(\mathbf{y})
 <p><span class="math display">\[
 T(\mathbf{x})=T(\mathbf{y}).
 \]</span></p>
-<p>Quando o quociente <span class="math inline">\(f_\theta(\mathbf{x})/f_\theta(\mathbf{y})\)</span> está bem definido, essa condição equivale a exigir que o quociente seja independente de <span class="math inline">\(\theta\)</span> exatamente quando <span class="math inline">\(T(\mathbf{x})=T(\mathbf{y})\)</span> <span class="citation" data-cites="casella2002statistical ramachandran2009">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.2; <a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.5.3)</span>.</p>
+<p>Quando o quociente <span class="math inline">\(f_\theta(\mathbf{x})/f_\theta(\mathbf{y})\)</span> está bem definido, essa condição equivale a exigir que o quociente seja independente de <span class="math inline">\(\theta\)</span> exatamente quando <span class="math inline">\(T(\mathbf{x})=T(\mathbf{y})\)</span> <span class="citation" data-cites="casella2011inferencia ramachandran2009">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;6.2.2; <a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.5.3)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Esboço da demonstração">
@@ -2353,7 +2353,7 @@ x_{(n)}=y_{(n)}.
 <p><span class="math display">\[
 X_{(n)}
 \]</span></p>
-<p>é suficiente minimal para <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="ramachandran2009 casella2002statistical">(<a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.5.3; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.2)</span>.</p>
+<p>é suficiente minimal para <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="ramachandran2009 casella2011inferencia">(<a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.5.3; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;6.2.2)</span>.</p>
 </div>
 </div>
 </div>
@@ -2502,7 +2502,7 @@ h_n(\mathbf x)
 <h4 class="unnumbered anchored" data-anchor-id="exemplo-modelo-bernoulli">Exemplo — Modelo Bernoulli</h4>
 <p>Retomemos</p>
 <p><span class="math display">\[
-X\sim\operatorname{Bernoulli}(p),
+X\sim\operatorname{Ber}(p),
 \qquad
 0&lt;p&lt;1.
 \]</span></p>
@@ -2918,7 +2918,7 @@ E_\theta[a(T)]=0
 P_\theta\bigl(a(T)=0\bigr)=1
 \quad\text{para todo }\theta\in\Theta.
 \]</span></p>
-<p>Essa é a definição usual de completude para a família de distribuições induzida por <span class="math inline">\(T\)</span> <span class="citation" data-cites="bickel2016volume2 casella2002statistical">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, def. 8.2.2; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.4)</span>.</p>
+<p>Essa é a definição usual de completude para a família de distribuições induzida por <span class="math inline">\(T\)</span> <span class="citation" data-cites="bickel2016volume2 casella2011inferencia">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, def. 8.2.2; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;6.2.4)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Teorema — Completude em famílias exponenciais">
@@ -2947,114 +2947,40 @@ T(\mathbf X)
 \sum_{i=1}^n t(X_i).
 \]</span></p>
 <p>Se o espaço natural de parâmetros contém um conjunto aberto não vazio de <span class="math inline">\(\mathbb R^k\)</span>, então <span class="math inline">\(T\)</span> é completa para a família.</p>
-<p>Esse resultado fornece uma condição suficiente para completude. A condição sobre o espaço natural é essencial: reconhecer uma expressão na forma exponencial não é suficiente, por si só, para concluir completude <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals bickel2016volume2">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, thm. 6.2.25; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, chap.&nbsp;3; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2)</span>.</p>
+<p>Esse resultado fornece uma condição suficiente para completude. A condição sobre o espaço natural é essencial: reconhecer uma expressão na forma exponencial não é suficiente, por si só, para concluir completude <span class="citation" data-cites="casella2011inferencia lauritzen2023fundamentals bickel2016volume2">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, thm. 6.2.25; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, chap.&nbsp;3; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2)</span>.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Esboço da demonstração">
+<div class="callout callout-style-default callout-note callout-titled" title="Ideia da demonstração">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-48-contents" aria-controls="callout-48" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Esboço da demonstração
+<span class="screen-reader-only">Nota</span>Ideia da demonstração
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-48" class="callout-48-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>A ideia da demonstração pode ser vista a partir da distribuição da estatística canônica</p>
+<p>A demonstração geral desse resultado utiliza um teorema de unicidade para transformadas de Laplace e não será desenvolvida aqui. Essa é também a estratégia adotada por Casella e Berger ao apresentar o resultado <span class="citation" data-cites="casella2011inferencia">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, teorema 6.2.25)</span>.</p>
+<p>A ideia central, entretanto, pode ser descrita de forma simples. Suponha que uma função <span class="math inline">\(a\)</span> da estatística canônica</p>
 <p><span class="math display">\[
 T
 =
-\sum_{i=1}^nt(X_i).
+\sum_{i=1}^nt(X_i)
 \]</span></p>
-<p>Suponha que uma função mensurável <span class="math inline">\(a\)</span> satisfaça</p>
+<p>satisfaça</p>
 <p><span class="math display">\[
 E_\eta[a(T)]=0
 \]</span></p>
 <p>para todo <span class="math inline">\(\eta\)</span> no espaço natural.</p>
-<p>A distribuição de <span class="math inline">\(T\)</span> em uma família exponencial pode ser escrita, em relação a uma medida adequada <span class="math inline">\(\nu\)</span>, na forma</p>
+<p>Devido à forma exponencial da distribuição, essa igualdade pode ser escrita como uma transformada envolvendo <span class="math inline">\(a(T)\)</span> e o parâmetro natural <span class="math inline">\(\eta\)</span>. Quando o espaço natural contém um conjunto aberto, a unicidade dessa transformada implica que ela só pode ser identicamente nula se</p>
 <p><span class="math display">\[
-dP_\eta^T(t)
-=
-\exp\left\{
-\eta^\top t-nA(\eta)
-\right\}
-\,d\nu(t).
+a(T)=0
 \]</span></p>
-<p>Portanto,</p>
-<p><span class="math display">\[
-0
-=
-E_\eta[a(T)]
-=
-\int
-a(t)
-\exp\left\{
-\eta^\top t-nA(\eta)
-\right\}
-\,d\nu(t).
-\]</span></p>
-<p>Multiplicando por</p>
-<p><span class="math display">\[
-e^{nA(\eta)},
-\]</span></p>
-<p>obtemos</p>
-<p><span class="math display">\[
-\int
-a(t)e^{\eta^\top t}\,d\nu(t)
-=
-0
-\]</span></p>
-<p>para todo <span class="math inline">\(\eta\)</span> em um conjunto aberto de <span class="math inline">\(\mathbb R^k\)</span>.</p>
-<p>Escolha um ponto <span class="math inline">\(\eta_0\)</span> no interior do conjunto aberto contido no espaço natural e defina a medida assinada</p>
-<p><span class="math display">\[
-d\mu(t)
-=
-a(t)e^{\eta_0^\top t}\,d\nu(t).
-\]</span></p>
-<p>Como</p>
-<p><span class="math display">\[
-E_{\eta_0}|a(T)|&lt;\infty,
-\]</span></p>
-<p>essa medida possui variação total finita.</p>
-<p>Para <span class="math inline">\(h\)</span> suficientemente próximo de zero,</p>
-<p><span class="math display">\[
-\eta_0+h
-\]</span></p>
-<p>continua pertencendo ao espaço natural. Logo,</p>
-<p><span class="math display">\[
-\begin{aligned}
-0
-&amp;=
-e^{nA(\eta_0+h)}
-E_{\eta_0+h}[a(T)]\\
-&amp;=
-\int
-e^{h^\top t}
-\,d\mu(t).
-\end{aligned}
-\]</span></p>
-<p>Assim, a transformada de Laplace da medida assinada finita <span class="math inline">\(\mu\)</span> é nula em uma vizinhança de zero.</p>
-<p>Pela unicidade da transformada de Laplace,</p>
-<p><span class="math display">\[
-\mu=0.
-\]</span></p>
-<p>Como o fator</p>
-<p><span class="math display">\[
-e^{\eta_0^\top t}
-\]</span></p>
-<p>é estritamente positivo,</p>
-<p><span class="math display">\[
-a(t)=0
-\]</span></p>
-<p>para <span class="math inline">\(\nu\)</span>-quase todo <span class="math inline">\(t\)</span>. Portanto,</p>
-<p><span class="math display">\[
-P_\eta\{a(T)=0\}=1
-\]</span></p>
-<p>para todo <span class="math inline">\(\eta\)</span>.</p>
-<p>Essa é precisamente a definição de completude.</p>
-<p>A etapa técnica central é a unicidade da transformada de Laplace; por isso, a condição de que o espaço natural contenha um conjunto aberto é essencial no argumento.</p>
+<p>quase certamente para todas as distribuições da família.</p>
+<p>Esse é o mecanismo que produz a completude. A condição sobre o espaço natural é importante porque fornece o conjunto de valores do parâmetro necessário para aplicar o resultado de unicidade.</p>
+<p>Nos exemplos seguintes não será necessário utilizar esse argumento técnico. Para o modelo Poisson, por exemplo, a completude será verificada diretamente por meio de uma série de potências.</p>
 </div>
 </div>
 </div>
@@ -3148,7 +3074,7 @@ t=0,1,2,\ldots
 \leq
 \operatorname{Var}_\theta(\delta)
 \]</span></p>
-<p>para todo <span class="math inline">\(\theta\in\Theta\)</span> e para todo estimador não viesado <span class="math inline">\(\delta\)</span> de <span class="math inline">\(\tau(\theta)\)</span> com variância finita <span class="citation" data-cites="casella2002statistical bickel2016volume2 rasch2018">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, def. 7.3.7; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2.3; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;2.4)</span>.</p>
+<p>para todo <span class="math inline">\(\theta\in\Theta\)</span> e para todo estimador não viesado <span class="math inline">\(\delta\)</span> de <span class="math inline">\(\tau(\theta)\)</span> com variância finita <span class="citation" data-cites="casella2011inferencia bickel2016volume2 rasch2018">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, def. 7.3.7; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2.3; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;2.4)</span>.</p>
 </div>
 </div>
 <p>A definição estabelece o objetivo, mas não fornece por si só um procedimento para encontrar <span class="math inline">\(\delta^*\)</span>. A suficiência permite construir melhorias por condicionamento, e a combinação entre suficiência e completude fornece uma caracterização de optimalidade e unicidade.</p>
@@ -3393,7 +3319,7 @@ x_1!\cdots x_n!
 <p><span class="math display">\[
 X_1\mid T=t
 \sim
-\operatorname{Binomial}
+\operatorname{Binom}
 \left(t,\frac1n\right),
 \]</span></p>
 <p>e</p>
@@ -3431,7 +3357,7 @@ P(X_1=0\mid T=t)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Se <span class="math inline">\(T\)</span> é suficiente e completa para <span class="math inline">\(\theta\)</span> e <span class="math inline">\(\phi(T)\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>, com segundo momento finito para todo <span class="math inline">\(\theta\)</span>, então <span class="math inline">\(\phi(T)\)</span> é o ENVVUM de <span class="math inline">\(\tau(\theta)\)</span> e é único a menos de equivalência <span class="math inline">\(P_\theta\)</span>-quase certa, para todo <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="casella2002statistical bickel2016volume2">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, thm. 7.3.23; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, cor. 8.2.2)</span>.</p>
+<p>Se <span class="math inline">\(T\)</span> é suficiente e completa para <span class="math inline">\(\theta\)</span> e <span class="math inline">\(\phi(T)\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>, com segundo momento finito para todo <span class="math inline">\(\theta\)</span>, então <span class="math inline">\(\phi(T)\)</span> é o ENVVUM de <span class="math inline">\(\tau(\theta)\)</span> e é único a menos de equivalência <span class="math inline">\(P_\theta\)</span>-quase certa, para todo <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="casella2011inferencia bickel2016volume2">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, thm. 7.3.23; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, cor. 8.2.2)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração">
@@ -3554,11 +3480,14 @@ T=\sum_{i=1}^nX_i
 \eta\in(-\infty,0),
 \]</span></p>
 <p>um intervalo aberto. Portanto, o teorema de completude para famílias exponenciais também garante que <span class="math inline">\(T\)</span> é completa.</p>
-<p>Além disso,</p>
+<p>Além disso, como <span class="math inline">\(\theta\)</span> é a taxa exponencial e a parametrização da distribuição gama adotada neste livro utiliza o segundo parâmetro como escala,</p>
 <p><span class="math display">\[
 T
 \sim
-\operatorname{Gama}(n,\text{taxa }\theta).
+\operatorname{Gama}
+\left(
+n,\frac{1}{\theta}
+\right).
 \]</span></p>
 <p>Para construir uma função não viesada de <span class="math inline">\(T\)</span> que estime <span class="math inline">\(\theta\)</span>, observamos que, para <span class="math inline">\(n&gt;1\)</span>,</p>
 <p><span class="math display">\[
@@ -3610,7 +3539,10 @@ E_\theta(\widehat\theta)=\theta.
 <p><span class="math display">\[
 T
 \sim
-\operatorname{Gama}(n,\text{taxa }\theta),
+\operatorname{Gama}
+\left(
+n,\frac{1}{\theta}
+\right),
 \]</span></p>
 <p>sua densidade é</p>
 <p><span class="math display">\[
@@ -3722,68 +3654,82 @@ I_n(\theta)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Se <span class="math inline">\(T\)</span> é suficiente e completa para <span class="math inline">\(\theta\)</span> e <span class="math inline">\(A\)</span> é ancilar, então <span class="math inline">\(T\)</span> e <span class="math inline">\(A\)</span> são independentes <span class="citation" data-cites="bickel2016volume2 casella2002statistical">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.3; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.2.4)</span>.</p>
+<p>Se <span class="math inline">\(T\)</span> é suficiente e completa para <span class="math inline">\(\theta\)</span> e <span class="math inline">\(A\)</span> é ancilar, então <span class="math inline">\(T\)</span> e <span class="math inline">\(A\)</span> são independentes <span class="citation" data-cites="bickel2016volume2 casella2011inferencia">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.3; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, teoremas 6.2.24 e 6.2.28)</span>.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Esboço da demonstração">
+<div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Caso discreto">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-62-contents" aria-controls="callout-62" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Esboço da demonstração
+<span class="screen-reader-only">Nota</span>Demonstração — Caso discreto
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-62" class="callout-62-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Considere uma função limitada <span class="math inline">\(b(A)\)</span>.</p>
-<p>Como <span class="math inline">\(A\)</span> é ancilar, sua distribuição não depende de <span class="math inline">\(\theta\)</span>. Portanto,</p>
+<p>Acompanhemos o argumento de Casella e Berger no caso discreto.</p>
+<p>Fixe um valor possível <span class="math inline">\(a\)</span> da estatística ancilar <span class="math inline">\(A\)</span>. Como <span class="math inline">\(A\)</span> é ancilar,</p>
 <p><span class="math display">\[
-E_\theta[b(A)]
-=
-c
+P_\theta(A=a)
 \]</span></p>
-<p>para alguma constante <span class="math inline">\(c\)</span> que não depende de <span class="math inline">\(\theta\)</span>.</p>
-<p>Defina</p>
+<p>não depende de <span class="math inline">\(\theta\)</span>. Denote essa probabilidade por</p>
 <p><span class="math display">\[
-g(T)
-=
-E_\theta[b(A)\mid T].
+c_a=P(A=a).
 \]</span></p>
-<p>Como <span class="math inline">\(T\)</span> é suficiente, a distribuição condicional da amostra dado <span class="math inline">\(T\)</span> não depende de <span class="math inline">\(\theta\)</span>. Assim, pode-se escolher <span class="math inline">\(g\)</span> de modo que ela seja uma função de <span class="math inline">\(T\)</span> sem dependência adicional em <span class="math inline">\(\theta\)</span>.</p>
-<p>Pela propriedade da esperança iterada,</p>
+<p>Como <span class="math inline">\(T\)</span> é suficiente, a probabilidade condicional</p>
 <p><span class="math display">\[
-E_\theta[g(T)]
-=
-E_\theta[b(A)]
-=
-c
+P_\theta(A=a\mid T=t)
 \]</span></p>
-<p>para todo <span class="math inline">\(\theta\)</span>.</p>
-<p>Logo,</p>
+<p>também não depende de <span class="math inline">\(\theta\)</span>. Defina</p>
 <p><span class="math display">\[
-E_\theta[g(T)-c]
+g_a(t)
+=
+P(A=a\mid T=t)-c_a.
+\]</span></p>
+<p>Pela fórmula da probabilidade total,</p>
+<p><span class="math display">\[
+P(A=a)
+=
+\sum_t
+P(A=a\mid T=t)
+P_\theta(T=t).
+\]</span></p>
+<p>Como também</p>
+<p><span class="math display">\[
+P(A=a)
+=
+\sum_t
+c_a\,P_\theta(T=t),
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+\sum_t
+g_a(t)P_\theta(T=t)
+=
+E_\theta[g_a(T)]
 =
 0
 \]</span></p>
 <p>para todo <span class="math inline">\(\theta\)</span>.</p>
 <p>Como <span class="math inline">\(T\)</span> é completa,</p>
 <p><span class="math display">\[
-g(T)-c=0
+g_a(T)=0
 \]</span></p>
 <p><span class="math inline">\(P_\theta\)</span>-quase certamente. Portanto,</p>
 <p><span class="math display">\[
-E_\theta[b(A)\mid T]
+P(A=a\mid T=t)
 =
-E_\theta[b(A)]
+P(A=a)
 \]</span></p>
-<p>quase certamente.</p>
-<p>Essa igualdade vale para toda função limitada <span class="math inline">\(b\)</span>. Em particular, tomando indicadores de eventos determinados por <span class="math inline">\(A\)</span>, a distribuição condicional de <span class="math inline">\(A\)</span> dado <span class="math inline">\(T\)</span> coincide com sua distribuição marginal. Consequentemente,</p>
+<p>para todos os valores relevantes de <span class="math inline">\(t\)</span>.</p>
+<p>Essa igualdade é precisamente a condição de independência entre <span class="math inline">\(A\)</span> e <span class="math inline">\(T\)</span>. Logo,</p>
 <p><span class="math display">\[
 A\perp T.
 \]</span></p>
-<p>O argumento mostra o papel de cada hipótese: a ancilaridade torna a esperança independente de <span class="math inline">\(\theta\)</span>, a suficiência retira <span class="math inline">\(\theta\)</span> da distribuição condicional e a completude força a função resultante de <span class="math inline">\(T\)</span> a ser constante.</p>
+<p>O argumento evidencia o papel de cada hipótese: a ancilaridade torna a distribuição de <span class="math inline">\(A\)</span> livre de <span class="math inline">\(\theta\)</span>, a suficiência torna a distribuição condicional de <span class="math inline">\(A\)</span> dado <span class="math inline">\(T\)</span> livre de <span class="math inline">\(\theta\)</span>, e a completude força a diferença entre as probabilidades condicional e marginal a ser nula.</p>
+<p>No caso contínuo, o mesmo princípio é formulado por meio das distribuições condicionais correspondentes.</p>
 </div>
 </div>
 </div>
@@ -3870,7 +3816,7 @@ S^2
 <p>Se <span class="math inline">\(\sigma^2\)</span> também for desconhecida e fizer parte do parâmetro, <span class="math inline">\(S^2\)</span> não será ancilar para o vetor <span class="math inline">\((\mu,\sigma^2)\)</span>, pois sua distribuição depende de <span class="math inline">\(\sigma^2\)</span>. A ancilaridade deve sempre ser especificada em relação ao parâmetro e ao modelo considerados.</p>
 </div>
 </div>
-<p>A definição de ancilaridade e o teorema de Basu são apresentados em <span class="citation" data-cites="bickel2016volume2">Bickel; Doksum (<a href="#ref-bickel2016volume2" role="doc-biblioref">2016</a>)</span> [def. 8.2.3 and thm. 8.2.3] e <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>, secs. 6.2.3–6.2.4)</span>.</p>
+<p>A definição de ancilaridade e o teorema de Basu são apresentados em <span class="citation" data-cites="bickel2016volume2">Bickel; Doksum (<a href="#ref-bickel2016volume2" role="doc-biblioref">2016</a>)</span> [def. 8.2.3 and thm. 8.2.3] e <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>, secs. 6.2.3–6.2.4)</span>.</p>
 </section>
 </section>
 <section id="exemplo-integrado-avaliação-e-redução-no-modelo-gama" class="level3 unnumbered">
@@ -4338,7 +4284,7 @@ X_{(n)},
 </ol>
 <p><span class="math display">\[
 X_1,\ldots,X_n
-\overset{\mathrm{i.i.d.}}{\sim}
+\overset{\mathrm{iid}}{\sim}
 N(\mu,\sigma^2),
 \]</span></p>
 <p>identifique uma estatística suficiente para:</p>
@@ -4355,7 +4301,7 @@ N(\mu,\sigma^2),
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Geom}(p),
+\operatorname{Geo}(p),
 \]</span></p>
 <p>com</p>
 <p><span class="math display">\[
@@ -4366,10 +4312,10 @@ P_p(X_i=x) = p(1-p)^{x-1}, \qquad x=1,2,\ldots, \qquad 0&lt;p&lt;1.
 <li><p>Determine a distribuição de <span class="math inline">\(T\)</span>.</p></li>
 <li><p>Mostre que a família de distribuições de <span class="math inline">\(T\)</span> é completa.</p></li>
 </ol>
-<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 6.</em></p>
 <ol start="8" type="1">
 <li><p><strong>Rao–Blackwell.</strong> Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são i.i.d. <span class="math inline">\(\operatorname{Poisson}(\theta)\)</span>, parta do estimador <span class="math inline">\(\mathbf 1\{X_1=1\}\)</span> de <span class="math inline">\(\theta e^{-\theta}\)</span> e calcule sua versão de Rao–Blackwell condicionando em <span class="math inline">\(T=\sum_iX_i\)</span>.</p></li>
-<li><p><strong>Lehmann–Scheffé no modelo binomial.</strong> Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são i.i.d. <span class="math inline">\(\operatorname{Bin}(m,p)\)</span>, com <span class="math inline">\(m\)</span> conhecido e <span class="math inline">\(0&lt;p&lt;1\)</span>, mostre que</p></li>
+<li><p><strong>Lehmann–Scheffé no modelo binomial.</strong> Se <span class="math inline">\(X_1,\ldots,X_n\)</span> são i.i.d. <span class="math inline">\(\operatorname{Binom}(m,p)\)</span>, com <span class="math inline">\(m\)</span> conhecido e <span class="math inline">\(0&lt;p&lt;1\)</span>, mostre que</p></li>
 </ol>
 <p><span class="math display">\[
 \widehat{p}
@@ -4396,7 +4342,7 @@ P_p(X_i=x) = p(1-p)^{x-1}, \qquad x=1,2,\ldots, \qquad 0&lt;p&lt;1.
 <li><p><span class="math inline">\((n+1)X_{(n)}/n\)</span> para <span class="math inline">\(\theta\)</span> em <span class="math inline">\(\operatorname{Unif}(0,\theta)\)</span>;</p></li>
 <li><p><span class="math inline">\((n-1)/\sum_iX_i\)</span> para a taxa de uma distribuição exponencial.</p></li>
 </ol>
-<p>Os exercícios foram elaborados ou adaptados a partir das discussões e listas de problemas de <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>, chaps. 4–5)</span>, <span class="citation" data-cites="rice2007mathematical">Rice (<a href="#ref-rice2007mathematical" role="doc-biblioref">2007</a>, chap.&nbsp;8)</span>, <span class="citation" data-cites="ramachandran2021r">Ramachandran; Tsokos (<a href="#ref-ramachandran2021r" role="doc-biblioref">2021</a>, chap.&nbsp;5)</span>, <span class="citation" data-cites="larsen2012">Larsen; Marx (<a href="#ref-larsen2012" role="doc-biblioref">2012</a>, chap.&nbsp;5)</span>, <span class="citation" data-cites="bickel2016volume2">Bickel; Doksum (<a href="#ref-bickel2016volume2" role="doc-biblioref">2016</a>, chap.&nbsp;8)</span> e <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>, chap.&nbsp;6)</span>.</p>
+<p>Os exercícios foram elaborados ou adaptados a partir das discussões e listas de problemas de <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>, chaps. 4–5)</span>, <span class="citation" data-cites="rice2007mathematical">Rice (<a href="#ref-rice2007mathematical" role="doc-biblioref">2007</a>, chap.&nbsp;8)</span>, <span class="citation" data-cites="ramachandran2021r">Ramachandran; Tsokos (<a href="#ref-ramachandran2021r" role="doc-biblioref">2021</a>, chap.&nbsp;5)</span>, <span class="citation" data-cites="larsen2012">Larsen; Marx (<a href="#ref-larsen2012" role="doc-biblioref">2012</a>, chap.&nbsp;5)</span>, <span class="citation" data-cites="bickel2016volume2">Bickel; Doksum (<a href="#ref-bickel2016volume2" role="doc-biblioref">2016</a>, chap.&nbsp;8)</span> e <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>, chap.&nbsp;6)</span>.</p>
 </section>
 <section id="exercícios-extras" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercícios-extras">Exercícios extras</h3>
@@ -4406,7 +4352,7 @@ P_p(X_i=x) = p(1-p)^{x-1}, \qquad x=1,2,\ldots, \qquad 0&lt;p&lt;1.
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p),
+\operatorname{Ber}(p),
 \qquad
 0&lt;p&lt;1.
 \]</span></p>
@@ -4417,7 +4363,7 @@ X_1,\ldots,X_n
 <li><p>Verifique se <span class="math inline">\(\widehat p\)</span> atinge esse limite.</p></li>
 <li><p>Para <span class="math inline">\(n\geq4\)</span>, mostre que <span class="math inline">\(X_1X_2X_3X_4\)</span> é não viesado para <span class="math inline">\(p^4\)</span> e use Rao–Blackwell e Lehmann–Scheffé para obter o ENVVUM de <span class="math inline">\(p^4\)</span>.</p></li>
 </ol>
-<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 7.</em></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 7.</em></p>
 <ol start="15" type="1">
 <li><strong>ENVVUM sem atingir Cramér–Rao.</strong> Seja</li>
 </ol>
@@ -4438,17 +4384,17 @@ N(\theta,1).
 <li><p>Calcule sua variância.</p></li>
 <li><p>Obtenha o limite inferior de Cramér–Rao para estimadores não viesados de <span class="math inline">\(\theta^2\)</span>.</p></li>
 </ol>
-<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 7.</em></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 7.</em></p>
 <ol start="16" type="1">
 <li><strong>Melhoria de um estimador exponencial.</strong> Seja</li>
 </ol>
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exp}(\theta),
+\operatorname{Exp}\left(\frac{1}{\theta}\right),
 \qquad E(X_i)=\theta,
 \]</span></p>
-<p>e defina</p>
+<p>em que a distribuição exponencial está escrita na parametrização por taxa adotada neste livro, e defina</p>
 <p><span class="math display">\[
 Y=X_{(1)}=\min\{X_1,\ldots,X_n\}.
 \]</span></p>
@@ -4459,7 +4405,7 @@ Y=X_{(1)}=\min\{X_1,\ldots,X_n\}.
 <li><p>Mostre que <span class="math inline">\(\overline X\)</span> possui menor variância.</p></li>
 <li><p>Relacione essa melhoria ao princípio de Rao–Blackwell.</p></li>
 </ol>
-<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 7.</em></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 7.</em></p>
 <ol start="17" type="1">
 <li><strong>Completude e espaço paramétrico.</strong> Considere</li>
 </ol>
@@ -4472,7 +4418,7 @@ X\sim\operatorname{Poisson}(\lambda),
 \]</span></p>
 <p>Mostre que essa família não é completa.</p>
 <p>Em seguida, explique por que esse resultado mostra que a completude depende não apenas da forma da distribuição, mas também do espaço paramétrico.</p>
-<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 6.</em></p>
 <ol start="18" type="1">
 <li><strong>Completude no modelo Poisson.</strong> Seja</li>
 </ol>
@@ -4503,7 +4449,7 @@ g(T)=0
 <li><p>Conclua que a família de distribuições de <span class="math inline">\(T\)</span> é completa.</p></li>
 <li><p>Compare esse resultado com o exercício em que o espaço paramétrico é restrito a <span class="math inline">\(\lambda\in\{0,1\}\)</span>.</p></li>
 </ol>
-<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 6.</em></p>
 <ol start="19" type="1">
 <li><strong>Ancilaridade em uma família de locação–escala.</strong> Seja</li>
 </ol>
@@ -4543,7 +4489,7 @@ S_X=bS_Z.
 <ol start="3" type="a">
 <li>Conclua que <span class="math inline">\(R/S\)</span> é uma estatística ancilar para os parâmetros de locação e escala.</li>
 </ol>
-<p><em>Adaptado de <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>)</span>, cap. 6.</em></p>
+<p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 6.</em></p>
 </section>
 </section>
 <section id="referências" class="level2 unnumbered">
@@ -4554,8 +4500,8 @@ S_X=bS_Z.
 <div id="ref-bickel2016volume2" class="csl-entry" role="listitem">
 BICKEL, Peter J.; DOKSUM, Kjell A. <strong>Mathematical Statistics: Basic Ideas and Selected Topics: Volume II</strong>. Boca Raton, FL: CRC Press, 2016. v. 2
 </div>
-<div id="ref-casella2002statistical" class="csl-entry" role="listitem">
-CASELLA, George; BERGER, Roger L. <strong>Statistical Inference</strong>. 2. ed. Pacific Grove, CA: Duxbury Press, 2002.
+<div id="ref-casella2011inferencia" class="csl-entry" role="listitem">
+CASELLA, George; BERGER, Roger L. <strong>Inferência Estatística</strong>. Tradução: Solange Aparecida Visconte. São Paulo: Cengage Learning, 2011.
 </div>
 <div id="ref-chihara2022" class="csl-entry" role="listitem">
 CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.

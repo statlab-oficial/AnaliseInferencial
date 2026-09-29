@@ -434,7 +434,7 @@ window.Quarto = {
   <li><a href="#lei-dos-grandes-números-e-teorema-central-do-limite" id="toc-lei-dos-grandes-números-e-teorema-central-do-limite" class="nav-link" data-scroll-target="#lei-dos-grandes-números-e-teorema-central-do-limite"><span class="header-section-number">2.3.5</span> Lei dos Grandes Números e Teorema Central do Limite</a></li>
   <li><a href="#teorema-do-mapeamento-contínuo" id="toc-teorema-do-mapeamento-contínuo" class="nav-link" data-scroll-target="#teorema-do-mapeamento-contínuo"><span class="header-section-number">2.3.6</span> Teorema do mapeamento contínuo</a></li>
   <li><a href="#lema-de-slutsky" id="toc-lema-de-slutsky" class="nav-link" data-scroll-target="#lema-de-slutsky"><span class="header-section-number">2.3.7</span> Lema de Slutsky</a></li>
-  <li><a href="#aprofundamento-mestrado" id="toc-aprofundamento-mestrado" class="nav-link" data-scroll-target="#aprofundamento-mestrado"><span class="header-section-number">2.3.8</span> Aprofundamento — Mestrado</a></li>
+  <li><a href="#aprofundamento" id="toc-aprofundamento" class="nav-link" data-scroll-target="#aprofundamento"><span class="header-section-number">2.3.8</span> Aprofundamento</a></li>
   <li><a href="#ordens-estocásticas" id="toc-ordens-estocásticas" class="nav-link" data-scroll-target="#ordens-estocásticas"><span class="header-section-number">2.3.9</span> Ordens estocásticas</a></li>
   </ul></li>
   <li><a href="#síntese" id="toc-síntese" class="nav-link" data-scroll-target="#síntese"><span class="header-section-number">2.4</span> Síntese</a></li>
@@ -483,7 +483,7 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>Os resultados apresentados neste capítulo podem ser utilizados como ferramentas. O objetivo não é desenvolver novamente conteúdos de Cálculo ou Álgebra Linear nem apresentar demonstrações dos resultados assintóticos.</p>
 <p>A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e interpretados aqui. Suas consequências para distribuições de estatísticas serão desenvolvidas no capítulo <strong>Distribuições Amostrais</strong>.</p>
-<p>O método delta e sua versão multivariada também são estabelecidos neste capítulo, mas constituem <strong>Aprofundamento — Mestrado</strong>, em consonância com o percurso curricular do livro. Esses resultados serão aplicados posteriormente nos desenvolvimentos inferenciais correspondentes.</p>
+<p>O método delta e sua versão multivariada também são estabelecidos neste capítulo como <strong>Aprofundamento</strong>. Esses resultados serão aplicados posteriormente nos desenvolvimentos inferenciais correspondentes.</p>
 </div>
 </div>
 <section id="mapa-de-dependências" class="level2" data-number="2.1">
@@ -546,7 +546,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td style="text-align: left;">Método delta</td>
-<td style="text-align: left;">distribuições assintóticas de funções — <strong>Aprofundamento — Mestrado</strong></td>
+<td style="text-align: left;">distribuições assintóticas de funções — <strong>Aprofundamento</strong></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Ordens estocásticas</td>
@@ -1259,7 +1259,16 @@ f_{Y_1}(y_1)
 \qquad
 y_1&gt;0.
 \]</span></p>
-<p>Portanto, a soma de duas variáveis exponenciais independentes com a mesma taxa possui distribuição gama com forma <span class="math inline">\(2\)</span> e taxa <span class="math inline">\(\lambda\)</span>, em concordância com a relação apresentada no capítulo anterior.</p>
+<p>Portanto, a soma de duas variáveis exponenciais independentes com a mesma taxa possui distribuição gama com forma <span class="math inline">\(2\)</span> e escala <span class="math inline">\(1/\lambda\)</span>,</p>
+<p><span class="math display">\[
+Y_1
+\sim
+\operatorname{Gama}
+\left(
+2,\frac{1}{\lambda}
+\right),
+\]</span></p>
+<p>em concordância com a parametrização forma–escala adotada no capítulo anterior.</p>
 </div>
 </section>
 </section>
@@ -1424,7 +1433,7 @@ E(X_1).
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 \]</span></p>
 <p>Como <span class="math inline">\(E(X_i)=p\)</span>,</p>
 <p><span class="math display">\[
@@ -1548,7 +1557,7 @@ N\left(
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda).
+\operatorname{Exp}(\lambda).
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
@@ -1583,7 +1592,7 @@ N\left(
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(1).
+\operatorname{Exp}(1).
 \]</span></p>
 <p>Nesse caso, <span class="math inline">\(E(X_i)=1\)</span> e <span class="math inline">\(\operatorname{Var}(X_i)=1\)</span>. Além disso,</p>
 <p><span class="math display">\[
@@ -1665,7 +1674,11 @@ N(0,1).
 <p><span class="math display">\[
 X_n\xrightarrow{P}X
 \]</span></p>
-<p>e <span class="math inline">\(g\)</span> é contínua em <span class="math inline">\(X\)</span> com probabilidade <span class="math inline">\(1\)</span>, então</p>
+<p>e <span class="math inline">\(g\)</span> é contínua em todos os pontos de um conjunto <span class="math inline">\(C\)</span> tal que</p>
+<p><span class="math display">\[
+P(X\in C)=1,
+\]</span></p>
+<p>então</p>
 <p><span class="math display">\[
 g(X_n)
 \xrightarrow{P}
@@ -1675,7 +1688,11 @@ g(X).
 <p><span class="math display">\[
 X_n\xrightarrow{d}X
 \]</span></p>
-<p>e <span class="math inline">\(g\)</span> é contínua em <span class="math inline">\(X\)</span> com probabilidade <span class="math inline">\(1\)</span>, então</p>
+<p>e <span class="math inline">\(g\)</span> é contínua em todos os pontos de um conjunto <span class="math inline">\(C\)</span> tal que</p>
+<p><span class="math display">\[
+P(X\in C)=1,
+\]</span></p>
+<p>então</p>
 <p><span class="math display">\[
 g(X_n)
 \xrightarrow{d}
@@ -1770,19 +1787,22 @@ N(0,1).
 <p>Esse mecanismo será utilizado posteriormente quando uma quantidade desconhecida presente em uma padronização for substituída por uma aproximação consistente.</p>
 </div>
 </section>
-<section id="aprofundamento-mestrado" class="level3" data-number="2.3.8">
-<h3 data-number="2.3.8" class="anchored" data-anchor-id="aprofundamento-mestrado"><span class="header-section-number">2.3.8</span> Aprofundamento — Mestrado</h3>
-<p>As subseções seguintes apresentam o método delta em suas versões univariada e multivariada. Esse bloco utiliza conjuntamente expansão de Taylor, convergência em distribuição e o lema de Slutsky e integra o percurso específico do mestrado.</p>
+<section id="aprofundamento" class="level3" data-number="2.3.8">
+<h3 data-number="2.3.8" class="anchored" data-anchor-id="aprofundamento"><span class="header-section-number">2.3.8</span> Aprofundamento</h3>
+<p>As subseções seguintes apresentam o método delta em suas versões univariada e multivariada. Esse bloco utiliza conjuntamente expansão de Taylor, convergência em distribuição e o lema de Slutsky.</p>
 <section id="método-delta" class="level4" data-number="2.3.8.1">
 <h4 data-number="2.3.8.1" class="anchored" data-anchor-id="método-delta"><span class="header-section-number">2.3.8.1</span> Método delta</h4>
-<p>O método delta permite obter a distribuição assintótica de uma transformação a partir da distribuição assintótica da quantidade original.</p>
+<p>O método delta permite obter a distribuição assintótica de uma transformação a partir da distribuição assintótica da quantidade original <span class="citation" data-cites="casella2011inferencia">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;5.5.4)</span>.</p>
 <p>Suponha que</p>
 <p><span class="math display">\[
 \sqrt n(T_n-\theta)
 \xrightarrow{d}
 N(0,\tau^2)
 \]</span></p>
-<p>e que <span class="math inline">\(g\)</span> seja diferenciável em <span class="math inline">\(\theta\)</span>.</p>
+<p>e que <span class="math inline">\(g\)</span> seja diferenciável em <span class="math inline">\(\theta\)</span>, com</p>
+<p><span class="math display">\[
+g'(\theta)\neq0.
+\]</span></p>
 <p>Então,</p>
 <p><span class="math display">\[
 \sqrt n
@@ -1793,8 +1813,8 @@ N\left(
 [g'(\theta)]^2\tau^2
 \right).
 \]</span></p>
-<p>Quando <span class="math inline">\(g'(\theta)\neq0\)</span>, o resultado fornece uma distribuição limite não degenerada de primeira ordem.</p>
-<p>Se <span class="math inline">\(g'(\theta)=0\)</span>, a aproximação de primeira ordem produz variância limite igual a zero. Nesse caso, uma expansão de ordem superior e uma escala diferente podem ser necessárias <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;7.7)</span>.</p>
+<p>Essa é a forma usual do método delta de primeira ordem <span class="citation" data-cites="casella2011inferencia">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;5.5.4)</span>.</p>
+<p>Quando <span class="math inline">\(g'(\theta)=0\)</span>, essa forma não fornece uma distribuição limite não degenerada. Nesse caso, uma expansão de Taylor de ordem superior e uma escala diferente podem ser necessárias <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;7.7)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Relação com Taylor">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2025,7 +2045,7 @@ O_P(n^{-1/2}).
 <p>Os resultados deste capítulo podem ser organizados em dois componentes.</p>
 <p>O primeiro reúne <strong>ferramentas matemáticas</strong>. Somatórios, produtos e logaritmos permitem reorganizar expressões; vetores e matrizes fornecem a linguagem necessária para parâmetros e estatísticas multidimensionais; diferenciação, gradientes, hessianas e expansões de Taylor permitem estudar localmente funções; formas quadráticas e projeções serão utilizadas principalmente em distribuições associadas ao modelo normal e em mínimos quadrados; e o jacobiano permite trabalhar com transformações multivariadas.</p>
 <p>O segundo reúne <strong>ferramentas assintóticas</strong>. Os modos de convergência formalizam diferentes sentidos em que uma sequência aleatória pode aproximar um limite. A Lei dos Grandes Números descreve a estabilização de médias, enquanto o Teorema Central do Limite descreve suas flutuações padronizadas. O teorema do mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes, e as ordens <span class="math inline">\(O_P\)</span> e <span class="math inline">\(o_P\)</span> registram de forma compacta a magnitude dos termos envolvidos.</p>
-<p>No <strong>Aprofundamento — Mestrado</strong>, o método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias. Sua versão multivariada realiza a mesma operação por meio da matriz jacobiana.</p>
+<p>No <strong>Aprofundamento</strong>, o método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias. Sua versão multivariada realiza a mesma operação por meio da matriz jacobiana.</p>
 <p>A estrutura assintótica do núcleo pode ser resumida por</p>
 <p><span class="math display">\[
 \text{Lei dos Grandes Números}
@@ -2038,7 +2058,7 @@ O_P(n^{-1/2}).
 \longrightarrow
 \text{distribuição das flutuações}.
 \]</span></p>
-<p>No aprofundamento do mestrado, essas ferramentas se articulam segundo o esquema</p>
+<p>No aprofundamento, essas ferramentas se articulam segundo o esquema</p>
 <p><span class="math display">\[
 \text{distribuição assintótica}
 +
@@ -2306,7 +2326,7 @@ Y_2=X_1+X_2.
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(0{,}35)
+\operatorname{Ber}(0{,}35)
 \]</span></p>
 <p>e <span class="math inline">\(R_n=\sum_{i=1}^nX_i\)</span>.</p>
 <ol type="a">
@@ -2331,7 +2351,7 @@ X_1,\ldots,X_n
 <p><span class="math display">\[
 X_1,\ldots,X_{64}
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(2).
+\operatorname{Exp}(2).
 \]</span></p>
 <ol type="a">
 <li><p>Determine <span class="math inline">\(E(X_i)\)</span> e <span class="math inline">\(\operatorname{Var}(X_i)\)</span>.</p></li>
@@ -2425,9 +2445,9 @@ S_n
 <p>Indique explicitamente onde o lema de Slutsky é utilizado.</p>
 </div>
 </div>
-<section id="aprofundamento" class="level4 unnumbered">
-<h4 class="unnumbered anchored" data-anchor-id="aprofundamento">Aprofundamento</h4>
-<p>Os exercícios seguintes utilizam o método delta e integram o percurso de aprofundamento do mestrado.</p>
+<section id="aprofundamento-1" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="aprofundamento-1">Aprofundamento</h4>
+<p>Os exercícios seguintes utilizam o método delta e integram o aprofundamento.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 14">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2538,6 +2558,9 @@ g(\theta_1,\theta_2)
 
 
 <div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
+<div id="ref-casella2011inferencia" class="csl-entry" role="listitem">
+CASELLA, George; BERGER, Roger L. <strong>Inferência Estatística</strong>. Tradução: Solange Aparecida Visconte. São Paulo: Cengage Learning, 2011.
+</div>
 <div id="ref-chihara2022" class="csl-entry" role="listitem">
 CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.
 </div>

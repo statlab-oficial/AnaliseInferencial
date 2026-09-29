@@ -1140,7 +1140,7 @@ E\left[
 \]</span></p>
 <p>quando existe.</p>
 <p>A média corresponde ao primeiro momento em torno da origem. A variância corresponde ao segundo momento centrado.</p>
-<p>Medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados <span class="citation" data-cites="casella2002statistical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, ex. 2.28; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1 e 3.3)</span>.</p>
+<p>Medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados <span class="citation" data-cites="casella2011inferencia ramachandran2021r">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, ex. 2.28; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 3.1 e 3.3)</span>.</p>
 </section>
 <section id="variância" class="level3" data-number="1.3.3">
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="variância"><span class="header-section-number">1.3.3</span> Variância</h3>
@@ -1931,7 +1931,7 @@ E
 </div>
 <div class="callout-body-container callout-body">
 <p>Os principais resultados desta seção podem ser organizados a partir da distribuição conjunta.</p>
-<p>A partir de uma distribuição conjunta podem ser obtidas as <strong>distribuições marginais</strong> de cada componente e, quando as condições necessárias são satisfeitas, suas <strong>distribuições condicionais</strong>.</p>
+<p>A partir de uma distribuição conjunta, podem ser obtidas as <strong>distribuições marginais</strong> de cada componente e, quando as condições necessárias são satisfeitas, suas <strong>distribuições condicionais</strong>.</p>
 <p>A independência corresponde à fatoração da distribuição conjunta. No caso discreto,</p>
 <p><span class="math display">\[
 p_{X,Y}(x,y)
@@ -1942,9 +1942,8 @@ p_X(x)p_Y(y),
 <p><span class="math display">\[
 f_{X,Y}(x,y)
 =
-f_X(x)f_Y(y)
+f_X(x)f_Y(y).
 \]</span></p>
-<p>quase sempre.</p>
 <p>O condicionamento também permite decompor momentos. A lei da esperança total estabelece que</p>
 <p><span class="math display">\[
 E(X)
@@ -1965,7 +1964,6 @@ X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
 F.
 \]</span></p>
-<p>Essa estrutura será utilizada repetidamente nos modelos probabilísticos apresentados a seguir e, posteriormente, na definição de amostras aleatórias.</p>
 </div>
 </div>
 </section>
@@ -2071,13 +2069,7 @@ M_{X_1+\cdots+X_n}(t)
 =
 \prod_{i=1}^nM_{X_i}(t).
 \]</span></p>
-<p>Se, além disso,</p>
-<p><span class="math display">\[
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
-X
-\]</span></p>
-<p>e</p>
+<p>Se, além disso, <span class="math inline">\(X_1,\ldots,X_n\)</span> são i.i.d. e possuem a mesma distribuição de uma variável aleatória <span class="math inline">\(X\)</span>, e</p>
 <p><span class="math display">\[
 S_n=X_1+\cdots+X_n,
 \]</span></p>
@@ -2669,7 +2661,7 @@ X
 \]</span></p>
 <p>Se <span class="math inline">\(X\)</span> representa o <strong>número de ensaios necessários até a ocorrência do primeiro sucesso</strong>, então</p>
 <p><span class="math display">\[
-X\sim\text{Geo}(p).
+X\sim\operatorname{Geo}(p).
 \]</span></p>
 <p>O suporte é</p>
 <p><span class="math display">\[
@@ -3810,11 +3802,16 @@ X_1,X_2,X_3
 <p><span class="math display">\[
 T=X_1+X_2+X_3
 \]</span></p>
-<p>possui distribuição gama. Como esse modelo surge diretamente da soma de variáveis exponenciais com taxa <span class="math inline">\(\lambda\)</span>, utilizaremos neste desenvolvimento a parametrização forma-taxa:</p>
+<p>possui distribuição gama. Como nesta seção a notação <span class="math inline">\(\operatorname{Gama}(\alpha,\beta)\)</span> foi definida na parametrização forma–escala, a taxa <span class="math inline">\(\lambda\)</span> corresponde à escala</p>
 <p><span class="math display">\[
-T\sim\operatorname{Gama}(3,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\beta=\frac{1}{\lambda}.
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+T\sim\operatorname{Gama}
+\left(
+3,\frac{1}{\lambda}
+\right).
 \]</span></p>
 <p>Ao observar tempos totais de atendimento de vários clientes, pode haver interesse inferencial em obter informação sobre <span class="math inline">\(\lambda\)</span> e, consequentemente, sobre</p>
 <p><span class="math display">\[
@@ -3865,13 +3862,14 @@ S_n
 =
 \sum_{i=1}^nX_i
 \]</span></p>
-<p>possui distribuição gama. Como o modelo surge diretamente de variáveis exponenciais com taxa <span class="math inline">\(\lambda\)</span>, utilizaremos neste desenvolvimento a parametrização forma-taxa:</p>
+<p>possui distribuição gama. Como a taxa exponencial <span class="math inline">\(\lambda\)</span> corresponde à escala gama <span class="math inline">\(1/\lambda\)</span>,</p>
 <p><span class="math display">\[
 S_n
 \sim
-\operatorname{Gama}(n,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\operatorname{Gama}
+\left(
+n,\frac{1}{\lambda}
+\right).
 \]</span></p>
 <p>Esse resultado pode ser obtido diretamente pelas funções geradoras de momentos. Como</p>
 <p><span class="math display">\[
@@ -3887,7 +3885,7 @@ M_{S_n}(t)
 \frac{\lambda}{\lambda-t}
 \right)^n.
 \]</span></p>
-<p>Essa é a FGM de uma distribuição gama com forma <span class="math inline">\(n\)</span> e taxa <span class="math inline">\(\lambda\)</span>.</p>
+<p>Essa é a FGM de uma distribuição gama com forma <span class="math inline">\(n\)</span> e escala <span class="math inline">\(1/\lambda\)</span>.</p>
 <p>Consequentemente,</p>
 <p><span class="math display">\[
 E(S_n)
@@ -3910,16 +3908,25 @@ E(S_n)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Na parametrização geral adotada nesta seção,</p>
+<p>Na parametrização adotada neste livro,</p>
 <p><span class="math display">\[
 X\sim\operatorname{Gama}(\alpha,\beta),
 \]</span></p>
-<p>o segundo parâmetro <span class="math inline">\(\beta\)</span> representa a <strong>escala</strong>.</p>
-<p>Quando a distribuição gama surge como soma de variáveis exponenciais parametrizadas pela taxa <span class="math inline">\(\lambda\)</span>, pode ser mais conveniente descrever o mesmo modelo em termos da <strong>forma</strong> e da <strong>taxa</strong>, usando a relação</p>
+<p>o primeiro parâmetro <span class="math inline">\(\alpha\)</span> representa a <strong>forma</strong> e o segundo parâmetro <span class="math inline">\(\beta\)</span> representa a <strong>escala</strong>, em concordância com a parametrização utilizada por Casella e Berger.</p>
+<p>Quando a distribuição gama surge a partir de variáveis exponenciais parametrizadas pela taxa <span class="math inline">\(\lambda\)</span>, utilizamos a relação</p>
 <p><span class="math display">\[
 \beta=\frac{1}{\lambda}.
 \]</span></p>
-<p>Nesse contexto,</p>
+<p>Assim,</p>
+<p><span class="math display">\[
+X
+\sim
+\operatorname{Gama}
+\left(
+\alpha,\frac{1}{\lambda}
+\right)
+\]</span></p>
+<p>possui</p>
 <p><span class="math display">\[
 E(X)=\frac{\alpha}{\lambda}
 \]</span></p>
@@ -3927,7 +3934,7 @@ E(X)=\frac{\alpha}{\lambda}
 <p><span class="math display">\[
 \operatorname{Var}(X)=\frac{\alpha}{\lambda^2}.
 \]</span></p>
-<p>A parametrização utilizada deve ser indicada explicitamente sempre que houver possibilidade de ambiguidade.</p>
+<p>Dessa forma, a notação <span class="math inline">\(\operatorname{Gama}(\alpha,\beta)\)</span> mantém sempre o segundo parâmetro como escala, enquanto a taxa <span class="math inline">\(\lambda\)</span> pode ser utilizada nos modelos exponenciais sem ambiguidade.</p>
 </div>
 </div>
 </section>
@@ -4195,15 +4202,7 @@ t\in\mathbb R,
 (0,1).
 \]</span></p>
 <p>Portanto, ela é adequada para variáveis contínuas que assumem valores estritamente entre <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>.</p>
-<p>Quando valores exatamente iguais a</p>
-<p><span class="math display">\[
-0
-\]</span></p>
-<p>ou</p>
-<p><span class="math display">\[
-1
-\]</span></p>
-<p>podem ocorrer com probabilidade positiva, a distribuição beta padrão não representa diretamente essa massa de probabilidade nos extremos. Nesses casos, pode ser necessário considerar outra especificação probabilística.</p>
+<p>Quando valores exatamente iguais a <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span> podem ocorrer com probabilidade positiva, a distribuição beta padrão não representa diretamente essa massa de probabilidade nos extremos. Nesses casos, pode ser necessário considerar outra especificação probabilística.</p>
 <p>Essa distinção deve ser considerada, por exemplo, ao modelar proporções que possam assumir exatamente <span class="math inline">\(0\%\)</span> ou <span class="math inline">\(100\%\)</span>.</p>
 </div>
 </div>
@@ -4438,7 +4437,7 @@ f_X
 g^{-1}(y)
 \right|,
 \]</span></p>
-<p>para <span class="math inline">\(y\)</span> pertencente ao suporte da variável transformada <span class="citation" data-cites="casella2002statistical rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;2.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 2.3 e 3.6; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.4)</span>.</p>
+<p>para <span class="math inline">\(y\)</span> pertencente ao suporte da variável transformada <span class="citation" data-cites="casella2011inferencia rice2007mathematical ramachandran2021r">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;2.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 2.3 e 3.6; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;3.4)</span>.</p>
 <p>O termo</p>
 <p><span class="math display">\[
 \left|
@@ -4941,14 +4940,15 @@ np_n\to\lambda
 </section>
 <section id="modelos-contínuos" class="level3" data-number="1.11.2">
 <h3 data-number="1.11.2" class="anchored" data-anchor-id="modelos-contínuos"><span class="header-section-number">1.11.2</span> Modelos contínuos</h3>
-<p>Na relação entre a distribuição exponencial e a distribuição gama, utilizaremos a parametrização forma-taxa da gama para evidenciar a taxa comum <span class="math inline">\(\lambda\)</span>. Assim, a distribuição exponencial é um caso particular da distribuição gama:</p>
+<p>Na relação entre a distribuição exponencial e a distribuição gama, lembramos que uma exponencial com taxa <span class="math inline">\(\lambda\)</span> corresponde a uma gama com forma <span class="math inline">\(1\)</span> e escala <span class="math inline">\(1/\lambda\)</span>:</p>
 <p><span class="math display">\[
 \boxed{
 \operatorname{Exp}(\lambda)
 =
-\operatorname{Gama}(1,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\operatorname{Gama}
+\left(
+1,\frac{1}{\lambda}
+\right).
 }
 \]</span></p>
 <p>Além disso, a soma de variáveis exponenciais independentes com a mesma taxa produz uma variável gama:</p>
@@ -4960,9 +4960,10 @@ X_1,\ldots,X_n
 \quad\Longrightarrow\quad
 \sum_{i=1}^nX_i
 \sim
-\operatorname{Gama}(n,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\operatorname{Gama}
+\left(
+n,\frac{1}{\lambda}
+\right).
 }
 \]</span></p>
 <p>A distribuição uniforme padrão é um caso particular da família beta:</p>
@@ -5389,7 +5390,7 @@ p(1-p)(\mu_1-\mu_0)^2.
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 \]</span></p>
 <ol type="a">
 <li><p>Obtenha a função geradora de momentos de <span class="math inline">\(X_i\)</span>.</p></li>
@@ -5426,7 +5427,7 @@ S
 <p><span class="math display">\[
 Y_1,\ldots,Y_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda),
+\operatorname{Exp}(\lambda),
 \]</span></p>
 <p>identifique a distribuição de <span class="math inline">\(T_n=\sum_{i=1}^nY_i\)</span>.</p>
 <ol start="3" type="a">
@@ -5446,7 +5447,7 @@ Y_1,\ldots,Y_n
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Considere <span class="math inline">\(X\sim\operatorname{Exponencial}(\lambda)\)</span> e <span class="math inline">\(Y=cX\)</span>, com <span class="math inline">\(c&gt;0\)</span>.</p>
+<p>Considere <span class="math inline">\(X\sim\operatorname{Exp}(\lambda)\)</span> e <span class="math inline">\(Y=cX\)</span>, com <span class="math inline">\(c&gt;0\)</span>.</p>
 <ol type="a">
 <li><p>Determine o suporte <span class="math inline">\(\mathcal Y\)</span> de <span class="math inline">\(Y\)</span>.</p></li>
 <li><p>Obtenha a função de distribuição de <span class="math inline">\(Y\)</span>.</p></li>
@@ -5502,8 +5503,8 @@ Y_1,\ldots,Y_n
 
 
 <div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
-<div id="ref-casella2002statistical" class="csl-entry" role="listitem">
-CASELLA, George; BERGER, Roger L. <strong>Statistical Inference</strong>. 2. ed. Pacific Grove, CA: Duxbury Press, 2002.
+<div id="ref-casella2011inferencia" class="csl-entry" role="listitem">
+CASELLA, George; BERGER, Roger L. <strong>Inferência Estatística</strong>. Tradução: Solange Aparecida Visconte. São Paulo: Cengage Learning, 2011.
 </div>
 <div id="ref-chihara2022" class="csl-entry" role="listitem">
 CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.
