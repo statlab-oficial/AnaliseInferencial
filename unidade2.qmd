@@ -87,7 +87,8 @@ $$
 A distribuição amostral é uma distribuição de uma estatística sob $P_\theta$; a verossimilhança, por sua vez, mantém os dados fixos e compara valores de $\theta$. Esses objetos são relacionados, mas não devem ser identificados [@cox2006principles, seções 1.3 e 2.1].
 
 ::: {.callout-tip title="Exemplo — Tempos de vida exponenciais"}
-Se
+
+Considere
 
 $$
 X_1,\ldots,X_n
@@ -95,37 +96,68 @@ X_1,\ldots,X_n
 \operatorname{Exp}(\mu),
 $$
 
-na parametrização pela média, então
+na parametrização pela média, de modo que
+
+$$
+E(X_i)=\mu.
+$$
+
+Obtenha:
+
+1. a densidade conjunta da amostra;
+2. a probabilidade
+
+$$
+P(X_1>2,\ldots,X_n>2).
+$$
+
+:::
+
+::: {.callout-note collapse="true" title="Resolução"}
+
+Para uma observação,
 
 $$
 f(x;\mu)
 =
-\frac{1}{\mu}e^{-x/\mu}I(x>0),
+\frac{1}{\mu}
+e^{-x/\mu}
+\mathbf 1\{x>0\}.
 $$
-
-com $E(X_i)=\mu$.
 
 Pela independência,
 
 $$
+\begin{aligned}
 f_{\mathbf X}(\mathbf x;\mu)
-=
+&=
+\prod_{i=1}^n
+f(x_i;\mu)\\
+&=
 \mu^{-n}
 \exp\left(
--\frac{1}{\mu}\sum_{i=1}^n x_i
+-\frac{1}{\mu}
+\sum_{i=1}^n x_i
 \right)
-\prod_{i=1}^n I(x_i>0).
+\prod_{i=1}^n
+\mathbf 1\{x_i>0\}.
+\end{aligned}
 $$
 
 Além disso,
 
 $$
+\begin{aligned}
 P(X_1>2,\ldots,X_n>2)
-=
-\prod_{i=1}^nP(X_i>2)
-=
+&=
+\prod_{i=1}^nP(X_i>2)\\
+&=
+\left(e^{-2/\mu}\right)^n\\
+&=
 e^{-2n/\mu}.
+\end{aligned}
 $$
+
 :::
 
 ### Amostragem aleatória simples sem reposição
@@ -474,11 +506,33 @@ Quando $n/N$ é pequeno, a correção de população finita é próxima de $1$, 
 Quando a população e o tamanho amostral são pequenos, a distribuição amostral pode ser obtida enumerando todas as amostras possíveis e calculando a estatística em cada uma delas [@ramachandran2021r, seção 4.1, pp. 148--151; @chihara2022, seção 4.2, pp. 82--85].
 
 ::: {.callout-tip title="Exemplo — Média de uma população finita"}
+
 Considere a população
 
-$$\mathcal{U}=\{3{,}8;3{,}9;4{,}0;4{,}1\}$$
+$$
+\mathcal U
+=
+\{3{,}8;3{,}9;4{,}0;4{,}1\}
+$$
 
-em km/L e amostras ordenadas de tamanho $n=2$, com reposição. Existem $4^2=16$ amostras equiprováveis. A distribuição de $\overline{X}$ é
+em km/L e amostras de tamanho
+
+$$
+n=2.
+$$
+
+Determine:
+
+1. a distribuição amostral de $\overline X$ com reposição;
+2. $E(\overline X)$ e $\operatorname{Var}(\overline X)$;
+3. a distribuição amostral de $\overline X$ sem reposição;
+4. como a ausência de reposição altera a variância da média.
+
+:::
+
+::: {.callout-note collapse="true" title="Resolução"}
+
+Com reposição, existem $4^2=16$ amostras ordenadas equiprováveis. A distribuição de $\overline{X}$ é
 
 | $\overline{x}$ | $3{,}80$ | $3{,}85$ | $3{,}90$ | $3{,}95$ | $4{,}00$ | $4{,}05$ | $4{,}10$ |
 |--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|
@@ -4068,7 +4122,7 @@ $$
 N_x
 =
 \sum_{i=1}^n
-I\{X_i\leq x\},
+\mathbf 1\{X_i\leq x\},
 $$
 
 o número de observações da amostra que não ultrapassam $x$.
@@ -4258,30 +4312,41 @@ $$
 :::
 
 ::: {.callout-tip title="Exemplo — Amostra uniforme"}
-Se $X_i\overset{\mathrm{iid}}{\sim}\operatorname{Unif}(0,1)$, então $F(x)=x$ e $f(x)=1$ para $0<x<1$. Assim,
+
+Se
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Unif}(0,1),
+$$
+
+utilize a fórmula geral da $k$-ésima estatística de ordem para:
+
+1. obter sua densidade;
+2. identificar sua distribuição;
+3. calcular $E[X_{(k)}]$.
+
+:::
+
+::: {.callout-note collapse="true" title="Resolução"}
+
+Para $0<x<1$,
+
+$$
+F(x)=x
+\qquad\text{e}\qquad
+f(x)=1.
+$$
+
+Logo,
 
 $$
 f_{X_{(k)}}(x)
 =
 \frac{n!}{(k-1)!(n-k)!}
- x^{k-1}(1-x)^{n-k},
- $$
-
-o que implica
-
+x^{k-1}(1-x)^{n-k}.
 $$
-X_{(k)}\sim\operatorname{Beta}(k,n-k+1).
-$$
-
-Em particular,
-
-$$
-E[X_{(k)}]
-=
-\frac{k}{n+1}.
-$$
-
-::: {.callout-note collapse="true" title="Identificação da distribuição beta e cálculo da esperança"}
 
 A densidade de uma variável
 
@@ -4359,7 +4424,6 @@ $$
 :::
 
 O caso uniforme é uma aplicação direta da densidade geral e identifica uma distribuição beta [@larsen2012, seção 3.10; @hogg1978, seção sobre estatísticas de ordem].
-:::
 
 ::: {.callout-tip title="Exemplo — Estatísticas de ordem em uma amostra exponencial"}
 
@@ -4707,11 +4771,11 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 
 ## Quadro-síntese
 
-| Situação | Estatística | Distribuição ou aproximação |
+| Situação | Estatística | Distribuição ou resultado principal |
 |------------------------|------------------------|------------------------|
 | Amostra i.i.d., $E(X)=\mu$, $\operatorname{Var}(X)=\sigma^2$ | $\overline{X}$ | $E(\overline{X})=\mu$, $\operatorname{Var}(\overline{X})=\sigma^2/n$ |
 | População normal | $\overline{X}$ | $N(\mu,\sigma^2/n)$, exatamente |
-| Amostra i.i.d., $E(X)=\mu$ e $0<\operatorname{Var}(X)=\sigma^2<\infty$ | $\sqrt n(\overline{X}-\mu)/\sigma$ | $N(0,1)$, assintoticamente |
+| Amostra i.i.d., $E(X)=\mu$ e $0<\operatorname{Var}(X)=\sigma^2<\infty$ | $\sqrt n(\overline{X}-\mu)/\sigma$ | converge em distribuição para $N(0,1)$ |
 | Poisson i.i.d. | $n\overline X=\sum X_i$ | $\operatorname{Poisson}(n\lambda)$ |
 | Bernoulli i.i.d. | $Y=\sum X_i$ | $\operatorname{Binomial}(n,p)$ |
 | Bernoulli i.i.d. | $\widehat p=Y/n$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=p(1-p)/n$ |
@@ -4721,7 +4785,7 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 | Duas populações normais independentes | $(S_1^2/\sigma_1^2)/(S_2^2/\sigma_2^2)$ | $F_{n_1-1,n_2-1}$ |
 | Duas populações normais independentes | $\overline X-\overline Y$ | $N\left(\mu_1-\mu_2,\sigma_1^2/n+\sigma_2^2/m\right)$ |
 | Amostra i.i.d. de uma distribuição contínua | $X_{(k)}$ | densidade da $k$-ésima estatística de ordem |
-| População finita, AAS sem reposição | $\overline X$ | $E(\overline X)=\mu_N$, $\operatorname{Var}(\overline X)=\dfrac{\sigma_N^2}{n}\dfrac{N-n}{N-1}$ |
+| População finita, amostragem aleatória simples sem reposição | $\overline X$ | $E(\overline X)=\mu_N$, $\operatorname{Var}(\overline X)=\dfrac{\sigma_N^2}{n}\dfrac{N-n}{N-1}$ |
 | Proporção em população finita sem reposição | $\widehat p$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=\dfrac{p(1-p)}{n}\dfrac{N-n}{N-1}$ |
 
 As distribuições e propriedades reunidas nesta unidade fornecem a base probabilística para a avaliação de estimadores. Em @sec-avaliacao-reducao, elas fundamentam o estudo de viés, variância, erro quadrático médio, consistência e eficiência.
@@ -4821,7 +4885,7 @@ c.  Determine $E(\overline X-\overline Y)$ e $\operatorname{Var}(\overline X-\ov
 
 11.  **TCL para uma população não normal.** Seja $X_1,\ldots,X_{64}\overset{\mathrm{iid}}{\sim}\operatorname{Exp}(1)$, na parametrização por taxa. Use o TCL para aproximar $P(0{,}8<\overline{X}<1{,}2)$.
 
-12. **Proporção.** Em uma população, $p=0{,}12$. Para $n=200$:
+12. **Proporção.** Sob um modelo Bernoulli i.i.d. com $p=0{,}12$, considere uma amostra de tamanho $n=200$:
 
 a.  determine $E(\widehat p)$ e $\operatorname{EP}(\widehat p)$;
 
@@ -4883,7 +4947,7 @@ X_1,\ldots,X_n
 f(x\mid\theta),
 $$
 
-em que, para $a>0$ conhecido,
+em que $a>0$ é conhecido e $\theta>0$,
 
 $$
 f(x\mid\theta)
