@@ -4,18 +4,18 @@ Em @sec-fundamentos-inferencia, um estimador foi definido como uma estatística 
 
 Conhecida essa variabilidade, surgem duas questões complementares. A primeira é **como avaliar a qualidade de um estimador**: seu erro, sua dispersão, seu comportamento quando o tamanho amostral aumenta e os limites de desempenho impostos pelo modelo. A segunda é **como identificar quais aspectos da amostra concentram a informação relevante sobre o parâmetro**, permitindo reduzir os dados sem perda inferencial.
 
-A primeira questão conduz aos conceitos de risco, viés, erro quadrático médio, consistência e eficiência. A segunda conduz à suficiência e, no aprofundamento, à suficiência minimal, às famílias exponenciais, à completude, ao ENVVUM, aos teoremas de Rao--Blackwell e Lehmann--Scheffé e à relação entre ancilaridade e o teorema de Basu. As duas linhas voltam a se encontrar quando a redução dos dados é utilizada para melhorar e caracterizar estimadores [@rice2007mathematical, chap. 8; @lauritzen2023fundamentals, chaps. 4--5; @cox2006principles, secs. 2.2 and 4.3].
+A primeira questão conduz aos conceitos de risco, viés, erro quadrático médio, consistência e eficiência e integra o percurso comum do capítulo. A segunda, correspondente ao aprofundamento do mestrado, conduz à suficiência, à suficiência minimal, às famílias exponenciais, à completude, ao ENVVUM, aos teoremas de Rao--Blackwell e Lehmann--Scheffé e à relação entre ancilaridade e o teorema de Basu. As duas linhas voltam a se encontrar quando a redução dos dados é utilizada para melhorar e caracterizar estimadores [@rice2007mathematical, chap. 8; @lauritzen2023fundamentals, chaps. 4--5; @cox2006principles, secs. 2.2 and 4.3].
 
 ## Avaliação de estimadores
 
 ### Função de perda, risco e erro quadrático médio {.unnumbered}
 
-A comparação entre estimadores depende do critério adotado. Uma forma geral de formalizar esse critério consiste em especificar uma **função de perda** $L(\tau(\theta),a)$, que quantifica a consequência de utilizar a ação $a$ quando o valor verdadeiro é $\tau(\theta)$. O risco do estimador $\delta$ é
+A comparação entre estimadores depende do critério adotado. Uma forma geral de formalizar esse critério consiste em especificar uma **função de perda** $\mathcal{L}(\tau(\theta),a)$, que quantifica a consequência de utilizar a ação $a$ quando o valor verdadeiro é $\tau(\theta)$. O risco do estimador $\delta$ é
 
 $$
 R(\theta,\delta)
 =
-E_\theta\left[L\bigl(\tau(\theta),\delta(\mathbf{X})\bigr)\right].
+E_\theta\left[\mathcal{L}\bigl(\tau(\theta),\delta(\mathbf{X})\bigr)\right].
 $$
 
 Essa formulação pertence ao quadro da teoria da decisão estatística [@rasch2018, secs. 1.5 and 2.4; @bickel2016volume2, chap. 1].
@@ -23,7 +23,7 @@ Essa formulação pertence ao quadro da teoria da decisão estatística [@rasch2
 Sob perda quadrática,
 
 $$
-L\bigl(\tau(\theta),a\bigr)
+\mathcal{L}\bigl(\tau(\theta),a\bigr)
 =
 \bigl(a-\tau(\theta)\bigr)^2,
 $$
@@ -1307,7 +1307,7 @@ A eficiência exata e a eficiência assintótica são propriedades distintas. Um
 
 Sob condições regulares, estimadores de máxima verossimilhança frequentemente possuem essa propriedade. Essa conclusão exige hipóteses próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações cuja taxa de convergência difere de $\sqrt n$ [@casella2002statistical, def. 10.1.11; @lauritzen2023fundamentals, thm. 5.11].
 
-## Princípios de redução de dados
+## Aprofundamento: Princípios de redução de dados
 
 Até aqui, a avaliação partiu de um estimador já construído e perguntou como medir seu desempenho. Uma segunda estratégia consiste em voltar à própria amostra e perguntar **quais aspectos dos dados carregam informação sobre o parâmetro**.
 
@@ -1609,8 +1609,6 @@ $$
 A distribuição condicional não depende de $p$, confirmando diretamente a suficiência de $T$.
 
 :::
-
-## Aprofundamento
 
 A suficiência responde se uma estatística preserva a informação sobre o parâmetro, mas deixa abertas questões mais refinadas. Uma estatística suficiente pode conter componentes redundantes; certas classes de modelos permitem identificar estatísticas suficientes de forma sistemática; diferentes funções de uma estatística suficiente podem estimar o mesmo alvo; e a redução dos dados pode ser utilizada para melhorar um estimador.
 
@@ -3853,6 +3851,8 @@ b. O suporte da distribuição depende de $\theta$. Explique por que a forma cl�
 
 4.  **Cramér--Rao no modelo exponencial.** Para uma amostra da distribuição exponencial com média $\theta$, calcule a informação de Fisher de uma observação e da amostra e mostre que $\overline{X}$ atinge o limite de Cramér--Rao para a estimação de $\theta$.
 
+### Exercícios — Aprofundamento {.unnumbered}
+
 5.  **Suficiência no modelo normal.** Se
 
 $$
@@ -3871,7 +3871,7 @@ c.  $(\mu,\sigma^2)$, quando ambos são desconhecidos.
 
 <!-- -->
 
-6.  **Suficiência mínima.** Utilize o critério da razão de verossimilhanças para mostrar que $X_{(n)}$ é suficiente minimal para $\theta$ no modelo $\operatorname{Unif}(0,\theta)$.
+6.  **Suficiência minimal.** Utilize o critério da razão de verossimilhanças para mostrar que $X_{(n)}$ é suficiente minimal para $\theta$ no modelo $\operatorname{Unif}(0,\theta)$.
 
 7.  **Suficiência e completude no modelo geométrico.** Seja
 
@@ -3895,7 +3895,7 @@ c.  Mostre que a família de distribuições de $T$ é completa.
 
 *Adaptado de @casella2002statistical, cap. 6.*
 
-8.  **Rao--Blackwell.** Se $X_1,\ldots,X_n$ são i.i.d. $\operatorname{Poisson}(\theta)$, parta do estimador $I\{X_1=1\}$ de $\theta e^{-\theta}$ e calcule sua versão de Rao--Blackwell condicionando em $T=\sum_iX_i$.
+8.  **Rao--Blackwell.** Se $X_1,\ldots,X_n$ são i.i.d. $\operatorname{Poisson}(\theta)$, parta do estimador $\mathbf 1\{X_1=1\}$ de $\theta e^{-\theta}$ e calcule sua versão de Rao--Blackwell condicionando em $T=\sum_iX_i$.
 
 9.  **Lehmann--Scheffé no modelo binomial.** Se $X_1,\ldots,X_n$ são i.i.d. $\operatorname{Bin}(m,p)$, com $m$ conhecido e $0<p<1$, mostre que
 
@@ -3905,7 +3905,7 @@ $$
 \frac{\sum_{i=1}^nX_i}{nm}
 $$
 
-é o ENVUM de $p$. Verifique também se o estimador é eficiente.
+é o ENVVUM de $p$. Verifique também se o estimador é eficiente.
 
 10.  **Taxa exponencial.** No modelo $\operatorname{Exp}(\theta)$
 parametrizado pela taxa, com $n>2$, mostre que
@@ -3914,14 +3914,14 @@ $$
 \frac{n-1}{\sum_{i=1}^n X_i}
 $$
 
-é o ENVUM de $\theta$. Calcule sua variância e explique por que ele não
+é o ENVVUM de $\theta$. Calcule sua variância e explique por que ele não
 atinge o limite de Cramér--Rao.
 
 11. **Ancilaridade e Basu.** No modelo normal com variância conhecida, mostre que $S^2$ é ancilar para $\mu$. Use o teorema de Basu para justificar a independência entre $\overline{X}$ e $S^2$.
 
 12. **Família exponencial curva.** Considere uma família normal $N(\mu,\mu^2)$, com $\mu>0$. Mostre que ela pode ser vista como uma subfamília curva da família normal de dois parâmetros. Discuta por que a completude da estatística canônica da família completa não pode ser transferida automaticamente para essa subfamília.
 
-13. **Comparação integrada.** Para cada estimador abaixo, determine se é não viesado, consistente e ENVUM e, quando aplicável, se atinge o limite de Cramér--Rao. Justifique cada resposta:
+13. **Comparação integrada.** Para cada estimador abaixo, determine se é não viesado, consistente e ENVVUM e, quando aplicável, se atinge o limite de Cramér--Rao. Justifique cada resposta:
 
 <!-- -->
 
@@ -3956,11 +3956,11 @@ c. Obtenha o limite inferior de Cramér--Rao para estimadores não viesados de $
 
 d. Verifique se $\widehat p$ atinge esse limite.
 
-e. Para $n\geq4$, mostre que $X_1X_2X_3X_4$ é não viesado para $p^4$ e use Rao--Blackwell e Lehmann--Scheffé para obter o ENVUM de $p^4$.
+e. Para $n\geq4$, mostre que $X_1X_2X_3X_4$ é não viesado para $p^4$ e use Rao--Blackwell e Lehmann--Scheffé para obter o ENVVUM de $p^4$.
 
 *Adaptado de @casella2002statistical, cap. 7.*
 
-15. **ENVUM sem atingir Cramér--Rao.** Seja
+15. **ENVVUM sem atingir Cramér--Rao.** Seja
 
 $$
 X_1,\ldots,X_n
@@ -3976,7 +3976,7 @@ $$
 
 é não viesado para $\theta^2$.
 
-b. Mostre que ele é o ENVUM de $\theta^2$.
+b. Mostre que ele é o ENVVUM de $\theta^2$.
 
 c. Calcule sua variância.
 
