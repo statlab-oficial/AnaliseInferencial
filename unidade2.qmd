@@ -19,7 +19,9 @@ $$
 Antes da observação dos dados, $T$ é uma variável aleatória. Depois que a amostra observada $\mathbf x=(x_1,\ldots,x_n)$ é obtida, o valor
 
 $$
-t=T(x_1,\ldots,x_n)
+T(\mathbf x)
+=
+T(x_1,\ldots,x_n)
 $$
 
 é uma realização dessa variável aleatória.
@@ -27,7 +29,7 @@ $$
 A **distribuição amostral** descreve probabilisticamente os valores que $T$ pode assumir quando o mecanismo que gera a amostra é repetido. Ela permite estudar a variabilidade de estatísticas como a média, a proporção, a variância, o mínimo, o máximo e outras funções das observações [@ramachandran2021r, cap. 4, seção 4.1, pp. 147--148; @rice2007mathematical, cap. 7, seção 7.3].
 
 ::: {.callout-important title="Definição — Distribuição amostral"}
-A **distribuição amostral** de uma estatística $T=T(X_1,\ldots,X_n)$ é sua distribuição de probabilidade sob o mecanismo que gera a amostra [@casella2002statistical, definição 5.2.1; @ramachandran2021r, definição 4.1.4, p. 148; @chihara2022, definição 4.1, pp. 78--79].
+A **distribuição amostral** de uma estatística $T=T(X_1,\ldots,X_n)$ é sua distribuição de probabilidade sob o mecanismo que gera a amostra [@casella2011inferencia, definição 5.2.1; @ramachandran2021r, definição 4.1.4, p. 148; @chihara2022, definição 4.1, pp. 78--79].
 :::
 
 A distribuição populacional e a distribuição amostral descrevem objetos diferentes. A distribuição populacional caracteriza o comportamento de uma observação $X$. A distribuição amostral caracteriza o comportamento de uma função de várias observações. Em situações particulares, ambas podem pertencer à mesma família de distribuições, possivelmente com parâmetros diferentes.
@@ -71,14 +73,14 @@ Duas estruturas de geração da amostra precisam ser distinguidas: o modelo i.i.
 
 ### Amostragem no modelo i.i.d.
 
-No modelo i.i.d., cada observação é gerada independentemente pela mesma distribuição. Esse referencial é apropriado para repetições independentes de um experimento, amostragem com reposição ou modelagem de uma população conceitualmente infinita [@casella2002statistical, seção 5.1; @ramachandran2021r, seção 4.1]. Se $f(x;\theta)$ representa a função de massa de probabilidade ou a densidade comum das observações, a função de massa ou densidade conjunta da amostra é
+No modelo i.i.d., cada observação é gerada independentemente pela mesma distribuição. Esse referencial é apropriado para repetições independentes de um experimento, amostragem com reposição ou modelagem de uma população conceitualmente infinita [@casella2011inferencia, seção 5.1; @ramachandran2021r, seção 4.1]. Se $f(x;\theta)$ representa a função de massa de probabilidade ou a densidade comum das observações, a função de massa ou densidade conjunta da amostra é
 
 $$f_{\mathbf{X}}(\mathbf{x};\theta)
 =
 \prod_{i=1}^n f(x_i;\theta).
 $$
 
-Em @sec-fundamentos-inferencia, a mesma expressão, depois de observados os dados $\mathbf{x}$, foi interpretada como função de $\theta$ e denominada função de verossimilhança [@cox2006principles, seção 2.1; @casella2002statistical, seção 6.3.1]:
+Em @sec-fundamentos-inferencia, a mesma expressão, depois de observados os dados $\mathbf{x}$, foi interpretada como função de $\theta$ e denominada função de verossimilhança [@cox2006principles, seção 2.1; @casella2011inferencia, seção 6.3.1]:
 
 $$
 L(\theta;\mathbf{x}) =\prod_{i=1}^n f(x_i;\theta).
@@ -100,6 +102,14 @@ na parametrização pela média, de modo que
 
 $$
 E(X_i)=\mu.
+$$
+
+Essa parametrização é equivalente à parametrização por taxa utilizada no capítulo anterior, com
+
+$$
+\lambda=\frac{1}{\mu}
+\qquad\text{ou, equivalentemente,}\qquad
+\mu=\frac{1}{\lambda}.
 $$
 
 Obtenha:
@@ -717,7 +727,7 @@ Considere
 $$
 X_1,X_2
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p)
+\operatorname{Ber}(p)
 $$
 
 e
@@ -785,7 +795,7 @@ Portanto,
 
 $$
 \boxed{
-Y\sim\operatorname{Binomial}(2,p)
+Y\sim\operatorname{Binom}(2,p)
 }.
 $$
 
@@ -1187,7 +1197,7 @@ N\left(
 \right).
 $$
 
-Os dois primeiros momentos são válidos para qualquer população com variância finita; a distribuição normal exata exige normalidade da população [@casella2002statistical, teorema 5.2.6 e seção 5.3.1; @ramachandran2021r, teorema 4.1.1; @kerns2010, seção 8.2; @chihara2022, apêndices A.5--A.6].
+Os dois primeiros momentos são válidos para qualquer população com variância finita; a distribuição normal exata exige normalidade da população [@casella2011inferencia, teorema 5.2.6 e seção 5.3.1; @ramachandran2021r, teorema 4.1.1; @kerns2010, seção 8.2; @chihara2022, apêndices A.5--A.6].
 :::
 
 ::: {.callout-note collapse="true" title="Demonstração"}
@@ -1817,7 +1827,7 @@ Para amostras normais, a estatística acima possui exatamente distribuição $t_
 
 Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Bernoulli}(p)$, então [@chihara2022, seções 4.1 e 4.3.1; @ramachandran2021r, seção 4.5]
 
-$$Y=\sum_{i=1}^nX_i\sim\operatorname{Binomial}(n,p)
+$$Y=\sum_{i=1}^nX_i\sim\operatorname{Binom}(n,p)
 $$
 
 e
@@ -2110,7 +2120,7 @@ Y_n
 =
 \sum_{i=1}^nX_i
 \sim
-\operatorname{Binomial}(n,p),
+\operatorname{Binom}(n,p),
 $$
 
 o mesmo resultado pode ser escrito como
@@ -2390,7 +2400,7 @@ Temos
 $$
 Y
 \sim
-\operatorname{Binomial}(1000,0{,}53).
+\operatorname{Binom}(1000,0{,}53).
 $$
 
 Logo,
@@ -2848,110 +2858,113 @@ $$
 \chi^2_{n-1}.
 $$
 
-Esse resultado é específico do modelo normal [@casella2002statistical, teorema 5.3.1; @rice2007mathematical, seções 6.2--6.3; @larsen2012, capítulo 7; @ramachandran2021r, seção 4.2].
+Esse resultado é específico do modelo normal [@casella2011inferencia, teorema 5.3.1; @rice2007mathematical, seções 6.2--6.3; @larsen2012, capítulo 7; @ramachandran2021r, seção 4.2].
 
-::: {.callout-note collapse="true" title="Como o teorema de Cochran conduz ao resultado"}
+::: {.callout-note collapse="true" title="Demonstração — Distribuição de $S^2$ no modelo normal"}
+
+Uma demonstração direta, seguindo a estratégia de Casella e Berger, utiliza uma identidade recursiva para a variância amostral.
+
+Denote por $\overline X_k$ e $S_k^2$ a média e a variância amostrais calculadas a partir das primeiras $k$ observações. Para $k\geq2$, vale a identidade
+
+$$
+kS_{k+1}^2
+=
+(k-1)S_k^2
++
+\frac{k}{k+1}
+\left(
+X_{k+1}-\overline X_k
+\right)^2.
+$$
+
+Comecemos pelo caso de uma amostra de tamanho $2$. Temos
+
+$$
+S_2^2
+=
+\frac{(X_2-X_1)^2}{2}.
+$$
 
 Como
 
 $$
-\frac{X_i-\mu}{\sigma}
+\frac{X_2-X_1}{\sigma\sqrt{2}}
 \sim
 N(0,1),
-$$
-
-temos
-
-$$
-\sum_{i=1}^n
-\left(
-\frac{X_i-\mu}{\sigma}
-\right)^2
-\sim
-\chi^2_n.
-$$
-
-A identidade
-
-$$
-\sum_{i=1}^n(X_i-\mu)^2
-=
-\sum_{i=1}^n(X_i-\overline X)^2
-+
-n(\overline X-\mu)^2
-$$
-
-decompõe a soma de quadrados em duas componentes.
-
-No modelo normal, essa decomposição é um caso particular do teorema de Cochran. Para visualizar o resultado, padronize a amostra:
-
-$$
-Z_i
-=
-\frac{X_i-\mu}{\sigma},
-\qquad
-i=1,\ldots,n.
-$$
-
-O vetor
-
-$$
-\mathbf Z
-=
-(Z_1,\ldots,Z_n)^\top
-$$
-
-possui distribuição normal multivariada padrão. A componente de $\mathbf Z$ na direção do vetor
-
-$$
-(1,\ldots,1)^\top
-$$
-
-é determinada pela média amostral, enquanto as componentes ortogonais a essa direção são determinadas pelos resíduos $X_i-\overline X$.
-
-Uma transformação ortogonal de um vetor normal padrão produz novamente componentes normais padrão independentes. A direção da média possui dimensão $1$, enquanto o espaço residual possui dimensão $n-1$. Consequentemente,
-
-$$
-\frac{
-n(\overline X-\mu)^2
-}{
-\sigma^2
-}
-\sim
-\chi^2_1
-$$
-
-e
-
-$$
-\frac{
-\sum_{i=1}^n(X_i-\overline X)^2
-}{
-\sigma^2
-}
-\sim
-\chi^2_{n-1},
-$$
-
-e as duas componentes são independentes. Essa é a forma do teorema de Cochran utilizada aqui.
-
-Como
-
-$$
-\sum_{i=1}^n(X_i-\overline X)^2
-=
-(n-1)S^2,
 $$
 
 segue que
 
 $$
-\frac{(n-1)S^2}{\sigma^2}
+\frac{S_2^2}{\sigma^2}
 \sim
-\chi^2_{n-1}.
+\chi^2_1.
 $$
 
-Em conjunto com o teorema de Cochran, a mesma decomposição também sustenta a independência entre $\overline X$ e $S^2$ no modelo normal.
+Suponha agora, por indução, que, para algum $k\geq2$,
+
+$$
+\frac{(k-1)S_k^2}{\sigma^2}
+\sim
+\chi^2_{k-1}.
+$$
+
+Como
+
+$$
+X_{k+1}-\overline X_k
+\sim
+N\left(
+0,
+\sigma^2\frac{k+1}{k}
+\right),
+$$
+
+temos
+
+$$
+\frac{k}{k+1}
+\frac{
+\left(X_{k+1}-\overline X_k\right)^2
+}{
+\sigma^2
+}
+\sim
+\chi^2_1.
+$$
+
+No modelo normal, $\overline X_k$ e $S_k^2$ são independentes. Essa propriedade será demonstrada na subseção seguinte por meio do Lema 5.3.3 de Casella e Berger, sem utilizar a distribuição qui-quadrado de $S_k^2$. Além disso, $X_{k+1}$ é independente das primeiras $k$ observações. Portanto, os dois termos da decomposição são independentes.
+
+Assim,
+
+$$
+\frac{kS_{k+1}^2}{\sigma^2}
+=
+\frac{(k-1)S_k^2}{\sigma^2}
++
+\frac{k}{k+1}
+\frac{
+\left(X_{k+1}-\overline X_k\right)^2
+}{
+\sigma^2
+}
+\sim
+\chi^2_{k-1}+\chi^2_1
+=
+\chi^2_k.
+$$
+
+Por indução,
+
+$$
+\boxed{
+\frac{(n-1)S^2}{\sigma^2}
+\sim
+\chi^2_{n-1}
+}.
+$$
+
+Essa é a estratégia utilizada na demonstração do Teorema 5.3.1 de Casella e Berger. A independência entre $\overline X$ e $S^2$, utilizada no passo indutivo, é demonstrada a seguir.
 
 :::
 
@@ -2995,21 +3008,25 @@ $$
 \chi^2_{n-1}.
 $$
 
-::: {.callout-note collapse="true" title="Outras interpretações de graus de liberdade"}
+::: {.callout-note collapse="true" title="Interpretação geral dos graus de liberdade"}
 
-De maneira mais geral, os graus de liberdade podem ser interpretados como a dimensão do espaço de variação que resta após a imposição de restrições.
+A ideia observada nos desvios em relação à média pode ser generalizada: em muitos problemas, os graus de liberdade correspondem ao número de componentes de variação que permanecem depois da imposição de restrições independentes.
 
-Em modelos lineares com $n$ observações e uma matriz de delineamento de posto $p$, por exemplo, os resíduos possuem
+No caso da variância amostral, partimos de $n$ desvios,
 
 $$
-n-p
+X_1-\overline X,\ldots,X_n-\overline X,
 $$
 
-graus de liberdade.
+mas eles satisfazem uma restrição linear,
 
-Em testes da razão de verossimilhanças, sob condições de regularidade, os graus de liberdade da distribuição assintótica correspondem à diferença entre as dimensões dos modelos irrestrito e restrito.
+$$
+\sum_{i=1}^n(X_i-\overline X)=0.
+$$
 
-Essa interpretação deve ser usada com cautela em procedimentos aproximados. No teste de Welch, por exemplo, os graus de liberdade podem não ser inteiros: eles constituem uma aproximação de Satterthwaite utilizada para calibrar uma distribuição $t$, e não uma contagem literal de observações independentes [@rice2007mathematical, seções 6.2--6.3 e 9.5; @chihara2022, seção 7.1].
+Por isso, apenas $n-1$ desses desvios podem variar livremente.
+
+Essa interpretação por restrições lineares será retomada posteriormente em outros procedimentos estatísticos. Entretanto, nem todo número chamado de graus de liberdade deve ser interpretado literalmente como uma contagem de observações independentes; em alguns métodos aproximados, ele funciona como um parâmetro de calibração.
 
 :::
 :::
@@ -3021,7 +3038,7 @@ Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}N(\mu,\sigma^2)$, então
 
 $$\overline{X}\ \perp\!\!\!\perp\ S^2.$$
 
-A independência entre a média e a variância amostrais é uma propriedade especial do modelo normal [@casella2002statistical, teorema 5.3.1; @larsen2012, apêndice 7.A.2; @rice2007mathematical, seção 6.3].
+A independência entre a média e a variância amostrais é uma propriedade especial do modelo normal [@casella2011inferencia, teorema 5.3.1; @larsen2012, apêndice 7.A.2; @rice2007mathematical, seção 6.3].
 
 Além disso,
 
@@ -3034,16 +3051,16 @@ $$\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.$$
 
 ::: {.callout-note collapse="true" title="Demonstração da independência entre $\overline X$ e $S^2$"}
 
-Considere o vetor de resíduos
+A demonstração utiliza uma propriedade específica das combinações lineares de variáveis normais independentes: nesse caso, combinações lineares com covariância nula são independentes [@casella2011inferencia, lema 5.3.3].
+
+Considere os $n-1$ resíduos
 
 $$
-\mathbf R
+R_i
 =
-\left(
-X_1-\overline X,
-\ldots,
-X_n-\overline X
-\right)^\top.
+X_i-\overline X,
+\qquad
+i=2,\ldots,n.
 $$
 
 Como
@@ -3054,12 +3071,12 @@ $$
 \frac1n\sum_{j=1}^nX_j,
 $$
 
-para cada $i$,
+temos, para cada $i=2,\ldots,n$,
 
 $$
 \begin{aligned}
 \operatorname{Cov}
-(\overline X,X_i-\overline X)
+(\overline X,R_i)
 &=
 \operatorname{Cov}(\overline X,X_i)
 -
@@ -3073,33 +3090,39 @@ $$
 \end{aligned}
 $$
 
-Como a amostra é normal, qualquer transformação linear de
-
-$$
-(X_1,\ldots,X_n)^\top
-$$
-
-possui distribuição normal multivariada. Assim, o vetor formado por $\overline X$ e pelos resíduos é conjuntamente normal.
-
-Em um vetor normal multivariado, covariância nula implica independência. Logo,
+A média $\overline X$ e os resíduos $R_2,\ldots,R_n$ são combinações lineares das variáveis normais independentes $X_1,\ldots,X_n$. Pelo resultado anterior,
 
 $$
 \overline X
 \perp\!\!\!\perp
-\mathbf R.
+(R_2,\ldots,R_n).
 $$
 
-A variância amostral é uma função apenas dos resíduos:
+Além disso,
+
+$$
+X_1-\overline X
+=
+-\sum_{i=2}^n
+(X_i-\overline X),
+$$
+
+de modo que
 
 $$
 S^2
 =
 \frac1{n-1}
-\sum_{i=1}^n
-(X_i-\overline X)^2.
+\left[
+\left(
+\sum_{i=2}^nR_i
+\right)^2
++
+\sum_{i=2}^nR_i^2
+\right].
 $$
 
-Portanto,
+Portanto, $S^2$ é uma função apenas de $R_2,\ldots,R_n$. Como $\overline X$ é independente desse vetor de resíduos,
 
 $$
 \boxed{
@@ -3109,7 +3132,7 @@ S^2
 }.
 $$
 
-A normalidade é essencial nesse argumento: para distribuições gerais, covariância nula não implica independência.
+A normalidade é essencial: fora da família normal, covariância nula entre estatísticas não implica, em geral, independência.
 
 :::
 
@@ -3132,7 +3155,7 @@ são independentes, então
 $$T=\frac{Z}{\sqrt{W/\nu}}\sim t_\nu.
 $$
 
-Essa construção define a distribuição $t$ de Student [@casella2002statistical, definição 5.3.4; @rice2007mathematical, seção 6.2; @larsen2012, seções 7.2--7.3].
+Essa construção define a distribuição $t$ de Student [@casella2011inferencia, definição 5.3.4; @rice2007mathematical, seção 6.2; @larsen2012, seções 7.2--7.3].
 :::
 
 A densidade é
@@ -3338,7 +3361,7 @@ $$
 \frac{\nu}{\nu-2}.
 $$
 
-A derivação da densidade segue a transformação utilizada em @casella2002statistical [seção 5.3.2].
+A derivação da densidade segue a transformação utilizada em @casella2011inferencia [seção 5.3.2].
 
 :::
 
@@ -3376,38 +3399,54 @@ $$
 
 e $Z$ e $W_\nu$ são independentes.
 
-Quando $\nu$ é inteiro, podemos representar
-
-$$
-W_\nu
-=
-\sum_{j=1}^{\nu}Z_j^2,
-$$
-
-em que
-
-$$
-Z_1,\ldots,Z_\nu
-\overset{\mathrm{iid}}{\sim}
-N(0,1)
-$$
-
-e essas variáveis são independentes de $Z$.
-
 Como
 
 $$
-E(Z_j^2)=1,
+E(W_\nu)=\nu
 $$
 
-a Lei dos Grandes Números fornece
+e
+
+$$
+\operatorname{Var}(W_\nu)=2\nu,
+$$
+
+temos
+
+$$
+E\left(\frac{W_\nu}{\nu}\right)=1
+$$
+
+e
+
+$$
+\operatorname{Var}
+\left(
+\frac{W_\nu}{\nu}
+\right)
+=
+\frac{2}{\nu}.
+$$
+
+Pela desigualdade de Chebyshev, para todo $\varepsilon>0$,
+
+$$
+P\left(
+\left|
+\frac{W_\nu}{\nu}-1
+\right|
+>\varepsilon
+\right)
+\leq
+\frac{2}{\nu\varepsilon^2}
+\longrightarrow0.
+$$
+
+Portanto,
 
 $$
 \frac{W_\nu}{\nu}
-=
-\frac1\nu
-\sum_{j=1}^{\nu}Z_j^2
-\xrightarrow{p}
+\xrightarrow{P}
 1.
 $$
 
@@ -3415,17 +3454,11 @@ Pelo teorema do mapeamento contínuo,
 
 $$
 \sqrt{\frac{W_\nu}{\nu}}
-\xrightarrow{p}
+\xrightarrow{P}
 1.
 $$
 
-Como
-
-$$
-Z\sim N(0,1),
-$$
-
-o teorema de Slutsky fornece
+Como $Z\sim N(0,1)$, o lema de Slutsky fornece
 
 $$
 T_\nu
@@ -3435,7 +3468,7 @@ T_\nu
 Z.
 $$
 
-Portanto,
+Logo,
 
 $$
 T_\nu
@@ -3634,7 +3667,7 @@ $$F=\frac{W_1/\nu_1}{W_2/\nu_2}
 \sim F_{\nu_1,\nu_2}.
 $$
 
-Essa razão de qui-quadrados independentes define a distribuição $F$ [@casella2002statistical, definição 5.3.6; @rice2007mathematical, seção 6.2; @larsen2012, seção 9.3; @ramachandran2021r, seção 4.2].
+Essa razão de qui-quadrados independentes define a distribuição $F$ [@casella2011inferencia, definição 5.3.6; @rice2007mathematical, seção 6.2; @larsen2012, seção 9.3; @ramachandran2021r, seção 4.2].
 :::
 
 Se $F\sim F_{\nu_1,\nu_2}$, então
@@ -4111,7 +4144,7 @@ f_{X_{(k)}}(x)
 [F(x)]^{k-1}[1-F(x)]^{n-k}f(x).
 $$
 
-A fórmula resulta da contagem do número de observações que ficam abaixo de $x$ [@casella2002statistical, teorema 5.4.4; @larsen2012, teorema 3.10.2; @ramachandran2021r, seção 4.3].
+A fórmula resulta da contagem do número de observações que ficam abaixo de $x$ [@casella2011inferencia, teorema 5.4.4; @larsen2012, teorema 3.10.2; @ramachandran2021r, seção 4.3].
 :::
 
 ::: {.callout-note collapse="true" title="Demonstração pela contagem de observações abaixo de $x$"}
@@ -4138,7 +4171,7 @@ e as observações são independentes,
 $$
 N_x
 \sim
-\operatorname{Binomial}\bigl(n,F(x)\bigr).
+\operatorname{Binom}\bigl(n,F(x)\bigr).
 $$
 
 O evento
@@ -4777,7 +4810,7 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 | População normal | $\overline{X}$ | $N(\mu,\sigma^2/n)$, exatamente |
 | Amostra i.i.d., $E(X)=\mu$ e $0<\operatorname{Var}(X)=\sigma^2<\infty$ | $\sqrt n(\overline{X}-\mu)/\sigma$ | converge em distribuição para $N(0,1)$ |
 | Poisson i.i.d. | $n\overline X=\sum X_i$ | $\operatorname{Poisson}(n\lambda)$ |
-| Bernoulli i.i.d. | $Y=\sum X_i$ | $\operatorname{Binomial}(n,p)$ |
+| Bernoulli i.i.d. | $Y=\sum X_i$ | $\operatorname{Binom}(n,p)$ |
 | Bernoulli i.i.d. | $\widehat p=Y/n$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=p(1-p)/n$ |
 | População normal | $(n-1)S^2/\sigma^2$ | $\chi^2_{n-1}$ |
 | População normal | $(\overline{X}-\mu)/(S/\sqrt n)$ | $t_{n-1}$ |
@@ -4893,7 +4926,7 @@ b.  aproxime $P(\widehat p\leq0{,}09)$;
 
 c.  compare a aproximação com a probabilidade binomial exata no R.
 
-13. **Correção de continuidade.** Seja $Y\sim\operatorname{Binomial}(150,0{,}5)$. Calcule aproximadamente:
+13. **Correção de continuidade.** Seja $Y\sim\operatorname{Binom}(150,0{,}5)$. Calcule aproximadamente:
 
 a.  $P(Y\geq90)$;
 
@@ -4939,15 +4972,7 @@ c.  calcule $E[X_{(n)}]$;
 
 d.  proponha uma transformação, $T(\cdot)$, de $X_{(n)}$ tal que  $E[T(X_{(n)})] = \theta$.
 
-18. **Parâmetro no suporte.** Seja
-
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
-f(x\mid\theta),
-$$
-
-em que $a>0$ é conhecido e $\theta>0$,
+18. **Parâmetro no suporte.** Seja $X_1,\ldots,X_n$ uma amostra i.i.d. de uma distribuição com densidade
 
 $$
 f(x\mid\theta)
@@ -4956,6 +4981,8 @@ f(x\mid\theta)
 \qquad
 0<x<\theta,
 $$
+
+em que $a>0$ é conhecido e $\theta>0$,
 
 e $f(x\mid\theta)=0$ fora desse intervalo.
 
@@ -4971,7 +4998,7 @@ $$
 \frac{X_{(n)}}{\theta}.
 $$
 
-*Adaptado de @casella2002statistical, cap. 5.*
+*Adaptado de @casella2011inferencia, cap. 5.*
 
 19. **Mínimo exponencial.** Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Exp}(\lambda)$ na parametrização por taxa, mostre que
 

@@ -74,7 +74,7 @@ A **unidade observacional** é o elemento da população sobre o qual uma ou mai
 
 Quando a população é finita, seu tamanho será representado por $N$.
 
-Uma característica numérica da população ou do processo de interesse é denominada **parâmetro**. Na abordagem frequentista desenvolvida neste livro, o parâmetro é tratado como uma quantidade fixa. Em um problema inferencial, seu valor é, em geral, desconhecido e deve ser estudado a partir dos dados observados.
+Uma quantidade que caracteriza a população, o processo ou o modelo estatístico de interesse é denominada **parâmetro**. Na abordagem frequentista desenvolvida neste livro, o parâmetro é tratado como uma quantidade fixa. Em um problema inferencial, seu valor é, em geral, desconhecido e deve ser estudado a partir dos dados observados.
 
 Por exemplo, podem constituir parâmetros:
 
@@ -84,7 +84,7 @@ Por exemplo, podem constituir parâmetros:
 
 Um **censo** consiste na observação de todas as unidades de uma população finita. Quando o censo é possível e as medições são obtidas sem erro, uma característica da população pode ser calculada diretamente. Em muitas aplicações, observar toda a população é inviável em razão de custo, tempo, disponibilidade das unidades ou do próprio processo de medição.
 
-Uma **amostra** é um subconjunto de unidades ou observações utilizado para obter informação sobre a população. Seu tamanho será representado por $n$. A **amostragem** corresponde ao procedimento utilizado para selecionar essas unidades.
+Uma **amostra** é uma coleção de unidades ou observações utilizada para obter informação sobre a população ou o processo de interesse. Seu tamanho será representado por $n$. A **amostragem** corresponde ao procedimento utilizado para selecionar ou obter essas unidades ou observações.
 
 No experimento que será realizado em sala de aula, a população é formada por $N=2400$ bolas de mesmo tamanho, das quais 900 são vermelhas e 1500 são brancas. A característica de interesse é a proporção populacional de bolas vermelhas,
 
@@ -172,14 +172,14 @@ A convenção de usar letras maiúsculas para variáveis aleatórias e minúscul
 Uma **estatística** é uma função das variáveis aleatórias que compõem a amostra e que não depende de parâmetros desconhecidos:
 
 $$
-T=g(X_1,\ldots,X_n).
+T=T(X_1,\ldots,X_n).
 $$
 
 Quando uma estatística é utilizada para estimar uma quantidade populacional $\tau(\theta)$, ela recebe o nome de **estimador**. Antes da observação dos dados, o estimador $\widehat\tau=T(\mathbf X)$ é uma variável aleatória.
 
 A **estimativa** é o valor observado do estimador:
 
-$$\widehat\tau(\mathbf x)=g(x_1,\ldots,x_n).$$
+$$\widehat\tau(\mathbf x)=T(x_1,\ldots,x_n).$$
 
 Assim, o estimador é a regra inferencial; a estimativa é o número produzido pela regra em uma amostra específica [@chihara2022, definição 4.2, p. 79; @ramachandran2021r, seção 5.2, pp. 181--182].
 :::
@@ -211,7 +211,7 @@ $$
 
 Se a probabilidade de uma bola vermelha em cada retirada é $p$, então
 
-$$X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Bernoulli}(p).$$
+$$X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Ber}(p).$$
 
 O total de bolas vermelhas e a proporção correspondente são
 
@@ -325,15 +325,15 @@ $$
 \{P_\theta:\theta\in\Theta\},
 $$
 
-em que $\theta$ é o parâmetro, ou vetor de parâmetros, e $\Theta$ é o espaço paramétrico. Cada valor de $\theta$ determina uma distribuição possível para os dados. O modelo é uma representação deliberadamente simplificada e sua adequação deve ser examinada no contexto da aplicação [@cox2006principles, seção 1.1].
+em que $\theta$ é o parâmetro, ou vetor de parâmetros, e $\Theta$ é o espaço paramétrico. Cada valor de $\theta$ determina uma distribuição $P_\theta$ possível para os dados. O modelo é uma representação deliberadamente simplificada e sua adequação deve ser examinada no contexto da aplicação [@cox2006principles, seção 1.1].
 
 ### Função de verossimilhança {.unnumbered}
 
-Suponha que a distribuição conjunta da amostra possua densidade ou função de probabilidade $f_{\mathbf X}(\mathbf x;\theta)$. Depois de observados os dados $\mathbf x$, a **função de verossimilhança** é
+Suponha que a distribuição conjunta da amostra possua densidade ou função de probabilidade $f(\mathbf x;\theta)$. Depois de observados os dados $\mathbf x$, a **função de verossimilhança** é
 
 $$L(\theta;\mathbf x)
 =
-f_{\mathbf X}(\mathbf x;\theta),
+f(\mathbf x;\theta),
 $$
 
 considerada como função de $\theta$, com $\mathbf x$ fixado. Se as observações forem i.i.d., a densidade conjunta se fatoriza e
@@ -398,7 +398,7 @@ objetivo é comparar valores de $\theta$ ou maximizar a verossimilhança.
 :::
 
 ::: {.callout-warning title="Probabilidade e verossimilhança"}
-Na distribuição $f_{\mathbf X}(\mathbf x;\theta)$, fixa-se $\theta$ e estudam-se os possíveis valores de $\mathbf X$. Na verossimilhança $L(\theta;\mathbf x)$, os dados observados são fixados e os valores de $\theta$ são comparados.
+Na distribuição $f(\mathbf x;\theta)$, fixa-se $\theta$ e estudam-se os possíveis valores de $\mathbf X$. Na verossimilhança $L(\theta;\mathbf x)$, os dados observados são fixados e os valores de $\theta$ são comparados.
 
 Consequentemente, a verossimilhança não é, em geral, uma distribuição de probabilidade para $\theta$. Ela expressa **compatibilidade relativa** entre valores paramétricos e os dados no modelo adotado, não a probabilidade de o parâmetro assumir determinado valor [@cox2006principles, seção 2.1].
 :::
@@ -624,6 +624,8 @@ No capítulo **Métodos de Estimação Pontual**, a maximização da verossimilh
 ## Exploração computacional do experimento da urna
 
 O experimento realizado em sala de aula pode ser reproduzido computacionalmente. O objetivo é repetir o mesmo mecanismo de amostragem um número maior de vezes e examinar com mais detalhes a variabilidade da proporção amostral.
+
+Nesta seção, retomamos o **mecanismo físico sem reposição** utilizado no experimento em sala de aula. Portanto, essa exploração não corresponde ao modelo Bernoulli i.i.d. com reposição utilizado anteriormente para introduzir a função de verossimilhança.
 
 Esta seção pode ser utilizada imediatamente após o experimento físico ou depois do desenvolvimento conceitual das seções anteriores.
 

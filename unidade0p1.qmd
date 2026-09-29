@@ -825,7 +825,7 @@ quando existe.
 
 A média corresponde ao primeiro momento em torno da origem. A variância corresponde ao segundo momento centrado.
 
-Medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados [@casella2002statistical, ex. 2.28; @ramachandran2021r, secs. 3.1 e 3.3].
+Medidas como assimetria e curtose são construídas a partir de momentos centrais padronizados [@casella2011inferencia, ex. 2.28; @ramachandran2021r, secs. 3.1 e 3.3].
 
 
 ### Variância 
@@ -1788,7 +1788,7 @@ A matriz de covariâncias é simétrica e positiva semidefinida. Essa representa
 
 Os principais resultados desta seção podem ser organizados a partir da distribuição conjunta.
 
-A partir de uma distribuição conjunta podem ser obtidas as **distribuições marginais** de cada componente e, quando as condições necessárias são satisfeitas, suas **distribuições condicionais**.
+A partir de uma distribuição conjunta, podem ser obtidas as **distribuições marginais** de cada componente e, quando as condições necessárias são satisfeitas, suas **distribuições condicionais**.
 
 A independência corresponde à fatoração da distribuição conjunta. No caso discreto,
 
@@ -1803,10 +1803,8 @@ e, no caso absolutamente contínuo,
 $$
 f_{X,Y}(x,y)
 =
-f_X(x)f_Y(y)
+f_X(x)f_Y(y).
 $$
-
-quase sempre.
 
 O condicionamento também permite decompor momentos. A lei da esperança total estabelece que
 
@@ -1834,7 +1832,6 @@ X_1,\ldots,X_n
 F.
 $$
 
-Essa estrutura será utilizada repetidamente nos modelos probabilísticos apresentados a seguir e, posteriormente, na definição de amostras aleatórias.
 :::
 
 ## Função geradora de momentos 
@@ -1971,15 +1968,7 @@ M_{X_1+\cdots+X_n}(t)
 \prod_{i=1}^nM_{X_i}(t).
 $$
 
-Se, além disso,
-
-$$
-X_1,\ldots,X_n
-\overset{\mathrm{iid}}{\sim}
-X
-$$
-
-e
+Se, além disso, $X_1,\ldots,X_n$ são i.i.d. e possuem a mesma distribuição de uma variável aleatória $X$, e
 
 $$
 S_n=X_1+\cdots+X_n,
@@ -3092,7 +3081,7 @@ $$
 Se $X$ representa o **número de ensaios necessários até a ocorrência do primeiro sucesso**, então
 
 $$
-X\sim\text{Geo}(p).
+X\sim\operatorname{Geo}(p).
 $$
 
 O suporte é
@@ -5167,12 +5156,19 @@ $$
 T=X_1+X_2+X_3
 $$
 
-possui distribuição gama. Como esse modelo surge diretamente da soma de variáveis exponenciais com taxa $\lambda$, utilizaremos neste desenvolvimento a parametrização forma-taxa:
+possui distribuição gama. Como nesta seção a notação $\operatorname{Gama}(\alpha,\beta)$ foi definida na parametrização forma--escala, a taxa $\lambda$ corresponde à escala
 
 $$
-T\sim\operatorname{Gama}(3,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\beta=\frac{1}{\lambda}.
+$$
+
+Portanto,
+
+$$
+T\sim\operatorname{Gama}
+\left(
+3,\frac{1}{\lambda}
+\right).
 $$
 
 Ao observar tempos totais de atendimento de vários clientes, pode haver interesse inferencial em obter informação sobre $\lambda$ e, consequentemente, sobre
@@ -5327,14 +5323,15 @@ S_n
 \sum_{i=1}^nX_i
 $$
 
-possui distribuição gama. Como o modelo surge diretamente de variáveis exponenciais com taxa $\lambda$, utilizaremos neste desenvolvimento a parametrização forma-taxa:
+possui distribuição gama. Como a taxa exponencial $\lambda$ corresponde à escala gama $1/\lambda$,
 
 $$
 S_n
 \sim
-\operatorname{Gama}(n,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\operatorname{Gama}
+\left(
+n,\frac{1}{\lambda}
+\right).
 $$
 
 Esse resultado pode ser obtido diretamente pelas funções geradoras de momentos. Como
@@ -5355,7 +5352,7 @@ M_{S_n}(t)
 \right)^n.
 $$
 
-Essa é a FGM de uma distribuição gama com forma $n$ e taxa $\lambda$.
+Essa é a FGM de uma distribuição gama com forma $n$ e escala $1/\lambda$.
 
 Consequentemente,
 
@@ -5375,21 +5372,32 @@ $$
 
 
 ::: {.callout-note title="Forma, escala e taxa"}
-Na parametrização geral adotada nesta seção,
+Na parametrização adotada neste livro,
 
 $$
 X\sim\operatorname{Gama}(\alpha,\beta),
 $$
 
-o segundo parâmetro $\beta$ representa a **escala**.
+o primeiro parâmetro $\alpha$ representa a **forma** e o segundo parâmetro $\beta$ representa a **escala**, em concordância com a parametrização utilizada por Casella e Berger.
 
-Quando a distribuição gama surge como soma de variáveis exponenciais parametrizadas pela taxa $\lambda$, pode ser mais conveniente descrever o mesmo modelo em termos da **forma** e da **taxa**, usando a relação
+Quando a distribuição gama surge a partir de variáveis exponenciais parametrizadas pela taxa $\lambda$, utilizamos a relação
 
 $$
 \beta=\frac{1}{\lambda}.
 $$
 
-Nesse contexto,
+Assim,
+
+$$
+X
+\sim
+\operatorname{Gama}
+\left(
+\alpha,\frac{1}{\lambda}
+\right)
+$$
+
+possui
 
 $$
 E(X)=\frac{\alpha}{\lambda}
@@ -5401,7 +5409,7 @@ $$
 \operatorname{Var}(X)=\frac{\alpha}{\lambda^2}.
 $$
 
-A parametrização utilizada deve ser indicada explicitamente sempre que houver possibilidade de ambiguidade.
+Dessa forma, a notação $\operatorname{Gama}(\alpha,\beta)$ mantém sempre o segundo parâmetro como escala, enquanto a taxa $\lambda$ pode ser utilizada nos modelos exponenciais sem ambiguidade.
 :::
 
 
@@ -5831,19 +5839,7 @@ $$
 
 Portanto, ela é adequada para variáveis contínuas que assumem valores estritamente entre $0$ e $1$.
 
-Quando valores exatamente iguais a
-
-$$
-0
-$$
-
-ou
-
-$$
-1
-$$
-
-podem ocorrer com probabilidade positiva, a distribuição beta padrão não representa diretamente essa massa de probabilidade nos extremos. Nesses casos, pode ser necessário considerar outra especificação probabilística.
+Quando valores exatamente iguais a $0$ ou $1$ podem ocorrer com probabilidade positiva, a distribuição beta padrão não representa diretamente essa massa de probabilidade nos extremos. Nesses casos, pode ser necessário considerar outra especificação probabilística.
 
 Essa distinção deve ser considerada, por exemplo, ao modelar proporções que possam assumir exatamente $0\%$ ou $100\%$.
 :::
@@ -6198,7 +6194,7 @@ g^{-1}(y)
 \right|,
 $$
 
-para $y$ pertencente ao suporte da variável transformada [@casella2002statistical, sec. 2.1; @rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
+para $y$ pertencente ao suporte da variável transformada [@casella2011inferencia, sec. 2.1; @rice2007mathematical, secs. 2.3 e 3.6; @ramachandran2021r, sec. 3.4].
 
 O termo
 
@@ -6625,15 +6621,16 @@ $$
 
 ### Modelos contínuos 
 
-Na relação entre a distribuição exponencial e a distribuição gama, utilizaremos a parametrização forma-taxa da gama para evidenciar a taxa comum $\lambda$. Assim, a distribuição exponencial é um caso particular da distribuição gama:
+Na relação entre a distribuição exponencial e a distribuição gama, lembramos que uma exponencial com taxa $\lambda$ corresponde a uma gama com forma $1$ e escala $1/\lambda$:
 
 $$
 \boxed{
 \operatorname{Exp}(\lambda)
 =
-\operatorname{Gama}(1,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\operatorname{Gama}
+\left(
+1,\frac{1}{\lambda}
+\right).
 }
 $$
 
@@ -6647,9 +6644,10 @@ X_1,\ldots,X_n
 \quad\Longrightarrow\quad
 \sum_{i=1}^nX_i
 \sim
-\operatorname{Gama}(n,\lambda),
-\qquad
-\text{com $\lambda$ representando a taxa}.
+\operatorname{Gama}
+\left(
+n,\frac{1}{\lambda}
+\right).
 }
 $$
 
@@ -7000,7 +6998,7 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 $$
 
 a. Obtenha a função geradora de momentos de $X_i$.
@@ -7034,7 +7032,7 @@ b. Se
 $$
 Y_1,\ldots,Y_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda),
+\operatorname{Exp}(\lambda),
 $$
 
 identifique a distribuição de $T_n=\sum_{i=1}^nY_i$.
@@ -7048,7 +7046,7 @@ e. Indique o papel da independência na propriedade multiplicativa das funções
 
 ::: {.callout-note title="Exercício 14"}
 
-Considere $X\sim\operatorname{Exponencial}(\lambda)$ e $Y=cX$, com $c>0$.
+Considere $X\sim\operatorname{Exp}(\lambda)$ e $Y=cX$, com $c>0$.
 
 a. Determine o suporte $\mathcal Y$ de $Y$.
 

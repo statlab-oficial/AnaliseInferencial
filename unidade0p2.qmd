@@ -9,7 +9,7 @@ Os resultados apresentados neste capítulo podem ser utilizados como ferramentas
 
 A Lei dos Grandes Números e o Teorema Central do Limite serão enunciados e interpretados aqui. Suas consequências para distribuições de estatísticas serão desenvolvidas no capítulo **Distribuições Amostrais**.
 
-O método delta e sua versão multivariada também são estabelecidos neste capítulo, mas constituem **Aprofundamento — Mestrado**, em consonância com o percurso curricular do livro. Esses resultados serão aplicados posteriormente nos desenvolvimentos inferenciais correspondentes.
+O método delta e sua versão multivariada também são estabelecidos neste capítulo como **Aprofundamento**. Esses resultados serão aplicados posteriormente nos desenvolvimentos inferenciais correspondentes.
 :::
 
 
@@ -28,7 +28,7 @@ O método delta e sua versão multivariada também são estabelecidos neste cap�
 | Lei dos Grandes Números | médias e momentos amostrais, consistência |
 | Teorema Central do Limite | aproximações normais e normalidade assintótica |
 | Mapeamento contínuo e Slutsky | transformação e combinação de sequências convergentes |
-| Método delta | distribuições assintóticas de funções — **Aprofundamento — Mestrado** |
+| Método delta | distribuições assintóticas de funções — **Aprofundamento** |
 | Ordens estocásticas | representação da magnitude de erros e termos de aproximação |
 
 ```{r}
@@ -1095,7 +1095,18 @@ f_{Y_1}(y_1)
 y_1>0.
 $$
 
-Portanto, a soma de duas variáveis exponenciais independentes com a mesma taxa possui distribuição gama com forma $2$ e taxa $\lambda$, em concordância com a relação apresentada no capítulo anterior.
+Portanto, a soma de duas variáveis exponenciais independentes com a mesma taxa possui distribuição gama com forma $2$ e escala $1/\lambda$,
+
+$$
+Y_1
+\sim
+\operatorname{Gama}
+\left(
+2,\frac{1}{\lambda}
+\right),
+$$
+
+em concordância com a parametrização forma--escala adotada no capítulo anterior.
 :::
 
 
@@ -1305,7 +1316,7 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 $$
 
 Como $E(X_i)=p$,
@@ -1505,7 +1516,7 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(\lambda).
+\operatorname{Exp}(\lambda).
 $$
 
 Como
@@ -1548,7 +1559,7 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(1).
+\operatorname{Exp}(1).
 $$
 
 Nesse caso, $E(X_i)=1$ e $\operatorname{Var}(X_i)=1$. Além disso,
@@ -1695,7 +1706,13 @@ $$
 X_n\xrightarrow{P}X
 $$
 
-e $g$ é contínua em $X$ com probabilidade $1$, então
+e $g$ é contínua em todos os pontos de um conjunto $C$ tal que
+
+$$
+P(X\in C)=1,
+$$
+
+então
 
 $$
 g(X_n)
@@ -1709,7 +1726,13 @@ $$
 X_n\xrightarrow{d}X
 $$
 
-e $g$ é contínua em $X$ com probabilidade $1$, então
+e $g$ é contínua em todos os pontos de um conjunto $C$ tal que
+
+$$
+P(X\in C)=1,
+$$
+
+então
 
 $$
 g(X_n)
@@ -1832,13 +1855,13 @@ Esse mecanismo será utilizado posteriormente quando uma quantidade desconhecida
 :::
 
 
-### Aprofundamento — Mestrado
+### Aprofundamento
 
-As subseções seguintes apresentam o método delta em suas versões univariada e multivariada. Esse bloco utiliza conjuntamente expansão de Taylor, convergência em distribuição e o lema de Slutsky e integra o percurso específico do mestrado.
+As subseções seguintes apresentam o método delta em suas versões univariada e multivariada. Esse bloco utiliza conjuntamente expansão de Taylor, convergência em distribuição e o lema de Slutsky.
 
 #### Método delta 
 
-O método delta permite obter a distribuição assintótica de uma transformação a partir da distribuição assintótica da quantidade original.
+O método delta permite obter a distribuição assintótica de uma transformação a partir da distribuição assintótica da quantidade original [@casella2011inferencia, sec. 5.5.4].
 
 Suponha que
 
@@ -1848,7 +1871,11 @@ $$
 N(0,\tau^2)
 $$
 
-e que $g$ seja diferenciável em $\theta$.
+e que $g$ seja diferenciável em $\theta$, com
+
+$$
+g'(\theta)\neq0.
+$$
 
 Então,
 
@@ -1862,9 +1889,9 @@ N\left(
 \right).
 $$
 
-Quando $g'(\theta)\neq0$, o resultado fornece uma distribuição limite não degenerada de primeira ordem.
+Essa é a forma usual do método delta de primeira ordem [@casella2011inferencia, sec. 5.5.4].
 
-Se $g'(\theta)=0$, a aproximação de primeira ordem produz variância limite igual a zero. Nesse caso, uma expansão de ordem superior e uma escala diferente podem ser necessárias [@chihara2022, sec. 7.7].
+Quando $g'(\theta)=0$, essa forma não fornece uma distribuição limite não degenerada. Nesse caso, uma expansão de Taylor de ordem superior e uma escala diferente podem ser necessárias [@chihara2022, sec. 7.7].
 
 ::: {.callout-note title="Relação com Taylor"}
 O método delta utiliza localmente a aproximação
@@ -2219,7 +2246,7 @@ O primeiro reúne **ferramentas matemáticas**. Somatórios, produtos e logaritm
 
 O segundo reúne **ferramentas assintóticas**. Os modos de convergência formalizam diferentes sentidos em que uma sequência aleatória pode aproximar um limite. A Lei dos Grandes Números descreve a estabilização de médias, enquanto o Teorema Central do Limite descreve suas flutuações padronizadas. O teorema do mapeamento contínuo e o lema de Slutsky permitem transformar e combinar sequências convergentes, e as ordens $O_P$ e $o_P$ registram de forma compacta a magnitude dos termos envolvidos.
 
-No **Aprofundamento — Mestrado**, o método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias. Sua versão multivariada realiza a mesma operação por meio da matriz jacobiana.
+No **Aprofundamento**, o método delta utiliza uma aproximação de Taylor para transportar distribuições assintóticas para funções de quantidades aleatórias. Sua versão multivariada realiza a mesma operação por meio da matriz jacobiana.
 
 A estrutura assintótica do núcleo pode ser resumida por
 
@@ -2237,7 +2264,7 @@ $$
 \text{distribuição das flutuações}.
 $$
 
-No aprofundamento do mestrado, essas ferramentas se articulam segundo o esquema
+No aprofundamento, essas ferramentas se articulam segundo o esquema
 
 $$
 \text{distribuição assintótica}
@@ -2470,7 +2497,7 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(0{,}35)
+\operatorname{Ber}(0{,}35)
 $$
 
 e $R_n=\sum_{i=1}^nX_i$.
@@ -2492,7 +2519,7 @@ Considere
 $$
 X_1,\ldots,X_{64}
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exponencial}(2).
+\operatorname{Exp}(2).
 $$
 
 a. Determine $E(X_i)$ e $\operatorname{Var}(X_i)$.
@@ -2585,7 +2612,7 @@ Indique explicitamente onde o lema de Slutsky é utilizado.
 
 #### Aprofundamento {.unnumbered}
 
-Os exercícios seguintes utilizam o método delta e integram o percurso de aprofundamento do mestrado.
+Os exercícios seguintes utilizam o método delta e integram o aprofundamento.
 
 ::: {.callout-note title="Exercício 14"}
 

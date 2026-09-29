@@ -4,7 +4,7 @@ Em @sec-fundamentos-inferencia, um estimador foi definido como uma estatística 
 
 Conhecida essa variabilidade, surgem duas questões complementares. A primeira é **como avaliar a qualidade de um estimador**: seu erro, sua dispersão, seu comportamento quando o tamanho amostral aumenta e os limites de desempenho impostos pelo modelo. A segunda é **como identificar quais aspectos da amostra concentram a informação relevante sobre o parâmetro**, permitindo reduzir os dados sem perda inferencial.
 
-A primeira questão conduz aos conceitos de risco, viés, erro quadrático médio, consistência e eficiência e integra o percurso comum do capítulo. A segunda, correspondente ao aprofundamento do mestrado, conduz à suficiência, à suficiência minimal, às famílias exponenciais, à completude, ao ENVVUM, aos teoremas de Rao--Blackwell e Lehmann--Scheffé e à relação entre ancilaridade e o teorema de Basu. As duas linhas voltam a se encontrar quando a redução dos dados é utilizada para melhorar e caracterizar estimadores [@rice2007mathematical, chap. 8; @lauritzen2023fundamentals, chaps. 4--5; @cox2006principles, secs. 2.2 and 4.3].
+A primeira questão conduz aos conceitos de risco, viés, erro quadrático médio, consistência e eficiência e integra o percurso comum do capítulo. A segunda, correspondente ao aprofundamento, conduz à suficiência, à suficiência minimal, às famílias exponenciais, à completude, ao ENVVUM, aos teoremas de Rao--Blackwell e Lehmann--Scheffé e à relação entre ancilaridade e o teorema de Basu. As duas linhas voltam a se encontrar quando a redução dos dados é utilizada para melhorar e caracterizar estimadores [@rice2007mathematical, chap. 8; @lauritzen2023fundamentals, chaps. 4--5; @cox2006principles, secs. 2.2 and 4.3].
 
 ## Avaliação de estimadores
 
@@ -1477,7 +1477,7 @@ g_\theta\bigl(T(\mathbf x)\bigr)
 h(\mathbf x).
 $$
 
-No caso contínuo e em famílias dominadas gerais, a mesma ideia é formalizada utilizando densidades condicionais e derivadas de Radon--Nikodym.
+No caso contínuo, a mesma ideia é expressa por meio de densidades condicionais. Para famílias dominadas, essa argumentação conduz à forma geral do teorema da fatoração apresentada acima.
 
 :::
 
@@ -2470,17 +2470,19 @@ Esse resultado fornece uma condição suficiente para completude. A condição s
 
 :::
 
-::: {.callout-note collapse="true" title="Esboço da demonstração"}
+::: {.callout-note collapse="true" title="Ideia da demonstração"}
 
-A ideia da demonstração pode ser vista a partir da distribuição da estatística canônica
+A ideia central pode ser observada sem desenvolver os detalhes técnicos do teorema de unicidade utilizado na prova geral.
+
+Considere a estatística canônica
 
 $$
 T
 =
-\sum_{i=1}^nt(X_i).
+\sum_{i=1}^nt(X_i)
 $$
 
-Suponha que uma função mensurável $a$ satisfaça
+e suponha que uma função mensurável $a$ satisfaça
 
 $$
 E_\eta[a(T)]=0
@@ -2488,7 +2490,7 @@ $$
 
 para todo $\eta$ no espaço natural.
 
-A distribuição de $T$ em uma família exponencial pode ser escrita, em relação a uma medida adequada $\nu$, na forma
+Na família exponencial, a distribuição de $T$ possui a estrutura
 
 $$
 dP_\eta^T(t)
@@ -2496,31 +2498,22 @@ dP_\eta^T(t)
 \exp\left\{
 \eta^\top t-nA(\eta)
 \right\}
-\,d\nu(t).
+\,d\nu(t),
 $$
 
-Portanto,
+para uma medida $\nu$ que não depende de $\eta$. Assim,
 
 $$
 0
 =
 E_\eta[a(T)]
 =
+e^{-nA(\eta)}
 \int
-a(t)
-\exp\left\{
-\eta^\top t-nA(\eta)
-\right\}
-\,d\nu(t).
+a(t)e^{\eta^\top t}\,d\nu(t).
 $$
 
-Multiplicando por
-
-$$
-e^{nA(\eta)},
-$$
-
-obtemos
+Como $e^{-nA(\eta)}>0$,
 
 $$
 \int
@@ -2529,76 +2522,19 @@ a(t)e^{\eta^\top t}\,d\nu(t)
 0
 $$
 
-para todo $\eta$ em um conjunto aberto de $\mathbb R^k$.
+para todo $\eta$ em um conjunto aberto.
 
-Escolha um ponto $\eta_0$ no interior do conjunto aberto contido no espaço natural e defina a medida assinada
-
-$$
-d\mu(t)
-=
-a(t)e^{\eta_0^\top t}\,d\nu(t).
-$$
-
-Como
+A expressão do lado esquerdo é uma transformada do produto entre $a(t)$ e a medida que determina a distribuição de $T$. Um resultado de unicidade para esse tipo de transformada implica que, se ela é nula em um conjunto aberto de valores do parâmetro natural, então
 
 $$
-E_{\eta_0}|a(T)|<\infty,
+a(T)=0
 $$
 
-essa medida possui variação total finita.
+quase certamente para toda distribuição da família.
 
-Para $h$ suficientemente próximo de zero,
+Esse é o mecanismo que produz a completude da estatística canônica. A condição de que o espaço natural contenha um conjunto aberto é essencial justamente para que o argumento de unicidade possa ser aplicado.
 
-$$
-\eta_0+h
-$$
-
-continua pertencendo ao espaço natural. Logo,
-
-$$
-\begin{aligned}
-0
-&=
-e^{nA(\eta_0+h)}
-E_{\eta_0+h}[a(T)]\\
-&=
-\int
-e^{h^\top t}
-\,d\mu(t).
-\end{aligned}
-$$
-
-Assim, a transformada de Laplace da medida assinada finita $\mu$ é nula em uma vizinhança de zero.
-
-Pela unicidade da transformada de Laplace,
-
-$$
-\mu=0.
-$$
-
-Como o fator
-
-$$
-e^{\eta_0^\top t}
-$$
-
-é estritamente positivo,
-
-$$
-a(t)=0
-$$
-
-para $\nu$-quase todo $t$. Portanto,
-
-$$
-P_\eta\{a(T)=0\}=1
-$$
-
-para todo $\eta$.
-
-Essa é precisamente a definição de completude.
-
-A etapa técnica central é a unicidade da transformada de Laplace; por isso, a condição de que o espaço natural contenha um conjunto aberto é essencial no argumento.
+A demonstração técnica do resultado de unicidade não é necessária para os desenvolvimentos seguintes. No exemplo de Poisson apresentado a seguir, a completude será verificada diretamente por uma série de potências, sem recorrer a esse resultado geral.
 
 :::
 
@@ -3857,7 +3793,7 @@ b. O suporte da distribuição depende de $\theta$. Explique por que a forma cl�
 
 $$
 X_1,\ldots,X_n
-\overset{\mathrm{i.i.d.}}{\sim}
+\overset{\mathrm{iid}}{\sim}
 N(\mu,\sigma^2),
 $$
 
