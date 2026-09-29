@@ -394,7 +394,7 @@ embora $\delta_2$ seja viesado e $\delta_1$ não seja.
 
 ::::
 
-O exemplo mostra dois aspectos importantes. Primeiro, o não viés não determina sozinho a qualidade de um estimador: um estimador viesado pode possuir EQM menor. Segundo, a forma do modelo importa para a construção do estimador. Como $\theta$ determina o limite do suporte, o máximo amostral contém informação particularmente direta sobre esse parâmetro.
+O não viés, isoladamente, não determina a qualidade de um estimador: um estimador viesado pode possuir EQM menor. A forma do modelo também orienta a construção do estimador. Como $\theta$ determina o limite do suporte, o máximo amostral contém informação particularmente direta sobre esse parâmetro.
 
 Os mesmos estimadores também permitem distinguir propriedades de amostra finita de propriedades assintóticas, pois não viés e consistência respondem a perguntas diferentes. A construção e a comparação foram adaptadas de @lauritzen2023fundamentals \[ex. 4.2\]; a interpretação em termos de não viés e EQM também é discutida por @chihara2022 [secs. 6.3.1--6.3.3].
 
@@ -2468,7 +2468,7 @@ $$
 
 Se o espaço natural de parâmetros contém um conjunto aberto não vazio de $\mathbb R^k$, então $T$ é completa para a família.
 
-Esse resultado fornece uma condição suficiente para completude. A condição sobre o espaço natural é essencial: reconhecer uma expressão na forma exponencial não é suficiente, por si só, para concluir completude [@lauritzen2023fundamentals, chap. 3; @bickel2016volume2, sec. 8.2].
+Esse resultado fornece uma condição suficiente para completude. A condição sobre o espaço natural é essencial: reconhecer uma expressão na forma exponencial não é suficiente, por si só, para concluir completude [@casella2002statistical, thm. 6.2.25; @lauritzen2023fundamentals, chap. 3; @bickel2016volume2, sec. 8.2].
 
 :::
 
@@ -3267,7 +3267,7 @@ o ENVVUM não atinge o limite de Cramér--Rao.
 
 ::::
 
-O exemplo distingue duas formas de optimalidade. Lehmann--Scheffé garante que não existe outro estimador **não viesado** de $\theta$ com variância menor, mas isso não significa que o limite de Cramér--Rao seja atingível. O limite é uma cota inferior; ele não garante a existência de um estimador cuja variância coincida com essa cota.
+Lehmann--Scheffé e Cramér--Rao expressam formas distintas de optimalidade. O primeiro garante que não existe outro estimador **não viesado** de $\theta$ com variância menor. Já o limite de Cramér--Rao é uma cota inferior e não garante a existência de um estimador cuja variância coincida com essa cota.
 
 ### Estatísticas ancilares e teorema de Basu {.unnumbered}
 
@@ -3574,17 +3574,7 @@ $$
 
 é não viesado para $\beta$.
 
-Como $\widehat\beta$ é uma função não viesada da estatística suficiente e completa $T$, o teorema de Lehmann--Scheffé fornece
-
-$$
-\boxed{
-\widehat\beta
-=
-\frac{\overline X}{\alpha}
-}
-$$
-
-como o ENVVUM de $\beta$.
+Como $\widehat\beta$ é uma função não viesada da estatística suficiente e completa $T$, estão satisfeitas as condições do teorema de Lehmann--Scheffé.
 
 :::
 
@@ -3607,7 +3597,7 @@ $$
 Como
 
 $$
-E_\theta(X_i)=\alpha\beta,
+E_\beta(X_i)=\alpha\beta,
 $$
 
 a Lei dos Grandes Números fornece
@@ -3618,27 +3608,27 @@ $$
 \alpha\beta.
 $$
 
-Consequentemente,
+Como $\alpha>0$, a transformação $g(x)=x/\alpha$ é contínua. Pelo teorema do mapeamento contínuo,
+
+$$
+\frac{\overline X}{\alpha}
+\xrightarrow{p}
+\beta.
+$$
+
+:::
+
+Portanto,
 
 $$
 \widehat\beta
 =
 \frac{\overline X}{\alpha}
 \xrightarrow{p}
-\beta.
+\beta,
 $$
 
-Portanto, o ENVVUM também é consistente.
-
-:::
-
-Assim,
-
-$$
-\widehat\beta
-\xrightarrow{p}
-\beta.
-$$
+e o ENVVUM é consistente.
 
 #### Eficiência de Cramér--Rao {.unnumbered}
 
@@ -3661,7 +3651,7 @@ $$
 O escore é
 
 $$
-U_\theta(X)
+U_\beta(X)
 =
 -\frac{\alpha}{\beta}
 +
@@ -3697,7 +3687,7 @@ I_n(\beta)
 \frac{n\alpha}{\beta^2},
 $$
 
-e o limite de Cramér--Rao para um estimador não viesado de $\theta$ é
+e o limite de Cramér--Rao para um estimador não viesado de $\beta$ é
 
 $$
 \frac1{I_n(\beta)}
@@ -3719,19 +3709,9 @@ $$
 \frac{\beta^2}{n\alpha}.
 $$
 
-Portanto,
-
-$$
-\operatorname{Var}_\theta(\widehat\beta)
-=
-\frac1{I_n(\beta)},
-$$
-
-e o estimador atinge o limite de Cramér--Rao.
-
 :::
 
-Como
+Como a variância de $\widehat\beta$ coincide com o limite de Cramér--Rao,
 
 $$
 \operatorname{Var}_\beta(\widehat\beta)
@@ -3834,7 +3814,7 @@ e
 $$
 \text{suficiência + completude}
 \overset{\text{Lehmann--Scheffé}}{\longrightarrow}
-\text{ENVVUM único, a menos de equivalência q.c.}.
+\text{ENVVUM único, a menos de equivalência quase certa}.
 $$
 
 As duas linhas do capítulo se encontram quando propriedades de redução dos dados são utilizadas para construir, melhorar e avaliar estimadores.
