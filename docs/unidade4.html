@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>6&nbsp; Métodos de Estimação Pontual</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -89,19 +95,18 @@ div.csl-indent {
 <link href="./unidade3.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-4c6d65c679321d81af7ec8b61b1d5a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -131,7 +136,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -347,18 +352,14 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-      <a href="./index.html" class="sidebar-logo-link">
-      </a>
-      <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
-</div>
-      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
         </div>
         </div>
+        <div class="sidebar-tools-collapse">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -523,7 +524,7 @@ window.Quarto = {
 <p>Quando resultados assintóticos fornecerem aproximações para a distribuição ou para o erro-padrão de um estimador, essas propriedades serão registradas nesta unidade. A construção e a interpretação de intervalos de confiança, incluindo o intervalo de Wald, serão desenvolvidas na unidade seguinte.</p>
 <section id="sec-metodo-momentos" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="sec-metodo-momentos"><span class="header-section-number">6.1</span> Método dos Momentos</h2>
-<p>O <strong>método dos momentos</strong> estima os parâmetros de um modelo igualando momentos populacionais, escritos como funções dos parâmetros, aos momentos correspondentes calculados na amostra. Em muitos modelos, as equações resultantes podem ser resolvidas diretamente e também podem fornecer valores iniciais para métodos numéricos. A definição do método não depende da Lei dos Grandes Números; essa lei, juntamente com condições de identificabilidade e continuidade, é utilizada para estabelecer a consistência dos estimadores obtidos <span class="citation" data-cites="casella2002statistical rice2007mathematical ramachandran2021r chihara2022">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;7.2.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.4; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;5.2.1; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;6.2)</span>.</p>
+<p>O <strong>método dos momentos</strong> estima os parâmetros de um modelo igualando momentos populacionais, escritos como funções dos parâmetros, aos momentos correspondentes calculados na amostra. Em muitos modelos, as equações resultantes podem ser resolvidas diretamente e também podem fornecer valores iniciais para métodos numéricos. A definição do método não depende da Lei dos Grandes Números; essa lei, juntamente com condições de identificabilidade e continuidade, é utilizada para estabelecer a consistência dos estimadores obtidos <span class="citation" data-cites="casella2011inferencia rice2007mathematical ramachandran2021r chihara2022">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;7.2.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.4; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;5.2.1; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;6.2)</span>.</p>
 <section id="momentos-populacionais-e-amostrais" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="momentos-populacionais-e-amostrais">Momentos populacionais e amostrais</h3>
 <div class="callout callout-style-default callout-important callout-titled" title="Definição — momentos populacionais">
@@ -781,7 +782,7 @@ E(X)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A distribuição assintótica deste estimador pode ser obtida pelo método delta. Essa aplicação será retomada em <a href="#sec-delta-mm-pareto" class="quarto-xref"><span>Seção 6.4.2.1</span></a>, após a apresentação dos métodos de estimação do percurso principal.</p>
+<p>A distribuição assintótica deste estimador é obtida em <a href="#sec-delta-mm-pareto" class="quarto-xref"><span>Seção 6.4.2.1</span></a> por meio do método delta.</p>
 </div>
 </div>
 </section>
@@ -807,7 +808,7 @@ E(X)
 <p><span class="math display">\[\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
 =\frac{\theta^2}{3n},
 \]</span></p>
-<p>e é consistente pela Lei dos Grandes Números. O estimador de máxima verossimilhança, estudado adiante, é <span class="math inline">\(X_{(n)}\)</span>; os dois métodos produzem estimadores distintos neste modelo não regular <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 6.1.2 e 6.2)</span>.</p>
+<p>e é consistente pela Lei dos Grandes Números. Para o mesmo modelo, o estimador de máxima verossimilhança é <span class="math inline">\(X_{(n)}\)</span>; os dois métodos produzem estimadores distintos neste modelo não regular <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 6.1.2 e 6.2)</span>.</p>
 </section>
 <section id="exemplo-distribuição-uniforme-discreta" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exemplo-distribuição-uniforme-discreta">Exemplo — distribuição uniforme discreta</h3>
@@ -963,8 +964,8 @@ E(X^2)
 <section id="sec-maxima-verossimilhanca" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-maxima-verossimilhanca"><span class="header-section-number">6.2</span> Máxima Verossimilhança</h2>
 <p>A função de verossimilhança foi introduzida em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a> como uma forma de comparar valores do parâmetro à luz dos dados observados. Nesta seção, essa ideia é utilizada para <strong>construir estimadores</strong>: o estimador de máxima verossimilhança é obtido selecionando, entre os valores admissíveis do parâmetro, aqueles que maximizam a verossimilhança.</p>
-<p>O método aplica-se a modelos discretos, contínuos e multiparamétricos. A maximização pode envolver soluções interiores, pontos de fronteira, múltiplos máximos ou situações em que o supremo não é atingido. Por isso, a obtenção do estimador exige examinar a função objetivo juntamente com o espaço paramétrico <span class="citation" data-cites="casella2002statistical rice2007mathematical larsen2012 ramachandran2009 chihara2022">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;7.2.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.5; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, sec.&nbsp;5.2; <a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.2.2; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;6.1)</span>.</p>
-<p>No percurso principal, o foco está na construção do estimador e nas ferramentas utilizadas para localizar e verificar o máximo. As condições de regularidade e as propriedades assintóticas específicas do EMV serão estudadas posteriormente em <a href="#sec-aprofundamento-assintotica" class="quarto-xref"><span>Seção 6.4.2</span></a>.</p>
+<p>O método aplica-se a modelos discretos, contínuos e multiparamétricos. A maximização pode envolver soluções interiores, pontos de fronteira, múltiplos máximos ou situações em que o supremo não é atingido. Por isso, a obtenção do estimador exige examinar a função objetivo juntamente com o espaço paramétrico <span class="citation" data-cites="casella2011inferencia rice2007mathematical larsen2012 ramachandran2009 chihara2022">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;7.2.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.5; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, sec.&nbsp;5.2; <a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>, sec.&nbsp;5.2.2; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;6.1)</span>.</p>
+<p>No percurso principal, o foco está na construção do estimador e nas ferramentas utilizadas para localizar e verificar o máximo. As condições de regularidade e as propriedades assintóticas específicas do EMV estão em <a href="#sec-aprofundamento-assintotica" class="quarto-xref"><span>Seção 6.4.2</span></a>.</p>
 <p>Ao final desta seção, o leitor deverá ser capaz de:</p>
 <ol type="1">
 <li><p>obter o estimador de máxima verossimilhança a partir de uma função de verossimilhança;</p></li>
@@ -1172,7 +1173,7 @@ L(\boldsymbol\theta).
 =
 \frac{1}{\widehat\lambda}.
 \]</span></p>
-<p>A propriedade de invariância é apresentada por <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>, sec.&nbsp;7.2.2)</span>, <span class="citation" data-cites="chihara2022">Chihara; Hesterberg (<a href="#ref-chihara2022" role="doc-biblioref">2022</a>, pp.&nbsp;171–173)</span> e <span class="citation" data-cites="ramachandran2009">Ramachandran; Tsokos (<a href="#ref-ramachandran2009" role="doc-biblioref">2009</a>, pp.&nbsp;243–244)</span>.</p>
+<p>A propriedade de invariância é apresentada por <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>, sec.&nbsp;7.2.2)</span>, <span class="citation" data-cites="chihara2022">Chihara; Hesterberg (<a href="#ref-chihara2022" role="doc-biblioref">2022</a>, pp.&nbsp;171–173)</span> e <span class="citation" data-cites="ramachandran2009">Ramachandran; Tsokos (<a href="#ref-ramachandran2009" role="doc-biblioref">2009</a>, pp.&nbsp;243–244)</span>.</p>
 </section>
 <section id="função-escore-e-informação" class="level3" data-number="6.2.5">
 <h3 data-number="6.2.5" class="anchored" data-anchor-id="função-escore-e-informação"><span class="header-section-number">6.2.5</span> Função escore e informação</h3>
@@ -1275,7 +1276,7 @@ n\mathbf{I}_1(\boldsymbol\theta).
 </section>
 <section id="exemplos" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exemplos">Exemplos</h3>
-<p>Os exemplos desta subseção mostram como a máxima verossimilhança é utilizada em modelos regulares e não regulares. O foco principal está na construção do estimador. Quando pertinente, resultados sobre informação, distribuição assintótica e erro-padrão são apresentados em blocos de aprofundamento, cuja fundamentação geral será desenvolvida posteriormente em <a href="#sec-aprofundamento-assintotica" class="quarto-xref"><span>Seção 6.4.2</span></a>.</p>
+<p>Os exemplos desta subseção mostram a construção do EMV em modelos regulares e não regulares. Resultados sobre informação, distribuição assintótica e erro-padrão aparecem em blocos recolhíveis; sua fundamentação está em <a href="#sec-aprofundamento-assintotica" class="quarto-xref"><span>Seção 6.4.2</span></a>.</p>
 <p>Os exemplos são adaptados de <span class="citation" data-cites="larsen2012">Larsen; Marx (<a href="#ref-larsen2012" role="doc-biblioref">2012</a>, sec.&nbsp;5.2)</span>, <span class="citation" data-cites="chihara2022">Chihara; Hesterberg (<a href="#ref-chihara2022" role="doc-biblioref">2022</a>, sec.&nbsp;6.1)</span> e <span class="citation" data-cites="ramachandran2009">Ramachandran; Tsokos (<a href="#ref-ramachandran2009" role="doc-biblioref">2009</a>, sec.&nbsp;5.2.2)</span>.</p>
 <section id="exemplo-distribuição-bernoulli" class="level4">
 <h4 class="anchored" data-anchor-id="exemplo-distribuição-bernoulli">Exemplo — distribuição Bernoulli</h4>
@@ -1934,7 +1935,7 @@ O_p(n^{-1}),
 <p>Modelos com suporte dependente do parâmetro, máximos na fronteira ou funções não diferenciáveis podem exigir outros argumentos.</p>
 </div>
 </div>
-<p>Quando não existe solução analítica, a maximização pode ser realizada numericamente. Métodos como Newton–Raphson, escore de Fisher e algoritmos quase-Newton são alternativas usuais. Para problemas com dados incompletos ou variáveis latentes, o algoritmo EM será estudado em <a href="#sec-algoritmo-em" class="quarto-xref"><span>Seção 6.4.3</span></a>.</p>
+<p>Quando não existe solução analítica, a maximização pode ser realizada numericamente. Métodos como Newton–Raphson, escore de Fisher e algoritmos quase-Newton são alternativas usuais. Para dados incompletos ou variáveis latentes, <a href="#sec-algoritmo-em" class="quarto-xref"><span>Seção 6.4.3</span></a> apresenta o algoritmo EM <span class="citation" data-cites="ramachandran2009">(<a href="#ref-ramachandran2009" role="doc-biblioref">Ramachandran; Tsokos, 2009</a>)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Aprofundamento">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2295,7 +2296,7 @@ L_n(\boldsymbol\theta).
 </section>
 <section id="sec-minimos-quadrados" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="sec-minimos-quadrados"><span class="header-section-number">6.3</span> Mínimos Quadrados</h2>
-<p>O método dos mínimos quadrados estima parâmetros minimizando a soma dos quadrados das discrepâncias entre valores observados e valores previstos. O critério é usado em regressão linear, modelos polinomiais e problemas não lineares. Sua interpretação inferencial depende das hipóteses adotadas para os erros <span class="citation" data-cites="casella2002statistical rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 11.3.1–11.3.4; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, chap.&nbsp;14; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;7.2.1)</span>.</p>
+<p>O método dos mínimos quadrados estima parâmetros minimizando a soma dos quadrados das discrepâncias entre valores observados e valores previstos. O critério é usado em regressão linear, modelos polinomiais e problemas não lineares. Sua interpretação inferencial depende das hipóteses adotadas para os erros <span class="citation" data-cites="casella2011inferencia rice2007mathematical ramachandran2021r">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, secs. 11.3.1–11.3.4; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, chap.&nbsp;14; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;7.2.1)</span>.</p>
 <p>A perda quadrática atribui peso crescente a resíduos de maior magnitude. Por exemplo, um resíduo igual a <span class="math inline">\(4\)</span> contribui com <span class="math inline">\(16\)</span> para a função objetivo, enquanto um resíduo igual a <span class="math inline">\(2\)</span> contribui com <span class="math inline">\(4\)</span>. Essa forma quadrática simplifica a otimização e torna o ajuste sensível a observações atípicas <span class="citation" data-cites="diez2014introductory rice2007mathematical">(<a href="#ref-diez2014introductory" role="doc-biblioref">Diez; Barr; Çetinkaya-Rundel, 2014, p. 229</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, p. 556</a>)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Observação">
 <div class="callout-header d-flex align-content-center">
@@ -3817,7 +3818,7 @@ Y_i-m(x_i;\boldsymbol\theta)
 <section id="sec-minimax-equivariancia" class="level3" data-number="6.4.1">
 <h3 data-number="6.4.1" class="anchored" data-anchor-id="sec-minimax-equivariancia"><span class="header-section-number">6.4.1</span> Minimax e equivariância</h3>
 <p>Em <a href="unidade3.html" class="quarto-xref"><span>Capítulo 5</span></a>, a função de risco foi utilizada para avaliar o desempenho de estimadores. Nesta seção, essa mesma função passa a ser utilizada como critério de construção e escolha. A equivariância restringe os estimadores de acordo com as transformações que preservam a estrutura do modelo; o critério minimax compara os procedimentos pelo maior risco que podem apresentar no espaço paramétrico.</p>
-<p>Equivariância e minimaxidade respondem a perguntas diferentes. A equivariância restringe a classe de estimadores por transformações que preservam o problema estatístico; a minimaxidade compara procedimentos pelo maior valor de sua função de risco <span class="citation" data-cites="casella2002statistical shao2005">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 6.4 e 7.3.4; <a href="#ref-shao2005" role="doc-biblioref">Shao, 2005</a>, secs. 4.2–4.3)</span>.</p>
+<p>Equivariância e minimaxidade respondem a perguntas diferentes. A equivariância restringe a classe de estimadores por transformações que preservam o problema estatístico; a minimaxidade compara procedimentos pelo maior valor de sua função de risco <span class="citation" data-cites="casella2011inferencia shao2003mathematical">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, secs. 6.4 e 7.3.4; <a href="#ref-shao2003mathematical" role="doc-biblioref">Shao, 2003</a>, secs. 4.2–4.3)</span>.</p>
 <section id="equivariância-e-problemas-invariantes" class="level4">
 <h4 class="anchored" data-anchor-id="equivariância-e-problemas-invariantes">Equivariância e problemas invariantes</h4>
 <p>Considere uma família de distribuições</p>
@@ -3857,7 +3858,7 @@ g(\mathbf X)\sim P_{\overline g(\theta)}.
 </div>
 </div>
 <p>A condição estabelece que a transformação dos dados não leva a uma classe probabilística diferente: ela apenas modifica o valor do parâmetro dentro da mesma família.</p>
-<p>Casella e Berger apresentam o Princípio da Equivariância a partir de duas exigências: a inferência não deve depender da escala usada para representar as mesmas medições, e problemas com a mesma estrutura formal devem receber procedimentos compatíveis <span class="citation" data-cites="casella2002statistical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;6.4)</span>.</p>
+<p>Casella e Berger apresentam o Princípio da Equivariância a partir de duas exigências: a inferência não deve depender da escala usada para representar as mesmas medições, e problemas com a mesma estrutura formal devem receber procedimentos compatíveis <span class="citation" data-cites="casella2011inferencia">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;6.4)</span>.</p>
 <p>Para um problema de estimação de <span class="math inline">\(\theta\)</span>, a transformação que atua no espaço paramétrico determina a transformação esperada para o estimador.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Definição — estimador equivariante">
 <div class="callout-header d-flex align-content-center">
@@ -3940,7 +3941,7 @@ P_{\theta+a}.
 \text{ é equivariante por translação}.
 }
 \]</span></p>
-<p>Esse exemplo é um caso particular da estrutura de localização discutida em <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>, sec.&nbsp;6.4)</span> e <span class="citation" data-cites="shao2005">Shao (<a href="#ref-shao2005" role="doc-biblioref">2005</a>, sec.&nbsp;4.2.1)</span>.</p>
+<p>Esse exemplo é um caso particular da estrutura de localização discutida em <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>, sec.&nbsp;6.4)</span> e <span class="citation" data-cites="shao2003mathematical">Shao (<a href="#ref-shao2003mathematical" role="doc-biblioref">2003</a>, sec.&nbsp;4.2.1)</span>.</p>
 </section>
 <section id="equivariância-e-função-de-risco" class="level4">
 <h4 class="anchored" data-anchor-id="equivariância-e-função-de-risco">Equivariância e função de risco</h4>
@@ -4126,7 +4127,7 @@ r^\star.
 \]</span></p>
 </div>
 </div>
-<p>O critério minimax não exige que <span class="math inline">\(\delta^\star\)</span> minimize o risco separadamente para cada valor de <span class="math inline">\(\theta\)</span>. A comparação é feita pelo pior risco de cada procedimento ao longo de todo o espaço paramétrico. Assim, <span class="math inline">\(\delta^\star\)</span> é minimax quando nenhum estimador de <span class="math inline">\(\mathcal D\)</span> possui risco máximo estritamente menor <span class="citation" data-cites="shao2005">(<a href="#ref-shao2005" role="doc-biblioref">Shao, 2005</a>, sec.&nbsp;4.3)</span>.</p>
+<p>O critério minimax não exige que <span class="math inline">\(\delta^\star\)</span> minimize o risco separadamente para cada valor de <span class="math inline">\(\theta\)</span>. A comparação é feita pelo pior risco de cada procedimento ao longo de todo o espaço paramétrico. Assim, <span class="math inline">\(\delta^\star\)</span> é minimax quando nenhum estimador de <span class="math inline">\(\mathcal D\)</span> possui risco máximo estritamente menor <span class="citation" data-cites="shao2003mathematical">(<a href="#ref-shao2003mathematical" role="doc-biblioref">Shao, 2003</a>, sec.&nbsp;4.3)</span>.</p>
 </section>
 <section id="uma-cota-inferior-para-o-risco-minimax" class="level4">
 <h4 class="anchored" data-anchor-id="uma-cota-inferior-para-o-risco-minimax">Uma cota inferior para o risco minimax</h4>
@@ -4280,7 +4281,7 @@ r_\pi^\star
 r_\pi(\delta),
 \]</span></p>
 <p>e esse valor necessariamente fornece uma cota inferior para <span class="math inline">\(r^\star\)</span>.</p>
-<p>Quando o ínfimo é atingido, o estimador correspondente é uma regra de Bayes para a priori <span class="math inline">\(\pi\)</span>. Aqui, essa construção é usada para obter uma cota inferior e provar minimaxidade; a comparação final continua sendo feita pela função de risco <span class="math inline">\(R(\theta,\delta)\)</span> <span class="citation" data-cites="casella2002statistical shao2005">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;7.3.4; <a href="#ref-shao2005" role="doc-biblioref">Shao, 2005</a>, sec.&nbsp;4.3)</span>.</p>
+<p>Quando o ínfimo é atingido, o estimador correspondente é uma regra de Bayes para a priori <span class="math inline">\(\pi\)</span>. Aqui, essa construção é usada para obter uma cota inferior e provar minimaxidade; a comparação final continua sendo feita pela função de risco <span class="math inline">\(R(\theta,\delta)\)</span> <span class="citation" data-cites="casella2011inferencia shao2003mathematical">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;7.3.4; <a href="#ref-shao2003mathematical" role="doc-biblioref">Shao, 2003</a>, sec.&nbsp;4.3)</span>.</p>
 </section>
 <section id="exemplo-média-normal-como-estimador-minimax" class="level4">
 <h4 class="anchored" data-anchor-id="exemplo-média-normal-como-estimador-minimax">Exemplo — média normal como estimador minimax</h4>
@@ -4465,7 +4466,7 @@ r^\star
 }
 \]</span></p>
 <p>sob perda quadrática, na classe <span class="math inline">\(\mathcal D\)</span> considerada. Em particular, tomando <span class="math inline">\(\mathcal D\)</span> como a classe de todos os estimadores com risco bem definido, a conclusão estabelece a minimaxidade global de <span class="math inline">\(\overline X\)</span> para esse problema.</p>
-<p>O risco constante simplifica a comparação, mas não prova minimaxidade. Ainda é necessário obter uma cota inferior que exclua a existência de outro estimador com risco máximo menor <span class="citation" data-cites="shao2005">(<a href="#ref-shao2005" role="doc-biblioref">Shao, 2005</a>, sec.&nbsp;4.3.1)</span>.</p>
+<p>O risco constante simplifica a comparação, mas não prova minimaxidade. Ainda é necessário obter uma cota inferior que exclua a existência de outro estimador com risco máximo menor <span class="citation" data-cites="shao2005">(<a href="#ref-shao2005" role="doc-biblioref">Shao, 2005</a> [pp.&nbsp;175–182])</span>.</p>
 </section>
 <section id="equivariância-e-invariância-do-emv" class="level4">
 <h4 class="anchored" data-anchor-id="equivariância-e-invariância-do-emv">Equivariância e invariância do EMV</h4>
@@ -5172,7 +5173,7 @@ J_n(\widehat\theta_n)&gt;0.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A normalidade assintótica e a estimativa do erro-padrão obtidas nesta seção fornecem os elementos necessários para a construção de intervalos de confiança aproximados. Os intervalos assintóticos, incluindo o intervalo de Wald, sua interpretação em termos de cobertura e suas limitações serão estudados na unidade seguinte.</p>
+<p>A normalidade assintótica e a estimativa do erro-padrão fornecem os elementos necessários para construir intervalos de confiança aproximados. A construção dos intervalos assintóticos, incluindo o intervalo de Wald, e a análise de cobertura e limitações pertencem à unidade de estimação intervalar.</p>
 </div>
 </div>
 </section>
@@ -5182,7 +5183,7 @@ J_n(\widehat\theta_n)&gt;0.
 <h3 data-number="6.4.3" class="anchored" data-anchor-id="sec-algoritmo-em"><span class="header-section-number">6.4.3</span> Algoritmo Expectation-Maximization (EM)</h3>
 <p>O algoritmo <em>Expectation-Maximization</em> (EM) é um procedimento iterativo para maximizar a verossimilhança em problemas nos quais a introdução de dados ausentes, censurados ou latentes torna a maximização mais simples do que trabalhar diretamente com a verossimilhança observada.</p>
 <p>O EM não define um novo princípio de estimação: ele fornece uma estratégia computacional para obter estimadores de máxima verossimilhança quando a otimização direta é difícil. As garantias computacionais do algoritmo e as propriedades estatísticas do estimador obtido são questões distintas.</p>
-<p>A apresentação adotada utiliza <span class="citation" data-cites="casella2002statistical">Casella; Berger (<a href="#ref-casella2002statistical" role="doc-biblioref">2002</a>, sec.&nbsp;7.2.4)</span> e <span class="citation" data-cites="gupta2011em">Gupta; Chen (<a href="#ref-gupta2011em" role="doc-biblioref">2011</a>, secs. 1–2)</span> para a formulação do algoritmo, <span class="citation" data-cites="hastie2009elements">Hastie; Tibshirani; Friedman (<a href="#ref-hastie2009elements" role="doc-biblioref">2009</a>, secs. 6.8 e 8.5)</span> para modelos de mistura, <span class="citation" data-cites="ramachandran2021r">Ramachandran; Tsokos (<a href="#ref-ramachandran2021r" role="doc-biblioref">2021</a>, sec.&nbsp;13.4)</span> para dados incompletos e <span class="citation" data-cites="chihara2022">Chihara; Hesterberg (<a href="#ref-chihara2022" role="doc-biblioref">2022</a>, sec.&nbsp;13.8)</span> para exemplos didáticos.</p>
+<p>A apresentação adotada utiliza <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>, sec.&nbsp;7.2.4)</span> e <span class="citation" data-cites="gupta2011em">Gupta; Chen (<a href="#ref-gupta2011em" role="doc-biblioref">2011</a>, secs. 1–2)</span> para a formulação do algoritmo, <span class="citation" data-cites="hastie2009elements">Hastie; Tibshirani; Friedman (<a href="#ref-hastie2009elements" role="doc-biblioref">2009</a>, secs. 6.8 e 8.5)</span> para modelos de mistura, <span class="citation" data-cites="ramachandran2021r">Ramachandran; Tsokos (<a href="#ref-ramachandran2021r" role="doc-biblioref">2021</a>, sec.&nbsp;13.4)</span> para dados incompletos e <span class="citation" data-cites="chihara2022">Chihara; Hesterberg (<a href="#ref-chihara2022" role="doc-biblioref">2022</a>, sec.&nbsp;13.8)</span> para exemplos didáticos.</p>
 <section id="exemplo-motivacional-mistura-de-duas-populações-normais" class="level4">
 <h4 class="anchored" data-anchor-id="exemplo-motivacional-mistura-de-duas-populações-normais">Exemplo motivacional — mistura de duas populações normais</h4>
 <p>Considere uma amostra <span class="math inline">\(Y_1,\ldots,Y_n\)</span> obtida de uma população heterogênea formada por duas subpopulações. Condicionalmente à subpopulação de origem, suponha que</p>
@@ -5758,7 +5759,7 @@ f(\boldsymbol{z}\mid\boldsymbol{y},\boldsymbol{\theta}^{(t)}),
 </section>
 <section id="exemplos-2" class="level4">
 <h4 class="anchored" data-anchor-id="exemplos-2">Exemplos</h4>
-<p>A mistura gaussiana será utilizada como exemplo central porque retoma o problema motivador apresentado no início da seção e permite calcular as etapas E e M. Os demais exemplos mostram a mesma estrutura em problemas com informação agregada, censura e dados ausentes.</p>
+<p>A mistura gaussiana é o exemplo central porque permite calcular diretamente as etapas E e M a partir do problema motivador da seção. Os exemplos adicionais tratam de informação agregada, censura e dados ausentes.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Exemplo adicional — informação agregada em um modelo multinomial">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-81-contents" aria-controls="callout-81" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -5827,7 +5828,7 @@ n,
 </div>
 <section id="exemplo-central-mistura-gaussiana" class="level5">
 <h5 class="anchored" data-anchor-id="exemplo-central-mistura-gaussiana">Exemplo central — mistura gaussiana</h5>
-<p>Retomemos agora o modelo de mistura utilizado para motivar o algoritmo. Naquele momento, a variável indicadora de pertencimento ao componente foi introduzida para mostrar por que a verossimilhança dos dados completos é mais simples. Aqui, a mesma construção será utilizada para obter explicitamente as etapas E e M.</p>
+<p>O exemplo retoma o modelo de mistura usado na motivação inicial. A variável indicadora do componente simplifica a verossimilhança dos dados completos e permite obter as etapas E e M.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Exemplo — mistura de $k$ distribuições normais">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5967,62 +5968,95 @@ n_j^{(t)}
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  loglik_anterior <span class="ot">&lt;-</span> <span class="sc">-</span><span class="cn">Inf</span></span>
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  responsabilidades <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA_real_</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span> k)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (iteracao <span class="cf">in</span> <span class="fu">seq_len</span>(max_iter)) {</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    log_componentes <span class="ot">&lt;-</span> <span class="fu">vapply</span>(</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">seq_len</span>(k),</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>      <span class="cf">function</span>(j) {</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        <span class="fu">log</span>(proporcoes[j]) <span class="sc">+</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>          <span class="fu">dnorm</span>(y,</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                <span class="at">mean =</span> medias[j],</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                <span class="at">sd =</span> <span class="fu">sqrt</span>(variancias[j]),</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>      },</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">numeric</span>(n)</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    max_linha <span class="ot">&lt;-</span> <span class="fu">apply</span>(log_componentes, <span class="dv">1</span>L, max)</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    exp_centrado <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_componentes <span class="sc">-</span> max_linha)</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    soma_exp <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(exp_centrado)</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    responsabilidades <span class="ot">&lt;-</span> exp_centrado <span class="sc">/</span> soma_exp</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    loglik <span class="ot">&lt;-</span> <span class="fu">sum</span>(max_linha <span class="sc">+</span> <span class="fu">log</span>(soma_exp))</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  convergiu <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  etapa_e <span class="ot">&lt;-</span> <span class="cf">function</span>(medias, variancias, proporcoes) {</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    log_componentes <span class="ot">&lt;-</span> <span class="fu">vapply</span>(</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">seq_len</span>(k),</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>      <span class="cf">function</span>(j) {</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        <span class="fu">log</span>(proporcoes[j]) <span class="sc">+</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>          <span class="fu">dnorm</span>(</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>            y,</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> medias[j],</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sqrt</span>(variancias[j]),</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>            <span class="at">log =</span> <span class="cn">TRUE</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>      },</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">numeric</span>(n)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    max_linha <span class="ot">&lt;-</span> <span class="fu">apply</span>(log_componentes, <span class="dv">1</span>L, max)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    exp_centrado <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_componentes <span class="sc">-</span> max_linha)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    soma_exp <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(exp_centrado)</span>
 <span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    tamanhos <span class="ot">&lt;-</span> <span class="fu">colSums</span>(responsabilidades)</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">any</span>(tamanhos <span class="sc">&lt;=</span> .Machine<span class="sc">$</span>double.eps)) {</span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">"Um componente recebeu peso efetivo numericamente nulo."</span>)</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    proporcoes <span class="ot">&lt;-</span> tamanhos <span class="sc">/</span> n</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    medias <span class="ot">&lt;-</span> <span class="fu">colSums</span>(responsabilidades <span class="sc">*</span> y) <span class="sc">/</span> tamanhos</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_len</span>(k)) {</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>      variancias[j] <span class="ot">&lt;-</span> <span class="fu">sum</span>(</span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>        responsabilidades[, j] <span class="sc">*</span> (y <span class="sc">-</span> medias[j])<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">/</span> tamanhos[j]</span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    variancias <span class="ot">&lt;-</span> <span class="fu">pmax</span>(variancias, variancia_minima)</span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.finite</span>(loglik_anterior)) {</span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>      erro_relativo <span class="ot">&lt;-</span> <span class="fu">abs</span>(loglik <span class="sc">-</span> loglik_anterior) <span class="sc">/</span></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">abs</span>(loglik_anterior))</span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (erro_relativo <span class="sc">&lt;</span> tol) {</span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    loglik_anterior <span class="ot">&lt;-</span> loglik</span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">proporcoes =</span> proporcoes,</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">medias =</span> medias,</span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">variancias =</span> variancias,</span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">responsabilidades =</span> responsabilidades,</span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_verossimilhanca =</span> loglik,</span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">iteracoes =</span> iteracao,</span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">convergiu =</span> iteracao <span class="sc">&lt;</span> max_iter</span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">responsabilidades =</span> exp_centrado <span class="sc">/</span> soma_exp,</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">loglik =</span> <span class="fu">sum</span>(max_linha <span class="sc">+</span> <span class="fu">log</span>(soma_exp))</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (iteracao <span class="cf">in</span> <span class="fu">seq_len</span>(max_iter)) {</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    resultado_e <span class="ot">&lt;-</span> <span class="fu">etapa_e</span>(</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>      medias,</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>      variancias,</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>      proporcoes</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    responsabilidades <span class="ot">&lt;-</span> resultado_e<span class="sc">$</span>responsabilidades</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    loglik <span class="ot">&lt;-</span> resultado_e<span class="sc">$</span>loglik</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.finite</span>(loglik_anterior)) {</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>      erro_relativo <span class="ot">&lt;-</span> <span class="fu">abs</span>(loglik <span class="sc">-</span> loglik_anterior) <span class="sc">/</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>        (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">abs</span>(loglik_anterior))</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (erro_relativo <span class="sc">&lt;</span> tol) {</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>        convergiu <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    tamanhos <span class="ot">&lt;-</span> <span class="fu">colSums</span>(responsabilidades)</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">any</span>(tamanhos <span class="sc">&lt;=</span> .Machine<span class="sc">$</span>double.eps)) {</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">"Um componente recebeu peso efetivo numericamente nulo."</span>)</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    proporcoes <span class="ot">&lt;-</span> tamanhos <span class="sc">/</span> n</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    medias <span class="ot">&lt;-</span> <span class="fu">colSums</span>(responsabilidades <span class="sc">*</span> y) <span class="sc">/</span> tamanhos</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_len</span>(k)) {</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>      variancias[j] <span class="ot">&lt;-</span> <span class="fu">sum</span>(</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>        responsabilidades[, j] <span class="sc">*</span> (y <span class="sc">-</span> medias[j])<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">/</span> tamanhos[j]</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>    variancias <span class="ot">&lt;-</span> <span class="fu">pmax</span>(</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>      variancias,</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>      variancia_minima</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>    loglik_anterior <span class="ot">&lt;-</span> loglik</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>  resultado_final <span class="ot">&lt;-</span> <span class="fu">etapa_e</span>(</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>    medias,</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    variancias,</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>    proporcoes</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>  responsabilidades <span class="ot">&lt;-</span> resultado_final<span class="sc">$</span>responsabilidades</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>  loglik <span class="ot">&lt;-</span> resultado_final<span class="sc">$</span>loglik</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">proporcoes =</span> proporcoes,</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    <span class="at">medias =</span> medias,</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">variancias =</span> variancias,</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">responsabilidades =</span> responsabilidades,</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_verossimilhanca =</span> loglik,</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">iteracoes =</span> iteracao,</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">convergiu =</span> convergiu</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Observação computacional">
 <div class="callout-header d-flex align-content-center">
@@ -6306,50 +6340,52 @@ X_i-\overline X_{\mathrm{obs}}
 <span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  loglik_anterior <span class="ot">&lt;-</span> <span class="fu">loglik_observada</span>(mu, variancia)</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (iteracao <span class="cf">in</span> <span class="fu">seq_len</span>(max_iter)) {</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    esperanca_t1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(observados) <span class="sc">+</span> m <span class="sc">*</span> mu</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    esperanca_t2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(observados<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> m <span class="sc">*</span> (mu<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> variancia)</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    mu_novo <span class="ot">&lt;-</span> esperanca_t1 <span class="sc">/</span> n</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    variancia_nova <span class="ot">&lt;-</span> esperanca_t2 <span class="sc">/</span> n <span class="sc">-</span> mu_novo<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.finite</span>(variancia_nova) <span class="sc">||</span> variancia_nova <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">"A atualização produziu variância inválida."</span>)</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    loglik_nova <span class="ot">&lt;-</span> <span class="fu">loglik_observada</span>(mu_novo, variancia_nova)</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>    historico <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>      historico,</span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(</span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">iteracao =</span> iteracao,</span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">mu =</span> mu_novo,</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">variancia =</span> variancia_nova,</span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>        <span class="at">loglik =</span> loglik_nova</span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    erro_relativo <span class="ot">&lt;-</span> <span class="fu">abs</span>(loglik_nova <span class="sc">-</span> loglik_anterior) <span class="sc">/</span></span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>      (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">abs</span>(loglik_anterior))</span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> mu_novo</span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    variancia <span class="ot">&lt;-</span> variancia_nova</span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (erro_relativo <span class="sc">&lt;</span> tol) {</span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span></span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>    loglik_anterior <span class="ot">&lt;-</span> loglik_nova</span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> mu,</span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">variancia =</span> variancia,</span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">historico =</span> historico,</span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">iteracoes =</span> iteracao,</span>
-<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">convergiu =</span> iteracao <span class="sc">&lt;</span> max_iter</span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>  convergiu <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (iteracao <span class="cf">in</span> <span class="fu">seq_len</span>(max_iter)) {</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    esperanca_t1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(observados) <span class="sc">+</span> m <span class="sc">*</span> mu</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    esperanca_t2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(observados<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> m <span class="sc">*</span> (mu<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> variancia)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    mu_novo <span class="ot">&lt;-</span> esperanca_t1 <span class="sc">/</span> n</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    variancia_nova <span class="ot">&lt;-</span> esperanca_t2 <span class="sc">/</span> n <span class="sc">-</span> mu_novo<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.finite</span>(variancia_nova) <span class="sc">||</span> variancia_nova <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="st">"A atualização produziu variância inválida."</span>)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    loglik_nova <span class="ot">&lt;-</span> <span class="fu">loglik_observada</span>(mu_novo, variancia_nova)</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>    historico <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>      historico,</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">iteracao =</span> iteracao,</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">mu =</span> mu_novo,</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>        <span class="at">variancia =</span> variancia_nova,</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">loglik =</span> loglik_nova</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    erro_relativo <span class="ot">&lt;-</span> <span class="fu">abs</span>(loglik_nova <span class="sc">-</span> loglik_anterior) <span class="sc">/</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>      (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">abs</span>(loglik_anterior))</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> mu_novo</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>    variancia <span class="ot">&lt;-</span> variancia_nova</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (erro_relativo <span class="sc">&lt;</span> tol) {</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>      convergiu <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>    loglik_anterior <span class="ot">&lt;-</span> loglik_nova</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> mu,</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">variancia =</span> variancia,</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">historico =</span> historico,</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">iteracoes =</span> iteracao,</span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">convergiu =</span> convergiu</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled" title="Interpretação do exemplo">
 <div class="callout-header d-flex align-content-center">
@@ -6672,8 +6708,8 @@ e^{-(x-\theta)}
 
 
 <div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list">
-<div id="ref-casella2002statistical" class="csl-entry" role="listitem">
-CASELLA, George; BERGER, Roger L. <strong>Statistical Inference</strong>. 2. ed. Pacific Grove, CA: Duxbury Press, 2002.
+<div id="ref-casella2011inferencia" class="csl-entry" role="listitem">
+CASELLA, George; BERGER, Roger L. <strong>Inferência Estatística</strong>. Tradução: Solange Aparecida Visconte. São Paulo: Cengage Learning, 2011.
 </div>
 <div id="ref-chihara2022" class="csl-entry" role="listitem">
 CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resampling and <span>R</span></strong>. 3. ed. Hoboken, NJ: John Wiley &amp; Sons, 2022.
@@ -6704,6 +6740,9 @@ RAMACHANDRAN, Kandethody M.; TSOKOS, Chris P. <strong>Mathematical Statistics wi
 </div>
 <div id="ref-rice2007mathematical" class="csl-entry" role="listitem">
 RICE, John A. <strong>Mathematical Statistics and Data Analysis</strong>. 3. ed. Belmont, CA: Duxbury Press, 2007.
+</div>
+<div id="ref-shao2003mathematical" class="csl-entry" role="listitem">
+SHAO, Jun. <strong><a href="https://doi.org/10.1007/b97553">Mathematical Statistics</a></strong>. 2. ed. New York: Springer, 2003.
 </div>
 <div id="ref-shao2005" class="csl-entry" role="listitem">
 SHAO, Jun. <strong>Mathematical Statistics: Exercises and Solutions</strong>. New York: Springer Science+Business Media, 2005.

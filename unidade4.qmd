@@ -10,7 +10,7 @@ Quando resultados assintóticos fornecerem aproximações para a distribuição 
 
 ## Método dos Momentos {#sec-metodo-momentos}
 
-O **método dos momentos** estima os parâmetros de um modelo igualando momentos populacionais, escritos como funções dos parâmetros, aos momentos correspondentes calculados na amostra. Em muitos modelos, as equações resultantes podem ser resolvidas diretamente e também podem fornecer valores iniciais para métodos numéricos. A definição do método não depende da Lei dos Grandes Números; essa lei, juntamente com condições de identificabilidade e continuidade, é utilizada para estabelecer a consistência dos estimadores obtidos [@casella2002statistical, sec. 7.2.1; @rice2007mathematical, sec. 8.4; @ramachandran2021r, sec. 5.2.1; @chihara2022, sec. 6.2].
+O **método dos momentos** estima os parâmetros de um modelo igualando momentos populacionais, escritos como funções dos parâmetros, aos momentos correspondentes calculados na amostra. Em muitos modelos, as equações resultantes podem ser resolvidas diretamente e também podem fornecer valores iniciais para métodos numéricos. A definição do método não depende da Lei dos Grandes Números; essa lei, juntamente com condições de identificabilidade e continuidade, é utilizada para estabelecer a consistência dos estimadores obtidos [@casella2011inferencia, sec. 7.2.1; @rice2007mathematical, sec. 8.4; @ramachandran2021r, sec. 5.2.1; @chihara2022, sec. 6.2].
 
 ### Momentos populacionais e amostrais {.unnumbered}
 
@@ -267,7 +267,7 @@ $$\widehat\theta^{\mathrm{MM}}\xrightarrow{p}\theta.
 $$
 
 ::: {.callout-note title="Aprofundamento"}
-A distribuição assintótica deste estimador pode ser obtida pelo método delta. Essa aplicação será retomada em @sec-delta-mm-pareto, após a apresentação dos métodos de estimação do percurso principal.
+A distribuição assintótica deste estimador é obtida em @sec-delta-mm-pareto por meio do método delta.
 :::
 
 ### Exemplo — distribuição uniforme contínua {.unnumbered}
@@ -302,7 +302,7 @@ $$\operatorname{Var}(\widehat\theta^{\mathrm{MM}})
 =\frac{\theta^2}{3n},
 $$
 
-e é consistente pela Lei dos Grandes Números. O estimador de máxima verossimilhança, estudado adiante, é $X_{(n)}$; os dois métodos produzem estimadores distintos neste modelo não regular [@chihara2022, secs. 6.1.2 e 6.2].
+e é consistente pela Lei dos Grandes Números. Para o mesmo modelo, o estimador de máxima verossimilhança é $X_{(n)}$; os dois métodos produzem estimadores distintos neste modelo não regular [@chihara2022, secs. 6.1.2 e 6.2].
 
 ### Exemplo — distribuição uniforme discreta {.unnumbered}
 
@@ -505,9 +505,9 @@ quase certamente, e os dois estimadores estão bem definidos. Eles são obtidos 
 
 A função de verossimilhança foi introduzida em @sec-fundamentos-inferencia como uma forma de comparar valores do parâmetro à luz dos dados observados. Nesta seção, essa ideia é utilizada para **construir estimadores**: o estimador de máxima verossimilhança é obtido selecionando, entre os valores admissíveis do parâmetro, aqueles que maximizam a verossimilhança.
 
-O método aplica-se a modelos discretos, contínuos e multiparamétricos. A maximização pode envolver soluções interiores, pontos de fronteira, múltiplos máximos ou situações em que o supremo não é atingido. Por isso, a obtenção do estimador exige examinar a função objetivo juntamente com o espaço paramétrico [@casella2002statistical, sec. 7.2.2; @rice2007mathematical, sec. 8.5; @larsen2012, sec. 5.2; @ramachandran2009, sec. 5.2.2; @chihara2022, sec. 6.1].
+O método aplica-se a modelos discretos, contínuos e multiparamétricos. A maximização pode envolver soluções interiores, pontos de fronteira, múltiplos máximos ou situações em que o supremo não é atingido. Por isso, a obtenção do estimador exige examinar a função objetivo juntamente com o espaço paramétrico [@casella2011inferencia, sec. 7.2.2; @rice2007mathematical, sec. 8.5; @larsen2012, sec. 5.2; @ramachandran2009, sec. 5.2.2; @chihara2022, sec. 6.1].
 
-No percurso principal, o foco está na construção do estimador e nas ferramentas utilizadas para localizar e verificar o máximo. As condições de regularidade e as propriedades assintóticas específicas do EMV serão estudadas posteriormente em @sec-aprofundamento-assintotica.
+No percurso principal, o foco está na construção do estimador e nas ferramentas utilizadas para localizar e verificar o máximo. As condições de regularidade e as propriedades assintóticas específicas do EMV estão em @sec-aprofundamento-assintotica.
 
 Ao final desta seção, o leitor deverá ser capaz de:
 
@@ -722,7 +722,7 @@ $$\widehat\beta
 \frac{1}{\widehat\lambda}.
 $$
 
-A propriedade de invariância é apresentada por @casella2002statistical [sec. 7.2.2], @chihara2022 [pp. 171--173] e @ramachandran2009 [pp. 243--244].
+A propriedade de invariância é apresentada por @casella2011inferencia [sec. 7.2.2], @chihara2022 [pp. 171--173] e @ramachandran2009 [pp. 243--244].
 
 ### Função escore e informação
 
@@ -835,7 +835,7 @@ depende da amostra observada, enquanto $\mathbf{I}_n(\boldsymbol\theta)$ é sua 
 
 ### Exemplos {.unnumbered}
 
-Os exemplos desta subseção mostram como a máxima verossimilhança é utilizada em modelos regulares e não regulares. O foco principal está na construção do estimador. Quando pertinente, resultados sobre informação, distribuição assintótica e erro-padrão são apresentados em blocos de aprofundamento, cuja fundamentação geral será desenvolvida posteriormente em @sec-aprofundamento-assintotica.
+Os exemplos desta subseção mostram a construção do EMV em modelos regulares e não regulares. Resultados sobre informação, distribuição assintótica e erro-padrão aparecem em blocos recolhíveis; sua fundamentação está em @sec-aprofundamento-assintotica.
 
 Os exemplos são adaptados de @larsen2012 [sec. 5.2], @chihara2022 [sec. 6.1] e @ramachandran2009 [sec. 5.2.2].
 
@@ -1556,7 +1556,7 @@ $$
 Modelos com suporte dependente do parâmetro, máximos na fronteira ou funções não diferenciáveis podem exigir outros argumentos.
 :::
 
-Quando não existe solução analítica, a maximização pode ser realizada numericamente. Métodos como Newton--Raphson, escore de Fisher e algoritmos quase-Newton são alternativas usuais. Para problemas com dados incompletos ou variáveis latentes, o algoritmo EM será estudado em @sec-algoritmo-em [@ramachandran2009].
+Quando não existe solução analítica, a maximização pode ser realizada numericamente. Métodos como Newton--Raphson, escore de Fisher e algoritmos quase-Newton são alternativas usuais. Para dados incompletos ou variáveis latentes, @sec-algoritmo-em apresenta o algoritmo EM [@ramachandran2009].
 
 ::: {.callout-note title="Aprofundamento"}
 Depois de construído o EMV, podem-se investigar suas propriedades estatísticas. As condições de regularidade, a consistência, a distribuição assintótica e a estimação do erro-padrão são tratadas em @sec-propriedades-assintoticas-emv. A construção de intervalos de confiança a partir dessas aproximações pertence à unidade de estimação intervalar.
@@ -1861,7 +1861,7 @@ Depois de construído o estimador, uma segunda questão é estudar seu comportam
 
 ## Mínimos Quadrados {#sec-minimos-quadrados}
 
-O método dos mínimos quadrados estima parâmetros minimizando a soma dos quadrados das discrepâncias entre valores observados e valores previstos. O critério é usado em regressão linear, modelos polinomiais e problemas não lineares. Sua interpretação inferencial depende das hipóteses adotadas para os erros [@casella2002statistical, secs. 11.3.1--11.3.4; @rice2007mathematical, chap. 14; @ramachandran2021r, sec. 7.2.1].
+O método dos mínimos quadrados estima parâmetros minimizando a soma dos quadrados das discrepâncias entre valores observados e valores previstos. O critério é usado em regressão linear, modelos polinomiais e problemas não lineares. Sua interpretação inferencial depende das hipóteses adotadas para os erros [@casella2011inferencia, secs. 11.3.1--11.3.4; @rice2007mathematical, chap. 14; @ramachandran2021r, sec. 7.2.1].
 
 A perda quadrática atribui peso crescente a resíduos de maior magnitude. Por exemplo, um resíduo igual a $4$ contribui com $16$ para a função objetivo, enquanto um resíduo igual a $2$ contribui com $4$. Essa forma quadrática simplifica a otimização e torna o ajuste sensível a observações atípicas [@diez2014introductory, p. 229; @rice2007mathematical, p. 556].
 
@@ -3379,7 +3379,7 @@ Os três blocos utilizam conhecimentos anteriores distintos. Minimax e equivari�
 
 Em @sec-avaliacao-reducao, a função de risco foi utilizada para avaliar o desempenho de estimadores. Nesta seção, essa mesma função passa a ser utilizada como critério de construção e escolha. A equivariância restringe os estimadores de acordo com as transformações que preservam a estrutura do modelo; o critério minimax compara os procedimentos pelo maior risco que podem apresentar no espaço paramétrico.
 
-Equivariância e minimaxidade respondem a perguntas diferentes. A equivariância restringe a classe de estimadores por transformações que preservam o problema estatístico; a minimaxidade compara procedimentos pelo maior valor de sua função de risco [@casella2002statistical, secs. 6.4 e 7.3.4; @shao2005, secs. 4.2--4.3].
+Equivariância e minimaxidade respondem a perguntas diferentes. A equivariância restringe a classe de estimadores por transformações que preservam o problema estatístico; a minimaxidade compara procedimentos pelo maior valor de sua função de risco [@casella2011inferencia, secs. 6.4 e 7.3.4; @shao2003mathematical, secs. 4.2--4.3].
 
 #### Equivariância e problemas invariantes
 
@@ -3421,7 +3421,7 @@ Em um modelo identificável, o valor $\overline g(\theta)$ é determinado de for
 
 A condição estabelece que a transformação dos dados não leva a uma classe probabilística diferente: ela apenas modifica o valor do parâmetro dentro da mesma família.
 
-Casella e Berger apresentam o Princípio da Equivariância a partir de duas exigências: a inferência não deve depender da escala usada para representar as mesmas medições, e problemas com a mesma estrutura formal devem receber procedimentos compatíveis [@casella2002statistical, sec. 6.4].
+Casella e Berger apresentam o Princípio da Equivariância a partir de duas exigências: a inferência não deve depender da escala usada para representar as mesmas medições, e problemas com a mesma estrutura formal devem receber procedimentos compatíveis [@casella2011inferencia, sec. 6.4].
 
 Para um problema de estimação de $\theta$, a transformação que atua no espaço paramétrico determina a transformação esperada para o estimador.
 
@@ -3517,7 +3517,7 @@ $$
 }
 $$
 
-Esse exemplo é um caso particular da estrutura de localização discutida em @casella2002statistical [sec. 6.4] e @shao2005 [sec. 4.2.1].
+Esse exemplo é um caso particular da estrutura de localização discutida em @casella2011inferencia [sec. 6.4] e @shao2003mathematical [sec. 4.2.1].
 
 #### Equivariância e função de risco
 
@@ -3710,7 +3710,7 @@ r^\star.
 $$
 :::
 
-O critério minimax não exige que $\delta^\star$ minimize o risco separadamente para cada valor de $\theta$. A comparação é feita pelo pior risco de cada procedimento ao longo de todo o espaço paramétrico. Assim, $\delta^\star$ é minimax quando nenhum estimador de $\mathcal D$ possui risco máximo estritamente menor [@shao2005, sec. 4.3].
+O critério minimax não exige que $\delta^\star$ minimize o risco separadamente para cada valor de $\theta$. A comparação é feita pelo pior risco de cada procedimento ao longo de todo o espaço paramétrico. Assim, $\delta^\star$ é minimax quando nenhum estimador de $\mathcal D$ possui risco máximo estritamente menor [@shao2003mathematical, sec. 4.3].
 
 #### Uma cota inferior para o risco minimax
 
@@ -3881,7 +3881,7 @@ $$
 
 e esse valor necessariamente fornece uma cota inferior para $r^\star$.
 
-Quando o ínfimo é atingido, o estimador correspondente é uma regra de Bayes para a priori $\pi$. Aqui, essa construção é usada para obter uma cota inferior e provar minimaxidade; a comparação final continua sendo feita pela função de risco $R(\theta,\delta)$ [@casella2002statistical, sec. 7.3.4; @shao2005, sec. 4.3].
+Quando o ínfimo é atingido, o estimador correspondente é uma regra de Bayes para a priori $\pi$. Aqui, essa construção é usada para obter uma cota inferior e provar minimaxidade; a comparação final continua sendo feita pela função de risco $R(\theta,\delta)$ [@casella2011inferencia, sec. 7.3.4; @shao2003mathematical, sec. 4.3].
 
 #### Exemplo — média normal como estimador minimax
 
@@ -4098,7 +4098,7 @@ $$
 
 sob perda quadrática, na classe $\mathcal D$ considerada. Em particular, tomando $\mathcal D$ como a classe de todos os estimadores com risco bem definido, a conclusão estabelece a minimaxidade global de $\overline X$ para esse problema.
 
-O risco constante simplifica a comparação, mas não prova minimaxidade. Ainda é necessário obter uma cota inferior que exclua a existência de outro estimador com risco máximo menor [@shao2005, sec. 4.3.1].
+O risco constante simplifica a comparação, mas não prova minimaxidade. Ainda é necessário obter uma cota inferior que exclua a existência de outro estimador com risco máximo menor [@shao2005 [pp. 175--182]].
 
 #### Equivariância e invariância do EMV
 
@@ -4875,7 +4875,7 @@ J_n(\widehat\theta_n)>0.
 $$
 
 ::: {.callout-note title="Ponte para a estimação intervalar"}
-A normalidade assintótica e a estimativa do erro-padrão obtidas nesta seção fornecem os elementos necessários para a construção de intervalos de confiança aproximados. Os intervalos assintóticos, incluindo o intervalo de Wald, sua interpretação em termos de cobertura e suas limitações serão estudados na unidade seguinte.
+A normalidade assintótica e a estimativa do erro-padrão fornecem os elementos necessários para construir intervalos de confiança aproximados. A construção dos intervalos assintóticos, incluindo o intervalo de Wald, e a análise de cobertura e limitações pertencem à unidade de estimação intervalar.
 :::
 
 
@@ -4885,7 +4885,7 @@ O algoritmo *Expectation-Maximization* (EM) é um procedimento iterativo para ma
 
 O EM não define um novo princípio de estimação: ele fornece uma estratégia computacional para obter estimadores de máxima verossimilhança quando a otimização direta é difícil. As garantias computacionais do algoritmo e as propriedades estatísticas do estimador obtido são questões distintas.
 
-A apresentação adotada utiliza @casella2002statistical [sec. 7.2.4] e @gupta2011em [secs. 1--2] para a formulação do algoritmo, @hastie2009elements [secs. 6.8 e 8.5] para modelos de mistura, @ramachandran2021r [sec. 13.4] para dados incompletos e @chihara2022 [sec. 13.8] para exemplos didáticos.
+A apresentação adotada utiliza @casella2011inferencia [sec. 7.2.4] e @gupta2011em [secs. 1--2] para a formulação do algoritmo, @hastie2009elements [secs. 6.8 e 8.5] para modelos de mistura, @ramachandran2021r [sec. 13.4] para dados incompletos e @chihara2022 [sec. 13.8] para exemplos didáticos.
 
 #### Exemplo motivacional — mistura de duas populações normais
 
@@ -5500,7 +5500,7 @@ Formulações penalizadas e extensões baseadas em distribuições a priori tamb
 
 #### Exemplos
 
-A mistura gaussiana será utilizada como exemplo central porque retoma o problema motivador apresentado no início da seção e permite calcular as etapas E e M. Os demais exemplos mostram a mesma estrutura em problemas com informação agregada, censura e dados ausentes.
+A mistura gaussiana é o exemplo central porque permite calcular diretamente as etapas E e M a partir do problema motivador da seção. Os exemplos adicionais tratam de informação agregada, censura e dados ausentes.
 
 :::: {.callout-note collapse="true" title="Exemplo adicional — informação agregada em um modelo multinomial"}
 
@@ -5562,7 +5562,7 @@ O exemplo ilustra que a etapa E não precisa reconstruir valores individuais dos
 
 ##### Exemplo central — mistura gaussiana
 
-Retomemos agora o modelo de mistura utilizado para motivar o algoritmo. Naquele momento, a variável indicadora de pertencimento ao componente foi introduzida para mostrar por que a verossimilhança dos dados completos é mais simples. Aqui, a mesma construção será utilizada para obter explicitamente as etapas E e M.
+O exemplo retoma o modelo de mistura usado na motivação inicial. A variável indicadora do componente simplifica a verossimilhança dos dados completos e permite obter as etapas E e M.
 
 ::: {.callout-tip title="Exemplo — mistura de $k$ distribuições normais"}
 A derivação segue @hastie2009elements [sec. 8.5] e @gupta2011em [sec. 3.2].
@@ -5706,16 +5706,19 @@ em_normal_1d <- function(y,
 
   loglik_anterior <- -Inf
   responsabilidades <- matrix(NA_real_, nrow = n, ncol = k)
+  convergiu <- FALSE
 
-  for (iteracao in seq_len(max_iter)) {
+  etapa_e <- function(medias, variancias, proporcoes) {
     log_componentes <- vapply(
       seq_len(k),
       function(j) {
         log(proporcoes[j]) +
-          dnorm(y,
-                mean = medias[j],
-                sd = sqrt(variancias[j]),
-                log = TRUE)
+          dnorm(
+            y,
+            mean = medias[j],
+            sd = sqrt(variancias[j]),
+            log = TRUE
+          )
       },
       numeric(n)
     )
@@ -5723,11 +5726,35 @@ em_normal_1d <- function(y,
     max_linha <- apply(log_componentes, 1L, max)
     exp_centrado <- exp(log_componentes - max_linha)
     soma_exp <- rowSums(exp_centrado)
-    responsabilidades <- exp_centrado / soma_exp
 
-    loglik <- sum(max_linha + log(soma_exp))
+    list(
+      responsabilidades = exp_centrado / soma_exp,
+      loglik = sum(max_linha + log(soma_exp))
+    )
+  }
+
+  for (iteracao in seq_len(max_iter)) {
+    resultado_e <- etapa_e(
+      medias,
+      variancias,
+      proporcoes
+    )
+
+    responsabilidades <- resultado_e$responsabilidades
+    loglik <- resultado_e$loglik
+
+    if (is.finite(loglik_anterior)) {
+      erro_relativo <- abs(loglik - loglik_anterior) /
+        (1 + abs(loglik_anterior))
+
+      if (erro_relativo < tol) {
+        convergiu <- TRUE
+        break
+      }
+    }
 
     tamanhos <- colSums(responsabilidades)
+
     if (any(tamanhos <= .Machine$double.eps)) {
       stop("Um componente recebeu peso efetivo numericamente nulo.")
     }
@@ -5740,17 +5767,23 @@ em_normal_1d <- function(y,
         responsabilidades[, j] * (y - medias[j])^2
       ) / tamanhos[j]
     }
-    variancias <- pmax(variancias, variancia_minima)
 
-    if (is.finite(loglik_anterior)) {
-      erro_relativo <- abs(loglik - loglik_anterior) /
-        (1 + abs(loglik_anterior))
-      if (erro_relativo < tol) {
-        break
-      }
-    }
+    variancias <- pmax(
+      variancias,
+      variancia_minima
+    )
+
     loglik_anterior <- loglik
   }
+
+  resultado_final <- etapa_e(
+    medias,
+    variancias,
+    proporcoes
+  )
+
+  responsabilidades <- resultado_final$responsabilidades
+  loglik <- resultado_final$loglik
 
   list(
     proporcoes = proporcoes,
@@ -5759,7 +5792,7 @@ em_normal_1d <- function(y,
     responsabilidades = responsabilidades,
     log_verossimilhanca = loglik,
     iteracoes = iteracao,
-    convergiu = iteracao < max_iter
+    convergiu = convergiu
   )
 }
 ```
@@ -6052,6 +6085,7 @@ em_normal_ausentes <- function(y,
   )
 
   loglik_anterior <- loglik_observada(mu, variancia)
+  convergiu <- FALSE
 
   for (iteracao in seq_len(max_iter)) {
     esperanca_t1 <- sum(observados) + m * mu
@@ -6083,6 +6117,7 @@ em_normal_ausentes <- function(y,
     variancia <- variancia_nova
 
     if (erro_relativo < tol) {
+      convergiu <- TRUE
       break
     }
     loglik_anterior <- loglik_nova
@@ -6093,7 +6128,7 @@ em_normal_ausentes <- function(y,
     variancia = variancia,
     historico = historico,
     iteracoes = iteracao,
-    convergiu = iteracao < max_iter
+    convergiu = convergiu
   )
 }
 ```
