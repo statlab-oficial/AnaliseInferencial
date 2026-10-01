@@ -2,23 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>8&nbsp; Testes de Hipóteses e Análise de Dados Categóricos</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -95,18 +89,19 @@ div.csl-indent {
 <link href="./unidade5.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-4c6d65c679321d81af7ec8b61b1d5a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -136,7 +131,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -352,14 +347,18 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
         </div>
         </div>
-        <div class="sidebar-tools-collapse">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
-</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -452,88 +451,78 @@ window.Quarto = {
   <ul>
   <li><a href="#objetivos-de-aprendizagem" id="toc-objetivos-de-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-de-aprendizagem"><span class="header-section-number">8.1</span> Objetivos de aprendizagem</a></li>
   <li><a href="#motivação-uma-moeda-aparentemente-honesta" id="toc-motivação-uma-moeda-aparentemente-honesta" class="nav-link" data-scroll-target="#motivação-uma-moeda-aparentemente-honesta"><span class="header-section-number">8.2</span> Motivação: uma moeda aparentemente honesta</a></li>
-  <li><a href="#formulação-estatística-do-problema" id="toc-formulação-estatística-do-problema" class="nav-link" data-scroll-target="#formulação-estatística-do-problema"><span class="header-section-number">8.3</span> Formulação estatística do problema</a>
+  <li><a href="#sec-formulacao-testes" id="toc-sec-formulacao-testes" class="nav-link" data-scroll-target="#sec-formulacao-testes"><span class="header-section-number">8.3</span> Formulação estatística do problema</a>
   <ul class="collapse">
   <li><a href="#função-de-teste-e-região-crítica" id="toc-função-de-teste-e-região-crítica" class="nav-link" data-scroll-target="#função-de-teste-e-região-crítica"><span class="header-section-number">8.3.1</span> Função de teste e região crítica</a></li>
   <li><a href="#função-poder-tamanho-e-nível" id="toc-função-poder-tamanho-e-nível" class="nav-link" data-scroll-target="#função-poder-tamanho-e-nível"><span class="header-section-number">8.3.2</span> Função poder, tamanho e nível</a></li>
   <li><a href="#erros-dos-tipos-i-e-ii" id="toc-erros-dos-tipos-i-e-ii" class="nav-link" data-scroll-target="#erros-dos-tipos-i-e-ii"><span class="header-section-number">8.3.3</span> Erros dos tipos I e II</a></li>
   </ul></li>
-  <li><a href="#valor-p" id="toc-valor-p" class="nav-link" data-scroll-target="#valor-p"><span class="header-section-number">8.4</span> Valor-<span class="math inline">\(p\)</span></a>
+  <li><a href="#sec-valor-p" id="toc-sec-valor-p" class="nav-link" data-scroll-target="#sec-valor-p"><span class="header-section-number">8.4</span> Valor-<span class="math inline">\(p\)</span></a>
   <ul class="collapse">
   <li><a href="#regra-de-decisão" id="toc-regra-de-decisão" class="nav-link" data-scroll-target="#regra-de-decisão"><span class="header-section-number">8.4.1</span> Regra de decisão</a></li>
   </ul></li>
   <li><a href="#procedimento-recomendado" id="toc-procedimento-recomendado" class="nav-link" data-scroll-target="#procedimento-recomendado"><span class="header-section-number">8.5</span> Procedimento recomendado</a></li>
   <li><a href="#exemplo-motivacional" id="toc-exemplo-motivacional" class="nav-link" data-scroll-target="#exemplo-motivacional"><span class="header-section-number">8.6</span> Exemplo motivacional</a></li>
-  <li><a href="#lema-de-neymanpearson" id="toc-lema-de-neymanpearson" class="nav-link" data-scroll-target="#lema-de-neymanpearson"><span class="header-section-number">8.7</span> Lema de Neyman–Pearson</a>
+  <li><a href="#sec-aprofundamento-testes" id="toc-sec-aprofundamento-testes" class="nav-link" data-scroll-target="#sec-aprofundamento-testes"><span class="header-section-number">8.7</span> Aprofundamento</a>
   <ul class="collapse">
-  <li><a href="#exemplo-média-normal-alternativa-simples" id="toc-exemplo-média-normal-alternativa-simples" class="nav-link" data-scroll-target="#exemplo-média-normal-alternativa-simples"><span class="header-section-number">8.7.1</span> Exemplo: média normal, alternativa simples</a></li>
+  <li><a href="#lema-de-neymanpearson" id="toc-lema-de-neymanpearson" class="nav-link" data-scroll-target="#lema-de-neymanpearson"><span class="header-section-number">8.7.1</span> Lema de Neyman–Pearson</a></li>
+  <li><a href="#testes-uniformemente-mais-poderosos" id="toc-testes-uniformemente-mais-poderosos" class="nav-link" data-scroll-target="#testes-uniformemente-mais-poderosos"><span class="header-section-number">8.7.2</span> Testes uniformemente mais poderosos</a></li>
+  <li><a href="#sec-trv" id="toc-sec-trv" class="nav-link" data-scroll-target="#sec-trv"><span class="header-section-number">8.7.3</span> Teste da razão de verossimilhanças</a></li>
   </ul></li>
-  <li><a href="#testes-uniformemente-mais-poderosos" id="toc-testes-uniformemente-mais-poderosos" class="nav-link" data-scroll-target="#testes-uniformemente-mais-poderosos"><span class="header-section-number">8.8</span> Testes uniformemente mais poderosos</a>
+  <li><a href="#sec-testes-usuais" id="toc-sec-testes-usuais" class="nav-link" data-scroll-target="#sec-testes-usuais"><span class="header-section-number">8.8</span> Testes usuais para parâmetros populacionais</a>
   <ul class="collapse">
-  <li><a href="#razão-de-verossimilhanças-monótona" id="toc-razão-de-verossimilhanças-monótona" class="nav-link" data-scroll-target="#razão-de-verossimilhanças-monótona"><span class="header-section-number">8.8.1</span> Razão de verossimilhanças monótona</a></li>
-  <li><a href="#exemplos-importantes" id="toc-exemplos-importantes" class="nav-link" data-scroll-target="#exemplos-importantes"><span class="header-section-number">8.8.2</span> Exemplos importantes</a></li>
-  <li><a href="#por-que-geralmente-não-existe-ump-bilateral" id="toc-por-que-geralmente-não-existe-ump-bilateral" class="nav-link" data-scroll-target="#por-que-geralmente-não-existe-ump-bilateral"><span class="header-section-number">8.8.3</span> Por que geralmente não existe UMP bilateral?</a></li>
+  <li><a href="#uma-média-com-variância-conhecida" id="toc-uma-média-com-variância-conhecida" class="nav-link" data-scroll-target="#uma-média-com-variância-conhecida"><span class="header-section-number">8.8.1</span> Uma média com variância conhecida</a></li>
+  <li><a href="#uma-média-com-variância-desconhecida" id="toc-uma-média-com-variância-desconhecida" class="nav-link" data-scroll-target="#uma-média-com-variância-desconhecida"><span class="header-section-number">8.8.2</span> Uma média com variância desconhecida</a></li>
+  <li><a href="#uma-proporção" id="toc-uma-proporção" class="nav-link" data-scroll-target="#uma-proporção"><span class="header-section-number">8.8.3</span> Uma proporção</a></li>
+  <li><a href="#duas-médias-independentes-teste-de-welch" id="toc-duas-médias-independentes-teste-de-welch" class="nav-link" data-scroll-target="#duas-médias-independentes-teste-de-welch"><span class="header-section-number">8.8.4</span> Duas médias independentes: teste de Welch</a></li>
+  <li><a href="#duas-médias-independentes-com-variância-comum" id="toc-duas-médias-independentes-com-variância-comum" class="nav-link" data-scroll-target="#duas-médias-independentes-com-variância-comum"><span class="header-section-number">8.8.5</span> Duas médias independentes com variância comum</a></li>
+  <li><a href="#amostras-pareadas" id="toc-amostras-pareadas" class="nav-link" data-scroll-target="#amostras-pareadas"><span class="header-section-number">8.8.6</span> Amostras pareadas</a></li>
+  <li><a href="#duas-proporções-independentes" id="toc-duas-proporções-independentes" class="nav-link" data-scroll-target="#duas-proporções-independentes"><span class="header-section-number">8.8.7</span> Duas proporções independentes</a></li>
   </ul></li>
-  <li><a href="#teste-da-razão-de-verossimilhanças" id="toc-teste-da-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#teste-da-razão-de-verossimilhanças"><span class="header-section-number">8.9</span> Teste da razão de verossimilhanças</a>
+  <li><a href="#sec-testes-exatos-permutacao" id="toc-sec-testes-exatos-permutacao" class="nav-link" data-scroll-target="#sec-testes-exatos-permutacao"><span class="header-section-number">8.9</span> Testes exatos, de permutação e robustez</a>
   <ul class="collapse">
-  <li><a href="#resultado-assintótico-de-wilks" id="toc-resultado-assintótico-de-wilks" class="nav-link" data-scroll-target="#resultado-assintótico-de-wilks"><span class="header-section-number">8.9.1</span> Resultado assintótico de Wilks</a></li>
-  <li><a href="#exemplo-média-normal-com-variância-conhecida" id="toc-exemplo-média-normal-com-variância-conhecida" class="nav-link" data-scroll-target="#exemplo-média-normal-com-variância-conhecida"><span class="header-section-number">8.9.2</span> Exemplo: média normal com variância conhecida</a></li>
-  <li><a href="#exemplo-proporção-binomial" id="toc-exemplo-proporção-binomial" class="nav-link" data-scroll-target="#exemplo-proporção-binomial"><span class="header-section-number">8.9.3</span> Exemplo: proporção binomial</a></li>
+  <li><a href="#testes-de-permutação" id="toc-testes-de-permutação" class="nav-link" data-scroll-target="#testes-de-permutação"><span class="header-section-number">8.9.1</span> Testes de permutação</a></li>
+  <li><a href="#robustez" id="toc-robustez" class="nav-link" data-scroll-target="#robustez"><span class="header-section-number">8.9.2</span> Robustez</a></li>
   </ul></li>
-  <li><a href="#testes-usuais-para-parâmetros-populacionais" id="toc-testes-usuais-para-parâmetros-populacionais" class="nav-link" data-scroll-target="#testes-usuais-para-parâmetros-populacionais"><span class="header-section-number">8.10</span> Testes usuais para parâmetros populacionais</a>
+  <li><a href="#sec-planejamento-poder" id="toc-sec-planejamento-poder" class="nav-link" data-scroll-target="#sec-planejamento-poder"><span class="header-section-number">8.10</span> Planejamento amostral e poder</a>
   <ul class="collapse">
-  <li><a href="#uma-média-com-variância-conhecida" id="toc-uma-média-com-variância-conhecida" class="nav-link" data-scroll-target="#uma-média-com-variância-conhecida"><span class="header-section-number">8.10.1</span> Uma média com variância conhecida</a></li>
-  <li><a href="#uma-média-com-variância-desconhecida" id="toc-uma-média-com-variância-desconhecida" class="nav-link" data-scroll-target="#uma-média-com-variância-desconhecida"><span class="header-section-number">8.10.2</span> Uma média com variância desconhecida</a></li>
-  <li><a href="#uma-proporção" id="toc-uma-proporção" class="nav-link" data-scroll-target="#uma-proporção"><span class="header-section-number">8.10.3</span> Uma proporção</a></li>
-  <li><a href="#duas-médias-independentes-teste-de-welch" id="toc-duas-médias-independentes-teste-de-welch" class="nav-link" data-scroll-target="#duas-médias-independentes-teste-de-welch"><span class="header-section-number">8.10.4</span> Duas médias independentes: teste de Welch</a></li>
-  <li><a href="#duas-médias-independentes-com-variância-comum" id="toc-duas-médias-independentes-com-variância-comum" class="nav-link" data-scroll-target="#duas-médias-independentes-com-variância-comum"><span class="header-section-number">8.10.5</span> Duas médias independentes com variância comum</a></li>
-  <li><a href="#amostras-pareadas" id="toc-amostras-pareadas" class="nav-link" data-scroll-target="#amostras-pareadas"><span class="header-section-number">8.10.6</span> Amostras pareadas</a></li>
-  <li><a href="#duas-proporções-independentes" id="toc-duas-proporções-independentes" class="nav-link" data-scroll-target="#duas-proporções-independentes"><span class="header-section-number">8.10.7</span> Duas proporções independentes</a></li>
+  <li><a href="#uma-média-com-variância-conhecida-1" id="toc-uma-média-com-variância-conhecida-1" class="nav-link" data-scroll-target="#uma-média-com-variância-conhecida-1"><span class="header-section-number">8.10.1</span> Uma média com variância conhecida</a></li>
+  <li><a href="#uma-proporção-1" id="toc-uma-proporção-1" class="nav-link" data-scroll-target="#uma-proporção-1"><span class="header-section-number">8.10.2</span> Uma proporção</a></li>
   </ul></li>
-  <li><a href="#testes-exatos-de-permutação-e-robustez" id="toc-testes-exatos-de-permutação-e-robustez" class="nav-link" data-scroll-target="#testes-exatos-de-permutação-e-robustez"><span class="header-section-number">8.11</span> Testes exatos, de permutação e robustez</a>
+  <li><a href="#sec-dados-categoricos" id="toc-sec-dados-categoricos" class="nav-link" data-scroll-target="#sec-dados-categoricos"><span class="header-section-number">8.11</span> Análise de dados categóricos</a>
   <ul class="collapse">
-  <li><a href="#testes-de-permutação" id="toc-testes-de-permutação" class="nav-link" data-scroll-target="#testes-de-permutação"><span class="header-section-number">8.11.1</span> Testes de permutação</a></li>
-  <li><a href="#robustez" id="toc-robustez" class="nav-link" data-scroll-target="#robustez"><span class="header-section-number">8.11.2</span> Robustez</a></li>
+  <li><a href="#estatística-qui-quadrado-de-pearson" id="toc-estatística-qui-quadrado-de-pearson" class="nav-link" data-scroll-target="#estatística-qui-quadrado-de-pearson"><span class="header-section-number">8.11.1</span> Estatística qui-quadrado de Pearson</a></li>
+  <li><a href="#estatística-da-razão-de-verossimilhanças" id="toc-estatística-da-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#estatística-da-razão-de-verossimilhanças"><span class="header-section-number">8.11.2</span> Estatística da razão de verossimilhanças</a></li>
   </ul></li>
-  <li><a href="#planejamento-amostral-e-poder" id="toc-planejamento-amostral-e-poder" class="nav-link" data-scroll-target="#planejamento-amostral-e-poder"><span class="header-section-number">8.12</span> Planejamento amostral e poder</a>
+  <li><a href="#teste-qui-quadrado-de-aderência" id="toc-teste-qui-quadrado-de-aderência" class="nav-link" data-scroll-target="#teste-qui-quadrado-de-aderência"><span class="header-section-number">8.12</span> Teste qui-quadrado de aderência</a>
   <ul class="collapse">
-  <li><a href="#uma-média-com-variância-conhecida-1" id="toc-uma-média-com-variância-conhecida-1" class="nav-link" data-scroll-target="#uma-média-com-variância-conhecida-1"><span class="header-section-number">8.12.1</span> Uma média com variância conhecida</a></li>
-  <li><a href="#uma-proporção-1" id="toc-uma-proporção-1" class="nav-link" data-scroll-target="#uma-proporção-1"><span class="header-section-number">8.12.2</span> Uma proporção</a></li>
+  <li><a href="#exemplo-dado-de-seis-faces" id="toc-exemplo-dado-de-seis-faces" class="nav-link" data-scroll-target="#exemplo-dado-de-seis-faces"><span class="header-section-number">8.12.1</span> Exemplo — dado de seis faces</a></li>
   </ul></li>
-  <li><a href="#análise-de-dados-categóricos" id="toc-análise-de-dados-categóricos" class="nav-link" data-scroll-target="#análise-de-dados-categóricos"><span class="header-section-number">8.13</span> Análise de dados categóricos</a>
+  <li><a href="#sec-tabelas-contingencia" id="toc-sec-tabelas-contingencia" class="nav-link" data-scroll-target="#sec-tabelas-contingencia"><span class="header-section-number">8.13</span> Tabelas de contingência</a>
   <ul class="collapse">
-  <li><a href="#estatística-qui-quadrado-de-pearson" id="toc-estatística-qui-quadrado-de-pearson" class="nav-link" data-scroll-target="#estatística-qui-quadrado-de-pearson"><span class="header-section-number">8.13.1</span> Estatística qui-quadrado de Pearson</a></li>
-  <li><a href="#estatística-da-razão-de-verossimilhanças" id="toc-estatística-da-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#estatística-da-razão-de-verossimilhanças"><span class="header-section-number">8.13.2</span> Estatística da razão de verossimilhanças</a></li>
+  <li><a href="#homogeneidade-e-independência" id="toc-homogeneidade-e-independência" class="nav-link" data-scroll-target="#homogeneidade-e-independência"><span class="header-section-number">8.13.1</span> Homogeneidade e independência</a></li>
+  <li><a href="#exemplo-renda-e-hipertensão" id="toc-exemplo-renda-e-hipertensão" class="nav-link" data-scroll-target="#exemplo-renda-e-hipertensão"><span class="header-section-number">8.13.2</span> Exemplo — renda e hipertensão</a></li>
   </ul></li>
-  <li><a href="#teste-qui-quadrado-de-aderência" id="toc-teste-qui-quadrado-de-aderência" class="nav-link" data-scroll-target="#teste-qui-quadrado-de-aderência"><span class="header-section-number">8.14</span> Teste qui-quadrado de aderência</a>
+  <li><a href="#diagnóstico-por-resíduos" id="toc-diagnóstico-por-resíduos" class="nav-link" data-scroll-target="#diagnóstico-por-resíduos"><span class="header-section-number">8.14</span> Diagnóstico por resíduos</a></li>
+  <li><a href="#condições-e-tabelas-esparsas" id="toc-condições-e-tabelas-esparsas" class="nav-link" data-scroll-target="#condições-e-tabelas-esparsas"><span class="header-section-number">8.15</span> Condições e tabelas esparsas</a></li>
+  <li><a href="#sec-fisher-exato" id="toc-sec-fisher-exato" class="nav-link" data-scroll-target="#sec-fisher-exato"><span class="header-section-number">8.16</span> Teste exato de Fisher</a></li>
+  <li><a href="#medidas-de-tamanho-do-efeito-em-tabelas" id="toc-medidas-de-tamanho-do-efeito-em-tabelas" class="nav-link" data-scroll-target="#medidas-de-tamanho-do-efeito-em-tabelas"><span class="header-section-number">8.17</span> Medidas de tamanho do efeito em tabelas</a></li>
+  <li><a href="#poder-e-tamanho-amostral-em-testes-qui-quadrado" id="toc-poder-e-tamanho-amostral-em-testes-qui-quadrado" class="nav-link" data-scroll-target="#poder-e-tamanho-amostral-em-testes-qui-quadrado"><span class="header-section-number">8.18</span> Poder e tamanho amostral em testes qui-quadrado</a></li>
+  <li><a href="#sec-dualidade-testes-ic" id="toc-sec-dualidade-testes-ic" class="nav-link" data-scroll-target="#sec-dualidade-testes-ic"><span class="header-section-number">8.19</span> Relação entre testes e intervalos de confiança</a></li>
+  <li><a href="#boas-práticas-de-apresentação" id="toc-boas-práticas-de-apresentação" class="nav-link" data-scroll-target="#boas-práticas-de-apresentação"><span class="header-section-number">8.20</span> Boas práticas de apresentação</a>
   <ul class="collapse">
-  <li><a href="#exemplo-dado-de-seis-faces" id="toc-exemplo-dado-de-seis-faces" class="nav-link" data-scroll-target="#exemplo-dado-de-seis-faces"><span class="header-section-number">8.14.1</span> Exemplo: dado de seis faces</a></li>
+  <li><a href="#modelo-de-redação" id="toc-modelo-de-redação" class="nav-link" data-scroll-target="#modelo-de-redação"><span class="header-section-number">8.20.1</span> Modelo de redação</a></li>
   </ul></li>
-  <li><a href="#tabelas-de-contingência" id="toc-tabelas-de-contingência" class="nav-link" data-scroll-target="#tabelas-de-contingência"><span class="header-section-number">8.15</span> Tabelas de contingência</a>
+  <li><a href="#erros-frequentes-de-interpretação" id="toc-erros-frequentes-de-interpretação" class="nav-link" data-scroll-target="#erros-frequentes-de-interpretação"><span class="header-section-number">8.21</span> Erros frequentes de interpretação</a></li>
+  <li><a href="#quadro-síntese" id="toc-quadro-síntese" class="nav-link" data-scroll-target="#quadro-síntese"><span class="header-section-number">8.22</span> Quadro-síntese</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">8.23</span> Exercícios</a>
   <ul class="collapse">
-  <li><a href="#homogeneidade-e-independência" id="toc-homogeneidade-e-independência" class="nav-link" data-scroll-target="#homogeneidade-e-independência"><span class="header-section-number">8.15.1</span> Homogeneidade e independência</a></li>
-  <li><a href="#exemplo-renda-e-hipertensão" id="toc-exemplo-renda-e-hipertensão" class="nav-link" data-scroll-target="#exemplo-renda-e-hipertensão"><span class="header-section-number">8.15.2</span> Exemplo: renda e hipertensão</a></li>
-  </ul></li>
-  <li><a href="#diagnóstico-por-resíduos" id="toc-diagnóstico-por-resíduos" class="nav-link" data-scroll-target="#diagnóstico-por-resíduos"><span class="header-section-number">8.16</span> Diagnóstico por resíduos</a></li>
-  <li><a href="#pressupostos-e-tabelas-esparsas" id="toc-pressupostos-e-tabelas-esparsas" class="nav-link" data-scroll-target="#pressupostos-e-tabelas-esparsas"><span class="header-section-number">8.17</span> Pressupostos e tabelas esparsas</a></li>
-  <li><a href="#teste-exato-de-fisher" id="toc-teste-exato-de-fisher" class="nav-link" data-scroll-target="#teste-exato-de-fisher"><span class="header-section-number">8.18</span> Teste exato de Fisher</a></li>
-  <li><a href="#medidas-de-tamanho-do-efeito-em-tabelas" id="toc-medidas-de-tamanho-do-efeito-em-tabelas" class="nav-link" data-scroll-target="#medidas-de-tamanho-do-efeito-em-tabelas"><span class="header-section-number">8.19</span> Medidas de tamanho do efeito em tabelas</a></li>
-  <li><a href="#poder-e-tamanho-amostral-em-testes-qui-quadrado" id="toc-poder-e-tamanho-amostral-em-testes-qui-quadrado" class="nav-link" data-scroll-target="#poder-e-tamanho-amostral-em-testes-qui-quadrado"><span class="header-section-number">8.20</span> Poder e tamanho amostral em testes qui-quadrado</a></li>
-  <li><a href="#relação-entre-testes-e-intervalos-de-confiança" id="toc-relação-entre-testes-e-intervalos-de-confiança" class="nav-link" data-scroll-target="#relação-entre-testes-e-intervalos-de-confiança"><span class="header-section-number">8.21</span> Relação entre testes e intervalos de confiança</a></li>
-  <li><a href="#boas-práticas-de-apresentação" id="toc-boas-práticas-de-apresentação" class="nav-link" data-scroll-target="#boas-práticas-de-apresentação"><span class="header-section-number">8.22</span> Boas práticas de apresentação</a>
-  <ul class="collapse">
-  <li><a href="#modelo-de-redação" id="toc-modelo-de-redação" class="nav-link" data-scroll-target="#modelo-de-redação"><span class="header-section-number">8.22.1</span> Modelo de redação</a></li>
-  </ul></li>
-  <li><a href="#erros-frequentes-de-interpretação" id="toc-erros-frequentes-de-interpretação" class="nav-link" data-scroll-target="#erros-frequentes-de-interpretação"><span class="header-section-number">8.23</span> Erros frequentes de interpretação</a></li>
-  <li><a href="#quadro-síntese" id="toc-quadro-síntese" class="nav-link" data-scroll-target="#quadro-síntese"><span class="header-section-number">8.24</span> Quadro-síntese</a></li>
-  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">8.25</span> Exercícios</a>
-  <ul class="collapse">
-  <li><a href="#exercícios-conceituais" id="toc-exercícios-conceituais" class="nav-link" data-scroll-target="#exercícios-conceituais"><span class="header-section-number">8.25.1</span> Exercícios conceituais</a></li>
-  <li><a href="#neymanpearson-e-testes-ump" id="toc-neymanpearson-e-testes-ump" class="nav-link" data-scroll-target="#neymanpearson-e-testes-ump"><span class="header-section-number">8.25.2</span> Neyman–Pearson e testes UMP</a></li>
-  <li><a href="#razão-de-verossimilhanças" id="toc-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#razão-de-verossimilhanças"><span class="header-section-number">8.25.3</span> Razão de verossimilhanças</a></li>
-  <li><a href="#testes-para-médias-e-proporções" id="toc-testes-para-médias-e-proporções" class="nav-link" data-scroll-target="#testes-para-médias-e-proporções"><span class="header-section-number">8.25.4</span> Testes para médias e proporções</a></li>
-  <li><a href="#dados-categóricos" id="toc-dados-categóricos" class="nav-link" data-scroll-target="#dados-categóricos"><span class="header-section-number">8.25.5</span> Dados categóricos</a></li>
-  <li><a href="#reamostragem-e-robustez" id="toc-reamostragem-e-robustez" class="nav-link" data-scroll-target="#reamostragem-e-robustez"><span class="header-section-number">8.25.6</span> Reamostragem e robustez</a></li>
+  <li><a href="#exercícios-conceituais" id="toc-exercícios-conceituais" class="nav-link" data-scroll-target="#exercícios-conceituais"><span class="header-section-number">8.23.1</span> Exercícios conceituais</a></li>
+  <li><a href="#neymanpearson-e-testes-ump" id="toc-neymanpearson-e-testes-ump" class="nav-link" data-scroll-target="#neymanpearson-e-testes-ump"><span class="header-section-number">8.23.2</span> Neyman–Pearson e testes UMP</a></li>
+  <li><a href="#razão-de-verossimilhanças" id="toc-razão-de-verossimilhanças" class="nav-link" data-scroll-target="#razão-de-verossimilhanças"><span class="header-section-number">8.23.3</span> Razão de verossimilhanças</a></li>
+  <li><a href="#testes-para-médias-e-proporções" id="toc-testes-para-médias-e-proporções" class="nav-link" data-scroll-target="#testes-para-médias-e-proporções"><span class="header-section-number">8.23.4</span> Testes para médias e proporções</a></li>
+  <li><a href="#dados-categóricos" id="toc-dados-categóricos" class="nav-link" data-scroll-target="#dados-categóricos"><span class="header-section-number">8.23.5</span> Dados categóricos</a></li>
+  <li><a href="#reamostragem-e-robustez" id="toc-reamostragem-e-robustez" class="nav-link" data-scroll-target="#reamostragem-e-robustez"><span class="header-section-number">8.23.6</span> Reamostragem e robustez</a></li>
   </ul></li>
   <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
@@ -545,7 +534,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Testes de Hipóteses e Análise de Dados Categóricos</span></h1>
+<h1 class="title"><span id="sec-testes-hipoteses" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Testes de Hipóteses e Análise de Dados Categóricos</span></span></h1>
 </div>
 
 
@@ -562,7 +551,7 @@ window.Quarto = {
 </header>
 
 
-<p>Os testes de hipóteses fornecem regras para avaliar a compatibilidade entre os dados e afirmações sobre um modelo estatístico, controlando probabilidades de erro previamente especificadas. Este capítulo articula a formulação frequentista dos testes, os princípios de optimalidade de Neyman–Pearson, os testes da razão de verossimilhanças, os procedimentos usuais para parâmetros populacionais e a análise de contagens categóricas <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002, cap. 8</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023, cap. 7</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 9</a>)</span>.</p>
+<p>Os testes de hipóteses fornecem regras para avaliar a compatibilidade entre os dados e afirmações sobre um modelo estatístico. No paradigma frequentista, seu comportamento é avaliado sob repetições do processo amostral: o nível limita a probabilidade de rejeição incorreta sob a hipótese nula, enquanto a função poder descreve a probabilidade de rejeição ao longo dos diferentes valores do parâmetro. Este capítulo articula a formulação frequentista dos testes, os princípios de optimalidade de Neyman–Pearson, os testes da razão de verossimilhanças, os procedimentos usuais para parâmetros populacionais e a análise de contagens categóricas <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002, cap. 8</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023, cap. 7</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 9</a>)</span>.</p>
 <section id="objetivos-de-aprendizagem" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="objetivos-de-aprendizagem"><span class="header-section-number">8.1</span> Objetivos de aprendizagem</h2>
 <p>Ao final deste capítulo, o leitor deverá ser capaz de:</p>
@@ -622,10 +611,10 @@ window.Quarto = {
 \approx 1{,}59\times 10^{-28}.\]</span></p>
 </div>
 </div>
-<p>Em ambos os casos, o resultado é extremamente incompatível com o modelo de moeda honesta. A conclusão não decorre de uma “prova” de que <span class="math inline">\(H_0\)</span> seja falsa, mas da aplicação de uma regra inferencial cujo comportamento é avaliado sob repetições do experimento. Em particular, o nível do teste controla a frequência de rejeições incorretas quando <span class="math inline">\(H_0\)</span> é verdadeira <span class="citation" data-cites="casella2002statistical cox2006principles lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.1 e 8.3.1; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 3.2 e 5.4; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.1–7.3)</span>.</p>
+<p>Em ambos os casos, o resultado é extremamente incompatível com o modelo de moeda honesta. A conclusão não decorre de uma “prova” de que <span class="math inline">\(H_0\)</span> seja falsa, mas da aplicação de uma regra inferencial cujo comportamento é avaliado sob repetições do experimento. Em particular, em um teste de nível <span class="math inline">\(\alpha\)</span>, a probabilidade de rejeitar <span class="math inline">\(H_0\)</span> quando ela é verdadeira é limitada superiormente por <span class="math inline">\(\alpha\)</span> <span class="citation" data-cites="casella2002statistical cox2006principles lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.1 e 8.3.1; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 3.2 e 5.4; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.1–7.4)</span>.</p>
 </section>
-<section id="formulação-estatística-do-problema" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="formulação-estatística-do-problema"><span class="header-section-number">8.3</span> Formulação estatística do problema</h2>
+<section id="sec-formulacao-testes" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="sec-formulacao-testes"><span class="header-section-number">8.3</span> Formulação estatística do problema</h2>
 <p>Considere um modelo estatístico</p>
 <p><span class="math display">\[\mathcal{P}=\{P_\theta:\theta\in\Theta\},\]</span></p>
 <p>em que <span class="math inline">\(\theta\)</span> é um parâmetro desconhecido. Um problema de teste de hipóteses divide o espaço paramétrico em dois subconjuntos disjuntos <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;7.2)</span>:</p>
@@ -719,7 +708,7 @@ H_1:\theta\in\Theta_1,\]</span></p>
 <p>Quando a igualdade é satisfeita, o teste tem tamanho <span class="math inline">\(\alpha\)</span>.</p>
 </div>
 </div>
-<p>Essa distinção é relevante em hipóteses nulas compostas: o nível <span class="math inline">\(\alpha\)</span> constitui um limite superior uniforme para a probabilidade de rejeição incorreta em todos os valores de <span class="math inline">\(\theta\)</span> permitidos por <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.1–7.3)</span>.</p>
+<p>Essa distinção é relevante em hipóteses nulas compostas: o nível <span class="math inline">\(\alpha\)</span> constitui um limite superior uniforme para a probabilidade de rejeição incorreta em todos os valores de <span class="math inline">\(\theta\)</span> permitidos por <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="casella2002statistical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;7.4)</span>.</p>
 </section>
 <section id="erros-dos-tipos-i-e-ii" class="level3" data-number="8.3.3">
 <h3 data-number="8.3.3" class="anchored" data-anchor-id="erros-dos-tipos-i-e-ii"><span class="header-section-number">8.3.3</span> Erros dos tipos I e II</h3>
@@ -766,15 +755,21 @@ H_1:\theta\in\Theta_1,\]</span></p>
 </div>
 </section>
 </section>
-<section id="valor-p" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="valor-p"><span class="header-section-number">8.4</span> Valor-<span class="math inline">\(p\)</span></h2>
+<section id="sec-valor-p" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="sec-valor-p"><span class="header-section-number">8.4</span> Valor-<span class="math inline">\(p\)</span></h2>
 <p>Considere uma estatística de teste <span class="math inline">\(T=T(X)\)</span> construída de modo que valores grandes sejam mais incompatíveis com <span class="math inline">\(H_0\)</span>. Para uma hipótese nula simples <span class="math inline">\(H_0:\theta=\theta_0\)</span>, o valor-<span class="math inline">\(p\)</span> observado é</p>
 <p><span class="math display">\[p(x)
 =P_{\theta_0}\{T(X)\geq T(x)\}.\]</span></p>
-<p>Para uma hipótese nula composta, uma construção conservadora que garante validade uniforme é</p>
-<p><span class="math display">\[p(x)
-=\sup_{\theta\in\Theta_0}
-P_\theta\{T(X)\geq T(x)\}.\]</span></p>
+<p>Para uma hipótese nula composta, uma construção que garante validade uniforme é</p>
+<p><span class="math display">\[
+p(x)
+=
+\sup_{\theta\in\Theta_0}
+P_\theta
+\{
+T(X)\geq T(x)
+\}.
+\]</span></p>
 <p>Outras construções de valores-<span class="math inline">\(p\)</span> são possíveis, especialmente quando existe uma estatística condicionante, um parâmetro de perturbação ou uma estrutura discreta. Em todos os casos, a propriedade essencial de validade é</p>
 <p><span class="math display">\[P_\theta\{p(X)\leq u\}\leq u,
 \qquad 0\leq u\leq1,
@@ -812,17 +807,61 @@ P_\theta\{T(X)\geq T(x)\}.\]</span></p>
 </ul>
 </div>
 </div>
-<p>Sob uma hipótese nula simples e para um teste contínuo exatamente calibrado, o valor-<span class="math inline">\(p\)</span> possui distribuição uniforme em <span class="math inline">\((0,1)\)</span>. Em problemas discretos ou sob hipóteses nulas compostas, ele pode ser apenas <strong>superuniforme</strong>, isto é,</p>
-<p><span class="math display">\[P_\theta\{p(X)\leq\alpha\}\leq\alpha,
-\qquad \theta\in\Theta_0.\]</span></p>
-<p>A igualdade ocorre no caso contínuo exatamente calibrado; a desigualdade corresponde a um procedimento conservador. Essa propriedade conecta diretamente o valor-<span class="math inline">\(p\)</span> à regra de decisão de nível <span class="math inline">\(\alpha\)</span> <span class="citation" data-cites="casella2002statistical cox2006principles rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.4; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;3.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.3 e 7.7)</span>.</p>
+<p>Sob uma hipótese nula simples, se a estatística de teste possui distribuição contínua e o valor-<span class="math inline">\(p\)</span> é calculado pela cauda exata correspondente, então</p>
+<p><span class="math display">\[
+p(X)\sim\operatorname{Unif}(0,1).
+\]</span></p>
+<p>Consequentemente,</p>
+<p><span class="math display">\[
+P_{\theta_0}
+\{
+p(X)\leq u
+\}
+=
+u,
+\qquad
+0\leq u\leq1.
+\]</span></p>
+<p>Em problemas discretos ou sob hipóteses nulas compostas, um valor-<span class="math inline">\(p\)</span> válido pode ser <strong>superuniforme</strong>:</p>
+<p><span class="math display">\[
+P_\theta
+\{
+p(X)\leq u
+\}
+\leq
+u,
+\qquad
+0\leq u\leq1,
+\quad
+\theta\in\Theta_0.
+\]</span></p>
+<p>Quando a desigualdade é estrita para alguns valores de <span class="math inline">\(u\)</span>, a regra baseada nesses pontos de corte é conservadora. Essa propriedade conecta diretamente a validade do valor-<span class="math inline">\(p\)</span> ao controle do nível do teste <span class="citation" data-cites="casella2002statistical cox2006principles rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.1; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;3.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 7.3 e 7.7)</span>.</p>
 <section id="regra-de-decisão" class="level3" data-number="8.4.1">
 <h3 data-number="8.4.1" class="anchored" data-anchor-id="regra-de-decisão"><span class="header-section-number">8.4.1</span> Regra de decisão</h3>
-<p>Após fixar <span class="math inline">\(\alpha\)</span> antes de examinar os resultados:</p>
-<p><span class="math display">\[\begin{cases}
-p\leq\alpha &amp;\Longrightarrow \text{rejeitar }H_0,\\
-p&gt;\alpha &amp;\Longrightarrow \text{não rejeitar }H_0.
-\end{cases}\]</span></p>
+<p>Para um valor-<span class="math inline">\(p\)</span> válido e qualquer <span class="math inline">\(\theta\in\Theta_0\)</span>,</p>
+<p><span class="math display">\[
+P_\theta
+\{
+p(X)\leq\alpha
+\}
+\leq
+\alpha.
+\]</span></p>
+<p>Portanto, após fixar <span class="math inline">\(\alpha\)</span> antes de examinar os resultados, a regra</p>
+<p><span class="math display">\[
+\begin{cases}
+p\leq\alpha
+&amp;
+\Longrightarrow
+\text{rejeitar }H_0,
+\\[1mm]
+p&gt;\alpha
+&amp;
+\Longrightarrow
+\text{não rejeitar }H_0
+\end{cases}
+\]</span></p>
+<p>define um teste de nível <span class="math inline">\(\alpha\)</span>.</p>
 <p>A forma “não rejeitar <span class="math inline">\(H_0\)</span>” é preferível a “aceitar <span class="math inline">\(H_0\)</span>”, pois um resultado não significativo pode decorrer de baixo poder, grande variabilidade ou tamanho amostral insuficiente. Em procedimentos discretos, a convenção de igualdade no ponto de corte deve ser compatível com a definição do valor-<span class="math inline">\(p\)</span> e com a região crítica.</p>
 </section>
 </section>
@@ -853,12 +892,49 @@ H_1:\mu&gt;662.\]</span></p>
 <p><span class="math display">\[z_{\text{obs}}
 =\frac{696-662}{13{,}1}
 \approx 2{,}595.\]</span></p>
-<p>Como a probabilidade de rejeição é máxima na fronteira <span class="math inline">\(\mu=662\)</span> da hipótese nula composta, o valor-<span class="math inline">\(p\)</span> é</p>
-<p><span class="math display">\[p=\sup_{\mu\leq662}
-P_\mu(Z\geq z_{\mathrm{obs}})
+<p>Para um valor qualquer <span class="math inline">\(\mu\leq662\)</span>,</p>
+<p><span class="math display">\[
+Z
 =
-P_{662}(Z\geq2{,}595)
-\approx0{,}0047.\]</span></p>
+\frac{\overline X-662}{131/\sqrt{100}}
+\sim
+N\left(
+\frac{\mu-662}{131/\sqrt{100}},
+1
+\right).
+\]</span></p>
+<p>A probabilidade</p>
+<p><span class="math display">\[
+P_\mu
+\{
+Z\geq z_{\mathrm{obs}}
+\}
+\]</span></p>
+<p>é crescente em <span class="math inline">\(\mu\)</span>. Portanto, dentro de</p>
+<p><span class="math display">\[
+H_0:\mu\leq662,
+\]</span></p>
+<p>o supremo é atingido na fronteira <span class="math inline">\(\mu=662\)</span>. Assim,</p>
+<p><span class="math display">\[
+\begin{aligned}
+p
+&amp;=
+\sup_{\mu\leq662}
+P_\mu
+\{
+Z\geq z_{\mathrm{obs}}
+\}
+\\
+&amp;=
+P_{662}
+\{
+Z\geq2{,}595
+\}
+\\
+&amp;\approx
+0{,}0047.
+\end{aligned}
+\]</span></p>
 <p>Ao nível de <span class="math inline">\(5\%\)</span>, rejeita-se <span class="math inline">\(H_0\)</span>. Os dados fornecem evidência de que a média dos participantes excede <span class="math inline">\(662\)</span> no modelo adotado.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Limitação causal">
 <div class="callout-header d-flex align-content-center">
@@ -874,8 +950,10 @@ P_{662}(Z\geq2{,}595)
 </div>
 </div>
 </section>
-<section id="lema-de-neymanpearson" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="lema-de-neymanpearson"><span class="header-section-number">8.7</span> Lema de Neyman–Pearson</h2>
+<section id="sec-aprofundamento-testes" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="sec-aprofundamento-testes"><span class="header-section-number">8.7</span> Aprofundamento</h2>
+<section id="lema-de-neymanpearson" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="lema-de-neymanpearson"><span class="header-section-number">8.7.1</span> Lema de Neyman–Pearson</h3>
 <p>Quando <span class="math inline">\(H_0\)</span> e <span class="math inline">\(H_1\)</span> são simples, o lema de Neyman–Pearson fornece um critério ótimo para a construção da região crítica.</p>
 <p>Considere</p>
 <p><span class="math display">\[H_0:\theta=\theta_0
@@ -908,18 +986,63 @@ E_{\theta_1}[\varphi(X)].\]</span></p>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Entre todos os testes de nível <span class="math inline">\(\alpha\)</span> para hipóteses simples, um teste mais poderoso rejeita <span class="math inline">\(H_0\)</span> quando a razão</p>
-<p><span class="math display">\[\frac{f_{\theta_1}(x)}{f_{\theta_0}(x)}\]</span></p>
-<p>é suficientemente grande. Equivalentemente, rejeita-se <span class="math inline">\(H_0\)</span> quando</p>
-<p><span class="math display">\[\frac{f_{\theta_0}(x)}{f_{\theta_1}(x)}\]</span></p>
-<p>é suficientemente pequena. O ponto de corte — e, quando necessário, a probabilidade de aleatorização na fronteira — é escolhido para que o teste tenha tamanho <span class="math inline">\(\alpha\)</span> ou, na versão não aleatorizada, tamanho no máximo <span class="math inline">\(\alpha\)</span> <span class="citation" data-cites="casella2002statistical hogg1978 rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978, cap. 7</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.2)</span>.</p>
+<p>Considere o teste</p>
+<p><span class="math display">\[
+H_0:\theta=\theta_0
+\qquad\text{versus}\qquad
+H_1:\theta=\theta_1.
+\]</span></p>
+<p>Entre todos os testes de nível <span class="math inline">\(\alpha\)</span>, um teste mais poderoso pode ser definido por</p>
+<p><span class="math display">\[
+\varphi^*(x)
+=
+\begin{cases}
+1,
+&amp;
+\dfrac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+&gt;k,
+\\[3mm]
+\gamma,
+&amp;
+\dfrac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+=k,
+\\[3mm]
+0,
+&amp;
+\dfrac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+&lt;k,
+\end{cases}
+\]</span></p>
+<p>em que <span class="math inline">\(k\geq0\)</span> e, quando necessária, a probabilidade de aleatorização <span class="math inline">\(\gamma\in[0,1]\)</span> são escolhidas de modo que</p>
+<p><span class="math display">\[
+E_{\theta_0}
+[
+\varphi^*(X)
+]
+=
+\alpha.
+\]</span></p>
+<p>Equivalentemente, o teste rejeita <span class="math inline">\(H_0\)</span> quando</p>
+<p><span class="math display">\[
+\frac{f_{\theta_0}(x)}
+{f_{\theta_1}(x)}
+\]</span></p>
+<p>é suficientemente pequeno.</p>
+<p>Em modelos discretos, pode não existir uma região crítica não aleatorizada com tamanho exatamente <span class="math inline">\(\alpha\)</span>. Nesse caso, a aleatorização na fronteira permite obter o tamanho prescrito; se a análise for restrita a testes não aleatorizados, utiliza-se uma região cuja probabilidade sob <span class="math inline">\(H_0\)</span> não exceda <span class="math inline">\(\alpha\)</span> <span class="citation" data-cites="casella2002statistical hogg1978 rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978, cap. 7</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2)</span>.</p>
 </div>
 </div>
-<section id="exemplo-média-normal-alternativa-simples" class="level3" data-number="8.7.1">
-<h3 data-number="8.7.1" class="anchored" data-anchor-id="exemplo-média-normal-alternativa-simples"><span class="header-section-number">8.7.1</span> Exemplo: média normal, alternativa simples</h3>
+<section id="exemplo-média-normal-alternativa-simples" class="level4">
+<h4 class="anchored" data-anchor-id="exemplo-média-normal-alternativa-simples">Exemplo — média normal, alternativa simples</h4>
 <p>O exemplo aplica diretamente o lema de Neyman–Pearson ao modelo normal <span class="citation" data-cites="casella2002statistical hogg1978 rasch2018">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978, cap. 7</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;3.2)</span>.</p>
 <p>Se</p>
-<p><span class="math display">\[X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2),\]</span></p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
+\]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida, considere</p>
 <p><span class="math display">\[H_0:\mu=\mu_0
 \qquad\text{versus}\qquad
@@ -929,11 +1052,11 @@ H_1:\mu=\mu_1,\]</span></p>
 \mu_0+z_{1-\alpha}\frac{\sigma}{\sqrt{n}}.\]</span></p>
 <p>Equivalentemente,</p>
 <p><span class="math display">\[Z=\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}&gt;z_{1-\alpha}.\]</span></p>
-<p>O ponto de corte não depende do valor específico <span class="math inline">\(\mu_1\)</span>, desde que <span class="math inline">\(\mu_1&gt;\mu_0\)</span>. Essa propriedade conduz aos testes uniformemente mais poderosos.</p>
+<p>O ponto de corte não depende do valor específico <span class="math inline">\(\mu_1\)</span>, desde que <span class="math inline">\(\mu_1&gt;\mu_0\)</span>. Portanto, o mesmo teste que é mais poderoso contra um valor particular <span class="math inline">\(\mu_1&gt;\mu_0\)</span> permanece mais poderoso para todos os valores dessa região da alternativa. Essa é a ideia que conduz aos testes uniformemente mais poderosos.</p>
 </section>
 </section>
-<section id="testes-uniformemente-mais-poderosos" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="testes-uniformemente-mais-poderosos"><span class="header-section-number">8.8</span> Testes uniformemente mais poderosos</h2>
+<section id="testes-uniformemente-mais-poderosos" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="testes-uniformemente-mais-poderosos"><span class="header-section-number">8.7.2</span> Testes uniformemente mais poderosos</h3>
 <div class="callout callout-style-default callout-note callout-titled" title="Definição: teste UMP">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -956,9 +1079,20 @@ E_\theta[\varphi(X)]
 \text{para todo }\theta\in\Theta_1.\]</span></p>
 </div>
 </div>
-<p>A palavra “uniformemente” significa que o mesmo teste maximiza o poder em todos os pontos da hipótese alternativa, e não apenas em um valor particular.</p>
-<section id="razão-de-verossimilhanças-monótona" class="level3" data-number="8.8.1">
-<h3 data-number="8.8.1" class="anchored" data-anchor-id="razão-de-verossimilhanças-monótona"><span class="header-section-number">8.8.1</span> Razão de verossimilhanças monótona</h3>
+<p>A palavra “uniformemente” indica que o mesmo teste maximiza o poder simultaneamente em todos os pontos da hipótese alternativa. Assim,</p>
+<p><span class="math display">\[
+\text{mais poderoso}
+\quad\Longrightarrow\quad
+\text{optimalidade em uma alternativa especificada},
+\]</span></p>
+<p>enquanto</p>
+<p><span class="math display">\[
+\text{UMP}
+\quad\Longrightarrow\quad
+\text{optimalidade simultânea em toda }\Theta_1.
+\]</span></p>
+<section id="razão-de-verossimilhanças-monótona" class="level4">
+<h4 class="anchored" data-anchor-id="razão-de-verossimilhanças-monótona">Razão de verossimilhanças monótona</h4>
 <div class="callout callout-style-default callout-note callout-titled" title="Definição">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -969,9 +1103,30 @@ E_\theta[\varphi(X)]
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uma família dominada <span class="math inline">\(\{f_\theta:\theta\in\Theta\subseteq\mathbb{R}\}\)</span>, com suporte comum, possui <strong>razão de verossimilhanças monótona</strong> em uma estatística <span class="math inline">\(T(X)\)</span> quando, para <span class="math inline">\(\theta_2&gt;\theta_1\)</span> e nos pontos em que o denominador é positivo,</p>
-<p><span class="math display">\[\frac{f_{\theta_2}(x)}{f_{\theta_1}(x)}\]</span></p>
-<p>é uma função não decrescente de <span class="math inline">\(T(x)\)</span>.</p>
+<p>Seja <span class="math inline">\(T=T(X)\)</span> uma estatística real cuja densidade ou função de probabilidade, sob o parâmetro <span class="math inline">\(\theta\)</span>, é denotada por</p>
+<p><span class="math display">\[
+g(t\mid\theta).
+\]</span></p>
+<p>A família</p>
+<p><span class="math display">\[
+\{
+g(t\mid\theta):
+\theta\in\Theta\subseteq\mathbb R
+\}
+\]</span></p>
+<p>possui <strong>razão de verossimilhanças monótona</strong> em <span class="math inline">\(T\)</span> quando, para todo</p>
+<p><span class="math display">\[
+\theta_2&gt;\theta_1,
+\]</span></p>
+<p>a razão</p>
+<p><span class="math display">\[
+\frac{
+g(t\mid\theta_2)
+}{
+g(t\mid\theta_1)
+}
+\]</span></p>
+<p>é uma função não decrescente de <span class="math inline">\(t\)</span> nos pontos em que a razão está definida.</p>
 </div>
 </div>
 <p>Em famílias com essa propriedade, valores grandes de <span class="math inline">\(T\)</span> favorecem sistematicamente valores maiores do parâmetro.</p>
@@ -985,29 +1140,66 @@ E_\theta[\varphi(X)]
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Suponha que <span class="math inline">\(\{f_\theta:\theta\in\Theta\subseteq\mathbb{R}\}\)</span> possua razão de verossimilhanças monótona não decrescente em <span class="math inline">\(T(X)\)</span>. Então o teste</p>
-<p><span class="math display">\[\varphi(x)=
+<p>Suponha que <span class="math inline">\(T=T(X)\)</span> seja uma estatística suficiente para <span class="math inline">\(\theta\)</span> e que a família de distribuições de <span class="math inline">\(T\)</span>,</p>
+<p><span class="math display">\[
+\{
+g(t\mid\theta):
+\theta\in\Theta\subseteq\mathbb R
+\},
+\]</span></p>
+<p>possua razão de verossimilhanças monótona não decrescente em <span class="math inline">\(t\)</span>.</p>
+<p>Então o teste</p>
+<p><span class="math display">\[
+\varphi(x)
+=
 \begin{cases}
 1, &amp; T(x)&gt;c,\\
 \gamma, &amp; T(x)=c,\\
 0, &amp; T(x)&lt;c,
-\end{cases}\]</span></p>
-<p>com <span class="math inline">\(c\)</span> e <span class="math inline">\(\gamma\)</span> determinados por</p>
-<p><span class="math display">\[P_{\theta_0}\{T(X)&gt;c\}
-+\gamma P_{\theta_0}\{T(X)=c\}
-=\alpha,\]</span></p>
+\end{cases}
+\]</span></p>
+<p>em que <span class="math inline">\(c\)</span> e <span class="math inline">\(\gamma\)</span> são escolhidos de modo que</p>
+<p><span class="math display">\[
+P_{\theta_0}
+\{
+T(X)&gt;c
+\}
++
+\gamma
+P_{\theta_0}
+\{
+T(X)=c
+\}
+=
+\alpha,
+\]</span></p>
 <p>é UMP de nível <span class="math inline">\(\alpha\)</span> para</p>
-<p><span class="math display">\[H_0:\theta\leq\theta_0
+<p><span class="math display">\[
+H_0:\theta\leq\theta_0
 \qquad\text{versus}\qquad
-H_1:\theta&gt;\theta_0.\]</span></p>
-<p>A versão com rejeição para valores pequenos de <span class="math inline">\(T\)</span> aplica-se quando a razão é não crescente ou quando a alternativa é à esquerda. Em modelos contínuos, normalmente <span class="math inline">\(P_{\theta_0}\{T=c\}=0\)</span> e a aleatorização não é necessária <span class="citation" data-cites="casella2002statistical borovkov1998 rasch2018">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;3.3.1)</span>.</p>
+H_1:\theta&gt;\theta_0.
+\]</span></p>
+<p>A propriedade de razão de verossimilhanças monótona implica que a probabilidade de rejeição é não decrescente em <span class="math inline">\(\theta\)</span>. Portanto,</p>
+<p><span class="math display">\[
+\sup_{\theta\leq\theta_0}
+\pi_\varphi(\theta)
+=
+\pi_\varphi(\theta_0)
+=
+\alpha.
+\]</span></p>
+<p>A versão análoga com rejeição para valores pequenos de <span class="math inline">\(T\)</span> aplica-se à alternativa à esquerda. Em modelos contínuos, se</p>
+<p><span class="math display">\[
+P_{\theta_0}\{T=c\}=0,
+\]</span></p>
+<p>a aleatorização na fronteira não é necessária <span class="citation" data-cites="casella2002statistical borovkov1998 rasch2018">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.2; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;3.3.1)</span>.</p>
 </div>
 </div>
 </section>
-<section id="exemplos-importantes" class="level3" data-number="8.8.2">
-<h3 data-number="8.8.2" class="anchored" data-anchor-id="exemplos-importantes"><span class="header-section-number">8.8.2</span> Exemplos importantes</h3>
-<section id="média-normal-com-variância-conhecida" class="level4">
-<h4 class="anchored" data-anchor-id="média-normal-com-variância-conhecida">Média normal com variância conhecida</h4>
+<section id="exemplos-importantes" class="level4">
+<h4 class="anchored" data-anchor-id="exemplos-importantes">Exemplos importantes</h4>
+<section id="média-normal-com-variância-conhecida" class="level5">
+<h5 class="anchored" data-anchor-id="média-normal-com-variância-conhecida">Média normal com variância conhecida</h5>
 <p>Para</p>
 <p><span class="math display">\[X_i\sim N(\mu,\sigma^2),\]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida, a família possui razão de verossimilhanças monótona em <span class="math inline">\(T=\sum_iX_i\)</span>, ou equivalentemente em <span class="math inline">\(\bar{X}\)</span>. Assim,</p>
@@ -1017,25 +1209,37 @@ H_1:\theta&gt;\theta_0.\]</span></p>
 \qquad\text{versus}\qquad
 H_1:\mu&gt;\mu_0.\]</span></p>
 </section>
-<section id="proporção-binomial" class="level4">
-<h4 class="anchored" data-anchor-id="proporção-binomial">Proporção binomial</h4>
-<p>Se <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span>, a família possui razão de verossimilhanças monótona em <span class="math inline">\(X\)</span>. Portanto, testes que rejeitam para valores grandes de <span class="math inline">\(X\)</span> são UMP para</p>
-<p><span class="math display">\[H_0:p\leq p_0
+<section id="proporção-binomial" class="level5">
+<h5 class="anchored" data-anchor-id="proporção-binomial">Proporção binomial</h5>
+<p>Se <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span>, a família possui razão de verossimilhanças monótona em <span class="math inline">\(X\)</span>. Portanto, para</p>
+<p><span class="math display">\[
+H_0:p\leq p_0
 \qquad\text{versus}\qquad
-H_1:p&gt;p_0.\]</span></p>
-<p>Como <span class="math inline">\(X\)</span> é discreta, o tamanho exato pode ser menor que <span class="math inline">\(\alpha\)</span> em um teste não aleatorizado.</p>
+H_1:p&gt;p_0,
+\]</span></p>
+<p>o teste UMP rejeita para valores suficientemente grandes de <span class="math inline">\(X\)</span>. O ponto de corte e, se admitida, a aleatorização na fronteira são escolhidos para controlar o nível em <span class="math inline">\(p=p_0\)</span>.</p>
+<p>Como <span class="math inline">\(X\)</span> é discreta, um teste não aleatorizado pode não atingir exatamente o nível nominal <span class="math inline">\(\alpha\)</span>; nesse caso, escolhe-se uma região crítica cuja probabilidade sob <span class="math inline">\(p_0\)</span> não exceda <span class="math inline">\(\alpha\)</span>.</p>
 </section>
-<section id="média-de-poisson" class="level4">
-<h4 class="anchored" data-anchor-id="média-de-poisson">Média de Poisson</h4>
-<p>Se <span class="math inline">\(X_1,\ldots,X_n\sim\operatorname{Poisson}(\lambda)\)</span>, a estatística <span class="math inline">\(T=\sum_iX_i\)</span> possui razão de verossimilhanças monótona. A rejeição para valores grandes de <span class="math inline">\(T\)</span> produz um teste UMP para</p>
-<p><span class="math display">\[H_0:\lambda\leq\lambda_0
+<section id="média-de-poisson" class="level5">
+<h5 class="anchored" data-anchor-id="média-de-poisson">Média de Poisson</h5>
+<p>Se <span class="math inline">\(X_1,\ldots,X_n\sim\operatorname{Poisson}(\lambda)\)</span>, a estatística</p>
+<p><span class="math display">\[
+T
+=
+\sum_{i=1}^nX_i
+\]</span></p>
+<p>possui razão de verossimilhanças monótona. Para</p>
+<p><span class="math display">\[
+H_0:\lambda\leq\lambda_0
 \qquad\text{versus}\qquad
-H_1:\lambda&gt;\lambda_0.\]</span></p>
+H_1:\lambda&gt;\lambda_0,
+\]</span></p>
+<p>o teste UMP rejeita para valores suficientemente grandes de <span class="math inline">\(T\)</span>. Como <span class="math inline">\(T\)</span> é discreta, a determinação do ponto de corte apresenta a mesma questão de calibração encontrada no caso binomial.</p>
 </section>
 </section>
-<section id="por-que-geralmente-não-existe-ump-bilateral" class="level3" data-number="8.8.3">
-<h3 data-number="8.8.3" class="anchored" data-anchor-id="por-que-geralmente-não-existe-ump-bilateral"><span class="header-section-number">8.8.3</span> Por que geralmente não existe UMP bilateral?</h3>
-<p>No modelo normal com variância conhecida, o teste mais poderoso contra <span class="math inline">\(\mu_1&gt;\mu_0\)</span> rejeita para valores grandes de <span class="math inline">\(\bar{X}\)</span>. Contra <span class="math inline">\(\mu_1&lt;\mu_0\)</span>, o teste mais poderoso rejeita para valores pequenos de <span class="math inline">\(\bar{X}\)</span>. Não existe, em geral, uma única região de nível <span class="math inline">\(\alpha\)</span> que seja simultaneamente mais poderosa em ambas as direções. Por isso, testes UMP são mais comuns em problemas unilaterais; problemas bilaterais frequentemente exigem restrições adicionais de optimalidade ou o teste da razão de verossimilhanças <span class="citation" data-cites="casella2002statistical borovkov1998 rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.3.2–8.3.3; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 6.2–6.3)</span>.</p>
+<section id="por-que-geralmente-não-existe-ump-bilateral" class="level4">
+<h4 class="anchored" data-anchor-id="por-que-geralmente-não-existe-ump-bilateral">Por que geralmente não existe UMP bilateral?</h4>
+<p>No modelo normal com variância conhecida, o teste mais poderoso contra <span class="math inline">\(\mu_1&gt;\mu_0\)</span> rejeita para valores grandes de <span class="math inline">\(\bar{X}\)</span>. Contra <span class="math inline">\(\mu_1&lt;\mu_0\)</span>, o teste mais poderoso rejeita para valores pequenos de <span class="math inline">\(\bar{X}\)</span>. Não existe, em geral, uma única região de nível <span class="math inline">\(\alpha\)</span> que seja simultaneamente mais poderosa em ambas as direções. Por isso, testes UMP são mais comuns em problemas unilaterais; problemas bilaterais frequentemente exigem restrições adicionais de optimalidade ou o teste da razão de verossimilhanças <span class="citation" data-cites="casella2002statistical borovkov1998 rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.3.2–8.3.3; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, secs. 6.2–6.3; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.2.3)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Observação: testes não viesados e UMPU">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1046,16 +1250,34 @@ H_1:\lambda&gt;\lambda_0.\]</span></p>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Para um teste de tamanho <span class="math inline">\(\alpha\)</span>, uma condição de não viés é</p>
-<p><span class="math display">\[\pi_\varphi(\theta)\geq\alpha,
-\qquad \theta\in\Theta_1.\]</span></p>
-<p>Restringindo a comparação à classe dos testes não viesados, pode existir um teste <strong>uniformemente mais poderoso não viesado</strong> (UMPU), mesmo quando não existe teste UMP entre todos os testes de nível <span class="math inline">\(\alpha\)</span>. O desenvolvimento completo dessa teoria exige condições adicionais e não deve ser confundido com a optimalidade geral do TRV <span class="citation" data-cites="casella2002statistical borovkov1998">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.3.2–8.3.3; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>)</span>.</p>
+<p>Um teste é <strong>não viesado</strong> quando sua função poder satisfaz</p>
+<p><span class="math display">\[
+\pi_\varphi(\theta_1)
+\geq
+\pi_\varphi(\theta_0)
+\]</span></p>
+<p>para todo</p>
+<p><span class="math display">\[
+\theta_1\in\Theta_1
+\qquad\text{e}\qquad
+\theta_0\in\Theta_0.
+\]</span></p>
+<p>Assim, o teste é pelo menos tão propenso a rejeitar <span class="math inline">\(H_0\)</span> quando a alternativa é verdadeira quanto quando o parâmetro pertence à hipótese nula.</p>
+<p>Para um teste de tamanho <span class="math inline">\(\alpha\)</span>, essa condição implica</p>
+<p><span class="math display">\[
+\pi_\varphi(\theta)
+\geq
+\alpha,
+\qquad
+\theta\in\Theta_1.
+\]</span></p>
+<p>Restringindo a comparação à classe dos testes não viesados de nível <span class="math inline">\(\alpha\)</span>, pode existir um teste <strong>uniformemente mais poderoso não viesado</strong> (UMPU), mesmo quando não existe teste UMP na classe de todos os testes de nível <span class="math inline">\(\alpha\)</span>. O desenvolvimento completo dessa teoria exige condições adicionais e não deve ser confundido com uma propriedade geral dos testes da razão de verossimilhanças <span class="citation" data-cites="casella2002statistical borovkov1998">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.3.2–8.3.3; <a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998, cap. 3</a>)</span>.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="teste-da-razão-de-verossimilhanças" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="teste-da-razão-de-verossimilhanças"><span class="header-section-number">8.9</span> Teste da razão de verossimilhanças</h2>
+<section id="sec-trv" class="level3" data-number="8.7.3">
+<h3 data-number="8.7.3" class="anchored" data-anchor-id="sec-trv"><span class="header-section-number">8.7.3</span> Teste da razão de verossimilhanças</h3>
 <p>O teste da razão de verossimilhanças — TRV — fornece um procedimento geral para hipóteses simples ou compostas. Diferentemente do lema de Neyman–Pearson, o TRV generalizado não é, em geral, ótimo em amostras finitas; sua importância decorre da aplicabilidade ampla e de propriedades assintóticas favoráveis. A estatística <span class="math inline">\(\Lambda\)</span> é preservada por reparametrizações biunívocas do modelo <span class="citation" data-cites="casella2002statistical hogg1978 rice2007mathematical chihara2022">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.2.1; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.6)</span>.</p>
 <p>Considere</p>
 <p><span class="math display">\[H_0:\theta\in\Theta_0
@@ -1093,43 +1315,63 @@ H_1:\theta\in\Theta\setminus\Theta_0.\]</span></p>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Quando ambas as hipóteses são simples, comparar <span class="math inline">\(\Lambda\)</span> com um ponto de corte é equivalente a comparar <span class="math inline">\(f_{\theta_1}(x)/f_{\theta_0}(x)\)</span> com um ponto de corte. Portanto, o TRV coincide com a forma do teste mais poderoso fornecida pelo lema de Neyman–Pearson. Para hipóteses compostas, essa equivalência de optimalidade não é garantida <span class="citation" data-cites="casella2002statistical hogg1978">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.2.1 e 8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4)</span>.</p>
+<p>No problema simples contra simples,</p>
+<p><span class="math display">\[
+H_0:\theta=\theta_0
+\qquad\text{versus}\qquad
+H_1:\theta=\theta_1,
+\]</span></p>
+<p>a comparação de <span class="math inline">\(\Lambda\)</span> com um ponto de corte é equivalente à comparação da razão</p>
+<p><span class="math display">\[
+\frac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+\]</span></p>
+<p>com um ponto de corte. Portanto, nesse caso, o TRV possui a mesma forma do teste mais poderoso fornecido pelo lema de Neyman–Pearson. Para hipóteses compostas, essa propriedade de optimalidade não é garantida <span class="citation" data-cites="casella2002statistical hogg1978">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.2.1 e 8.3.2; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4)</span>.</p>
 </div>
 </div>
-<section id="resultado-assintótico-de-wilks" class="level3" data-number="8.9.1">
-<h3 data-number="8.9.1" class="anchored" data-anchor-id="resultado-assintótico-de-wilks"><span class="header-section-number">8.9.1</span> Resultado assintótico de Wilks</h3>
-<p>Suponha que o parâmetro verdadeiro seja um ponto interior, que o modelo seja identificável e diferenciável e que <span class="math inline">\(H_0\)</span> imponha <span class="math inline">\(q\)</span> restrições independentes e regulares. Então, sob <span class="math inline">\(H_0\)</span>,</p>
-<p><span class="math display">\[-2\log\Lambda
+<section id="resultado-assintótico-de-wilks" class="level4">
+<h4 class="anchored" data-anchor-id="resultado-assintótico-de-wilks">Resultado assintótico de Wilks</h4>
+<p>Sob condições de regularidade, suponha que o verdadeiro valor do parâmetro pertença ao interior do espaço paramétrico, que o modelo seja identificável e diferenciável e que <span class="math inline">\(\Theta_0\)</span> seja definido localmente por <span class="math inline">\(q\)</span> restrições independentes e regulares. Então, sob <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[
+-2\log\Lambda
 \xrightarrow{d}
-\chi^2_q,\]</span></p>
-<p>em que</p>
-<p><span class="math display">\[q=\dim(\Theta)-\dim(\Theta_0)\]</span></p>
-<p>é o número de restrições independentes impostas por <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="casella2002statistical rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;10.3; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4)</span>.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Condições e exceções">
+\chi^2_q.
+\]</span></p>
+<p>No caso regular em que os espaços possuem dimensões bem definidas,</p>
+<p><span class="math display">\[
+q
+=
+\dim(\Theta)
+-
+\dim(\Theta_0),
+\]</span></p>
+<p>isto é, <span class="math inline">\(q\)</span> corresponde ao número de restrições independentes impostas por <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="casella2002statistical rice2007mathematical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.4.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Condições e limitações">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>Condições e exceções
+<span class="screen-reader-only">Aviso</span>Condições e limitações
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A aproximação qui-quadrado pode falhar quando:</p>
+<p>Há duas fontes distintas de dificuldade na utilização do resultado de Wilks.</p>
+<p><strong>Falha das condições de regularidade.</strong> A distribuição limite pode não ser <span class="math inline">\(\chi^2_q\)</span> quando, por exemplo:</p>
 <ul>
-<li>o parâmetro verdadeiro está na fronteira do espaço paramétrico;</li>
+<li>o verdadeiro parâmetro está na fronteira do espaço paramétrico;</li>
 <li>há parâmetros não identificáveis sob <span class="math inline">\(H_0\)</span>;</li>
 <li>o suporte da distribuição depende do parâmetro;</li>
-<li>a amostra é pequena;</li>
-<li>o modelo é irregular ou excessivamente esparso.</li>
+<li>o modelo apresenta outras irregularidades que invalidam a expansão assintótica usual.</li>
 </ul>
-<p>Nessas situações, devem ser consideradas distribuições exatas, simulação de Monte Carlo ou <em>bootstrap</em> paramétrico.</p>
+<p><strong>Qualidade da aproximação em amostras finitas.</strong> Mesmo em um modelo regular, a aproximação qui-quadrado pode ser inadequada quando a amostra é pequena ou quando a informação disponível é muito esparsa.</p>
+<p>Nessas situações, conforme o problema, podem ser necessárias distribuições exatas, calibração por simulação de Monte Carlo ou <em>bootstrap</em> paramétrico.</p>
 </div>
 </div>
 </section>
-<section id="exemplo-média-normal-com-variância-conhecida" class="level3" data-number="8.9.2">
-<h3 data-number="8.9.2" class="anchored" data-anchor-id="exemplo-média-normal-com-variância-conhecida"><span class="header-section-number">8.9.2</span> Exemplo: média normal com variância conhecida</h3>
-<p>Este exemplo mostra um caso em que o TRV possui distribuição nula exata, e não apenas assintótica <span class="citation" data-cites="casella2002statistical rice2007mathematical hogg1978">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.2.1 e 10.3; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4)</span>.</p>
+<section id="exemplo-média-normal-com-variância-conhecida" class="level4">
+<h4 class="anchored" data-anchor-id="exemplo-média-normal-com-variância-conhecida">Exemplo — média normal com variância conhecida</h4>
+<p>Neste caso, a estatística do TRV possui distribuição nula exata. A distribuição limite assintótica não é necessária para calibrar o teste <span class="citation" data-cites="casella2002statistical rice2007mathematical hogg1978">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, secs. 8.2.1 e 8.4.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.4; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, sec.&nbsp;7.4)</span>.</p>
 <p>Considere</p>
 <p><span class="math display">\[X_i\sim N(\mu,\sigma^2),\]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida, e</p>
@@ -1149,27 +1391,57 @@ H_1:\mu\neq\mu_0.\]</span></p>
 <p><span class="math display">\[Z^2\sim\chi^2_1.\]</span></p>
 <p>Logo, o TRV é exatamente equivalente ao teste bilateral <span class="math inline">\(Z\)</span>.</p>
 </section>
-<section id="exemplo-proporção-binomial" class="level3" data-number="8.9.3">
-<h3 data-number="8.9.3" class="anchored" data-anchor-id="exemplo-proporção-binomial"><span class="header-section-number">8.9.3</span> Exemplo: proporção binomial</h3>
-<p>A expressão abaixo é a deviance binomial para o teste de uma proporção <span class="citation" data-cites="casella2002statistical rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;10.3; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 9.4–9.5; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.3)</span>.</p>
-<p>Se <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span> e deseja-se testar</p>
-<p><span class="math display">\[H_0:p=p_0
+<section id="exemplo-proporção-binomial" class="level4">
+<h4 class="anchored" data-anchor-id="exemplo-proporção-binomial">Exemplo — proporção binomial</h4>
+<p>A expressão abaixo é a estatística da razão de verossimilhanças, também denominada <em>deviance</em> binomial neste contexto <span class="citation" data-cites="casella2002statistical rice2007mathematical ramachandran2021r">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.4.1; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, secs. 9.4–9.5; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.3)</span>.</p>
+<p>Se</p>
+<p><span class="math display">\[
+X\sim\operatorname{Bin}(n,p),
+\]</span></p>
+<p>com <span class="math inline">\(0&lt;p_0&lt;1\)</span>, e deseja-se testar</p>
+<p><span class="math display">\[
+H_0:p=p_0
 \qquad\text{versus}\qquad
-H_1:p\neq p_0,\]</span></p>
-<p>o estimador irrestrito é <span class="math inline">\(\widehat p=X/n\)</span>. Para <span class="math inline">\(0&lt;X&lt;n\)</span>,</p>
-<p><span class="math display">\[-2\log\Lambda
+H_1:p\neq p_0,
+\]</span></p>
+<p>o estimador irrestrito é</p>
+<p><span class="math display">\[
+\widehat p
+=
+\frac{X}{n}.
+\]</span></p>
+<p>A estatística do TRV é</p>
+<p><span class="math display">\[
+-2\log\Lambda
 =
 2\left[
 X\log\left(\frac{X}{np_0}\right)
-+(n-X)\log\left(\frac{n-X}{n(1-p_0)}\right)
-\right].\]</span></p>
-<p>Adota-se a convenção <span class="math inline">\(0\log 0=0\)</span>. Para amostras grandes, essa estatística possui distribuição aproximadamente <span class="math inline">\(\chi^2_1\)</span> sob <span class="math inline">\(H_0\)</span>. Em amostras pequenas, o teste binomial exato é preferível.</p>
++
+(n-X)
+\log\left(
+\frac{n-X}{n(1-p_0)}
+\right)
+\right],
+\]</span></p>
+<p>com a convenção</p>
+<p><span class="math display">\[
+0\log0=0.
+\]</span></p>
+<p>Essa convenção permite utilizar a expressão também nos casos <span class="math inline">\(X=0\)</span> e <span class="math inline">\(X=n\)</span>.</p>
+<p>Sob <span class="math inline">\(H_0\)</span> e nas condições regulares do resultado de Wilks,</p>
+<p><span class="math display">\[
+-2\log\Lambda
+\xrightarrow{d}
+\chi^2_1.
+\]</span></p>
+<p>Assim, a comparação com a distribuição <span class="math inline">\(\chi^2_1\)</span> fornece um teste assintótico. Para amostras pequenas ou quando a aproximação assintótica é inadequada, deve-se considerar o teste binomial exato desenvolvido adiante.</p>
 </section>
 </section>
-<section id="testes-usuais-para-parâmetros-populacionais" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="testes-usuais-para-parâmetros-populacionais"><span class="header-section-number">8.10</span> Testes usuais para parâmetros populacionais</h2>
-<section id="uma-média-com-variância-conhecida" class="level3" data-number="8.10.1">
-<h3 data-number="8.10.1" class="anchored" data-anchor-id="uma-média-com-variância-conhecida"><span class="header-section-number">8.10.1</span> Uma média com variância conhecida</h3>
+</section>
+<section id="sec-testes-usuais" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="sec-testes-usuais"><span class="header-section-number">8.8</span> Testes usuais para parâmetros populacionais</h2>
+<section id="uma-média-com-variância-conhecida" class="level3" data-number="8.8.1">
+<h3 data-number="8.8.1" class="anchored" data-anchor-id="uma-média-com-variância-conhecida"><span class="header-section-number">8.8.1</span> Uma média com variância conhecida</h3>
 <p>Suponha</p>
 <p><span class="math display">\[X_1,\ldots,X_n\sim N(\mu,\sigma^2),\]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida. Sob <span class="math inline">\(H_0:\mu=\mu_0\)</span>,</p>
@@ -1207,12 +1479,12 @@ X\log\left(\frac{X}{np_0}\right)
 </table>
 <p>Esses testes são exatos sob o modelo normal com variância conhecida <span class="citation" data-cites="chihara2022 larsen2012 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.1; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 6</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.4.2)</span>.</p>
 </section>
-<section id="uma-média-com-variância-desconhecida" class="level3" data-number="8.10.2">
-<h3 data-number="8.10.2" class="anchored" data-anchor-id="uma-média-com-variância-desconhecida"><span class="header-section-number">8.10.2</span> Uma média com variância desconhecida</h3>
+<section id="uma-média-com-variância-desconhecida" class="level3" data-number="8.8.2">
+<h3 data-number="8.8.2" class="anchored" data-anchor-id="uma-média-com-variância-desconhecida"><span class="header-section-number">8.8.2</span> Uma média com variância desconhecida</h3>
 <p>Se a população é normal e <span class="math inline">\(\sigma^2\)</span> é desconhecida,</p>
 <p><span class="math display">\[T=\frac{\bar{X}-\mu_0}{S/\sqrt{n}}
 \sim t_{n-1}\]</span></p>
-<p>sob <span class="math inline">\(H_0\)</span>. As regiões críticas seguem o mesmo padrão do teste <span class="math inline">\(Z\)</span>, substituindo os quantis normais pelos quantis da distribuição <span class="math inline">\(t\)</span> com <span class="math inline">\(n-1\)</span> graus de liberdade <span class="citation" data-cites="lauritzen2023fundamentals larsen2012">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;7.6.1; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 6</a>)</span>.</p>
+<p>sob <span class="math inline">\(H_0\)</span>. As regiões críticas seguem o mesmo padrão do teste <span class="math inline">\(Z\)</span>, substituindo os quantis normais pelos quantis da distribuição <span class="math inline">\(t\)</span> com <span class="math inline">\(n-1\)</span> graus de liberdade <span class="citation" data-cites="lauritzen2023fundamentals larsen2012">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;7.6.2.2; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 7</a>)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Pressuposto">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1223,20 +1495,54 @@ X\log\left(\frac{X}{np_0}\right)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Para amostras pequenas, a validade exata do teste depende da normalidade da população. Para amostras maiores, a aproximação costuma ser favorecida pelo comportamento assintótico da média, mas assimetria intensa e valores extremos podem comprometer a inferência.</p>
+<p>Sob uma população normal, a distribuição <span class="math inline">\(t_{n-1}\)</span> da estatística é exata para qualquer <span class="math inline">\(n\geq2\)</span>.</p>
+<p>Se a normalidade for retirada, mas <span class="math inline">\(X_1,\ldots,X_n\)</span> forem i.i.d. com média <span class="math inline">\(\mu\)</span> e variância finita e positiva, a estatística studentizada</p>
+<p><span class="math display">\[
+\frac{\overline X-\mu}{S/\sqrt n}
+\]</span></p>
+<p>converge em distribuição para <span class="math inline">\(N(0,1)\)</span>. Como os quantis da distribuição <span class="math inline">\(t_{n-1}\)</span> convergem para os quantis normais, o teste <span class="math inline">\(t\)</span> possui validade assintótica nessas condições.</p>
+<p>Essa aproximação pode ser inadequada em amostras pequenas ou moderadas quando a distribuição apresenta forte assimetria, caudas pesadas ou valores extremos.</p>
 </div>
 </div>
 </section>
-<section id="uma-proporção" class="level3" data-number="8.10.3">
-<h3 data-number="8.10.3" class="anchored" data-anchor-id="uma-proporção"><span class="header-section-number">8.10.3</span> Uma proporção</h3>
-<p>Se <span class="math inline">\(X\sim\operatorname{Bin}(n,p)\)</span>, a estatística aproximada sob <span class="math inline">\(H_0:p=p_0\)</span> é</p>
-<p><span class="math display">\[Z
+<section id="uma-proporção" class="level3" data-number="8.8.3">
+<h3 data-number="8.8.3" class="anchored" data-anchor-id="uma-proporção"><span class="header-section-number">8.8.3</span> Uma proporção</h3>
+<p>Se</p>
+<p><span class="math display">\[
+X\sim\operatorname{Bin}(n,p),
+\]</span></p>
+<p>e deseja-se testar</p>
+<p><span class="math display">\[
+H_0:p=p_0,
+\]</span></p>
+<p>com <span class="math inline">\(0&lt;p_0&lt;1\)</span>, então</p>
+<p><span class="math display">\[
+\widehat p
+=
+\frac{X}{n}
+\]</span></p>
+<p>e, sob <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[
+\operatorname{Var}_{p_0}(\widehat p)
+=
+\frac{p_0(1-p_0)}{n}.
+\]</span></p>
+<p>Assim, a estatística normal de escore é</p>
+<p><span class="math display">\[
+Z
 =
 \frac{\widehat p-p_0}
-{\sqrt{p_0(1-p_0)/n}},
-\qquad
-\widehat p=\frac{X}{n}.\]</span></p>
-<p>A aproximação normal deve ser usada apenas quando a distribuição binomial sob <span class="math inline">\(H_0\)</span> não for excessivamente assimétrica ou esparsa. Regras baseadas apenas em <span class="math inline">\(np_0\)</span> e <span class="math inline">\(n(1-p_0)\)</span> são heurísticas, não garantias de precisão. Caso contrário, utiliza-se o teste exato <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 8.1 e 8.4.3; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.4.2)</span>.</p>
+{\sqrt{p_0(1-p_0)/n}}.
+\]</span></p>
+<p>Sob <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[
+Z
+\xrightarrow{d}
+N(0,1)
+\]</span></p>
+<p>quando a aproximação normal à distribuição binomial é adequada.</p>
+<p>Observe que o erro-padrão é calculado com <span class="math inline">\(p_0\)</span>, isto é, sob a hipótese nula. Essa estatística difere da estatística de Wald, que substituiria <span class="math inline">\(p_0\)</span> por <span class="math inline">\(\widehat p\)</span> no denominador.</p>
+<p>A aproximação normal pode apresentar desempenho inadequado quando a distribuição binomial sob <span class="math inline">\(H_0\)</span> é muito assimétrica ou quando as contagens esperadas de sucessos ou fracassos são pequenas. Regras baseadas apenas em <span class="math inline">\(np_0\)</span> e <span class="math inline">\(n(1-p_0)\)</span> são heurísticas, e não garantias da qualidade da aproximação. Nessas situações, deve-se considerar o teste binomial exato <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.1.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.4.2)</span>.</p>
 <section id="teste-binomial-exato" class="level4">
 <h4 class="anchored" data-anchor-id="teste-binomial-exato">Teste binomial exato</h4>
 <p>Para uma alternativa unilateral à direita,</p>
@@ -1248,11 +1554,16 @@ X\log\left(\frac{X}{np_0}\right)
 =
 \sum_{k:\,P_{p_0}(X=k)\leq P_{p_0}(X=x_{\mathrm{obs}})}
 P_{p_0}(X=k).\]</span></p>
-<p>O método bilateral adotado deve ser explicitado, pois dobrar mecanicamente uma cauda nem sempre coincide com essa definição <span class="citation" data-cites="chihara2022 rasch2018">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.1; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018, cap. 3</a>)</span>.</p>
+<p>O método bilateral adotado deve ser explicitado, pois dobrar mecanicamente uma cauda nem sempre coincide com essa definição.</p>
+<p>Como a distribuição binomial é discreta, os valores-<span class="math inline">\(p\)</span> exatos não precisam possuir distribuição uniforme sob <span class="math inline">\(H_0\)</span>. A regra</p>
+<p><span class="math display">\[
+p\leq\alpha
+\]</span></p>
+<p>mantém o nível em no máximo <span class="math inline">\(\alpha\)</span>, mas pode ser conservadora para alguns valores de <span class="math inline">\(\alpha\)</span> <span class="citation" data-cites="chihara2022 rasch2018">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.1; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018, cap. 3</a>)</span>.</p>
 </section>
 </section>
-<section id="duas-médias-independentes-teste-de-welch" class="level3" data-number="8.10.4">
-<h3 data-number="8.10.4" class="anchored" data-anchor-id="duas-médias-independentes-teste-de-welch"><span class="header-section-number">8.10.4</span> Duas médias independentes: teste de Welch</h3>
+<section id="duas-médias-independentes-teste-de-welch" class="level3" data-number="8.8.4">
+<h3 data-number="8.8.4" class="anchored" data-anchor-id="duas-médias-independentes-teste-de-welch"><span class="header-section-number">8.8.4</span> Duas médias independentes: teste de Welch</h3>
 <p>Considere duas amostras independentes, com médias <span class="math inline">\(\bar{X}_1\)</span> e <span class="math inline">\(\bar{X}_2\)</span>, variâncias <span class="math inline">\(S_1^2\)</span> e <span class="math inline">\(S_2^2\)</span> e tamanhos <span class="math inline">\(n_1\)</span> e <span class="math inline">\(n_2\)</span>. Para testar</p>
 <p><span class="math display">\[H_0:\mu_1-\mu_2=\Delta_0,\]</span></p>
 <p>a estatística de Welch é</p>
@@ -1266,10 +1577,16 @@ P_{p_0}(X=k).\]</span></p>
 \frac{\left(S_1^2/n_1+S_2^2/n_2\right)^2}
 {\dfrac{(S_1^2/n_1)^2}{n_1-1}
 +\dfrac{(S_2^2/n_2)^2}{n_2-1}}.\]</span></p>
-<p>Sob populações normais independentes, a distribuição <span class="math inline">\(t_\nu\)</span> utilizada pelo teste de Welch é uma aproximação de Satterthwaite. O procedimento é uma escolha padrão quando não há justificativa substantiva para assumir variâncias iguais <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.5.1.2; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.3)</span>.</p>
+<p>Sob duas amostras independentes provenientes de populações normais, a distribuição <span class="math inline">\(t_\nu\)</span> utilizada pelo teste de Welch é uma aproximação de Satterthwaite, e não uma distribuição exata em geral.</p>
+<p>Para amostras independentes suficientemente grandes, a diferença entre médias também admite fundamentação assintótica sob condições mais gerais, desde que as variâncias populacionais sejam finitas.</p>
+<p>O procedimento de Welch não exige a hipótese</p>
+<p><span class="math display">\[
+\sigma_1^2=\sigma_2^2
+\]</span></p>
+<p>e é uma escolha apropriada quando o modelo ou o conhecimento do problema não sustentam a hipótese de variância comum <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.5.1.2; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.3)</span>.</p>
 </section>
-<section id="duas-médias-independentes-com-variância-comum" class="level3" data-number="8.10.5">
-<h3 data-number="8.10.5" class="anchored" data-anchor-id="duas-médias-independentes-com-variância-comum"><span class="header-section-number">8.10.5</span> Duas médias independentes com variância comum</h3>
+<section id="duas-médias-independentes-com-variância-comum" class="level3" data-number="8.8.5">
+<h3 data-number="8.8.5" class="anchored" data-anchor-id="duas-médias-independentes-com-variância-comum"><span class="header-section-number">8.8.5</span> Duas médias independentes com variância comum</h3>
 <p>Quando o modelo científico justifica</p>
 <p><span class="math display">\[\sigma_1^2=\sigma_2^2=\sigma^2,\]</span></p>
 <p>utiliza-se</p>
@@ -1296,89 +1613,311 @@ P_{p_0}(X=k).\]</span></p>
 </div>
 </div>
 </section>
-<section id="amostras-pareadas" class="level3" data-number="8.10.6">
-<h3 data-number="8.10.6" class="anchored" data-anchor-id="amostras-pareadas"><span class="header-section-number">8.10.6</span> Amostras pareadas</h3>
-<p>Para pares <span class="math inline">\((X_i,Y_i)\)</span>, defina</p>
-<p><span class="math display">\[D_i=X_i-Y_i.\]</span></p>
-<p>O teste pareado é simplesmente um teste para uma média aplicado às diferenças:</p>
-<p><span class="math display">\[T
+<section id="amostras-pareadas" class="level3" data-number="8.8.6">
+<h3 data-number="8.8.6" class="anchored" data-anchor-id="amostras-pareadas"><span class="header-section-number">8.8.6</span> Amostras pareadas</h3>
+<p>Considere <span class="math inline">\(n\)</span> pares</p>
+<p><span class="math display">\[
+(X_i,Y_i),
+\qquad
+i=1,\ldots,n,
+\]</span></p>
+<p>e defina a diferença dentro de cada par por</p>
+<p><span class="math display">\[
+D_i
 =
-\frac{\bar{D}-\Delta_0}{S_D/\sqrt{n}}
-\sim t_{n-1}\]</span></p>
-<p>sob normalidade das diferenças. O pareamento deve ser incorporado à análise; tratar observações pareadas como independentes desperdiça informação e produz erro-padrão inadequado <span class="citation" data-cites="chihara2022 larsen2012">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.3; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 9</a>)</span>.</p>
-</section>
-<section id="duas-proporções-independentes" class="level3" data-number="8.10.7">
-<h3 data-number="8.10.7" class="anchored" data-anchor-id="duas-proporções-independentes"><span class="header-section-number">8.10.7</span> Duas proporções independentes</h3>
-<p>Se <span class="math inline">\(X_j\sim\operatorname{Bin}(n_j,p_j)\)</span>, <span class="math inline">\(j=1,2\)</span>, e deseja-se testar</p>
-<p><span class="math display">\[H_0:p_1=p_2,\]</span></p>
-<p>a proporção combinada sob <span class="math inline">\(H_0\)</span> é</p>
-<p><span class="math display">\[\widehat p
+X_i-Y_i.
+\]</span></p>
+<p>O parâmetro de interesse passa a ser a média populacional das diferenças,</p>
+<p><span class="math display">\[
+\mu_D
 =
-\frac{X_1+X_2}{n_1+n_2}.\]</span></p>
-<p>A estatística aproximada é</p>
-<p><span class="math display">\[Z
+E(D_i).
+\]</span></p>
+<p>Para testar</p>
+<p><span class="math display">\[
+H_0:\mu_D=\Delta_0,
+\]</span></p>
+<p>utiliza-se</p>
+<p><span class="math display">\[
+T
 =
-\frac{\widehat p_1-\widehat p_2}
-{\sqrt{\widehat p(1-\widehat p)(1/n_1+1/n_2)}}.\]</span></p>
-<p>Para tabelas <span class="math inline">\(2\times2\)</span> esparsas, o teste exato de Fisher é uma alternativa importante. A estatística normal acima é aproximada e requer independência entre os grupos e contagens esperadas compatíveis com a aproximação normal <span class="citation" data-cites="chihara2022 rosner2011fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 8.3 e 10.3.3; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, cap. 10</a>)</span>.</p>
+\frac{\overline D-\Delta_0}
+{S_D/\sqrt n}.
+\]</span></p>
+<p>Se as diferenças</p>
+<p><span class="math display">\[
+D_1,\ldots,D_n
+\]</span></p>
+<p>forem independentes entre pares e normalmente distribuídas, então, sob <span class="math inline">\(H_0\)</span>,</p>
+<p><span class="math display">\[
+T
+\sim
+t_{n-1}.
+\]</span></p>
+<p>Portanto, a condição de normalidade relevante para a validade exata do teste é a distribuição das <strong>diferenças</strong>, e não a normalidade marginal de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> separadamente.</p>
+<p>Ignorar o pareamento também ignora a covariância entre as duas observações do mesmo par e, em geral, produz um erro-padrão inadequado. Quando a correlação intrapar é positiva, situação comum em delineamentos pareados, a análise pareada costuma proporcionar maior precisão <span class="citation" data-cites="chihara2022 larsen2012">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.3; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 9</a>)</span>.</p>
+</section>
+<section id="duas-proporções-independentes" class="level3" data-number="8.8.7">
+<h3 data-number="8.8.7" class="anchored" data-anchor-id="duas-proporções-independentes"><span class="header-section-number">8.8.7</span> Duas proporções independentes</h3>
+<p>Considere amostras independentes com</p>
+<p><span class="math display">\[
+X_j
+\sim
+\operatorname{Bin}(n_j,p_j),
+\qquad
+j=1,2,
+\]</span></p>
+<p>e o teste</p>
+<p><span class="math display">\[
+H_0:p_1=p_2.
+\]</span></p>
+<p>Sob <span class="math inline">\(H_0\)</span>, existe uma única proporção comum,</p>
+<p><span class="math display">\[
+p_1=p_2=p.
+\]</span></p>
+<p>Sua estimativa combinada é</p>
+<p><span class="math display">\[
+\widehat p
+=
+\frac{X_1+X_2}
+{n_1+n_2}.
+\]</span></p>
+<p>Portanto, a estatística normal de escore para a diferença entre as proporções é</p>
+<p><span class="math display">\[
+Z
+=
+\frac{
+\widehat p_1-\widehat p_2
+}{
+\sqrt{
+\widehat p(1-\widehat p)
+\left(
+\frac{1}{n_1}
++
+\frac{1}{n_2}
+\right)
+}
+}.
+\]</span></p>
+<p>Sob <span class="math inline">\(H_0\)</span> e quando a aproximação normal é adequada,</p>
+<p><span class="math display">\[
+Z
+\xrightarrow{d}
+N(0,1).
+\]</span></p>
+<p>A proporção combinada é utilizada especificamente porque a hipótese nula impõe uma proporção populacional comum aos dois grupos.</p>
+<p>Para tabelas <span class="math inline">\(2\times2\)</span> com contagens pequenas ou estrutura esparsa, a aproximação normal pode ser inadequada, e o teste exato de Fisher constitui uma alternativa importante. O procedimento pressupõe independência entre os dois grupos <span class="citation" data-cites="chihara2022 rosner2011fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 8.3 e 10.3.3; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, cap. 10</a>)</span>.</p>
 </section>
 </section>
-<section id="testes-exatos-de-permutação-e-robustez" class="level2" data-number="8.11">
-<h2 data-number="8.11" class="anchored" data-anchor-id="testes-exatos-de-permutação-e-robustez"><span class="header-section-number">8.11</span> Testes exatos, de permutação e robustez</h2>
-<p>Os testes paramétricos anteriores dependem de modelos probabilísticos específicos. Quando a distribuição exata sob <span class="math inline">\(H_0\)</span> é conhecida, um teste exato controla o nível sem recorrer a aproximações assintóticas. Exemplos são o teste binomial e o teste exato de Fisher.</p>
-<section id="testes-de-permutação" class="level3" data-number="8.11.1">
-<h3 data-number="8.11.1" class="anchored" data-anchor-id="testes-de-permutação"><span class="header-section-number">8.11.1</span> Testes de permutação</h3>
-<p>Em problemas de comparação entre grupos, um teste de permutação constrói a distribuição nula recombinando os rótulos das observações. A justificativa não é simplesmente “não assumir normalidade”: sob <span class="math inline">\(H_0\)</span>, é necessário que as observações sejam permutáveis, condição frequentemente derivada da randomização experimental ou da igualdade das distribuições sob a hipótese nula. Para dados pareados, permutam-se sinais ou condições dentro dos pares, preservando a estrutura do delineamento <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 3</a> e secs. 8.5 e 9.5.1)</span>.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Observação">
+<section id="sec-testes-exatos-permutacao" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="sec-testes-exatos-permutacao"><span class="header-section-number">8.9</span> Testes exatos, de permutação e robustez</h2>
+<p>Um teste é denominado <strong>exato</strong> quando sua calibração utiliza a distribuição nula em amostras finitas, sem substituir essa distribuição por uma aproximação assintótica. Exemplos incluem o teste binomial exato e o teste exato de Fisher.</p>
+<p>O termo “exato” refere-se ao uso da distribuição nula finita e não implica que a probabilidade de erro do tipo I seja exatamente igual a <span class="math inline">\(\alpha\)</span>. Em problemas discretos, pode não existir uma região crítica não aleatorizada com probabilidade exatamente <span class="math inline">\(\alpha\)</span> sob <span class="math inline">\(H_0\)</span>. Nesse caso, o procedimento pode ter tamanho inferior ao nível nominal e ser conservador.</p>
+<section id="testes-de-permutação" class="level3" data-number="8.9.1">
+<h3 data-number="8.9.1" class="anchored" data-anchor-id="testes-de-permutação"><span class="header-section-number">8.9.1</span> Testes de permutação</h3>
+<p>Um teste de permutação constrói a distribuição nula aplicando aos dados transformações que são admissíveis sob <span class="math inline">\(H_0\)</span>.</p>
+<p>Em uma comparação entre grupos independentes, a permutação dos rótulos é justificada quando, sob a hipótese nula, a distribuição conjunta dos dados é invariante a essas permutações. Essa propriedade pode decorrer, por exemplo, do mecanismo de randomização de um experimento ou da permutabilidade das observações sob uma hipótese de igualdade de distribuições. A ausência de normalidade, por si só, não justifica a permutação.</p>
+<p>Em dados pareados, o esquema de permutação deve preservar os pares. Dependendo do delineamento e da hipótese nula, podem ser trocados os rótulos das condições dentro de cada par ou utilizados sinais das diferenças. A validade de cada procedimento depende da invariância correspondente sob <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 3</a> e sec.&nbsp;9.5.1)</span>.</p>
+<p>Se todas as permutações admissíveis forem enumeradas, a distribuição de permutação é obtida exatamente. Quando apenas uma amostra aleatória das permutações é utilizada, o valor-<span class="math inline">\(p\)</span> resultante constitui uma aproximação de Monte Carlo à distribuição de permutação completa.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Hipótese testada">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Aviso</span>Observação
+<span class="screen-reader-only">Aviso</span>Hipótese testada
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Um teste de permutação baseado na diferença de médias pode testar igualdade de distribuições ou uma hipótese decorrente do mecanismo de randomização; ele não é automaticamente um teste exato apenas para igualdade de médias quando as distribuições diferem em outros aspectos. A hipótese efetivamente testada deve ser explicitada.</p>
+<p>Um teste de permutação baseado na diferença de médias não se transforma automaticamente em um teste exato apenas para</p>
+<p><span class="math display">\[
+H_0:\mu_1=\mu_2.
+\]</span></p>
+<p>Sob permutabilidade decorrente da igualdade das distribuições, a hipótese nula é mais forte que a simples igualdade das médias. Em experimentos randomizados, a interpretação depende da hipótese definida pelo mecanismo de randomização. A hipótese efetivamente testada e o conjunto de permutações admissíveis devem ser especificados.</p>
 </div>
 </div>
 </section>
-<section id="robustez" class="level3" data-number="8.11.2">
-<h3 data-number="8.11.2" class="anchored" data-anchor-id="robustez"><span class="header-section-number">8.11.2</span> Robustez</h3>
-<p>O teste <span class="math inline">\(t\)</span> pode ser relativamente estável diante de desvios moderados de normalidade, sobretudo em amostras equilibradas e sem observações extremas. Contudo, caudas pesadas, heteroscedasticidade, assimetria pronunciada e <em>outliers</em> podem alterar substancialmente o nível e o poder. Nessas situações, devem ser considerados o teste de Welch, métodos de reamostragem coerentes com o delineamento e procedimentos robustos baseados, por exemplo, em médias aparadas ou estimadores robustos de localização <span class="citation" data-cites="wilcox2022">(<a href="#ref-wilcox2022" role="doc-biblioref">Wilcox, 2022</a>, caps. 4–7)</span>.</p>
+<section id="robustez" class="level3" data-number="8.9.2">
+<h3 data-number="8.9.2" class="anchored" data-anchor-id="robustez"><span class="header-section-number">8.9.2</span> Robustez</h3>
+<p>A robustez de um procedimento refere-se à estabilidade de suas propriedades inferenciais diante de desvios das condições utilizadas em sua derivação.</p>
+<p>Testes <span class="math inline">\(t\)</span> baseados em médias podem apresentar comportamento satisfatório diante de desvios moderados de normalidade, especialmente quando não há forte assimetria, caudas muito pesadas ou observações extremas. Essa estabilidade, contudo, não é universal.</p>
+<p>Problemas distintos exigem respostas distintas:</p>
+<ul>
+<li>para duas amostras independentes com variâncias diferentes, o teste de Welch evita a imposição de uma variância populacional comum;</li>
+<li>caudas pesadas e <em>outliers</em> podem comprometer procedimentos baseados em médias e variâncias amostrais, mesmo quando Welch é utilizado;</li>
+<li>nesses casos, procedimentos baseados em médias aparadas ou outros estimadores robustos de localização podem ser considerados;</li>
+<li>métodos de reamostragem também precisam respeitar o delineamento e a estrutura de dependência dos dados e não corrigem automaticamente violações do modelo.</li>
+</ul>
+<p>Assim, “robusto” não significa “livre de pressupostos”; é necessário identificar a perturbação do modelo em relação à qual o procedimento mantém desempenho adequado <span class="citation" data-cites="wilcox2022">(<a href="#ref-wilcox2022" role="doc-biblioref">Wilcox, 2022</a>, caps. 4–7)</span>.</p>
 </section>
 </section>
-<section id="planejamento-amostral-e-poder" class="level2" data-number="8.12">
-<h2 data-number="8.12" class="anchored" data-anchor-id="planejamento-amostral-e-poder"><span class="header-section-number">8.12</span> Planejamento amostral e poder</h2>
-<section id="uma-média-com-variância-conhecida-1" class="level3" data-number="8.12.1">
-<h3 data-number="8.12.1" class="anchored" data-anchor-id="uma-média-com-variância-conhecida-1"><span class="header-section-number">8.12.1</span> Uma média com variância conhecida</h3>
-<p>Para o teste unilateral</p>
-<p><span class="math display">\[H_0:\mu=\mu_0
+<section id="sec-planejamento-poder" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="sec-planejamento-poder"><span class="header-section-number">8.10</span> Planejamento amostral e poder</h2>
+<section id="uma-média-com-variância-conhecida-1" class="level3" data-number="8.10.1">
+<h3 data-number="8.10.1" class="anchored" data-anchor-id="uma-média-com-variância-conhecida-1"><span class="header-section-number">8.10.1</span> Uma média com variância conhecida</h3>
+<p>Considere</p>
+<p><span class="math display">\[
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
+\]</span></p>
+<p>com <span class="math inline">\(\sigma\)</span> conhecida, e o teste unilateral</p>
+<p><span class="math display">\[
+H_0:\mu=\mu_0
 \qquad\text{versus}\qquad
-H_1:\mu&gt;\mu_0,\]</span></p>
-<p>suponha que se deseje poder <span class="math inline">\(1-\beta\)</span> para detectar <span class="math inline">\(\mu_1&gt;\mu_0\)</span>. Uma aproximação para o tamanho amostral é</p>
-<p><span class="math display">\[n
+H_1:\mu&gt;\mu_0.
+\]</span></p>
+<p>A região crítica de nível <span class="math inline">\(\alpha\)</span> é</p>
+<p><span class="math display">\[
+\frac{\overline X-\mu_0}
+{\sigma/\sqrt n}
+&gt;
+z_{1-\alpha}.
+\]</span></p>
+<p>Se o verdadeiro valor da média for <span class="math inline">\(\mu_1&gt;\mu_0\)</span>, o poder é</p>
+<p><span class="math display">\[
+\begin{aligned}
+\pi(\mu_1)
+&amp;=
+P_{\mu_1}
+\left\{
+\frac{\overline X-\mu_0}
+{\sigma/\sqrt n}
+&gt;
+z_{1-\alpha}
+\right\}
+\\
+&amp;=
+1-
+\Phi\left[
+z_{1-\alpha}
+-
+\frac{\sqrt n(\mu_1-\mu_0)}{\sigma}
+\right].
+\end{aligned}
+\]</span></p>
+<p>Para exigir</p>
+<p><span class="math display">\[
+\pi(\mu_1)\geq1-\beta,
+\]</span></p>
+<p>é suficiente e necessário que</p>
+<p><span class="math display">\[
+n
+\geq
+\left[
+\frac{
+(z_{1-\alpha}+z_{1-\beta})\sigma
+}{
+\mu_1-\mu_0
+}
+\right]^2.
+\]</span></p>
+<p>Portanto, o menor tamanho amostral inteiro que satisfaz essa condição é</p>
+<p><span class="math display">\[
+\boxed{
+n
 =
 \left\lceil
 \left[
-\frac{(z_{1-\alpha}+z_{1-\beta})\sigma}
-{\mu_1-\mu_0}
+\frac{
+(z_{1-\alpha}+z_{1-\beta})\sigma
+}{
+\mu_1-\mu_0
+}
 \right]^2
-\right\rceil.\]</span></p>
-<p>Para o teste bilateral, a substituição de <span class="math inline">\(z_{1-\alpha}\)</span> por <span class="math inline">\(z_{1-\alpha/2}\)</span> fornece uma aproximação conservadora usual, pois o poder bilateral exato envolve as duas caudas. A expressão deve ser entendida como planejamento para uma diferença alternativa previamente especificada <span class="citation" data-cites="ramachandran2021r chihara2022">(<a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.1.1; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.2)</span>.</p>
+\right\rceil
+}.
+\]</span></p>
+<p>Sob o modelo normal com variância conhecida, essa expressão decorre da função poder exata do teste unilateral; não se trata de uma aproximação assintótica <span class="citation" data-cites="casella2002statistical ramachandran2021r chihara2022">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;8.3.1; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.1.1; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.2)</span>.</p>
+<p>Para o teste bilateral, a função poder em um valor <span class="math inline">\(\mu_1&gt;\mu_0\)</span> é</p>
+<p><span class="math display">\[
+\pi(\mu_1)
+=
+1-
+\Phi
+\left[
+z_{1-\alpha/2}
+-
+\frac{\sqrt n(\mu_1-\mu_0)}{\sigma}
+\right]
++
+\Phi
+\left[
+-z_{1-\alpha/2}
+-
+\frac{\sqrt n(\mu_1-\mu_0)}{\sigma}
+\right].
+\]</span></p>
+<p>Substituir <span class="math inline">\(z_{1-\alpha}\)</span> por <span class="math inline">\(z_{1-\alpha/2}\)</span> na expressão fechada do caso unilateral fornece um planejamento conservador, pois considera apenas a cauda na direção de <span class="math inline">\(\mu_1\)</span> e desconsidera o poder adicional proveniente da cauda oposta. Quando se deseja o menor <span class="math inline">\(n\)</span> para o teste bilateral, a função poder acima pode ser avaliada diretamente para valores inteiros de <span class="math inline">\(n\)</span>.</p>
 </section>
-<section id="uma-proporção-1" class="level3" data-number="8.12.2">
-<h3 data-number="8.12.2" class="anchored" data-anchor-id="uma-proporção-1"><span class="header-section-number">8.12.2</span> Uma proporção</h3>
-<p>Para detectar <span class="math inline">\(p_1\neq p_0\)</span>, uma aproximação unilateral é</p>
-<p><span class="math display">\[n
+<section id="uma-proporção-1" class="level3" data-number="8.10.2">
+<h3 data-number="8.10.2" class="anchored" data-anchor-id="uma-proporção-1"><span class="header-section-number">8.10.2</span> Uma proporção</h3>
+<p>Considere inicialmente o teste unilateral</p>
+<p><span class="math display">\[
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p&gt;p_0,
+\]</span></p>
+<p>e suponha que se deseje poder <span class="math inline">\(1-\beta\)</span> quando</p>
+<p><span class="math display">\[
+p=p_1&gt;p_0.
+\]</span></p>
+<p>Utilizando a aproximação normal para a proporção amostral, obtém-se</p>
+<p><span class="math display">\[
+\boxed{
+n
 \approx
 \frac{
 \left[
 z_{1-\alpha}\sqrt{p_0(1-p_0)}
-+z_{1-\beta}\sqrt{p_1(1-p_1)}
++
+z_{1-\beta}\sqrt{p_1(1-p_1)}
 \right]^2
-}{(p_1-p_0)^2}.\]</span></p>
-<p>No caso bilateral, usa-se <span class="math inline">\(z_{1-\alpha/2}\)</span>. Trata-se de uma aproximação normal; após arredondar <span class="math inline">\(n\)</span> para cima, recomenda-se recalcular o poder pela distribuição binomial exata, especialmente quando <span class="math inline">\(p_0\)</span> ou <span class="math inline">\(p_1\)</span> estiver próximo de <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span> <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.1.1)</span>.</p>
+}{
+(p_1-p_0)^2
+}
+}.
+\]</span></p>
+<p>Para uma alternativa unilateral à esquerda, com <span class="math inline">\(p_1&lt;p_0\)</span>, utiliza-se a mesma expressão com a diferença em módulo,</p>
+<p><span class="math display">\[
+|p_1-p_0|.
+\]</span></p>
+<p>Para um teste bilateral,</p>
+<p><span class="math display">\[
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p\neq p_0,
+\]</span></p>
+<p>uma aproximação usual é substituir <span class="math inline">\(z_{1-\alpha}\)</span> por</p>
+<p><span class="math display">\[
+z_{1-\alpha/2}.
+\]</span></p>
+<p>Diferentemente do caso normal com variância conhecida, essas expressões dependem de aproximações normais à distribuição binomial. Depois de arredondar <span class="math inline">\(n\)</span> para cima, é recomendável calcular o poder efetivo utilizando</p>
+<p><span class="math display">\[
+X\sim\operatorname{Bin}(n,p_1)
+\]</span></p>
+<p>e a região crítica que será realmente adotada no teste. Essa verificação é especialmente importante quando <span class="math inline">\(p_0\)</span> ou <span class="math inline">\(p_1\)</span> está próximo de <span class="math inline">\(0\)</span> ou <span class="math inline">\(1\)</span> ou quando o tamanho amostral obtido é moderado <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.2; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;6.1.1)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Precisão e poder respondem a perguntas diferentes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Precisão e poder respondem a perguntas diferentes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Na estimação intervalar, o tamanho amostral foi relacionado à <strong>precisão</strong>, por exemplo por meio de uma margem de erro desejada.</p>
+<p>No planejamento de um teste de hipóteses, a pergunta é diferente: escolhe-se <span class="math inline">\(n\)</span> para obter determinado <strong>poder</strong> contra uma alternativa cientificamente relevante, mantendo especificado o controle do erro do tipo I.</p>
+<p>Assim,</p>
+<p><span class="math display">\[
+\text{U5: margem de erro}
+\qquad\text{e}\qquad
+\text{U6: poder}
+\]</span></p>
+<p>correspondem a critérios distintos de dimensionamento amostral.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled" title="Significância prática">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1389,48 +1928,85 @@ z_{1-\alpha}\sqrt{p_0(1-p_0)}
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O planejamento deve ser baseado na menor diferença cientificamente relevante, e não na menor diferença que possa se tornar estatisticamente significativa. Com amostras muito grandes, efeitos desprezíveis podem produzir valores-<span class="math inline">\(p\)</span> pequenos.</p>
+<p>O valor alternativo utilizado no planejamento deve representar uma diferença cientificamente relevante. Com amostras muito grandes, diferenças muito pequenas podem produzir valores-<span class="math inline">\(p\)</span> pequenos, sem que isso implique relevância prática.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="análise-de-dados-categóricos" class="level2" data-number="8.13">
-<h2 data-number="8.13" class="anchored" data-anchor-id="análise-de-dados-categóricos"><span class="header-section-number">8.13</span> Análise de dados categóricos</h2>
-<p>Dados categóricos são representados por contagens em categorias mutuamente exclusivas. O modelo multinomial fornece a base probabilística para testes de aderência e para tabelas de contingência <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals chihara2022 larsen2012">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.5; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.2–8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 10</a>; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 10</a>)</span>.</p>
-<section id="estatística-qui-quadrado-de-pearson" class="level3" data-number="8.13.1">
-<h3 data-number="8.13.1" class="anchored" data-anchor-id="estatística-qui-quadrado-de-pearson"><span class="header-section-number">8.13.1</span> Estatística qui-quadrado de Pearson</h3>
-<p>Para contagens observadas <span class="math inline">\(O_1,\ldots,O_k\)</span> e esperadas <span class="math inline">\(E_1,\ldots,E_k\)</span>, a estatística de Pearson é</p>
-<p><span class="math display">\[X^2
+<section id="sec-dados-categoricos" class="level2" data-number="8.11">
+<h2 data-number="8.11" class="anchored" data-anchor-id="sec-dados-categoricos"><span class="header-section-number">8.11</span> Análise de dados categóricos</h2>
+<p>Os procedimentos anteriores foram formulados principalmente em termos de médias, proporções ou parâmetros de distribuições específicas. Quando as observações são classificadas em categorias mutuamente exclusivas, os dados podem ser representados por <strong>contagens</strong>.</p>
+<p>Se uma amostra de tamanho <span class="math inline">\(n\)</span> é classificada em <span class="math inline">\(k\)</span> categorias com probabilidades</p>
+<p><span class="math display">\[
+p_1,\ldots,p_k,
+\qquad
+\sum_{i=1}^k p_i=1,
+\]</span></p>
+<p>então o vetor de contagens</p>
+<p><span class="math display">\[
+(O_1,\ldots,O_k)
+\]</span></p>
+<p>pode ser modelado por uma distribuição multinomial.</p>
+<p>Essa estrutura fornece a base para o teste de aderência. Em tabelas de contingência, o modelo probabilístico depende também do delineamento: uma única amostra classificada segundo duas variáveis categóricas pode ser representada por um modelo multinomial, enquanto a comparação de distribuições categóricas entre grupos independentes conduz naturalmente a um produto de distribuições multinomiais.</p>
+<p>Apesar dessas diferenças de delineamento, os testes de Pearson resultantes possuem formas algébricas estreitamente relacionadas <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals chihara2022 larsen2012">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.5; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.1 e 8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 10</a>; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 10</a>)</span>.</p>
+<section id="estatística-qui-quadrado-de-pearson" class="level3" data-number="8.11.1">
+<h3 data-number="8.11.1" class="anchored" data-anchor-id="estatística-qui-quadrado-de-pearson"><span class="header-section-number">8.11.1</span> Estatística qui-quadrado de Pearson</h3>
+<p>Para contagens observadas <span class="math inline">\(O_1,\ldots,O_k\)</span> e frequências esperadas positivas <span class="math inline">\(E_1,\ldots,E_k\)</span> sob <span class="math inline">\(H_0\)</span>, a estatística de Pearson é</p>
+<p><span class="math display">\[
+X^2
 =
 \sum_{i=1}^k
-\frac{(O_i-E_i)^2}{E_i}.\]</span></p>
-<p>Valores grandes indicam discrepância entre os dados e o modelo nulo.</p>
+\frac{(O_i-E_i)^2}{E_i}.
+\]</span></p>
+<p>Cada termo mede a discrepância entre uma contagem observada e sua frequência esperada, em escala relativa à variabilidade esperada sob o modelo nulo. Valores grandes de <span class="math inline">\(X^2\)</span> fornecem evidência contra <span class="math inline">\(H_0\)</span>.</p>
+<p>A comparação com uma distribuição qui-quadrado é, em geral, <strong>assintótica</strong>. Seus graus de liberdade dependem das restrições impostas pelo modelo nulo e de eventuais parâmetros estimados a partir dos dados.</p>
 </section>
-<section id="estatística-da-razão-de-verossimilhanças" class="level3" data-number="8.13.2">
-<h3 data-number="8.13.2" class="anchored" data-anchor-id="estatística-da-razão-de-verossimilhanças"><span class="header-section-number">8.13.2</span> Estatística da razão de verossimilhanças</h3>
-<p>A estatística correspondente ao TRV é</p>
-<p><span class="math display">\[G^2
+<section id="estatística-da-razão-de-verossimilhanças" class="level3" data-number="8.11.2">
+<h3 data-number="8.11.2" class="anchored" data-anchor-id="estatística-da-razão-de-verossimilhanças"><span class="header-section-number">8.11.2</span> Estatística da razão de verossimilhanças</h3>
+<p>A estatística correspondente ao teste da razão de verossimilhanças é</p>
+<p><span class="math display">\[
+G^2
 =
 2\sum_{i=1}^k
-O_i\log\left(\frac{O_i}{E_i}\right),\]</span></p>
-<p>com a convenção de que termos com <span class="math inline">\(O_i=0\)</span> são iguais a zero. Sob condições regulares,</p>
-<p><span class="math display">\[G^2\approx X^2,\]</span></p>
-<p>e ambas as estatísticas possuem a mesma distribuição qui-quadrado assintótica sob <span class="math inline">\(H_0\)</span>. Sob regularidade, sua diferença é assintoticamente desprezível, embora seus valores em uma amostra finita não precisem ser próximos quando existem células esparsas <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.5; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.2–8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.6)</span>.</p>
+O_i
+\log\left(
+\frac{O_i}{E_i}
+\right),
+\]</span></p>
+<p>com a convenção de que o termo correspondente a <span class="math inline">\(O_i=0\)</span> é igual a zero.</p>
+<p>Sob condições de regularidade, <span class="math inline">\(X^2\)</span> e <span class="math inline">\(G^2\)</span> são estatísticas assintoticamente equivalentes para testar o mesmo modelo nulo e possuem a mesma distribuição qui-quadrado limite.</p>
+<p>Isso não significa que seus valores observados devam ser numericamente próximos em qualquer amostra. Diferenças entre <span class="math inline">\(X^2\)</span> e <span class="math inline">\(G^2\)</span> podem ser relevantes em amostras pequenas ou em tabelas esparsas, justamente situações em que a aproximação assintótica também merece maior cautela <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.5; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.1 e 8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.6)</span>.</p>
 </section>
 </section>
-<section id="teste-qui-quadrado-de-aderência" class="level2" data-number="8.14">
-<h2 data-number="8.14" class="anchored" data-anchor-id="teste-qui-quadrado-de-aderência"><span class="header-section-number">8.14</span> Teste qui-quadrado de aderência</h2>
+<section id="teste-qui-quadrado-de-aderência" class="level2" data-number="8.12">
+<h2 data-number="8.12" class="anchored" data-anchor-id="teste-qui-quadrado-de-aderência"><span class="header-section-number">8.12</span> Teste qui-quadrado de aderência</h2>
 <p>Considere uma variável com <span class="math inline">\(k\)</span> categorias e probabilidades especificadas por <span class="math inline">\(H_0\)</span>:</p>
 <p><span class="math display">\[H_0:(p_1,\ldots,p_k)=(p_1^{(0)},\ldots,p_k^{(0)}).\]</span></p>
 <p>As frequências esperadas são</p>
 <p><span class="math display">\[E_i=np_i^{(0)}.\]</span></p>
-<p>Quando nenhuma quantidade é estimada a partir da própria amostra, os graus de liberdade são</p>
-<p><span class="math display">\[\nu=k-1.\]</span></p>
-<p>Se <span class="math inline">\(q\)</span> parâmetros livres forem estimados, sob condições regulares, a partir da mesma amostra para calcular as probabilidades esperadas, então</p>
-<p><span class="math display">\[\nu=k-1-q.\]</span></p>
-<p>Essa redução dos graus de liberdade pressupõe que os parâmetros sejam identificáveis e que o modelo ajustado possua posto local <span class="math inline">\(q\)</span> <span class="citation" data-cites="larsen2012 chihara2022">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, secs. 10.3–10.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.5)</span>.</p>
-<section id="exemplo-dado-de-seis-faces" class="level3" data-number="8.14.1">
-<h3 data-number="8.14.1" class="anchored" data-anchor-id="exemplo-dado-de-seis-faces"><span class="header-section-number">8.14.1</span> Exemplo: dado de seis faces</h3>
+<p>Quando as probabilidades</p>
+<p><span class="math display">\[
+p_1^{(0)},\ldots,p_k^{(0)}
+\]</span></p>
+<p>são completamente especificadas antes da observação dos dados, existe apenas a restrição</p>
+<p><span class="math display">\[
+\sum_{i=1}^k O_i=n,
+\]</span></p>
+<p>e os graus de liberdade são</p>
+<p><span class="math display">\[
+\nu
+=
+k-1.
+\]</span></p>
+<p>Se as probabilidades esperadas pertencem a um modelo paramétrico com <span class="math inline">\(q\)</span> parâmetros livres estimados a partir da própria amostra, então, sob condições regulares e com estimação compatível com o modelo utilizado no teste,</p>
+<p><span class="math display">\[
+\nu
+=
+k-1-q.
+\]</span></p>
+<p>Essa redução pressupõe que os parâmetros sejam identificáveis e que as <span class="math inline">\(q\)</span> direções paramétricas correspondam a restrições localmente independentes. Assim, a simples presença de <span class="math inline">\(q\)</span> quantidades calculadas a partir dos dados não é suficiente, por si só, para justificar a subtração de <span class="math inline">\(q\)</span> graus de liberdade <span class="citation" data-cites="larsen2012 chihara2022">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, secs. 10.3–10.4; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.5)</span>.</p>
+<section id="exemplo-dado-de-seis-faces" class="level3" data-number="8.12.1">
+<h3 data-number="8.12.1" class="anchored" data-anchor-id="exemplo-dado-de-seis-faces"><span class="header-section-number">8.12.1</span> Exemplo — dado de seis faces</h3>
 <p>Em <span class="math inline">\(120\)</span> lançamentos de um dado, foram observadas as contagens</p>
 <p><span class="math display">\[(14,18,20,22,21,25).\]</span></p>
 <p>Sob a hipótese de equilíbrio,</p>
@@ -1441,8 +2017,12 @@ O_i\log\left(\frac{O_i}{E_i}\right),\]</span></p>
 +\cdots+
 \frac{(25-20)^2}{20}
 =3{,}50.\]</span></p>
-<p>Com <span class="math inline">\(\nu=5\)</span>, o valor-<span class="math inline">\(p\)</span> é aproximadamente <span class="math inline">\(0{,}623\)</span>. Não se rejeita a hipótese de probabilidades iguais.</p>
-<div id="fca54f74" class="cell" data-execution_count="1">
+<p>Com <span class="math inline">\(\nu=5\)</span>, o valor-<span class="math inline">\(p\)</span> é aproximadamente</p>
+<p><span class="math display">\[
+p=0{,}623.
+\]</span></p>
+<p>Ao nível usual de <span class="math inline">\(5\%\)</span>, não se rejeita a hipótese de probabilidades iguais. Esse resultado indica que as discrepâncias observadas são compatíveis com a variabilidade esperada sob o modelo de dado equilibrado; ele não demonstra que as seis probabilidades sejam exatamente iguais.</p>
+<div id="00f96b77" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chisquare</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1457,23 +2037,69 @@ O_i\log\left(\frac{O_i}{E_i}\right),\]</span></p>
 </div>
 </section>
 </section>
-<section id="tabelas-de-contingência" class="level2" data-number="8.15">
-<h2 data-number="8.15" class="anchored" data-anchor-id="tabelas-de-contingência"><span class="header-section-number">8.15</span> Tabelas de contingência</h2>
+<section id="sec-tabelas-contingencia" class="level2" data-number="8.13">
+<h2 data-number="8.13" class="anchored" data-anchor-id="sec-tabelas-contingencia"><span class="header-section-number">8.13</span> Tabelas de contingência</h2>
 <p>Considere uma tabela com <span class="math inline">\(r\)</span> linhas e <span class="math inline">\(c\)</span> colunas. Seja <span class="math inline">\(O_{ij}\)</span> a frequência observada na célula <span class="math inline">\((i,j)\)</span>, <span class="math inline">\(O_{i\cdot}\)</span> o total da linha, <span class="math inline">\(O_{\cdot j}\)</span> o total da coluna e <span class="math inline">\(n\)</span> o total geral.</p>
-<p>Sob independência ou homogeneidade, a frequência esperada é</p>
-<p><span class="math display">\[E_{ij}
+<p>No <strong>teste de independência</strong>, uma única amostra é classificada segundo duas variáveis categóricas. Sob</p>
+<p><span class="math display">\[
+H_0:
+\text{as duas variáveis são independentes},
+\]</span></p>
+<p>a probabilidade conjunta fatoriza como</p>
+<p><span class="math display">\[
+p_{ij}
 =
-\frac{O_{i\cdot}O_{\cdot j}}{n}.\]</span></p>
-<p>A estatística de Pearson é</p>
-<p><span class="math display">\[X^2
+p_{i\cdot}p_{\cdot j}.
+\]</span></p>
+<p>Estimando as probabilidades marginais pelas proporções amostrais, obtém-se</p>
+<p><span class="math display">\[
+E_{ij}
 =
-\sum_{i=1}^r\sum_{j=1}^c
-\frac{(O_{ij}-E_{ij})^2}{E_{ij}},\]</span></p>
-<p>com</p>
-<p><span class="math display">\[\nu=(r-1)(c-1).\]</span></p>
-<p>Esses resultados decorrem do modelo de independência para contagens multinomiais ou produtos multinomiais <span class="citation" data-cites="lauritzen2023fundamentals chihara2022 larsen2012">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 10.1–10.3; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, sec.&nbsp;10.5)</span>.</p>
-<section id="homogeneidade-e-independência" class="level3" data-number="8.15.1">
-<h3 data-number="8.15.1" class="anchored" data-anchor-id="homogeneidade-e-independência"><span class="header-section-number">8.15.1</span> Homogeneidade e independência</h3>
+n
+\frac{O_{i\cdot}}{n}
+\frac{O_{\cdot j}}{n}
+=
+\frac{
+O_{i\cdot}O_{\cdot j}
+}{n}.
+\]</span></p>
+<p>No <strong>teste de homogeneidade</strong>, existem amostras independentes provenientes de diferentes populações. Sob a hipótese de que todas possuem a mesma distribuição categórica, estima-se a probabilidade comum da coluna <span class="math inline">\(j\)</span> por</p>
+<p><span class="math display">\[
+\widehat p_j
+=
+\frac{O_{\cdot j}}{n}.
+\]</span></p>
+<p>Assim, para uma amostra de tamanho <span class="math inline">\(O_{i\cdot}\)</span>,</p>
+<p><span class="math display">\[
+E_{ij}
+=
+O_{i\cdot}\widehat p_j
+=
+\frac{
+O_{i\cdot}O_{\cdot j}
+}{n}.
+\]</span></p>
+<p>Portanto, os dois problemas conduzem à mesma fórmula de frequências esperadas e à mesma estatística de Pearson,</p>
+<p><span class="math display">\[
+X^2
+=
+\sum_{i=1}^r
+\sum_{j=1}^c
+\frac{
+(O_{ij}-E_{ij})^2
+}{
+E_{ij}
+}.
+\]</span></p>
+<p>Sob as condições assintóticas usuais,</p>
+<p><span class="math display">\[
+X^2
+\xrightarrow{d}
+\chi^2_{(r-1)(c-1)}
+\]</span></p>
+<p>sob <span class="math inline">\(H_0\)</span> <span class="citation" data-cites="lauritzen2023fundamentals chihara2022 larsen2012">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;8.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, secs. 10.1–10.3; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, sec.&nbsp;10.5)</span>.</p>
+<section id="homogeneidade-e-independência" class="level3" data-number="8.13.1">
+<h3 data-number="8.13.1" class="anchored" data-anchor-id="homogeneidade-e-independência"><span class="header-section-number">8.13.1</span> Homogeneidade e independência</h3>
 <p>Os dois testes utilizam a mesma estatística, mas respondem a perguntas distintas.</p>
 <table class="caption-top table">
 <colgroup>
@@ -1501,10 +2127,43 @@ O_i\log\left(\frac{O_i}{E_i}\right),\]</span></p>
 </tr>
 </tbody>
 </table>
-<p>A interpretação correta depende do esquema amostral, não apenas da tabela numérica.</p>
+<p>A interpretação correta depende do esquema amostral; a tabela numérica, isoladamente, não determina o problema inferencial.</p>
+<p>No teste de <strong>homogeneidade</strong>, a inferência compara distribuições categóricas entre populações ou grupos. No teste de <strong>independência</strong>, a inferência avalia a associação entre duas variáveis categóricas medidas nas mesmas unidades amostrais.</p>
+<p>Portanto, uma mesma tabela de contagens pode produzir o mesmo valor de <span class="math inline">\(X^2\)</span> e o mesmo valor-<span class="math inline">\(p\)</span> em ambos os enquadramentos, mas a população-alvo, o mecanismo amostral e a interpretação do resultado não são os mesmos.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Conexão com o teste de duas proporções">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Conexão com o teste de duas proporções
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em uma tabela <span class="math inline">\(2\times2\)</span> formada por duas amostras binomiais independentes, o teste</p>
+<p><span class="math display">\[
+H_0:p_1=p_2
+\]</span></p>
+<p>pode ser formulado tanto como comparação de duas proporções quanto como teste qui-quadrado de homogeneidade.</p>
+<p>Sem correção de continuidade, a estatística normal baseada na proporção combinada satisfaz</p>
+<p><span class="math display">\[
+Z^2
+=
+X^2,
+\]</span></p>
+<p>em que <span class="math inline">\(X^2\)</span> é a estatística de Pearson da tabela <span class="math inline">\(2\times2\)</span>.</p>
+<p>Como</p>
+<p><span class="math display">\[
+Z\sim N(0,1)
+\quad\Longrightarrow\quad
+Z^2\sim\chi^2_1,
+\]</span></p>
+<p>os dois procedimentos fornecem o mesmo valor-<span class="math inline">\(p\)</span> bilateral quando construídos dessa forma. Essa equivalência algébrica não elimina a necessidade de identificar corretamente o delineamento e a hipótese de interesse <span class="citation" data-cites="casella2002statistical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, ex. 8.59)</span>.</p>
+</div>
+</div>
 </section>
-<section id="exemplo-renda-e-hipertensão" class="level3" data-number="8.15.2">
-<h3 data-number="8.15.2" class="anchored" data-anchor-id="exemplo-renda-e-hipertensão"><span class="header-section-number">8.15.2</span> Exemplo: renda e hipertensão</h3>
+<section id="exemplo-renda-e-hipertensão" class="level3" data-number="8.13.2">
+<h3 data-number="8.13.2" class="anchored" data-anchor-id="exemplo-renda-e-hipertensão"><span class="header-section-number">8.13.2</span> Exemplo — renda e hipertensão</h3>
 <p>Considere os dados hipotéticos:</p>
 <table class="caption-top table">
 <thead>
@@ -1547,7 +2206,7 @@ O_i\log\left(\frac{O_i}{E_i}\right),\]</span></p>
 <p>com <span class="math inline">\(\nu=2\)</span> e</p>
 <p><span class="math display">\[p\approx5{,}06\times10^{-8}.\]</span></p>
 <p>Rejeita-se a hipótese de independência. O resultado indica associação, mas não demonstra causalidade.</p>
-<div id="0e889275" class="cell" data-execution_count="2">
+<div id="4976c9d2" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2_contingency</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1573,45 +2232,107 @@ O_i\log\left(\frac{O_i}{E_i}\right),\]</span></p>
 </div>
 </section>
 </section>
-<section id="diagnóstico-por-resíduos" class="level2" data-number="8.16">
-<h2 data-number="8.16" class="anchored" data-anchor-id="diagnóstico-por-resíduos"><span class="header-section-number">8.16</span> Diagnóstico por resíduos</h2>
-<p>A rejeição global não identifica automaticamente quais células explicam a associação.</p>
-<p>O resíduo de Pearson é</p>
-<p><span class="math display">\[r_{ij}
-=
-\frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}}.\]</span></p>
-<p>Um resíduo ajustado é</p>
-<p><span class="math display">\[r_{ij}^{\mathrm{aj}}
+<section id="diagnóstico-por-resíduos" class="level2" data-number="8.14">
+<h2 data-number="8.14" class="anchored" data-anchor-id="diagnóstico-por-resíduos"><span class="header-section-number">8.14</span> Diagnóstico por resíduos</h2>
+<p>A rejeição do teste global indica discrepância em relação ao modelo nulo, mas não identifica quais células estão mais diretamente associadas a essa discrepância.</p>
+<p>O <strong>resíduo de Pearson</strong> da célula <span class="math inline">\((i,j)\)</span> é</p>
+<p><span class="math display">\[
+r_{ij}
 =
 \frac{O_{ij}-E_{ij}}
-{\sqrt{E_{ij}
-\left(1-\dfrac{O_{i\cdot}}{n}\right)
-\left(1-\dfrac{O_{\cdot j}}{n}\right)}}.\]</span></p>
-<p>Valores absolutos grandes indicam células que contribuem de maneira relevante para a discrepância global. A aproximação normal de cada resíduo é assintótica, e os resíduos de uma mesma tabela são dependentes. Quando muitas células são examinadas, a interpretação deve considerar multiplicidade <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, secs. 8.2–8.3)</span>.</p>
+{\sqrt{E_{ij}}}.
+\]</span></p>
+<p>Ele preserva o sinal da diferença:</p>
+<p><span class="math display">\[
+r_{ij}&gt;0
+\quad\Longrightarrow\quad
+O_{ij}&gt;E_{ij},
+\]</span></p>
+<p>enquanto</p>
+<p><span class="math display">\[
+r_{ij}&lt;0
+\quad\Longrightarrow\quad
+O_{ij}&lt;E_{ij}.
+\]</span></p>
+<p>Em tabelas de contingência, a estimação das margens afeta a variabilidade desses resíduos. Uma padronização que incorpora esse efeito é o <strong>resíduo ajustado</strong>,</p>
+<p><span class="math display">\[
+r_{ij}^{\mathrm{aj}}
+=
+\frac{O_{ij}-E_{ij}}
+{\sqrt{
+E_{ij}
+\left(
+1-\dfrac{O_{i\cdot}}{n}
+\right)
+\left(
+1-\dfrac{O_{\cdot j}}{n}
+\right)
+}}.
+\]</span></p>
+<p>Sob o modelo nulo e em condições assintóticas adequadas, cada resíduo ajustado possui distribuição aproximadamente normal padrão. Assim, valores positivos ou negativos de grande magnitude ajudam a localizar células com discrepâncias relevantes.</p>
+<p>Os resíduos de uma mesma tabela, entretanto, são dependentes. Além disso, quando muitas células são examinadas simultaneamente, interpretar cada uma isoladamente por comparação com quantis normais aumenta o problema de multiplicidade. A análise deve considerar o padrão conjunto dos resíduos e o contexto da aplicação <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;8.1.3)</span>.</p>
 </section>
-<section id="pressupostos-e-tabelas-esparsas" class="level2" data-number="8.17">
-<h2 data-number="8.17" class="anchored" data-anchor-id="pressupostos-e-tabelas-esparsas"><span class="header-section-number">8.17</span> Pressupostos e tabelas esparsas</h2>
-<p>Os testes qui-quadrado requerem:</p>
+<section id="condições-e-tabelas-esparsas" class="level2" data-number="8.15">
+<h2 data-number="8.15" class="anchored" data-anchor-id="condições-e-tabelas-esparsas"><span class="header-section-number">8.15</span> Condições e tabelas esparsas</h2>
+<p>A validade da análise envolve dois grupos de condições.</p>
+<p><strong>Condições do modelo e do delineamento:</strong></p>
 <ol type="1">
-<li>observações independentes;</li>
-<li>categorias mutuamente exclusivas;</li>
-<li>frequências esperadas suficientemente grandes para justificar a aproximação assintótica;</li>
-<li>um esquema amostral compatível com o modelo multinomial ou com o modelo de tabela de contingência.</li>
+<li>as unidades amostrais devem possuir a estrutura de independência assumida pelo modelo;</li>
+<li>as categorias utilizadas em uma mesma classificação devem ser mutuamente exclusivas;</li>
+<li>o esquema amostral deve ser compatível com o modelo multinomial, produto de multinomiais ou outro modelo utilizado para as contagens.</li>
 </ol>
-<p>A regra pedagógica <span class="math inline">\(E_{ij}\geq5\)</span> é apenas uma heurística, não um teorema universal. Quando há muitas células com contagens esperadas pequenas, podem ser necessários:</p>
+<p><strong>Condições para a aproximação qui-quadrado:</strong></p>
+<p>as frequências esperadas precisam ser suficientemente informativas para que a distribuição finita da estatística seja bem aproximada pela distribuição qui-quadrado assintótica.</p>
+<p>A regra pedagógica</p>
+<p><span class="math display">\[
+E_{ij}\geq5
+\]</span></p>
+<p>é uma heurística, e não um teorema universal. A qualidade da aproximação depende do conjunto das frequências esperadas, do número de células e do grau de desequilíbrio da tabela.</p>
+<p>Quando a aproximação assintótica é inadequada, podem ser considerados:</p>
 <ul>
-<li>agrupamento de categorias cientificamente justificável;</li>
+<li>agrupamento de categorias, desde que seja justificado pelo significado das categorias e compatível com a pergunta de interesse;</li>
 <li>teste exato de Fisher em tabelas <span class="math inline">\(2\times2\)</span>;</li>
-<li>testes exatos condicionais;</li>
-<li>valores-<span class="math inline">\(p\)</span> por Monte Carlo;</li>
+<li>outros testes exatos condicionais;</li>
+<li>valores-<span class="math inline">\(p\)</span> obtidos por simulação de Monte Carlo;</li>
 <li>modelos multinomiais ou log-lineares apropriados.</li>
 </ul>
 <p>A adequação de critérios numéricos específicos para frequências esperadas deve ser avaliada considerando o número de células, o grau de desequilíbrio e a precisão desejada; a regra <span class="math inline">\(5\)</span> não constitui garantia universal <span class="citation" data-cites="chihara2022 rosner2011fundamentals">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, cap. 10</a>; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011, cap. 10</a>)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Correção de continuidade em tabelas $2\times2$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Correção de continuidade em tabelas <span class="math inline">\(2\times2\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A estatística de Pearson utiliza uma distribuição qui-quadrado contínua para aproximar a distribuição de uma estatística construída a partir de contagens discretas. Em tabelas <span class="math inline">\(2\times2\)</span>, uma modificação clássica é a <strong>correção de continuidade de Yates</strong>,</p>
+<p><span class="math display">\[
+X^2_{\mathrm{Yates}}
+=
+\sum_{i=1}^2
+\sum_{j=1}^2
+\frac{
+\left(
+|O_{ij}-E_{ij}|-0{,}5
+\right)^2
+}{
+E_{ij}
+},
+\]</span></p>
+<p>quando as discrepâncias consideradas são maiores que <span class="math inline">\(0{,}5\)</span>.</p>
+<p>A correção reduz a estatística de Pearson e tende a produzir valores-<span class="math inline">\(p\)</span> maiores. Seu objetivo é melhorar a aproximação contínua em situações discretas, mas ela pode produzir um procedimento conservador. Portanto, não constitui substituto geral para procedimentos exatos quando a aproximação qui-quadrado é inadequada <span class="citation" data-cites="casella2002statistical">(<a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>, sec.&nbsp;3.2)</span>.</p>
+</div>
+</div>
 </section>
-<section id="teste-exato-de-fisher" class="level2" data-number="8.18">
-<h2 data-number="8.18" class="anchored" data-anchor-id="teste-exato-de-fisher"><span class="header-section-number">8.18</span> Teste exato de Fisher</h2>
-<p>Em uma tabela <span class="math inline">\(2\times2\)</span>, condicionando aos totais marginais, a contagem de uma célula segue distribuição hipergeométrica sob a hipótese nula. O teste exato de Fisher calcula probabilidades diretamente dessa distribuição e não depende da aproximação qui-quadrado. Para alternativas bilaterais, existem diferentes convenções de ordenação das tabelas; a convenção utilizada pelo software deve ser declarada <span class="citation" data-cites="lauritzen2023fundamentals chihara2022 rosner2011fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;8.3.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.3.3; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011</a>, sec.&nbsp;10.3)</span>.</p>
-<div id="52b12239" class="cell" data-execution_count="3">
+<section id="sec-fisher-exato" class="level2" data-number="8.16">
+<h2 data-number="8.16" class="anchored" data-anchor-id="sec-fisher-exato"><span class="header-section-number">8.16</span> Teste exato de Fisher</h2>
+<p>Considere uma tabela <span class="math inline">\(2\times2\)</span>. Sob a hipótese nula de ausência de associação — equivalentemente, razão de chances populacional igual a 1 — e condicionando aos totais marginais, a contagem de uma das células possui distribuição hipergeométrica.</p>
+<p>O teste exato de Fisher calcula as probabilidades das tabelas admissíveis diretamente dessa distribuição condicional. Portanto, sua calibração não depende da aproximação qui-quadrado e permanece disponível em tabelas com frequências pequenas.</p>
+<p>O termo <strong>exato</strong> refere-se ao uso da distribuição condicional finita. Como essa distribuição é discreta, o tamanho de um teste não aleatorizado não precisa ser exatamente igual ao nível nominal.</p>
+<p>Para alternativas bilaterais, existem diferentes critérios para ordenar as tabelas consideradas tão ou mais extremas que a observada. Por isso, a convenção utilizada pelo software deve ser identificada quando essa diferença for relevante <span class="citation" data-cites="lauritzen2023fundamentals chihara2022 rosner2011fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;8.3.5; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;10.3.3; <a href="#ref-rosner2011fundamentals" role="doc-biblioref">Rosner, 2011</a>, sec.&nbsp;10.3)</span>.</p>
+<div id="01cf3760" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> fisher_exact</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1633,60 +2354,121 @@ Valor-p exato = 0.0350</code></pre>
 </div>
 </div>
 </section>
-<section id="medidas-de-tamanho-do-efeito-em-tabelas" class="level2" data-number="8.19">
-<h2 data-number="8.19" class="anchored" data-anchor-id="medidas-de-tamanho-do-efeito-em-tabelas"><span class="header-section-number">8.19</span> Medidas de tamanho do efeito em tabelas</h2>
-<p>Para uma tabela <span class="math inline">\(2\times2\)</span>, a <strong>magnitude</strong> do coeficiente <span class="math inline">\(\phi\)</span> pode ser escrita como</p>
-<p><span class="math display">\[|\phi|
-=\sqrt{\frac{X^2}{n}}.\]</span></p>
-<p>O sinal de <span class="math inline">\(\phi\)</span> depende da codificação e da orientação das linhas e colunas; a expressão baseada em <span class="math inline">\(X^2\)</span> fornece apenas sua magnitude.</p>
-<p>Para uma tabela <span class="math inline">\(r\times c\)</span>, o <span class="math inline">\(V\)</span> de Cramér é</p>
-<p><span class="math display">\[V
-=\sqrt{
-\frac{X^2}
-{n\min(r-1,c-1)}
-}.\]</span></p>
-<p>No exemplo de renda e hipertensão,</p>
-<p><span class="math display">\[V
-=\sqrt{\frac{33{,}60}{300}}
-\approx0{,}335.\]</span></p>
-<p>A interpretação substantiva deve considerar o contexto, o delineamento e a direção observada nas proporções e nos resíduos. Pontos de corte universais para “efeito pequeno”, “médio” ou “grande” não substituem a análise contextual. Essas medidas são descritivas e não substituem a apresentação das proporções ou dos resíduos que determinam a direção da associação.</p>
-</section>
-<section id="poder-e-tamanho-amostral-em-testes-qui-quadrado" class="level2" data-number="8.20">
-<h2 data-number="8.20" class="anchored" data-anchor-id="poder-e-tamanho-amostral-em-testes-qui-quadrado"><span class="header-section-number">8.20</span> Poder e tamanho amostral em testes qui-quadrado</h2>
-<p>No teste de aderência com probabilidades nulas completamente especificadas, defina</p>
-<p><span class="math display">\[w
+<section id="medidas-de-tamanho-do-efeito-em-tabelas" class="level2" data-number="8.17">
+<h2 data-number="8.17" class="anchored" data-anchor-id="medidas-de-tamanho-do-efeito-em-tabelas"><span class="header-section-number">8.17</span> Medidas de tamanho do efeito em tabelas</h2>
+<p>Para uma tabela <span class="math inline">\(2\times2\)</span>, a magnitude do coeficiente <span class="math inline">\(\phi\)</span> pode ser escrita como</p>
+<p><span class="math display">\[
+|\phi|
 =
 \sqrt{
-\sum_i
-\frac{(p_i-p_i^{(0)})^2}{p_i^{(0)}}
-},\]</span></p>
-<p>em que <span class="math inline">\(p_i\)</span> representa uma alternativa cientificamente relevante. Sob a aproximação qui-quadrado não central, o parâmetro de não centralidade é</p>
-<p><span class="math display">\[\lambda=nw^2.\]</span></p>
-<p>Em tabelas de contingência, a definição correspondente deve ser construída a partir das probabilidades conjuntas sob a alternativa e das probabilidades ajustadas sob a hipótese de independência; não se deve reutilizar mecanicamente a fórmula de aderência.</p>
-<p>Para <span class="math inline">\(\nu\)</span> graus de liberdade e nível <span class="math inline">\(\alpha\)</span>, o poder aproximado é</p>
-<p><span class="math display">\[1-\beta
+\frac{X^2}{n}
+}.
+\]</span></p>
+<p>O sinal de <span class="math inline">\(\phi\)</span> depende da codificação e da orientação das linhas e colunas; a expressão baseada em <span class="math inline">\(X^2\)</span> recupera apenas sua magnitude.</p>
+<p>Para uma tabela <span class="math inline">\(r\times c\)</span>, o <span class="math inline">\(V\)</span> de Cramér é</p>
+<p><span class="math display">\[
+V
 =
-P\left
-\{
+\sqrt{
+\frac{X^2}
+{
+n\min(r-1,c-1)
+}
+}.
+\]</span></p>
+<p>Em uma tabela <span class="math inline">\(2\times2\)</span>,</p>
+<p><span class="math display">\[
+\min(r-1,c-1)=1,
+\]</span></p>
+<p>de modo que</p>
+<p><span class="math display">\[
+V
+=
+|\phi|.
+\]</span></p>
+<p>O <span class="math inline">\(V\)</span> de Cramér fornece uma medida não negativa da intensidade da associação. Ele não informa, por si só, quais categorias apresentam frequências acima ou abaixo do esperado nem o padrão que produz a associação.</p>
+<p>No exemplo de renda e hipertensão,</p>
+<p><span class="math display">\[
+V
+=
+\sqrt{
+\frac{33{,}60}{300}
+}
+\approx
+0{,}335.
+\]</span></p>
+<p>A interpretação de <span class="math inline">\(V\)</span> deve considerar o contexto, o delineamento, as proporções observadas e o padrão dos resíduos. Pontos de corte universais para classificar automaticamente valores de <span class="math inline">\(V\)</span> como “pequenos”, “médios” ou “grandes” não substituem essa análise contextual.</p>
+</section>
+<section id="poder-e-tamanho-amostral-em-testes-qui-quadrado" class="level2" data-number="8.18">
+<h2 data-number="8.18" class="anchored" data-anchor-id="poder-e-tamanho-amostral-em-testes-qui-quadrado"><span class="header-section-number">8.18</span> Poder e tamanho amostral em testes qui-quadrado</h2>
+<p>No teste de aderência com probabilidades nulas completamente especificadas,</p>
+<p><span class="math display">\[
+H_0:
+(p_1,\ldots,p_k)
+=
+(p_1^{(0)},\ldots,p_k^{(0)}),
+\]</span></p>
+<p>considere uma alternativa de planejamento</p>
+<p><span class="math display">\[
+(p_1,\ldots,p_k).
+\]</span></p>
+<p>O tamanho do efeito de Pearson associado a essa alternativa é</p>
+<p><span class="math display">\[
+w
+=
+\sqrt{
+\sum_{i=1}^k
+\frac{
+(p_i-p_i^{(0)})^2
+}{
+p_i^{(0)}
+}
+}.
+\]</span></p>
+<p>Assim, <span class="math inline">\(w\)</span> não é uma característica apenas de <span class="math inline">\(H_0\)</span>: seu valor depende da alternativa contra a qual se deseja obter determinado poder.</p>
+<p>Na aproximação baseada na distribuição qui-quadrado não central, utiliza-se o parâmetro de não centralidade</p>
+<p><span class="math display">\[
+\lambda
+=
+nw^2.
+\]</span></p>
+<p>Para <span class="math inline">\(\nu\)</span> graus de liberdade e nível <span class="math inline">\(\alpha\)</span>, o poder aproximado é</p>
+<p><span class="math display">\[
+1-\beta
+\approx
+P
+\left\{
 \chi^2_\nu(\lambda)
 &gt;
 \chi^2_{\nu,1-\alpha}
-\right\}.\]</span></p>
-<p>O tamanho amostral deve ser obtido numericamente a partir dessa expressão. Fórmulas que ignoram os graus de liberdade podem produzir planejamento inadequado.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Observação bibliográfica">
+\right\}.
+\]</span></p>
+<p>Consequentemente, o tamanho amostral pode ser obtido numericamente procurando o menor inteiro <span class="math inline">\(n\)</span> para o qual o poder aproximado atinge o valor planejado.</p>
+<p>Em tabelas de contingência, a medida correspondente deve ser construída a partir das probabilidades conjuntas especificadas sob a alternativa e das probabilidades que satisfazem o modelo nulo. A fórmula de aderência não deve ser reutilizada mecanicamente sem definir essas probabilidades.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Aproximação de planejamento">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Observação bibliográfica
+<span class="screen-reader-only">Nota</span>Aproximação de planejamento
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A relação <span class="math inline">\(\lambda=nw^2\)</span> é uma aproximação de planejamento. Após obter <span class="math inline">\(n\)</span>, recomenda-se recalcular o poder com o modelo probabilístico específico e verificar as frequências esperadas previstas.</p>
+<p>A relação</p>
+<p><span class="math display">\[
+\lambda=nw^2
+\]</span></p>
+<p>é utilizada aqui como aproximação para planejamento de poder. Depois de obter <span class="math inline">\(n\)</span>, convém verificar:</p>
+<ol type="1">
+<li>o poder sob o modelo probabilístico efetivamente utilizado;</li>
+<li>as frequências esperadas previstas para esse tamanho amostral;</li>
+<li>se a aproximação qui-quadrado é adequada no cenário planejado.</li>
+</ol>
+<p>Fórmulas de planejamento que utilizam apenas <span class="math inline">\(w\)</span>, sem considerar os graus de liberdade e a distribuição de referência, podem produzir resultados inadequados.</p>
 </div>
 </div>
-<div id="46b0c3d5" class="cell" data-execution_count="4">
+<div id="66f48c47" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> ceil</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> brentq</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> chi2, ncx2</span>
@@ -1713,11 +2495,44 @@ poder recalculado = 0.8037</code></pre>
 </div>
 </div>
 </section>
-<section id="relação-entre-testes-e-intervalos-de-confiança" class="level2" data-number="8.21">
-<h2 data-number="8.21" class="anchored" data-anchor-id="relação-entre-testes-e-intervalos-de-confiança"><span class="header-section-number">8.21</span> Relação entre testes e intervalos de confiança</h2>
-<p>Há uma dualidade entre testes bilaterais e intervalos de confiança. Para um procedimento coerente de nível <span class="math inline">\(\alpha\)</span>,</p>
-<p><span class="math display">\[H_0:\theta=\theta_0\]</span></p>
-<p>não é rejeitada se, e somente se, <span class="math inline">\(\theta_0\)</span> pertence ao conjunto de confiança de nível <span class="math inline">\(1-\alpha\)</span> obtido pela inversão dessa mesma família de testes <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.4)</span>.</p>
+<section id="sec-dualidade-testes-ic" class="level2" data-number="8.19">
+<h2 data-number="8.19" class="anchored" data-anchor-id="sec-dualidade-testes-ic"><span class="header-section-number">8.19</span> Relação entre testes e intervalos de confiança</h2>
+<p>Como desenvolvido em <a href="unidade5.html#sec-dualidade-ic-testes" class="quarto-xref"><span>Seção 7.10</span></a>, considere, para cada valor <span class="math inline">\(\theta_0\)</span>, um teste de nível <span class="math inline">\(\alpha\)</span> para</p>
+<p><span class="math display">\[
+H_0:\theta=\theta_0.
+\]</span></p>
+<p>O conjunto obtido pela inversão dessa mesma família de testes é</p>
+<p><span class="math display">\[
+C(\mathbf X)
+=
+\left\{
+\theta_0:
+H_0:\theta=\theta_0
+\text{ não é rejeitada}
+\right\}.
+\]</span></p>
+<p>Como cada teste possui probabilidade de rejeição de no máximo <span class="math inline">\(\alpha\)</span> quando sua hipótese nula é verdadeira,</p>
+<p><span class="math display">\[
+P_\theta
+\{
+\theta\in C(\mathbf X)
+\}
+\geq
+1-\alpha.
+\]</span></p>
+<p>Portanto, a inversão produz um conjunto de confiança de nível pelo menos <span class="math inline">\(1-\alpha\)</span>.</p>
+<p>Para uma amostra observada <span class="math inline">\(\mathbf x\)</span>, vale diretamente, pela construção,</p>
+<p><span class="math display">\[
+H_0:\theta=\theta_0
+\text{ não é rejeitada}
+\]</span></p>
+<p>se, e somente se,</p>
+<p><span class="math display">\[
+\theta_0
+\in
+C(\mathbf x).
+\]</span></p>
+<p>Se a probabilidade de rejeição sob cada hipótese nula simples for exatamente <span class="math inline">\(\alpha\)</span>, a cobertura correspondente é exatamente <span class="math inline">\(1-\alpha\)</span> <span class="citation" data-cites="rice2007mathematical chihara2022">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;9.3; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, sec.&nbsp;8.4.4)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Interpretação">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1728,32 +2543,34 @@ poder recalculado = 0.8037</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O intervalo de confiança complementa o valor-<span class="math inline">\(p\)</span> porque mostra a faixa de valores compatíveis com os dados e permite avaliar a magnitude e a precisão do efeito.</p>
+<p>O conjunto de confiança complementa o valor-<span class="math inline">\(p\)</span> ao mostrar quais valores do parâmetro permanecem compatíveis com o procedimento inferencial utilizado e ao informar a precisão da estimação. A equivalência entre rejeição e exclusão do conjunto exige que teste e conjunto de confiança sejam construídos pela <strong>mesma família de procedimentos</strong>.</p>
 </div>
 </div>
 </section>
-<section id="boas-práticas-de-apresentação" class="level2" data-number="8.22">
-<h2 data-number="8.22" class="anchored" data-anchor-id="boas-práticas-de-apresentação"><span class="header-section-number">8.22</span> Boas práticas de apresentação</h2>
-<p>Um relatório de teste deve incluir:</p>
+<section id="boas-práticas-de-apresentação" class="level2" data-number="8.20">
+<h2 data-number="8.20" class="anchored" data-anchor-id="boas-práticas-de-apresentação"><span class="header-section-number">8.20</span> Boas práticas de apresentação</h2>
+<p>Um relatório de teste deve incluir, conforme o problema:</p>
 <ul>
+<li>parâmetro ou comparação de interesse;</li>
 <li>hipóteses e direção do teste;</li>
+<li>nível <span class="math inline">\(\alpha\)</span> adotado quando houver uma regra de decisão previamente especificada;</li>
 <li>estatística de teste e distribuição de referência;</li>
 <li>graus de liberdade, quando aplicável;</li>
-<li>valor-<span class="math inline">\(p\)</span>, preferencialmente com precisão adequada;</li>
-<li>estimativa pontual e intervalo de confiança;</li>
-<li>medida de tamanho do efeito;</li>
-<li>verificação dos pressupostos;</li>
-<li>interpretação contextual, sem linguagem causal indevida.</li>
+<li>valor-<span class="math inline">\(p\)</span>, com precisão adequada;</li>
+<li>estimativa pontual e intervalo de confiança correspondente;</li>
+<li>medida de tamanho do efeito, quando aplicável;</li>
+<li>avaliação das condições que sustentam o procedimento;</li>
+<li>interpretação contextual, sem linguagem causal incompatível com o delineamento.</li>
 </ul>
-<section id="modelo-de-redação" class="level3" data-number="8.22.1">
-<h3 data-number="8.22.1" class="anchored" data-anchor-id="modelo-de-redação"><span class="header-section-number">8.22.1</span> Modelo de redação</h3>
+<section id="modelo-de-redação" class="level3" data-number="8.20.1">
+<h3 data-number="8.20.1" class="anchored" data-anchor-id="modelo-de-redação"><span class="header-section-number">8.20.1</span> Modelo de redação</h3>
 <blockquote class="blockquote">
-<p>A diferença média estimada foi de <span class="math inline">\(4{,}2\)</span> unidades, com intervalo de confiança de <span class="math inline">\(95\%\)</span> de <span class="math inline">\([1{,}1;7{,}3]\)</span>. O teste de Welch forneceu <span class="math inline">\(t=2{,}68\)</span>, <span class="math inline">\(\nu=37{,}4\)</span> e <span class="math inline">\(p=0{,}011\)</span>. Há evidência de diferença entre as médias no modelo adotado. A magnitude e a relevância prática devem ser avaliadas à luz da escala da variável e do delineamento do estudo.</p>
+<p>A diferença média estimada foi de <span class="math inline">\(4{,}2\)</span> unidades, com intervalo de confiança de <span class="math inline">\(95\%\)</span> de <span class="math inline">\([1{,}03;7{,}37]\)</span>. O teste de Welch forneceu <span class="math inline">\(t=2{,}68\)</span>, <span class="math inline">\(\nu=37{,}4\)</span> e <span class="math inline">\(p=0{,}011\)</span>. Há evidência de diferença entre as médias no modelo adotado. A magnitude e a relevância prática devem ser avaliadas à luz da escala da variável e do delineamento do estudo.</p>
 </blockquote>
 </section>
 </section>
-<section id="erros-frequentes-de-interpretação" class="level2" data-number="8.23">
-<h2 data-number="8.23" class="anchored" data-anchor-id="erros-frequentes-de-interpretação"><span class="header-section-number">8.23</span> Erros frequentes de interpretação</h2>
+<section id="erros-frequentes-de-interpretação" class="level2" data-number="8.21">
+<h2 data-number="8.21" class="anchored" data-anchor-id="erros-frequentes-de-interpretação"><span class="header-section-number">8.21</span> Erros frequentes de interpretação</h2>
 <ol type="1">
 <li><strong>Confundir valor-</strong><span class="math inline">\(p\)</span> com <span class="math inline">\(P(H_0\mid\text{dados})\)</span>. O valor-<span class="math inline">\(p\)</span> é calculado sob <span class="math inline">\(H_0\)</span> e não atribui probabilidade posterior à hipótese.</li>
 <li><strong>Escolher unilateralidade após observar os dados.</strong> A direção deve ser definida previamente.</li>
@@ -1765,8 +2582,8 @@ poder recalculado = 0.8037</code></pre>
 <li><strong>Realizar muitos testes sem controlar multiplicidade.</strong> A probabilidade de ao menos uma rejeição falsa cresce com o número de comparações.</li>
 </ol>
 </section>
-<section id="quadro-síntese" class="level2" data-number="8.24">
-<h2 data-number="8.24" class="anchored" data-anchor-id="quadro-síntese"><span class="header-section-number">8.24</span> Quadro-síntese</h2>
+<section id="quadro-síntese" class="level2" data-number="8.22">
+<h2 data-number="8.22" class="anchored" data-anchor-id="quadro-síntese"><span class="header-section-number">8.22</span> Quadro-síntese</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -1779,7 +2596,7 @@ poder recalculado = 0.8037</code></pre>
 <th style="text-align: left;">Problema</th>
 <th style="text-align: left;">Estatística principal</th>
 <th style="text-align: left;">Referência sob <span class="math inline">\(H_0\)</span></th>
-<th style="text-align: left;">Observação</th>
+<th style="text-align: left;">Natureza/condições</th>
 </tr>
 </thead>
 <tbody>
@@ -1793,58 +2610,76 @@ poder recalculado = 0.8037</code></pre>
 <td style="text-align: left;">uma média, <span class="math inline">\(\sigma\)</span> desconhecida</td>
 <td style="text-align: left;"><span class="math inline">\(T\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(t_{n-1}\)</span></td>
-<td style="text-align: left;">exato sob normalidade</td>
+<td style="text-align: left;">exato sob normalidade; validade assintótica sob condições mais gerais</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">duas médias independentes</td>
+<td style="text-align: left;">duas médias independentes, variâncias não necessariamente iguais</td>
 <td style="text-align: left;"><span class="math inline">\(T\)</span> de Welch</td>
 <td style="text-align: left;"><span class="math inline">\(t_\nu\)</span> aproximada</td>
-<td style="text-align: left;">não exige variâncias iguais</td>
+<td style="text-align: left;">aproximação de Welch–Satterthwaite</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">duas médias independentes, variância comum</td>
+<td style="text-align: left;"><span class="math inline">\(T\)</span> agrupado</td>
+<td style="text-align: left;"><span class="math inline">\(t_{n_1+n_2-2}\)</span></td>
+<td style="text-align: left;">exato sob normalidade, independência e variância comum</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">médias pareadas</td>
 <td style="text-align: left;"><span class="math inline">\(T\)</span> nas diferenças</td>
 <td style="text-align: left;"><span class="math inline">\(t_{n-1}\)</span></td>
-<td style="text-align: left;">analisa <span class="math inline">\(D_i=X_i-Y_i\)</span></td>
+<td style="text-align: left;">exato sob normalidade das diferenças e independência entre pares</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">uma proporção</td>
+<td style="text-align: left;"><span class="math inline">\(Z\)</span> de escore</td>
+<td style="text-align: left;"><span class="math inline">\(N(0,1)\)</span> assintótica</td>
+<td style="text-align: left;">variância calculada sob <span class="math inline">\(H_0\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">uma proporção</td>
-<td style="text-align: left;"><span class="math inline">\(Z\)</span> ou binomial exato</td>
-<td style="text-align: left;">normal ou binomial</td>
-<td style="text-align: left;">preferir exato em amostras pequenas</td>
+<td style="text-align: left;">binomial exato</td>
+<td style="text-align: left;">distribuição binomial finita</td>
+<td style="text-align: left;">pode ser conservador devido à discretização</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">duas proporções</td>
-<td style="text-align: left;"><span class="math inline">\(Z\)</span> combinado</td>
-<td style="text-align: left;">normal aproximada</td>
-<td style="text-align: left;">Fisher em <span class="math inline">\(2\times2\)</span> esparsa</td>
+<td style="text-align: left;"><span class="math inline">\(Z\)</span> com proporção combinada</td>
+<td style="text-align: left;"><span class="math inline">\(N(0,1)\)</span> assintótica</td>
+<td style="text-align: left;">proporção combinada decorre de <span class="math inline">\(H_0:p_1=p_2\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">aderência</td>
 <td style="text-align: left;"><span class="math inline">\(X^2\)</span> ou <span class="math inline">\(G^2\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\chi^2_{k-1-q}\)</span></td>
-<td style="text-align: left;">descontar parâmetros estimados</td>
+<td style="text-align: left;"><span class="math inline">\(\chi^2_{k-1-q}\)</span> assintótica</td>
+<td style="text-align: left;">descontar parâmetros estimados quando aplicável</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">homogeneidade/independência</td>
 <td style="text-align: left;"><span class="math inline">\(X^2\)</span> ou <span class="math inline">\(G^2\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\chi^2_{(r-1)(c-1)}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\chi^2_{(r-1)(c-1)}\)</span> assintótica</td>
 <td style="text-align: left;">mesma álgebra, delineamentos distintos</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">tabela <span class="math inline">\(2\times2\)</span></td>
+<td style="text-align: left;">Fisher exato</td>
+<td style="text-align: left;">distribuição hipergeométrica condicional</td>
+<td style="text-align: left;">não depende da aproximação qui-quadrado</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">hipótese paramétrica geral</td>
 <td style="text-align: left;"><span class="math inline">\(-2\log\Lambda\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(\chi^2_q\)</span> assintótica</td>
-<td style="text-align: left;">verificar regularidade</td>
+<td style="text-align: left;">resultado de Wilks sob regularidade</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="exercícios" class="level2" data-number="8.25">
-<h2 data-number="8.25" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">8.25</span> Exercícios</h2>
+<section id="exercícios" class="level2" data-number="8.23">
+<h2 data-number="8.23" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">8.23</span> Exercícios</h2>
 <p>Os exercícios a seguir são autorais ou foram adaptados conceitualmente das fontes teóricas e aplicadas utilizadas no capítulo <span class="citation" data-cites="casella2002statistical hogg1978 borovkov1998 rice2007mathematical ramachandran2021r rasch2018 lauritzen2023fundamentals chihara2022 shao2005">(<a href="#ref-borovkov1998" role="doc-biblioref">Borovkov, 1998</a>; <a href="#ref-casella2002statistical" role="doc-biblioref">Casella; Berger, 2002</a>; <a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>; <a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>; <a href="#ref-shao2005" role="doc-biblioref">Shao, 2005</a>)</span>.</p>
-<section id="exercícios-conceituais" class="level3" data-number="8.25.1">
-<h3 data-number="8.25.1" class="anchored" data-anchor-id="exercícios-conceituais"><span class="header-section-number">8.25.1</span> Exercícios conceituais</h3>
+<section id="exercícios-conceituais" class="level3" data-number="8.23.1">
+<h3 data-number="8.23.1" class="anchored" data-anchor-id="exercícios-conceituais"><span class="header-section-number">8.23.1</span> Exercícios conceituais</h3>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 1">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1885,8 +2720,8 @@ poder recalculado = 0.8037</code></pre>
 </div>
 </div>
 </section>
-<section id="neymanpearson-e-testes-ump" class="level3" data-number="8.25.2">
-<h3 data-number="8.25.2" class="anchored" data-anchor-id="neymanpearson-e-testes-ump"><span class="header-section-number">8.25.2</span> Neyman–Pearson e testes UMP</h3>
+<section id="neymanpearson-e-testes-ump" class="level3" data-number="8.23.2">
+<h3 data-number="8.23.2" class="anchored" data-anchor-id="neymanpearson-e-testes-ump"><span class="header-section-number">8.23.2</span> Neyman–Pearson e testes UMP</h3>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 4">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1951,8 +2786,8 @@ H_1:p&gt;p_0,\]</span></p>
 </div>
 </div>
 </section>
-<section id="razão-de-verossimilhanças" class="level3" data-number="8.25.3">
-<h3 data-number="8.25.3" class="anchored" data-anchor-id="razão-de-verossimilhanças"><span class="header-section-number">8.25.3</span> Razão de verossimilhanças</h3>
+<section id="razão-de-verossimilhanças" class="level3" data-number="8.23.3">
+<h3 data-number="8.23.3" class="anchored" data-anchor-id="razão-de-verossimilhanças"><span class="header-section-number">8.23.3</span> Razão de verossimilhanças</h3>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 8">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1995,8 +2830,8 @@ H_1:p&gt;p_0,\]</span></p>
 </div>
 </div>
 </section>
-<section id="testes-para-médias-e-proporções" class="level3" data-number="8.25.4">
-<h3 data-number="8.25.4" class="anchored" data-anchor-id="testes-para-médias-e-proporções"><span class="header-section-number">8.25.4</span> Testes para médias e proporções</h3>
+<section id="testes-para-médias-e-proporções" class="level3" data-number="8.23.4">
+<h3 data-number="8.23.4" class="anchored" data-anchor-id="testes-para-médias-e-proporções"><span class="header-section-number">8.23.4</span> Testes para médias e proporções</h3>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 11">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2053,8 +2888,8 @@ H_1:p&gt;p_0,\]</span></p>
 </div>
 </div>
 </section>
-<section id="dados-categóricos" class="level3" data-number="8.25.5">
-<h3 data-number="8.25.5" class="anchored" data-anchor-id="dados-categóricos"><span class="header-section-number">8.25.5</span> Dados categóricos</h3>
+<section id="dados-categóricos" class="level3" data-number="8.23.5">
+<h3 data-number="8.23.5" class="anchored" data-anchor-id="dados-categóricos"><span class="header-section-number">8.23.5</span> Dados categóricos</h3>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 15">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2135,8 +2970,8 @@ H_1:p&gt;p_0,\]</span></p>
 </div>
 </div>
 </section>
-<section id="reamostragem-e-robustez" class="level3" data-number="8.25.6">
-<h3 data-number="8.25.6" class="anchored" data-anchor-id="reamostragem-e-robustez"><span class="header-section-number">8.25.6</span> Reamostragem e robustez</h3>
+<section id="reamostragem-e-robustez" class="level3" data-number="8.23.6">
+<h3 data-number="8.23.6" class="anchored" data-anchor-id="reamostragem-e-robustez"><span class="header-section-number">8.23.6</span> Reamostragem e robustez</h3>
 <div class="callout callout-style-default callout-note callout-titled" title="Exercício 19">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

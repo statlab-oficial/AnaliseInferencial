@@ -1,6 +1,6 @@
-# Testes de Hipóteses e Análise de Dados Categóricos
+# Testes de Hipóteses e Análise de Dados Categóricos {#sec-testes-hipoteses}
 
-Os testes de hipóteses fornecem regras para avaliar a compatibilidade entre os dados e afirmações sobre um modelo estatístico, controlando probabilidades de erro previamente especificadas. Este capítulo articula a formulação frequentista dos testes, os princípios de optimalidade de Neyman--Pearson, os testes da razão de verossimilhanças, os procedimentos usuais para parâmetros populacionais e a análise de contagens categóricas [@casella2002statistical, cap. 8; @lauritzen2023fundamentals, cap. 7; @rice2007mathematical, cap. 9].
+Os testes de hipóteses fornecem regras para avaliar a compatibilidade entre os dados e afirmações sobre um modelo estatístico. No paradigma frequentista, seu comportamento é avaliado sob repetições do processo amostral: o nível limita a probabilidade de rejeição incorreta sob a hipótese nula, enquanto a função poder descreve a probabilidade de rejeição ao longo dos diferentes valores do parâmetro. Este capítulo articula a formulação frequentista dos testes, os princípios de optimalidade de Neyman--Pearson, os testes da razão de verossimilhanças, os procedimentos usuais para parâmetros populacionais e a análise de contagens categóricas [@casella2002statistical, cap. 8; @lauritzen2023fundamentals, cap. 7; @rice2007mathematical, cap. 9].
 
 ## Objetivos de aprendizagem
 
@@ -55,9 +55,9 @@ $$P_{0{,}5}(X\geq 99\ \text{ou}\ X\leq 1)
 \approx 1{,}59\times 10^{-28}.$$
 :::
 
-Em ambos os casos, o resultado é extremamente incompatível com o modelo de moeda honesta. A conclusão não decorre de uma “prova” de que $H_0$ seja falsa, mas da aplicação de uma regra inferencial cujo comportamento é avaliado sob repetições do experimento. Em particular, o nível do teste controla a frequência de rejeições incorretas quando $H_0$ é verdadeira [@casella2002statistical, secs. 8.1 e 8.3.1; @cox2006principles, secs. 3.2 e 5.4; @lauritzen2023fundamentals, secs. 7.1--7.3].
+Em ambos os casos, o resultado é extremamente incompatível com o modelo de moeda honesta. A conclusão não decorre de uma “prova” de que $H_0$ seja falsa, mas da aplicação de uma regra inferencial cujo comportamento é avaliado sob repetições do experimento. Em particular, em um teste de nível $\alpha$, a probabilidade de rejeitar $H_0$ quando ela é verdadeira é limitada superiormente por $\alpha$ [@casella2002statistical, secs. 8.1 e 8.3.1; @cox2006principles, secs. 3.2 e 5.4; @lauritzen2023fundamentals, secs. 7.1--7.4].
 
-## Formulação estatística do problema
+## Formulação estatística do problema {#sec-formulacao-testes}
 
 Considere um modelo estatístico
 
@@ -139,7 +139,7 @@ $$\sup_{\theta\in\Theta_0}\pi_\varphi(\theta)\leq\alpha.$$
 Quando a igualdade é satisfeita, o teste tem tamanho $\alpha$.
 :::
 
-Essa distinção é relevante em hipóteses nulas compostas: o nível $\alpha$ constitui um limite superior uniforme para a probabilidade de rejeição incorreta em todos os valores de $\theta$ permitidos por $H_0$ [@casella2002statistical, sec. 8.3.1; @lauritzen2023fundamentals, secs. 7.1--7.3].
+Essa distinção é relevante em hipóteses nulas compostas: o nível $\alpha$ constitui um limite superior uniforme para a probabilidade de rejeição incorreta em todos os valores de $\theta$ permitidos por $H_0$ [@casella2002statistical, sec. 8.3.1; @lauritzen2023fundamentals, sec. 7.4].
 
 ### Erros dos tipos I e II
 
@@ -165,18 +165,24 @@ Portanto, o poder no ponto $\theta\in\Theta_1$ é $1-\beta_\varphi(\theta)$.
 O valor $\beta$ não é, em geral, uma constante única. Ele depende do valor verdadeiro do parâmetro sob a alternativa. Por isso, o planejamento amostral deve especificar uma diferença mínima ou um valor alternativo de interesse.
 :::
 
-## Valor-$p$
+## Valor-$p$ {#sec-valor-p}
 
 Considere uma estatística de teste $T=T(X)$ construída de modo que valores grandes sejam mais incompatíveis com $H_0$. Para uma hipótese nula simples $H_0:\theta=\theta_0$, o valor-$p$ observado é
 
 $$p(x)
 =P_{\theta_0}\{T(X)\geq T(x)\}.$$
 
-Para uma hipótese nula composta, uma construção conservadora que garante validade uniforme é
+Para uma hipótese nula composta, uma construção que garante validade uniforme é
 
-$$p(x)
-=\sup_{\theta\in\Theta_0}
-P_\theta\{T(X)\geq T(x)\}.$$
+$$
+p(x)
+=
+\sup_{\theta\in\Theta_0}
+P_\theta
+\{
+T(X)\geq T(x)
+\}.
+$$
 
 Outras construções de valores-$p$ são possíveis, especialmente quando existe uma estatística condicionante, um parâmetro de perturbação ou uma estrutura discreta. Em todos os casos, a propriedade essencial de validade é
 
@@ -201,21 +207,72 @@ O valor-$p$ não é:
 - uma garantia de relevância científica, clínica ou prática.
 :::
 
-Sob uma hipótese nula simples e para um teste contínuo exatamente calibrado, o valor-$p$ possui distribuição uniforme em $(0,1)$. Em problemas discretos ou sob hipóteses nulas compostas, ele pode ser apenas **superuniforme**, isto é,
+Sob uma hipótese nula simples, se a estatística de teste possui distribuição contínua e o valor-$p$ é calculado pela cauda exata correspondente, então
 
-$$P_\theta\{p(X)\leq\alpha\}\leq\alpha,
-\qquad \theta\in\Theta_0.$$
+$$
+p(X)\sim\operatorname{Unif}(0,1).
+$$
 
-A igualdade ocorre no caso contínuo exatamente calibrado; a desigualdade corresponde a um procedimento conservador. Essa propriedade conecta diretamente o valor-$p$ à regra de decisão de nível $\alpha$ [@casella2002statistical, sec. 8.3.4; @cox2006principles, sec. 3.2; @rice2007mathematical, sec. 9.2.1; @lauritzen2023fundamentals, secs. 7.3 e 7.7].
+Consequentemente,
+
+$$
+P_{\theta_0}
+\{
+p(X)\leq u
+\}
+=
+u,
+\qquad
+0\leq u\leq1.
+$$
+
+Em problemas discretos ou sob hipóteses nulas compostas, um valor-$p$ válido pode ser **superuniforme**:
+
+$$
+P_\theta
+\{
+p(X)\leq u
+\}
+\leq
+u,
+\qquad
+0\leq u\leq1,
+\quad
+\theta\in\Theta_0.
+$$
+
+Quando a desigualdade é estrita para alguns valores de $u$, a regra baseada nesses pontos de corte é conservadora. Essa propriedade conecta diretamente a validade do valor-$p$ ao controle do nível do teste [@casella2002statistical, sec. 8.3.1; @cox2006principles, sec. 3.2; @rice2007mathematical, sec. 9.2.1; @lauritzen2023fundamentals, secs. 7.3 e 7.7].
 
 ### Regra de decisão
 
-Após fixar $\alpha$ antes de examinar os resultados:
+Para um valor-$p$ válido e qualquer $\theta\in\Theta_0$,
 
-$$\begin{cases}
-p\leq\alpha &\Longrightarrow \text{rejeitar }H_0,\\
-p>\alpha &\Longrightarrow \text{não rejeitar }H_0.
-\end{cases}$$
+$$
+P_\theta
+\{
+p(X)\leq\alpha
+\}
+\leq
+\alpha.
+$$
+
+Portanto, após fixar $\alpha$ antes de examinar os resultados, a regra
+
+$$
+\begin{cases}
+p\leq\alpha
+&
+\Longrightarrow
+\text{rejeitar }H_0,
+\\[1mm]
+p>\alpha
+&
+\Longrightarrow
+\text{não rejeitar }H_0
+\end{cases}
+$$
+
+define um teste de nível $\alpha$.
 
 A forma “não rejeitar $H_0$” é preferível a “aceitar $H_0$”, pois um resultado não significativo pode decorrer de baixo poder, grande variabilidade ou tamanho amostral insuficiente. Em procedimentos discretos, a convenção de igualdade no ponto de corte deve ser compatível com a definição do valor-$p$ e com a região crítica.
 
@@ -251,13 +308,56 @@ $$z_{\text{obs}}
 =\frac{696-662}{13{,}1}
 \approx 2{,}595.$$
 
-Como a probabilidade de rejeição é máxima na fronteira $\mu=662$ da hipótese nula composta, o valor-$p$ é
+Para um valor qualquer $\mu\leq662$,
 
-$$p=\sup_{\mu\leq662}
-P_\mu(Z\geq z_{\mathrm{obs}})
+$$
+Z
 =
-P_{662}(Z\geq2{,}595)
-\approx0{,}0047.$$
+\frac{\overline X-662}{131/\sqrt{100}}
+\sim
+N\left(
+\frac{\mu-662}{131/\sqrt{100}},
+1
+\right).
+$$
+
+A probabilidade
+
+$$
+P_\mu
+\{
+Z\geq z_{\mathrm{obs}}
+\}
+$$
+
+é crescente em $\mu$. Portanto, dentro de
+
+$$
+H_0:\mu\leq662,
+$$
+
+o supremo é atingido na fronteira $\mu=662$. Assim,
+
+$$
+\begin{aligned}
+p
+&=
+\sup_{\mu\leq662}
+P_\mu
+\{
+Z\geq z_{\mathrm{obs}}
+\}
+\\
+&=
+P_{662}
+\{
+Z\geq2{,}595
+\}
+\\
+&\approx
+0{,}0047.
+\end{aligned}
+$$
 
 Ao nível de $5\%$, rejeita-se $H_0$. Os dados fornecem evidência de que a média dos participantes excede $662$ no modelo adotado.
 
@@ -266,7 +366,9 @@ Ao nível de $5\%$, rejeita-se $H_0$. Os dados fornecem evidência de que a méd
 Esse teste compara médias, mas não estabelece por si só que o programa causou o aumento. Uma conclusão causal exige delineamento adequado, como randomização, grupo de controle e controle de perdas e confundimento.
 :::
 
-## Lema de Neyman--Pearson
+## Aprofundamento {#sec-aprofundamento-testes}
+
+### Lema de Neyman--Pearson
 
 Quando $H_0$ e $H_1$ são simples, o lema de Neyman--Pearson fornece um critério ótimo para a construção da região crítica.
 
@@ -289,24 +391,74 @@ E_{\theta_1}[\varphi(X)].$$
 
 ::: {.callout-tip title="Teorema: lema de Neyman--Pearson"}
 
-Entre todos os testes de nível $\alpha$ para hipóteses simples, um teste mais poderoso rejeita $H_0$ quando a razão
+Considere o teste
 
-$$\frac{f_{\theta_1}(x)}{f_{\theta_0}(x)}$$
+$$
+H_0:\theta=\theta_0
+\qquad\text{versus}\qquad
+H_1:\theta=\theta_1.
+$$
 
-é suficientemente grande. Equivalentemente, rejeita-se $H_0$ quando
+Entre todos os testes de nível $\alpha$, um teste mais poderoso pode ser definido por
 
-$$\frac{f_{\theta_0}(x)}{f_{\theta_1}(x)}$$
+$$
+\varphi^*(x)
+=
+\begin{cases}
+1,
+&
+\dfrac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+>k,
+\\[3mm]
+\gamma,
+&
+\dfrac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+=k,
+\\[3mm]
+0,
+&
+\dfrac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+<k,
+\end{cases}
+$$
 
-é suficientemente pequena. O ponto de corte — e, quando necessário, a probabilidade de aleatorização na fronteira — é escolhido para que o teste tenha tamanho $\alpha$ ou, na versão não aleatorizada, tamanho no máximo $\alpha$ [@casella2002statistical, sec. 8.3.2; @hogg1978, cap. 7; @rice2007mathematical, sec. 9.2; @ramachandran2021r, sec. 6.2].
+em que $k\geq0$ e, quando necessária, a probabilidade de aleatorização $\gamma\in[0,1]$ são escolhidas de modo que
+
+$$
+E_{\theta_0}
+[
+\varphi^*(X)
+]
+=
+\alpha.
+$$
+
+Equivalentemente, o teste rejeita $H_0$ quando
+
+$$
+\frac{f_{\theta_0}(x)}
+{f_{\theta_1}(x)}
+$$
+
+é suficientemente pequeno.
+
+Em modelos discretos, pode não existir uma região crítica não aleatorizada com tamanho exatamente $\alpha$. Nesse caso, a aleatorização na fronteira permite obter o tamanho prescrito; se a análise for restrita a testes não aleatorizados, utiliza-se uma região cuja probabilidade sob $H_0$ não exceda $\alpha$ [@casella2002statistical, sec. 8.3.2; @hogg1978, cap. 7; @rice2007mathematical, sec. 9.2; @ramachandran2021r, sec. 6.2].
 :::
 
-### Exemplo: média normal, alternativa simples
+#### Exemplo — média normal, alternativa simples
 
 O exemplo aplica diretamente o lema de Neyman--Pearson ao modelo normal [@casella2002statistical, sec. 8.3.2; @hogg1978, cap. 7; @rasch2018, sec. 3.2].
 
 Se
 
-$$X_1,\ldots,X_n\overset{\mathrm{i.i.d.}}{\sim}N(\mu,\sigma^2),$$
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
+$$
 
 com $\sigma^2$ conhecida, considere
 
@@ -323,9 +475,9 @@ Equivalentemente,
 
 $$Z=\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}>z_{1-\alpha}.$$
 
-O ponto de corte não depende do valor específico $\mu_1$, desde que $\mu_1>\mu_0$. Essa propriedade conduz aos testes uniformemente mais poderosos.
+O ponto de corte não depende do valor específico $\mu_1$, desde que $\mu_1>\mu_0$. Portanto, o mesmo teste que é mais poderoso contra um valor particular $\mu_1>\mu_0$ permanece mais poderoso para todos os valores dessa região da alternativa. Essa é a ideia que conduz aos testes uniformemente mais poderosos.
 
-## Testes uniformemente mais poderosos
+### Testes uniformemente mais poderosos
 
 ::: {.callout-note title="Definição: teste UMP"}
 
@@ -344,50 +496,135 @@ E_\theta[\varphi(X)]
 \text{para todo }\theta\in\Theta_1.$$
 :::
 
-A palavra “uniformemente” significa que o mesmo teste maximiza o poder em todos os pontos da hipótese alternativa, e não apenas em um valor particular.
+A palavra “uniformemente” indica que o mesmo teste maximiza o poder simultaneamente em todos os pontos da hipótese alternativa. Assim,
 
-### Razão de verossimilhanças monótona
+$$
+\text{mais poderoso}
+\quad\Longrightarrow\quad
+\text{optimalidade em uma alternativa especificada},
+$$
+
+enquanto
+
+$$
+\text{UMP}
+\quad\Longrightarrow\quad
+\text{optimalidade simultânea em toda }\Theta_1.
+$$
+
+#### Razão de verossimilhanças monótona
 
 ::: {.callout-note title="Definição"}
 
-Uma família dominada $\{f_\theta:\theta\in\Theta\subseteq\mathbb{R}\}$, com suporte comum, possui **razão de verossimilhanças monótona** em uma estatística $T(X)$ quando, para $\theta_2>\theta_1$ e nos pontos em que o denominador é positivo,
+Seja $T=T(X)$ uma estatística real cuja densidade ou função de probabilidade, sob o parâmetro $\theta$, é denotada por
 
-$$\frac{f_{\theta_2}(x)}{f_{\theta_1}(x)}$$
+$$
+g(t\mid\theta).
+$$
 
-é uma função não decrescente de $T(x)$.
+A família
+
+$$
+\{
+g(t\mid\theta):
+\theta\in\Theta\subseteq\mathbb R
+\}
+$$
+
+possui **razão de verossimilhanças monótona** em $T$ quando, para todo
+
+$$
+\theta_2>\theta_1,
+$$
+
+a razão
+
+$$
+\frac{
+g(t\mid\theta_2)
+}{
+g(t\mid\theta_1)
+}
+$$
+
+é uma função não decrescente de $t$ nos pontos em que a razão está definida.
 :::
 
 Em famílias com essa propriedade, valores grandes de $T$ favorecem sistematicamente valores maiores do parâmetro.
 
 ::: {.callout-tip title="Teorema: resultado de Karlin--Rubin"}
 
-Suponha que $\{f_\theta:\theta\in\Theta\subseteq\mathbb{R}\}$ possua razão de verossimilhanças monótona não decrescente em $T(X)$. Então o teste
+Suponha que $T=T(X)$ seja uma estatística suficiente para $\theta$ e que a família de distribuições de $T$,
 
-$$\varphi(x)=
+$$
+\{
+g(t\mid\theta):
+\theta\in\Theta\subseteq\mathbb R
+\},
+$$
+
+possua razão de verossimilhanças monótona não decrescente em $t$.
+
+Então o teste
+
+$$
+\varphi(x)
+=
 \begin{cases}
 1, & T(x)>c,\\
 \gamma, & T(x)=c,\\
 0, & T(x)<c,
-\end{cases}$$
+\end{cases}
+$$
 
-com $c$ e $\gamma$ determinados por
+em que $c$ e $\gamma$ são escolhidos de modo que
 
-$$P_{\theta_0}\{T(X)>c\}
-+\gamma P_{\theta_0}\{T(X)=c\}
-=\alpha,$$
+$$
+P_{\theta_0}
+\{
+T(X)>c
+\}
++
+\gamma
+P_{\theta_0}
+\{
+T(X)=c
+\}
+=
+\alpha,
+$$
 
 é UMP de nível $\alpha$ para
 
-$$H_0:\theta\leq\theta_0
+$$
+H_0:\theta\leq\theta_0
 \qquad\text{versus}\qquad
-H_1:\theta>\theta_0.$$
+H_1:\theta>\theta_0.
+$$
 
-A versão com rejeição para valores pequenos de $T$ aplica-se quando a razão é não crescente ou quando a alternativa é à esquerda. Em modelos contínuos, normalmente $P_{\theta_0}\{T=c\}=0$ e a aleatorização não é necessária [@casella2002statistical, sec. 8.3.2; @borovkov1998, cap. 3; @rasch2018, sec. 3.3.1].
+A propriedade de razão de verossimilhanças monótona implica que a probabilidade de rejeição é não decrescente em $\theta$. Portanto,
+
+$$
+\sup_{\theta\leq\theta_0}
+\pi_\varphi(\theta)
+=
+\pi_\varphi(\theta_0)
+=
+\alpha.
+$$
+
+A versão análoga com rejeição para valores pequenos de $T$ aplica-se à alternativa à esquerda. Em modelos contínuos, se
+
+$$
+P_{\theta_0}\{T=c\}=0,
+$$
+
+a aleatorização na fronteira não é necessária [@casella2002statistical, sec. 8.3.2; @borovkov1998, cap. 3; @rasch2018, sec. 3.3.1].
 :::
 
-### Exemplos importantes
+#### Exemplos importantes
 
-#### Média normal com variância conhecida
+##### Média normal com variância conhecida
 
 Para
 
@@ -403,39 +640,78 @@ $$H_0:\mu\leq\mu_0
 \qquad\text{versus}\qquad
 H_1:\mu>\mu_0.$$
 
-#### Proporção binomial
+##### Proporção binomial
 
-Se $X\sim\operatorname{Bin}(n,p)$, a família possui razão de verossimilhanças monótona em $X$. Portanto, testes que rejeitam para valores grandes de $X$ são UMP para
+Se $X\sim\operatorname{Bin}(n,p)$, a família possui razão de verossimilhanças monótona em $X$. Portanto, para
 
-$$H_0:p\leq p_0
+$$
+H_0:p\leq p_0
 \qquad\text{versus}\qquad
-H_1:p>p_0.$$
+H_1:p>p_0,
+$$
 
-Como $X$ é discreta, o tamanho exato pode ser menor que $\alpha$ em um teste não aleatorizado.
+o teste UMP rejeita para valores suficientemente grandes de $X$. O ponto de corte e, se admitida, a aleatorização na fronteira são escolhidos para controlar o nível em $p=p_0$.
 
-#### Média de Poisson
+Como $X$ é discreta, um teste não aleatorizado pode não atingir exatamente o nível nominal $\alpha$; nesse caso, escolhe-se uma região crítica cuja probabilidade sob $p_0$ não exceda $\alpha$.
 
-Se $X_1,\ldots,X_n\sim\operatorname{Poisson}(\lambda)$, a estatística $T=\sum_iX_i$ possui razão de verossimilhanças monótona. A rejeição para valores grandes de $T$ produz um teste UMP para
+##### Média de Poisson
 
-$$H_0:\lambda\leq\lambda_0
+Se $X_1,\ldots,X_n\sim\operatorname{Poisson}(\lambda)$, a estatística
+
+$$
+T
+=
+\sum_{i=1}^nX_i
+$$
+
+possui razão de verossimilhanças monótona. Para
+
+$$
+H_0:\lambda\leq\lambda_0
 \qquad\text{versus}\qquad
-H_1:\lambda>\lambda_0.$$
+H_1:\lambda>\lambda_0,
+$$
 
-### Por que geralmente não existe UMP bilateral?
+o teste UMP rejeita para valores suficientemente grandes de $T$. Como $T$ é discreta, a determinação do ponto de corte apresenta a mesma questão de calibração encontrada no caso binomial.
+
+#### Por que geralmente não existe UMP bilateral?
 
 No modelo normal com variância conhecida, o teste mais poderoso contra $\mu_1>\mu_0$ rejeita para valores grandes de $\bar{X}$. Contra $\mu_1<\mu_0$, o teste mais poderoso rejeita para valores pequenos de $\bar{X}$. Não existe, em geral, uma única região de nível $\alpha$ que seja simultaneamente mais poderosa em ambas as direções. Por isso, testes UMP são mais comuns em problemas unilaterais; problemas bilaterais frequentemente exigem restrições adicionais de optimalidade ou o teste da razão de verossimilhanças [@casella2002statistical, secs. 8.3.2--8.3.3; @borovkov1998, cap. 3; @rice2007mathematical, sec. 9.2.3; @ramachandran2021r, secs. 6.2--6.3].
 
 ::: {.callout-note title="Observação: testes não viesados e UMPU"}
 
-Para um teste de tamanho $\alpha$, uma condição de não viés é
+Um teste é **não viesado** quando sua função poder satisfaz
 
-$$\pi_\varphi(\theta)\geq\alpha,
-\qquad \theta\in\Theta_1.$$
+$$
+\pi_\varphi(\theta_1)
+\geq
+\pi_\varphi(\theta_0)
+$$
 
-Restringindo a comparação à classe dos testes não viesados, pode existir um teste **uniformemente mais poderoso não viesado** (UMPU), mesmo quando não existe teste UMP entre todos os testes de nível $\alpha$. O desenvolvimento completo dessa teoria exige condições adicionais e não deve ser confundido com a optimalidade geral do TRV [@casella2002statistical, secs. 8.3.2--8.3.3; @borovkov1998, cap. 3].
+para todo
+
+$$
+\theta_1\in\Theta_1
+\qquad\text{e}\qquad
+\theta_0\in\Theta_0.
+$$
+
+Assim, o teste é pelo menos tão propenso a rejeitar $H_0$ quando a alternativa é verdadeira quanto quando o parâmetro pertence à hipótese nula.
+
+Para um teste de tamanho $\alpha$, essa condição implica
+
+$$
+\pi_\varphi(\theta)
+\geq
+\alpha,
+\qquad
+\theta\in\Theta_1.
+$$
+
+Restringindo a comparação à classe dos testes não viesados de nível $\alpha$, pode existir um teste **uniformemente mais poderoso não viesado** (UMPU), mesmo quando não existe teste UMP na classe de todos os testes de nível $\alpha$. O desenvolvimento completo dessa teoria exige condições adicionais e não deve ser confundido com uma propriedade geral dos testes da razão de verossimilhanças [@casella2002statistical, secs. 8.3.2--8.3.3; @borovkov1998, cap. 3].
 :::
 
-## Teste da razão de verossimilhanças
+### Teste da razão de verossimilhanças {#sec-trv}
 
 O teste da razão de verossimilhanças — TRV — fornece um procedimento geral para hipóteses simples ou compostas. Diferentemente do lema de Neyman--Pearson, o TRV generalizado não é, em geral, ótimo em amostras finitas; sua importância decorre da aplicabilidade ampla e de propriedades assintóticas favoráveis. A estatística $\Lambda$ é preservada por reparametrizações biunívocas do modelo [@casella2002statistical, sec. 8.2.1; @hogg1978, sec. 7.4; @rice2007mathematical, sec. 9.4; @chihara2022, sec. 8.6].
 
@@ -467,39 +743,65 @@ $$W=-2\log\Lambda.$$
 
 ::: {.callout-note title="Relação com Neyman--Pearson"}
 
-Quando ambas as hipóteses são simples, comparar $\Lambda$ com um ponto de corte é equivalente a comparar $f_{\theta_1}(x)/f_{\theta_0}(x)$ com um ponto de corte. Portanto, o TRV coincide com a forma do teste mais poderoso fornecida pelo lema de Neyman--Pearson. Para hipóteses compostas, essa equivalência de optimalidade não é garantida [@casella2002statistical, secs. 8.2.1 e 8.3.2; @hogg1978, sec. 7.4].
+No problema simples contra simples,
+
+$$
+H_0:\theta=\theta_0
+\qquad\text{versus}\qquad
+H_1:\theta=\theta_1,
+$$
+
+a comparação de $\Lambda$ com um ponto de corte é equivalente à comparação da razão
+
+$$
+\frac{f_{\theta_1}(x)}
+{f_{\theta_0}(x)}
+$$
+
+com um ponto de corte. Portanto, nesse caso, o TRV possui a mesma forma do teste mais poderoso fornecido pelo lema de Neyman--Pearson. Para hipóteses compostas, essa propriedade de optimalidade não é garantida [@casella2002statistical, secs. 8.2.1 e 8.3.2; @hogg1978, sec. 7.4].
 :::
 
-### Resultado assintótico de Wilks
+#### Resultado assintótico de Wilks
 
-Suponha que o parâmetro verdadeiro seja um ponto interior, que o modelo seja identificável e diferenciável e que $H_0$ imponha $q$ restrições independentes e regulares. Então, sob $H_0$,
+Sob condições de regularidade, suponha que o verdadeiro valor do parâmetro pertença ao interior do espaço paramétrico, que o modelo seja identificável e diferenciável e que $\Theta_0$ seja definido localmente por $q$ restrições independentes e regulares. Então, sob $H_0$,
 
-$$-2\log\Lambda
+$$
+-2\log\Lambda
 \xrightarrow{d}
-\chi^2_q,$$
+\chi^2_q.
+$$
 
-em que
+No caso regular em que os espaços possuem dimensões bem definidas,
 
-$$q=\dim(\Theta)-\dim(\Theta_0)$$
+$$
+q
+=
+\dim(\Theta)
+-
+\dim(\Theta_0),
+$$
 
-é o número de restrições independentes impostas por $H_0$ [@casella2002statistical, sec. 10.3; @rice2007mathematical, sec. 9.4].
+isto é, $q$ corresponde ao número de restrições independentes impostas por $H_0$ [@casella2002statistical, sec. 8.4.1; @rice2007mathematical, sec. 9.4].
 
-::: {.callout-warning title="Condições e exceções"}
+::: {.callout-warning title="Condições e limitações"}
 
-A aproximação qui-quadrado pode falhar quando:
+Há duas fontes distintas de dificuldade na utilização do resultado de Wilks.
 
-- o parâmetro verdadeiro está na fronteira do espaço paramétrico;
+**Falha das condições de regularidade.** A distribuição limite pode não ser $\chi^2_q$ quando, por exemplo:
+
+- o verdadeiro parâmetro está na fronteira do espaço paramétrico;
 - há parâmetros não identificáveis sob $H_0$;
 - o suporte da distribuição depende do parâmetro;
-- a amostra é pequena;
-- o modelo é irregular ou excessivamente esparso.
+- o modelo apresenta outras irregularidades que invalidam a expansão assintótica usual.
 
-Nessas situações, devem ser consideradas distribuições exatas, simulação de Monte Carlo ou *bootstrap* paramétrico.
+**Qualidade da aproximação em amostras finitas.** Mesmo em um modelo regular, a aproximação qui-quadrado pode ser inadequada quando a amostra é pequena ou quando a informação disponível é muito esparsa.
+
+Nessas situações, conforme o problema, podem ser necessárias distribuições exatas, calibração por simulação de Monte Carlo ou *bootstrap* paramétrico.
 :::
 
-### Exemplo: média normal com variância conhecida
+#### Exemplo — média normal com variância conhecida
 
-Este exemplo mostra um caso em que o TRV possui distribuição nula exata, e não apenas assintótica [@casella2002statistical, secs. 8.2.1 e 10.3; @rice2007mathematical, sec. 9.4; @hogg1978, sec. 7.4].
+Neste caso, a estatística do TRV possui distribuição nula exata. A distribuição limite assintótica não é necessária para calibrar o teste [@casella2002statistical, secs. 8.2.1 e 8.4.1; @rice2007mathematical, sec. 9.4; @hogg1978, sec. 7.4].
 
 Considere
 
@@ -530,28 +832,66 @@ $$Z^2\sim\chi^2_1.$$
 
 Logo, o TRV é exatamente equivalente ao teste bilateral $Z$.
 
-### Exemplo: proporção binomial
+#### Exemplo — proporção binomial
 
-A expressão abaixo é a deviance binomial para o teste de uma proporção [@casella2002statistical, sec. 10.3; @rice2007mathematical, secs. 9.4--9.5; @ramachandran2021r, sec. 6.3].
+A expressão abaixo é a estatística da razão de verossimilhanças, também denominada *deviance* binomial neste contexto [@casella2002statistical, sec. 8.4.1; @rice2007mathematical, secs. 9.4--9.5; @ramachandran2021r, sec. 6.3].
 
-Se $X\sim\operatorname{Bin}(n,p)$ e deseja-se testar
+Se
 
-$$H_0:p=p_0
+$$
+X\sim\operatorname{Bin}(n,p),
+$$
+
+com $0<p_0<1$, e deseja-se testar
+
+$$
+H_0:p=p_0
 \qquad\text{versus}\qquad
-H_1:p\neq p_0,$$
+H_1:p\neq p_0,
+$$
 
-o estimador irrestrito é $\widehat p=X/n$. Para $0<X<n$,
+o estimador irrestrito é
 
-$$-2\log\Lambda
+$$
+\widehat p
+=
+\frac{X}{n}.
+$$
+
+A estatística do TRV é
+
+$$
+-2\log\Lambda
 =
 2\left[
 X\log\left(\frac{X}{np_0}\right)
-+(n-X)\log\left(\frac{n-X}{n(1-p_0)}\right)
-\right].$$
++
+(n-X)
+\log\left(
+\frac{n-X}{n(1-p_0)}
+\right)
+\right],
+$$
 
-Adota-se a convenção $0\log 0=0$. Para amostras grandes, essa estatística possui distribuição aproximadamente $\chi^2_1$ sob $H_0$. Em amostras pequenas, o teste binomial exato é preferível.
+com a convenção
 
-## Testes usuais para parâmetros populacionais
+$$
+0\log0=0.
+$$
+
+Essa convenção permite utilizar a expressão também nos casos $X=0$ e $X=n$.
+
+Sob $H_0$ e nas condições regulares do resultado de Wilks,
+
+$$
+-2\log\Lambda
+\xrightarrow{d}
+\chi^2_1.
+$$
+
+Assim, a comparação com a distribuição $\chi^2_1$ fornece um teste assintótico. Para amostras pequenas ou quando a aproximação assintótica é inadequada, deve-se considerar o teste binomial exato desenvolvido adiante.
+
+## Testes usuais para parâmetros populacionais {#sec-testes-usuais}
 
 ### Uma média com variância conhecida
 
@@ -578,25 +918,75 @@ Se a população é normal e $\sigma^2$ é desconhecida,
 $$T=\frac{\bar{X}-\mu_0}{S/\sqrt{n}}
 \sim t_{n-1}$$
 
-sob $H_0$. As regiões críticas seguem o mesmo padrão do teste $Z$, substituindo os quantis normais pelos quantis da distribuição $t$ com $n-1$ graus de liberdade [@lauritzen2023fundamentals, sec. 7.6.1; @larsen2012, cap. 6].
+sob $H_0$. As regiões críticas seguem o mesmo padrão do teste $Z$, substituindo os quantis normais pelos quantis da distribuição $t$ com $n-1$ graus de liberdade [@lauritzen2023fundamentals, sec. 7.6.2.2; @larsen2012, cap. 7].
 
 ::: {.callout-warning title="Pressuposto"}
 
-Para amostras pequenas, a validade exata do teste depende da normalidade da população. Para amostras maiores, a aproximação costuma ser favorecida pelo comportamento assintótico da média, mas assimetria intensa e valores extremos podem comprometer a inferência.
+Sob uma população normal, a distribuição $t_{n-1}$ da estatística é exata para qualquer $n\geq2$.
+
+Se a normalidade for retirada, mas $X_1,\ldots,X_n$ forem i.i.d. com média $\mu$ e variância finita e positiva, a estatística studentizada
+
+$$
+\frac{\overline X-\mu}{S/\sqrt n}
+$$
+
+converge em distribuição para $N(0,1)$. Como os quantis da distribuição $t_{n-1}$ convergem para os quantis normais, o teste $t$ possui validade assintótica nessas condições.
+
+Essa aproximação pode ser inadequada em amostras pequenas ou moderadas quando a distribuição apresenta forte assimetria, caudas pesadas ou valores extremos.
 :::
 
 ### Uma proporção
 
-Se $X\sim\operatorname{Bin}(n,p)$, a estatística aproximada sob $H_0:p=p_0$ é
+Se
 
-$$Z
+$$
+X\sim\operatorname{Bin}(n,p),
+$$
+
+e deseja-se testar
+
+$$
+H_0:p=p_0,
+$$
+
+com $0<p_0<1$, então
+
+$$
+\widehat p
+=
+\frac{X}{n}
+$$
+
+e, sob $H_0$,
+
+$$
+\operatorname{Var}_{p_0}(\widehat p)
+=
+\frac{p_0(1-p_0)}{n}.
+$$
+
+Assim, a estatística normal de escore é
+
+$$
+Z
 =
 \frac{\widehat p-p_0}
-{\sqrt{p_0(1-p_0)/n}},
-\qquad
-\widehat p=\frac{X}{n}.$$
+{\sqrt{p_0(1-p_0)/n}}.
+$$
 
-A aproximação normal deve ser usada apenas quando a distribuição binomial sob $H_0$ não for excessivamente assimétrica ou esparsa. Regras baseadas apenas em $np_0$ e $n(1-p_0)$ são heurísticas, não garantias de precisão. Caso contrário, utiliza-se o teste exato [@chihara2022, secs. 8.1 e 8.4.3; @ramachandran2021r, sec. 6.4.2].
+Sob $H_0$,
+
+$$
+Z
+\xrightarrow{d}
+N(0,1)
+$$
+
+quando a aproximação normal à distribuição binomial é adequada.
+
+Observe que o erro-padrão é calculado com $p_0$, isto é, sob a hipótese nula. Essa estatística difere da estatística de Wald, que substituiria $p_0$ por $\widehat p$ no denominador.
+
+A aproximação normal pode apresentar desempenho inadequado quando a distribuição binomial sob $H_0$ é muito assimétrica ou quando as contagens esperadas de sucessos ou fracassos são pequenas. Regras baseadas apenas em $np_0$ e $n(1-p_0)$ são heurísticas, e não garantias da qualidade da aproximação. Nessas situações, deve-se considerar o teste binomial exato [@chihara2022, sec. 8.1.2; @ramachandran2021r, sec. 6.4.2].
 
 #### Teste binomial exato
 
@@ -615,7 +1005,15 @@ $$p
 \sum_{k:\,P_{p_0}(X=k)\leq P_{p_0}(X=x_{\mathrm{obs}})}
 P_{p_0}(X=k).$$
 
-O método bilateral adotado deve ser explicitado, pois dobrar mecanicamente uma cauda nem sempre coincide com essa definição [@chihara2022, sec. 8.1; @rasch2018, cap. 3].
+O método bilateral adotado deve ser explicitado, pois dobrar mecanicamente uma cauda nem sempre coincide com essa definição.
+
+Como a distribuição binomial é discreta, os valores-$p$ exatos não precisam possuir distribuição uniforme sob $H_0$. A regra
+
+$$
+p\leq\alpha
+$$
+
+mantém o nível em no máximo $\alpha$, mas pode ser conservadora para alguns valores de $\alpha$ [@chihara2022, sec. 8.1; @rasch2018, cap. 3].
 
 ### Duas médias independentes: teste de Welch
 
@@ -638,7 +1036,17 @@ $$\nu
 {\dfrac{(S_1^2/n_1)^2}{n_1-1}
 +\dfrac{(S_2^2/n_2)^2}{n_2-1}}.$$
 
-Sob populações normais independentes, a distribuição $t_\nu$ utilizada pelo teste de Welch é uma aproximação de Satterthwaite. O procedimento é uma escolha padrão quando não há justificativa substantiva para assumir variâncias iguais [@ramachandran2021r, sec. 6.5.1.2; @chihara2022, sec. 8.3].
+Sob duas amostras independentes provenientes de populações normais, a distribuição $t_\nu$ utilizada pelo teste de Welch é uma aproximação de Satterthwaite, e não uma distribuição exata em geral.
+
+Para amostras independentes suficientemente grandes, a diferença entre médias também admite fundamentação assintótica sob condições mais gerais, desde que as variâncias populacionais sejam finitas.
+
+O procedimento de Welch não exige a hipótese
+
+$$
+\sigma_1^2=\sigma_2^2
+$$
+
+e é uma escolha apropriada quando o modelo ou o conhecimento do problema não sustentam a hipótese de variância comum [@ramachandran2021r, sec. 6.5.1.2; @chihara2022, sec. 8.3].
 
 ### Duas médias independentes com variância comum
 
@@ -668,129 +1076,427 @@ A decisão de agrupar variâncias não deve ser baseada apenas em um teste preli
 
 ### Amostras pareadas
 
-Para pares $(X_i,Y_i)$, defina
+Considere $n$ pares
 
-$$D_i=X_i-Y_i.$$
+$$
+(X_i,Y_i),
+\qquad
+i=1,\ldots,n,
+$$
 
-O teste pareado é simplesmente um teste para uma média aplicado às diferenças:
+e defina a diferença dentro de cada par por
 
-$$T
+$$
+D_i
 =
-\frac{\bar{D}-\Delta_0}{S_D/\sqrt{n}}
-\sim t_{n-1}$$
+X_i-Y_i.
+$$
 
-sob normalidade das diferenças. O pareamento deve ser incorporado à análise; tratar observações pareadas como independentes desperdiça informação e produz erro-padrão inadequado [@chihara2022, sec. 8.3; @larsen2012, cap. 9].
+O parâmetro de interesse passa a ser a média populacional das diferenças,
+
+$$
+\mu_D
+=
+E(D_i).
+$$
+
+Para testar
+
+$$
+H_0:\mu_D=\Delta_0,
+$$
+
+utiliza-se
+
+$$
+T
+=
+\frac{\overline D-\Delta_0}
+{S_D/\sqrt n}.
+$$
+
+Se as diferenças
+
+$$
+D_1,\ldots,D_n
+$$
+
+forem independentes entre pares e normalmente distribuídas, então, sob $H_0$,
+
+$$
+T
+\sim
+t_{n-1}.
+$$
+
+Portanto, a condição de normalidade relevante para a validade exata do teste é a distribuição das **diferenças**, e não a normalidade marginal de $X$ e $Y$ separadamente.
+
+Ignorar o pareamento também ignora a covariância entre as duas observações do mesmo par e, em geral, produz um erro-padrão inadequado. Quando a correlação intrapar é positiva, situação comum em delineamentos pareados, a análise pareada costuma proporcionar maior precisão [@chihara2022, sec. 8.3; @larsen2012, cap. 9].
 
 ### Duas proporções independentes
 
-Se $X_j\sim\operatorname{Bin}(n_j,p_j)$, $j=1,2$, e deseja-se testar
+Considere amostras independentes com
 
-$$H_0:p_1=p_2,$$
+$$
+X_j
+\sim
+\operatorname{Bin}(n_j,p_j),
+\qquad
+j=1,2,
+$$
 
-a proporção combinada sob $H_0$ é
+e o teste
 
-$$\widehat p
+$$
+H_0:p_1=p_2.
+$$
+
+Sob $H_0$, existe uma única proporção comum,
+
+$$
+p_1=p_2=p.
+$$
+
+Sua estimativa combinada é
+
+$$
+\widehat p
 =
-\frac{X_1+X_2}{n_1+n_2}.$$
+\frac{X_1+X_2}
+{n_1+n_2}.
+$$
 
-A estatística aproximada é
+Portanto, a estatística normal de escore para a diferença entre as proporções é
 
-$$Z
+$$
+Z
 =
-\frac{\widehat p_1-\widehat p_2}
-{\sqrt{\widehat p(1-\widehat p)(1/n_1+1/n_2)}}.$$
+\frac{
+\widehat p_1-\widehat p_2
+}{
+\sqrt{
+\widehat p(1-\widehat p)
+\left(
+\frac{1}{n_1}
++
+\frac{1}{n_2}
+\right)
+}
+}.
+$$
 
-Para tabelas $2\times2$ esparsas, o teste exato de Fisher é uma alternativa importante. A estatística normal acima é aproximada e requer independência entre os grupos e contagens esperadas compatíveis com a aproximação normal [@chihara2022, secs. 8.3 e 10.3.3; @rosner2011fundamentals, cap. 10].
+Sob $H_0$ e quando a aproximação normal é adequada,
 
-## Testes exatos, de permutação e robustez
+$$
+Z
+\xrightarrow{d}
+N(0,1).
+$$
 
-Os testes paramétricos anteriores dependem de modelos probabilísticos específicos. Quando a distribuição exata sob $H_0$ é conhecida, um teste exato controla o nível sem recorrer a aproximações assintóticas. Exemplos são o teste binomial e o teste exato de Fisher.
+A proporção combinada é utilizada especificamente porque a hipótese nula impõe uma proporção populacional comum aos dois grupos.
+
+Para tabelas $2\times2$ com contagens pequenas ou estrutura esparsa, a aproximação normal pode ser inadequada, e o teste exato de Fisher constitui uma alternativa importante. O procedimento pressupõe independência entre os dois grupos [@chihara2022, secs. 8.3 e 10.3.3; @rosner2011fundamentals, cap. 10].
+
+## Testes exatos, de permutação e robustez {#sec-testes-exatos-permutacao}
+
+Um teste é denominado **exato** quando sua calibração utiliza a distribuição nula em amostras finitas, sem substituir essa distribuição por uma aproximação assintótica. Exemplos incluem o teste binomial exato e o teste exato de Fisher.
+
+O termo “exato” refere-se ao uso da distribuição nula finita e não implica que a probabilidade de erro do tipo I seja exatamente igual a $\alpha$. Em problemas discretos, pode não existir uma região crítica não aleatorizada com probabilidade exatamente $\alpha$ sob $H_0$. Nesse caso, o procedimento pode ter tamanho inferior ao nível nominal e ser conservador.
 
 ### Testes de permutação
 
-Em problemas de comparação entre grupos, um teste de permutação constrói a distribuição nula recombinando os rótulos das observações. A justificativa não é simplesmente “não assumir normalidade”: sob $H_0$, é necessário que as observações sejam permutáveis, condição frequentemente derivada da randomização experimental ou da igualdade das distribuições sob a hipótese nula. Para dados pareados, permutam-se sinais ou condições dentro dos pares, preservando a estrutura do delineamento [@chihara2022, cap. 3 e secs. 8.5 e 9.5.1].
+Um teste de permutação constrói a distribuição nula aplicando aos dados transformações que são admissíveis sob $H_0$.
 
-::: {.callout-warning title="Observação"}
+Em uma comparação entre grupos independentes, a permutação dos rótulos é justificada quando, sob a hipótese nula, a distribuição conjunta dos dados é invariante a essas permutações. Essa propriedade pode decorrer, por exemplo, do mecanismo de randomização de um experimento ou da permutabilidade das observações sob uma hipótese de igualdade de distribuições. A ausência de normalidade, por si só, não justifica a permutação.
 
-Um teste de permutação baseado na diferença de médias pode testar igualdade de distribuições ou uma hipótese decorrente do mecanismo de randomização; ele não é automaticamente um teste exato apenas para igualdade de médias quando as distribuições diferem em outros aspectos. A hipótese efetivamente testada deve ser explicitada.
+Em dados pareados, o esquema de permutação deve preservar os pares. Dependendo do delineamento e da hipótese nula, podem ser trocados os rótulos das condições dentro de cada par ou utilizados sinais das diferenças. A validade de cada procedimento depende da invariância correspondente sob $H_0$ [@chihara2022, cap. 3 e sec. 9.5.1].
+
+Se todas as permutações admissíveis forem enumeradas, a distribuição de permutação é obtida exatamente. Quando apenas uma amostra aleatória das permutações é utilizada, o valor-$p$ resultante constitui uma aproximação de Monte Carlo à distribuição de permutação completa.
+
+::: {.callout-warning title="Hipótese testada"}
+
+Um teste de permutação baseado na diferença de médias não se transforma automaticamente em um teste exato apenas para
+
+$$
+H_0:\mu_1=\mu_2.
+$$
+
+Sob permutabilidade decorrente da igualdade das distribuições, a hipótese nula é mais forte que a simples igualdade das médias. Em experimentos randomizados, a interpretação depende da hipótese definida pelo mecanismo de randomização. A hipótese efetivamente testada e o conjunto de permutações admissíveis devem ser especificados.
 :::
 
 ### Robustez
 
-O teste $t$ pode ser relativamente estável diante de desvios moderados de normalidade, sobretudo em amostras equilibradas e sem observações extremas. Contudo, caudas pesadas, heteroscedasticidade, assimetria pronunciada e *outliers* podem alterar substancialmente o nível e o poder. Nessas situações, devem ser considerados o teste de Welch, métodos de reamostragem coerentes com o delineamento e procedimentos robustos baseados, por exemplo, em médias aparadas ou estimadores robustos de localização [@wilcox2022, caps. 4--7].
+A robustez de um procedimento refere-se à estabilidade de suas propriedades inferenciais diante de desvios das condições utilizadas em sua derivação.
 
-## Planejamento amostral e poder
+Testes $t$ baseados em médias podem apresentar comportamento satisfatório diante de desvios moderados de normalidade, especialmente quando não há forte assimetria, caudas muito pesadas ou observações extremas. Essa estabilidade, contudo, não é universal.
+
+Problemas distintos exigem respostas distintas:
+
+- para duas amostras independentes com variâncias diferentes, o teste de Welch evita a imposição de uma variância populacional comum;
+- caudas pesadas e *outliers* podem comprometer procedimentos baseados em médias e variâncias amostrais, mesmo quando Welch é utilizado;
+- nesses casos, procedimentos baseados em médias aparadas ou outros estimadores robustos de localização podem ser considerados;
+- métodos de reamostragem também precisam respeitar o delineamento e a estrutura de dependência dos dados e não corrigem automaticamente violações do modelo.
+
+Assim, “robusto” não significa “livre de pressupostos”; é necessário identificar a perturbação do modelo em relação à qual o procedimento mantém desempenho adequado [@wilcox2022, caps. 4--7].
+
+## Planejamento amostral e poder {#sec-planejamento-poder}
 
 ### Uma média com variância conhecida
 
-Para o teste unilateral
+Considere
 
-$$H_0:\mu=\mu_0
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
+$$
+
+com $\sigma$ conhecida, e o teste unilateral
+
+$$
+H_0:\mu=\mu_0
 \qquad\text{versus}\qquad
-H_1:\mu>\mu_0,$$
+H_1:\mu>\mu_0.
+$$
 
-suponha que se deseje poder $1-\beta$ para detectar $\mu_1>\mu_0$. Uma aproximação para o tamanho amostral é
+A região crítica de nível $\alpha$ é
 
-$$n
+$$
+\frac{\overline X-\mu_0}
+{\sigma/\sqrt n}
+>
+z_{1-\alpha}.
+$$
+
+Se o verdadeiro valor da média for $\mu_1>\mu_0$, o poder é
+
+$$
+\begin{aligned}
+\pi(\mu_1)
+&=
+P_{\mu_1}
+\left\{
+\frac{\overline X-\mu_0}
+{\sigma/\sqrt n}
+>
+z_{1-\alpha}
+\right\}
+\\
+&=
+1-
+\Phi\left[
+z_{1-\alpha}
+-
+\frac{\sqrt n(\mu_1-\mu_0)}{\sigma}
+\right].
+\end{aligned}
+$$
+
+Para exigir
+
+$$
+\pi(\mu_1)\geq1-\beta,
+$$
+
+é suficiente e necessário que
+
+$$
+n
+\geq
+\left[
+\frac{
+(z_{1-\alpha}+z_{1-\beta})\sigma
+}{
+\mu_1-\mu_0
+}
+\right]^2.
+$$
+
+Portanto, o menor tamanho amostral inteiro que satisfaz essa condição é
+
+$$
+\boxed{
+n
 =
 \left\lceil
 \left[
-\frac{(z_{1-\alpha}+z_{1-\beta})\sigma}
-{\mu_1-\mu_0}
+\frac{
+(z_{1-\alpha}+z_{1-\beta})\sigma
+}{
+\mu_1-\mu_0
+}
 \right]^2
-\right\rceil.$$
+\right\rceil
+}.
+$$
 
-Para o teste bilateral, a substituição de $z_{1-\alpha}$ por $z_{1-\alpha/2}$ fornece uma aproximação conservadora usual, pois o poder bilateral exato envolve as duas caudas. A expressão deve ser entendida como planejamento para uma diferença alternativa previamente especificada [@ramachandran2021r, sec. 6.1.1; @chihara2022, sec. 8.4.2].
+Sob o modelo normal com variância conhecida, essa expressão decorre da função poder exata do teste unilateral; não se trata de uma aproximação assintótica [@casella2002statistical, sec. 8.3.1; @ramachandran2021r, sec. 6.1.1; @chihara2022, sec. 8.4.2].
+
+Para o teste bilateral, a função poder em um valor $\mu_1>\mu_0$ é
+
+$$
+\pi(\mu_1)
+=
+1-
+\Phi
+\left[
+z_{1-\alpha/2}
+-
+\frac{\sqrt n(\mu_1-\mu_0)}{\sigma}
+\right]
++
+\Phi
+\left[
+-z_{1-\alpha/2}
+-
+\frac{\sqrt n(\mu_1-\mu_0)}{\sigma}
+\right].
+$$
+
+Substituir $z_{1-\alpha}$ por $z_{1-\alpha/2}$ na expressão fechada do caso unilateral fornece um planejamento conservador, pois considera apenas a cauda na direção de $\mu_1$ e desconsidera o poder adicional proveniente da cauda oposta. Quando se deseja o menor $n$ para o teste bilateral, a função poder acima pode ser avaliada diretamente para valores inteiros de $n$.
 
 ### Uma proporção
 
-Para detectar $p_1\neq p_0$, uma aproximação unilateral é
+Considere inicialmente o teste unilateral
 
-$$n
+$$
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p>p_0,
+$$
+
+e suponha que se deseje poder $1-\beta$ quando
+
+$$
+p=p_1>p_0.
+$$
+
+Utilizando a aproximação normal para a proporção amostral, obtém-se
+
+$$
+\boxed{
+n
 \approx
 \frac{
 \left[
- z_{1-\alpha}\sqrt{p_0(1-p_0)}
- +z_{1-\beta}\sqrt{p_1(1-p_1)}
+z_{1-\alpha}\sqrt{p_0(1-p_0)}
++
+z_{1-\beta}\sqrt{p_1(1-p_1)}
 \right]^2
-}{(p_1-p_0)^2}.$$
+}{
+(p_1-p_0)^2
+}
+}.
+$$
 
-No caso bilateral, usa-se $z_{1-\alpha/2}$. Trata-se de uma aproximação normal; após arredondar $n$ para cima, recomenda-se recalcular o poder pela distribuição binomial exata, especialmente quando $p_0$ ou $p_1$ estiver próximo de $0$ ou $1$ [@chihara2022, sec. 8.4.2; @ramachandran2021r, sec. 6.1.1].
+Para uma alternativa unilateral à esquerda, com $p_1<p_0$, utiliza-se a mesma expressão com a diferença em módulo,
+
+$$
+|p_1-p_0|.
+$$
+
+Para um teste bilateral,
+
+$$
+H_0:p=p_0
+\qquad\text{versus}\qquad
+H_1:p\neq p_0,
+$$
+
+uma aproximação usual é substituir $z_{1-\alpha}$ por
+
+$$
+z_{1-\alpha/2}.
+$$
+
+Diferentemente do caso normal com variância conhecida, essas expressões dependem de aproximações normais à distribuição binomial. Depois de arredondar $n$ para cima, é recomendável calcular o poder efetivo utilizando
+
+$$
+X\sim\operatorname{Bin}(n,p_1)
+$$
+
+e a região crítica que será realmente adotada no teste. Essa verificação é especialmente importante quando $p_0$ ou $p_1$ está próximo de $0$ ou $1$ ou quando o tamanho amostral obtido é moderado [@chihara2022, sec. 8.4.2; @ramachandran2021r, sec. 6.1.1].
+
+::: {.callout-note title="Precisão e poder respondem a perguntas diferentes"}
+
+Na estimação intervalar, o tamanho amostral foi relacionado à **precisão**, por exemplo por meio de uma margem de erro desejada.
+
+No planejamento de um teste de hipóteses, a pergunta é diferente: escolhe-se $n$ para obter determinado **poder** contra uma alternativa cientificamente relevante, mantendo especificado o controle do erro do tipo I.
+
+Assim,
+
+$$
+\text{U5: margem de erro}
+\qquad\text{e}\qquad
+\text{U6: poder}
+$$
+
+correspondem a critérios distintos de dimensionamento amostral.
+:::
 
 ::: {.callout-important title="Significância prática"}
 
-O planejamento deve ser baseado na menor diferença cientificamente relevante, e não na menor diferença que possa se tornar estatisticamente significativa. Com amostras muito grandes, efeitos desprezíveis podem produzir valores-$p$ pequenos.
+O valor alternativo utilizado no planejamento deve representar uma diferença cientificamente relevante. Com amostras muito grandes, diferenças muito pequenas podem produzir valores-$p$ pequenos, sem que isso implique relevância prática.
 :::
 
-## Análise de dados categóricos
+## Análise de dados categóricos {#sec-dados-categoricos}
 
-Dados categóricos são representados por contagens em categorias mutuamente exclusivas. O modelo multinomial fornece a base probabilística para testes de aderência e para tabelas de contingência [@rice2007mathematical, sec. 9.5; @lauritzen2023fundamentals, secs. 8.2--8.3; @chihara2022, cap. 10; @larsen2012, cap. 10].
+Os procedimentos anteriores foram formulados principalmente em termos de médias, proporções ou parâmetros de distribuições específicas. Quando as observações são classificadas em categorias mutuamente exclusivas, os dados podem ser representados por **contagens**.
+
+Se uma amostra de tamanho $n$ é classificada em $k$ categorias com probabilidades
+
+$$
+p_1,\ldots,p_k,
+\qquad
+\sum_{i=1}^k p_i=1,
+$$
+
+então o vetor de contagens
+
+$$
+(O_1,\ldots,O_k)
+$$
+
+pode ser modelado por uma distribuição multinomial.
+
+Essa estrutura fornece a base para o teste de aderência. Em tabelas de contingência, o modelo probabilístico depende também do delineamento: uma única amostra classificada segundo duas variáveis categóricas pode ser representada por um modelo multinomial, enquanto a comparação de distribuições categóricas entre grupos independentes conduz naturalmente a um produto de distribuições multinomiais.
+
+Apesar dessas diferenças de delineamento, os testes de Pearson resultantes possuem formas algébricas estreitamente relacionadas [@rice2007mathematical, sec. 9.5; @lauritzen2023fundamentals, secs. 8.1 e 8.3; @chihara2022, cap. 10; @larsen2012, cap. 10].
 
 ### Estatística qui-quadrado de Pearson
 
-Para contagens observadas $O_1,\ldots,O_k$ e esperadas $E_1,\ldots,E_k$, a estatística de Pearson é
+Para contagens observadas $O_1,\ldots,O_k$ e frequências esperadas positivas $E_1,\ldots,E_k$ sob $H_0$, a estatística de Pearson é
 
-$$X^2
+$$
+X^2
 =
 \sum_{i=1}^k
-\frac{(O_i-E_i)^2}{E_i}.$$
+\frac{(O_i-E_i)^2}{E_i}.
+$$
 
-Valores grandes indicam discrepância entre os dados e o modelo nulo.
+Cada termo mede a discrepância entre uma contagem observada e sua frequência esperada, em escala relativa à variabilidade esperada sob o modelo nulo. Valores grandes de $X^2$ fornecem evidência contra $H_0$.
+
+A comparação com uma distribuição qui-quadrado é, em geral, **assintótica**. Seus graus de liberdade dependem das restrições impostas pelo modelo nulo e de eventuais parâmetros estimados a partir dos dados.
 
 ### Estatística da razão de verossimilhanças
 
-A estatística correspondente ao TRV é
+A estatística correspondente ao teste da razão de verossimilhanças é
 
-$$G^2
+$$
+G^2
 =
 2\sum_{i=1}^k
-O_i\log\left(\frac{O_i}{E_i}\right),$$
+O_i
+\log\left(
+\frac{O_i}{E_i}
+\right),
+$$
 
-com a convenção de que termos com $O_i=0$ são iguais a zero. Sob condições regulares,
+com a convenção de que o termo correspondente a $O_i=0$ é igual a zero.
 
-$$G^2\approx X^2,$$
+Sob condições de regularidade, $X^2$ e $G^2$ são estatísticas assintoticamente equivalentes para testar o mesmo modelo nulo e possuem a mesma distribuição qui-quadrado limite.
 
-e ambas as estatísticas possuem a mesma distribuição qui-quadrado assintótica sob $H_0$. Sob regularidade, sua diferença é assintoticamente desprezível, embora seus valores em uma amostra finita não precisem ser próximos quando existem células esparsas [@rice2007mathematical, sec. 9.5; @lauritzen2023fundamentals, secs. 8.2--8.3; @chihara2022, sec. 10.6].
+Isso não significa que seus valores observados devam ser numericamente próximos em qualquer amostra. Diferenças entre $X^2$ e $G^2$ podem ser relevantes em amostras pequenas ou em tabelas esparsas, justamente situações em que a aproximação assintótica também merece maior cautela [@rice2007mathematical, sec. 9.5; @lauritzen2023fundamentals, secs. 8.1 e 8.3; @chihara2022, sec. 10.6].
 
 ## Teste qui-quadrado de aderência
 
@@ -802,17 +1508,37 @@ As frequências esperadas são
 
 $$E_i=np_i^{(0)}.$$
 
-Quando nenhuma quantidade é estimada a partir da própria amostra, os graus de liberdade são
+Quando as probabilidades
 
-$$\nu=k-1.$$
+$$
+p_1^{(0)},\ldots,p_k^{(0)}
+$$
 
-Se $q$ parâmetros livres forem estimados, sob condições regulares, a partir da mesma amostra para calcular as probabilidades esperadas, então
+são completamente especificadas antes da observação dos dados, existe apenas a restrição
 
-$$\nu=k-1-q.$$
+$$
+\sum_{i=1}^k O_i=n,
+$$
 
-Essa redução dos graus de liberdade pressupõe que os parâmetros sejam identificáveis e que o modelo ajustado possua posto local $q$ [@larsen2012, secs. 10.3--10.4; @chihara2022, sec. 10.5].
+e os graus de liberdade são
 
-### Exemplo: dado de seis faces
+$$
+\nu
+=
+k-1.
+$$
+
+Se as probabilidades esperadas pertencem a um modelo paramétrico com $q$ parâmetros livres estimados a partir da própria amostra, então, sob condições regulares e com estimação compatível com o modelo utilizado no teste,
+
+$$
+\nu
+=
+k-1-q.
+$$
+
+Essa redução pressupõe que os parâmetros sejam identificáveis e que as $q$ direções paramétricas correspondam a restrições localmente independentes. Assim, a simples presença de $q$ quantidades calculadas a partir dos dados não é suficiente, por si só, para justificar a subtração de $q$ graus de liberdade [@larsen2012, secs. 10.3--10.4; @chihara2022, sec. 10.5].
+
+### Exemplo — dado de seis faces
 
 Em $120$ lançamentos de um dado, foram observadas as contagens
 
@@ -830,7 +1556,13 @@ $$X^2
 \frac{(25-20)^2}{20}
 =3{,}50.$$
 
-Com $\nu=5$, o valor-$p$ é aproximadamente $0{,}623$. Não se rejeita a hipótese de probabilidades iguais.
+Com $\nu=5$, o valor-$p$ é aproximadamente
+
+$$
+p=0{,}623.
+$$
+
+Ao nível usual de $5\%$, não se rejeita a hipótese de probabilidades iguais. Esse resultado indica que as discrepâncias observadas são compatíveis com a variabilidade esperada sob o modelo de dado equilibrado; ele não demonstra que as seis probabilidades sejam exatamente iguais.
 
 ```{python}
 import numpy as np
@@ -843,28 +1575,82 @@ estatistica, p_valor = chisquare(observado, f_exp=esperado)
 print(f"X² = {estatistica:.3f}; valor-p = {p_valor:.4f}")
 ```
 
-## Tabelas de contingência
+## Tabelas de contingência {#sec-tabelas-contingencia}
 
 Considere uma tabela com $r$ linhas e $c$ colunas. Seja $O_{ij}$ a frequência observada na célula $(i,j)$, $O_{i\cdot}$ o total da linha, $O_{\cdot j}$ o total da coluna e $n$ o total geral.
 
-Sob independência ou homogeneidade, a frequência esperada é
+No **teste de independência**, uma única amostra é classificada segundo duas variáveis categóricas. Sob
 
-$$E_{ij}
+$$
+H_0:
+\text{as duas variáveis são independentes},
+$$
+
+a probabilidade conjunta fatoriza como
+
+$$
+p_{ij}
 =
-\frac{O_{i\cdot}O_{\cdot j}}{n}.$$
+p_{i\cdot}p_{\cdot j}.
+$$
 
-A estatística de Pearson é
+Estimando as probabilidades marginais pelas proporções amostrais, obtém-se
 
-$$X^2
+$$
+E_{ij}
 =
-\sum_{i=1}^r\sum_{j=1}^c
-\frac{(O_{ij}-E_{ij})^2}{E_{ij}},$$
+n
+\frac{O_{i\cdot}}{n}
+\frac{O_{\cdot j}}{n}
+=
+\frac{
+O_{i\cdot}O_{\cdot j}
+}{n}.
+$$
 
-com
+No **teste de homogeneidade**, existem amostras independentes provenientes de diferentes populações. Sob a hipótese de que todas possuem a mesma distribuição categórica, estima-se a probabilidade comum da coluna $j$ por
 
-$$\nu=(r-1)(c-1).$$
+$$
+\widehat p_j
+=
+\frac{O_{\cdot j}}{n}.
+$$
 
-Esses resultados decorrem do modelo de independência para contagens multinomiais ou produtos multinomiais [@lauritzen2023fundamentals, sec. 8.3; @chihara2022, secs. 10.1--10.3; @larsen2012, sec. 10.5].
+Assim, para uma amostra de tamanho $O_{i\cdot}$,
+
+$$
+E_{ij}
+=
+O_{i\cdot}\widehat p_j
+=
+\frac{
+O_{i\cdot}O_{\cdot j}
+}{n}.
+$$
+
+Portanto, os dois problemas conduzem à mesma fórmula de frequências esperadas e à mesma estatística de Pearson,
+
+$$
+X^2
+=
+\sum_{i=1}^r
+\sum_{j=1}^c
+\frac{
+(O_{ij}-E_{ij})^2
+}{
+E_{ij}
+}.
+$$
+
+Sob as condições assintóticas usuais,
+
+$$
+X^2
+\xrightarrow{d}
+\chi^2_{(r-1)(c-1)}
+$$
+
+sob $H_0$ [@lauritzen2023fundamentals, sec. 8.3; @chihara2022, secs. 10.1--10.3; @larsen2012, sec. 10.5].
 
 ### Homogeneidade e independência
 
@@ -875,9 +1661,44 @@ Os dois testes utilizam a mesma estatística, mas respondem a perguntas distinta
 | Homogeneidade | amostras independentes de diferentes populações | a distribuição categórica é a mesma nas populações |
 | Independência | uma amostra, com duas variáveis categóricas medidas em cada unidade | as variáveis são independentes |
 
-A interpretação correta depende do esquema amostral, não apenas da tabela numérica.
+A interpretação correta depende do esquema amostral; a tabela numérica, isoladamente, não determina o problema inferencial.
 
-### Exemplo: renda e hipertensão
+No teste de **homogeneidade**, a inferência compara distribuições categóricas entre populações ou grupos. No teste de **independência**, a inferência avalia a associação entre duas variáveis categóricas medidas nas mesmas unidades amostrais.
+
+Portanto, uma mesma tabela de contagens pode produzir o mesmo valor de $X^2$ e o mesmo valor-$p$ em ambos os enquadramentos, mas a população-alvo, o mecanismo amostral e a interpretação do resultado não são os mesmos.
+
+::: {.callout-note title="Conexão com o teste de duas proporções"}
+
+Em uma tabela $2\times2$ formada por duas amostras binomiais independentes, o teste
+
+$$
+H_0:p_1=p_2
+$$
+
+pode ser formulado tanto como comparação de duas proporções quanto como teste qui-quadrado de homogeneidade.
+
+Sem correção de continuidade, a estatística normal baseada na proporção combinada satisfaz
+
+$$
+Z^2
+=
+X^2,
+$$
+
+em que $X^2$ é a estatística de Pearson da tabela $2\times2$.
+
+Como
+
+$$
+Z\sim N(0,1)
+\quad\Longrightarrow\quad
+Z^2\sim\chi^2_1,
+$$
+
+os dois procedimentos fornecem o mesmo valor-$p$ bilateral quando construídos dessa forma. Essa equivalência algébrica não elimina a necessidade de identificar corretamente o delineamento e a hipótese de interesse [@casella2002statistical, ex. 8.59].
+:::
+
+### Exemplo — renda e hipertensão
 
 Considere os dados hipotéticos:
 
@@ -919,47 +1740,118 @@ print(esperado)
 
 ## Diagnóstico por resíduos
 
-A rejeição global não identifica automaticamente quais células explicam a associação.
+A rejeição do teste global indica discrepância em relação ao modelo nulo, mas não identifica quais células estão mais diretamente associadas a essa discrepância.
 
-O resíduo de Pearson é
+O **resíduo de Pearson** da célula $(i,j)$ é
 
-$$r_{ij}
-=
-\frac{O_{ij}-E_{ij}}{\sqrt{E_{ij}}}.$$
-
-Um resíduo ajustado é
-
-$$r_{ij}^{\mathrm{aj}}
+$$
+r_{ij}
 =
 \frac{O_{ij}-E_{ij}}
-{\sqrt{E_{ij}
-\left(1-\dfrac{O_{i\cdot}}{n}\right)
-\left(1-\dfrac{O_{\cdot j}}{n}\right)}}.$$
+{\sqrt{E_{ij}}}.
+$$
 
-Valores absolutos grandes indicam células que contribuem de maneira relevante para a discrepância global. A aproximação normal de cada resíduo é assintótica, e os resíduos de uma mesma tabela são dependentes. Quando muitas células são examinadas, a interpretação deve considerar multiplicidade [@lauritzen2023fundamentals, secs. 8.2--8.3].
+Ele preserva o sinal da diferença:
 
-## Pressupostos e tabelas esparsas
+$$
+r_{ij}>0
+\quad\Longrightarrow\quad
+O_{ij}>E_{ij},
+$$
 
-Os testes qui-quadrado requerem:
+enquanto
 
-1.  observações independentes;
-2.  categorias mutuamente exclusivas;
-3.  frequências esperadas suficientemente grandes para justificar a aproximação assintótica;
-4.  um esquema amostral compatível com o modelo multinomial ou com o modelo de tabela de contingência.
+$$
+r_{ij}<0
+\quad\Longrightarrow\quad
+O_{ij}<E_{ij}.
+$$
 
-A regra pedagógica $E_{ij}\geq5$ é apenas uma heurística, não um teorema universal. Quando há muitas células com contagens esperadas pequenas, podem ser necessários:
+Em tabelas de contingência, a estimação das margens afeta a variabilidade desses resíduos. Uma padronização que incorpora esse efeito é o **resíduo ajustado**,
 
-- agrupamento de categorias cientificamente justificável;
+$$
+r_{ij}^{\mathrm{aj}}
+=
+\frac{O_{ij}-E_{ij}}
+{\sqrt{
+E_{ij}
+\left(
+1-\dfrac{O_{i\cdot}}{n}
+\right)
+\left(
+1-\dfrac{O_{\cdot j}}{n}
+\right)
+}}.
+$$
+
+Sob o modelo nulo e em condições assintóticas adequadas, cada resíduo ajustado possui distribuição aproximadamente normal padrão. Assim, valores positivos ou negativos de grande magnitude ajudam a localizar células com discrepâncias relevantes.
+
+Os resíduos de uma mesma tabela, entretanto, são dependentes. Além disso, quando muitas células são examinadas simultaneamente, interpretar cada uma isoladamente por comparação com quantis normais aumenta o problema de multiplicidade. A análise deve considerar o padrão conjunto dos resíduos e o contexto da aplicação [@lauritzen2023fundamentals, sec. 8.1.3].
+
+## Condições e tabelas esparsas
+
+A validade da análise envolve dois grupos de condições.
+
+**Condições do modelo e do delineamento:**
+
+1. as unidades amostrais devem possuir a estrutura de independência assumida pelo modelo;
+2. as categorias utilizadas em uma mesma classificação devem ser mutuamente exclusivas;
+3. o esquema amostral deve ser compatível com o modelo multinomial, produto de multinomiais ou outro modelo utilizado para as contagens.
+
+**Condições para a aproximação qui-quadrado:**
+
+as frequências esperadas precisam ser suficientemente informativas para que a distribuição finita da estatística seja bem aproximada pela distribuição qui-quadrado assintótica.
+
+A regra pedagógica
+
+$$
+E_{ij}\geq5
+$$
+
+é uma heurística, e não um teorema universal. A qualidade da aproximação depende do conjunto das frequências esperadas, do número de células e do grau de desequilíbrio da tabela.
+
+Quando a aproximação assintótica é inadequada, podem ser considerados:
+
+- agrupamento de categorias, desde que seja justificado pelo significado das categorias e compatível com a pergunta de interesse;
 - teste exato de Fisher em tabelas $2\times2$;
-- testes exatos condicionais;
-- valores-$p$ por Monte Carlo;
+- outros testes exatos condicionais;
+- valores-$p$ obtidos por simulação de Monte Carlo;
 - modelos multinomiais ou log-lineares apropriados.
 
 A adequação de critérios numéricos específicos para frequências esperadas deve ser avaliada considerando o número de células, o grau de desequilíbrio e a precisão desejada; a regra $5$ não constitui garantia universal [@chihara2022, cap. 10; @rosner2011fundamentals, cap. 10].
 
-## Teste exato de Fisher
+::: {.callout-note title="Correção de continuidade em tabelas $2\times2$"}
 
-Em uma tabela $2\times2$, condicionando aos totais marginais, a contagem de uma célula segue distribuição hipergeométrica sob a hipótese nula. O teste exato de Fisher calcula probabilidades diretamente dessa distribuição e não depende da aproximação qui-quadrado. Para alternativas bilaterais, existem diferentes convenções de ordenação das tabelas; a convenção utilizada pelo software deve ser declarada [@lauritzen2023fundamentals, sec. 8.3.5; @chihara2022, sec. 10.3.3; @rosner2011fundamentals, sec. 10.3].
+A estatística de Pearson utiliza uma distribuição qui-quadrado contínua para aproximar a distribuição de uma estatística construída a partir de contagens discretas. Em tabelas $2\times2$, uma modificação clássica é a **correção de continuidade de Yates**,
+
+$$
+X^2_{\mathrm{Yates}}
+=
+\sum_{i=1}^2
+\sum_{j=1}^2
+\frac{
+\left(
+|O_{ij}-E_{ij}|-0{,}5
+\right)^2
+}{
+E_{ij}
+},
+$$
+
+quando as discrepâncias consideradas são maiores que $0{,}5$.
+
+A correção reduz a estatística de Pearson e tende a produzir valores-$p$ maiores. Seu objetivo é melhorar a aproximação contínua em situações discretas, mas ela pode produzir um procedimento conservador. Portanto, não constitui substituto geral para procedimentos exatos quando a aproximação qui-quadrado é inadequada [@casella2002statistical, sec. 3.2].
+:::
+
+## Teste exato de Fisher {#sec-fisher-exato}
+
+Considere uma tabela $2\times2$. Sob a hipótese nula de ausência de associação — equivalentemente, razão de chances populacional igual a 1 — e condicionando aos totais marginais, a contagem de uma das células possui distribuição hipergeométrica.
+
+O teste exato de Fisher calcula as probabilidades das tabelas admissíveis diretamente dessa distribuição condicional. Portanto, sua calibração não depende da aproximação qui-quadrado e permanece disponível em tabelas com frequências pequenas.
+
+O termo **exato** refere-se ao uso da distribuição condicional finita. Como essa distribuição é discreta, o tamanho de um teste não aleatorizado não precisa ser exatamente igual ao nível nominal.
+
+Para alternativas bilaterais, existem diferentes critérios para ordenar as tabelas consideradas tão ou mais extremas que a observada. Por isso, a convenção utilizada pelo software deve ser identificada quando essa diferença for relevante [@lauritzen2023fundamentals, sec. 8.3.5; @chihara2022, sec. 10.3.3; @rosner2011fundamentals, sec. 10.3].
 
 ```{python}
 import numpy as np
@@ -981,62 +1873,135 @@ print(f"Valor-p exato = {p_valor:.4f}")
 
 ## Medidas de tamanho do efeito em tabelas
 
-Para uma tabela $2\times2$, a **magnitude** do coeficiente $\phi$ pode ser escrita como
+Para uma tabela $2\times2$, a magnitude do coeficiente $\phi$ pode ser escrita como
 
-$$|\phi|
-=\sqrt{\frac{X^2}{n}}.$$
+$$
+|\phi|
+=
+\sqrt{
+\frac{X^2}{n}
+}.
+$$
 
-O sinal de $\phi$ depende da codificação e da orientação das linhas e colunas; a expressão baseada em $X^2$ fornece apenas sua magnitude.
+O sinal de $\phi$ depende da codificação e da orientação das linhas e colunas; a expressão baseada em $X^2$ recupera apenas sua magnitude.
 
 Para uma tabela $r\times c$, o $V$ de Cramér é
 
-$$V
-=\sqrt{
+$$
+V
+=
+\sqrt{
 \frac{X^2}
-{n\min(r-1,c-1)}
-}.$$
+{
+n\min(r-1,c-1)
+}
+}.
+$$
+
+Em uma tabela $2\times2$,
+
+$$
+\min(r-1,c-1)=1,
+$$
+
+de modo que
+
+$$
+V
+=
+|\phi|.
+$$
+
+O $V$ de Cramér fornece uma medida não negativa da intensidade da associação. Ele não informa, por si só, quais categorias apresentam frequências acima ou abaixo do esperado nem o padrão que produz a associação.
 
 No exemplo de renda e hipertensão,
 
-$$V
-=\sqrt{\frac{33{,}60}{300}}
-\approx0{,}335.$$
+$$
+V
+=
+\sqrt{
+\frac{33{,}60}{300}
+}
+\approx
+0{,}335.
+$$
 
-A interpretação substantiva deve considerar o contexto, o delineamento e a direção observada nas proporções e nos resíduos. Pontos de corte universais para “efeito pequeno”, “médio” ou “grande” não substituem a análise contextual. Essas medidas são descritivas e não substituem a apresentação das proporções ou dos resíduos que determinam a direção da associação.
+A interpretação de $V$ deve considerar o contexto, o delineamento, as proporções observadas e o padrão dos resíduos. Pontos de corte universais para classificar automaticamente valores de $V$ como “pequenos”, “médios” ou “grandes” não substituem essa análise contextual.
 
 ## Poder e tamanho amostral em testes qui-quadrado
 
-No teste de aderência com probabilidades nulas completamente especificadas, defina
+No teste de aderência com probabilidades nulas completamente especificadas,
 
-$$w
+$$
+H_0:
+(p_1,\ldots,p_k)
+=
+(p_1^{(0)},\ldots,p_k^{(0)}),
+$$
+
+considere uma alternativa de planejamento
+
+$$
+(p_1,\ldots,p_k).
+$$
+
+O tamanho do efeito de Pearson associado a essa alternativa é
+
+$$
+w
 =
 \sqrt{
-\sum_i
-\frac{(p_i-p_i^{(0)})^2}{p_i^{(0)}}
-},$$
+\sum_{i=1}^k
+\frac{
+(p_i-p_i^{(0)})^2
+}{
+p_i^{(0)}
+}
+}.
+$$
 
-em que $p_i$ representa uma alternativa cientificamente relevante. Sob a aproximação qui-quadrado não central, o parâmetro de não centralidade é
+Assim, $w$ não é uma característica apenas de $H_0$: seu valor depende da alternativa contra a qual se deseja obter determinado poder.
 
-$$\lambda=nw^2.$$
+Na aproximação baseada na distribuição qui-quadrado não central, utiliza-se o parâmetro de não centralidade
 
-Em tabelas de contingência, a definição correspondente deve ser construída a partir das probabilidades conjuntas sob a alternativa e das probabilidades ajustadas sob a hipótese de independência; não se deve reutilizar mecanicamente a fórmula de aderência.
+$$
+\lambda
+=
+nw^2.
+$$
 
 Para $\nu$ graus de liberdade e nível $\alpha$, o poder aproximado é
 
-$$1-\beta
-=
-P\left
-\{
+$$
+1-\beta
+\approx
+P
+\left\{
 \chi^2_\nu(\lambda)
 >
 \chi^2_{\nu,1-\alpha}
-\right\}.$$
+\right\}.
+$$
 
-O tamanho amostral deve ser obtido numericamente a partir dessa expressão. Fórmulas que ignoram os graus de liberdade podem produzir planejamento inadequado.
+Consequentemente, o tamanho amostral pode ser obtido numericamente procurando o menor inteiro $n$ para o qual o poder aproximado atinge o valor planejado.
 
-::: {.callout-note title="Observação bibliográfica"}
+Em tabelas de contingência, a medida correspondente deve ser construída a partir das probabilidades conjuntas especificadas sob a alternativa e das probabilidades que satisfazem o modelo nulo. A fórmula de aderência não deve ser reutilizada mecanicamente sem definir essas probabilidades.
 
-A relação $\lambda=nw^2$ é uma aproximação de planejamento. Após obter $n$, recomenda-se recalcular o poder com o modelo probabilístico específico e verificar as frequências esperadas previstas.
+::: {.callout-note title="Aproximação de planejamento"}
+
+A relação
+
+$$
+\lambda=nw^2
+$$
+
+é utilizada aqui como aproximação para planejamento de poder. Depois de obter $n$, convém verificar:
+
+1. o poder sob o modelo probabilístico efetivamente utilizado;
+2. as frequências esperadas previstas para esse tamanho amostral;
+3. se a aproximação qui-quadrado é adequada no cenário planejado.
+
+Fórmulas de planejamento que utilizam apenas $w$, sem considerar os graus de liberdade e a distribuição de referência, podem produzir resultados inadequados.
 :::
 
 ```{python}
@@ -1062,35 +2027,79 @@ print(f"n mínimo aproximado = {n_minimo}")
 print(f"poder recalculado = {poder(n_minimo):.4f}")
 ```
 
-## Relação entre testes e intervalos de confiança
+## Relação entre testes e intervalos de confiança {#sec-dualidade-testes-ic}
 
-Há uma dualidade entre testes bilaterais e intervalos de confiança. Para um procedimento coerente de nível $\alpha$,
+Como desenvolvido em @sec-dualidade-ic-testes, considere, para cada valor $\theta_0$, um teste de nível $\alpha$ para
 
-$$H_0:\theta=\theta_0$$
+$$
+H_0:\theta=\theta_0.
+$$
 
-não é rejeitada se, e somente se, $\theta_0$ pertence ao conjunto de confiança de nível $1-\alpha$ obtido pela inversão dessa mesma família de testes [@rice2007mathematical, sec. 9.3; @chihara2022, sec. 8.4.4].
+O conjunto obtido pela inversão dessa mesma família de testes é
+
+$$
+C(\mathbf X)
+=
+\left\{
+\theta_0:
+H_0:\theta=\theta_0
+\text{ não é rejeitada}
+\right\}.
+$$
+
+Como cada teste possui probabilidade de rejeição de no máximo $\alpha$ quando sua hipótese nula é verdadeira,
+
+$$
+P_\theta
+\{
+\theta\in C(\mathbf X)
+\}
+\geq
+1-\alpha.
+$$
+
+Portanto, a inversão produz um conjunto de confiança de nível pelo menos $1-\alpha$.
+
+Para uma amostra observada $\mathbf x$, vale diretamente, pela construção,
+
+$$
+H_0:\theta=\theta_0
+\text{ não é rejeitada}
+$$
+
+se, e somente se,
+
+$$
+\theta_0
+\in
+C(\mathbf x).
+$$
+
+Se a probabilidade de rejeição sob cada hipótese nula simples for exatamente $\alpha$, a cobertura correspondente é exatamente $1-\alpha$ [@rice2007mathematical, sec. 9.3; @chihara2022, sec. 8.4.4].
 
 ::: {.callout-note title="Interpretação"}
 
-O intervalo de confiança complementa o valor-$p$ porque mostra a faixa de valores compatíveis com os dados e permite avaliar a magnitude e a precisão do efeito.
+O conjunto de confiança complementa o valor-$p$ ao mostrar quais valores do parâmetro permanecem compatíveis com o procedimento inferencial utilizado e ao informar a precisão da estimação. A equivalência entre rejeição e exclusão do conjunto exige que teste e conjunto de confiança sejam construídos pela **mesma família de procedimentos**.
 :::
 
 ## Boas práticas de apresentação
 
-Um relatório de teste deve incluir:
+Um relatório de teste deve incluir, conforme o problema:
 
+- parâmetro ou comparação de interesse;
 - hipóteses e direção do teste;
+- nível $\alpha$ adotado quando houver uma regra de decisão previamente especificada;
 - estatística de teste e distribuição de referência;
 - graus de liberdade, quando aplicável;
-- valor-$p$, preferencialmente com precisão adequada;
-- estimativa pontual e intervalo de confiança;
-- medida de tamanho do efeito;
-- verificação dos pressupostos;
-- interpretação contextual, sem linguagem causal indevida.
+- valor-$p$, com precisão adequada;
+- estimativa pontual e intervalo de confiança correspondente;
+- medida de tamanho do efeito, quando aplicável;
+- avaliação das condições que sustentam o procedimento;
+- interpretação contextual, sem linguagem causal incompatível com o delineamento.
 
 ### Modelo de redação
 
-> A diferença média estimada foi de $4{,}2$ unidades, com intervalo de confiança de $95\%$ de $[1{,}1;7{,}3]$. O teste de Welch forneceu $t=2{,}68$, $\nu=37{,}4$ e $p=0{,}011$. Há evidência de diferença entre as médias no modelo adotado. A magnitude e a relevância prática devem ser avaliadas à luz da escala da variável e do delineamento do estudo.
+> A diferença média estimada foi de $4{,}2$ unidades, com intervalo de confiança de $95\%$ de $[1{,}03;7{,}37]$. O teste de Welch forneceu $t=2{,}68$, $\nu=37{,}4$ e $p=0{,}011$. Há evidência de diferença entre as médias no modelo adotado. A magnitude e a relevância prática devem ser avaliadas à luz da escala da variável e do delineamento do estudo.
 
 ## Erros frequentes de interpretação
 
@@ -1105,17 +2114,20 @@ Um relatório de teste deve incluir:
 
 ## Quadro-síntese
 
-| Problema | Estatística principal | Referência sob $H_0$ | Observação |
+| Problema | Estatística principal | Referência sob $H_0$ | Natureza/condições |
 |:-----------------|:-----------------|:-----------------|:-----------------|
 | uma média, $\sigma$ conhecida | $Z$ | $N(0,1)$ | exato sob normalidade |
-| uma média, $\sigma$ desconhecida | $T$ | $t_{n-1}$ | exato sob normalidade |
-| duas médias independentes | $T$ de Welch | $t_\nu$ aproximada | não exige variâncias iguais |
-| médias pareadas | $T$ nas diferenças | $t_{n-1}$ | analisa $D_i=X_i-Y_i$ |
-| uma proporção | $Z$ ou binomial exato | normal ou binomial | preferir exato em amostras pequenas |
-| duas proporções | $Z$ combinado | normal aproximada | Fisher em $2\times2$ esparsa |
-| aderência | $X^2$ ou $G^2$ | $\chi^2_{k-1-q}$ | descontar parâmetros estimados |
-| homogeneidade/independência | $X^2$ ou $G^2$ | $\chi^2_{(r-1)(c-1)}$ | mesma álgebra, delineamentos distintos |
-| hipótese paramétrica geral | $-2\log\Lambda$ | $\chi^2_q$ assintótica | verificar regularidade |
+| uma média, $\sigma$ desconhecida | $T$ | $t_{n-1}$ | exato sob normalidade; validade assintótica sob condições mais gerais |
+| duas médias independentes, variâncias não necessariamente iguais | $T$ de Welch | $t_\nu$ aproximada | aproximação de Welch--Satterthwaite |
+| duas médias independentes, variância comum | $T$ agrupado | $t_{n_1+n_2-2}$ | exato sob normalidade, independência e variância comum |
+| médias pareadas | $T$ nas diferenças | $t_{n-1}$ | exato sob normalidade das diferenças e independência entre pares |
+| uma proporção | $Z$ de escore | $N(0,1)$ assintótica | variância calculada sob $H_0$ |
+| uma proporção | binomial exato | distribuição binomial finita | pode ser conservador devido à discretização |
+| duas proporções | $Z$ com proporção combinada | $N(0,1)$ assintótica | proporção combinada decorre de $H_0:p_1=p_2$ |
+| aderência | $X^2$ ou $G^2$ | $\chi^2_{k-1-q}$ assintótica | descontar parâmetros estimados quando aplicável |
+| homogeneidade/independência | $X^2$ ou $G^2$ | $\chi^2_{(r-1)(c-1)}$ assintótica | mesma álgebra, delineamentos distintos |
+| tabela $2\times2$ | Fisher exato | distribuição hipergeométrica condicional | não depende da aproximação qui-quadrado |
+| hipótese paramétrica geral | $-2\log\Lambda$ | $\chi^2_q$ assintótica | resultado de Wilks sob regularidade |
 
 ## Exercícios
 

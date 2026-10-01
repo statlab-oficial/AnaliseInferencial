@@ -1072,102 +1072,143 @@ A U8 deverá ser conferida posteriormente para garantir que os procedimentos apl
 
 # Testes de Hipóteses e Análise de Dados Categóricos
 
-**Arquivo:** `unidade6.qmd`  
-**Extensão atual:** 1273 linhas.
+**Arquivo:** `unidade6.qmd`
 
 ## Função do capítulo
 
-Desenvolver a formulação de testes de hipóteses, a teoria de erros e poder, resultados clássicos de otimalidade, testes usuais e análise de dados categóricos.
+Desenvolver a formulação, avaliação e aplicação de testes de hipóteses no paradigma frequentista, articulando controle do erro do tipo I, função poder, valor-$p$, princípios de optimalidade, procedimentos usuais e inferência para dados categóricos.
 
-## Arquitetura atual
+A pergunta central adotada é:
 
-### Fundamentos e teoria
+\[
+\boxed{
+\text{Como formular, avaliar e aplicar testes de hipóteses controlando os erros do procedimento?}
+}
+\]
 
-- motivação por moeda;
-- formulação estatística;
+## Arquitetura consolidada
+
+### Percurso principal
+
+- motivação e formulação de $H_0$ e $H_1$;
+- hipóteses simples e compostas;
 - função de teste e região crítica;
-- poder, tamanho e nível;
-- erros I e II;
-- valor-p e regra de decisão;
-- Neyman--Pearson;
-- UMP e razão de verossimilhanças monótona;
-- teste da razão de verossimilhanças e Wilks.
-
-### Procedimentos e aplicações
-
-- testes para uma média, uma proporção, duas médias, pareamento e duas proporções;
-- Welch e caso de variância comum;
-- binomial exato;
-- permutação e robustez;
-- planejamento amostral e poder;
-- qui-quadrado de Pearson e razão de verossimilhanças;
-- aderência, homogeneidade e independência;
+- função poder, tamanho e nível;
+- erros dos tipos I e II;
+- valor-$p$, validade e superuniformidade;
+- regra de decisão;
+- procedimento geral de teste;
+- testes usuais para médias e proporções;
+- teste binomial exato;
+- Welch, variância comum e pareamento;
+- testes de permutação e robustez;
+- planejamento amostral por poder;
+- modelo multinomial e dados categóricos;
+- estatísticas $X^2$ de Pearson e $G^2$;
+- aderência;
+- homogeneidade e independência;
 - resíduos;
-- tabelas esparsas e Fisher;
-- tamanho de efeito;
-- poder em qui-quadrado;
-- relação teste--IC;
-- boas práticas e erros de interpretação;
-- exercícios.
+- tabelas esparsas;
+- teste exato de Fisher;
+- $\phi$ e $V$ de Cramér;
+- planejamento de poder para testes qui-quadrado;
+- relação entre testes e conjuntos de confiança;
+- boas práticas, erros frequentes e quadro-síntese.
 
-## Conteúdo a proteger
+### Aprofundamento
 
-- distinção entre tamanho, nível, erro tipo I, erro tipo II e poder;
-- desenvolvimento já existente de valor-p e seus limites interpretativos;
-- sequência Neyman--Pearson → UMP → TRV;
+- lema de Neyman--Pearson;
+- testes mais poderosos;
+- testes UMP;
+- razão de verossimilhanças monótona;
+- resultado de Karlin--Rubin;
+- exemplos normal, binomial e Poisson;
+- inexistência geral de UMP bilateral;
+- testes não viesados e UMPU;
+- teste da razão de verossimilhanças;
+- relação TRV--Neyman--Pearson;
 - resultado assintótico de Wilks;
-- presença conjunta de teoria de testes e dados categóricos, conforme o programa;
-- Welch, testes exatos, permutação e robustez como extensões já incorporadas;
-- diagnóstico por resíduos e tamanho de efeito em tabelas.
+- condições de regularidade e irregularidades;
+- exemplos normal e binomial de TRV.
 
-## Consequência para recomendações antigas
+## Conteúdo protegido após a auditoria
 
-A recomendação anterior de “tornar explícita a diferença entre significância e Neyman--Pearson” não deve ser executada automaticamente. A versão atual já possui função de teste, erros, poder, valor-p, regra de decisão, Neyman--Pearson, boas práticas e erros frequentes. A Passagem 1 deve verificar **se ainda existe alguma lacuna real**, e não pressupor que exista.
+- distinção entre função poder, tamanho, nível, erro do tipo I e erro do tipo II;
+- definição de valor-$p$ e propriedade de superuniformidade;
+- regra $p\leq\alpha$ derivada da validade do valor-$p$;
+- testes aleatorizados como ferramenta teórica para modelos discretos;
+- desenvolvimento completo de Neyman--Pearson, UMP, MLR, Karlin--Rubin e UMPU;
+- TRV e resultado de Wilks;
+- distinção entre calibração exata em amostras finitas e aproximação assintótica;
+- teste normal de escore para uma proporção;
+- teste binomial exato;
+- Welch antes do procedimento com variância comum;
+- estrutura das diferenças no teste pareado;
+- testes de permutação e condições de permutabilidade/randomização;
+- discussão de robustez sem tratar Welch ou reamostragem como soluções universais;
+- planejamento por poder, distinto do planejamento por precisão da U5;
+- distinção entre aderência, homogeneidade e independência;
+- conexão entre duas proporções e tabela $2\times2$;
+- resíduos ajustados;
+- condições da aproximação qui-quadrado;
+- correção de continuidade;
+- Fisher exato;
+- medidas $\phi$ e $V$ de Cramér;
+- planejamento pela qui-quadrado não central;
+- todos os exercícios, salvo correção de erro matemático ou inconsistência que inviabilize sua resolução.
 
-## Pontos para Passagem 1
+## Fronteiras consolidadas
 
-- conferir continuidade entre a parte teórica e a coleção de testes usuais;
-- verificar a precisão da terminologia “teste de significância”, “nível”, “tamanho” e “regra de decisão”;
-- conferir quando os resultados são exatos ou assintóticos;
-- conferir condições de aproximação nos testes de proporções e qui-quadrado;
-- proteger todas as referências teóricas até verificação direta das afirmações correspondentes.
+A U5 é responsável pela construção de conjuntos de confiança, cobertura, precisão e inversão de testes como princípio de construção.
 
-## Mapa atual de seções principais
+A U6 formaliza função de teste, tamanho, nível, erros, poder e valor-$p$ e, ao final, retoma a dualidade com conjuntos de confiança sem reconstruir a U5.
 
-- linha 5: **Objetivos de aprendizagem**
-- linha 20: **Motivação: uma moeda aparentemente honesta**
-- linha 60: **Formulação estatística do problema**
-- linha 168: **Valor-$p$**
-- linha 222: **Procedimento recomendado**
-- linha 235: **Exemplo motivacional**
-- linha 269: **Lema de Neyman--Pearson**
-- linha 328: **Testes uniformemente mais poderosos**
-- linha 438: **Teste da razão de verossimilhanças**
-- linha 554: **Testes usuais para parâmetros populacionais**
-- linha 705: **Testes exatos, de permutação e robustez**
-- linha 722: **Planejamento amostral e poder**
-- linha 765: **Análise de dados categóricos**
-- linha 795: **Teste qui-quadrado de aderência**
-- linha 846: **Tabelas de contingência**
-- linha 920: **Diagnóstico por resíduos**
-- linha 941: **Pressupostos e tabelas esparsas**
-- linha 960: **Teste exato de Fisher**
-- linha 982: **Medidas de tamanho do efeito em tabelas**
-- linha 1007: **Poder e tamanho amostral em testes qui-quadrado**
-- linha 1065: **Relação entre testes e intervalos de confiança**
-- linha 1078: **Boas práticas de apresentação**
-- linha 1095: **Erros frequentes de interpretação**
-- linha 1106: **Quadro-síntese**
-- linha 1120: **Exercícios**
-- linha 1271: **Referências {.unnumbered}**
+A correspondência consolidada é:
 
-## Chaves bibliográficas atualmente utilizadas
+\[
+\boxed{
+\text{U5: inversão para construir conjuntos de confiança}
+\qquad
+\text{U6: interpretação da dualidade após a teoria formal dos testes}.
+}
+\]
+
+O planejamento amostral também possui responsabilidades distintas:
+
+\[
+\boxed{
+\text{U5: tamanho amostral por precisão}
+\qquad
+\text{U6: tamanho amostral por poder}.
+}
+\]
+
+A U7 pode utilizar a U6 como referência para escolha e comunicação de testes.
+
+A U8 deverá ser auditada contra a U6, especialmente quanto a hipótese alternativa, cauda do valor-$p$, nível $\alpha$, graus de liberdade, Welch, pareamento, proporções e planejamento amostral.
+
+## Identificadores consolidados
+
+- **Testes de Hipóteses e Análise de Dados Categóricos** `{#sec-testes-hipoteses}`;
+- **Formulação estatística do problema** `{#sec-formulacao-testes}`;
+- **Valor-$p$** `{#sec-valor-p}`;
+- **Aprofundamento** `{#sec-aprofundamento-testes}`;
+- **Teste da razão de verossimilhanças** `{#sec-trv}`;
+- **Testes usuais para parâmetros populacionais** `{#sec-testes-usuais}`;
+- **Testes exatos, de permutação e robustez** `{#sec-testes-exatos-permutacao}`;
+- **Planejamento amostral e poder** `{#sec-planejamento-poder}`;
+- **Análise de dados categóricos** `{#sec-dados-categoricos}`;
+- **Tabelas de contingência** `{#sec-tabelas-contingencia}`;
+- **Teste exato de Fisher** `{#sec-fisher-exato}`;
+- **Relação entre testes e intervalos de confiança** `{#sec-dualidade-testes-ic}`.
+
+## Chaves bibliográficas utilizadas após a auditoria
 
 `@borovkov1998`, `@casella2002statistical`, `@chihara2022`, `@cox2006principles`, `@hogg1978`, `@larsen2012`, `@lauritzen2023fundamentals`, `@ramachandran2021r`, `@rasch2018`, `@rice2007mathematical`, `@rosner2011fundamentals`, `@shao2005`, `@wilcox2022`.
 
 ## Estado
 
-**Inventariado; auditoria ainda não iniciada.**
+**Passagens estrutural, matemática, bibliográfica, terminológica, editorial e computacional concluídas. Auditoria final de regressão realizada.**
 
 # Projetos Aplicados
 
@@ -1308,7 +1349,7 @@ Essa matriz registra apenas dependências conceituais de alto nível. A matriz d
 2. **Auditar U1 preservando PGD, urna e verossimilhança.** O objetivo é unificar a progressão conceitual, não substituir o capítulo.
 3. **Auditar U3--U4 como par.** Verificar sobreposição de informação, eficiência e assintótica, preservando os desenvolvimentos e fontes que cumprem funções distintas.
 4. **Registrar a lacuna de minimax/equivância.** Não inserir conteúdo antes de verificar fontes e posição adequada.
-5. **Auditar U5--U6 como sequência articulada.** Preservar a dualidade entre IC e testes e reconhecer que U6 já possui um desenvolvimento substancial e bibliograficamente apoiado.
+5. **Preservar U5--U6 como sequência articulada já consolidada.** A U5 desenvolve conjuntos de confiança e inversão de testes; a U6 formaliza a teoria de testes e retoma a dualidade ao final. Novas alterações nessa fronteira devem ocorrer apenas diante de inconsistência concreta.
 6. **Executar U8 como auditoria matemática e computacional.** Nenhuma conclusão aplicada deve ser considerada consolidada sem teste de código.
 7. **Revisar `index.qmd` somente depois de a identidade editorial do livro estar congelada.** Assim o prefácio poderá descrever corretamente o livro final.
 
@@ -1328,13 +1369,15 @@ Depois de cada capítulo consolidado:
 
 - arquitetura física: **inventariada**;
 - conteúdo programático: **inventariado**;
-- U6: **incluída e inventariada**;
 - política de preservação: **fixada**;
 - Casella e Berger como fonte principal: **fixado**;
 - inventário inicial dos capítulos: **concluído**;
-- auditoria estrutural/conceitual dos capítulos: **não iniciada**;
-- auditoria bibliográfica direta no PDF, capítulo a capítulo: **não iniciada**;
-- auditoria computacional integral: **não iniciada**.
+- U4: **consolidada**;
+- U5: **consolidada**;
+- U6: **consolidada**;
+- auditoria estrutural/conceitual dos capítulos: **em andamento, com U4--U6 concluídas**;
+- auditoria bibliográfica capítulo a capítulo: **em andamento, com U4--U6 concluídas**;
+- auditoria computacional: **em andamento; códigos das unidades auditadas são verificados durante a consolidação e a U8 permanece pendente de auditoria executável integral**.
 
 # Governança dos chats do projeto
 
