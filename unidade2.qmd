@@ -34,7 +34,7 @@ A **distribuição amostral** de uma estatística $T=T(X_1,\ldots,X_n)$ é sua d
 
 A distribuição populacional e a distribuição amostral descrevem objetos diferentes. A distribuição populacional caracteriza o comportamento de uma observação $X$. A distribuição amostral caracteriza o comportamento de uma função de várias observações. Em situações particulares, ambas podem pertencer à mesma família de distribuições, possivelmente com parâmetros diferentes.
 
-Transformações e funções geradoras de momentos permitem obter distribuições amostrais exatas. A Lei dos Grandes Números, o Teorema Central do Limite, o teorema do mapeamento contínuo e o lema de Slutsky, apresentados em @sec-prelim-matematica-assintotica, fornecem as ferramentas para estudar concentração e aproximações assintóticas quando o tamanho amostral aumenta.
+Transformações e funções geradoras de momentos permitem obter distribuições amostrais exatas. A Lei dos Grandes Números, o Teorema Central do Limite, o teorema do mapeamento contínuo e o lema de Slutsky, apresentados no @sec-prelim-matematica-assintotica, fornecem as ferramentas para estudar concentração e aproximações assintóticas quando o tamanho amostral aumenta.
 
 ### Objetivos do capítulo {.unnumbered}
 
@@ -51,7 +51,7 @@ Ao final deste capítulo, o leitor deverá ser capaz de:
 
 ## Amostra e estatística: recordação
 
-Em @sec-fundamentos-inferencia foram estabelecidas as distinções entre amostra aleatória e amostra observada, estatística, estimador e estimativa.
+No @sec-fundamentos-inferencia foram estabelecidas as distinções entre amostra aleatória e amostra observada, estatística, estimador e estimativa.
 
 Se
 
@@ -69,7 +69,7 @@ Como $T$ é uma variável aleatória, seu valor pode mudar de uma amostra para o
 
 ## Dois referenciais para a geração da amostra
 
-Duas estruturas de geração da amostra precisam ser distinguidas: o modelo i.i.d. e a amostragem aleatória simples sem reposição em uma população finita. A distinção evita confundir independência probabilística com aleatorização de um plano amostral.
+Duas estruturas de geração da amostra precisam ser tratadas separadamente: o modelo i.i.d. e a amostragem aleatória simples sem reposição em uma população finita. A distinção evita confundir independência probabilística com aleatorização de um plano amostral.
 
 ### Amostragem no modelo i.i.d.
 
@@ -83,7 +83,7 @@ f_{\mathbf X}(\mathbf x\mid\theta)
 \prod_{i=1}^n f(x_i\mid\theta).
 $$
 
-Em @sec-fundamentos-inferencia, vimos que, depois de observados os dados $\mathbf x$, essa mesma expressão pode ser considerada como função de $\theta$, com $\mathbf x$ fixado, originando a função de verossimilhança [@cox2006principles, seção 2.1; @casella2011inferencia, seção 6.3.1]:
+No @sec-fundamentos-inferencia, vimos que, depois de observados os dados $\mathbf x$, essa mesma expressão pode ser considerada como função de $\theta$, com $\mathbf x$ fixado, originando a função de verossimilhança [@cox2006principles, seção 2.1; @casella2011inferencia, seção 6.3.1]:
 
 $$
 L(\theta;\mathbf x)
@@ -219,7 +219,18 @@ $$
 
 Portanto, cada unidade possui a mesma probabilidade de ocupar qualquer posição da amostra. A variável aleatória $X_i$ registra o valor associado à unidade selecionada nessa posição.
 
-Se todos os valores populacionais forem distintos, então
+Como $J_i$ é uniforme sobre os índices $1,\ldots,N$, a distribuição marginal de $X_i$ corresponde à distribuição dos valores da própria população finita. Para qualquer valor $x$,
+
+$$
+P(X_i=x)
+=
+\frac{1}{N}
+\#\{r:a_r=x\},
+$$
+
+em que $\#\{r:a_r=x\}$ representa o número de unidades da população cujo valor é igual a $x$.
+
+Em particular, se todos os valores $a_1,\ldots,a_N$ forem distintos,
 
 $$
 P(X_i=a_r)=\frac{1}{N},
@@ -227,11 +238,9 @@ P(X_i=a_r)=\frac{1}{N},
 r=1,\ldots,N.
 $$
 
-Se diferentes unidades possuírem o mesmo valor, a probabilidade desse valor é obtida somando as probabilidades das unidades correspondentes.
-
 ::: {.callout-important title="Resultado — Momentos de cada posição da amostra"}
 
-Para qualquer $i=1,\ldots,n$,
+Para qualquer posição $i=1,\ldots,n$,
 
 $$
 E(X_i)=\mu_N
@@ -243,27 +252,67 @@ $$
 \operatorname{Var}(X_i)=\sigma_N^2.
 $$
 
+Assim, cada posição da amostra possui a mesma média e a mesma variância da população finita.
+
+:::
+
 ::: {.callout-note collapse="true" title="Demonstração"}
 
-Como cada uma das $N$ unidades possui probabilidade $1/N$ de ocupar a posição $i$,
+Na amostragem aleatória simples sem reposição, cada uma das $N$ unidades da população possui a mesma probabilidade de ocupar a posição $i$. Portanto,
 
 $$
+P(J_i=r)=\frac{1}{N},
+\qquad
+r=1,\ldots,N,
+$$
+
+e, como
+
+$$
+X_i=a_{J_i},
+$$
+
+a variável $X_i$ assume cada valor populacional $a_r$ com a probabilidade correspondente à seleção da unidade $r$.
+
+Assim,
+
+$$
+\begin{aligned}
 E(X_i)
-=
-\frac{1}{N}\sum_{r=1}^N a_r
-=
+&=
+\sum_{r=1}^N
+a_r P(J_i=r)\\
+&=
+\frac{1}{N}
+\sum_{r=1}^N a_r\\
+&=
 \mu_N.
+\end{aligned}
 $$
 
-Além disso,
+Para calcular a variância, utilizamos
 
 $$
-E(X_i^2)
+\operatorname{Var}(X_i)
 =
-\frac{1}{N}\sum_{r=1}^N a_r^2.
+E(X_i^2)-[E(X_i)]^2.
 $$
 
-Da definição de variância da população finita,
+O segundo momento de $X_i$ é
+
+$$
+\begin{aligned}
+E(X_i^2)
+&=
+\sum_{r=1}^N
+a_r^2P(J_i=r)\\
+&=
+\frac{1}{N}
+\sum_{r=1}^N a_r^2.
+\end{aligned}
+$$
+
+Por outro lado, pela definição da variância da população finita,
 
 $$
 \sigma_N^2
@@ -273,165 +322,235 @@ $$
 (a_r-\mu_N)^2.
 $$
 
-Expandindo o quadrado,
+Expandindo,
 
 $$
+\begin{aligned}
 \sigma_N^2
-=
+&=
+\frac{1}{N}
+\sum_{r=1}^N
+\left(
+a_r^2-2a_r\mu_N+\mu_N^2
+\right)\\
+&=
+\frac{1}{N}
+\sum_{r=1}^N a_r^2
+-
+2\mu_N
+\left(
+\frac{1}{N}
+\sum_{r=1}^N a_r
+\right)
++
+\mu_N^2\\
+&=
 \frac{1}{N}
 \sum_{r=1}^N a_r^2
 -
 \mu_N^2.
+\end{aligned}
 $$
 
-Portanto,
+Logo,
 
 $$
-E(X_i^2)
+\frac{1}{N}
+\sum_{r=1}^N a_r^2
 =
 \sigma_N^2+\mu_N^2,
 $$
 
-e
+e, portanto,
 
 $$
+E(X_i^2)
+=
+\sigma_N^2+\mu_N^2.
+$$
+
+Finalmente,
+
+$$
+\begin{aligned}
 \operatorname{Var}(X_i)
-=
-E(X_i^2)-[E(X_i)]^2
-=
+&=
+E(X_i^2)-[E(X_i)]^2\\
+&=
+\sigma_N^2+\mu_N^2-\mu_N^2\\
+&=
 \sigma_N^2.
+\end{aligned}
 $$
-:::
+
+Assim,
+
+$$
+
+E(X_i)=\mu_N,
+\qquad
+\operatorname{Var}(X_i)=\sigma_N^2.
+$$
+
 :::
 
-A igualdade das distribuições marginais não implica independência. Na amostragem sem reposição, o valor observado em uma posição altera a composição disponível para as posições seguintes.
+Embora $X_1,\ldots,X_n$ possuam a mesma distribuição marginal, essas variáveis não são independentes. Na amostragem sem reposição, a unidade selecionada em uma posição deixa de estar disponível para as demais. A covariância entre duas posições distintas permite quantificar essa dependência.
 
 ::: {.callout-important title="Resultado — Covariância na amostragem sem reposição"}
 
 Para duas posições distintas $i\neq j$,
 
 $$
-\operatorname{Cov}(X_i,X_j) =-\frac{\sigma_N^2}{N-1}.
+\operatorname{Cov}(X_i,X_j)
+=
+-\frac{\sigma_N^2}{N-1}.
 $$
 
-A covariância é não positiva e, para uma população com $\sigma_N^2>0$, é negativa. O resultado expressa a dependência produzida pela ausência de reposição: a seleção de uma unidade modifica o conjunto disponível para as seleções seguintes.
+Assim, se a população apresenta variabilidade, isto é, $\sigma_N^2>0$, a covariância entre duas posições distintas da amostra é negativa. Esse resultado expressa a dependência introduzida pela amostragem sem reposição: depois que uma unidade é selecionada, ela deixa de estar disponível para as seleções seguintes.
+
+:::
 
 ::: {.callout-note collapse="true" title="Demonstração"}
 
-Para $i\neq j$, qualquer par ordenado de unidades distintas da população possui probabilidade
-
-$$
-\frac{1}{N(N-1)}
-$$
-
-de ocupar, respectivamente, as posições $i$ e $j$. Portanto,
-
-$$
-E(X_iX_j)
-=
-\frac{1}{N(N-1)}
-\sum_{r\neq s} a_ra_s.
-$$
-
-Utilizamos a identidade
-
-$$
-\left(
-\sum_{r=1}^N a_r
-\right)^2
-=
-\sum_{r=1}^N a_r^2
-+
-\sum_{r\neq s}a_ra_s.
-$$
-
-Logo,
-
-$$
-\sum_{r\neq s}a_ra_s
-=
-\left(
-\sum_{r=1}^N a_r
-\right)^2
--
-\sum_{r=1}^N a_r^2.
-$$
-
-Como
-
-$$
-\sum_{r=1}^N a_r
-=
-N\mu_N
-$$
-
-e
-
-$$
-\frac{1}{N}
-\sum_{r=1}^N a_r^2
-=
-\sigma_N^2+\mu_N^2,
-$$
-
-temos
-
-$$
-E(X_iX_j)
-=
-\frac{
-N^2\mu_N^2
--
-N(\sigma_N^2+\mu_N^2)
-}{
-N(N-1)
-}.
-$$
-
-Simplificando,
-
-$$
-E(X_iX_j)
-=
-\mu_N^2
--
-\frac{\sigma_N^2}{N-1}.
-$$
-
-Como
+Considere $i\neq j$. Como
 
 $$
 E(X_i)=E(X_j)=\mu_N,
 $$
 
+podemos escrever a covariância como
+
+$$
+\operatorname{Cov}(X_i,X_j)
+=
+E\left[
+(X_i-\mu_N)(X_j-\mu_N)
+\right].
+$$
+
+Na amostragem aleatória simples sem reposição, qualquer par ordenado de **unidades distintas** da população possui a mesma probabilidade de ocupar as posições $i$ e $j$.
+
+Se $J_i$ e $J_j$ representam os índices das unidades selecionadas nessas posições, então, para $r\neq s$,
+
+$$
+P(J_i=r,J_j=s)
+=
+\frac{1}{N}\frac{1}{N-1}
+=
+\frac{1}{N(N-1)}.
+$$
+
+Como
+
+$$
+X_i=a_{J_i}
+\qquad\text{e}\qquad
+X_j=a_{J_j},
+$$
+
+temos
+
+$$
+\begin{aligned}
+\operatorname{Cov}(X_i,X_j)
+&=
+\sum_{r\neq s}
+(a_r-\mu_N)(a_s-\mu_N)
+P(J_i=r,J_j=s)\\
+&=
+\frac{1}{N(N-1)}
+\sum_{r\neq s}
+(a_r-\mu_N)(a_s-\mu_N).
+\end{aligned}
+$$
+
+Agora utilizamos a identidade
+
+$$
+\left[
+\sum_{r=1}^N(a_r-\mu_N)
+\right]^2
+=
+\sum_{r=1}^N(a_r-\mu_N)^2
++
+\sum_{r\neq s}
+(a_r-\mu_N)(a_s-\mu_N).
+$$
+
+Pela definição de $\mu_N$,
+
+$$
+\sum_{r=1}^N(a_r-\mu_N)=0.
+$$
+
+Portanto,
+
+$$
+\sum_{r\neq s}
+(a_r-\mu_N)(a_s-\mu_N)
+=
+-
+\sum_{r=1}^N(a_r-\mu_N)^2.
+$$
+
+Como
+
+$$
+\sigma_N^2
+=
+\frac{1}{N}
+\sum_{r=1}^N(a_r-\mu_N)^2,
+$$
+
 segue que
 
 $$
-\operatorname{Cov}(X_i,X_j)
+\sum_{r=1}^N(a_r-\mu_N)^2
 =
-E(X_iX_j)-E(X_i)E(X_j),
+N\sigma_N^2.
 $$
 
-e, portanto,
+Substituindo na expressão da covariância,
 
 $$
+\begin{aligned}
 \operatorname{Cov}(X_i,X_j)
-=
+&=
+\frac{1}{N(N-1)}
+\left(
+-N\sigma_N^2
+\right)\\
+&=
 -\frac{\sigma_N^2}{N-1}.
+\end{aligned}
 $$
+
+Logo,
+
+$$
+\operatorname{Cov}(X_i,X_j)
+=
+-\frac{\sigma_N^2}{N-1},
+\qquad i\neq j.
+$$
+
 :::
-:::
 
+::: {.callout-important title="Resultado — Momentos da média amostral"}
 
-Então
+Na amostragem aleatória simples sem reposição,
 
-$$E(\overline{X})=\mu_N$$
+$$
+E(\overline X)=\mu_N
+$$
 
 e
 
-$$\operatorname{Var}(\overline{X})
+$$
+\operatorname{Var}(\overline X)
 =
-\frac{\sigma_N^2}{n}\frac{N-n}{N-1}.
+\frac{\sigma_N^2}{n}
+\frac{N-n}{N-1}.
 $$
 
 O fator
@@ -440,7 +559,7 @@ $$
 \frac{N-n}{N-1}
 $$
 
-é a correção de população finita para a variância. Para o erro-padrão, o fator correspondente é
+é denominado **correção de população finita para a variância**. Para o erro-padrão, o fator correspondente é
 
 $$
 \sqrt{\frac{N-n}{N-1}}.
@@ -448,6 +567,7 @@ $$
 
 [@rice2007mathematical, seção 7.3.1, pp. 203--210; @cox2006principles, seção 9.2, pp. 179--181]
 
+:::
 
 ::: {.callout-note collapse="true" title="Demonstração"}
 
@@ -457,30 +577,47 @@ $$
 \overline X
 =
 \frac{1}{n}
-\sum_{i=1}^nX_i.
+\sum_{i=1}^n X_i.
 $$
 
 Usando a linearidade da esperança,
 
 $$
+\begin{aligned}
 E(\overline X)
-=
+&=
+E\left(
 \frac{1}{n}
-\sum_{i=1}^nE(X_i).
+\sum_{i=1}^n X_i
+\right)\\
+&=
+\frac{1}{n}
+\sum_{i=1}^n E(X_i).
+\end{aligned}
 $$
 
-Como $E(X_i)=\mu_N$ para todo $i$,
+Como, para qualquer posição da amostra,
 
 $$
+E(X_i)=\mu_N,
+$$
+
+segue que
+
+$$
+\begin{aligned}
 E(\overline X)
-=
+&=
 \frac{1}{n}
-n\mu_N
-=
+\sum_{i=1}^n \mu_N\\
+&=
+\frac{1}{n}n\mu_N\\
+&=
 \mu_N.
+\end{aligned}
 $$
 
-Para a variância,
+Para obter a variância, temos
 
 $$
 \operatorname{Var}(\overline X)
@@ -488,7 +625,7 @@ $$
 \frac{1}{n^2}
 \operatorname{Var}
 \left(
-\sum_{i=1}^nX_i
+\sum_{i=1}^n X_i
 \right).
 $$
 
@@ -497,7 +634,7 @@ A variância de uma soma pode ser escrita como
 $$
 \operatorname{Var}
 \left(
-\sum_{i=1}^nX_i
+\sum_{i=1}^n X_i
 \right)
 =
 \sum_{i=1}^n
@@ -508,47 +645,70 @@ $$
 \operatorname{Cov}(X_i,X_j).
 $$
 
-Como
+Dos resultados anteriores,
 
 $$
-\operatorname{Var}(X_i)
+\operatorname{Var}(X_i)=\sigma_N^2
+$$
+
+e, para $i\neq j$,
+
+$$
+\operatorname{Cov}(X_i,X_j)
 =
-\sigma_N^2
+-\frac{\sigma_N^2}{N-1}.
 $$
 
-e existem
+Há
 
 $$
-\binom n2
+\binom{n}{2}
 =
 \frac{n(n-1)}{2}
 $$
 
-pares distintos,
+pares de posições distintas com $i<j$. Portanto,
 
 $$
+\begin{aligned}
 \operatorname{Var}(\overline X)
-=
+&=
 \frac{1}{n^2}
 \left[
 n\sigma_N^2
 +
-n(n-1)
+2\binom{n}{2}
 \left(
 -\frac{\sigma_N^2}{N-1}
 \right)
+\right]\\
+&=
+\frac{1}{n^2}
+\left[
+n\sigma_N^2
+-
+n(n-1)
+\frac{\sigma_N^2}{N-1}
 \right].
+\end{aligned}
 $$
 
 Colocando $n\sigma_N^2$ em evidência,
 
 $$
+\begin{aligned}
 \operatorname{Var}(\overline X)
-=
+&=
+\frac{n\sigma_N^2}{n^2}
+\left[
+1-\frac{n-1}{N-1}
+\right]\\
+&=
 \frac{\sigma_N^2}{n}
 \left[
 1-\frac{n-1}{N-1}
 \right].
+\end{aligned}
 $$
 
 Como
@@ -562,27 +722,50 @@ $$
 obtemos
 
 $$
+\boxed{
 \operatorname{Var}(\overline X)
 =
 \frac{\sigma_N^2}{n}
-\frac{N-n}{N-1}.
+\frac{N-n}{N-1}
+}.
 $$
+
+Portanto, a correção de população finita surge diretamente das covariâncias negativas entre posições distintas da amostra.
+
 :::
 
 
+::: {.callout-note title="Observação — Duas convenções para a variância da população finita"}
 
-::: {.callout-warning title="Observação — Duas convenções para a variância finita"}
-Se a variância da população finita for definida por
+Neste capítulo, definimos
+
+$$
+\sigma_N^2
+=
+\frac{1}{N}
+\sum_{j=1}^N
+(a_j-\mu_N)^2.
+$$
+
+Outra convenção encontrada na literatura utiliza o denominador $N-1$:
 
 $$
 \sigma_F^2
 =
 \frac{1}{N-1}
 \sum_{j=1}^N
-(a_j-\mu_N)^2,
+(a_j-\mu_N)^2.
 $$
 
-então a mesma fórmula pode ser escrita como
+As duas definições estão relacionadas por
+
+$$
+\sigma_F^2
+=
+\frac{N}{N-1}\sigma_N^2.
+$$
+
+Com essa segunda convenção, a variância da média amostral pode ser escrita como
 
 $$
 \operatorname{Var}(\overline X)
@@ -593,7 +776,17 @@ $$
 \frac{\sigma_F^2}{n}.
 $$
 
-As duas expressões são equivalentes; é necessário apenas manter a convenção utilizada para a variância populacional [@rice2007mathematical, seção 7.3.1; @cox2006principles, seção 9.2].
+Essa expressão é equivalente a
+
+$$
+\operatorname{Var}(\overline X)
+=
+\frac{\sigma_N^2}{n}
+\frac{N-n}{N-1}.
+$$
+
+Por isso, ao consultar diferentes referências, é importante verificar qual definição de variância da população finita está sendo utilizada [@rice2007mathematical, seção 7.3.1; @cox2006principles, seção 9.2].
+
 :::
 
 ::: {.callout-note title="Interpretação — Fração amostral"}
@@ -1649,7 +1842,7 @@ A normalidade é exata porque $\overline X$ e $\overline Y$ são variáveis norm
 
 ## Lei dos Grandes Números
 
-A Lei dos Grandes Números descreve o comportamento da média amostral quando o tamanho da amostra aumenta. O resultado também é discutido, em um contexto probabilístico mais geral, em @sec-prelim-matematica-assintotica.
+A Lei dos Grandes Números descreve o comportamento da média amostral quando o tamanho da amostra aumenta. O resultado também é discutido, em um contexto probabilístico mais geral, no @sec-prelim-matematica-assintotica.
 
 No estudo das distribuições amostrais, seu papel é mostrar como a distribuição de $\overline X_n$ se concentra progressivamente em torno da média populacional $\mu$ à medida que $n$ aumenta.
 
@@ -1764,7 +1957,7 @@ Assim, a proporção amostral concentra-se em torno da proporção populacional 
 
 ## Teorema Central do Limite
 
-O Teorema Central do Limite fornece uma aproximação para a forma da distribuição amostral de somas e médias quando o tamanho da amostra aumenta. Uma apresentação do resultado em um contexto probabilístico mais geral também pode ser consultada em @sec-prelim-matematica-assintotica.
+O Teorema Central do Limite fornece uma aproximação para a forma da distribuição amostral de somas e médias quando o tamanho da amostra aumenta. Uma apresentação do resultado em um contexto probabilístico mais geral também pode ser consultada no @sec-prelim-matematica-assintotica.
 
 Para uma amostra i.i.d. com
 
@@ -2055,7 +2248,7 @@ Para amostras normais, a estatística acima possui exatamente distribuição $t_
 
 ## Distribuição amostral da proporção
 
-Retomando o modelo Bernoulli utilizado em @sec-fundamentos-inferencia, considere
+Retomando o modelo Bernoulli utilizado no @sec-fundamentos-inferencia, considere
 
 $$
 X_1,\ldots,X_n
@@ -3438,6 +3631,8 @@ $$
 \chi^2_{n-1}.
 $$
 
+:::
+
 ::: {.callout-note collapse="true" title="Interpretação geral dos graus de liberdade"}
 
 A ideia observada nos desvios em relação à média pode ser generalizada: em muitos problemas, os graus de liberdade correspondem ao número de componentes de variação que permanecem depois da imposição de restrições independentes.
@@ -3459,8 +3654,6 @@ Por isso, apenas $n-1$ desses desvios podem variar livremente.
 Essa interpretação por restrições lineares será retomada posteriormente em outros procedimentos estatísticos. Entretanto, nem todo número chamado de graus de liberdade deve ser interpretado literalmente como uma contagem de observações independentes; em alguns métodos aproximados, ele funciona como um parâmetro de calibração.
 
 :::
-:::
-
 
 ### Distribuição $t$ de Student
 
