@@ -2,50 +2,29 @@
 
 A inferência estatística utiliza informações obtidas em uma amostra para estudar características desconhecidas de uma população ou de um processo que produz dados. Como diferentes amostras podem gerar resultados diferentes, as conclusões obtidas a partir dos dados estão associadas à variabilidade e à incerteza.
 
-O desenvolvimento parte do problema inferencial, do processo gerador de dados, da população, dos parâmetros e da amostragem. Um experimento com uma urna permite observar diretamente a variabilidade produzida por diferentes amostras e fornece a base para distinguir estatística, estimador, estimativa e modelo estatístico.
+O desenvolvimento parte do problema inferencial, do processo gerador de dados, da população, dos parâmetros e da amostragem. Um experimento com uma urna permite observar diretamente a variabilidade produzida por diferentes amostras e fornece a base para distinguir estatística, estimador e estimativa e para introduzir o modelo estatístico e a função de verossimilhança.
 
-Ao final do capítulo, o experimento da urna é reproduzido e ampliado computacionalmente. Essa seção foi organizada de forma autônoma: pode ser utilizada logo após o experimento em sala de aula, de forma intercalada com o desenvolvimento conceitual ou depois da apresentação da teoria.
+Ao final do capítulo, o experimento da urna é reproduzido e ampliado computacionalmente.
 
 ## O problema da inferência estatística
 
 Em muitas situações, deseja-se conhecer uma característica de uma população sem observar todos os seus elementos. Pode haver interesse, por exemplo, na proporção de eleitores favoráveis a determinado candidato, no peso médio de um produto fabricado por uma empresa ou no tempo médio de funcionamento de determinado equipamento.
 
-Quando a observação de toda a população não é possível ou conveniente, utiliza-se uma amostra. As informações obtidas nessa amostra são utilizadas para estudar a característica de interesse na população. De forma geral, esse processo pode ser representado por
-
-$$
-\text{população}
-\longrightarrow
-\text{amostra}
-\longrightarrow
-\text{informação sobre a população}.
-$$
+Quando a observação de toda a população não é possível ou conveniente, utiliza-se uma amostra. Os dados obtidos nessa amostra são analisados para produzir conclusões sobre a característica de interesse na população. A amostra observada corresponde a apenas um dos possíveis conjuntos de dados que poderiam ser obtidos. Se o procedimento de amostragem fosse repetido, outros elementos poderiam ser selecionados e os resultados calculados a partir deles poderiam ser diferentes. Assim, a inferência estatística envolve a variabilidade associada ao processo de obtenção dos dados.
 
 ::: {.callout-important title="Inferência estatística"}
 A inferência estatística utiliza dados observados para obter informação sobre características desconhecidas da população ou do processo que gerou os dados.
 :::
 
-A amostra observada corresponde a apenas um dos possíveis conjuntos de dados que poderiam ser obtidos. Se o procedimento de amostragem fosse repetido, outros elementos poderiam ser selecionados e os resultados calculados a partir deles poderiam ser diferentes. Assim, a inferência estatística envolve a variabilidade associada aos dados observados.
-
 Para representar essa variabilidade e estabelecer procedimentos inferenciais, é necessário considerar como os dados são produzidos. Esse é o ponto de partida para o conceito de Processo Gerador de Dados.
-
 
 ## Processo Gerador de Dados (PGD)
 
-Os dados observados resultam de algum mecanismo que determina quais valores podem ocorrer e como esses valores são produzidos. Esse mecanismo será denominado **Processo Gerador de Dados (PGD)**.
+Os dados observados resultam de algum mecanismo que define as condições sob as quais determinados valores podem ocorrer e ser observados. Esse mecanismo será denominado **Processo Gerador de Dados (PGD)**.
 
-O PGD pode envolver diferentes componentes, como características da população, seleção das unidades observadas, condições de medição, fontes de variabilidade e relações de dependência entre as observações. Em um experimento controlado, parte desse processo pode ser estabelecida pelo pesquisador. Em estudos observacionais, vários de seus componentes podem ser desconhecidos ou apenas parcialmente conhecidos.
+O PGD pode envolver diferentes componentes, como características da população, seleção das unidades observadas, condições de medição, fontes de variabilidade e relações de dependência entre as observações. Em termos gerais, o PGD descreve como o fenômeno de interesse e o mecanismo de observação se combinam para produzir os dados observados.
 
-Podemos representar esquematicamente esse processo por
-
-$$
-\text{fenômeno}
-\longrightarrow
-\text{PGD}
-\longrightarrow
-\text{dados observados}.
-$$
-
-Os dados constituem uma realização particular do processo. Se o mecanismo fosse repetido sob as mesmas condições, outros conjuntos de dados poderiam ser observados.
+Os dados constituem uma realização particular desse processo. Se o mecanismo fosse repetido sob condições semelhantes, outros conjuntos de dados poderiam ser observados.
 
 O PGD real raramente é conhecido em todos os seus detalhes. Por essa razão, o **modelo estatístico** fornece uma representação probabilística simplificada dos aspectos do PGD considerados relevantes para o problema estudado.
 
@@ -56,7 +35,7 @@ $$
 X_1,\ldots,X_n \overset{\mathrm{iid}}{\sim} F.
 $$
 
-A condição i.i.d. estabelece que as variáveis são independentes e possuem a mesma distribuição. Essa é uma hipótese sobre o mecanismo de geração dos dados e não uma condição que define todo Processo Gerador de Dados.
+A condição i.i.d. (iid) estabelece que as variáveis aleatórias são independentes e identicamente distribuídas. Essa é uma hipótese sobre o mecanismo de geração dos dados e não uma condição que define todo Processo Gerador de Dados.
 
 Outros mecanismos podem produzir observações dependentes, distribuições diferentes entre unidades ou estruturas amostrais determinadas pelo plano de coleta.
 :::
@@ -64,7 +43,6 @@ Outros mecanismos podem produzir observações dependentes, distribuições dife
 A adequação da hipótese i.i.d. depende do mecanismo que produz os dados. A condição de distribuições idênticas requer que as observações possam ser representadas pelo mesmo modelo probabilístico, enquanto a independência requer que o comportamento de uma observação não altere probabilisticamente o das demais.
 
 Por exemplo, componentes selecionados aleatoriamente de uma produção mantida sob condições estáveis podem ser razoavelmente representados como i.i.d. Em contrapartida, medições sucessivas de uma mesma variável ao longo do tempo podem apresentar dependência e exigir outro modelo.
-
 
 ## Conceitos fundamentais
 
@@ -75,6 +53,8 @@ A **unidade observacional** é o elemento da população sobre o qual uma ou mai
 Quando a população é finita, seu tamanho será representado por $N$.
 
 Uma quantidade que caracteriza a população, o processo ou o modelo estatístico de interesse é denominada **parâmetro**. Na abordagem frequentista desenvolvida neste livro, o parâmetro é tratado como uma quantidade fixa. Em um problema inferencial, seu valor é, em geral, desconhecido e deve ser estudado a partir dos dados observados.
+
+Os parâmetros são usualmente representados por letras gregas, como $\mu$, $\sigma^2$ e $\theta$. Algumas quantidades, entretanto, possuem notações convencionais próprias. Um exemplo é a proporção populacional, frequentemente representada pela letra $p$.
 
 Por exemplo, podem constituir parâmetros:
 
@@ -94,15 +74,25 @@ $$
 
 Conhecemos $p$ nesse experimento porque a composição completa da urna é conhecida. Essa informação será utilizada como referência para estudar o que ocorre quando apenas uma amostra da urna é observada.
 
-Se uma amostra de tamanho $n$ contém $R$ bolas vermelhas, sua proporção de bolas vermelhas é
+Se representarmos por $V$ o número de bolas vermelhas em uma amostra aleatória de tamanho $n$, a proporção amostral pode ser escrita como
 
 $$
 \widehat p
 =
-\frac{R}{n}.
+\frac{V}{n}.
 $$
 
-A quantidade $\widehat p$ é calculada a partir da amostra. Seu papel como estatística, estimador ou estimativa depende da função que desempenha no problema inferencial.
+Como será formalizado adiante, $\widehat p$ é uma **estatística**, pois é uma função da amostra. Quando utilizada para obter informação sobre o parâmetro populacional $p$, ela desempenha o papel de **estimador** de $p$. Depois que uma amostra específica é observada e $V$ assume um valor $v$, o valor numérico
+
+$$
+\widehat p(\mathbf x)
+=
+\frac{v}{n}
+$$
+
+constitui uma **estimativa** de $p$.
+
+Essa distinção entre estatística, estimador e estimativa será retomada adiante, após o experimento da urna, quando será possível observar diretamente como $\widehat p$ varia entre diferentes amostras.
 
 ### Mecanismo de seleção da amostra {.unnumbered}
 
@@ -126,12 +116,14 @@ Cada grupo realizará uma amostragem seguindo o mesmo protocolo:
 
 1. misturar cuidadosamente as bolas da urna;
 2. retirar, com uma pá de amostragem com 50 espaços, $n=50$ bolas, sem reposição durante a formação da amostra;
-3. contar o número $R$ de bolas vermelhas;
-4. calcular a proporção amostral $\widehat p=R/50$;
-5. registrar os valores de $R$ e $\widehat p$;
+3. contar o número observado $v$ de bolas vermelhas;
+4. calcular a proporção observada $\widehat p=v/50$;
+5. registrar os valores de $v$ e $\widehat p$;
 6. devolver todas as bolas à urna antes da amostragem do grupo seguinte e misturá-las novamente.
 
-Cada grupo realiza uma amostragem separada. Os resultados dos grupos serão reunidos somente depois que todas as amostras tiverem sido obtidas.
+Cada grupo realiza uma amostragem separada. Dentro de cada amostra, as bolas são retiradas sem reposição; entre as amostragens dos grupos, todas as bolas são devolvidas à urna, restabelecendo a população original.
+
+Os resultados dos grupos serão reunidos somente depois que todas as amostras tiverem sido obtidas.
 
 Ao final, teremos valores
 
@@ -141,7 +133,7 @@ $$
 
 em que $m$ corresponde ao número de grupos.
 
-Essas proporções serão organizadas em uma tabela e representadas por um histograma. A figura resultante mostra a **distribuição empírica dos valores de $\widehat p$ obtidos pelos grupos** e permite observar a variabilidade produzida pela repetição da amostragem.
+Essas proporções serão organizadas em uma tabela e representadas graficamente. A representação resultante mostra a **distribuição empírica dos valores de $\widehat p$ obtidos pelos grupos** e permite observar a variabilidade produzida pela repetição da amostragem.
 
 Mesmo que todos os grupos utilizem a mesma população, o mesmo tamanho amostral e o mesmo procedimento, os valores de $\widehat p$ não precisam coincidir. Essa variação decorre da seleção de conjuntos diferentes de bolas em cada amostra.
 
@@ -150,7 +142,7 @@ O experimento fornece uma primeira representação empírica da variabilidade qu
 ### Verificação de aprendizagem {.unnumbered}
 
 1. Explique a função da mistura da urna antes de cada amostragem.
-2. Explique por que diferentes grupos podem obter valores distintos de $R$ e de $\widehat p$, mesmo utilizando o mesmo tamanho amostral.
+2. Explique por que diferentes grupos podem obter valores distintos de $v$ e de $\widehat p$, mesmo utilizando o mesmo tamanho amostral.
 3. Compare os valores de $\widehat p$ obtidos pelos grupos com a proporção populacional $p=0{,}375$.
 4. A partir dos resultados da turma, descreva o que permaneceu fixo e o que variou entre as diferentes amostras.
 
@@ -158,101 +150,240 @@ O experimento fornece uma primeira representação empírica da variabilidade qu
 
 Os resultados do experimento podem agora ser formalizados distinguindo a amostra antes da observação dos valores e a amostra efetivamente observada.
 
-Antes da coleta, representamos a amostra por um vetor aleatório
-
-$$\mathbf{X}=(X_1,\ldots,X_n).$$
-
-Depois da coleta, os valores observados são escritos como
-
-$$\mathbf{x}=(x_1,\ldots,x_n).$$
-
-A convenção de usar letras maiúsculas para variáveis aleatórias e minúsculas para suas realizações permite separar o procedimento inferencial, definido antes de observar os dados, do resultado numérico obtido em uma amostra particular [@cox2006principles, seção 1.1; @ramachandran2021r, seção 5.2, pp. 180--182].
-
-::: {.callout-important title="Estatística, estimador e estimativa"}
-Uma **estatística** é uma função das variáveis aleatórias que compõem a amostra e que não depende de parâmetros desconhecidos:
+Antes da coleta, representamos a amostra pelo vetor aleatório
 
 $$
-T=T(X_1,\ldots,X_n).
+\mathbf{X}=(X_1,\ldots,X_n).
 $$
 
-Quando uma estatística é utilizada para estimar uma quantidade populacional $\tau(\theta)$, ela recebe o nome de **estimador**. Antes da observação dos dados, o estimador $\widehat\tau=T(\mathbf X)$ é uma variável aleatória.
+Nesse caso, $X_1,\ldots,X_n$ são variáveis aleatórias e seus valores ainda não foram observados. Depois da coleta, uma realização particular desse vetor é representada por
 
-A **estimativa** é o valor observado do estimador:
+$$
+\mathbf{x}=(x_1,\ldots,x_n),
+$$
 
-$$\widehat\tau(\mathbf x)=T(x_1,\ldots,x_n).$$
+em que $x_1,\ldots,x_n$ são os valores efetivamente observados.
 
-Assim, o estimador é a regra inferencial; a estimativa é o número produzido pela regra em uma amostra específica [@chihara2022, definição 4.2, p. 79; @ramachandran2021r, seção 5.2, pp. 181--182].
+A convenção de utilizar letras maiúsculas para variáveis aleatórias e letras minúsculas para suas realizações permite distinguir uma quantidade definida antes da observação dos dados de seu valor em uma amostra particular [@cox2006principles, seção 1.1; @ramachandran2021r, seção 5.2, pp. 180--182].
+
+::: {.callout-important title="Estatística"}
+Uma **estatística** é uma função conhecida das variáveis aleatórias que compõem a amostra e cuja expressão não envolve parâmetros desconhecidos. De forma geral,
+
+$$
+T=T(\mathbf X)=T(X_1,\ldots,X_n).
+$$
+
+Antes da observação da amostra, $T(\mathbf X)$ é uma variável aleatória. Depois que a amostra $\mathbf x=(x_1,\ldots,x_n)$ é observada, a estatística assume o valor
+
+$$
+T(\mathbf x)=T(x_1,\ldots,x_n).
+$$
 :::
 
-### Exemplos básicos {.unnumbered}
+A condição de que uma estatística não dependa de parâmetros desconhecidos refere-se à sua regra de cálculo. Sua distribuição de probabilidade, entretanto, pode depender dos parâmetros do modelo. A distribuição de probabilidade de uma estatística é denominada **distribuição amostral** e será estudada em @sec-distribuicoes-amostrais.
 
-| Parâmetro de interesse | Estatística utilizada como estimador |
-|:-----------------------------------|:-----------------------------------|
-| média populacional $\mu$ | $\displaystyle \overline X=\frac{1}{n}\sum_{i=1}^nX_i$ |
-| variância populacional $\sigma^2$ | $\displaystyle S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2$ |
-| proporção populacional $p$ | $\displaystyle \widehat p=\frac{1}{n}\sum_{i=1}^nX_i$, para $X_i\in\{0,1\}$ |
+No experimento da urna, por exemplo, a quantidade $V$, que representa o número de bolas vermelhas na amostra aleatória, é uma estatística. A proporção amostral
 
-O papel inferencial depende do objetivo. Por exemplo, $\overline X$ é sempre uma estatística, mas somente é um estimador de $\mu$ quando a média populacional é a quantidade de interesse. A mesma estatística pode ainda ser empregada para estimar outras funções do parâmetro, dependendo do modelo adotado [@chihara2022, seção 1.6 e definição 4.2; @ramachandran2021r, seção 5.2].
+$$
+\widehat p=\frac{V}{n}
+$$
+
+também é uma estatística, pois é calculada apenas a partir dos resultados da amostra e do tamanho amostral conhecido.
+
+Uma estatística pode ser utilizada para estimar um parâmetro desconhecido. Considere inicialmente um parâmetro populacional $\theta$. Se a estatística $T(\mathbf X)$ é escolhida como regra para estimar $\theta$, escrevemos
+
+$$
+\widehat\theta=T(\mathbf X),
+$$
+
+e denominamos $\widehat\theta$ **estimador de $\theta$**.
+
+Como o estimador é uma função da amostra aleatória, seu valor pode variar de uma amostra para outra. Na abordagem frequentista considerada neste livro, essa situação é distinta daquela do parâmetro. Aqui $\theta$ é tratado como uma quantidade fixa, embora desconhecida, enquanto $\widehat\theta$ é uma variável aleatória.
+
+Depois que uma amostra particular $\mathbf x$ é observada, o estimador assume o valor
+
+$$
+\widehat\theta(\mathbf x)=T(\mathbf x).
+$$
+
+Esse valor é denominado **estimativa de $\theta$**.
+
+::: {.callout-important title="Estimador e estimativa"}
+Considere
+
+$$
+\widehat\theta=T(\mathbf X).
+$$
+
+O **estimador** $\widehat\theta$ é a regra, definida como uma função da amostra aleatória, utilizada para estimar o parâmetro $\theta$.
+
+Depois que a amostra $\mathbf x$ é observada,
+
+$$
+\widehat\theta(\mathbf x)=T(\mathbf x)
+$$
+
+é a **estimativa**, isto é, o valor assumido pelo estimador naquela amostra particular.
+
+Assim, o parâmetro $\theta$ é fixo e desconhecido, o estimador $\widehat\theta$ é aleatório antes da observação da amostra e a estimativa é o valor obtido após a observação dos dados [@chihara2022, definição 4.2, p. 79; @ramachandran2021r, seção 5.2, pp. 181--182].
+:::
+
+No experimento da urna, o parâmetro de interesse é a proporção populacional $p$. A proporção amostral
+
+$$
+\widehat p=\frac{V}{n}
+$$
+
+é utilizada como estimador de $p$.
+
+Por exemplo, se em uma amostra de $n=50$ bolas for observado $v=20$, a estimativa obtida é
+
+$$
+\widehat p
+=
+\frac{20}{50}
+=
+0{,}40.
+$$
+
+Nesse caso, $\widehat p=V/n$ representa o estimador de $p$, enquanto
+
+$$
+\widehat p(\mathbf x)
+=
+\frac{v}{n}
+=
+0{,}40
+$$
+
+é a estimativa produzida pela amostra observada.
+
+Na notação estatística, é comum utilizar o mesmo símbolo, como $\widehat p$ ou $\widehat\theta$, tanto para o estimador quanto para seu valor observado. A distinção entre os dois é determinada pelo contexto. Quando for necessário explicitá-la, utilizaremos $T(\mathbf X)$ para a estatística como variável aleatória e $T(\mathbf x)$ para seu valor na amostra observada.
+
+::: {.callout-note title="Estimação de uma função do parâmetro"}
+Em alguns problemas, a quantidade de interesse não é o próprio parâmetro $\theta$, mas uma função desse parâmetro,
+
+$$
+\tau(\theta).
+$$
+
+Nesse caso, uma estatística $T(\mathbf X)$ utilizada para estimar $\tau(\theta)$ pode ser representada por
+
+$$
+\widehat{\tau}=T(\mathbf X).
+$$
+
+Depois da observação da amostra $\mathbf x$, o valor
+
+$$
+\widehat{\tau}(\mathbf x)=T(\mathbf x)
+$$
+
+é uma estimativa de $\tau(\theta)$.
+
+Portanto, a definição de estimador permanece a mesma; o que se altera é a quantidade paramétrica que constitui o objeto da estimação.
+:::
+
+Alguns exemplos usuais são apresentados a seguir.
+
+| Parâmetro de interesse | Estimador | Estimativa após a observação da amostra |
+|:-----------------------|:----------|:-----------------------------------------|
+| média populacional $\mu$ | $\displaystyle \overline X=\frac{1}{n}\sum_{i=1}^nX_i$ | $\displaystyle \overline x=\frac{1}{n}\sum_{i=1}^nx_i$ |
+| variância populacional $\sigma^2$ | $\displaystyle S^2=\frac{1}{n-1}\sum_{i=1}^n(X_i-\overline X)^2$ | $\displaystyle s^2=\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline x)^2$ |
+| proporção populacional $p$ | $\displaystyle \widehat p=\frac{V}{n}$ | $\displaystyle \widehat p(\mathbf x)=\frac{v}{n}$ |
+
+Uma mesma expressão pode ser considerada inicialmente apenas como uma estatística e, quando associada a uma quantidade paramétrica que se deseja estimar, desempenhar o papel de estimador. Por exemplo, $\overline X$ é uma estatística por ser uma função da amostra que não envolve parâmetros desconhecidos. Quando é utilizada para estimar a média populacional $\mu$, $\overline X$ é um estimador de $\mu$ [@chihara2022, seção 1.6 e definição 4.2; @ramachandran2021r, seção 5.2].
 
 ## Exemplo-guia: modelo Bernoulli para a urna
 
-Considere agora uma versão idealizada do experimento em que cada retirada é realizada **com reposição** e todas as bolas possuem a mesma probabilidade de seleção em cada retirada. Nesse modelo, as retiradas são independentes e a probabilidade de selecionar uma bola vermelha permanece constante.
+O experimento realizado em sala de aula utiliza amostragem sem reposição. Nesse caso, a composição da urna se modifica a cada retirada e as observações realizadas dentro de uma mesma amostra não são independentes.
 
-Na urna utilizada em sala de aula, a proporção $p=0{,}375$ é conhecida porque sua composição foi previamente estabelecida. Para introduzir o problema inferencial, consideraremos agora $p$ como desconhecido e utilizaremos os resultados das retiradas para obter informação sobre essa proporção.
+Para introduzir um modelo probabilístico simples que permita formalizar os conceitos de parâmetro, estatística e estimador, consideraremos agora um mecanismo de amostragem diferente: após cada retirada, a bola é devolvida à urna e as bolas são novamente misturadas antes da retirada seguinte.
+
+Com a reposição, a composição da urna permanece a mesma em todas as retiradas. Se todas as bolas possuem a mesma probabilidade de seleção, a probabilidade de retirar uma bola vermelha é constante e igual à proporção de bolas vermelhas na urna.
+
+Na urna utilizada em sala de aula,
+
+$$
+p=\frac{900}{2400}=0{,}375.
+$$
+
+Esse valor é conhecido porque a composição da urna foi previamente estabelecida. Para formular um problema de inferência, passaremos agora da urna física para um **modelo Bernoulli paramétrico idealizado**, no qual $p$ é desconhecido e deve ser estudado a partir da amostra.
+
+Nesse modelo, $p$ representa a probabilidade de obter uma bola vermelha em cada retirada e pode assumir qualquer valor no intervalo $[0,1]$. Portanto, não será imposta a restrição discreta decorrente da composição da urna física, na qual uma proporção populacional teria necessariamente a forma $R/2400$.
 
 Defina
 
-$$X_i=
+$$
+X_i=
 \begin{cases}
 1, & \text{se a }i\text{-ésima bola é vermelha},\\
 0, & \text{se a }i\text{-ésima bola é branca}.
 \end{cases}
 $$
 
-Se a probabilidade de uma bola vermelha em cada retirada é $p$, então
+Sob esse mecanismo de amostragem,
 
-$$X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Ber}(p).$$
-
-O total de bolas vermelhas e a proporção correspondente são
-
-$$R=\sum_{i=1}^nX_i
-\qquad\text{e}\qquad
-\widehat p=\frac{R}{n}.
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Ber}(p).
 $$
 
-Nesse exemplo, $R$ e $\widehat p$ são estatísticas. Quando o objetivo é estimar $p$, a proporção amostral $\widehat p$ funciona como estimador da proporção populacional [@chihara2022, seção 1.5, seção 1.6 e apêndice B.1].
+Cada variável $X_i$ possui a mesma distribuição Bernoulli com parâmetro $p$, e a reposição permite tratar as retiradas como independentes.
+
+A estatística que representa o número de bolas vermelhas na amostra é
+
+$$
+V=\sum_{i=1}^n X_i,
+$$
+
+e a proporção amostral é
+
+$$
+\widehat p
+=
+\frac{V}{n}
+=
+\frac{1}{n}\sum_{i=1}^n X_i.
+$$
+
+Assim, $V$ e $\widehat p$ são estatísticas. Quando o objetivo é estimar a proporção populacional $p$, $\widehat p$ é utilizado como estimador de $p$ [@chihara2022, seção 1.5, seção 1.6 e apêndice B.1].
 
 ::: {.callout-warning title="Amostragem com e sem reposição"}
-A representação i.i.d. de Bernoulli exige retiradas independentes, como ocorre na amostragem com reposição. Em uma urna finita amostrada **sem reposição**, as observações não são independentes e o total de bolas vermelhas possui distribuição hipergeométrica. A distinção entre esses dois planos amostrais e a correção para população finita são desenvolvidas em @sec-distribuicoes-amostrais [@chihara2022, seção 1.5, pp. 5--6; @rice2007mathematical, seção 7.3].
+O modelo Bernoulli i.i.d. apresentado nesta seção corresponde ao mecanismo de amostragem **com reposição** e, portanto, não descreve exatamente o experimento realizado anteriormente em sala de aula.
+
+Na amostragem **sem reposição** em uma população finita, as retiradas realizadas dentro de uma mesma amostra são dependentes e o número de bolas vermelhas possui distribuição hipergeométrica.
+
+Os dois mecanismos permitem estudar a variabilidade decorrente da amostragem, mas produzem modelos probabilísticos diferentes. A amostragem sem reposição e a correção para população finita serão estudadas em @sec-distribuicoes-amostrais [@chihara2022, seção 1.5, pp. 5--6; @rice2007mathematical, seção 7.3].
 :::
 
 ::: {.collapse title="Por que a independência se perde sem reposição?"}
 
-Considere uma urna com $N$ bolas, das quais $K$ são vermelhas.
+Considere uma urna com $N$ bolas, das quais $R$ são vermelhas.
 
 Antes de qualquer retirada,
 
 $$
 P(X_1=1)
 =
-\frac{K}{N}.
+\frac{R}{N}.
 $$
 
-Se a primeira bola retirada for vermelha e ela não for devolvida à urna,
-restam $K-1$ bolas vermelhas entre $N-1$ bolas. Portanto,
+Se a primeira bola retirada for vermelha e não for devolvida à urna, restam $R-1$ bolas vermelhas entre $N-1$ bolas. Portanto,
 
 $$
 P(X_2=1\mid X_1=1)
 =
-\frac{K-1}{N-1}.
+\frac{R-1}{N-1}.
 $$
 
 Em geral,
 
 $$
-\frac{K-1}{N-1}
+\frac{R-1}{N-1}
 \neq
-\frac{K}{N}.
+\frac{R}{N}.
 $$
 
 Logo,
@@ -281,272 +412,815 @@ P(X_2=1\mid X_1=1)
 \frac{899}{2399}.
 $$
 
-A ausência de reposição modifica a composição da urna após cada retirada,
-criando dependência entre as observações.
+A ausência de reposição modifica a composição da urna após cada retirada e, consequentemente, a probabilidade associada às retiradas seguintes.
 
 :::
-
-## Variabilidade dos estimadores
-
-Como um estimador é uma função de variáveis aleatórias, amostras diferentes podem produzir estimativas diferentes. A repetição do mecanismo amostral permite estudar probabilisticamente essa variabilidade e conduz ao conceito de **distribuição amostral**.
-
-A relação é formalizada em @sec-distribuicoes-amostrais por meio dos seguintes elementos:
-
-- distribuições de $\overline X$, $S^2$ e $\widehat p$;
-- esperança, variância e erro-padrão das estatísticas;
-- efeito do tamanho amostral;
-- amostragem sem reposição e correção para população finita;
-- resultados exatos, aproximações assintóticas e simulação.
-
-Esses resultados transformam a variabilidade observada entre amostras em uma descrição probabilística das estatísticas sob repetição do mecanismo amostral.
-
-## Critérios para avaliar estimadores
-
-Diferentes estimadores podem ser propostos para o mesmo parâmetro. A escolha entre eles exige critérios que descrevam tanto o desempenho em amostras finitas quanto o comportamento quando o tamanho amostral aumenta [@chihara2022, seção 6.3; @ramachandran2021r, seção 5.2].
-
-| Critério | Aspecto avaliado |
-|:-----------------------------------|:-----------------------------------|
-| viés | diferença entre o valor esperado do estimador e a quantidade estimada |
-| variância | variabilidade do estimador entre diferentes amostras |
-| erro quadrático médio | efeito conjunto do viés e da variabilidade |
-| consistência | aproximação do estimador ao parâmetro quando o tamanho amostral aumenta |
-
-Viés, variância, erro quadrático médio e consistência descrevem aspectos distintos do desempenho de um estimador. O capítulo **Avaliação de Estimadores e Princípios de Redução de Dados** formaliza esses critérios e acrescenta eficiência, suficiência e resultados de melhoria de estimadores.
 
 ## Modelo estatístico e função de verossimilhança
 
-A função de verossimilhança relaciona os dados observados aos diferentes valores do parâmetro permitidos pelo modelo. Essa relação sustenta tanto a redução de dados por meio da informação sobre o parâmetro quanto a construção de estimadores por máxima verossimilhança.
-
-O processo gerador de dados de um fenômeno real raramente é conhecido em todos os seus detalhes. A análise começa, portanto, com um **modelo estatístico**: uma família de distribuições que representa os aspectos do mecanismo considerados relevantes para a pergunta científica. Em um modelo paramétrico,
+No exemplo da urna, a representação
 
 $$
-\mathcal P
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Ber}(p)
+$$
+
+especifica probabilisticamente como os dados podem ser produzidos para cada possível valor de $p$. Essa representação é um exemplo de **modelo estatístico**.
+
+De forma mais geral, a análise inferencial requer uma representação probabilística para o vetor de observações
+
+$$
+\mathbf X=(X_1,\ldots,X_n).
+$$
+
+Essa representação deve especificar quais distribuições de probabilidade são consideradas possíveis para $\mathbf X$ e quais quantidades desconhecidas distinguem essas distribuições.
+
+### Modelo estatístico {.unnumbered}
+
+Considere um vetor aleatório $\mathbf X$ que assume valores em um espaço amostral $\mathcal X$. Um **modelo estatístico paramétrico** é uma família de distribuições de probabilidade
+
+$$
+\mathcal F
 =
-\{P_\theta:\theta\in\Theta\},
+\{F(\cdot \mid \theta):\theta\in\Theta\},
 $$
 
-em que $\theta$ é o parâmetro, ou vetor de parâmetros, e $\Theta$ é o espaço paramétrico. Cada valor de $\theta$ determina uma distribuição $P_\theta$ possível para os dados. O modelo é uma representação deliberadamente simplificada e sua adequação deve ser examinada no contexto da aplicação [@cox2006principles, seção 1.1].
+em que:
 
-### Função de verossimilhança {.unnumbered}
+- $\theta$ representa o parâmetro, ou vetor de parâmetros, do modelo;
+- $\Theta$ é o **espaço paramétrico**, isto é, o conjunto dos valores possíveis de $\theta$;
+- para cada $\theta\in\Theta$, $F(\cdot \mid \theta)$ representa uma possível distribuição conjunta para $\mathbf X$.
 
-Suponha que a distribuição conjunta da amostra possua densidade ou função de probabilidade $f(\mathbf x;\theta)$. Depois de observados os dados $\mathbf x$, a **função de verossimilhança** é
+Na abordagem frequentista, admite-se que existe um valor fixo, porém desconhecido, de $\theta$ associado ao mecanismo que produziu os dados. O objetivo inferencial consiste em utilizar a amostra observada para obter informação sobre esse valor.
 
-$$L(\theta;\mathbf x)
-=
-f(\mathbf x;\theta),
-$$
-
-considerada como função de $\theta$, com $\mathbf x$ fixado. Se as observações forem i.i.d., a densidade conjunta se fatoriza e
-
-$$L(\theta;\mathbf x)
-=
-\prod_{i=1}^n f(x_i;\theta).
-$$
-
-A forma em produto é consequência da independência, não parte da definição geral. Além disso, multiplicar $L(\theta;\mathbf x)$ por uma função positiva dos dados que não dependa de $\theta$ não altera as comparações de verossimilhança nem seus maximizadores [@cox2006principles, seção 2.1, pp. 17--18; @casella2002statistical, seção 6.3.1].
-
-::: {.collapse title="Demonstração"}
-
-Considere uma função de verossimilhança $L(\theta;\mathbf x)$ e uma função
-$c(\mathbf x)>0$ que não depende de $\theta$. Defina
+Quando a distribuição conjunta possui função de probabilidade ou densidade, ela pode ser representada por
 
 $$
-\widetilde L(\theta;\mathbf x)
-=
-c(\mathbf x)L(\theta;\mathbf x).
+f(\mathbf x \mid \theta),
+\qquad
+\mathbf x\in\mathcal X,
+\quad
+\theta\in\Theta.
 $$
 
-Para dois valores $\theta_1$ e $\theta_2$,
+Para cada valor fixado de $\theta$, a função $f(\mathbf x \mid \theta)$ descreve probabilisticamente os possíveis valores de $\mathbf X$.
 
-$$
-\frac{
-\widetilde L(\theta_1;\mathbf x)
-}{
-\widetilde L(\theta_2;\mathbf x)
-}
-=
-\frac{
-c(\mathbf x)L(\theta_1;\mathbf x)
-}{
-c(\mathbf x)L(\theta_2;\mathbf x)
-}
-=
-\frac{
-L(\theta_1;\mathbf x)
-}{
-L(\theta_2;\mathbf x)
-}.
-$$
+::: {.callout-note title="Processo Gerador de Dados e modelo estatístico"}
+O **Processo Gerador de Dados (PGD)** corresponde ao mecanismo que produz os dados e pode envolver aspectos da população, seleção das unidades, condições de medição, dependência e outras fontes de variabilidade.
 
-Portanto, multiplicar a verossimilhança por um fator positivo que não
-depende de $\theta$ preserva todas as comparações relativas entre valores
-do parâmetro.
+O **modelo estatístico** é uma representação probabilística dos aspectos desse processo considerados relevantes para a análise.
 
-Pela mesma razão,
-
-$$
-\operatorname*{arg\,max}_{\theta}
-\widetilde L(\theta;\mathbf x)
-=
-\operatorname*{arg\,max}_{\theta}
-L(\theta;\mathbf x).
-$$
-
-Assim, fatores que dependem apenas dos dados podem ser omitidos quando o
-objetivo é comparar valores de $\theta$ ou maximizar a verossimilhança.
-
+Assim, o modelo não precisa reproduzir todos os detalhes do PGD. Ele estabelece uma família de distribuições probabilísticas dentro da qual será realizada a inferência.
 :::
 
-::: {.callout-warning title="Probabilidade e verossimilhança"}
-Na distribuição $f(\mathbf x;\theta)$, fixa-se $\theta$ e estudam-se os possíveis valores de $\mathbf X$. Na verossimilhança $L(\theta;\mathbf x)$, os dados observados são fixados e os valores de $\theta$ são comparados.
+A expressão $f(\mathbf x \mid \theta)$ representa a **função de probabilidade ou densidade conjunta da amostra**. Ela não precisa, em geral, ser escrita como produto das funções correspondentes às observações individuais.
 
-Consequentemente, a verossimilhança não é, em geral, uma distribuição de probabilidade para $\theta$. Ela expressa **compatibilidade relativa** entre valores paramétricos e os dados no modelo adotado, não a probabilidade de o parâmetro assumir determinado valor [@cox2006principles, seção 2.1].
-:::
+Quando $X_1,\ldots,X_n$ são independentes e identicamente distribuídas, com função de probabilidade ou densidade comum $f( \cdot \mid \theta)$, a independência permite escrever
 
-### Verossimilhança no modelo Bernoulli da urna {.unnumbered}
-
-No modelo de retiradas independentes,
-
-$$f(x_i;p)=p^{x_i}(1-p)^{1-x_i},
-\qquad x_i\in\{0,1\}.
 $$
-
-Para uma sequência observada $\mathbf x=(x_1,\ldots,x_n)$, com
-
-$$r=\sum_{i=1}^n x_i,
-$$
-
-a verossimilhança é
-
-$$L(p;\mathbf x)
+f(\mathbf x \mid \theta)
 =
-p^r(1-p)^{n-r},
-\qquad 0\leq p\leq1.
+\prod_{i=1}^n f(x_i \mid \theta).
 $$
 
-::: {.collapse title="Derivação da verossimilhança Bernoulli"}
+A forma em produto é, portanto, consequência da hipótese de independência. Para observações dependentes, a distribuição conjunta deve incorporar a estrutura de dependência existente.
 
-Como as observações são independentes,
+#### Distribuição conjunta da amostra no modelo Bernoulli {.unnumbered}
+
+No modelo Bernoulli da urna,
 
 $$
-L(p;\mathbf x)
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Ber}(p),
+$$
+
+o parâmetro do modelo é
+
+$$
+\theta=p,
+$$
+
+com espaço paramétrico
+
+$$
+\Theta=[0,1].
+$$
+
+Como cada variável $X_i$ assume os valores 0 ou 1, o vetor aleatório
+
+$$
+\mathbf X=(X_1,\ldots,X_n)
+$$
+
+assume valores no espaço amostral
+
+$$
+\mathcal X=\{0,1\}^n.
+$$
+
+Para cada observação $X_i$, a função de probabilidade Bernoulli pode ser escrita como
+
+$$
+f_{X_i}(x_i\mid p)
+=
+P(X_i=x_i\mid p)
+=
+p^{x_i}(1-p)^{1-x_i},
+\qquad
+x_i\in\{0,1\}.
+$$
+
+Nesta notação, $p$ é o parâmetro fixado do modelo. A barra vertical é utilizada para indicar que a função de probabilidade é especificada para determinado valor de $p$; não estamos tratando $p$ como uma variável aleatória.
+
+Essa expressão representa simultaneamente as duas possibilidades. Se $x_i=1$,
+
+$$
+f_{X_i}(1\mid p)
+=
+P(X_i=1\mid p)
+=
+p,
+$$
+
+enquanto, se $x_i=0$,
+
+$$
+f_{X_i}(0\mid p)
+=
+P(X_i=0 \mid p)
+=
+1-p.
+$$
+
+Considere agora o vetor aleatório
+
+$$
+\mathbf X=(X_1,\ldots,X_n)
+$$
+
+e uma possível realização
+
+$$
+\mathbf x=(x_1,\ldots,x_n)\in\{0,1\}^n.
+$$
+
+Como as variáveis $X_1,\ldots,X_n$ são independentes, a função de probabilidade conjunta de $\mathbf X$ é o produto das funções de probabilidade individuais:
+
+$$
+f_{\mathbf X}(\mathbf x\mid p)
+=
+\prod_{i=1}^n f_{X_i}(x_i\mid p).
+$$
+
+Substituindo a função de probabilidade Bernoulli,
+
+$$
+f_{\mathbf X}(\mathbf x\mid p)
 =
 \prod_{i=1}^n
 p^{x_i}(1-p)^{1-x_i}.
 $$
 
-Usando as propriedades de potências,
+Agrupando os fatores que envolvem $p$ e $1-p$,
 
 $$
-L(p;\mathbf x)
+f_{\mathbf X}(\mathbf x\mid p)
 =
 p^{\sum_{i=1}^n x_i}
 (1-p)^{\sum_{i=1}^n(1-x_i)}.
 $$
 
-Como
+Retomando a estatística definida anteriormente,
 
 $$
-r
+V
 =
-\sum_{i=1}^n x_i
+\sum_{i=1}^n X_i,
 $$
 
-e
+como cada $X_i$ assume os valores 0 ou 1, $V$ representa o número de bolas vermelhas na amostra aleatória.
+
+Depois que uma realização $\mathbf x=(x_1,\ldots,x_n)$ é observada, $V$ assume o valor
+
+$$
+v
+=
+\sum_{i=1}^n x_i,
+$$
+
+que corresponde ao número efetivamente observado de bolas vermelhas.
+
+Além disso,
 
 $$
 \sum_{i=1}^n(1-x_i)
 =
 n-\sum_{i=1}^n x_i
 =
-n-r,
+n-v,
 $$
 
-obtemos
+de modo que $n-v$ é o número de bolas brancas na sequência observada.
+
+Consequentemente, a função de probabilidade conjunta da amostra pode ser escrita como
+
+$$
+f_{\mathbf X}(\mathbf x\mid p)
+=
+p^v(1-p)^{n-v},
+\qquad
+\mathbf x\in\{0,1\}^n.
+$$ {#eq-bernoulli-conjunta}
+
+A @eq-bernoulli-conjunta fornece, para um valor fixado de $p$, a probabilidade associada a cada possível realização $\mathbf x=(x_1,\ldots,x_n)$ do vetor aleatório $\mathbf X$. Antes da observação dos dados, $\mathbf X$ é aleatório e diferentes sequências podem ser observadas.
+
+Por exemplo, para $n=5$, as sequências
+
+$$
+(1,0,1,0,0)
+\qquad\text{e}\qquad
+(0,1,0,0,1)
+$$
+
+possuem, em ambos os casos, $v=2$. Para um valor fixado de $p$, cada uma dessas sequências possui probabilidade
+
+$$
+p^2(1-p)^3.
+$$
+
+Isso ocorre porque, nesse modelo, a função de probabilidade conjunta depende da sequência $\mathbf x$ por meio do número de ocorrências de 1 e de 0, e não da ordem em que esses valores aparecem.
+
+::: {.callout-note title="Sequência observada e número de sucessos"}
+A probabilidade de uma sequência específica com $v$ bolas vermelhas é
+
+$$
+p^v(1-p)^{n-v}.
+$$
+
+Essa expressão não deve ser confundida com a probabilidade de observar **exatamente $v$ bolas vermelhas, independentemente da ordem em que aparecem na sequência**.
+
+Como existem
+
+$$
+\binom{n}{v}
+$$
+
+sequências distintas com exatamente $v$ ocorrências de 1, a distribuição da estatística
+
+$$
+V=\sum_{i=1}^n X_i
+$$
+
+é
+
+$$
+P(V=v \mid p)
+=
+\binom{n}{v}p^v(1-p)^{n-v},
+\qquad
+v=0,1,\ldots,n.
+$$
+
+Assim,
+
+$$
+V\sim\operatorname{Bin}(n,p).
+$$
+:::
+
+Portanto, para cada valor $p\in[0,1]$, o modelo especifica uma distribuição conjunta para $\mathbf X$. A amostra observada corresponde a uma realização particular dessa distribuição.
+
+### Função de verossimilhança {.unnumbered}
+
+Depois que a amostra é observada, a perspectiva pode ser invertida. Os dados
+
+$$
+\mathbf x=(x_1,\ldots,x_n)
+$$
+
+passam a ser conhecidos, enquanto o parâmetro $\theta$ permanece desconhecido.
+
+A mesma expressão matemática $f(\mathbf x \mid \theta)$ pode então ser examinada como função de $\theta$, mantendo $\mathbf x$ fixado.
+
+::: {.callout-important title="Função de verossimilhança"}
+Para uma amostra observada $\mathbf x$, a **função de verossimilhança** é definida por
+
+$$
+L(\theta;\mathbf x)
+=
+f(\mathbf x \mid \theta),
+\qquad
+\theta\in\Theta,
+$$
+
+considerada como função do parâmetro $\theta$, com os dados $\mathbf x$ fixados.
+:::
+
+A diferença entre a função de probabilidade ou densidade e a função de verossimilhança está, portanto, no elemento que é considerado variável.
+
+Na função
+
+$$
+f(\mathbf x \mid \theta),
+$$
+
+fixa-se $\theta$ e estudam-se os possíveis valores de $\mathbf X$.
+
+Na função de verossimilhança
+
+$$
+L(\theta;\mathbf x),
+$$
+
+fixa-se a amostra observada $\mathbf x$ e comparam-se os diferentes valores de $\theta$ permitidos pelo modelo.
+
+::: {.callout-warning title="Probabilidade e verossimilhança"}
+A verossimilhança não é, em geral, uma distribuição de probabilidade para $\theta$.
+
+Na abordagem frequentista, $\theta$ é tratado como uma quantidade fixa e desconhecida. A função $L(\theta;\mathbf x)$ permite comparar os diferentes valores de $\theta$ em relação aos dados observados.
+
+Valores de $\theta$ que produzem maior verossimilhança apresentam maior compatibilidade com os dados observados dentro do modelo considerado. Essa comparação é relativa: a verossimilhança não representa a probabilidade de $\theta$ assumir determinado valor [@cox2006principles, seção 2.1].
+:::
+
+### Verossimilhança no modelo Bernoulli {.unnumbered}
+
+Na distribuição conjunta do modelo Bernoulli, obtivemos em @eq-bernoulli-conjunta
+
+$$
+f_{\mathbf X}(\mathbf x\mid p)
+=
+p^v(1-p)^{n-v},
+$$
+
+em que
+
+$$
+v=\sum_{i=1}^n x_i
+$$
+
+é o valor observado da estatística
+
+$$
+V=\sum_{i=1}^n X_i.
+$$
+
+Na interpretação probabilística dessa expressão, $p$ é fixado e consideram-se as diferentes realizações possíveis de $\mathbf X$.
+
+Depois que uma realização específica
+
+$$
+\mathbf x=(x_1,\ldots,x_n)
+$$
+
+é observada, ocorre uma mudança de perspectiva. Os valores $x_1,\ldots,x_n$ e, consequentemente, $v$ passam a ser fixos, enquanto $p$ é a quantidade desconhecida.
+
+A mesma expressão da @eq-bernoulli-conjunta, considerada agora como função de $p$, define a função de verossimilhança:
 
 $$
 L(p;\mathbf x)
 =
-p^r(1-p)^{n-r}.
-$$
-
-A expressão mostra que, para comparar valores de $p$, a sequência
-observada influencia a verossimilhança apenas por meio do número total
-$r$ de sucessos.
-
-:::
-
-Se apenas o total $R=r$ for registrado, sua função de probabilidade é
-
-$$P_p(R=r)
+f_{\mathbf X}(\mathbf x\mid p)
 =
-\binom nr p^r(1-p)^{n-r}.
+p^v(1-p)^{n-v},
+\qquad
+0\leq p\leq1.
 $$
 
-O fator $\binom nr$ não depende de $p$. Portanto, a sequência completa e o total de sucessos produzem funções de verossimilhança proporcionais e conduzem ao mesmo estimador de máxima verossimilhança. A dependência dos dados em relação a $p$ ocorre apenas por meio de $r$, antecipando a ideia de redução de dados por suficiência.
+Portanto, não estamos definindo uma nova distribuição de probabilidade. A expressão matemática é a mesma, mas sua interpretação é diferente:
 
-Para $0<r<n$, a log-verossimilhança é
+- em $f_{\mathbf X}(\mathbf x\mid p)$, fixa-se $p$ e consideram-se os possíveis valores de $\mathbf X$;
+- em $L(p;\mathbf x)$, fixa-se a realização observada $\mathbf x$ e comparam-se os possíveis valores de $p$.
 
-$$\ell(p)
+Considere, por exemplo, uma amostra de tamanho $n=50$ na qual foram observadas $v=20$ bolas vermelhas. Nesse caso,
+
+$$
+L(p;\mathbf x)
 =
-r\log p+(n-r)\log(1-p),
+p^{20}(1-p)^{30}.
 $$
 
-cujo máximo ocorre em
+Os dados permanecem fixos: foram observadas 20 bolas vermelhas e 30 bolas brancas. O que varia é $p$. A função de verossimilhança permite comparar os diferentes valores de $p\in[0,1]$ em relação à mesma amostra observada.
 
-$$\widehat p_{\mathrm{MV}}
+A função pode ser visualizada diretamente na sua escala original.
+
+```{r}
+#| label: fig-verossimilhanca-bernoulli
+#| fig-cap: "Função de verossimilhança para o modelo Bernoulli com $n=50$ e $v=20$."
+#| fig-width: 7
+#| fig-height: 4.8
+#| warning: false
+#| message: false
+
+library(ggplot2)
+
+n <- 50
+v <- 20
+
+p_grade <- seq(0, 1, length.out = 1001)
+
+dados_veross <- data.frame(
+  p = p_grade
+)
+
+dados_veross$L <- with(
+  dados_veross,
+  p^v * (1 - p)^(n - v)
+)
+
+# Localização numérica do maior valor da verossimilhança
+indice_max <- which.max(dados_veross$L)
+
+p_max <- dados_veross$p[indice_max]
+L_max <- dados_veross$L[indice_max]
+
+ggplot(dados_veross, aes(x = p, y = L)) +
+  geom_line(
+    color = "#08519C",
+    linewidth = 1.3
+  ) +
+  geom_vline(
+    xintercept = p_max,
+    linetype = "dashed",
+    color = "#CB181D",
+    linewidth = 0.9
+  ) +
+  geom_point(
+    x = p_max,
+    y = L_max,
+    color = "#CB181D",
+    size = 3
+  ) +
+  annotate(
+    "label",
+    x = 0.52,
+    y = 0.92 * L_max,
+    label = "maior valor em p = 0,40",
+    color = "#A50F15",
+    fill = "white",
+    size = 4
+  ) +
+  scale_x_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, by = 0.1),
+    labels = scales::label_number(
+      accuracy = 0.1,
+      decimal.mark = ","
+    )
+  ) +
+  scale_y_continuous(
+    labels = scales::label_scientific()
+  ) +
+  labs(
+    x = "Valor de p",
+    y = expression(L(p~";"~bold(x))),
+    title = "Função de verossimilhança",
+    subtitle = "Modelo Bernoulli: n = 50 e v = 20"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title.position = "plot"
+  )
+```
+
+A altura da curva depende da escala da função de verossimilhança e, neste exemplo, seus valores são numericamente pequenos. O que interessa para a comparação entre valores de $p$ é a forma da função e sua posição relativa. O gráfico mostra que valores próximos de $0{,}40$ apresentam maior verossimilhança para a amostra observada, enquanto valores mais afastados produzem valores menores de $L(p;\mathbf x)$.
+
+#### Log-verossimilhança {.unnumbered}
+
+Em muitos problemas, é conveniente trabalhar com o logaritmo da função de verossimilhança. Define-se a **função de log-verossimilhança** por
+
+$$
+\ell(p;\mathbf x)
 =
-\frac{r}{n}.
+\log L(p;\mathbf x).
 $$
+
+No modelo Bernoulli,
+
+$$
+L(p;\mathbf x)
+=
+p^v(1-p)^{n-v},
+$$
+
+de modo que
+
+$$
+\ell(p;\mathbf x)
+=
+\log\left[
+p^v(1-p)^{n-v}
+\right].
+$$
+
+Utilizando as propriedades do logaritmo,
+
+$$
+\ell(p;\mathbf x)
+=
+v\log p
++
+(n-v)\log(1-p),
+\qquad
+0<p<1.
+$$
+
+Para o exemplo com $n=50$ e $v=20$,
+
+$$
+\ell(p;\mathbf x)
+=
+20\log p
++
+30\log(1-p).
+$$
+
+O logaritmo transforma o produto presente na verossimilhança em uma soma, o que facilita manipulações algébricas e numéricas.
+
+Além disso, como a função logaritmo é estritamente crescente, se
+
+$$
+L(p_1;\mathbf x)
+>
+L(p_2;\mathbf x),
+$$
+
+então
+
+$$
+\ell(p_1;\mathbf x)
+>
+\ell(p_2;\mathbf x).
+$$
+
+Consequentemente, a verossimilhança e a log-verossimilhança ordenam os valores de $p$ da mesma forma e atingem seu máximo no mesmo ponto.
+
+```{r}
+#| label: fig-log-verossimilhanca-bernoulli
+#| fig-cap: "Função de log-verossimilhança para o modelo Bernoulli com $n=50$ e $v=20$."
+#| fig-width: 7
+#| fig-height: 4.8
+#| warning: false
+#| message: false
+
+n <- 50
+v <- 20
+
+# Os extremos 0 e 1 são excluídos porque log(0) não é definido.
+p_grade <- seq(0.001, 0.999, by = 0.001)
+
+dados_logveross <- data.frame(
+  p = p_grade
+)
+
+dados_logveross$logL <- with(
+  dados_logveross,
+  v * log(p) + (n - v) * log(1 - p)
+)
+
+indice_max <- which.max(dados_logveross$logL)
+
+p_max <- dados_logveross$p[indice_max]
+logL_max <- dados_logveross$logL[indice_max]
+
+ggplot(dados_logveross, aes(x = p, y = logL)) +
+  geom_line(
+    color = "#54278F",
+    linewidth = 1.2
+  ) +
+  geom_vline(
+    xintercept = p_max,
+    linetype = "dashed",
+    color = "#CB181D",
+    linewidth = 0.9
+  ) +
+  geom_point(
+    x = p_max,
+    y = logL_max,
+    color = "#CB181D",
+    size = 3
+  ) +
+  annotate(
+    "label",
+    x = 0.52,
+    y = logL_max - 5,
+    label = "p = 0,40",
+    color = "#A50F15",
+    fill = "white",
+    label.size = 0.2,
+    size = 4
+  ) +
+  scale_x_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, by = 0.1),
+    labels = scales::label_number(
+      accuracy = 0.1,
+      decimal.mark = ","
+    )
+  ) +
+  labs(
+    x = "Valor de p",
+    y = expression(ell(p~";"~bold(x))),
+    title = "Função de log-verossimilhança",
+    subtitle = "Modelo Bernoulli: n = 50 e v = 20"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title.position = "plot"
+  )
+```
+
+Os dois gráficos apresentam o maior valor no mesmo ponto. A diferença está na escala vertical: o primeiro representa diretamente $L(p;\mathbf x)$, enquanto o segundo representa seu logaritmo.
+
+Observe ainda que, na expressão
+
+$$
+L(p;\mathbf x)
+=
+p^v(1-p)^{n-v},
+$$
+
+a sequência completa
+
+$$
+(x_1,\ldots,x_n)
+$$
+
+aparece apenas por meio de
+
+$$
+v=\sum_{i=1}^n x_i.
+$$
+
+Assim, duas sequências observadas com o mesmo número $v$ de bolas vermelhas produzem a mesma função de verossimilhança para $p$, mesmo que as bolas vermelhas e brancas apareçam em ordens diferentes.
+
+Essa propriedade será formalizada posteriormente por meio do conceito de **estatística suficiente**.
+
+
+### Verossimilhança e estimação {.unnumbered}
+
+A função de verossimilhança permite comparar diferentes valores do parâmetro em relação à amostra observada. Uma forma de utilizar essa comparação para construir uma estimativa consiste em procurar o valor de $\theta$ que torna a verossimilhança tão grande quanto possível.
+
+Considere uma amostra observada $\mathbf x$. Para cada valor $\theta\in\Theta$, podemos calcular
+
+$$
+L(\theta;\mathbf x).
+$$
+
+Entre os valores permitidos pelo espaço paramétrico $\Theta$, procuramos aqueles para os quais a função de verossimilhança atinge seu maior valor.
+
+Se existir um único valor $\theta^\ast$ tal que
+
+$$
+L(\theta^\ast;\mathbf x)
+\geq
+L(\theta;\mathbf x)
+\qquad
+\text{para todo }\theta\in\Theta,
+$$
+
+então $\theta^\ast$ é o valor de $\theta$ que maximiza a função de verossimilhança para a amostra observada.
+
+Esse valor é denominado **estimativa de máxima verossimilhança**.
+
+Em alguns problemas, entretanto, mais de um valor de $\theta$ pode produzir o mesmo valor máximo da função de verossimilhança. Por essa razão, é conveniente representar o conjunto de todos os valores que maximizam a função.
+
+A notação
+
+$$
+\operatorname*{arg\,max}_{\theta\in\Theta}
+L(\theta;\mathbf x)
+$$
+
+representa o conjunto dos valores de $\theta$ em $\Theta$ nos quais a função $L(\theta;\mathbf x)$ atinge seu máximo.
+
+A expressão $\operatorname*{arg\,max}$ deve ser distinguida do próprio valor máximo da função. Enquanto
+
+$$
+\max_{\theta\in\Theta}
+L(\theta;\mathbf x)
+$$
+
+representa o maior valor assumido pela função de verossimilhança,
+
+$$
+\operatorname*{arg\,max}_{\theta\in\Theta}
+L(\theta;\mathbf x)
+$$
+
+representa o valor, ou os valores, de $\theta$ nos quais esse máximo é atingido.
+
+Por exemplo, se uma função atinge seu maior valor em $\theta=2$, então
+
+$$
+\operatorname*{arg\,max}_{\theta\in\Theta}
+L(\theta;\mathbf x)
+=
+\{2\}.
+$$
+
+A estimativa de máxima verossimilhança é, portanto, qualquer valor pertencente a esse conjunto. Quando esse conjunto possui mais de um elemento, qualquer um de seus elementos pode ser considerado uma estimativa de máxima verossimilhança. 
+
+Para definir um estimador como uma função da amostra, entretanto, é necessário estabelecer uma regra de escolha quando houver mais de um maximizador. Quando o máximo é único, essa escolha não apresenta ambiguidade. Escrevemos
+
+$$
+\widehat\theta_{\mathrm{MV}}(\mathbf x)
+\in
+\operatorname*{arg\,max}_{\theta\in\Theta}
+L(\theta;\mathbf x).
+$$
+
+O símbolo $\in$ é utilizado porque, em geral, o lado direito representa um conjunto de valores que maximizam a verossimilhança. Quando o máximo é atingido em um único valor, podemos escrever, de forma equivalente,
+
+$$
+\widehat\theta_{\mathrm{MV}}(\mathbf x)
+=
+\theta^\ast.
+$$
+
+Assim, para uma amostra observada $\mathbf x$, a máxima verossimilhança fornece uma regra para selecionar um valor do parâmetro a partir dos dados.
+
+Até aqui estamos tratando de uma **estimativa**, pois a amostra já foi observada. Para obter o correspondente estimador, consideramos a mesma regra para todas as possíveis realizações da amostra aleatória.
+
+A cada possível realização $\mathbf x$ de $\mathbf X$, associamos um valor $\widehat\theta_{\mathrm{MV}}(\mathbf x)$ que maximiza a função de verossimilhança. Essa regra define o **estimador de máxima verossimilhança**. Antes da observação dos dados, escrevemos
+
+$$
+\widehat\theta_{\mathrm{MV}}
+=
+\widehat\theta_{\mathrm{MV}}(\mathbf X).
+$$
+
+Portanto,
+
+$$
+\widehat\theta_{\mathrm{MV}}(\mathbf X)
+$$
+
+é uma função da amostra aleatória e, por isso, é uma variável aleatória. Depois que a amostra assume o valor observado $\mathbf x$, obtemos
+
+$$
+\widehat\theta_{\mathrm{MV}}(\mathbf x),
+$$
+
+que é a estimativa de máxima verossimilhança correspondente.
+
+Essa distinção é a mesma apresentada anteriormente para estimadores e estimativas: o **estimador de máxima verossimilhança** é a regra definida em função da amostra aleatória, enquanto a **estimativa de máxima verossimilhança** é o valor produzido por essa regra para uma amostra particular.
+
+#### Verossimilhança e estimação no exemplo-guia {.unnumbered}
+
+No modelo Bernoulli,
+
+$$
+L(p;\mathbf x)
+=
+p^v(1-p)^{n-v}.
+$$
+
+Para determinar o valor de $p$ que maximiza essa função, podemos trabalhar com a log-verossimilhança. Como a amostra observada $\mathbf x$ permanece fixa durante a maximização, escreveremos na derivação a seguir $\ell(p)$ como forma abreviada de $\ell(p;\mathbf x)$.
 
 ::: {.collapse title="Derivação do estimador de máxima verossimilhança"}
 
-Para $0<r<n$, derivamos a log-verossimilhança em relação a $p$:
+Para $0<v<n$, a log-verossimilhança é
+
+$$
+\ell(p)
+=
+\log L(p;\mathbf x)
+=
+v\log p+(n-v)\log(1-p).
+$$
+
+Como o logaritmo é uma função estritamente crescente, maximizar $\ell(p)$ equivale a maximizar $L(p;\mathbf x)$.
+
+Derivando em relação a $p$,
 
 $$
 \ell'(p)
 =
-\frac{r}{p}
+\frac{d \ell(p)}{dp}
+=
+\frac{v}{p}
 -
-\frac{n-r}{1-p}.
-$$
-
-Colocando os termos sobre o mesmo denominador,
-
-$$
-\ell'(p)
+\frac{n-v}{1-p}
 =
-\frac{
-r(1-p)-(n-r)p
-}{
-p(1-p)
-}
+\frac{v-np}{p(1-p)}.
+$$
+
+O ponto crítico satisfaz
+
+$$
+v-np=0,
+$$
+
+de modo que
+
+$$
+\widehat p_{\mathrm{MV}}(\mathbf x)
 =
-\frac{
-r-np
-}{
-p(1-p)
-}.
-$$
-
-Um ponto crítico satisfaz
-
-$$
-\ell'(p)=0.
-$$
-
-Como $0<p<1$, o denominador é positivo. Portanto,
-
-$$
-r-np=0,
-$$
-
-o que fornece
-
-$$
-p
-=
-\frac rn.
+\frac{v}{n}.
 $$
 
 Além disso,
@@ -554,81 +1228,122 @@ Além disso,
 $$
 \ell''(p)
 =
--\frac{r}{p^2}
+\frac{d^2 \ell(p)}{dp^2}
+=
+-\frac{v}{p^2}
 -
-\frac{n-r}{(1-p)^2}
+\frac{n-v}{(1-p)^2}
 <
 0,
 $$
 
-para $0<r<n$. Assim, o ponto crítico corresponde a um máximo.
-
-Isso demonstra o resultado para $0<r<n$.
+para $0<p<1$. Portanto, o ponto crítico corresponde a um máximo da verossimilhança.
 
 :::
 
-O mesmo resultado permanece válido nos casos de fronteira: se $r=0$, então $\widehat p_{\mathrm{MV}}=0$; se $r=n$, então $\widehat p_{\mathrm{MV}}=1$ [@chihara2022, seção 6.1.1, pp. 148--150; @ramachandran2021r, seção 5.3].
+Nos casos de fronteira, o máximo pode ser identificado diretamente pela forma da verossimilhança.
 
-::: {.callout-note title="Três papéis da proporção amostral"}
-No modelo de Bernoulli, $\widehat p=R/n$ é simultaneamente:
-
-1.  uma estatística, porque é função da amostra;
-2.  um estimador, porque é utilizada para estimar $p$;
-3.  o estimador de máxima verossimilhança de $p$.
-
-Os três papéis são conceitualmente distintos, embora sejam desempenhados pela mesma expressão matemática.
-:::
-
-::: {.collapse title="Do estimador à estimativa"}
-
-Antes de observar a amostra,
+Se $v=0$,
 
 $$
-R=\sum_{i=1}^nX_i
-$$
-
-é uma variável aleatória. Portanto,
-
-$$
-\widehat p
+L(p;\mathbf x)
 =
-\frac{R}{n}
+(1-p)^n,
 $$
 
-também é uma variável aleatória e funciona como estimador de $p$.
-
-Depois de observar os dados, se $R=r$, obtemos
+que é máxima em $p=0$. Portanto,
 
 $$
-\widehat p(\mathbf x)
+\widehat p_{\mathrm{MV}}=0.
+$$
+
+Se $v=n$,
+
+$$
+L(p;\mathbf x)
 =
-\frac rn,
+p^n,
 $$
 
-que é a estimativa produzida pelo estimador naquela amostra.
+que é máxima em $p=1$. Portanto,
 
+$$
+\widehat p_{\mathrm{MV}}=1.
+$$
+
+Assim, em todos os casos,
+
+$$
+\widehat p_{\mathrm{MV}}
+=
+\frac{V}{n}.
+$$
+A proporção amostral, que anteriormente foi apresentada como uma estatística e utilizada como estimador de $p$, surge agora também como estimador de máxima verossimilhança.
+
+::: {.callout-note title="Proporção amostral no modelo Bernoulli"}
+No modelo Bernoulli,
+
+$$
+\widehat p=\frac{V}{n}
+$$
+
+pode ser considerada sob diferentes aspectos:
+
+1. é uma **estatística**, pois é uma função da amostra;
+2. é um **estimador de $p$**, quando utilizada para estimar a proporção populacional;
+3. é o **estimador de máxima verossimilhança de $p$**, pois resulta da maximização da função de verossimilhança.
+
+Depois que a amostra é observada e $V=v$, o valor
+
+$$
+\widehat p(\mathbf x)=\frac{v}{n}
+$$
+
+é a estimativa correspondente.
 :::
 
-No capítulo **Métodos de Estimação Pontual**, a maximização da verossimilhança é desenvolvida como método geral de construção de estimadores. No capítulo **Avaliação de Estimadores e Princípios de Redução de Dados**, a redução da sequência observada ao total $R$ é formalizada por meio do conceito de suficiência.
+A máxima verossimilhança será desenvolvida como método geral de estimação no capítulo **Métodos de Estimação Pontual**. O conceito de suficiência, sugerido pelo fato de a verossimilhança Bernoulli depender dos dados apenas por meio do valor observado $v$ da estatística
+
+$$
+V=\sum_{i=1}^n X_i,
+$$
+
+será formalizado no capítulo **Avaliação de Estimadores e Princípios de Redução de Dados**.
 
 ### Verificação de aprendizagem {.unnumbered}
 
-1.  Explique a diferença entre o estimador $\widehat p$ e a estimativa obtida depois de observar os dados.
-2.  Por que $R=\sum_iX_i$ é uma estatística? Em que situação ele poderia ser tratado como estimador?
-3. Que modificação no mecanismo de amostragem da urna permite representar $X_1,\ldots,X_n$ como variáveis i.i.d. de Bernoulli?
-4.  Por que a forma $\prod_i f(x_i;\theta)$ não é válida para qualquer plano amostral?
-5.  Na função $L(\theta;\mathbf x)$, quais elementos permanecem fixos e quais variam?
-6.  Por que as verossimilhanças baseadas na sequência de retiradas e apenas no total $R$ conduzem ao mesmo estimador de $p$?
+1. O que constitui um modelo estatístico paramétrico?
+2. No modelo $\mathcal F=\{F(\cdot\mid\theta):\theta\in\Theta\}$, qual é o papel de $\theta$ e de $\Theta$?
+3. Por que a distribuição conjunta da amostra não pode ser escrita, em geral, como $\prod_{i=1}^n f(x_i \mid \theta)$?
+4. Explique a diferença entre considerar $f(\mathbf x \mid \theta)$ como função de probabilidade ou densidade conjunta, para $\theta$ fixado, e considerá-la como função de verossimilhança depois que $\mathbf x$ é observado.
+5. Na função $L(\theta;\mathbf x)$, o que permanece fixo e o que varia?
+6. Por que a verossimilhança não deve ser interpretada como uma distribuição de probabilidade para $\theta$?
+7. No modelo Bernoulli, por que a função de verossimilhança depende da sequência observada apenas por meio de $v=\sum_i x_i$, valor observado da estatística $V=\sum_iX_i$?
+8. Explique por que $\widehat p=V/n$ pode ser considerada simultaneamente uma estatística, um estimador de $p$ e o estimador de máxima verossimilhança de $p$.
 
+## Variabilidade dos estimadores
+
+Um estimador é uma função da amostra aleatória. Se
+
+$$
+\widehat\theta=T(\mathbf X),
+$$
+
+então seu valor depende dos resultados que compõem $\mathbf X$. Amostras diferentes, obtidas segundo o mesmo mecanismo, podem produzir valores diferentes de $\widehat\theta$.
+
+Fixados o modelo estatístico e um valor do parâmetro $\theta$, a distribuição de probabilidade de $\mathbf X$ induz uma distribuição de probabilidade para $T(\mathbf X)$. Essa distribuição é a **distribuição amostral** da estatística.
+
+Assim, a variabilidade observada entre diferentes estimativas pode ser descrita probabilisticamente. Características da distribuição amostral, como posição e dispersão, permitem estudar o comportamento de uma estatística quando o mecanismo de amostragem é repetido.
+
+Em @sec-distribuicoes-amostrais, essa ideia será desenvolvida para estatísticas como $\overline X$, $S^2$ e $\widehat p$, considerando também o efeito do tamanho amostral, a amostragem sem reposição, resultados exatos, aproximações e simulação.
+
+A distribuição amostral estabelece, portanto, a ligação entre a variabilidade observada no experimento e sua representação probabilística.
 
 ## Exploração computacional do experimento da urna
 
 O experimento realizado em sala de aula pode ser reproduzido computacionalmente. O objetivo é repetir o mesmo mecanismo de amostragem um número maior de vezes e examinar com mais detalhes a variabilidade da proporção amostral.
 
 Nesta seção, retomamos o **mecanismo físico sem reposição** utilizado no experimento em sala de aula. Portanto, essa exploração não corresponde ao modelo Bernoulli i.i.d. com reposição utilizado anteriormente para introduzir a função de verossimilhança.
-
-Esta seção pode ser utilizada imediatamente após o experimento físico ou depois do desenvolvimento conceitual das seções anteriores.
-
 
 ### Preparação do ambiente computacional {.unnumbered}
 
@@ -659,8 +1374,8 @@ Podemos obter a composição completa da população virtual por meio de um cens
 censo_virtual <- bowl %>%
   summarize(
     N = n(),
-    N_red = sum(color == "red"),
-    p = N_red / N
+    N_vermelha = sum(color == "red"),
+    p = N_vermelha / N
   )
 
 censo_virtual
@@ -701,35 +1416,36 @@ Podemos identificar cada bola vermelha por meio da expressão lógica `color == 
 ```{r}
 pa_virtual <- pa_virtual %>%
   mutate(
-    is_red = color == "red"
+    is_vermelha = color == "red"
   )
 
 pa_virtual
 ```
 
-O R representa `TRUE` e `FALSE` como valores lógicos. Em operações de soma, `TRUE` é tratado como 1 e `FALSE` como 0. Dessa forma, a soma da variável `is_red` fornece diretamente o número de bolas vermelhas da amostra.
+O R representa `TRUE` e `FALSE` como valores lógicos. Em operações de soma, `TRUE` é tratado como 1 e `FALSE` como 0. Dessa forma, a soma da variável `is_vermelha` fornece diretamente o número de bolas vermelhas da amostra.
 
 ```{r}
 resumo_amostra <- pa_virtual %>%
   summarize(
-    R = sum(is_red),
-    p_hat = R / n()
+    V = sum(is_vermelha),
+    p_hat = V / n()
   )
 
 resumo_amostra
 ```
 
-Nesta amostra, foram observadas `r resumo_amostra$R` bolas vermelhas. A proporção amostral foi `r format(resumo_amostra$p_hat, decimal.mark = ",", nsmall = 2)`.
 
-Esse valor corresponde a uma realização de
+Nesta amostra, o valor observado da estatística $V$ foi $v=$ `r resumo_amostra$V`. A proporção amostral observada foi `r format(resumo_amostra$p_hat, decimal.mark = ",", nsmall = 2)`.
+
+Esse valor corresponde à estimativa
 
 $$
-\widehat p
+\widehat p(\mathbf x)
 =
-\frac{R}{n}.
+\frac{v}{n}.
 $$
 
-Uma nova amostra de 50 bolas pode produzir outro valor de $\widehat p$.
+No código, a coluna `V` armazena o valor observado de $V$ em cada amostra.
 
 
 ### Repetição da amostragem e variabilidade {.unnumbered}
@@ -754,15 +1470,15 @@ O objeto possui $20\times50=1000$ linhas. A variável `replicate` identifica a a
 As 20 proporções amostrais são obtidas agrupando os dados por repetição:
 
 ```{r}
-virtual_prop_red <- amostra_virtual %>%
+virtual_prop_vermelha <- amostra_virtual %>%
   group_by(replicate) %>%
   summarize(
-    R = sum(color == "red"),
-    p_hat = R / n(),
+    V = sum(color == "red"),
+    p_hat = V / n(),
     .groups = "drop"
   )
 
-virtual_prop_red
+virtual_prop_vermelha
 ```
 
 Cada linha corresponde agora a uma amostra e contém seu número de bolas vermelhas e sua proporção amostral.
@@ -771,7 +1487,7 @@ A distribuição empírica desses 20 valores pode ser visualizada por meio de um
 
 ```{r}
 ggplot(
-  virtual_prop_red,
+  virtual_prop_vermelha,
   aes(x = p_hat)
 ) +
   geom_histogram(
@@ -811,7 +1527,7 @@ Com apenas 20 repetições, o histograma apresenta uma distribuição empírica 
 
 1. Repita o experimento utilizando `rep_sample_n()` com `size = 50` e `reps = 1000`.
 
-2. Para cada uma das 1000 amostras, calcule $R$ e $\widehat p$.
+2. Para cada uma das 1000 amostras, calcule $V$ e $\widehat p$.
 
 3. Construa um histograma das 1000 proporções amostrais e acrescente uma linha vertical indicando $p=0{,}375$.
 
@@ -894,13 +1610,13 @@ b. Qual condição deixa de ser satisfeita na amostragem sem reposição?
 c. Se $X_i=1$ indicar uma bola vermelha e $X_i=0$ uma bola branca, escreva o modelo Bernoulli para a situação em que as observações são i.i.d. e indique o significado de $p$.
 
 
-**7.** Avalie se a suposição de observações i.i.d. parece adequada em cada situação.
+**7.** Avalie se a representação por observações i.i.d. parece adequada em cada situação.
 
-a. Trinta componentes são selecionados aleatoriamente de uma produção realizada sob condições estáveis.
+a. Trinta componentes são produzidos sucessivamente por um processo mantido sob condições estáveis. Admita que não haja evidência de dependência entre os resultados de componentes consecutivos.
 
 b. A temperatura de um mesmo local é registrada a cada minuto durante duas horas.
 
-Justifique brevemente.
+Em cada caso, discuta separadamente a plausibilidade das hipóteses de distribuições idênticas e de independência.
 
 
 **8.** Uma universidade envia um questionário a todos os seus estudantes, mas analisa apenas as respostas daqueles que decidiram participar.
@@ -909,5 +1625,44 @@ a. Os respondentes podem ser considerados automaticamente representativos de tod
 
 b. Que aspecto do Processo Gerador de Dados deve ser considerado antes de realizar inferências para toda a população?
 
+
+**9.** Considere o modelo
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
+$$
+
+em que $\sigma^2$ é conhecida e $\mu$ é desconhecida.
+
+a. Qual é o parâmetro desconhecido do modelo?
+
+b. Qual é o espaço paramétrico usual de $\mu$?
+
+c. O que representa a família
+
+$$
+\mathcal F
+=
+\{F(\cdot\mid\mu):\mu\in\mathbb R\}?
+$$
+
+d. Para um valor fixado de $\mu$, o que a distribuição $F(\cdot\mid\mu)$ descreve?
+
+
+**10.** Considere uma função de probabilidade ou densidade conjunta
+
+$$
+f(\mathbf x \mid \theta).
+$$
+
+a. Quando essa expressão é considerada como função dos possíveis valores de $\mathbf X$, o que permanece fixo?
+
+b. Depois que a amostra $\mathbf x$ é observada, como é definida a função de verossimilhança para $\theta$?
+
+c. Na função de verossimilhança, o que permanece fixo e o que varia?
+
+d. Explique por que $L(\theta;\mathbf x)$ não deve, em geral, ser interpretada como uma distribuição de probabilidade para $\theta$.
 
 ## Referências {.unnumbered}
