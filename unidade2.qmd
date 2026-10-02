@@ -73,20 +73,25 @@ Duas estruturas de geração da amostra precisam ser distinguidas: o modelo i.i.
 
 ### Amostragem no modelo i.i.d.
 
-No modelo i.i.d., cada observação é gerada independentemente pela mesma distribuição. Esse referencial é apropriado para repetições independentes de um experimento, amostragem com reposição ou modelagem de uma população conceitualmente infinita [@casella2011inferencia, seção 5.1; @ramachandran2021r, seção 4.1]. Se $f(x;\theta)$ representa a função de massa de probabilidade ou a densidade comum das observações, a função de massa ou densidade conjunta da amostra é
+No modelo i.i.d., cada observação é gerada independentemente pela mesma distribuição. Esse referencial é apropriado para repetições independentes de um experimento, amostragem com reposição ou modelagem de uma população conceitualmente infinita [@casella2011inferencia, seção 5.1; @ramachandran2021r, seção 4.1].
 
-$$f_{\mathbf{X}}(\mathbf{x};\theta)
+Se $f(x\mid\theta)$ representa a função de probabilidade ou densidade comum das observações, a independência permite escrever a função de probabilidade ou densidade conjunta da amostra como
+
+$$
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
-\prod_{i=1}^n f(x_i;\theta).
+\prod_{i=1}^n f(x_i\mid\theta).
 $$
 
-Em @sec-fundamentos-inferencia, a mesma expressão, depois de observados os dados $\mathbf{x}$, foi interpretada como função de $\theta$ e denominada função de verossimilhança [@cox2006principles, seção 2.1; @casella2011inferencia, seção 6.3.1]:
+Em @sec-fundamentos-inferencia, vimos que, depois de observados os dados $\mathbf x$, essa mesma expressão pode ser considerada como função de $\theta$, com $\mathbf x$ fixado, originando a função de verossimilhança [@cox2006principles, seção 2.1; @casella2011inferencia, seção 6.3.1]:
 
 $$
-L(\theta;\mathbf{x}) =\prod_{i=1}^n f(x_i;\theta).
+L(\theta;\mathbf x)
+=
+\prod_{i=1}^n f(x_i\mid\theta).
 $$
 
-A distribuição amostral é uma distribuição de uma estatística sob $P_\theta$; a verossimilhança, por sua vez, mantém os dados fixos e compara valores de $\theta$. Esses objetos são relacionados, mas não devem ser identificados [@cox2006principles, seções 1.3 e 2.1].
+Os dois objetos desempenham papéis diferentes. Para um valor fixado de $\theta$, a distribuição amostral descreve probabilisticamente o comportamento de uma estatística sob repetição do mecanismo que gera a amostra. Na função de verossimilhança, os dados observados permanecem fixos e são comparados diferentes valores de $\theta$. Portanto, distribuição amostral e verossimilhança estão relacionadas ao mesmo modelo probabilístico, mas não representam o mesmo objeto [@cox2006principles, seções 1.3 e 2.1].
 
 ::: {.callout-tip title="Exemplo — Tempos de vida exponenciais"}
 
@@ -104,7 +109,7 @@ $$
 E(X_i)=\mu.
 $$
 
-Essa parametrização é equivalente à parametrização por taxa utilizada no capítulo anterior, com
+A distribuição exponencial também pode ser parametrizada pela taxa $\lambda$. As duas parametrizações estão relacionadas por
 
 $$
 \lambda=\frac{1}{\mu}
@@ -128,7 +133,7 @@ $$
 Para uma observação,
 
 $$
-f(x;\mu)
+f(x\mid\mu)
 =
 \frac{1}{\mu}
 e^{-x/\mu}
@@ -139,10 +144,10 @@ Pela independência,
 
 $$
 \begin{aligned}
-f_{\mathbf X}(\mathbf x;\mu)
+f_{\mathbf X}(\mathbf x\mid\mu)
 &=
 \prod_{i=1}^n
-f(x_i;\mu)\\
+f(x_i\mid\mu)\\
 &=
 \mu^{-n}
 \exp\left(
@@ -172,19 +177,34 @@ $$
 
 ### Amostragem aleatória simples sem reposição
 
-Considere uma população finita formada por $N$ unidades, às quais estão associados os valores $x_1,\ldots,x_N$. Equivalentemente, o procedimento pode ser representado por $n$ seleções sequenciais sem reposição, em que cada unidade ainda disponível possui a mesma probabilidade de ser escolhida em cada etapa. Essa representação ordenada permite definir $X_1,\ldots,X_n$. As observações possuem a mesma distribuição marginal, mas não são independentes [@rice2007mathematical, seção 7.3.1; @cox2006principles, seção 9.2; @ramachandran2021r, seção 4.1].
+Considere uma população finita formada por $N$ unidades, às quais estão associados os valores fixos
 
-Defina
+$$
+a_1,\ldots,a_N.
+$$
 
-$$\mu_N=\frac{1}{N}\sum_{j=1}^N x_j
-\quad\text{e}\quad
-\sigma_N^2=\frac{1}{N}\sum_{j=1}^N(x_j-\mu_N)^2.
+O procedimento pode ser representado por $n$ seleções sequenciais sem reposição, em que cada unidade ainda disponível possui a mesma probabilidade de ser escolhida em cada etapa. Essa representação ordenada permite definir as variáveis aleatórias $X_1,\ldots,X_n$. As observações possuem a mesma distribuição marginal, mas não são independentes [@rice2007mathematical, seção 7.3.1; @cox2006principles, seção 9.2; @ramachandran2021r, seção 4.1].
+
+Defina a média e a variância dessa população finita por
+
+$$
+\mu_N
+=
+\frac{1}{N}\sum_{j=1}^N a_j
+$$
+
+e
+
+$$
+\sigma_N^2
+=
+\frac{1}{N}\sum_{j=1}^N(a_j-\mu_N)^2.
 $$
 
 Para descrever probabilisticamente a amostra, considere $J_i$ como o índice da unidade selecionada na $i$-ésima posição e defina
 
 $$
-X_i=x_{J_i},
+X_i=a_{J_i},
 \qquad
 i=1,\ldots,n.
 $$
@@ -197,12 +217,14 @@ P(J_i=r)=\frac{1}{N},
 r=1,\ldots,N.
 $$
 
-Portanto, cada unidade possui a mesma probabilidade de ocupar qualquer posição da amostra. A variável $X_i$ registra o valor associado à unidade selecionada.
+Portanto, cada unidade possui a mesma probabilidade de ocupar qualquer posição da amostra. A variável aleatória $X_i$ registra o valor associado à unidade selecionada nessa posição.
 
 Se todos os valores populacionais forem distintos, então
 
 $$
-P(X_i=x_r)=\frac{1}{N}.
+P(X_i=a_r)=\frac{1}{N},
+\qquad
+r=1,\ldots,N.
 $$
 
 Se diferentes unidades possuírem o mesmo valor, a probabilidade desse valor é obtida somando as probabilidades das unidades correspondentes.
@@ -226,37 +248,58 @@ $$
 Como cada uma das $N$ unidades possui probabilidade $1/N$ de ocupar a posição $i$,
 
 $$
-E(X_i)=\frac{1}{N}\sum_{r=1}^N x_r=\mu_N.
+E(X_i)
+=
+\frac{1}{N}\sum_{r=1}^N a_r
+=
+\mu_N.
 $$
 
 Além disso,
 
 $$
-E(X_i^2) =\frac{1}{N}\sum_{r=1}^N x_r^2.
+E(X_i^2)
+=
+\frac{1}{N}\sum_{r=1}^N a_r^2.
 $$
 
-Da definição de variância populacional,
+Da definição de variância da população finita,
 
 $$
-\sigma_N^2=\frac{1}{N}\sum_{r=1}^N(x_r-\mu_N)^2.
+\sigma_N^2
+=
+\frac{1}{N}
+\sum_{r=1}^N
+(a_r-\mu_N)^2.
 $$
 
 Expandindo o quadrado,
 
 $$
-\sigma_N^2 = \frac{1}{N}\sum_{r=1}^N x_r^2-\mu_N^2.
+\sigma_N^2
+=
+\frac{1}{N}
+\sum_{r=1}^N a_r^2
+-
+\mu_N^2.
 $$
 
 Portanto,
 
 $$
-E(X_i^2) = \sigma_N^2+\mu_N^2,
+E(X_i^2)
+=
+\sigma_N^2+\mu_N^2,
 $$
 
 e
 
 $$
-\operatorname{Var}(X_i) = E(X_i^2)-[E(X_i)]^2=\sigma_N^2.
+\operatorname{Var}(X_i)
+=
+E(X_i^2)-[E(X_i)]^2
+=
+\sigma_N^2.
 $$
 :::
 :::
@@ -284,43 +327,75 @@ $$
 de ocupar, respectivamente, as posições $i$ e $j$. Portanto,
 
 $$
-E(X_iX_j) = \frac{1}{N(N-1)}\sum_{r\neq s} x_rx_s.
+E(X_iX_j)
+=
+\frac{1}{N(N-1)}
+\sum_{r\neq s} a_ra_s.
 $$
 
 Utilizamos a identidade
 
 $$
-\left(\sum_{r=1}^N x_r\right)^2=\sum_{r=1}^N x_r^2+\sum_{r\neq s}x_rx_s.
+\left(
+\sum_{r=1}^N a_r
+\right)^2
+=
+\sum_{r=1}^N a_r^2
++
+\sum_{r\neq s}a_ra_s.
 $$
 
 Logo,
 
 $$
-\sum_{r\neq s}x_rx_s = \left( \sum_{r=1}^N x_r \right)^2 - \sum_{r=1}^N x_r^2.
+\sum_{r\neq s}a_ra_s
+=
+\left(
+\sum_{r=1}^N a_r
+\right)^2
+-
+\sum_{r=1}^N a_r^2.
 $$
 
 Como
 
 $$
-\sum_{r=1}^N x_r = N\mu_N
+\sum_{r=1}^N a_r
+=
+N\mu_N
 $$
 
 e
 
 $$
-\frac{1}{N} \sum_{r=1}^N x_r^2 = \sigma_N^2+\mu_N^2,
+\frac{1}{N}
+\sum_{r=1}^N a_r^2
+=
+\sigma_N^2+\mu_N^2,
 $$
 
 temos
 
 $$
-E(X_iX_j) = \frac{N^2\mu_N^2-N(\sigma_N^2+\mu_N^2)}{N(N-1)}.
+E(X_iX_j)
+=
+\frac{
+N^2\mu_N^2
+-
+N(\sigma_N^2+\mu_N^2)
+}{
+N(N-1)
+}.
 $$
 
 Simplificando,
 
 $$
-E(X_iX_j) = \mu_N^2 - \frac{\sigma_N^2}{N-1}.
+E(X_iX_j)
+=
+\mu_N^2
+-
+\frac{\sigma_N^2}{N-1}.
 $$
 
 Como
@@ -332,13 +407,17 @@ $$
 segue que
 
 $$
-\operatorname{Cov}(X_i,X_j) = E(X_iX_j)-E(X_i)E(X_j),
+\operatorname{Cov}(X_i,X_j)
+=
+E(X_iX_j)-E(X_i)E(X_j),
 $$
 
 e, portanto,
 
 $$
-\operatorname{Cov}(X_i,X_j)=-\frac{\sigma_N^2}{N-1}.
+\operatorname{Cov}(X_i,X_j)
+=
+-\frac{\sigma_N^2}{N-1}.
 $$
 :::
 :::
@@ -495,13 +574,23 @@ $$
 ::: {.callout-warning title="Observação — Duas convenções para a variância finita"}
 Se a variância da população finita for definida por
 
-$$\sigma_F^2=\frac{1}{N-1}\sum_{j=1}^N(x_j-\mu_N)^2,$$
+$$
+\sigma_F^2
+=
+\frac{1}{N-1}
+\sum_{j=1}^N
+(a_j-\mu_N)^2,
+$$
 
 então a mesma fórmula pode ser escrita como
 
-$$\operatorname{Var}(\overline{X})
+$$
+\operatorname{Var}(\overline X)
 =
-\left(1-\frac{n}{N}\right)\frac{\sigma_F^2}{n}.
+\left(
+1-\frac{n}{N}
+\right)
+\frac{\sigma_F^2}{n}.
 $$
 
 As duas expressões são equivalentes; é necessário apenas manter a convenção utilizada para a variância populacional [@rice2007mathematical, seção 7.3.1; @cox2006principles, seção 9.2].
@@ -509,6 +598,37 @@ As duas expressões são equivalentes; é necessário apenas manter a convençã
 
 ::: {.callout-note title="Interpretação — Fração amostral"}
 Quando $n/N$ é pequeno, a correção de população finita é próxima de $1$, e o erro-padrão fica próximo de $\sigma_N/\sqrt{n}$. Quando uma fração apreciável da população é observada, a amostragem sem reposição reduz a incerteza em relação à amostragem com reposição [@rice2007mathematical, seção 7.3.1; @cox2006principles, seção 9.2].
+:::
+
+::: {.callout-note title="Modelo i.i.d. e amostragem sem reposição"}
+Os dois referenciais produzem estruturas probabilísticas distintas.
+
+No **modelo i.i.d.**, as observações possuem a mesma distribuição e são independentes. Para a média amostral,
+
+$$
+\operatorname{Var}(\overline X)
+=
+\frac{\sigma^2}{n}.
+$$
+
+Na **amostragem aleatória simples sem reposição** de uma população finita, as observações possuem a mesma distribuição marginal, mas são dependentes. Para $i\neq j$,
+
+$$
+\operatorname{Cov}(X_i,X_j)
+=
+-\frac{\sigma_N^2}{N-1},
+$$
+
+e
+
+$$
+\operatorname{Var}(\overline X)
+=
+\frac{\sigma_N^2}{n}
+\frac{N-n}{N-1}.
+$$
+
+Portanto, a distribuição amostral de uma estatística depende não apenas da estatística escolhida, mas também do mecanismo que gera a amostra.
 :::
 
 ## Construção de uma distribuição amostral por enumeração
@@ -609,20 +729,25 @@ A enumeração torna visível que a distribuição amostral é a distribuição 
 
 ## Somas, transformações e funções geradoras de momentos
 
-Se
+Muitas estatísticas de interesse podem ser expressas a partir de somas de variáveis aleatórias. A média amostral, por exemplo, é uma transformação da soma
 
-$$Y=\sum_{i=1}^n X_i,
+$$
+Y=\sum_{i=1}^n X_i,
 \qquad
-\overline{X}=\frac{Y}{n},
+\overline X=\frac{Y}{n}.
 $$
 
-então, no caso contínuo,
+Assim, conhecer a distribuição de $Y$ permite obter a distribuição de $\overline X$ por uma transformação de variável.
+
+No caso contínuo,
 
 $$
-f_{\overline X}(x)
+f_{\overline X}(u)
 =
-n f_Y(nx).
+n f_Y(nu),
 $$
+
+em que $u$ representa um possível valor de $\overline X$.
 
 ::: {.callout-note collapse="true" title="Derivação pela transformação de variável"}
 
@@ -640,23 +765,17 @@ $$
 Y=n\overline X.
 $$
 
-Se escrevermos
+Se $u$ representa um possível valor de $\overline X$, o valor correspondente de $Y$ é
 
 $$
-x=\overline x
+y=nu.
 $$
 
-para um possível valor da média amostral, então
-
-$$
-y=nx
-$$
-
-e
+Além disso,
 
 $$
 \left|
-\frac{dy}{dx}
+\frac{dy}{du}
 \right|
 =
 n.
@@ -666,14 +785,14 @@ Pela fórmula de transformação de uma variável contínua,
 
 $$
 \begin{aligned}
-f_{\overline X}(x)
+f_{\overline X}(u)
 &=
-f_Y(nx)
+f_Y(nu)
 \left|
-\frac{d(nx)}{dx}
+\frac{d(nu)}{du}
 \right|\\
 &=
-n f_Y(nx).
+n f_Y(nu).
 \end{aligned}
 $$
 
@@ -681,9 +800,9 @@ Portanto,
 
 $$
 \boxed{
-f_{\overline X}(x)
+f_{\overline X}(u)
 =
-n f_Y(nx)
+n f_Y(nu)
 }.
 $$
 
@@ -718,7 +837,7 @@ $$
 
 Para somas com mais de duas variáveis independentes, a convolução pode ser aplicada sucessivamente.
 
-Quando as funções geradoras de momentos existem em uma vizinhança de zero, elas fornecem outra forma de identificar a distribuição da soma [@larsen2012, seções 3.8 e 3.12; @rice2007mathematical, seção 4.5; @kerns2010, seção 5.4].
+Outra possibilidade é utilizar funções geradoras de momentos. Quando a FGM existe em uma vizinhança de zero, ela determina unicamente a distribuição da variável aleatória. Além disso, para variáveis independentes, a FGM de uma soma é obtida pelo produto das FGMs individuais. Essas propriedades frequentemente permitem reconhecer diretamente a distribuição de uma soma [@larsen2012, seções 3.8 e 3.12; @rice2007mathematical, seção 4.5; @kerns2010, seção 5.4].
 
 ::: {.callout-tip title="Exemplo — Convolução de duas variáveis Bernoulli"}
 
@@ -795,7 +914,7 @@ Portanto,
 
 $$
 \boxed{
-Y\sim\operatorname{Binom}(2,p)
+Y\sim\operatorname{Bin}(2,p)
 }.
 $$
 
@@ -803,22 +922,48 @@ A convolução mostra diretamente como a distribuição binomial surge da soma d
 
 :::
 
+::: {.callout-note title="Propriedade — FGM da soma e da média"}
+Para variáveis aleatórias independentes,
+
+$$
+M_{\sum X_i}(t)
+=
+\prod_{i=1}^nM_{X_i}(t).
+$$
+
+Se, adicionalmente, $X_1,\ldots,X_n$ são identicamente distribuídas com FGM $M_X(t)$, então
+
+$$
+M_{\overline X}(t)
+=
+\left[
+M_X\left(\frac{t}{n}\right)
+\right]^n.
+$$
+
+Essas identidades permitem reconhecer distribuições amostrais exatas a partir das funções geradoras de momentos das variáveis que compõem a amostra [@larsen2012, seção 3.12; @rice2007mathematical, seção 4.5].
+:::
+
 ::: {.callout-tip title="Exemplo — Média de variáveis Poisson"}
 
-Se
+Considere
 
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Poisson}(\lambda),
+\operatorname{Poisson}(\lambda)
 $$
 
-então
+e defina
 
 $$
-Y=\sum_{i=1}^nX_i
-\sim
-\operatorname{Poisson}(n\lambda).
+Y=\sum_{i=1}^nX_i.
+$$
+
+Utilize a função geradora de momentos para obter a distribuição de $Y$ e, a partir dela, caracterizar a distribuição da média amostral
+
+$$
+\overline X=\frac Yn.
 $$
 
 ::: {.callout-note collapse="true" title="Como obter a distribuição da soma pela FGM"}
@@ -905,27 +1050,7 @@ $$
 :::
 
 
-::: {.callout-note title="Recordação — FGM da soma e da média"}
-As propriedades da função geradora de momentos fornecem, para variáveis independentes,
 
-$$
-M_{\sum X_i}(t)
-=
-\prod_{i=1}^nM_{X_i}(t).
-$$
-
-Se, adicionalmente, $X_1,\ldots,X_n$ são identicamente distribuídas com FGM $M_X(t)$, então
-
-$$
-M_{\overline X}(t)
-=
-\left[
-M_X\left(\frac{t}{n}\right)
-\right]^n.
-$$
-
-Essas identidades permitem reconhecer distribuições amostrais exatas a partir das funções geradoras de momentos das variáveis que compõem a amostra [@larsen2012, seção 3.12; @rice2007mathematical, seção 4.5].
-:::
 
 ::: {.callout-tip title="Exemplo — Média de variáveis normais"}
 
@@ -1524,9 +1649,9 @@ A normalidade é exata porque $\overline X$ e $\overline Y$ são variáveis norm
 
 ## Lei dos Grandes Números
 
-A Lei dos Grandes Números foi estabelecida em @sec-prelim-matematica-assintotica. Aqui, o resultado é aplicado à distribuição amostral da média.
+A Lei dos Grandes Números descreve o comportamento da média amostral quando o tamanho da amostra aumenta. O resultado também é discutido, em um contexto probabilístico mais geral, em @sec-prelim-matematica-assintotica.
 
-Para uma amostra i.i.d. com média $\mu$ e variância finita, a Lei dos Grandes Números descreve a concentração da média amostral em torno de $\mu$.
+No estudo das distribuições amostrais, seu papel é mostrar como a distribuição de $\overline X_n$ se concentra progressivamente em torno da média populacional $\mu$ à medida que $n$ aumenta.
 
 ::: {.callout-important title="Aplicação — Concentração da média amostral"}
 Se $X_1,X_2,\ldots$ são i.i.d.,
@@ -1610,7 +1735,7 @@ Se
 $$
 X_1,X_2,\ldots
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p),
+\operatorname{Ber}(p),
 $$
 
 então
@@ -1639,7 +1764,9 @@ Assim, a proporção amostral concentra-se em torno da proporção populacional 
 
 ## Teorema Central do Limite
 
-O Teorema Central do Limite apresentado em @sec-prelim-matematica-assintotica fornece, para uma amostra i.i.d. com
+O Teorema Central do Limite fornece uma aproximação para a forma da distribuição amostral de somas e médias quando o tamanho da amostra aumenta. Uma apresentação do resultado em um contexto probabilístico mais geral também pode ser consultada em @sec-prelim-matematica-assintotica.
+
+Para uma amostra i.i.d. com
 
 $$
 E(X_i)=\mu
@@ -1647,7 +1774,7 @@ E(X_i)=\mu
 0<\sigma^2=\operatorname{Var}(X_i)<\infty,
 $$
 
-a convergência
+temos a convergência
 
 $$
 Z_n
@@ -1678,6 +1805,73 @@ $$
 \overset{\cdot}{\sim}
 N(n\mu,n\sigma^2).
 $$
+
+### Diferença de médias em grandes amostras {.unnumbered}
+
+O mesmo princípio pode ser aplicado à diferença de médias de duas amostras independentes.
+
+Considere
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+F_1
+$$
+
+e
+
+$$
+Y_1,\ldots,Y_m
+\overset{\mathrm{iid}}{\sim}
+F_2,
+$$
+
+com as duas amostras independentes e
+
+$$
+E(X_i)=\mu_1,
+\qquad
+\operatorname{Var}(X_i)=\sigma_1^2<\infty,
+$$
+
+$$
+E(Y_j)=\mu_2,
+\qquad
+\operatorname{Var}(Y_j)=\sigma_2^2<\infty.
+$$
+
+Quando $n$ e $m$ aumentam, o Teorema Central do Limite fornece
+
+$$
+\frac{
+(\overline X-\overline Y)-(\mu_1-\mu_2)
+}{
+\sqrt{
+\sigma_1^2/n+\sigma_2^2/m
+}
+}
+\xrightarrow{d}
+N(0,1),
+$$
+
+quando $\min(n,m)\to\infty$.
+
+Consequentemente, para amostras suficientemente grandes,
+
+$$
+\boxed{
+\overline X-\overline Y
+\overset{\cdot}{\sim}
+N\left(
+\mu_1-\mu_2,\,
+\frac{\sigma_1^2}{n}
++
+\frac{\sigma_2^2}{m}
+\right)
+}.
+$$
+
+Esse resultado deve ser distinguido daquele obtido anteriormente para duas populações normais. Se as duas populações são normais, a distribuição acima é **exata para quaisquer tamanhos amostrais**. Para populações gerais com variâncias finitas, ela constitui uma **aproximação assintótica** baseada no Teorema Central do Limite.
 
 Neste texto, o símbolo
 
@@ -1721,11 +1915,41 @@ $$
 A distribuição normal com variância $\sigma^2/n$ é uma **aproximação da distribuição de $\overline X_n$ para cada $n$ suficientemente grande**, e não seu limite em distribuição.
 :::
 
+::: {.callout-note title="Lei dos Grandes Números e Teorema Central do Limite"}
+A Lei dos Grandes Números e o Teorema Central do Limite descrevem aspectos diferentes do comportamento da média amostral.
+
+A **Lei dos Grandes Números** estabelece que
+
+$$
+\overline X_n
+\xrightarrow{p}
+\mu,
+$$
+
+mostrando que a média amostral se concentra em torno da média populacional à medida que $n$ aumenta.
+
+O **Teorema Central do Limite** descreve a escala e a forma das flutuações de $\overline X_n$ em torno de $\mu$. Depois de centralizar e multiplicar por $\sqrt n$,
+
+$$
+\frac{
+\sqrt n(\overline X_n-\mu)
+}{
+\sigma
+}
+\xrightarrow{d}
+N(0,1).
+$$
+
+Assim, a LGN descreve a **concentração** da média amostral, enquanto o TCL descreve a **distribuição aproximada de seus desvios em relação a $\mu$**, após a padronização adequada.
+:::
+
 ::: {.callout-warning title="Observação — Não existe uma regra universal $n\\geq30$"}
 A qualidade da aproximação normal depende da assimetria, do peso das caudas, da existência de momentos, da natureza discreta ou contínua da população e da precisão desejada. Distribuições fortemente assimétricas ou com caudas pesadas podem exigir amostras muito maiores. O diagnóstico deve considerar o modelo e, quando possível, simulações ou limites de erro [@chihara2022, seção 4.3.3, p. 92].
 :::
 
 ### Padronização com variância estimada
+
+A padronização fornecida diretamente pelo TCL utiliza o desvio-padrão populacional $\sigma$. Em problemas inferenciais, entretanto, $\sigma$ frequentemente é desconhecido. Nesse caso, podemos examinar o que ocorre quando ele é substituído pelo desvio-padrão amostral $S$.
 
 Para uma amostra i.i.d. com $0<\sigma^2<\infty$,
 
@@ -1813,10 +2037,16 @@ $$
 
 :::
 
-Combinando $S\xrightarrow{p}\sigma$ com o TCL, o teorema de Slutsky fornece [@lauritzen2023fundamentals, apêndice A.2.2]
+Combinando $S\xrightarrow{p}\sigma$ com o TCL, o lema de Slutsky fornece [@lauritzen2023fundamentals, apêndice A.2.2]
 
-$$\frac{\overline{X}-\mu}{S/\sqrt{n}}
-\xrightarrow{d}N(0,1).
+$$
+\frac{
+\overline X_n-\mu
+}{
+S/\sqrt n
+}
+\xrightarrow{d}
+N(0,1).
 $$
 
 ::: {.callout-warning title="Observação — Resultado exato e resultado assintótico"}
@@ -1825,30 +2055,75 @@ Para amostras normais, a estatística acima possui exatamente distribuição $t_
 
 ## Distribuição amostral da proporção
 
-Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}\operatorname{Bernoulli}(p)$, então [@chihara2022, seções 4.1 e 4.3.1; @ramachandran2021r, seção 4.5]
+Retomando o modelo Bernoulli utilizado em @sec-fundamentos-inferencia, considere
 
-$$Y=\sum_{i=1}^nX_i\sim\operatorname{Binom}(n,p)
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Ber}(p).
 $$
 
-e
+Se
 
-$$\widehat p=\overline{X}=\frac{Y}{n}.
 $$
-
-Portanto,
-
-$$E(\widehat p)=p$$
-
-e
-
-$$\operatorname{Var}(\widehat p)=\frac{p(1-p)}{n}.$$
-
-A distribuição exata de $\widehat p$ é discreta:
-
-$$P\left(\widehat p=\frac{k}{n}\right)
+Y
 =
-\binom{n}{k}p^k(1-p)^{n-k},
-\qquad k=0,\ldots,n.
+\sum_{i=1}^nX_i,
+$$
+
+então
+
+$$
+Y
+\sim
+\operatorname{Bin}(n,p)
+$$
+
+e a proporção amostral pode ser escrita como
+
+$$
+\widehat p
+=
+\overline X
+=
+\frac{Y}{n}.
+$$
+
+Como
+
+$$
+E(Y)=np
+\qquad\text{e}\qquad
+\operatorname{Var}(Y)=np(1-p),
+$$
+
+segue que
+
+$$
+E(\widehat p)=p
+$$
+
+e
+
+$$
+\operatorname{Var}(\widehat p)
+=
+\frac{p(1-p)}{n}.
+$$
+
+A distribuição exata de $\widehat p$ é discreta e é induzida pela distribuição binomial de $Y$:
+
+$$
+P\left(
+\widehat p=\frac{k}{n}
+\right)
+=
+P(Y=k)
+=
+\binom{n}{k}
+p^k(1-p)^{n-k},
+\qquad
+k=0,\ldots,n.
 $$
 
 ### Proporção em uma população finita {.unnumbered}
@@ -1859,7 +2134,7 @@ $$
 p=\frac{M}{N}.
 $$
 
-Se uma amostra aleatória simples de tamanho $n$ é selecionada sem reposição e $Y$ representa o número de unidades da amostra com essa característica, então
+Se uma amostra aleatória simples de tamanho $n$ é selecionada sem reposição e $Y$ representa o número de unidades da amostra que apresentam essa característica, então
 
 $$
 Y
@@ -1872,7 +2147,7 @@ A proporção amostral é
 $$
 \widehat p
 =
-\frac Yn.
+\frac{Y}{n}.
 $$
 
 Além disso,
@@ -1934,10 +2209,10 @@ $$
 
 que é a função de probabilidade da distribuição hipergeométrica.
 
-Para obter os momentos de $\widehat p$, podemos representar cada unidade da população por
+Para obter os momentos de $\widehat p$, podemos representar o valor associado à $r$-ésima unidade da população por
 
 $$
-x_r=
+a_r=
 \begin{cases}
 1, & \text{se possui a característica},\\
 0, & \text{caso contrário}.
@@ -2004,7 +2279,37 @@ $$
 
 :::
 
-Na variância de $\widehat p$, a diferença em relação ao modelo Bernoulli i.i.d. aparece por meio da correção de população finita. As distribuições exatas também são diferentes: no modelo i.i.d., $Y$ é binomial; na amostragem sem reposição de uma população finita, $Y$ é hipergeométrica.
+A estatística de contagem
+
+$$
+Y
+=
+n\widehat p
+$$
+
+possui distribuições diferentes nos dois referenciais de geração da amostra.
+
+No modelo Bernoulli i.i.d.,
+
+$$
+Y
+\sim
+\operatorname{Bin}(n,p),
+$$
+
+enquanto, na amostragem aleatória simples sem reposição de uma população finita com $M$ unidades que apresentam a característica,
+
+$$
+Y
+\sim
+\operatorname{Hipergeométrica}(N,M,n).
+$$
+
+A diferença também aparece na variância de $\widehat p$: no caso sem reposição, surge a correção de população finita
+
+$$
+\frac{N-n}{N-1}.
+$$
 
 ::: {.callout-tip title="Exemplo — Urna do experimento físico"}
 
@@ -2020,13 +2325,9 @@ $$
 M=900
 $$
 
-são vermelhas. Considere uma amostra aleatória simples de
+são vermelhas.
 
-$$
-n=50
-$$
-
-bolas, selecionada sem reposição.
+Para estudar teoricamente a distribuição amostral da proporção, suponha agora que a seleção de $n=50$ bolas possa ser representada por uma **amostragem aleatória simples sem reposição**. Sob esse modelo probabilístico,
 
 Determine:
 
@@ -2089,7 +2390,7 @@ $$
 0{,}0678.
 $$
 
-Esse é o modelo probabilístico de referência para o experimento físico quando o procedimento de seleção é representado como uma amostragem aleatória simples sem reposição.
+A correção de população finita reduz ligeiramente a variabilidade de $\widehat p$ em relação ao modelo Bernoulli i.i.d. com o mesmo valor de $p$ e o mesmo tamanho amostral.
 
 :::
 
@@ -2110,24 +2411,24 @@ Como
 $$
 \widehat p
 =
-\frac{Y_n}{n},
+\frac{Y}{n},
 $$
 
 em que
 
 $$
-Y_n
+Y
 =
 \sum_{i=1}^nX_i
 \sim
-\operatorname{Binom}(n,p),
+\operatorname{Bin}(n,p),
 $$
 
 o mesmo resultado pode ser escrito como
 
 $$
 \frac{
-Y_n-np
+Y-np
 }{
 \sqrt{np(1-p)}
 }
@@ -2137,15 +2438,15 @@ $$
 
 ### Aproximação normal da binomial
 
-A convergência acima é a justificativa assintótica para aproximar a distribuição binomial por uma distribuição normal. Para $n$ suficientemente grande,
+A convergência acima fornece a justificativa assintótica para aproximar a distribuição binomial por uma distribuição normal. Para $n$ suficientemente grande,
 
 $$
-Y_n
+Y
 \overset{\cdot}{\sim}
 N\bigl(np,np(1-p)\bigr).
 $$
 
-A expressão é uma aproximação da distribuição de $Y_n$; não afirma que $Y_n$ converge em distribuição para uma normal cuja média e variância dependem de $n$.
+Essa expressão aproxima a distribuição de $Y$ para valores grandes de $n$; ela não afirma que $Y$ converge em distribuição para uma normal cuja média e variância dependem de $n$.
 
 ::: {.callout-note collapse="true" title="Como o TCL conduz à aproximação normal da binomial"}
 
@@ -2154,7 +2455,7 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Bernoulli}(p).
+\operatorname{Ber}(p).
 $$
 
 Para cada observação,
@@ -2184,7 +2485,7 @@ $$
 Como
 
 $$
-Y_n=n\overline X_n,
+Y=n\overline X_n,
 $$
 
 temos
@@ -2192,14 +2493,14 @@ temos
 $$
 \sqrt n(\overline X_n-p)
 =
-\frac{Y_n-np}{\sqrt n}.
+\frac{Y-np}{\sqrt n}.
 $$
 
 Portanto,
 
 $$
 \frac{
-Y_n-np
+Y-np
 }{
 \sqrt{np(1-p)}
 }
@@ -2211,7 +2512,7 @@ Para grandes valores de $n$, isso permite aproximar a variável padronizada bino
 
 $$
 \frac{
-Y_n-np
+Y-np
 }{
 \sqrt{np(1-p)}
 }
@@ -2222,7 +2523,7 @@ $$
 Desfazendo a padronização, obtemos a forma operacional
 
 $$
-Y_n
+Y
 \overset{\cdot}{\sim}
 N\bigl(np,np(1-p)\bigr).
 $$
@@ -2234,7 +2535,7 @@ Como a binomial é discreta e a normal é contínua, uma aproximação direta as
 Por exemplo,
 
 $$
-P(Y_n\leq k)
+P(Y\leq k)
 \approx
 \Phi\left(
 \frac{k+0{,}5-np}{\sqrt{np(1-p)}}
@@ -2244,7 +2545,7 @@ $$
 e
 
 $$
-P(Y_n\geq k)
+P(Y\geq k)
 \approx
 1-
 \Phi\left(
@@ -2257,7 +2558,7 @@ $$
 A variável binomial assume apenas valores inteiros. A probabilidade
 
 $$
-P(Y_n=k)
+P(Y=k)
 $$
 
 corresponde a uma massa concentrada no ponto $k$.
@@ -2275,13 +2576,13 @@ $$
 Assim, o evento discreto
 
 $$
-Y_n\leq k
+Y\leq k
 $$
 
 é aproximado, na normal contínua, por
 
 $$
-Y_n^*
+Y^*
 \leq
 k+\frac12,
 $$
@@ -2289,7 +2590,7 @@ $$
 em que
 
 $$
-Y_n^*
+Y^*
 \sim
 N\bigl(np,np(1-p)\bigr).
 $$
@@ -2298,10 +2599,10 @@ Logo,
 
 $$
 \begin{aligned}
-P(Y_n\leq k)
+P(Y\leq k)
 &\approx
 P\left(
-Y_n^*\leq k+\frac12
+Y^*\leq k+\frac12
 \right)\\
 &=
 \Phi\left(
@@ -2317,13 +2618,13 @@ $$
 Da mesma forma,
 
 $$
-Y_n\geq k
+Y\geq k
 $$
 
 é aproximado pelo evento contínuo
 
 $$
-Y_n^*
+Y^*
 \geq
 k-\frac12,
 $$
@@ -2331,7 +2632,7 @@ $$
 o que fornece
 
 $$
-P(Y_n\geq k)
+P(Y\geq k)
 \approx
 1-
 \Phi\left(
@@ -2400,7 +2701,7 @@ Temos
 $$
 Y
 \sim
-\operatorname{Binom}(1000,0{,}53).
+\operatorname{Bin}(1000,0{,}53).
 $$
 
 Logo,
@@ -2656,9 +2957,19 @@ $$
 
 Portanto, a variância de $S^2$ depende do quarto momento da população. A fórmula
 
-$$\operatorname{Var}(S^2)=\frac{2\sigma^4}{n-1}$$
+$$
+\operatorname{Var}(S^2)
+=
+\frac{2\sigma^4}{n-1}
+$$
 
-é válida especificamente para a população normal, pois nesse caso $\mu_4=3\sigma^4$.
+é válida especificamente para a população normal, pois nesse caso
+
+$$
+\mu_4=3\sigma^4.
+$$
+
+Até aqui, estudamos propriedades de $S^2$ que não exigem normalidade, exceto quando essa hipótese foi explicitamente utilizada. Sob o modelo normal, é possível avançar além dos momentos e obter a **distribuição exata** de transformações envolvendo $\overline X$ e $S^2$.
 
 ## Distribuições derivadas do modelo normal
 
@@ -2842,6 +3153,9 @@ Os dois casos fornecem exatamente os momentos inversos necessários nas derivaç
 
 :::
 
+### Independência entre média e variância
+
+::: {.callout-important title="Teorema — Independência no modelo normal"}
 Se
 
 $$
@@ -2853,12 +3167,128 @@ $$
 então
 
 $$
+\boxed{
+\overline X
+\ \perp\!\!\!\perp\
+S^2
+}.
+$$
+
+A independência entre a média e a variância amostrais é uma propriedade especial do modelo normal [@casella2011inferencia, teorema 5.3.1; @larsen2012, apêndice 7.A.2; @rice2007mathematical, seção 6.3].
+:::
+
+::: {.callout-note collapse="true" title="Demonstração da independência entre $\overline X$ e $S^2$"}
+
+A demonstração utiliza uma propriedade específica das combinações lineares de variáveis normais independentes: nesse caso, combinações lineares com covariância nula são independentes [@casella2011inferencia, lema 5.3.3].
+
+Considere os $n-1$ resíduos
+
+$$
+R_i
+=
+X_i-\overline X,
+\qquad
+i=2,\ldots,n.
+$$
+
+Como
+
+$$
+\overline X
+=
+\frac1n\sum_{j=1}^nX_j,
+$$
+
+temos, para cada $i=2,\ldots,n$,
+
+$$
+\begin{aligned}
+\operatorname{Cov}
+(\overline X,R_i)
+&=
+\operatorname{Cov}(\overline X,X_i)
+-
+\operatorname{Var}(\overline X)\\
+&=
+\frac{\sigma^2}{n}
+-
+\frac{\sigma^2}{n}\\
+&=
+0.
+\end{aligned}
+$$
+
+A média $\overline X$ e os resíduos $R_2,\ldots,R_n$ são combinações lineares das variáveis normais independentes $X_1,\ldots,X_n$. Portanto,
+
+$$
+\overline X
+\perp\!\!\!\perp
+(R_2,\ldots,R_n).
+$$
+
+Além disso,
+
+$$
+X_1-\overline X
+=
+-\sum_{i=2}^n
+(X_i-\overline X),
+$$
+
+de modo que
+
+$$
+S^2
+=
+\frac1{n-1}
+\left[
+\left(
+\sum_{i=2}^nR_i
+\right)^2
++
+\sum_{i=2}^nR_i^2
+\right].
+$$
+
+Portanto, $S^2$ é uma função apenas de $R_2,\ldots,R_n$. Como $\overline X$ é independente desse vetor de resíduos,
+
+$$
+\boxed{
+\overline X
+\perp\!\!\!\perp
+S^2
+}.
+$$
+:::
+
+::: {.callout-warning title="Observação — Especificidade do modelo normal"}
+A independência entre $\overline X$ e $S^2$ é uma propriedade especial da distribuição normal. Ela não vale, em geral, para outras populações.
+:::
+
+### Distribuição da variância amostral no modelo normal
+
+Se
+
+$$
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+N(\mu,\sigma^2),
+$$
+
+então
+
+::: {.callout-important title="Resultado — Distribuição da variância amostral no modelo normal"}
+
+$$
+\boxed{
 \frac{(n-1)S^2}{\sigma^2}
 \sim
-\chi^2_{n-1}.
+\chi^2_{n-1}
+}.
 $$
 
 Esse resultado é específico do modelo normal [@casella2011inferencia, teorema 5.3.1; @rice2007mathematical, seções 6.2--6.3; @larsen2012, capítulo 7; @ramachandran2021r, seção 4.2].
+:::
 
 ::: {.callout-note collapse="true" title="Demonstração — Distribuição de $S^2$ no modelo normal"}
 
@@ -2933,7 +3363,7 @@ $$
 \chi^2_1.
 $$
 
-No modelo normal, $\overline X_k$ e $S_k^2$ são independentes. Essa propriedade será demonstrada na subseção seguinte por meio do Lema 5.3.3 de Casella e Berger, sem utilizar a distribuição qui-quadrado de $S_k^2$. Além disso, $X_{k+1}$ é independente das primeiras $k$ observações. Portanto, os dois termos da decomposição são independentes.
+Pelo resultado de independência estabelecido anteriormente, $\overline X_k$ e $S_k^2$ são independentes no modelo normal. Além disso, $X_{k+1}$ é independente das primeiras $k$ observações. Portanto, os dois termos da decomposição são independentes.
 
 Assim,
 
@@ -2964,7 +3394,7 @@ $$
 }.
 $$
 
-Essa é a estratégia utilizada na demonstração do Teorema 5.3.1 de Casella e Berger. A independência entre $\overline X$ e $S^2$, utilizada no passo indutivo, é demonstrada a seguir.
+Essa é a estratégia utilizada na demonstração do Teorema 5.3.1 de Casella e Berger. O passo indutivo utiliza a independência entre a média e a variância amostrais no modelo normal, estabelecida anteriormente.
 
 :::
 
@@ -3031,116 +3461,10 @@ Essa interpretação por restrições lineares será retomada posteriormente em 
 :::
 :::
 
-### Independência entre média e variância
-
-::: {.callout-important title="Teorema — Independência no modelo normal"}
-Se $X_1,\ldots,X_n\overset{\mathrm{iid}}{\sim}N(\mu,\sigma^2)$, então
-
-$$\overline{X}\ \perp\!\!\!\perp\ S^2.$$
-
-A independência entre a média e a variância amostrais é uma propriedade especial do modelo normal [@casella2011inferencia, teorema 5.3.1; @larsen2012, apêndice 7.A.2; @rice2007mathematical, seção 6.3].
-
-Além disso,
-
-$$\overline{X}\sim N\left(\mu,\frac{\sigma^2}{n}\right)$$
-
-e
-
-$$\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.$$
-:::
-
-::: {.callout-note collapse="true" title="Demonstração da independência entre $\overline X$ e $S^2$"}
-
-A demonstração utiliza uma propriedade específica das combinações lineares de variáveis normais independentes: nesse caso, combinações lineares com covariância nula são independentes [@casella2011inferencia, lema 5.3.3].
-
-Considere os $n-1$ resíduos
-
-$$
-R_i
-=
-X_i-\overline X,
-\qquad
-i=2,\ldots,n.
-$$
-
-Como
-
-$$
-\overline X
-=
-\frac1n\sum_{j=1}^nX_j,
-$$
-
-temos, para cada $i=2,\ldots,n$,
-
-$$
-\begin{aligned}
-\operatorname{Cov}
-(\overline X,R_i)
-&=
-\operatorname{Cov}(\overline X,X_i)
--
-\operatorname{Var}(\overline X)\\
-&=
-\frac{\sigma^2}{n}
--
-\frac{\sigma^2}{n}\\
-&=
-0.
-\end{aligned}
-$$
-
-A média $\overline X$ e os resíduos $R_2,\ldots,R_n$ são combinações lineares das variáveis normais independentes $X_1,\ldots,X_n$. Pelo resultado anterior,
-
-$$
-\overline X
-\perp\!\!\!\perp
-(R_2,\ldots,R_n).
-$$
-
-Além disso,
-
-$$
-X_1-\overline X
-=
--\sum_{i=2}^n
-(X_i-\overline X),
-$$
-
-de modo que
-
-$$
-S^2
-=
-\frac1{n-1}
-\left[
-\left(
-\sum_{i=2}^nR_i
-\right)^2
-+
-\sum_{i=2}^nR_i^2
-\right].
-$$
-
-Portanto, $S^2$ é uma função apenas de $R_2,\ldots,R_n$. Como $\overline X$ é independente desse vetor de resíduos,
-
-$$
-\boxed{
-\overline X
-\perp\!\!\!\perp
-S^2
-}.
-$$
-
-A normalidade é essencial: fora da família normal, covariância nula entre estatísticas não implica, em geral, independência.
-
-:::
-
-::: {.callout-warning title="Observação — Especificidade do modelo normal"}
-A independência entre $\overline{X}$ e $S^2$ é uma propriedade especial da distribuição normal. Ela não vale, em geral, para outras populações.
-:::
 
 ### Distribuição $t$ de Student
+
+Os resultados anteriores permitem estudar o que ocorre quando o desvio-padrão populacional $\sigma$, presente na padronização normal da média, é substituído pelo desvio-padrão amostral $S$. Essa substituição conduz à distribuição $t$ de Student.
 
 ::: {.callout-important title="Definição — Distribuição $t$"}
 Se
@@ -3478,11 +3802,24 @@ $$
 
 :::
 
+::: {.callout-important title="Resultado — Distribuição da média padronizada com variância estimada"}
+
 No modelo normal,
 
-$$\frac{\overline{X}-\mu}{S/\sqrt{n}}
-\sim t_{n-1}.
 $$
+\boxed{
+\frac{
+\overline X-\mu
+}{
+S/\sqrt n
+}
+\sim
+t_{n-1}
+}.
+$$
+
+Esse resultado é exato para qualquer $n\geq2$ sob normalidade.
+:::
 
 ::: {.callout-note collapse="true" title="Derivação da estatística $t$ no modelo normal"}
 
@@ -3660,6 +3997,8 @@ Esse cálculo descreve uma propriedade da distribuição amostral exata de $T$ [
 
 ### Distribuição $F$
 
+Enquanto a distribuição $t$ surge da combinação entre uma variável normal padrão e uma variável qui-quadrado independente, a distribuição $F$ surge da razão entre duas variáveis qui-quadrado independentes depois de cada uma ser dividida por seus respectivos graus de liberdade. Essa construção será utilizada para obter a distribuição da razão entre duas variâncias amostrais sob normalidade.
+
 ::: {.callout-important title="Definição — Distribuição $F$"}
 Se $W_1\sim\chi^2_{\nu_1}$ e $W_2\sim\chi^2_{\nu_2}$ são independentes, então
 
@@ -3814,19 +4153,38 @@ $$
 
 :::
 
+::: {.callout-important title="Resultado — Razão entre variâncias amostrais"}
+
 Se duas amostras normais são independentes,
 
-$$X_1,\ldots,X_{n_1}\overset{\mathrm{iid}}{\sim}N(\mu_1,\sigma_1^2)$$
+$$
+X_1,\ldots,X_{n_1}
+\overset{\mathrm{iid}}{\sim}
+N(\mu_1,\sigma_1^2)
+$$
 
 e
 
-$$Y_1,\ldots,Y_{n_2}\overset{\mathrm{iid}}{\sim}N(\mu_2,\sigma_2^2),$$
+$$
+Y_1,\ldots,Y_{n_2}
+\overset{\mathrm{iid}}{\sim}
+N(\mu_2,\sigma_2^2),
+$$
 
 então
 
-$$\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}
-\sim F_{n_1-1,n_2-1}.
 $$
+\boxed{
+\frac{
+S_1^2/\sigma_1^2
+}{
+S_2^2/\sigma_2^2
+}
+\sim
+F_{n_1-1,n_2-1}
+}.
+$$
+:::
 
 ::: {.callout-note collapse="true" title="Derivação da razão de variâncias"}
 
@@ -3982,9 +4340,9 @@ $$
 
 ## Estatísticas de ordem
 
-Até aqui, as principais estatísticas amostrais foram construídas por somas, médias, proporções ou somas de quadrados. Outra forma de resumir uma amostra consiste em utilizar a **posição relativa das observações depois de ordená-las**.
+Até aqui, as principais estatísticas amostrais foram construídas por somas, médias, proporções ou somas de quadrados. Outra forma de resumir uma amostra consiste em utilizar a **posição das observações depois de ordená-las**, em vez de combiná-las por meio de uma soma.
 
-Estatísticas desse tipo permitem estudar mínimos, máximos, medianas e quantis amostrais. Sua distribuição também é importante em modelos nos quais extremos carregam informação direta sobre o parâmetro, como ocorre no modelo uniforme.
+Estatísticas desse tipo permitem estudar mínimos, máximos, medianas e quantis amostrais. Sua distribuição também é importante em modelos nos quais a posição dos valores observados, especialmente dos extremos, carrega informação direta sobre o parâmetro, como ocorre em alguns modelos uniformes.
 
 Seja $X_1,\ldots,X_n$ uma amostra i.i.d. de uma distribuição contínua com função de distribuição $F$ e densidade $f$. As observações ordenadas são denotadas por
 
@@ -4126,13 +4484,28 @@ $$
 
 ::: {.callout-note title="Parâmetro no suporte"}
 
-As fórmulas para o mínimo e o máximo também se aplicam quando o suporte da distribuição depende de um parâmetro. Para obter a distribuição amostral, considera-se $\theta$ fixado e calcula-se a distribuição da estatística sob $P_\theta$.
+As fórmulas para o mínimo e o máximo também se aplicam quando o suporte da distribuição depende de um parâmetro. Para obter a distribuição amostral, considera-se $\theta$ fixado e utiliza-se a função de distribuição
 
-Nesses modelos, deve-se observar cuidadosamente o conjunto de valores possíveis da estatística, pois seus limites também podem depender de $\theta$.
+$$
+F(x\mid\theta)
+$$
 
+correspondente ao modelo.
+
+Nesses casos, o conjunto de valores possíveis da estatística também pode depender de $\theta$. Esse aspecto deve ser considerado ao determinar a função de distribuição ou a densidade da estatística de ordem.
 :::
 
 ### $k$-ésima estatística de ordem
+
+O mínimo e o máximo correspondem aos casos extremos
+
+$$
+X_{(1)}
+\qquad\text{e}\qquad
+X_{(n)}.
+$$
+
+Podemos agora obter a distribuição de uma posição arbitrária da amostra ordenada.
 
 ::: {.callout-important title="Teorema — Densidade de $X_{(k)}$"}
 Para $k=1,\ldots,n$,
@@ -4171,7 +4544,7 @@ e as observações são independentes,
 $$
 N_x
 \sim
-\operatorname{Binom}\bigl(n,F(x)\bigr).
+\operatorname{Bin}\bigl(n,F(x)\bigr).
 $$
 
 O evento
@@ -4279,7 +4652,7 @@ f(x).
 \end{aligned}
 $$
 
-Esse argumento mostra também a ideia probabilística central do resultado: a posição de $X_{(k)}$ é determinada pelo **número de observações que ficam abaixo de $x$**.
+Esse argumento mostra também a ideia probabilística central do resultado: a distribuição de $X_{(k)}$ pode ser obtida a partir do **número de observações da amostra que não ultrapassam $x$**.
 
 :::
 
@@ -4657,7 +5030,7 @@ $$
 
 recuperando a densidade do máximo.
 
-O exemplo mostra que a fórmula geral das estatísticas de ordem contém mínimo e máximo como casos particulares e que uma família populacional simples pode produzir distribuições amostrais com formas bastante diferentes.
+O exemplo mostra que a fórmula geral das estatísticas de ordem contém o mínimo e o máximo como casos particulares e que diferentes estatísticas construídas a partir da mesma amostra podem possuir distribuições amostrais com formas bastante distintas.
 
 :::
 
@@ -4805,21 +5178,23 @@ Os dois cálculos coincidem, reproduzindo computacionalmente a correção de pop
 ## Quadro-síntese
 
 | Situação | Estatística | Distribuição ou resultado principal |
-|------------------------|------------------------|------------------------|
-| Amostra i.i.d., $E(X)=\mu$, $\operatorname{Var}(X)=\sigma^2$ | $\overline{X}$ | $E(\overline{X})=\mu$, $\operatorname{Var}(\overline{X})=\sigma^2/n$ |
-| População normal | $\overline{X}$ | $N(\mu,\sigma^2/n)$, exatamente |
-| Amostra i.i.d., $E(X)=\mu$ e $0<\operatorname{Var}(X)=\sigma^2<\infty$ | $\sqrt n(\overline{X}-\mu)/\sigma$ | converge em distribuição para $N(0,1)$ |
-| Poisson i.i.d. | $n\overline X=\sum X_i$ | $\operatorname{Poisson}(n\lambda)$ |
-| Bernoulli i.i.d. | $Y=\sum X_i$ | $\operatorname{Binom}(n,p)$ |
-| Bernoulli i.i.d. | $\widehat p=Y/n$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=p(1-p)/n$ |
+|:--|:--|:--|
+| Amostra i.i.d., $E(X)=\mu$, $\operatorname{Var}(X)=\sigma^2<\infty$ | $\overline X$ | $E(\overline X)=\mu$, $\operatorname{Var}(\overline X)=\sigma^2/n$ |
+| População normal | $\overline X$ | $\overline X\sim N(\mu,\sigma^2/n)$, exatamente |
+| Amostra i.i.d., $E(X)=\mu$, $0<\operatorname{Var}(X)=\sigma^2<\infty$ | $\sqrt n(\overline X_n-\mu)/\sigma$ | converge em distribuição para $N(0,1)$ |
+| Duas amostras independentes, com médias e variâncias finitas | $\dfrac{(\overline X-\overline Y)-(\mu_1-\mu_2)}{\sqrt{\sigma_1^2/n+\sigma_2^2/m}}$ | converge em distribuição para $N(0,1)$ quando $\min(n,m)\to\infty$ |
+| Duas populações normais independentes | $\overline X-\overline Y$ | $N\left(\mu_1-\mu_2,\sigma_1^2/n+\sigma_2^2/m\right)$, exatamente |
+| Poisson i.i.d. | $\sum X_i$ | $\operatorname{Poisson}(n\lambda)$ |
+| $\operatorname{Ber}(p)$ i.i.d. | $Y=\sum X_i$ | $Y\sim\operatorname{Bin}(n,p)$ |
+| $\operatorname{Ber}(p)$ i.i.d. | $\widehat p=Y/n$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=p(1-p)/n$ |
+| População finita com $M$ unidades que apresentam a característica, AAS sem reposição | $Y=n\widehat p$ | $Y\sim\operatorname{Hipergeométrica}(N,M,n)$ |
+| Proporção em população finita, AAS sem reposição | $\widehat p$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=\dfrac{p(1-p)}{n}\dfrac{N-n}{N-1}$ |
+| População finita, AAS sem reposição | $\overline X$ | $E(\overline X)=\mu_N$, $\operatorname{Var}(\overline X)=\dfrac{\sigma_N^2}{n}\dfrac{N-n}{N-1}$ |
 | População normal | $(n-1)S^2/\sigma^2$ | $\chi^2_{n-1}$ |
-| População normal | $(\overline{X}-\mu)/(S/\sqrt n)$ | $t_{n-1}$ |
-| Exponencial i.i.d., parametrizada pela média | $\overline X$ | $\operatorname{Gama}(n,\mu/n)$ |
+| População normal | $(\overline X-\mu)/(S/\sqrt n)$ | $t_{n-1}$ |
 | Duas populações normais independentes | $(S_1^2/\sigma_1^2)/(S_2^2/\sigma_2^2)$ | $F_{n_1-1,n_2-1}$ |
-| Duas populações normais independentes | $\overline X-\overline Y$ | $N\left(\mu_1-\mu_2,\sigma_1^2/n+\sigma_2^2/m\right)$ |
-| Amostra i.i.d. de uma distribuição contínua | $X_{(k)}$ | densidade da $k$-ésima estatística de ordem |
-| População finita, amostragem aleatória simples sem reposição | $\overline X$ | $E(\overline X)=\mu_N$, $\operatorname{Var}(\overline X)=\dfrac{\sigma_N^2}{n}\dfrac{N-n}{N-1}$ |
-| Proporção em população finita sem reposição | $\widehat p$ | $E(\widehat p)=p$, $\operatorname{Var}(\widehat p)=\dfrac{p(1-p)}{n}\dfrac{N-n}{N-1}$ |
+| Exponencial i.i.d., parametrizada pela média | $\overline X$ | $\operatorname{Gama}(n,\mu/n)$ |
+| Amostra i.i.d. de uma distribuição contínua | $X_{(k)}$ | $f_{X_{(k)}}(x)=\dfrac{n!}{(k-1)!(n-k)!}[F(x)]^{k-1}[1-F(x)]^{n-k}f(x)$ |
 
 As distribuições e propriedades reunidas nesta unidade fornecem a base probabilística para a avaliação de estimadores. Em @sec-avaliacao-reducao, elas fundamentam o estudo de viés, variância, erro quadrático médio, consistência e eficiência.
 
@@ -4916,17 +5291,46 @@ $$
 
 c.  Determine $E(\overline X-\overline Y)$ e $\operatorname{Var}(\overline X-\overline Y)$.
 
+d.  Suponha agora que as duas populações não sejam necessariamente normais, mas possuam médias $\mu_1$, $\mu_2$ e variâncias finitas $\sigma_1^2$, $\sigma_2^2$. Explique sob que regime a distribuição de $\overline X-\overline Y$ pode ser aproximada por
+
+$$
+N\left(
+\mu_1-\mu_2,\,
+\frac{\sigma_1^2}{n}
++
+\frac{\sigma_2^2}{m}
+\right)
+$$
+
+e indique a diferença entre esse resultado e o obtido nos itens anteriores.
+
 11.  **TCL para uma população não normal.** Seja $X_1,\ldots,X_{64}\overset{\mathrm{iid}}{\sim}\operatorname{Exp}(1)$, na parametrização por taxa. Use o TCL para aproximar $P(0{,}8<\overline{X}<1{,}2)$.
 
-12. **Proporção.** Sob um modelo Bernoulli i.i.d. com $p=0{,}12$, considere uma amostra de tamanho $n=200$:
+12. **Proporção.** Considere inicialmente
 
-a.  determine $E(\widehat p)$ e $\operatorname{EP}(\widehat p)$;
+$$
+X_1,\ldots,X_{200}
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Ber}(0{,}12).
+$$
 
-b.  aproxime $P(\widehat p\leq0{,}09)$;
+a.  Determine $E(\widehat p)$ e $\operatorname{EP}(\widehat p)$.
 
-c.  compare a aproximação com a probabilidade binomial exata no R.
+b.  Aproxime $P(\widehat p\leq0{,}09)$ utilizando o TCL.
 
-13. **Correção de continuidade.** Seja $Y\sim\operatorname{Binom}(150,0{,}5)$. Calcule aproximadamente:
+c.  Compare a aproximação com a probabilidade binomial exata no R.
+
+d.  Considere agora uma população finita com $N=1000$ unidades, das quais $M=120$ apresentam a característica de interesse, e uma amostra aleatória simples sem reposição de tamanho $n=200$. Identifique a distribuição exata de $Y=n\widehat p$ e calcule $\operatorname{EP}(\widehat p)$.
+
+e.  Compare o erro-padrão obtido no item anterior com aquele do modelo $\operatorname{Ber}(0{,}12)$ i.i.d. e explique a origem da diferença.
+
+13. **Correção de continuidade.** Seja
+
+$$
+Y\sim\operatorname{Bin}(150,0{,}5).
+$$
+
+Utilizando a aproximação normal com correção de continuidade, calcule aproximadamente:
 
 a.  $P(Y\geq90)$;
 

@@ -2,23 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>3&nbsp; Fundamentos da Inferência Estatística</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -95,18 +89,19 @@ div.csl-indent {
 <link href="./unidade0p2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-a64f2b92d8b4b45ab5f5d9261e8b8c9d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-f07248834697d125d844cdaf4174b45d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-4c6d65c679321d81af7ec8b61b1d5a24.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2641b481724464e61c86985d8c912b6f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -136,7 +131,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -352,14 +347,18 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
+</div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Procurar"></div>
         </div>
         </div>
-        <div class="sidebar-tools-collapse">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo escuro"><i class="bi"></i></a>
-</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -576,17 +575,17 @@ X_1,\ldots,X_n \overset{\mathrm{iid}}{\sim} F.
 p = \frac{900}{2400} = 0{,}375.
 \]</span></p>
 <p>Conhecemos <span class="math inline">\(p\)</span> nesse experimento porque a composição completa da urna é conhecida. Essa informação será utilizada como referência para estudar o que ocorre quando apenas uma amostra da urna é observada.</p>
-<p>Se representarmos por <span class="math inline">\(V\)</span> o número de bolas vermelhas em uma amostra aleatória de tamanho <span class="math inline">\(n\)</span>, a proporção amostral pode ser escrita como</p>
+<p>Se representarmos por <span class="math inline">\(Y\)</span> o número de bolas vermelhas em uma amostra aleatória de tamanho <span class="math inline">\(n\)</span>, a proporção amostral pode ser escrita como</p>
 <p><span class="math display">\[
 \widehat p
 =
-\frac{V}{n}.
+\frac{Y}{n}.
 \]</span></p>
-<p>Como será formalizado adiante, <span class="math inline">\(\widehat p\)</span> é uma <strong>estatística</strong>, pois é uma função da amostra. Quando utilizada para obter informação sobre o parâmetro populacional <span class="math inline">\(p\)</span>, ela desempenha o papel de <strong>estimador</strong> de <span class="math inline">\(p\)</span>. Depois que uma amostra específica é observada e <span class="math inline">\(V\)</span> assume um valor <span class="math inline">\(v\)</span>, o valor numérico</p>
+<p>Como será formalizado adiante, <span class="math inline">\(\widehat p\)</span> é uma <strong>estatística</strong>, pois é uma função da amostra. Quando utilizada para obter informação sobre o parâmetro populacional <span class="math inline">\(p\)</span>, ela desempenha o papel de <strong>estimador</strong> de <span class="math inline">\(p\)</span>. Depois que uma amostra específica é observada e <span class="math inline">\(Y\)</span> assume um valor <span class="math inline">\(y\)</span>, o valor numérico</p>
 <p><span class="math display">\[
 \widehat p(\mathbf x)
 =
-\frac{v}{n}
+\frac{y}{n}
 \]</span></p>
 <p>constitui uma <strong>estimativa</strong> de <span class="math inline">\(p\)</span>.</p>
 <p>Essa distinção entre estatística, estimador e estimativa será retomada adiante, após o experimento da urna, quando será possível observar diretamente como <span class="math inline">\(\widehat p\)</span> varia entre diferentes amostras.</p>
@@ -607,9 +606,9 @@ p = \frac{900}{2400} = 0{,}375.
 <ol type="1">
 <li>misturar cuidadosamente as bolas da urna;</li>
 <li>retirar, com uma pá de amostragem com 50 espaços, <span class="math inline">\(n=50\)</span> bolas, sem reposição durante a formação da amostra;</li>
-<li>contar o número observado <span class="math inline">\(v\)</span> de bolas vermelhas;</li>
-<li>calcular a proporção observada <span class="math inline">\(\widehat p=v/50\)</span>;</li>
-<li>registrar os valores de <span class="math inline">\(v\)</span> e <span class="math inline">\(\widehat p\)</span>;</li>
+<li>contar o número observado <span class="math inline">\(y\)</span> de bolas vermelhas;</li>
+<li>calcular a proporção observada <span class="math inline">\(\widehat p=y/50\)</span>;</li>
+<li>registrar os valores de <span class="math inline">\(y\)</span> e <span class="math inline">\(\widehat p\)</span>;</li>
 <li>devolver todas as bolas à urna antes da amostragem do grupo seguinte e misturá-las novamente.</li>
 </ol>
 <p>Cada grupo realiza uma amostragem separada. Dentro de cada amostra, as bolas são retiradas sem reposição; entre as amostragens dos grupos, todas as bolas são devolvidas à urna, restabelecendo a população original.</p>
@@ -621,12 +620,12 @@ p = \frac{900}{2400} = 0{,}375.
 <p>em que <span class="math inline">\(m\)</span> corresponde ao número de grupos.</p>
 <p>Essas proporções serão organizadas em uma tabela e representadas graficamente. A representação resultante mostra a <strong>distribuição empírica dos valores de <span class="math inline">\(\widehat p\)</span> obtidos pelos grupos</strong> e permite observar a variabilidade produzida pela repetição da amostragem.</p>
 <p>Mesmo que todos os grupos utilizem a mesma população, o mesmo tamanho amostral e o mesmo procedimento, os valores de <span class="math inline">\(\widehat p\)</span> não precisam coincidir. Essa variação decorre da seleção de conjuntos diferentes de bolas em cada amostra.</p>
-<p>O experimento fornece uma primeira representação empírica da variabilidade que será descrita probabilisticamente pela distribuição amostral de <span class="math inline">\(\widehat p\)</span> em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
+<p>O experimento fornece uma primeira representação empírica da variabilidade que será descrita probabilisticamente pela distribuição amostral de <span class="math inline">\(\widehat p\)</span> no <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
 <section id="verificação-de-aprendizagem" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="verificação-de-aprendizagem">Verificação de aprendizagem</h3>
 <ol type="1">
 <li>Explique a função da mistura da urna antes de cada amostragem.</li>
-<li>Explique por que diferentes grupos podem obter valores distintos de <span class="math inline">\(v\)</span> e de <span class="math inline">\(\widehat p\)</span>, mesmo utilizando o mesmo tamanho amostral.</li>
+<li>Explique por que diferentes grupos podem obter valores distintos de <span class="math inline">\(y\)</span> e de <span class="math inline">\(\widehat p\)</span>, mesmo utilizando o mesmo tamanho amostral.</li>
 <li>Compare os valores de <span class="math inline">\(\widehat p\)</span> obtidos pelos grupos com a proporção populacional <span class="math inline">\(p=0{,}375\)</span>.</li>
 <li>A partir dos resultados da turma, descreva o que permaneceu fixo e o que variou entre as diferentes amostras.</li>
 </ol>
@@ -665,10 +664,10 @@ T(\mathbf x)=T(x_1,\ldots,x_n).
 \]</span></p>
 </div>
 </div>
-<p>A condição de que uma estatística não dependa de parâmetros desconhecidos refere-se à sua regra de cálculo. Sua distribuição de probabilidade, entretanto, pode depender dos parâmetros do modelo. A distribuição de probabilidade de uma estatística é denominada <strong>distribuição amostral</strong> e será estudada em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
-<p>No experimento da urna, por exemplo, a quantidade <span class="math inline">\(V\)</span>, que representa o número de bolas vermelhas na amostra aleatória, é uma estatística. A proporção amostral</p>
+<p>A condição de que uma estatística não dependa de parâmetros desconhecidos refere-se à sua regra de cálculo. Sua distribuição de probabilidade, entretanto, pode depender dos parâmetros do modelo. A distribuição de probabilidade de uma estatística é denominada <strong>distribuição amostral</strong> e será estudada no <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
+<p>No experimento da urna, por exemplo, a quantidade <span class="math inline">\(Y\)</span>, que representa o número de bolas vermelhas na amostra aleatória, é uma estatística. A proporção amostral</p>
 <p><span class="math display">\[
-\widehat p=\frac{V}{n}
+\widehat p=\frac{Y}{n}
 \]</span></p>
 <p>também é uma estatística, pois é calculada apenas a partir dos resultados da amostra e do tamanho amostral conhecido.</p>
 <p>Uma estatística pode ser utilizada para estimar um parâmetro desconhecido. Considere inicialmente um parâmetro populacional <span class="math inline">\(\theta\)</span>. Se a estatística <span class="math inline">\(T(\mathbf X)\)</span> é escolhida como regra para estimar <span class="math inline">\(\theta\)</span>, escrevemos</p>
@@ -699,7 +698,7 @@ T(\mathbf x)=T(x_1,\ldots,x_n).
 <p>O <strong>estimador</strong> <span class="math inline">\(\widehat\theta\)</span> é a regra, definida como uma função da amostra aleatória, utilizada para estimar o parâmetro <span class="math inline">\(\theta\)</span>.</p>
 <p>Depois que a amostra <span class="math inline">\(\mathbf x\)</span> é observada,</p>
 <p><span class="math display">\[
-\widehat\theta(\mathbf x)=T(\mathbf x)
+\widehat\theta(\mathbf x)=T(\mathbf x)=t
 \]</span></p>
 <p>é a <strong>estimativa</strong>, isto é, o valor assumido pelo estimador naquela amostra particular.</p>
 <p>Assim, o parâmetro <span class="math inline">\(\theta\)</span> é fixo e desconhecido, o estimador <span class="math inline">\(\widehat\theta\)</span> é aleatório antes da observação da amostra e a estimativa é o valor obtido após a observação dos dados <span class="citation" data-cites="chihara2022 ramachandran2021r">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022</a>, definição 4.2, p.&nbsp;79; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 5.2</a>, pp.&nbsp;181–182)</span>.</p>
@@ -707,10 +706,10 @@ T(\mathbf x)=T(x_1,\ldots,x_n).
 </div>
 <p>No experimento da urna, o parâmetro de interesse é a proporção populacional <span class="math inline">\(p\)</span>. A proporção amostral</p>
 <p><span class="math display">\[
-\widehat p=\frac{V}{n}
+\widehat p=\frac{Y}{n}
 \]</span></p>
 <p>é utilizada como estimador de <span class="math inline">\(p\)</span>.</p>
-<p>Por exemplo, se em uma amostra de <span class="math inline">\(n=50\)</span> bolas for observado <span class="math inline">\(v=20\)</span>, a estimativa obtida é</p>
+<p>Por exemplo, se em uma amostra de <span class="math inline">\(n=50\)</span> bolas for observado <span class="math inline">\(y=20\)</span>, a estimativa obtida é</p>
 <p><span class="math display">\[
 \widehat p
 =
@@ -718,16 +717,16 @@ T(\mathbf x)=T(x_1,\ldots,x_n).
 =
 0{,}40.
 \]</span></p>
-<p>Nesse caso, <span class="math inline">\(\widehat p=V/n\)</span> representa o estimador de <span class="math inline">\(p\)</span>, enquanto</p>
+<p>Nesse caso, <span class="math inline">\(\widehat p=Y/n\)</span> representa o estimador de <span class="math inline">\(p\)</span>, enquanto</p>
 <p><span class="math display">\[
 \widehat p(\mathbf x)
 =
-\frac{v}{n}
+\frac{y}{n}
 =
 0{,}40
 \]</span></p>
 <p>é a estimativa produzida pela amostra observada.</p>
-<p>Na notação estatística, é comum utilizar o mesmo símbolo, como <span class="math inline">\(\widehat p\)</span> ou <span class="math inline">\(\widehat\theta\)</span>, tanto para o estimador quanto para seu valor observado. A distinção entre os dois é determinada pelo contexto. Quando for necessário explicitá-la, utilizaremos <span class="math inline">\(T(\mathbf X)\)</span> para a estatística como variável aleatória e <span class="math inline">\(T(\mathbf x)\)</span> para seu valor na amostra observada.</p>
+<p>Na notação estatística, é comum utilizar o mesmo símbolo, como <span class="math inline">\(\widehat p\)</span> ou <span class="math inline">\(\widehat\theta\)</span>, tanto para o estimador quanto para seu valor observado. A distinção entre os dois é determinada pelo contexto. Quando for necessário explicitá-la, utilizaremos <span class="math inline">\(T(\mathbf X)\)</span> para a estatística como variável aleatória e <span class="math inline">\(t=T(\mathbf x)=t\)</span> para seu valor na amostra observada.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Estimação de uma função do parâmetro">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -748,7 +747,7 @@ T(\mathbf x)=T(x_1,\ldots,x_n).
 \]</span></p>
 <p>Depois da observação da amostra <span class="math inline">\(\mathbf x\)</span>, o valor</p>
 <p><span class="math display">\[
-\widehat{\tau}(\mathbf x)=T(\mathbf x)
+\widehat{\tau}(\mathbf x)=T(\mathbf x)=t
 \]</span></p>
 <p>é uma estimativa de <span class="math inline">\(\tau(\theta)\)</span>.</p>
 <p>Portanto, a definição de estimador permanece a mesma; o que se altera é a quantidade paramétrica que constitui o objeto da estimação.</p>
@@ -781,8 +780,8 @@ T(\mathbf x)=T(x_1,\ldots,x_n).
 </tr>
 <tr class="odd">
 <td style="text-align: left;">proporção populacional <span class="math inline">\(p\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle \widehat p=\frac{V}{n}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle \widehat p(\mathbf x)=\frac{v}{n}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \widehat p=\frac{Y}{n}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \widehat p(\mathbf x)=\frac{y}{n}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -798,7 +797,7 @@ T(\mathbf x)=T(x_1,\ldots,x_n).
 p=\frac{900}{2400}=0{,}375.
 \]</span></p>
 <p>Esse valor é conhecido porque a composição da urna foi previamente estabelecida. Para formular um problema de inferência, passaremos agora da urna física para um <strong>modelo Bernoulli paramétrico idealizado</strong>, no qual <span class="math inline">\(p\)</span> é desconhecido e deve ser estudado a partir da amostra.</p>
-<p>Nesse modelo, <span class="math inline">\(p\)</span> representa a probabilidade de obter uma bola vermelha em cada retirada e pode assumir qualquer valor no intervalo <span class="math inline">\([0,1]\)</span>. Portanto, não será imposta a restrição discreta decorrente da composição da urna física, na qual uma proporção populacional teria necessariamente a forma <span class="math inline">\(R/2400\)</span>.</p>
+<p>Nesse modelo, <span class="math inline">\(p\)</span> representa a probabilidade de obter uma bola vermelha em cada retirada e pode assumir qualquer valor no intervalo <span class="math inline">\([0,1]\)</span>.</p>
 <p>Defina</p>
 <p><span class="math display">\[
 X_i=
@@ -816,17 +815,17 @@ X_1,\ldots,X_n
 <p>Cada variável <span class="math inline">\(X_i\)</span> possui a mesma distribuição Bernoulli com parâmetro <span class="math inline">\(p\)</span>, e a reposição permite tratar as retiradas como independentes.</p>
 <p>A estatística que representa o número de bolas vermelhas na amostra é</p>
 <p><span class="math display">\[
-V=\sum_{i=1}^n X_i,
+Y=\sum_{i=1}^n X_i,
 \]</span></p>
 <p>e a proporção amostral é</p>
 <p><span class="math display">\[
 \widehat p
 =
-\frac{V}{n}
+\frac{Y}{n}
 =
 \frac{1}{n}\sum_{i=1}^n X_i.
 \]</span></p>
-<p>Assim, <span class="math inline">\(V\)</span> e <span class="math inline">\(\widehat p\)</span> são estatísticas. Quando o objetivo é estimar a proporção populacional <span class="math inline">\(p\)</span>, <span class="math inline">\(\widehat p\)</span> é utilizado como estimador de <span class="math inline">\(p\)</span> <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, seç. 1.5</a>, seção 1.6 e apêndice B.1)</span>.</p>
+<p>Assim, <span class="math inline">\(Y\)</span> e <span class="math inline">\(\widehat p\)</span> são estatísticas. Quando o objetivo é estimar a proporção populacional <span class="math inline">\(p\)</span>, <span class="math inline">\(\widehat p\)</span> é utilizado como estimador de <span class="math inline">\(p\)</span> <span class="citation" data-cites="chihara2022">(<a href="#ref-chihara2022" role="doc-biblioref">Chihara; Hesterberg, 2022, seç. 1.5</a>, seção 1.6 e apêndice B.1)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Amostragem com e sem reposição">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -839,28 +838,28 @@ V=\sum_{i=1}^n X_i,
 <div class="callout-body-container callout-body">
 <p>O modelo Bernoulli i.i.d. apresentado nesta seção corresponde ao mecanismo de amostragem <strong>com reposição</strong> e, portanto, não descreve exatamente o experimento realizado anteriormente em sala de aula.</p>
 <p>Na amostragem <strong>sem reposição</strong> em uma população finita, as retiradas realizadas dentro de uma mesma amostra são dependentes e o número de bolas vermelhas possui distribuição hipergeométrica.</p>
-<p>Os dois mecanismos permitem estudar a variabilidade decorrente da amostragem, mas produzem modelos probabilísticos diferentes. A amostragem sem reposição e a correção para população finita serão estudadas em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
+<p>Os dois mecanismos permitem estudar a variabilidade decorrente da amostragem, mas produzem modelos probabilísticos diferentes. A amostragem sem reposição e a correção para população finita serão estudadas no <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
 </div>
 </div>
 <div class="collapse" title="Por que a independência se perde sem reposição?">
-<p>Considere uma urna com <span class="math inline">\(N\)</span> bolas, das quais <span class="math inline">\(R\)</span> são vermelhas.</p>
+<p>Considere uma urna com <span class="math inline">\(N\)</span> bolas, das quais <span class="math inline">\(M\)</span> são vermelhas.</p>
 <p>Antes de qualquer retirada,</p>
 <p><span class="math display">\[
 P(X_1=1)
 =
-\frac{R}{N}.
+\frac{M}{N}.
 \]</span></p>
-<p>Se a primeira bola retirada for vermelha e não for devolvida à urna, restam <span class="math inline">\(R-1\)</span> bolas vermelhas entre <span class="math inline">\(N-1\)</span> bolas. Portanto,</p>
+<p>Se a primeira bola retirada for vermelha e não for devolvida à urna, restam <span class="math inline">\(M-1\)</span> bolas vermelhas entre <span class="math inline">\(N-1\)</span> bolas. Portanto,</p>
 <p><span class="math display">\[
 P(X_2=1\mid X_1=1)
 =
-\frac{R-1}{N-1}.
+\frac{M-1}{N-1}.
 \]</span></p>
 <p>Em geral,</p>
 <p><span class="math display">\[
-\frac{R-1}{N-1}
+\frac{M-1}{N-1}
 \neq
-\frac{R}{N}.
+\frac{M}{N}.
 \]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[
@@ -937,10 +936,10 @@ f(\mathbf x \mid \theta),
 <p>Assim, o modelo não precisa reproduzir todos os detalhes do PGD. Ele estabelece uma família de distribuições probabilísticas dentro da qual será realizada a inferência.</p>
 </div>
 </div>
-<p>A expressão <span class="math inline">\(f(\mathbf x \mid \theta)\)</span> representa a <strong>função de probabilidade ou densidade conjunta da amostra</strong>. Ela não precisa, em geral, ser escrita como produto das funções correspondentes às observações individuais.</p>
+<p>A expressão <span class="math inline">\(f_{\mathbf X}(\mathbf x \mid \theta)\)</span> representa a <strong>função de probabilidade ou densidade conjunta da amostra</strong>. Ela não precisa, em geral, ser escrita como produto das funções correspondentes às observações individuais.</p>
 <p>Quando <span class="math inline">\(X_1,\ldots,X_n\)</span> são independentes e identicamente distribuídas, com função de probabilidade ou densidade comum <span class="math inline">\(f( \cdot \mid \theta)\)</span>, a independência permite escrever</p>
 <p><span class="math display">\[
-f(\mathbf x \mid \theta)
+f_{\mathbf X}(\mathbf x \mid \theta)
 =
 \prod_{i=1}^n f(x_i \mid \theta).
 \]</span></p>
@@ -971,9 +970,9 @@ X_1,\ldots,X_n
 \]</span></p>
 <p>Para cada observação <span class="math inline">\(X_i\)</span>, a função de probabilidade Bernoulli pode ser escrita como</p>
 <p><span class="math display">\[
-f_{X_i}(x_i\mid p)
+f(x_i\mid p)
 =
-P(X_i=x_i\mid p)
+P(X=x_i\mid p)
 =
 p^{x_i}(1-p)^{1-x_i},
 \qquad
@@ -982,17 +981,17 @@ x_i\in\{0,1\}.
 <p>Nesta notação, <span class="math inline">\(p\)</span> é o parâmetro fixado do modelo. A barra vertical é utilizada para indicar que a função de probabilidade é especificada para determinado valor de <span class="math inline">\(p\)</span>; não estamos tratando <span class="math inline">\(p\)</span> como uma variável aleatória.</p>
 <p>Essa expressão representa simultaneamente as duas possibilidades. Se <span class="math inline">\(x_i=1\)</span>,</p>
 <p><span class="math display">\[
-f_{X_i}(1\mid p)
+f(1\mid p)
 =
-P(X_i=1\mid p)
+P(X=1\mid p)
 =
 p,
 \]</span></p>
 <p>enquanto, se <span class="math inline">\(x_i=0\)</span>,</p>
 <p><span class="math display">\[
-f_{X_i}(0\mid p)
+f(0\mid p)
 =
-P(X_i=0 \mid p)
+P(X=0 \mid p)
 =
 1-p.
 \]</span></p>
@@ -1008,7 +1007,7 @@ P(X_i=0 \mid p)
 <p><span class="math display">\[
 f_{\mathbf X}(\mathbf x\mid p)
 =
-\prod_{i=1}^n f_{X_i}(x_i\mid p).
+\prod_{i=1}^n f(x_i\mid p).
 \]</span></p>
 <p>Substituindo a função de probabilidade Bernoulli,</p>
 <p><span class="math display">\[
@@ -1026,14 +1025,14 @@ p^{\sum_{i=1}^n x_i}
 \]</span></p>
 <p>Retomando a estatística definida anteriormente,</p>
 <p><span class="math display">\[
-V
+Y
 =
 \sum_{i=1}^n X_i,
 \]</span></p>
-<p>como cada <span class="math inline">\(X_i\)</span> assume os valores 0 ou 1, <span class="math inline">\(V\)</span> representa o número de bolas vermelhas na amostra aleatória.</p>
-<p>Depois que uma realização <span class="math inline">\(\mathbf x=(x_1,\ldots,x_n)\)</span> é observada, <span class="math inline">\(V\)</span> assume o valor</p>
+<p>como cada <span class="math inline">\(X_i\)</span> assume os valores 0 ou 1, <span class="math inline">\(Y\)</span> representa o número de bolas vermelhas na amostra aleatória.</p>
+<p>Depois que uma realização <span class="math inline">\(\mathbf x=(x_1,\ldots,x_n)\)</span> é observada, <span class="math inline">\(Y\)</span> assume o valor</p>
 <p><span class="math display">\[
-v
+y
 =
 \sum_{i=1}^n x_i,
 \]</span></p>
@@ -1044,14 +1043,14 @@ v
 =
 n-\sum_{i=1}^n x_i
 =
-n-v,
+n-y,
 \]</span></p>
-<p>de modo que <span class="math inline">\(n-v\)</span> é o número de bolas brancas na sequência observada.</p>
+<p>de modo que <span class="math inline">\(n-y\)</span> é o número de bolas brancas na sequência observada.</p>
 <p>Consequentemente, a função de probabilidade conjunta da amostra pode ser escrita como</p>
 <p><span id="eq-bernoulli-conjunta"><span class="math display">\[
 f_{\mathbf X}(\mathbf x\mid p)
 =
-p^v(1-p)^{n-v},
+p^y(1-p)^{n-y},
 \qquad
 \mathbf x\in\{0,1\}^n.
 \tag{3.1}\]</span></span></p>
@@ -1077,30 +1076,30 @@ p^2(1-p)^3.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A probabilidade de uma sequência específica com <span class="math inline">\(v\)</span> bolas vermelhas é</p>
+<p>A probabilidade de uma sequência específica com <span class="math inline">\(y\)</span> bolas vermelhas é</p>
 <p><span class="math display">\[
-p^v(1-p)^{n-v}.
+p^y(1-p)^{n-y}.
 \]</span></p>
-<p>Essa expressão não deve ser confundida com a probabilidade de observar <strong>exatamente <span class="math inline">\(v\)</span> bolas vermelhas, independentemente da ordem em que aparecem na sequência</strong>.</p>
+<p>Essa expressão não deve ser confundida com a probabilidade de observar <strong>exatamente <span class="math inline">\(y\)</span> bolas vermelhas, independentemente da ordem em que aparecem na sequência</strong>.</p>
 <p>Como existem</p>
 <p><span class="math display">\[
-\binom{n}{v}
+\binom{n}{y}
 \]</span></p>
-<p>sequências distintas com exatamente <span class="math inline">\(v\)</span> ocorrências de 1, a distribuição da estatística</p>
+<p>sequências distintas com exatamente <span class="math inline">\(y\)</span> ocorrências de 1, a distribuição da estatística</p>
 <p><span class="math display">\[
-V=\sum_{i=1}^n X_i
+Y=\sum_{i=1}^n X_i
 \]</span></p>
 <p>é</p>
 <p><span class="math display">\[
-P(V=v \mid p)
+P(Y=y\mid p)
 =
-\binom{n}{v}p^v(1-p)^{n-v},
+\binom{n}{y}p^y(1-p)^{n-y},
 \qquad
-v=0,1,\ldots,n.
+y=0,1,\ldots,n.
 \]</span></p>
 <p>Assim,</p>
 <p><span class="math display">\[
-V\sim\operatorname{Bin}(n,p).
+Y\sim\operatorname{Bin}(n,p).
 \]</span></p>
 </div>
 </div>
@@ -1114,7 +1113,7 @@ V\sim\operatorname{Bin}(n,p).
 \mathbf x=(x_1,\ldots,x_n)
 \]</span></p>
 <p>passam a ser conhecidos, enquanto o parâmetro <span class="math inline">\(\theta\)</span> permanece desconhecido.</p>
-<p>A mesma expressão matemática <span class="math inline">\(f(\mathbf x \mid \theta)\)</span> pode então ser examinada como função de <span class="math inline">\(\theta\)</span>, mantendo <span class="math inline">\(\mathbf x\)</span> fixado.</p>
+<p>A mesma expressão matemática <span class="math inline">\(f_{\mathbf X}(\mathbf x \mid \theta)\)</span> pode então ser examinada como função de <span class="math inline">\(\theta\)</span>, mantendo <span class="math inline">\(\mathbf x\)</span> fixado.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Função de verossimilhança">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1129,7 +1128,7 @@ V\sim\operatorname{Bin}(n,p).
 <p><span class="math display">\[
 L(\theta;\mathbf x)
 =
-f(\mathbf x \mid \theta),
+f_{\mathbf X}(\mathbf x \mid \theta),
 \qquad
 \theta\in\Theta,
 \]</span></p>
@@ -1139,7 +1138,7 @@ f(\mathbf x \mid \theta),
 <p>A diferença entre a função de probabilidade ou densidade e a função de verossimilhança está, portanto, no elemento que é considerado variável.</p>
 <p>Na função</p>
 <p><span class="math display">\[
-f(\mathbf x \mid \theta),
+f_{\mathbf X}(\mathbf x \mid \theta),
 \]</span></p>
 <p>fixa-se <span class="math inline">\(\theta\)</span> e estudam-se os possíveis valores de <span class="math inline">\(\mathbf X\)</span>.</p>
 <p>Na função de verossimilhança</p>
@@ -1169,29 +1168,29 @@ L(\theta;\mathbf x),
 <p><span class="math display">\[
 f_{\mathbf X}(\mathbf x\mid p)
 =
-p^v(1-p)^{n-v},
+p^y(1-p)^{n-y},
 \]</span></p>
 <p>em que</p>
 <p><span class="math display">\[
-v=\sum_{i=1}^n x_i
+y=\sum_{i=1}^n x_i
 \]</span></p>
 <p>é o valor observado da estatística</p>
 <p><span class="math display">\[
-V=\sum_{i=1}^n X_i.
+Y=\sum_{i=1}^n X_i.
 \]</span></p>
 <p>Na interpretação probabilística dessa expressão, <span class="math inline">\(p\)</span> é fixado e consideram-se as diferentes realizações possíveis de <span class="math inline">\(\mathbf X\)</span>.</p>
 <p>Depois que uma realização específica</p>
 <p><span class="math display">\[
 \mathbf x=(x_1,\ldots,x_n)
 \]</span></p>
-<p>é observada, ocorre uma mudança de perspectiva. Os valores <span class="math inline">\(x_1,\ldots,x_n\)</span> e, consequentemente, <span class="math inline">\(v\)</span> passam a ser fixos, enquanto <span class="math inline">\(p\)</span> é a quantidade desconhecida.</p>
+<p>é observada, ocorre uma mudança de perspectiva. Os valores <span class="math inline">\(x_1,\ldots,x_n\)</span> e, consequentemente, <span class="math inline">\(y\)</span> passam a ser fixos, enquanto <span class="math inline">\(p\)</span> é a quantidade desconhecida.</p>
 <p>A mesma expressão da <a href="#eq-bernoulli-conjunta" class="quarto-xref">Equação&nbsp;<span>3.1</span></a>, considerada agora como função de <span class="math inline">\(p\)</span>, define a função de verossimilhança:</p>
 <p><span class="math display">\[
 L(p;\mathbf x)
 =
 f_{\mathbf X}(\mathbf x\mid p)
 =
-p^v(1-p)^{n-v},
+p^y(1-p)^{n-y},
 \qquad
 0\leq p\leq1.
 \]</span></p>
@@ -1200,7 +1199,7 @@ p^v(1-p)^{n-v},
 <li>em <span class="math inline">\(f_{\mathbf X}(\mathbf x\mid p)\)</span>, fixa-se <span class="math inline">\(p\)</span> e consideram-se os possíveis valores de <span class="math inline">\(\mathbf X\)</span>;</li>
 <li>em <span class="math inline">\(L(p;\mathbf x)\)</span>, fixa-se a realização observada <span class="math inline">\(\mathbf x\)</span> e comparam-se os possíveis valores de <span class="math inline">\(p\)</span>.</li>
 </ul>
-<p>Considere, por exemplo, uma amostra de tamanho <span class="math inline">\(n=50\)</span> na qual foram observadas <span class="math inline">\(v=20\)</span> bolas vermelhas. Nesse caso,</p>
+<p>Considere, por exemplo, uma amostra de tamanho <span class="math inline">\(n=50\)</span> na qual foram observadas <span class="math inline">\(y=20\)</span> bolas vermelhas. Nesse caso,</p>
 <p><span class="math display">\[
 L(p;\mathbf x)
 =
@@ -1212,7 +1211,7 @@ p^{20}(1-p)^{30}.
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">20</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>p_grade <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">1001</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -1222,7 +1221,7 @@ p^{20}(1-p)^{30}.
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>dados_veross<span class="sc">$</span>L <span class="ot">&lt;-</span> <span class="fu">with</span>(</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  dados_veross,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  p<span class="sc">^</span>v <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)<span class="sc">^</span>(n <span class="sc">-</span> v)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  p<span class="sc">^</span>y <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p)<span class="sc">^</span>(n <span class="sc">-</span> y)</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Localização numérica do maior valor da verossimilhança</span></span>
@@ -1272,7 +1271,7 @@ p^{20}(1-p)^{30}.
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Valor de p"</span>,</span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">L</span>(p<span class="sc">~</span><span class="st">";"</span><span class="sc">~</span><span class="fu">bold</span>(x))),</span>
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Função de verossimilhança"</span>,</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Modelo Bernoulli: n = 50 e v = 20"</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Modelo Bernoulli: n = 50 e y = 20"</span></span>
 <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -1286,7 +1285,7 @@ p^{20}(1-p)^{30}.
 <img src="unidade1_files/figure-html/fig-verossimilhanca-bernoulli-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-verossimilhanca-bernoulli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.1: Função de verossimilhança para o modelo Bernoulli com <span class="math inline">\(n=50\)</span> e <span class="math inline">\(v=20\)</span>.
+Figura&nbsp;3.1: Função de verossimilhança para o modelo Bernoulli com <span class="math inline">\(n=50\)</span> e <span class="math inline">\(y=20\)</span>.
 </figcaption>
 </figure>
 </div>
@@ -1305,27 +1304,27 @@ Figura&nbsp;3.1: Função de verossimilhança para o modelo Bernoulli com <span 
 <p><span class="math display">\[
 L(p;\mathbf x)
 =
-p^v(1-p)^{n-v},
+p^y(1-p)^{n-y},
 \]</span></p>
 <p>de modo que</p>
 <p><span class="math display">\[
 \ell(p;\mathbf x)
 =
 \log\left[
-p^v(1-p)^{n-v}
+p^y(1-p)^{n-y}
 \right].
 \]</span></p>
 <p>Utilizando as propriedades do logaritmo,</p>
 <p><span class="math display">\[
 \ell(p;\mathbf x)
 =
-v\log p
+y\log p
 +
-(n-v)\log(1-p),
+(n-y)\log(1-p),
 \qquad
 0&lt;p&lt;1.
 \]</span></p>
-<p>Para o exemplo com <span class="math inline">\(n=50\)</span> e <span class="math inline">\(v=20\)</span>,</p>
+<p>Para o exemplo com <span class="math inline">\(n=50\)</span> e <span class="math inline">\(y=20\)</span>,</p>
 <p><span class="math display">\[
 \ell(p;\mathbf x)
 =
@@ -1349,7 +1348,7 @@ L(p_2;\mathbf x),
 <p>Consequentemente, a verossimilhança e a log-verossimilhança ordenam os valores de <span class="math inline">\(p\)</span> da mesma forma e atingem seu máximo no mesmo ponto.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">20</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Os extremos 0 e 1 são excluídos porque log(0) não é definido.</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>p_grade <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.001</span>, <span class="fl">0.999</span>, <span class="at">by =</span> <span class="fl">0.001</span>)</span>
@@ -1360,7 +1359,7 @@ L(p_2;\mathbf x),
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>dados_logveross<span class="sc">$</span>logL <span class="ot">&lt;-</span> <span class="fu">with</span>(</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  dados_logveross,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  v <span class="sc">*</span> <span class="fu">log</span>(p) <span class="sc">+</span> (n <span class="sc">-</span> v) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">*</span> <span class="fu">log</span>(p) <span class="sc">+</span> (n <span class="sc">-</span> y) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>indice_max <span class="ot">&lt;-</span> <span class="fu">which.max</span>(dados_logveross<span class="sc">$</span>logL)</span>
@@ -1407,7 +1406,7 @@ L(p_2;\mathbf x),
 <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Valor de p"</span>,</span>
 <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">ell</span>(p<span class="sc">~</span><span class="st">";"</span><span class="sc">~</span><span class="fu">bold</span>(x))),</span>
 <span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Função de log-verossimilhança"</span>,</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Modelo Bernoulli: n = 50 e v = 20"</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Modelo Bernoulli: n = 50 e y = 20"</span></span>
 <span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
 <span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
@@ -1421,7 +1420,7 @@ L(p_2;\mathbf x),
 <img src="unidade1_files/figure-html/fig-log-verossimilhanca-bernoulli-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-log-verossimilhanca-bernoulli-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.2: Função de log-verossimilhança para o modelo Bernoulli com <span class="math inline">\(n=50\)</span> e <span class="math inline">\(v=20\)</span>.
+Figura&nbsp;3.2: Função de log-verossimilhança para o modelo Bernoulli com <span class="math inline">\(n=50\)</span> e <span class="math inline">\(y=20\)</span>.
 </figcaption>
 </figure>
 </div>
@@ -1432,7 +1431,7 @@ Figura&nbsp;3.2: Função de log-verossimilhança para o modelo Bernoulli com <s
 <p><span class="math display">\[
 L(p;\mathbf x)
 =
-p^v(1-p)^{n-v},
+p^y(1-p)^{n-y},
 \]</span></p>
 <p>a sequência completa</p>
 <p><span class="math display">\[
@@ -1440,9 +1439,9 @@ p^v(1-p)^{n-v},
 \]</span></p>
 <p>aparece apenas por meio de</p>
 <p><span class="math display">\[
-v=\sum_{i=1}^n x_i.
+y=\sum_{i=1}^n x_i.
 \]</span></p>
-<p>Assim, duas sequências observadas com o mesmo número <span class="math inline">\(v\)</span> de bolas vermelhas produzem a mesma função de verossimilhança para <span class="math inline">\(p\)</span>, mesmo que as bolas vermelhas e brancas apareçam em ordens diferentes.</p>
+<p>Assim, duas sequências observadas com o mesmo número <span class="math inline">\(y\)</span> de bolas vermelhas produzem a mesma função de verossimilhança para <span class="math inline">\(p\)</span>, mesmo que as bolas vermelhas e brancas apareçam em ordens diferentes.</p>
 <p>Essa propriedade será formalizada posteriormente por meio do conceito de <strong>estatística suficiente</strong>.</p>
 </section>
 </section>
@@ -1527,17 +1526,17 @@ L(\theta;\mathbf x).
 <p><span class="math display">\[
 L(p;\mathbf x)
 =
-p^v(1-p)^{n-v}.
+p^y(1-p)^{n-y}.
 \]</span></p>
 <p>Para determinar o valor de <span class="math inline">\(p\)</span> que maximiza essa função, podemos trabalhar com a log-verossimilhança. Como a amostra observada <span class="math inline">\(\mathbf x\)</span> permanece fixa durante a maximização, escreveremos na derivação a seguir <span class="math inline">\(\ell(p)\)</span> como forma abreviada de <span class="math inline">\(\ell(p;\mathbf x)\)</span>.</p>
 <div class="collapse" title="Derivação do estimador de máxima verossimilhança">
-<p>Para <span class="math inline">\(0&lt;v&lt;n\)</span>, a log-verossimilhança é</p>
+<p>Para <span class="math inline">\(0&lt;y&lt;n\)</span>, a log-verossimilhança é</p>
 <p><span class="math display">\[
 \ell(p)
 =
 \log L(p;\mathbf x)
 =
-v\log p+(n-v)\log(1-p).
+y\log p+(n-y)\log(1-p).
 \]</span></p>
 <p>Como o logaritmo é uma função estritamente crescente, maximizar <span class="math inline">\(\ell(p)\)</span> equivale a maximizar <span class="math inline">\(L(p;\mathbf x)\)</span>.</p>
 <p>Derivando em relação a <span class="math inline">\(p\)</span>,</p>
@@ -1546,21 +1545,21 @@ v\log p+(n-v)\log(1-p).
 =
 \frac{d \ell(p)}{dp}
 =
-\frac{v}{p}
+\frac{y}{p}
 -
-\frac{n-v}{1-p}
+\frac{n-y}{1-p}
 =
-\frac{v-np}{p(1-p)}.
+\frac{y-np}{p(1-p)}.
 \]</span></p>
 <p>O ponto crítico satisfaz</p>
 <p><span class="math display">\[
-v-np=0,
+y-np=0,
 \]</span></p>
 <p>de modo que</p>
 <p><span class="math display">\[
 \widehat p_{\mathrm{MV}}(\mathbf x)
 =
-\frac{v}{n}.
+\frac{y}{n}.
 \]</span></p>
 <p>Além disso,</p>
 <p><span class="math display">\[
@@ -1568,16 +1567,16 @@ v-np=0,
 =
 \frac{d^2 \ell(p)}{dp^2}
 =
--\frac{v}{p^2}
+-\frac{y}{p^2}
 -
-\frac{n-v}{(1-p)^2}
+\frac{n-y}{(1-p)^2}
 &lt;
 0,
 \]</span></p>
 <p>para <span class="math inline">\(0&lt;p&lt;1\)</span>. Portanto, o ponto crítico corresponde a um máximo da verossimilhança.</p>
 </div>
 <p>Nos casos de fronteira, o máximo pode ser identificado diretamente pela forma da verossimilhança.</p>
-<p>Se <span class="math inline">\(v=0\)</span>,</p>
+<p>Se <span class="math inline">\(y=0\)</span>,</p>
 <p><span class="math display">\[
 L(p;\mathbf x)
 =
@@ -1587,7 +1586,7 @@ L(p;\mathbf x)
 <p><span class="math display">\[
 \widehat p_{\mathrm{MV}}=0.
 \]</span></p>
-<p>Se <span class="math inline">\(v=n\)</span>,</p>
+<p>Se <span class="math inline">\(y=n\)</span>,</p>
 <p><span class="math display">\[
 L(p;\mathbf x)
 =
@@ -1601,7 +1600,7 @@ p^n,
 <p><span class="math display">\[
 \widehat p_{\mathrm{MV}}
 =
-\frac{V}{n}.
+\frac{Y}{n}.
 \]</span> A proporção amostral, que anteriormente foi apresentada como uma estatística e utilizada como estimador de <span class="math inline">\(p\)</span>, surge agora também como estimador de máxima verossimilhança.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Proporção amostral no modelo Bernoulli">
 <div class="callout-header d-flex align-content-center">
@@ -1615,7 +1614,7 @@ p^n,
 <div class="callout-body-container callout-body">
 <p>No modelo Bernoulli,</p>
 <p><span class="math display">\[
-\widehat p=\frac{V}{n}
+\widehat p=\frac{Y}{n}
 \]</span></p>
 <p>pode ser considerada sob diferentes aspectos:</p>
 <ol type="1">
@@ -1623,16 +1622,16 @@ p^n,
 <li>é um <strong>estimador de <span class="math inline">\(p\)</span></strong>, quando utilizada para estimar a proporção populacional;</li>
 <li>é o <strong>estimador de máxima verossimilhança de <span class="math inline">\(p\)</span></strong>, pois resulta da maximização da função de verossimilhança.</li>
 </ol>
-<p>Depois que a amostra é observada e <span class="math inline">\(V=v\)</span>, o valor</p>
+<p>Depois que a amostra é observada e <span class="math inline">\(Y=y\)</span>, o valor</p>
 <p><span class="math display">\[
-\widehat p(\mathbf x)=\frac{v}{n}
+\widehat p(\mathbf x)=\frac{y}{n}
 \]</span></p>
 <p>é a estimativa correspondente.</p>
 </div>
 </div>
-<p>A máxima verossimilhança será desenvolvida como método geral de estimação no capítulo <strong>Métodos de Estimação Pontual</strong>. O conceito de suficiência, sugerido pelo fato de a verossimilhança Bernoulli depender dos dados apenas por meio do valor observado <span class="math inline">\(v\)</span> da estatística</p>
+<p>A máxima verossimilhança será desenvolvida como método geral de estimação no capítulo <strong>Métodos de Estimação Pontual</strong>. O conceito de suficiência, sugerido pelo fato de a verossimilhança Bernoulli depender dos dados apenas por meio do valor observado <span class="math inline">\(y\)</span> da estatística</p>
 <p><span class="math display">\[
-V=\sum_{i=1}^n X_i,
+Y=\sum_{i=1}^n X_i,
 \]</span></p>
 <p>será formalizado no capítulo <strong>Avaliação de Estimadores e Princípios de Redução de Dados</strong>.</p>
 </section>
@@ -1646,7 +1645,7 @@ V=\sum_{i=1}^n X_i,
 <li>Explique a diferença entre considerar <span class="math inline">\(f(\mathbf x \mid \theta)\)</span> como função de probabilidade ou densidade conjunta, para <span class="math inline">\(\theta\)</span> fixado, e considerá-la como função de verossimilhança depois que <span class="math inline">\(\mathbf x\)</span> é observado.</li>
 <li>Na função <span class="math inline">\(L(\theta;\mathbf x)\)</span>, o que permanece fixo e o que varia?</li>
 <li>Por que a verossimilhança não deve ser interpretada como uma distribuição de probabilidade para <span class="math inline">\(\theta\)</span>?</li>
-<li>No modelo Bernoulli, por que a função de verossimilhança depende da sequência observada apenas por meio de <span class="math inline">\(v=\sum_i x_i\)</span>, valor observado da estatística <span class="math inline">\(V=\sum_iX_i\)</span>?</li>
+<li>No modelo Bernoulli, por que a função de verossimilhança depende da sequência observada apenas por meio de <span class="math inline">\(v=\sum_i x_i\)</span>, valor observado da estatística <span class="math inline">\(Y=\sum_iX_i\)</span>?</li>
 <li>Explique por que <span class="math inline">\(\widehat p=V/n\)</span> pode ser considerada simultaneamente uma estatística, um estimador de <span class="math inline">\(p\)</span> e o estimador de máxima verossimilhança de <span class="math inline">\(p\)</span>.</li>
 </ol>
 </section>
@@ -1660,7 +1659,7 @@ V=\sum_{i=1}^n X_i,
 <p>então seu valor depende dos resultados que compõem <span class="math inline">\(\mathbf X\)</span>. Amostras diferentes, obtidas segundo o mesmo mecanismo, podem produzir valores diferentes de <span class="math inline">\(\widehat\theta\)</span>.</p>
 <p>Fixados o modelo estatístico e um valor do parâmetro <span class="math inline">\(\theta\)</span>, a distribuição de probabilidade de <span class="math inline">\(\mathbf X\)</span> induz uma distribuição de probabilidade para <span class="math inline">\(T(\mathbf X)\)</span>. Essa distribuição é a <strong>distribuição amostral</strong> da estatística.</p>
 <p>Assim, a variabilidade observada entre diferentes estimativas pode ser descrita probabilisticamente. Características da distribuição amostral, como posição e dispersão, permitem estudar o comportamento de uma estatística quando o mecanismo de amostragem é repetido.</p>
-<p>Em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>, essa ideia será desenvolvida para estatísticas como <span class="math inline">\(\overline X\)</span>, <span class="math inline">\(S^2\)</span> e <span class="math inline">\(\widehat p\)</span>, considerando também o efeito do tamanho amostral, a amostragem sem reposição, resultados exatos, aproximações e simulação.</p>
+<p>No <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>, essa ideia será desenvolvida para estatísticas como <span class="math inline">\(\overline X\)</span>, <span class="math inline">\(S^2\)</span> e <span class="math inline">\(\widehat p\)</span>, considerando também o efeito do tamanho amostral, a amostragem sem reposição, resultados exatos, aproximações e simulação.</p>
 <p>A distribuição amostral estabelece, portanto, a ligação entre a variabilidade observada no experimento e sua representação probabilística.</p>
 </section>
 <section id="exploração-computacional-do-experimento-da-urna" class="level2" data-number="3.9">
@@ -1785,26 +1784,26 @@ p
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>resumo_amostra <span class="ot">&lt;-</span> pa_virtual <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">V =</span> <span class="fu">sum</span>(is_vermelha),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_hat =</span> V <span class="sc">/</span> <span class="fu">n</span>()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> <span class="fu">sum</span>(is_vermelha),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_hat =</span> Y <span class="sc">/</span> <span class="fu">n</span>()</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>resumo_amostra</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
-  replicate     V p_hat
+  replicate     Y p_hat
       &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
 1         1    16  0.32</code></pre>
 </div>
 </div>
-<p>Nesta amostra, o valor observado da estatística <span class="math inline">\(V\)</span> foi <span class="math inline">\(v=\)</span> 16. A proporção amostral observada foi 0,32.</p>
+<p>Nesta amostra, o valor observado da estatística <span class="math inline">\(Y\)</span> foi <span class="math inline">\(v=\)</span> 16. A proporção amostral observada foi 0,32.</p>
 <p>Esse valor corresponde à estimativa</p>
 <p><span class="math display">\[
 \widehat p(\mathbf x)
 =
-\frac{v}{n}.
+\frac{y}{n}.
 \]</span></p>
-<p>No código, a coluna <code>V</code> armazena o valor observado de <span class="math inline">\(V\)</span> em cada amostra.</p>
+<p>No código, a coluna <code>V</code> armazena o valor observado de <span class="math inline">\(Y\)</span> em cada amostra.</p>
 </section>
 <section id="repetição-da-amostragem-e-variabilidade" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="repetição-da-amostragem-e-variabilidade">Repetição da amostragem e variabilidade</h3>
@@ -1844,15 +1843,15 @@ p
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>virtual_prop_vermelha <span class="ot">&lt;-</span> amostra_virtual <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(replicate) <span class="sc">%&gt;%</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">V =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>),</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_hat =</span> V <span class="sc">/</span> <span class="fu">n</span>(),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Y =</span> <span class="fu">sum</span>(color <span class="sc">==</span> <span class="st">"red"</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_hat =</span> Y <span class="sc">/</span> <span class="fu">n</span>(),</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>virtual_prop_vermelha</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
-   replicate     V p_hat
+   replicate     Y p_hat
        &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
  1         1    16  0.32
  2         2    22  0.44
@@ -1923,14 +1922,14 @@ p
 <h3 class="unnumbered anchored" data-anchor-id="atividade-computacional-de-consolidação">Atividade computacional de consolidação</h3>
 <ol type="1">
 <li><p>Repita o experimento utilizando <code>rep_sample_n()</code> com <code>size = 50</code> e <code>reps = 1000</code>.</p></li>
-<li><p>Para cada uma das 1000 amostras, calcule <span class="math inline">\(V\)</span> e <span class="math inline">\(\widehat p\)</span>.</p></li>
+<li><p>Para cada uma das 1000 amostras, calcule <span class="math inline">\(Y\)</span> e <span class="math inline">\(\widehat p\)</span>.</p></li>
 <li><p>Construa um histograma das 1000 proporções amostrais e acrescente uma linha vertical indicando <span class="math inline">\(p=0{,}375\)</span>.</p></li>
 <li><p>Compare esse histograma com o obtido a partir de apenas 20 amostras.</p></li>
 <li><p>Utilize as 1000 repetições para avaliar empiricamente a frequência com que <span class="math inline">\(\widehat p\leq0{,}30\)</span>.</p></li>
 <li><p>Avalie também a frequência com que <span class="math inline">\(\widehat p\leq0{,}20\)</span> e compare os dois resultados.</p></li>
 <li><p>Escreva uma interpretação relacionando o resultado à variabilidade amostral.</p></li>
 </ol>
-<p>O experimento físico e sua reprodução computacional mostram que o parâmetro populacional permanece fixo, enquanto as estatísticas calculadas a partir das amostras variam. A inferência estatística utiliza essa variabilidade, representada por modelos probabilísticos, para obter informação sobre quantidades desconhecidas. A passagem dessa variabilidade empírica para a distribuição de uma estatística constitui o objeto de <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
+<p>O experimento físico e sua reprodução computacional mostram que o parâmetro populacional permanece fixo, enquanto as estatísticas calculadas a partir das amostras variam. A inferência estatística utiliza essa variabilidade, representada por modelos probabilísticos, para obter informação sobre quantidades desconhecidas. A passagem dessa variabilidade empírica para a distribuição de uma estatística constitui o objeto do <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>.</p>
 </section>
 </section>
 <section id="questões-de-revisão" class="level2 unnumbered">
