@@ -63,7 +63,7 @@ A revisão deve utilizar a seguinte hierarquia.
 
 1. **`intro.qmd` — fonte normativa do conteúdo programático.** Define os objetivos, a ementa e os conteúdos previstos para graduação e pós-graduação. A auditoria não deve retirar do livro um conteúdo exigido pelo programa sem registrar explicitamente a incompatibilidade e a decisão correspondente.
 2. **`_quarto.yml` — fonte da arquitetura física vigente.** Define a ordem dos arquivos no livro e deve ser usado para conferir a sequência efetiva de leitura.
-3. **Manuscrito atual — objeto primário da revisão.** Os arquivos `.qmd` representam o conteúdo que deve ser preservado, corrigido, articulado e melhorado. O manuscrito não deve ser reconstruído apenas para reproduzir a organização de outra obra.
+3. **Manuscrito atual — objeto primário da revisão.** Os arquivos `.qmd` representam o conteúdo que deve ser preservado, corrigido, articulado e melhorado. O manuscrito não deve ser reconstruído apenas para reproduzir a organização de outra obra. Quando um capítulo for marcado como **consolidado**, sua versão consolidada passa a constituir a referência canônica para os capítulos posteriores. Correções pontuais continuam permitidas, mas sua estrutura, suas definições e suas convenções não devem ser reabertas ou alteradas silenciosamente durante a revisão de outras unidades.
 4. **Casella e Berger — fonte teórica principal de organização e controle.** *Statistical Inference*, 2nd ed., deve orientar a verificação de definições, resultados, condições, relações entre conceitos, exemplos clássicos e profundidade do núcleo de inferência estatística.
 5. **Demais referências já utilizadas no manuscrito.** Lauritzen, Rice, Cox, Chihara, Ramachandran, Larsen, Shao, Bickel--Doksum e as demais obras cadastradas em `references.bib` continuam válidas quando sustentarem diretamente o conteúdo em questão.
 6. **`deep-research-report (10).md` — diagnóstico auxiliar.** Suas recomendações devem ser reavaliadas contra a versão atual dos arquivos antes de qualquer alteração.
@@ -159,7 +159,7 @@ O arquivo `demo.qmd` está disponível no conjunto atual do projeto, mas ainda n
 | `intro.qmd` | identificação das disciplinas, ementas, objetivos, conteúdo programático, metodologia, avaliação e bibliografia |
 | `unidade0p1.qmd` | revisão probabilística e famílias de modelos necessárias à inferência |
 | `unidade0p2.qmd` | ferramentas matemáticas e assintóticas utilizadas nos capítulos inferenciais |
-| `unidade1.qmd` | formulação do problema inferencial, PGD, conceitos fundamentais, estatística/estimador/estimativa, modelo e verossimilhança |
+| `unidade1.qmd` | fundamentos da linguagem inferencial: PGD, população e amostra, parâmetro, estatística/estimador/estimativa, modelo estatístico, distribuição conjunta da amostra, verossimilhança, log-verossimilhança, introdução à máxima verossimilhança e variabilidade dos estimadores |
 | `unidade2.qmd` | distribuição das estatísticas sob repetição amostral, resultados exatos, aproximações e simulação |
 | `unidade3.qmd` | critérios de avaliação de estimadores e princípios de redução de dados |
 | `unidade4.qmd` | métodos de construção de estimadores e extensões de estimação |
@@ -726,63 +726,113 @@ O capítulo estabelece ferramentas gerais. U2--U6 podem retomá-las para mostrar
 # Fundamentos da Inferência Estatística
 
 **Arquivo:** `unidade1.qmd`  
-**Extensão atual:** 660 linhas.
+**Extensão consolidada:** aproximadamente 1.670 linhas.
 
 ## Função do capítulo
 
-Introduzir o problema inferencial e criar a linguagem comum usada no restante do livro.
+Estabelecer a linguagem inferencial canônica utilizada no restante do livro, partindo do problema inferencial e do Processo Gerador de Dados até a formulação de modelos estatísticos, funções de verossimilhança e uma primeira construção de estimadores por máxima verossimilhança.
 
-## Arquitetura atual
+A unidade também estabelece a distinção entre parâmetro, estatística, estimador e estimativa e prepara a passagem para o estudo das distribuições amostrais na U2.
+
+## Arquitetura consolidada
 
 - problema da inferência estatística;
 - Processo Gerador de Dados (PGD);
-- conceitos fundamentais;
-- experimento em sala de aula;
+- população, unidade observacional, parâmetro, censo, amostra e amostragem;
+- mecanismo de seleção da amostra;
+- experimento físico da urna com amostragem sem reposição;
+- distinção entre amostra aleatória e realização observada;
 - estatística, estimador e estimativa;
-- exemplo-guia Bernoulli/urna;
-- antecipação da variabilidade dos estimadores;
-- visão panorâmica dos critérios de avaliação;
-- modelo estatístico e verossimilhança;
-- exploração computacional da urna;
-- questões de revisão.
+- exemplo-guia Bernoulli para a urna;
+- distinção entre o experimento físico sem reposição e o modelo Bernoulli idealizado com reposição;
+- modelo estatístico paramétrico;
+- distribuição conjunta da amostra no modelo Bernoulli;
+- distinção entre a probabilidade de uma sequência específica e a distribuição de $V=\sum_iX_i$;
+- função de verossimilhança;
+- verossimilhança e log-verossimilhança no modelo Bernoulli, com representação gráfica;
+- introdução à máxima verossimilhança;
+- distinção entre máximo e `arg max`;
+- obtenção do estimador de máxima verossimilhança de $p$ no modelo Bernoulli;
+- variabilidade dos estimadores e transição para distribuições amostrais;
+- reprodução computacional do experimento físico da urna;
+- verificações de aprendizagem, atividade computacional e questões de revisão.
+
+## Decisões consolidadas
+
+- O PGD permanece como organizador conceitual anterior ao modelo estatístico.
+- A população, a amostra, o parâmetro e o mecanismo de amostragem são apresentados antes da formalização de estatísticas e estimadores.
+- A distinção entre variável aleatória e realização observada é representada canonicamente por $\mathbf X$ e $\mathbf x$.
+- A distinção entre estatística e valor observado é explicitada no exemplo da urna por $V$ e $v$.
+- O estimador é uma função da amostra aleatória; a estimativa é seu valor depois que a amostra é observada.
+- O experimento físico utiliza amostragem sem reposição e não é identificado com o modelo Bernoulli i.i.d.
+- O modelo Bernoulli utilizado na construção da verossimilhança é uma idealização com reposição e parâmetro $p\in[0,1]$.
+- A distribuição conjunta da amostra é construída antes da verossimilhança.
+- No modelo Bernoulli, a distinção entre a probabilidade de uma sequência específica e a distribuição de $V$ deve permanecer explícita.
+- A verossimilhança é apresentada como a mesma expressão da função de probabilidade ou densidade conjunta considerada, após a observação dos dados, como função do parâmetro.
+- A log-verossimilhança é introduzida antes da maximização e ilustrada graficamente.
+- A notação `arg max` é apresentada somente depois da explicação do conceito de máximo e da distinção entre o maior valor de uma função e os valores do argumento nos quais esse máximo é atingido.
+- A máxima verossimilhança é introduzida na U1 apenas no nível necessário para estabelecer sua lógica e obter $\widehat p_{\mathrm{MV}}=V/n$ no exemplo Bernoulli. O desenvolvimento geral do método permanece responsabilidade da U4.
+- A visão panorâmica dos critérios de avaliação de estimadores foi retirada da U1. Viés, variância, EQM, risco, eficiência, informação e critérios relacionados permanecem responsabilidade da U3.
+- A variabilidade dos estimadores permanece na U1 apenas como transição conceitual para a U2.
+- A exploração computacional retorna ao mecanismo físico sem reposição e deve permanecer explicitamente distinguida do modelo Bernoulli i.i.d. utilizado na verossimilhança.
 
 ## Conteúdo a proteger
 
 - PGD como organizador conceitual;
-- experimento da urna e exemplo-guia Bernoulli;
+- experimento físico da urna;
+- exemplo-guia Bernoulli;
+- distinção entre amostragem com e sem reposição;
+- convenções $\mathbf X/\mathbf x$ e $V/v$;
 - distinção entre estatística, estimador e estimativa;
-- introdução explícita da verossimilhança antes dos métodos de estimação;
-- integração entre experimento físico/conceitual e simulação.
+- formulação do modelo estatístico antes da verossimilhança;
+- construção da distribuição conjunta Bernoulli antes da mudança de perspectiva para a verossimilhança;
+- distinção entre sequência específica e distribuição binomial de $V$;
+- gráficos da verossimilhança e da log-verossimilhança;
+- introdução gradual de máxima verossimilhança e `arg max`;
+- integração entre experimento físico, modelo probabilístico e exploração computacional;
+- transição explícita para distribuições amostrais.
 
-## Pontos para Passagem 1
+## Notação canônica estabelecida na U1
 
-- conferir se população, amostra, parâmetro, estatística, estimador e estimativa são introduzidos em ordem coerente e sem definições provisórias conflitantes;
-- verificar a transição entre a parte conceitual e a parte computacional;
-- distinguir antecipações legítimas de conteúdos que pertencem formalmente à U3;
-- manter a urna como exemplo longitudinal, salvo erro específico.
+- amostra aleatória: $\mathbf X=(X_1,\ldots,X_n)$;
+- realização observada: $\mathbf x=(x_1,\ldots,x_n)$;
+- estatística genérica: $T(\mathbf X)$;
+- valor observado da estatística: $T(\mathbf x)$;
+- estimador: $\widehat\theta=T(\mathbf X)$;
+- estimativa: $\widehat\theta(\mathbf x)=T(\mathbf x)$;
+- número de bolas vermelhas na amostra aleatória: $V=\sum_iX_i$;
+- valor observado correspondente: $v=\sum_ix_i$;
+- família paramétrica: $\mathcal F=\{F(\cdot\mid\theta):\theta\in\Theta\}$;
+- função de probabilidade ou densidade: $f(\mathbf x\mid\theta)$;
+- verossimilhança: $L(\theta;\mathbf x)$;
+- log-verossimilhança: $\ell(\theta;\mathbf x)$, admitindo a forma abreviada $\ell(\theta)$ quando os dados observados estiverem claramente fixados;
+- probabilidade em modelos paramétricos: pode ser escrita na forma $P(A\mid\theta)$ quando for necessário explicitar o valor paramétrico adotado; nesta notação, $\theta$ é um parâmetro fixo do modelo, não uma variável aleatória.
 
-## Mapa atual de seções principais
+Não adotar $P_\theta$ como notação canônica nas novas revisões. Formas já existentes em capítulos ainda não revisados devem ser harmonizadas somente durante a auditoria local correspondente, evitando substituições mecânicas fora de contexto.
 
-- linha 9: **O problema da inferência estatística**
-- linha 32: **Processo Gerador de Dados (PGD)**
-- linha 69: **Conceitos fundamentais**
-- linha 117: **Experimento em sala de aula**
-- linha 155: **Estatísticas, estimadores e estimativas**
-- linha 195: **Exemplo-guia: modelo Bernoulli para a urna**
-- linha 227: **A variabilidade dos estimadores: uma antecipação**
-- linha 241: **Critérios para avaliar estimadores: visão panorâmica**
-- linha 270: **Modelo estatístico e função de verossimilhança**
-- linha 373: **Exploração computacional do experimento da urna**
-- linha 576: **Questões de revisão {.unnumbered}**
-- linha 660: **Referências {.unnumbered}**
+## Identificadores e referências cruzadas consolidados
+
+- capítulo: `sec-fundamentos-inferencia`;
+- equação da distribuição conjunta Bernoulli: `eq-bernoulli-conjunta`;
+- figura da verossimilhança Bernoulli: `fig-verossimilhanca-bernoulli`;
+- figura da log-verossimilhança Bernoulli: `fig-log-verossimilhanca-bernoulli`;
+- referência de saída para U2: `@sec-distribuicoes-amostrais`.
 
 ## Chaves bibliográficas atualmente utilizadas
 
-`@casella2002statistical`, `@chihara2022`, `@cox2006principles`, `@moderndive`, `@ramachandran2021r`, `@rice2007mathematical`, `@tidyverse`.
+`@chihara2022`, `@cox2006principles`, `@moderndive`, `@ramachandran2021r`, `@rice2007mathematical`, `@tidyverse`.
+
+## Histórico da consolidação
+
+A revisão da U1 preservou o PGD, o experimento da urna, o exemplo Bernoulli e a introdução da verossimilhança, mas reorganizou a progressão conceitual. Foram formalizadas as distinções $\mathbf X/\mathbf x$ e $V/v$, separadas explicitamente a urna física sem reposição e a idealização Bernoulli com reposição, desenvolvida a distribuição conjunta da amostra antes da verossimilhança e introduzidas log-verossimilhança e máxima verossimilhança de forma gradual.
+
+A antiga antecipação dos critérios de avaliação de estimadores foi removida da U1 e sua responsabilidade permaneceu com a U3. A variabilidade dos estimadores foi mantida em forma condensada como ligação conceitual com a U2.
 
 ## Estado
 
-**Inventariado; auditoria ainda não iniciada.**
+**Consolidado.** Esta unidade passa a constituir a fonte canônica do projeto para PGD introdutório, população, amostra, parâmetro, estatística, estimador, estimativa, modelo estatístico, distribuição conjunta da amostra em nível introdutório, verossimilhança e máxima verossimilhança introdutória.
+
+Correções pontuais futuras permanecem possíveis, mas a unidade não deve ser reestruturada durante a revisão dos capítulos posteriores sem identificação de erro concreto ou decisão transversal explícita.
 
 # Distribuições Amostrais
 
@@ -1346,7 +1396,7 @@ Não substituir em massa as referências atuais. Para cada definição, proposi�
 |---|---|
 | 0.1 | modelos e distribuições usados em U1--U6 |
 | 0.2 | convergência e assintótica usadas em U2--U6 |
-| U1 | linguagem inferencial, modelo e verossimilhança usados em U2--U8 |
+| U1 | linguagem inferencial canônica, modelo estatístico, distinções $\mathbf X/\mathbf x$ e estimador/estimativa, distribuição conjunta introdutória, verossimilhança, log-verossimilhança e máxima verossimilhança introdutória usadas em U2--U8 |
 | U2 | distribuições amostrais usadas em U3--U6 e U8 |
 | U3 | critérios de avaliação e informação usados na discussão de estimadores em U4 |
 | U4 | estimadores pontuais e propriedades usadas em U5, U6 e U8 |
@@ -1359,7 +1409,7 @@ Essa matriz registra apenas dependências conceituais de alto nível. A matriz d
 # Pontos prioritários para o início da auditoria
 
 1. **Congelar notação e responsabilidades de 0.1, 0.2, U1 e U2.** A fronteira entre ferramenta probabilística, ferramenta assintótica e distribuição amostral precisa ficar clara sem eliminar retomadas úteis.
-2. **Auditar U1 preservando PGD, urna e verossimilhança.** O objetivo é unificar a progressão conceitual, não substituir o capítulo.
+2. **Preservar a U1 como capítulo consolidado e utilizar sua formulação como referência para a U2.** A próxima auditoria deve verificar o que, na U2, constitui recordação necessária e o que pode ser substituído por referência cruzada para a U1, sem eliminar os desenvolvimentos próprios de distribuições amostrais.
 3. **Auditar U3--U4 como par.** Verificar sobreposição de informação, eficiência e assintótica, preservando os desenvolvimentos e fontes que cumprem funções distintas.
 4. **Registrar a lacuna de minimax/equivância.** Não inserir conteúdo antes de verificar fontes e posição adequada.
 5. **Preservar U5--U6 como sequência articulada já consolidada.** A U5 desenvolve conjuntos de confiança e inversão de testes; a U6 formaliza a teoria de testes e retoma a dualidade ao final. Novas alterações nessa fronteira devem ocorrer apenas diante de inconsistência concreta.
@@ -1382,15 +1432,14 @@ Depois de cada capítulo consolidado:
 
 - arquitetura física: **inventariada**;
 - conteúdo programático: **inventariado**;
+- U1 — Fundamentos da Inferência Estatística: **consolidada e fonte canônica para as unidades posteriores**;
+- U6: **incluída e inventariada**;
 - política de preservação: **fixada**;
 - Casella e Berger como fonte principal: **fixado**;
 - inventário inicial dos capítulos: **concluído**;
-- U4: **consolidada**;
-- U5: **consolidada**;
-- U6: **consolidada**;
-- auditoria estrutural/conceitual dos capítulos: **em andamento, com U4--U6 concluídas**;
-- auditoria bibliográfica capítulo a capítulo: **em andamento, com U4--U6 concluídas**;
-- auditoria computacional: **em andamento; códigos das unidades auditadas são verificados durante a consolidação e a U8 permanece pendente de auditoria executável integral**.
+- auditoria estrutural/conceitual dos capítulos: **iniciada; U1 consolidada**;
+- auditoria bibliográfica direta, capítulo a capítulo: **iniciada; permanece pendente para os capítulos ainda não consolidados**;
+- auditoria computacional integral: **não iniciada**, embora os códigos locais da U1 tenham sido revisados no processo de consolidação.
 
 # Governança dos chats do projeto
 
@@ -1565,6 +1614,8 @@ IDs de capítulo propostos:
 
 Os IDs devem ser considerados estáveis depois de aprovados. As auditorias locais poderão criar IDs internos adicionais, mas não redefinir a convenção global.
 
+Com a consolidação da U1, `sec-fundamentos-inferencia` passa a ser um identificador **confirmado e estável**. A U1 também introduziu `eq-bernoulli-conjunta`, `fig-verossimilhanca-bernoulli` e `fig-log-verossimilhanca-bernoulli`, que devem ser preservados em referências posteriores. Os demais IDs globais permanecem sujeitos à confirmação durante a revisão local de seus respectivos capítulos.
+
 ## Organização editorial no `_quarto.yml`
 
 A ordem atual dos capítulos é conceitualmente adequada e deve ser preservada como ponto de partida. Para tornar a arquitetura visível ao leitor, recomenda-se avaliar a organização do sumário em três partes, sem alterar a sequência dos arquivos:
@@ -1703,18 +1754,21 @@ A padronização deve preservar a notação já dominante no manuscrito e evitar
 
 ### Modelo, densidade e verossimilhança
 
-- Família paramétrica: $\mathcal P=\{P_\theta:\theta\in\Theta\}$; usar $\boldsymbol\theta$ quando o caráter vetorial for material à discussão.
-- Forma preferencial para densidade/função de probabilidade em desenvolvimentos inferenciais: $f(x;\theta)$ ou $f(\mathbf x;\boldsymbol\theta)$.
-- A notação $f_\theta(x)$ pode ser mantida localmente quando tornar fórmulas teóricas mais legíveis, especialmente em derivadas, escores e expectativas, mas não deve gerar uma segunda convenção concorrente sem necessidade.
+- Família paramétrica: $\mathcal F=\{F(\cdot\mid\theta):\theta\in\Theta\}$; usar $\boldsymbol\theta$ quando o caráter vetorial for material à discussão.
+- Para cada $\theta\in\Theta$, $F(\cdot\mid\theta)$ representa uma distribuição possível para a variável ou vetor aleatório considerado.
+- Forma preferencial para função de probabilidade ou densidade em desenvolvimentos inferenciais: $f(x\mid\theta)$ ou $f(\mathbf x\mid\boldsymbol\theta)$.
+- A barra vertical em $f(x\mid\theta)$ separa o argumento da função do parâmetro do modelo e não implica que $\theta$ esteja sendo tratado como variável aleatória.
+- A notação $f_\theta(x)$ pode permanecer localmente quando uma fonte ou desenvolvimento já construído a utilizar de modo funcional, mas não deve ser introduzida como segunda convenção concorrente sem necessidade.
 - Verossimilhança: $L(\theta;\mathbf x)$ no caso escalar e $L(\boldsymbol\theta;\mathbf x)$ no caso vetorial.
 - Verossimilhança de uma amostra de tamanho $n$: $L_n$ quando o índice $n$ tiver utilidade real.
-- Log-verossimilhança: $\ell(\theta)$ ou $\ell_n(\theta)$; manter $\ell$ minúsculo para não confundir com a verossimilhança $L$.
+- Log-verossimilhança: $\ell(\theta;\mathbf x)$ quando for útil explicitar os dados observados; $\ell(\theta)$ ou $\ell_n(\theta)$ podem ser usados quando $\mathbf x$ estiver claramente fixado pelo contexto. Manter $\ell$ minúsculo para não confundir com a verossimilhança $L$.
 - A função de perda não deve competir visualmente com a verossimilhança. Nas futuras revisões, preferir $\mathcal L(\tau(\theta),a)$ para a perda quando isso puder ser feito sem comprometer a leitura ou a fidelidade a um desenvolvimento já referenciado.
 
 ### Probabilidade, esperança e variância
 
-- Probabilidade sob o valor paramétrico $\theta$: $P_\theta$.
-- Esperança: $E_\theta$ quando a dependência do parâmetro for importante; $E$ pode ser usado em exemplos locais nos quais não haja ambiguidade.
+- Quando for necessário explicitar o valor paramétrico adotado, a probabilidade pode ser escrita como $P(A\mid\theta)$. Nessa notação, $\theta$ é um parâmetro fixo do modelo; a barra vertical não indica que $\theta$ seja uma variável aleatória.
+- Não utilizar $P_\theta$ como notação canônica nas novas revisões. Ocorrências existentes em capítulos ainda não consolidados devem ser avaliadas durante a auditoria local antes de qualquer harmonização.
+- Esperança: $E_\theta$ quando a dependência do parâmetro for importante; $E$ pode ser usado em exemplos locais nos quais não haja ambiguidade. A eventual harmonização dessa notação com a convenção probabilística será decidida durante a revisão das unidades em que esperança paramétrica desempenhar papel central.
 - Variância: $\operatorname{Var}_\theta$ quando a dependência paramétrica for material; $\operatorname{Var}$ quando o parâmetro estiver fixado ou evidente no contexto.
 - Erro quadrático médio: $\operatorname{EQM}_\theta$ quando formulado como função do parâmetro.
 
@@ -2531,39 +2585,70 @@ No percurso da graduação, LGN e TCL permanecem núcleo. O método delta e dese
 
 ## U1 → U2
 
-### U1 deve entregar
+### U1 consolidada entrega
 
 - problema inferencial e Processo Gerador de Dados;
-- população, unidade observacional e amostra;
+- população, unidade observacional, censo, amostra e mecanismo de amostragem;
 - parâmetro e espaço paramétrico;
-- amostra aleatória e distinção entre variável aleatória e realização;
+- distinção entre amostra aleatória e realização observada;
+- convenções $\mathbf X/\mathbf x$ e $V/v$;
 - estatística;
 - estimador e estimativa;
-- modelo estatístico;
-- introdução à função de verossimilhança;
-- distinção entre amostragem i.i.d. e estruturas amostrais que não são i.i.d.
+- modelo estatístico paramétrico;
+- família $\mathcal F=\{F(\cdot\mid\theta):\theta\in\Theta\}$;
+- função de probabilidade ou densidade conjunta $f(\mathbf x\mid\theta)$;
+- fatoração da distribuição conjunta sob independência;
+- exemplo Bernoulli como modelo probabilístico idealizado;
+- distinção entre amostragem com e sem reposição;
+- distribuição conjunta da amostra Bernoulli;
+- distinção entre a probabilidade de uma sequência específica e a distribuição de $V=\sum_iX_i$;
+- resultado introdutório $V\sim\operatorname{Bin}(n,p)$;
+- função de verossimilhança;
+- distinção entre função de probabilidade/densidade e função de verossimilhança;
+- log-verossimilhança;
+- representação gráfica da verossimilhança e da log-verossimilhança;
+- significado de máximo e `arg max`;
+- distinção entre estimativa e estimador de máxima verossimilhança;
+- resultado introdutório $\widehat p_{\mathrm{MV}}=V/n$;
+- conceito de variabilidade de um estimador sob repetição amostral;
+- primeira aproximação empírica à distribuição de uma estatística por meio do experimento físico e da simulação.
 
-A U1 já estabelece explicitamente a diferença entre $\mathbf X$ e $\mathbf x$, bem como entre estatística, estimador e estimativa. Essa formulação deve ser considerada canônica para o restante do livro.
+Essas formulações devem ser consideradas **canônicas** para o restante do livro. A U2 não deve redefinir população, parâmetro, estatística, estimador, estimativa, modelo ou verossimilhança como se fossem conceitos novos.
 
 ### U2 deve pressupor
 
-- modelo estatístico, parâmetro, amostra e estatística já conhecidos;
-- distinção entre amostra aleatória e amostra observada;
-- noção de repetição do mecanismo gerador.
+- modelo estatístico, parâmetro, amostra, estatística, estimador e estimativa já conhecidos;
+- distinção entre $\mathbf X$ e $\mathbf x$;
+- distinção entre estatística e valor observado;
+- noção de repetição do mecanismo amostral;
+- reconhecimento de que uma estatística, por ser função da amostra aleatória, possui uma distribuição;
+- modelo Bernoulli/binomial já disponível como exemplo;
+- distinção entre experimento físico sem reposição e modelo i.i.d. com reposição.
 
 ### U2 deve acrescentar
 
-- distribuição amostral como distribuição de uma estatística;
+- definição e estudo sistemático da distribuição amostral de uma estatística;
 - mecanismos exatos de obtenção de distribuições amostrais;
+- esperança, variância e erro-padrão de estatísticas;
 - distribuição da média, proporção e variância;
+- amostragem sem reposição e correção para população finita;
 - estatísticas de ordem;
 - relações $\chi^2$, $t$ e $F$ associadas ao modelo normal;
 - aproximações assintóticas de estatísticas;
-- interpretação da simulação como aproximação da distribuição amostral.
+- efeito do tamanho amostral;
+- interpretação da simulação como aproximação de distribuições amostrais.
 
 ### Regra de fronteira
 
-A seção atual de U2 intitulada "Amostra e estatística: recordação" pode permanecer, mas deve funcionar como **recordação condensada**, não como segunda apresentação completa de modelo, amostra e estatística. Na revisão específica da U2, avaliar substituição parcial por referências cruzadas para U1 quando isso não prejudicar a leitura local.
+A U2 pode retomar conceitos da U1 quando isso for necessário para iniciar um novo desenvolvimento, mas essas retomadas devem funcionar como **recordação condensada**, e não como segunda apresentação completa das definições já consolidadas.
+
+Na revisão específica da U2:
+
+1. preservar o desenvolvimento próprio de distribuições amostrais;
+2. substituir redefinições extensas de população, amostra, estatística, estimador ou modelo por retomadas breves e, quando útil, referências cruzadas para `@sec-fundamentos-inferencia`;
+3. usar a U1 como referência para as convenções $\mathbf X/\mathbf x$, estimador/estimativa e $V/v$;
+4. reconhecer que $V\sim\operatorname{Bin}(n,p)$ já aparece na U1, mas somente como consequência introdutória do modelo Bernoulli; a U2 pode retomá-lo com nova função, agora como exemplo formal de distribuição amostral;
+5. não repetir o desenvolvimento de verossimilhança ou máxima verossimilhança, salvo quando uma referência breve for necessária para contextualizar uma estatística.
 
 ## U2 → U3
 
@@ -2860,12 +2945,12 @@ Ao final do bloco, verificar especificamente:
 
 ### Bloco B — Linguagem inferencial e distribuições amostrais
 
-3. `unidade1.qmd`
-4. `unidade2.qmd`
+3. `unidade1.qmd` — **consolidada**
+4. `unidade2.qmd` — **próxima unidade a revisar neste bloco**
 
-A U1 deve ser revisada antes da U2 porque é a fonte canônica para população, parâmetro, amostra, estatística, estimador, estimativa, modelo e verossimilhança introdutória.
+A U1 constitui agora a fonte canônica para PGD introdutório, população, parâmetro, amostra, estatística, estimador, estimativa, modelo estatístico, distribuição conjunta introdutória, verossimilhança, log-verossimilhança e máxima verossimilhança introdutória.
 
-Ao revisar U2, usar a versão consolidada de U1 para decidir o que deve permanecer como recordação e o que pode ser substituído por referência cruzada.
+A revisão da U2 deve partir da versão consolidada da U1. Retomadas necessárias podem permanecer, mas redefinições extensas dos conceitos já estabilizados devem ser avaliadas para condensação ou substituição por referência cruzada. A U2 deve concentrar seu desenvolvimento novo na distribuição das estatísticas sob repetição amostral.
 
 ### Bloco C — Avaliação e construção de estimadores
 
@@ -3010,17 +3095,18 @@ Exemplos:
 
 # Ordem recomendada de abertura dos chats específicos
 
-Salvo necessidade prática diferente, a ordem recomendada é:
+A U1 já foi consolidada e não integra mais a fila de capítulos a revisar. Salvo necessidade prática diferente, a ordem recomendada a partir desta versão é:
 
 1. Preliminar 0.1;
 2. Preliminar 0.2;
-3. U1;
-4. U2;
-5. U3;
-6. U4;
-7. U5;
-8. U6;
-9. U7;
-10. U8.
+3. U2;
+4. U3;
+5. U4;
+6. U5;
+7. U6;
+8. U7;
+9. U8.
+
+A U1 permanece disponível como fonte canônica e só deve ser reaberta para correção pontual, ajuste de referência cruzada ou incompatibilidade transversal concreta identificada durante a revisão posterior.
 
 Após U6, fazer uma pequena auditoria transversal de U5 ↔ U6 antes de avançar para U7. Após U8, realizar uma auditoria transversal final do livro completo.
