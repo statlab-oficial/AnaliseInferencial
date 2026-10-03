@@ -633,7 +633,26 @@ X_1,\ldots,X_n
 <p><span class="math display">\[
 E(X_i)=\mu.
 \]</span></p>
-<p>A distribuição exponencial também pode ser parametrizada pela taxa <span class="math inline">\(\lambda\)</span>. As duas parametrizações estão relacionadas por</p>
+<p>Na parametrização pela média utilizada neste exemplo, a densidade é</p>
+<p><span class="math display">\[
+f(x\mid\mu)
+=
+\frac1\mu
+e^{-x/\mu}
+\mathbf 1_{(0,\infty)}(x),
+\qquad
+\mu&gt;0.
+\]</span></p>
+<p>A distribuição exponencial também pode ser parametrizada pela <strong>taxa</strong> <span class="math inline">\(\lambda\)</span>, caso em que</p>
+<p><span class="math display">\[
+f(x\mid\lambda)
+=
+\lambda e^{-\lambda x}
+\mathbf 1_{(0,\infty)}(x),
+\qquad
+\lambda&gt;0.
+\]</span></p>
+<p>As duas parametrizações estão relacionadas por</p>
 <p><span class="math display">\[
 \lambda=\frac{1}{\mu}
 \qquad\text{ou, equivalentemente,}\qquad
@@ -661,14 +680,6 @@ P(X_1&gt;2,\ldots,X_n&gt;2).
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Para uma observação,</p>
-<p><span class="math display">\[
-f(x\mid\mu)
-=
-\frac{1}{\mu}
-e^{-x/\mu}
-\mathbf 1\{x&gt;0\}.
-\]</span></p>
 <p>Pela independência,</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -683,7 +694,7 @@ f(x_i\mid\mu)\\
 \sum_{i=1}^n x_i
 \right)
 \prod_{i=1}^n
-\mathbf 1\{x_i&gt;0\}.
+\mathbf 1_{(0,\infty)}(x_i).
 \end{aligned}
 \]</span></p>
 <p>Além disso,</p>
@@ -1193,12 +1204,10 @@ n(n-1)
 \]</span></p>
 <p>obtemos</p>
 <p><span class="math display">\[
-\boxed{
 \operatorname{Var}(\overline X)
 =
 \frac{\sigma_N^2}{n}
-\frac{N-n}{N-1}
-}.
+\frac{N-n}{N-1}.
 \]</span></p>
 <p>Portanto, a correção de população finita surge diretamente das covariâncias negativas entre posições distintas da amostra.</p>
 </div>
@@ -1495,13 +1504,13 @@ E(\overline X)=3{,}95.
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Interpretação">
+<div class="callout callout-style-default callout-note callout-titled" title="Interpretação — Papel da enumeração">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Interpretação
+<span class="screen-reader-only">Nota</span>Interpretação — Papel da enumeração
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1574,11 +1583,9 @@ n f_Y(nu).
 \]</span></p>
 <p>Portanto,</p>
 <p><span class="math display">\[
-\boxed{
 f_{\overline X}(u)
 =
-n f_Y(nu)
-}.
+n f_Y(nu).
 \]</span></p>
 </div>
 </div>
@@ -1690,9 +1697,7 @@ y=0,1,2.
 \]</span></p>
 <p>Portanto,</p>
 <p><span class="math display">\[
-\boxed{
-Y\sim\operatorname{Bin}(2,p)
-}.
+Y\sim\operatorname{Bin}(2,p).
 \]</span></p>
 <p>A convolução mostra diretamente como a distribuição binomial surge da soma de variáveis Bernoulli independentes.</p>
 </div>
@@ -1739,7 +1744,18 @@ M_X\left(\frac{t}{n}\right)
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Poisson}(\lambda)
+\operatorname{Poisson}(\lambda),
+\qquad
+\lambda&gt;0.
+\]</span></p>
+<p>A função de massa de probabilidade é</p>
+<p><span class="math display">\[
+P(X_i=x)
+=
+e^{-\lambda}
+\frac{\lambda^x}{x!},
+\qquad
+x=0,1,2,\ldots.
 \]</span></p>
 <p>e defina</p>
 <p><span class="math display">\[
@@ -1858,8 +1874,21 @@ E(\overline X)
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
 N(\mu,\sigma^2),
+\qquad
+\sigma^2&gt;0.
 \]</span></p>
-<p>utilize a função geradora de momentos para obter a distribuição exata de</p>
+<p>Na notação adotada neste livro, o segundo parâmetro é a <strong>variância</strong>. A densidade de cada observação é</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left[
+-\frac{(x-\mu)^2}{2\sigma^2}
+\right],
+\qquad
+-\infty&lt;x&lt;\infty.
+\]</span></p>
+<p>Utilize a função geradora de momentos para obter a distribuição exata de</p>
 <p><span class="math display">\[
 \overline X.
 \]</span></p>
@@ -1947,13 +1976,11 @@ v=\frac{\sigma^2}{n}.
 \]</span></p>
 <p>Como a FGM, quando existe em uma vizinhança de zero, determina unicamente a distribuição, concluímos que</p>
 <p><span class="math display">\[
-\boxed{
 \overline X
 \sim
 N\left(
 \mu,\frac{\sigma^2}{n}
-\right)
-}.
+\right).
 \]</span></p>
 <p>Essa dedução por FGM é apresentada em tratamentos clássicos de transformações e somas de variáveis aleatórias <span class="citation" data-cites="larsen2012 rice2007mathematical">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.12</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 4</a> e 6)</span>.</p>
 </div>
@@ -1969,12 +1996,57 @@ N\left(
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Adote a parametrização por forma <span class="math inline">\(\alpha\)</span> e escala <span class="math inline">\(\beta\)</span> e suponha</p>
+<p>Adote a parametrização da distribuição gama por <strong>forma</strong> <span class="math inline">\(\alpha\)</span> e <strong>escala</strong> <span class="math inline">\(\beta\)</span>, com</p>
+<p><span class="math display">\[
+\alpha&gt;0,
+\qquad
+\beta&gt;0.
+\]</span></p>
+<p>Sua densidade é</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{
+1
+}{
+\Gamma(\alpha)\beta^\alpha
+}
+x^{\alpha-1}
+e^{-x/\beta},
+\qquad
+x&gt;0.
+\]</span></p>
+<p>Nessa parametrização,</p>
+<p><span class="math display">\[
+E(X)=\alpha\beta
+\qquad\text{e}\qquad
+\operatorname{Var}(X)=\alpha\beta^2.
+\]</span></p>
+<p>A distribuição gama também é frequentemente parametrizada por <strong>forma</strong> <span class="math inline">\(\alpha\)</span> e <strong>taxa</strong> <span class="math inline">\(\lambda\)</span>, com</p>
+<p><span class="math display">\[
+\lambda=\frac1\beta.
+\]</span></p>
+<p>Nesse caso, a mesma densidade é escrita como</p>
+<p><span class="math display">\[
+f_X(x)
+=
+\frac{
+\lambda^\alpha
+}{
+\Gamma(\alpha)
+}
+x^{\alpha-1}
+e^{-\lambda x},
+\qquad
+x&gt;0.
+\]</span></p>
+<p>Considere agora</p>
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Gama}(\alpha,\beta).
+\operatorname{Gama}(\alpha,\beta),
 \]</span></p>
+<p>na parametrização por forma e escala.</p>
 <p>Utilize a função geradora de momentos para obter a distribuição de</p>
 <p><span class="math display">\[
 \overline X.
@@ -2044,14 +2116,12 @@ n\alpha
 \]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[
-\boxed{
 \overline X
 \sim
 \operatorname{Gama}
 \left(
 n\alpha,\frac{\beta}{n}
-\right)
-}.
+\right).
 \]</span></p>
 <p>Como verificação, para uma variável</p>
 <p><span class="math display">\[
@@ -2107,14 +2177,12 @@ E(X_i)=\mu.
 \]</span></p>
 <p>e</p>
 <p><span class="math display">\[
-\boxed{
 \overline X
 \sim
 \operatorname{Gama}
 \left(
 n,\frac{\mu}{n}
 \right).
-}
 \]</span></p>
 </section>
 <section id="sec-u2-media-amostral" class="level2" data-number="4.6">
@@ -2356,13 +2424,15 @@ N\left(
 </div>
 <section id="diferença-de-médias-de-duas-amostras-independentes" class="level3" data-number="4.6.1">
 <h3 data-number="4.6.1" class="anchored" data-anchor-id="diferença-de-médias-de-duas-amostras-independentes"><span class="header-section-number">4.6.1</span> Diferença de médias de duas amostras independentes</h3>
-<p>Considere duas amostras independentes,</p>
+<p>Considere duas amostras independentes entre si,</p>
 <p><span class="math display">\[
-X_1,\ldots,X_n,
-\qquad
+X_1,\ldots,X_n
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
 Y_1,\ldots,Y_m,
 \]</span></p>
-<p>tais que</p>
+<p>em que, dentro de cada amostra, as observações são independentes e identicamente distribuídas. Suponha que</p>
 <p><span class="math display">\[
 E(X_i)=\mu_1,
 \qquad
@@ -2386,13 +2456,11 @@ E(D)
 \]</span></p>
 <p>e, pela independência entre as amostras,</p>
 <p><span class="math display">\[
-\boxed{
 \operatorname{Var}(D)
 =
 \frac{\sigma_1^2}{n}
 +
 \frac{\sigma_2^2}{m}.
-}
 \]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Derivação — Média e variância da diferença de médias">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
@@ -2459,13 +2527,13 @@ E(\overline X)-E(\overline Y)\\
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled" title="Resultado — Duas populações normais">
+<div class="callout callout-style-default callout-important callout-titled" title="Resultado — Distribuição exata da diferença de médias">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Resultado — Duas populações normais
+<span class="screen-reader-only">Importante</span>Resultado — Distribuição exata da diferença de médias
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2483,7 +2551,6 @@ N(\mu_2,\sigma_2^2),
 \]</span></p>
 <p>com as duas amostras independentes, então</p>
 <p><span class="math display">\[
-\boxed{
 \overline X-\overline Y
 \sim
 N\left(
@@ -2492,7 +2559,6 @@ N\left(
 +
 \frac{\sigma_2^2}{m}
 \right).
-}
 \]</span></p>
 <p>A normalidade é exata porque <span class="math inline">\(\overline X\)</span> e <span class="math inline">\(\overline Y\)</span> são variáveis normais independentes.</p>
 </div>
@@ -2528,18 +2594,18 @@ P\left(
 \]</span></p>
 <p>isto é,</p>
 <p><span class="math display">\[
-\overline X_n\xrightarrow{p}\mu.
+\overline X_n\xrightarrow{P}\mu.
 \]</span></p>
 <p>Assim, à medida que <span class="math inline">\(n\)</span> aumenta, a distribuição amostral de <span class="math inline">\(\overline X_n\)</span> concentra progressivamente sua massa em torno da média populacional <span class="citation" data-cites="rice2007mathematical">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 5.2</a>, pp.&nbsp;177–181)</span>.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Demonstração via desigualdade de Chebyshev">
+<div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Lei Fraca via desigualdade de Chebyshev">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Demonstração via desigualdade de Chebyshev
+<span class="screen-reader-only">Nota</span>Demonstração — Lei Fraca via desigualdade de Chebyshev
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2578,7 +2644,7 @@ P\left(
 \]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[
-\overline X_n\xrightarrow{p}\mu.
+\overline X_n\xrightarrow{P}\mu.
 \]</span></p>
 </div>
 </div>
@@ -2612,7 +2678,7 @@ X_1,X_2,\ldots
 <p>Como <span class="math inline">\(E(X_i)=p\)</span>, a Lei dos Grandes Números implica</p>
 <p><span class="math display">\[
 \widehat p_n
-\xrightarrow{p}
+\xrightarrow{P}
 p.
 \]</span></p>
 <p>Assim, a proporção amostral concentra-se em torno da proporção populacional conforme o tamanho amostral aumenta.</p>
@@ -2695,7 +2761,6 @@ N(0,1),
 <p>quando <span class="math inline">\(\min(n,m)\to\infty\)</span>.</p>
 <p>Consequentemente, para amostras suficientemente grandes,</p>
 <p><span class="math display">\[
-\boxed{
 \overline X-\overline Y
 \overset{\cdot}{\sim}
 N\left(
@@ -2703,8 +2768,7 @@ N\left(
 \frac{\sigma_1^2}{n}
 +
 \frac{\sigma_2^2}{m}
-\right)
-}.
+\right).
 \]</span></p>
 <p>Esse resultado deve ser distinguido daquele obtido anteriormente para duas populações normais. Se as duas populações são normais, a distribuição acima é <strong>exata para quaisquer tamanhos amostrais</strong>. Para populações gerais com variâncias finitas, ela constitui uma <strong>aproximação assintótica</strong> baseada no Teorema Central do Limite.</p>
 <p>Neste texto, o símbolo</p>
@@ -2742,7 +2806,7 @@ N\left(
 \]</span></p>
 <p>pois essa distribuição também depende de <span class="math inline">\(n\)</span>. Pela Lei dos Grandes Números,</p>
 <p><span class="math display">\[
-\overline X_n\xrightarrow{p}\mu.
+\overline X_n\xrightarrow{P}\mu.
 \]</span></p>
 <p>A distribuição normal com variância <span class="math inline">\(\sigma^2/n\)</span> é uma <strong>aproximação da distribuição de <span class="math inline">\(\overline X_n\)</span> para cada <span class="math inline">\(n\)</span> suficientemente grande</strong>, e não seu limite em distribuição.</p>
 </div>
@@ -2761,7 +2825,7 @@ N\left(
 <p>A <strong>Lei dos Grandes Números</strong> estabelece que</p>
 <p><span class="math display">\[
 \overline X_n
-\xrightarrow{p}
+\xrightarrow{P}
 \mu,
 \]</span></p>
 <p>mostrando que a média amostral se concentra em torno da média populacional à medida que <span class="math inline">\(n\)</span> aumenta.</p>
@@ -2797,19 +2861,19 @@ N(0,1).
 <p>A padronização fornecida diretamente pelo TCL utiliza o desvio-padrão populacional <span class="math inline">\(\sigma\)</span>. Em problemas inferenciais, entretanto, <span class="math inline">\(\sigma\)</span> frequentemente é desconhecido. Nesse caso, podemos examinar o que ocorre quando ele é substituído pelo desvio-padrão amostral <span class="math inline">\(S\)</span>.</p>
 <p>Para uma amostra i.i.d. com <span class="math inline">\(0&lt;\sigma^2&lt;\infty\)</span>,</p>
 <p><span class="math display">\[
-S^2\xrightarrow{p}\sigma^2
+S^2\xrightarrow{P}\sigma^2
 \]</span></p>
 <p>e, consequentemente,</p>
 <p><span class="math display">\[
-S\xrightarrow{p}\sigma.
+S\xrightarrow{P}\sigma.
 \]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Derivação de $S^2\xrightarrow{p}\sigma^2$">
+<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Convergência de $S^2$ para $\sigma^2$">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Derivação de <span class="math inline">\(S^2\xrightarrow{p}\sigma^2\)</span>
+<span class="screen-reader-only">Nota</span>Derivação — Convergência de <span class="math inline">\(S^2\)</span> para <span class="math inline">\(\sigma^2\)</span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2831,19 +2895,19 @@ S^2
 <p><span class="math display">\[
 \frac{1}{n}
 \sum_{i=1}^nX_i^2
-\xrightarrow{p}
+\xrightarrow{P}
 E(X^2)
 \]</span></p>
 <p>e</p>
 <p><span class="math display">\[
 \overline X_n
-\xrightarrow{p}
+\xrightarrow{P}
 \mu.
 \]</span></p>
 <p>Pelo teorema do mapeamento contínuo, apresentado em <a href="#sec-prelim-mapeamento-continuo" class="quarto-xref"><span class="quarto-unresolved-ref">sec-prelim-mapeamento-continuo</span></a>,</p>
 <p><span class="math display">\[
 \overline X_n^2
-\xrightarrow{p}
+\xrightarrow{P}
 \mu^2.
 \]</span></p>
 <p>Logo,</p>
@@ -2852,7 +2916,7 @@ E(X^2)
 \sum_{i=1}^nX_i^2
 -
 \overline X_n^2
-\xrightarrow{p}
+\xrightarrow{P}
 E(X^2)-\mu^2
 =
 \sigma^2.
@@ -2863,16 +2927,16 @@ E(X^2)-\mu^2
 \]</span></p>
 <p>o lema de Slutsky, apresentado em <a href="#sec-prelim-slutsky" class="quarto-xref"><span class="quarto-unresolved-ref">sec-prelim-slutsky</span></a>, fornece</p>
 <p><span class="math display">\[
-S^2\xrightarrow{p}\sigma^2.
+S^2\xrightarrow{P}\sigma^2.
 \]</span></p>
 <p>Finalmente, como <span class="math inline">\(\sigma&gt;0\)</span> e a função raiz quadrada é contínua,</p>
 <p><span class="math display">\[
-S\xrightarrow{p}\sigma.
+S\xrightarrow{P}\sigma.
 \]</span></p>
 </div>
 </div>
 </div>
-<p>Combinando <span class="math inline">\(S\xrightarrow{p}\sigma\)</span> com o TCL, o lema de Slutsky fornece <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, apêndice A.2.2)</span></p>
+<p>Combinando <span class="math inline">\(S\xrightarrow{P}\sigma\)</span> com o TCL, o lema de Slutsky fornece <span class="citation" data-cites="lauritzen2023fundamentals">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, apêndice A.2.2)</span></p>
 <p><span class="math display">\[
 \frac{
 \overline X_n-\mu
@@ -2903,7 +2967,15 @@ N(0,1).
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Ber}(p).
+\operatorname{Ber}(p),
+\qquad
+0&lt;p&lt;1.
+\]</span></p>
+<p>Para <span class="math inline">\(x\in\{0,1\}\)</span>, a função de massa de uma variável Bernoulli pode ser escrita como</p>
+<p><span class="math display">\[
+P(X_i=x)
+=
+p^x(1-p)^{1-x}.
 \]</span></p>
 <p>Se</p>
 <p><span class="math display">\[
@@ -2915,9 +2987,18 @@ Y
 <p><span class="math display">\[
 Y
 \sim
-\operatorname{Bin}(n,p)
+\operatorname{Bin}(n,p).
 \]</span></p>
-<p>e a proporção amostral pode ser escrita como</p>
+<p>Sua função de massa é</p>
+<p><span class="math display">\[
+P(Y=y)
+=
+\binom ny
+p^y(1-p)^{n-y},
+\qquad
+y=0,1,\ldots,n.
+\]</span></p>
+<p>A proporção amostral pode ser escrita como</p>
 <p><span class="math display">\[
 \widehat p
 =
@@ -2965,6 +3046,24 @@ p=\frac{M}{N}.
 Y
 \sim
 \operatorname{Hiper}(N,M,n).
+\]</span> Sua função de massa é</p>
+<p><span class="math display">\[
+P(Y=y)
+=
+\frac{
+\binom My
+\binom{N-M}{n-y}
+}{
+\binom Nn
+},
+\]</span></p>
+<p>para</p>
+<p><span class="math display">\[
+\max\{0,n-(N-M)\}
+\leq
+y
+\leq
+\min\{n,M\}.
 \]</span></p>
 <p>A proporção amostral é</p>
 <p><span class="math display">\[
@@ -2983,13 +3082,13 @@ E(\widehat p)=p
 \frac{p(1-p)}{n}
 \frac{N-n}{N-1}.
 \]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Distribuição hipergeométrica e momentos de $\widehat p$">
+<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Função de massa hipergeométrica e momentos de $\widehat p$">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Derivação — Distribuição hipergeométrica e momentos de <span class="math inline">\(\widehat p\)</span>
+<span class="screen-reader-only">Nota</span>Derivação — Função de massa hipergeométrica e momentos de <span class="math inline">\(\widehat p\)</span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -3551,9 +3650,7 @@ P(Y&lt;500)
 \]</span></p>
 <p>Portanto, sob o modelo assumido, a probabilidade de observar menos de <span class="math inline">\(500\)</span> sucessos é aproximadamente</p>
 <p><span class="math display">\[
-\boxed{
-0{,}027
-}.
+0{,}027.
 \]</span></p>
 </div>
 </div>
@@ -3845,13 +3942,13 @@ E(W)=\nu,
 \qquad
 \operatorname{Var}(W)=2\nu.
 \]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Derivação da média e da variância da distribuição $\chi^2$">
+<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Média e variância da distribuição $\chi^2$">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-53-contents" aria-controls="callout-53" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Derivação da média e da variância da distribuição <span class="math inline">\(\chi^2\)</span>
+<span class="screen-reader-only">Nota</span>Derivação — Média e variância da distribuição <span class="math inline">\(\chi^2\)</span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -3977,19 +4074,15 @@ E(W^{-r})
 \]</span></p>
 <p>Para <span class="math inline">\(r=1\)</span>, se <span class="math inline">\(\nu&gt;2\)</span>,</p>
 <p><span class="math display">\[
-\boxed{
 E\left(\frac1W\right)
 =
-\frac1{\nu-2}
-}.
+\frac1{\nu-2}.
 \]</span></p>
 <p>Para <span class="math inline">\(r=2\)</span>, se <span class="math inline">\(\nu&gt;4\)</span>,</p>
 <p><span class="math display">\[
-\boxed{
 E\left(\frac1{W^2}\right)
 =
-\frac1{(\nu-2)(\nu-4)}
-}.
+\frac1{(\nu-2)(\nu-4)}.
 \]</span></p>
 <p>Os dois casos fornecem exatamente os momentos inversos necessários nas derivações das distribuições <span class="math inline">\(t\)</span> e <span class="math inline">\(F\)</span>.</p>
 </div>
@@ -4016,22 +4109,20 @@ N(\mu,\sigma^2),
 \]</span></p>
 <p>então</p>
 <p><span class="math display">\[
-\boxed{
 \overline X
 \ \perp\!\!\!\perp\
-S^2
-}.
+S^2.
 \]</span></p>
 <p>A independência entre a média e a variância amostrais é uma propriedade especial do modelo normal <span class="citation" data-cites="casella2011inferencia larsen2012 rice2007mathematical">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, teorema 5.3.1; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012</a>, apêndice 7.A.2; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 6.3</a>)</span>.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Demonstração da independência entre $\overline X$ e $S^2$">
+<div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Independência entre $\overline X$ e $S^2$">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Demonstração da independência entre <span class="math inline">\(\overline X\)</span> e <span class="math inline">\(S^2\)</span>
+<span class="screen-reader-only">Nota</span>Demonstração — Independência entre <span class="math inline">\(\overline X\)</span> e <span class="math inline">\(S^2\)</span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -4102,11 +4193,9 @@ S^2
 \]</span></p>
 <p>Portanto, <span class="math inline">\(S^2\)</span> é uma função apenas de <span class="math inline">\(R_2,\ldots,R_n\)</span>. Como <span class="math inline">\(\overline X\)</span> é independente desse vetor de resíduos,</p>
 <p><span class="math display">\[
-\boxed{
 \overline X
 \perp\!\!\!\perp
-S^2
-}.
+S^2.
 \]</span></p>
 </div>
 </div>
@@ -4145,11 +4234,9 @@ N(\mu,\sigma^2),
 </div>
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
-\boxed{
 \frac{(n-1)S^2}{\sigma^2}
 \sim
-\chi^2_{n-1}
-}.
+\chi^2_{n-1}.
 \]</span></p>
 <p>Esse resultado é específico do modelo normal <span class="citation" data-cites="casella2011inferencia rice2007mathematical larsen2012 ramachandran2021r">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, teorema 5.3.1; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, cap. 7</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.2</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 6.2–6.3</a>)</span>.</p>
 </div>
@@ -4252,11 +4339,9 @@ X_{k+1}-\overline X_k.
 \]</span></p>
 <p>Por indução,</p>
 <p><span class="math display">\[
-\boxed{
 \frac{(n-1)S^2}{\sigma^2}
 \sim
-\chi^2_{n-1}
-}.
+\chi^2_{n-1}.
 \]</span></p>
 <p>Essa é a estratégia utilizada na demonstração do Teorema 5.3.1 de Casella e Berger. O passo indutivo utiliza a independência entre a média e a variância amostrais estabelecida em <a href="#sec-u2-independencia-media-variancia" class="quarto-xref"><span class="quarto-unresolved-ref">sec-u2-independencia-media-variancia</span></a>.</p>
 </div>
@@ -4657,26 +4742,24 @@ N(0,1).
 <div class="callout-body-container callout-body">
 <p>No modelo normal,</p>
 <p><span class="math display">\[
-\boxed{
 \frac{
 \overline X-\mu
 }{
 S/\sqrt n
 }
 \sim
-t_{n-1}
-}.
+t_{n-1}.
 \]</span></p>
 <p>Esse resultado é exato para qualquer <span class="math inline">\(n\geq2\)</span> sob normalidade.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Derivação da estatística $t$ no modelo normal">
+<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Estatística $t$ no modelo normal">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-67-contents" aria-controls="callout-67" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Derivação da estatística <span class="math inline">\(t\)</span> no modelo normal
+<span class="screen-reader-only">Nota</span>Derivação — Estatística <span class="math inline">\(t\)</span> no modelo normal
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -4823,7 +4906,6 @@ t_{0{,}975;9}
 \]</span></p>
 <p>obtemos</p>
 <p><span class="math display">\[
-\boxed{
 P\left(
 -2{,}262
 \leq
@@ -4832,8 +4914,7 @@ T
 2{,}262
 \right)
 \approx
-0{,}95
-}.
+0{,}95.
 \]</span></p>
 <p>Esse cálculo descreve uma propriedade da distribuição amostral exata de <span class="math inline">\(T\)</span> <span class="citation" data-cites="larsen2012 rice2007mathematical">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 7.2–7.3</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, cap. 6</a>)</span>.</p>
 </div>
@@ -4853,11 +4934,202 @@ T
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Se <span class="math inline">\(W_1\sim\chi^2_{\nu_1}\)</span> e <span class="math inline">\(W_2\sim\chi^2_{\nu_2}\)</span> são independentes, então</p>
-<p><span class="math display">\[F=\frac{W_1/\nu_1}{W_2/\nu_2}
-\sim F_{\nu_1,\nu_2}.
+<p>Se</p>
+<p><span class="math display">\[
+W_1\sim\chi^2_{\nu_1}
+\qquad\text{e}\qquad
+W_2\sim\chi^2_{\nu_2}
+\]</span></p>
+<p>são independentes, então</p>
+<p><span class="math display">\[
+F
+=
+\frac{W_1/\nu_1}{W_2/\nu_2}
+\sim
+F_{\nu_1,\nu_2}.
 \]</span></p>
 <p>Essa razão de qui-quadrados independentes define a distribuição <span class="math inline">\(F\)</span> <span class="citation" data-cites="casella2011inferencia rice2007mathematical larsen2012 ramachandran2021r">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, definição 5.3.6; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 9.3</a>; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021, seç. 4.2</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 6.2</a>)</span>.</p>
+</div>
+</div>
+<p>Se</p>
+<p><span class="math display">\[
+F\sim F_{\nu_1,\nu_2},
+\]</span></p>
+<p>sua densidade é</p>
+<p><span class="math display">\[
+f_F(x)
+=
+\frac{
+\Gamma\left(\dfrac{\nu_1+\nu_2}{2}\right)
+}{
+\Gamma\left(\dfrac{\nu_1}{2}\right)
+\Gamma\left(\dfrac{\nu_2}{2}\right)
+}
+\left(
+\frac{\nu_1}{\nu_2}
+\right)^{\nu_1/2}
+x^{\nu_1/2-1}
+\left(
+1+\frac{\nu_1}{\nu_2}x
+\right)^{-(\nu_1+\nu_2)/2},
+\qquad
+x&gt;0.
+\]</span></p>
+<p>Os parâmetros <span class="math inline">\(\nu_1\)</span> e <span class="math inline">\(\nu_2\)</span> correspondem, respectivamente, aos graus de liberdade associados ao numerador e ao denominador <span class="citation" data-cites="rice2007mathematical larsen2012">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 9.3</a>; <a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007, seç. 6.2</a>)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Densidade da distribuição $F$">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-71-contents" aria-controls="callout-71" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Derivação — Densidade da distribuição <span class="math inline">\(F\)</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-71" class="callout-71-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A densidade pode ser obtida por transformação de variáveis a partir das duas variáveis qui-quadrado independentes. Utilizamos o método de transformação multivariada e jacobiano apresentado em <a href="#sec-prelim-transformacoes-jacobiano" class="quarto-xref"><span class="quarto-unresolved-ref">sec-prelim-transformacoes-jacobiano</span></a>.</p>
+<p>Defina</p>
+<p><span class="math display">\[
+R
+=
+\frac{W_1/\nu_1}{W_2/\nu_2}
+=
+\frac{\nu_2W_1}{\nu_1W_2}
+\]</span></p>
+<p>e mantenha <span class="math inline">\(W_2\)</span> como segunda variável:</p>
+<p><span class="math display">\[
+Q=W_2.
+\]</span></p>
+<p>A transformação inversa é</p>
+<p><span class="math display">\[
+W_1
+=
+\frac{\nu_1}{\nu_2}RQ,
+\qquad
+W_2=Q.
+\]</span></p>
+<p>O valor absoluto do jacobiano é</p>
+<p><span class="math display">\[
+\left|
+\frac{
+\partial(w_1,w_2)
+}{
+\partial(r,q)
+}
+\right|
+=
+\frac{\nu_1}{\nu_2}q.
+\]</span></p>
+<p>Como <span class="math inline">\(W_1\)</span> e <span class="math inline">\(W_2\)</span> são independentes,</p>
+<p><span class="math display">\[
+f_{R,Q}(r,q)
+=
+f_{W_1}
+\left(
+\frac{\nu_1}{\nu_2}rq
+\right)
+f_{W_2}(q)
+\frac{\nu_1}{\nu_2}q,
+\qquad
+r&gt;0,\ q&gt;0.
+\]</span></p>
+<p>Substituindo as densidades qui-quadrado,</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_{R,Q}(r,q)
+={}&amp;
+\frac{
+\left(\dfrac{\nu_1}{\nu_2}\right)^{\nu_1/2}
+}{
+2^{(\nu_1+\nu_2)/2}
+\Gamma(\nu_1/2)
+\Gamma(\nu_2/2)
+}
+r^{\nu_1/2-1}
+q^{(\nu_1+\nu_2)/2-1}
+\\
+&amp;\times
+\exp\left[
+-\frac q2
+\left(
+1+\frac{\nu_1}{\nu_2}r
+\right)
+\right].
+\end{aligned}
+\]</span></p>
+<p>A densidade marginal de <span class="math inline">\(R\)</span> é obtida integrando em relação a <span class="math inline">\(q\)</span>:</p>
+<p><span class="math display">\[
+f_R(r)
+=
+\int_0^\infty
+f_{R,Q}(r,q)\,dq.
+\]</span></p>
+<p>Usando a integral gama,</p>
+<p><span class="math display">\[
+\int_0^\infty
+q^{a-1}e^{-bq}\,dq
+=
+\frac{\Gamma(a)}{b^a},
+\qquad
+a&gt;0,\ b&gt;0,
+\]</span></p>
+<p>obtemos</p>
+<p><span class="math display">\[
+f_R(r)
+=
+\frac{
+\Gamma\left(\dfrac{\nu_1+\nu_2}{2}\right)
+}{
+\Gamma\left(\dfrac{\nu_1}{2}\right)
+\Gamma\left(\dfrac{\nu_2}{2}\right)
+}
+\left(
+\frac{\nu_1}{\nu_2}
+\right)^{\nu_1/2}
+r^{\nu_1/2-1}
+\left(
+1+\frac{\nu_1}{\nu_2}r
+\right)^{-(\nu_1+\nu_2)/2},
+\qquad
+r&gt;0.
+\]</span></p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+R\sim F_{\nu_1,\nu_2}.
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Probabilidades na distribuição $F$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Probabilidades na distribuição <span class="math inline">\(F\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como o suporte da distribuição <span class="math inline">\(F\)</span> é <span class="math inline">\((0,\infty)\)</span>, para <span class="math inline">\(c&gt;0\)</span>,</p>
+<p><span class="math display">\[
+P(F\leq c)
+=
+\int_0^c
+f_F(x)\,dx.
+\]</span></p>
+<p>Consequentemente,</p>
+<p><span class="math display">\[
+P(F&gt;c)
+=
+1-
+P(F\leq c).
+\]</span></p>
+<p>Em geral, essas probabilidades são obtidas numericamente, por tabelas da distribuição <span class="math inline">\(F\)</span> ou por software. No R,</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pf</span>(c, <span class="at">df1 =</span> nu1, <span class="at">df2 =</span> nu2)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>fornece <span class="math inline">\(P(F\leq c)\)</span>, enquanto</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pf</span>(c, <span class="at">df1 =</span> nu1, <span class="at">df2 =</span> nu2, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>fornece diretamente <span class="math inline">\(P(F&gt;c)\)</span>.</p>
 </div>
 </div>
 <p>Se <span class="math inline">\(F\sim F_{\nu_1,\nu_2}\)</span>, então</p>
@@ -4876,17 +5148,17 @@ T
 \qquad
 \nu_2&gt;4.
 \]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Derivação da média e da variância da distribuição $F$">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-71-contents" aria-controls="callout-71" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Média e variância da distribuição $F$">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-73-contents" aria-controls="callout-73" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Derivação da média e da variância da distribuição <span class="math inline">\(F\)</span>
+<span class="screen-reader-only">Nota</span>Derivação — Média e variância da distribuição <span class="math inline">\(F\)</span>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-71" class="callout-71-contents callout-collapse collapse">
+<div id="callout-73" class="callout-73-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Pela definição,</p>
 <p><span class="math display">\[
@@ -5012,20 +5284,18 @@ N(\mu_2,\sigma_2^2),
 \]</span></p>
 <p>então</p>
 <p><span class="math display">\[
-\boxed{
 \frac{
 S_1^2/\sigma_1^2
 }{
 S_2^2/\sigma_2^2
 }
 \sim
-F_{n_1-1,n_2-1}
-}.
+F_{n_1-1,n_2-1}.
 \]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Derivação — Distribuição $F$ da razão de variâncias">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-73-contents" aria-controls="callout-73" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-75-contents" aria-controls="callout-75" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5034,7 +5304,7 @@ F_{n_1-1,n_2-1}
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-73" class="callout-73-contents callout-collapse collapse">
+<div id="callout-75" class="callout-75-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Aplicando o resultado de <a href="#sec-u2-variancia-normal" class="quarto-xref"><span class="quarto-unresolved-ref">sec-u2-variancia-normal</span></a> a duas amostras normais independentes,</p>
 <p><span class="math display">\[
@@ -5107,13 +5377,13 @@ F_{n_1-1,n_2-1}.
 <p>A distribuição <span class="math inline">\(F\)</span> da razão de variâncias amostrais é exata sob normalidade. Procedimentos baseados nessa razão podem ser sensíveis a assimetria, caudas pesadas e valores extremos; a validade deve ser avaliada no contexto da aplicação.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Relações úteis">
+<div class="callout callout-style-default callout-note callout-titled" title="Relações entre as distribuições $t$ e $F$">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Relações úteis
+<span class="screen-reader-only">Nota</span>Relações entre as distribuições <span class="math inline">\(t\)</span> e <span class="math inline">\(F\)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -5130,7 +5400,7 @@ F_{\nu_2,\nu_1}.
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Derivação — Relações entre as distribuições $t$ e $F$">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-76-contents" aria-controls="callout-76" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-78-contents" aria-controls="callout-78" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5139,7 +5409,7 @@ F_{\nu_2,\nu_1}.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-76" class="callout-76-contents callout-collapse collapse">
+<div id="callout-78" class="callout-78-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Se</p>
 <p><span class="math display">\[
@@ -5250,7 +5520,7 @@ n[F(x)]^{n-1}f(x).
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Distribuições do mínimo e do máximo">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-78-contents" aria-controls="callout-78" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-80-contents" aria-controls="callout-80" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5259,7 +5529,7 @@ n[F(x)]^{n-1}f(x).
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-78" class="callout-78-contents callout-collapse collapse">
+<div id="callout-80" class="callout-80-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Para o mínimo,</p>
 <p><span class="math display">\[
@@ -5369,7 +5639,7 @@ f_{X_{(k)}}(x)
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Contagem das observações que não ultrapassam $x$">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-81-contents" aria-controls="callout-81" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-83-contents" aria-controls="callout-83" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5378,14 +5648,14 @@ f_{X_{(k)}}(x)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-81" class="callout-81-contents callout-collapse collapse">
+<div id="callout-83" class="callout-83-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Defina</p>
+<p>Utilizando a representação de contagens por funções indicadoras apresentada em <a href="#sec-prelim-funcao-indicadora" class="quarto-xref"><span class="quarto-unresolved-ref">sec-prelim-funcao-indicadora</span></a>, defina</p>
 <p><span class="math display">\[
 N_x
 =
 \sum_{i=1}^n
-\mathbf 1\{X_i\leq x\},
+\mathbf 1_{\{X_i\leq x\}},
 \]</span></p>
 <p>o número de observações da amostra que não ultrapassam <span class="math inline">\(x\)</span>.</p>
 <p>Como</p>
@@ -5498,25 +5768,55 @@ f(x).
 <div class="callout-body-container callout-body">
 <p>Se <span class="math inline">\(F\)</span> é contínua, então</p>
 <p><span class="math display">\[
-\boxed{
 F(X_{(k)})
 \sim
-\operatorname{Beta}(k,n-k+1)
-}.
+\operatorname{Beta}(k,n-k+1).
 \]</span></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Distribuição de $F(X_{(k)})$">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-83-contents" aria-controls="callout-83" aria-expanded="false" aria-label="Toggle callout">
+<p>A distribuição Beta será utilizada para identificar a distribuição de estatísticas de ordem de amostras uniformes. Se</p>
+<p><span class="math display">\[
+U\sim\operatorname{Beta}(\alpha,\beta),
+\qquad
+\alpha&gt;0,\ \beta&gt;0,
+\]</span></p>
+<p>sua densidade é</p>
+<p><span class="math display">\[
+f_U(u)
+=
+\frac{1}{B(\alpha,\beta)}
+u^{\alpha-1}
+(1-u)^{\beta-1},
+\qquad
+0&lt;u&lt;1,
+\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+B(\alpha,\beta)
+=
+\frac{
+\Gamma(\alpha)\Gamma(\beta)
+}{
+\Gamma(\alpha+\beta)
+}.
+\]</span></p>
+<p>Além disso,</p>
+<p><span class="math display">\[
+E(U)
+=
+\frac{\alpha}{\alpha+\beta}.
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Distribuição de $F(X_{(k)})">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-85-contents" aria-controls="callout-85" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Demonstração — Distribuição de <span class="math inline">\(F(X_{(k)})\)</span>
+<span class="screen-reader-only">Nota</span>Demonstração — Distribuição de $F(X_{(k)})
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-83" class="callout-83-contents callout-collapse collapse">
+<div id="callout-85" class="callout-85-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Pelo teorema da transformação integral de probabilidade,</p>
 <p><span class="math display">\[
@@ -5579,7 +5879,7 @@ X_1,\ldots,X_n
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Estatística de ordem de uma amostra uniforme">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-85-contents" aria-controls="callout-85" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-87-contents" aria-controls="callout-87" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5588,7 +5888,7 @@ X_1,\ldots,X_n
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-85" class="callout-85-contents callout-collapse collapse">
+<div id="callout-87" class="callout-87-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Para <span class="math inline">\(0&lt;x&lt;1\)</span>,</p>
 <p><span class="math display">\[
@@ -5603,41 +5903,28 @@ f_{X_{(k)}}(x)
 \frac{n!}{(k-1)!(n-k)!}
 x^{k-1}(1-x)^{n-k}.
 \]</span></p>
-<p>A densidade de uma variável</p>
-<p><span class="math display">\[
-U\sim\operatorname{Beta}(\alpha,\beta)
-\]</span></p>
-<p>é</p>
-<p><span class="math display">\[
-f_U(u)
-=
-\frac{1}{B(\alpha,\beta)}
-u^{\alpha-1}(1-u)^{\beta-1},
-\qquad
-0&lt;u&lt;1.
-\]</span></p>
-<p>Tomando</p>
+<p>Comparando a densidade obtida com a densidade da distribuição Beta apresentada anteriormente, identificamos</p>
 <p><span class="math display">\[
 \alpha=k
 \qquad\text{e}\qquad
-\beta=n-k+1,
+\beta=n-k+1.
 \]</span></p>
-<p>temos</p>
+<p>De fato,</p>
 <p><span class="math display">\[
 B(k,n-k+1)
 =
 \frac{\Gamma(k)\Gamma(n-k+1)}
 {\Gamma(n+1)}
 =
-\frac{(k-1)!(n-k)!}{n!}.
+\frac{(k-1)!(n-k)!}{n!},
 \]</span></p>
-<p>Portanto,</p>
+<p>de modo que</p>
 <p><span class="math display">\[
 \frac{1}{B(k,n-k+1)}
 =
 \frac{n!}{(k-1)!(n-k)!},
 \]</span></p>
-<p>que coincide exatamente com a constante da densidade de <span class="math inline">\(X_{(k)}\)</span> no modelo uniforme.</p>
+<p>que coincide com a constante da densidade de <span class="math inline">\(X_{(k)}\)</span> no modelo uniforme.</p>
 <p>Assim,</p>
 <p><span class="math display">\[
 X_{(k)}
@@ -5662,7 +5949,7 @@ E[X_{(k)}]
 </div>
 </div>
 </div>
-<p>O caso uniforme é uma aplicação direta da densidade geral e identifica uma distribuição beta <span class="citation" data-cites="larsen2012 hogg1978">(<a href="#ref-hogg1978" role="doc-biblioref">Hogg; Craig, 1978</a>, seção sobre estatísticas de ordem; <a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.10</a>)</span>.</p>
+<p>O caso uniforme é uma aplicação direta da densidade geral e identifica uma distribuição beta <span class="citation" data-cites="larsen2012">(<a href="#ref-larsen2012" role="doc-biblioref">Larsen; Marx, 2012, seç. 3.10</a>)</span>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Exemplo — Estatísticas de ordem em uma amostra exponencial">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5690,7 +5977,7 @@ X_1,\ldots,X_n
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Estatísticas de ordem de uma amostra exponencial">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-87-contents" aria-controls="callout-87" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-89-contents" aria-controls="callout-89" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5699,7 +5986,7 @@ X_1,\ldots,X_n
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-87" class="callout-87-contents callout-collapse collapse">
+<div id="callout-89" class="callout-89-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Para uma variável exponencial com taxa <span class="math inline">\(\lambda\)</span>,</p>
 <p><span class="math display">\[
@@ -5733,11 +6020,9 @@ e^{-n\lambda x}.
 \]</span></p>
 <p>Essa é a função de sobrevivência de uma distribuição exponencial com taxa <span class="math inline">\(n\lambda\)</span>. Assim,</p>
 <p><span class="math display">\[
-\boxed{
 X_{(1)}
 \sim
-\operatorname{Exp}(n\lambda)
-}.
+\operatorname{Exp}(n\lambda).
 \]</span></p>
 <p>Em particular,</p>
 <p><span class="math display">\[
@@ -5754,7 +6039,6 @@ F_{X_{(n)}}(x)
 \]</span></p>
 <p>portanto</p>
 <p><span class="math display">\[
-\boxed{
 F_{X_{(n)}}(x)
 =
 \left(
@@ -5762,11 +6046,9 @@ F_{X_{(n)}}(x)
 \right)^n,
 \qquad
 x\geq0.
-}
 \]</span></p>
 <p>Derivando,</p>
 <p><span class="math display">\[
-\boxed{
 f_{X_{(n)}}(x)
 =
 n\lambda
@@ -5776,7 +6058,6 @@ e^{-\lambda x}
 \right)^{n-1},
 \qquad
 x&gt;0.
-}
 \]</span></p>
 <p>Observe que o máximo <strong>não</strong> possui distribuição exponencial.</p>
 <p>Para a <span class="math inline">\(k\)</span>-ésima estatística de ordem, utilizamos</p>
@@ -5807,7 +6088,6 @@ f(x)
 \]</span></p>
 <p>segue que</p>
 <p><span class="math display">\[
-\boxed{
 f_{X_{(k)}}(x)
 =
 \frac{n!}{(k-1)!(n-k)!}
@@ -5818,7 +6098,6 @@ f_{X_{(k)}}(x)
 e^{-(n-k+1)\lambda x},
 \qquad
 x&gt;0.
-}
 \]</span></p>
 <p>Para <span class="math inline">\(k=1\)</span>,</p>
 <p><span class="math display">\[
@@ -5877,29 +6156,29 @@ n\lambda e^{-\lambda x}
 N\left(1,\frac{1}{n}\right)
 \]</span></p>
 <p>fornecida pelo Teorema Central do Limite em <a href="#sec-u2-tcl" class="quarto-xref"><span class="quarto-unresolved-ref">sec-u2-tcl</span></a>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20262</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">50</span>, <span class="dv">100</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> ns) {</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  medias <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">mean</span>(<span class="fu">rexp</span>(n, <span class="at">rate =</span> <span class="dv">1</span>)))</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    medias,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">probability =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="dv">40</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">bar</span>(X)),</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Densidade"</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">box</span>()</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  curva_x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(medias), <span class="fu">max</span>(medias), <span class="at">length.out =</span> <span class="dv">400</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(curva_x, <span class="fu">dnorm</span>(curva_x, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n)), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20262</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">50</span>, <span class="dv">100</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> ns) {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  medias <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, <span class="fu">mean</span>(<span class="fu">rexp</span>(n, <span class="at">rate =</span> <span class="dv">1</span>)))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    medias,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">probability =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="dv">40</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">bar</span>(X)),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Densidade"</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">box</span>()</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  curva_x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(medias), <span class="fu">max</span>(medias), <span class="at">length.out =</span> <span class="dv">400</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(curva_x, <span class="fu">dnorm</span>(curva_x, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n)), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-exponencial" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-exponencial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -6029,75 +6308,75 @@ N\left(
 <h3 class="unnumbered anchored" data-anchor-id="exemplo-computacional-enumeração-com-e-sem-reposição">Exemplo computacional: enumeração com e sem reposição</h3>
 <p>Retomamos computacionalmente a população estudada em <a href="#sec-u2-enumeracao" class="quarto-xref"><span class="quarto-unresolved-ref">sec-u2-enumeracao</span></a> para verificar as distribuições da média com e sem reposição.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>populacao <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.8</span>, <span class="fl">3.9</span>, <span class="fl">4.0</span>, <span class="fl">4.1</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Amostras ordenadas de tamanho 2, com reposição</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>amostras <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X1 =</span> populacao, <span class="at">X2 =</span> populacao)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>amostras<span class="sc">$</span>media <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(amostras)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(amostras<span class="sc">$</span>media))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>populacao <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.8</span>, <span class="fl">3.9</span>, <span class="fl">4.0</span>, <span class="fl">4.1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Amostras ordenadas de tamanho 2, com reposição</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>amostras <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">X1 =</span> populacao, <span class="at">X2 =</span> populacao)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>amostras<span class="sc">$</span>media <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(amostras)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(amostras<span class="sc">$</span>media))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    3.8   3.85    3.9   3.95      4   4.05    4.1 
 0.0625 0.1250 0.1875 0.2500 0.1875 0.1250 0.0625 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(amostras<span class="sc">$</span>media)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(amostras<span class="sc">$</span>media)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.95</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>var_pop <span class="ot">&lt;-</span> <span class="fu">mean</span>((populacao <span class="sc">-</span> <span class="fu">mean</span>(populacao))<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((amostras<span class="sc">$</span>media <span class="sc">-</span> <span class="fu">mean</span>(amostras<span class="sc">$</span>media))<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>var_pop <span class="ot">&lt;-</span> <span class="fu">mean</span>((populacao <span class="sc">-</span> <span class="fu">mean</span>(populacao))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((amostras<span class="sc">$</span>media <span class="sc">-</span> <span class="fu">mean</span>(amostras<span class="sc">$</span>media))<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.00625</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>var_pop <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>var_pop <span class="sc">/</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.00625</code></pre>
 </div>
 </div>
 <p>Para verificar também o caso sem reposição, podemos enumerar os seis subconjuntos possíveis:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>amostras_sem_reposicao <span class="ot">&lt;-</span> <span class="fu">combn</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  populacao,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">simplify =</span> <span class="cn">FALSE</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>medias_sem_reposicao <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  amostras_sem_reposicao,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  mean</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>medias_sem_reposicao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>amostras_sem_reposicao <span class="ot">&lt;-</span> <span class="fu">combn</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  populacao,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">simplify =</span> <span class="cn">FALSE</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>medias_sem_reposicao <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  amostras_sem_reposicao,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  mean</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>medias_sem_reposicao</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.85 3.90 3.95 3.95 4.00 4.05</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>(medias_sem_reposicao)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>(medias_sem_reposicao)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>medias_sem_reposicao
      3.85       3.9      3.95         4      4.05 
 0.1666667 0.1666667 0.3333333 0.1666667 0.1666667 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias_sem_reposicao)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias_sem_reposicao)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.95</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  (medias_sem_reposicao <span class="sc">-</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mean</span>(medias_sem_reposicao))<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  (medias_sem_reposicao <span class="sc">-</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mean</span>(medias_sem_reposicao))<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.004166667</code></pre>
 </div>
 </div>
 <p>A variância teórica é</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(populacao)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>var_pop <span class="sc">/</span> n <span class="sc">*</span> (N <span class="sc">-</span> n) <span class="sc">/</span> (N <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">length</span>(populacao)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>var_pop <span class="sc">/</span> n <span class="sc">*</span> (N <span class="sc">-</span> n) <span class="sc">/</span> (N <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.004166667</code></pre>
 </div>
@@ -6470,9 +6749,6 @@ CHIHARA, Laura M.; HESTERBERG, Tim C. <strong>Mathematical Statistics with Resam
 </div>
 <div id="ref-cox2006principles" class="csl-entry" role="listitem">
 COX, D. R. <strong>Principles of Statistical Inference</strong>. Cambridge: Cambridge University Press, 2006.
-</div>
-<div id="ref-hogg1978" class="csl-entry" role="listitem">
-HOGG, Robert V.; CRAIG, Allen T. <strong>Introduction to Mathematical Statistics</strong>. 4. ed. New York: Macmillan Publishing Co., 1978.
 </div>
 <div id="ref-kerns2010" class="csl-entry" role="listitem">
 KERNS, G. Jay. <strong><a href="https://ipsur.r-forge.r-project.org/">Introduction to Probability and Statistics Using <span>R</span></a></strong>. 1. ed. <em>[S.l.: S.n.]</em>.

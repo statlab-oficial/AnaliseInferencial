@@ -109,7 +109,30 @@ $$
 E(X_i)=\mu.
 $$
 
-A distribuição exponencial também pode ser parametrizada pela taxa $\lambda$. As duas parametrizações estão relacionadas por
+Na parametrização pela média utilizada neste exemplo, a densidade é
+
+$$
+f(x\mid\mu)
+=
+\frac1\mu
+e^{-x/\mu}
+\mathbf 1_{(0,\infty)}(x),
+\qquad
+\mu>0.
+$$
+
+A distribuição exponencial também pode ser parametrizada pela **taxa** $\lambda$, caso em que
+
+$$
+f(x\mid\lambda)
+=
+\lambda e^{-\lambda x}
+\mathbf 1_{(0,\infty)}(x),
+\qquad
+\lambda>0.
+$$
+
+As duas parametrizações estão relacionadas por
 
 $$
 \lambda=\frac{1}{\mu}
@@ -130,16 +153,6 @@ $$
 
 ::: {.callout-note collapse="true" title="Resolução — Densidade conjunta e probabilidade no modelo exponencial"}
 
-Para uma observação,
-
-$$
-f(x\mid\mu)
-=
-\frac{1}{\mu}
-e^{-x/\mu}
-\mathbf 1\{x>0\}.
-$$
-
 Pela independência,
 
 $$
@@ -155,7 +168,7 @@ f(x_i\mid\mu)\\
 \sum_{i=1}^n x_i
 \right)
 \prod_{i=1}^n
-\mathbf 1\{x_i>0\}.
+\mathbf 1_{(0,\infty)}(x_i).
 \end{aligned}
 $$
 
@@ -936,7 +949,7 @@ Nesse exemplo, portanto, a enumeração permite visualizar diretamente a correç
 
 :::
 
-::: {.callout-note title="Interpretação"}
+::: {.callout-note title="Interpretação — Papel da enumeração"}
 A enumeração torna visível que a distribuição amostral é a distribuição dos valores de uma estatística sob repetição do plano amostral. Para populações grandes ou contínuas, a enumeração exata é inviável, sendo substituída por resultados analíticos, aproximações assintóticas ou simulação.
 :::
 
@@ -1172,7 +1185,20 @@ Considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Poisson}(\lambda)
+\operatorname{Poisson}(\lambda),
+\qquad
+\lambda>0.
+$$
+
+A função de massa de probabilidade é
+
+$$
+P(X_i=x)
+=
+e^{-\lambda}
+\frac{\lambda^x}{x!},
+\qquad
+x=0,1,2,\ldots.
 $$
 
 e defina
@@ -1301,9 +1327,24 @@ $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
 N(\mu,\sigma^2),
+\qquad
+\sigma^2>0.
 $$
 
-utilize a função geradora de momentos para obter a distribuição exata de
+Na notação adotada neste livro, o segundo parâmetro é a **variância**. A densidade de cada observação é
+
+$$
+f_X(x)
+=
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left[
+-\frac{(x-\mu)^2}{2\sigma^2}
+\right],
+\qquad
+-\infty<x<\infty.
+$$
+
+Utilize a função geradora de momentos para obter a distribuição exata de
 
 $$
 \overline X.
@@ -1409,13 +1450,69 @@ Essa dedução por FGM é apresentada em tratamentos clássicos de transformaç�
 
 ::: {.callout-tip title="Exemplo — Média de variáveis gama"}
 
-Adote a parametrização por forma $\alpha$ e escala $\beta$ e suponha
+Adote a parametrização da distribuição gama por **forma** $\alpha$ e **escala** $\beta$, com
+
+$$
+\alpha>0,
+\qquad
+\beta>0.
+$$
+
+Sua densidade é
+
+$$
+f_X(x)
+=
+\frac{
+1
+}{
+\Gamma(\alpha)\beta^\alpha
+}
+x^{\alpha-1}
+e^{-x/\beta},
+\qquad
+x>0.
+$$
+
+Nessa parametrização,
+
+$$
+E(X)=\alpha\beta
+\qquad\text{e}\qquad
+\operatorname{Var}(X)=\alpha\beta^2.
+$$
+
+A distribuição gama também é frequentemente parametrizada por **forma** $\alpha$ e **taxa** $\lambda$, com
+
+$$
+\lambda=\frac1\beta.
+$$
+
+Nesse caso, a mesma densidade é escrita como
+
+$$
+f_X(x)
+=
+\frac{
+\lambda^\alpha
+}{
+\Gamma(\alpha)
+}
+x^{\alpha-1}
+e^{-\lambda x},
+\qquad
+x>0.
+$$
+
+Considere agora
 
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Gama}(\alpha,\beta).
+\operatorname{Gama}(\alpha,\beta),
 $$
+
+na parametrização por forma e escala.
 
 Utilize a função geradora de momentos para obter a distribuição de
 
@@ -1798,15 +1895,19 @@ Os intervalos apresentados neste exemplo descrevem regiões centrais de distribu
 
 ### Diferença de médias de duas amostras independentes
 
-Considere duas amostras independentes,
+Considere duas amostras independentes entre si,
 
 $$
-X_1,\ldots,X_n,
-\qquad
+X_1,\ldots,X_n
+$$
+
+e
+
+$$
 Y_1,\ldots,Y_m,
 $$
 
-tais que
+em que, dentro de cada amostra, as observações são independentes e identicamente distribuídas. Suponha que
 
 $$
 E(X_i)=\mu_1,
@@ -1912,7 +2013,7 @@ $$
 
 :::
 
-::: {.callout-important title="Resultado — Duas populações normais"}
+::: {.callout-important title="Resultado — Distribuição exata da diferença de médias"}
 
 Se
 
@@ -1974,13 +2075,13 @@ $$
 isto é,
 
 $$
-\overline X_n\xrightarrow{p}\mu.
+\overline X_n\xrightarrow{P}\mu.
 $$
 
 Assim, à medida que $n$ aumenta, a distribuição amostral de $\overline X_n$ concentra progressivamente sua massa em torno da média populacional [@rice2007mathematical, seção 5.2, pp. 177--181].
 :::
 
-::: {.callout-note collapse="true" title="Demonstração via desigualdade de Chebyshev"}
+::: {.callout-note collapse="true" title="Demonstração — Lei Fraca via desigualdade de Chebyshev"}
 
 Como
 
@@ -2024,7 +2125,7 @@ $$
 Logo,
 
 $$
-\overline X_n\xrightarrow{p}\mu.
+\overline X_n\xrightarrow{P}\mu.
 $$
 
 :::
@@ -2055,7 +2156,7 @@ Como $E(X_i)=p$, a Lei dos Grandes Números implica
 
 $$
 \widehat p_n
-\xrightarrow{p}
+\xrightarrow{P}
 p.
 $$
 
@@ -2207,7 +2308,7 @@ $$
 pois essa distribuição também depende de $n$. Pela Lei dos Grandes Números,
 
 $$
-\overline X_n\xrightarrow{p}\mu.
+\overline X_n\xrightarrow{P}\mu.
 $$
 
 A distribuição normal com variância $\sigma^2/n$ é uma **aproximação da distribuição de $\overline X_n$ para cada $n$ suficientemente grande**, e não seu limite em distribuição.
@@ -2220,7 +2321,7 @@ A **Lei dos Grandes Números** estabelece que
 
 $$
 \overline X_n
-\xrightarrow{p}
+\xrightarrow{P}
 \mu,
 $$
 
@@ -2252,16 +2353,16 @@ A padronização fornecida diretamente pelo TCL utiliza o desvio-padrão populac
 Para uma amostra i.i.d. com $0<\sigma^2<\infty$,
 
 $$
-S^2\xrightarrow{p}\sigma^2
+S^2\xrightarrow{P}\sigma^2
 $$
 
 e, consequentemente,
 
 $$
-S\xrightarrow{p}\sigma.
+S\xrightarrow{P}\sigma.
 $$
 
-::: {.callout-note collapse="true" title="Derivação de $S^2\xrightarrow{p}\sigma^2$"}
+::: {.callout-note collapse="true" title="Derivação — Convergência de $S^2$ para $\sigma^2$"}
 
 A variância amostral pode ser escrita como
 
@@ -2282,7 +2383,7 @@ Como $E(X_i^2)<\infty$, a Lei dos Grandes Números fornece
 $$
 \frac{1}{n}
 \sum_{i=1}^nX_i^2
-\xrightarrow{p}
+\xrightarrow{P}
 E(X^2)
 $$
 
@@ -2290,7 +2391,7 @@ e
 
 $$
 \overline X_n
-\xrightarrow{p}
+\xrightarrow{P}
 \mu.
 $$
 
@@ -2298,7 +2399,7 @@ Pelo teorema do mapeamento contínuo, apresentado em @sec-prelim-mapeamento-cont
 
 $$
 \overline X_n^2
-\xrightarrow{p}
+\xrightarrow{P}
 \mu^2.
 $$
 
@@ -2309,7 +2410,7 @@ $$
 \sum_{i=1}^nX_i^2
 -
 \overline X_n^2
-\xrightarrow{p}
+\xrightarrow{P}
 E(X^2)-\mu^2
 =
 \sigma^2.
@@ -2324,18 +2425,18 @@ $$
 o lema de Slutsky, apresentado em @sec-prelim-slutsky, fornece
 
 $$
-S^2\xrightarrow{p}\sigma^2.
+S^2\xrightarrow{P}\sigma^2.
 $$
 
 Finalmente, como $\sigma>0$ e a função raiz quadrada é contínua,
 
 $$
-S\xrightarrow{p}\sigma.
+S\xrightarrow{P}\sigma.
 $$
 
 :::
 
-Combinando $S\xrightarrow{p}\sigma$ com o TCL, o lema de Slutsky fornece [@lauritzen2023fundamentals, apêndice A.2.2]
+Combinando $S\xrightarrow{P}\sigma$ com o TCL, o lema de Slutsky fornece [@lauritzen2023fundamentals, apêndice A.2.2]
 
 $$
 \frac{
@@ -2358,7 +2459,17 @@ Retomando o modelo Bernoulli utilizado no @sec-fundamentos-inferencia, considere
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Ber}(p).
+\operatorname{Ber}(p),
+\qquad
+0<p<1.
+$$
+
+Para $x\in\{0,1\}$, a função de massa de uma variável Bernoulli pode ser escrita como
+
+$$
+P(X_i=x)
+=
+p^x(1-p)^{1-x}.
 $$
 
 Se
@@ -2374,10 +2485,21 @@ então
 $$
 Y
 \sim
-\operatorname{Bin}(n,p)
+\operatorname{Bin}(n,p).
 $$
 
-e a proporção amostral pode ser escrita como
+Sua função de massa é
+
+$$
+P(Y=y)
+=
+\binom ny
+p^y(1-p)^{n-y},
+\qquad
+y=0,1,\ldots,n.
+$$
+
+A proporção amostral pode ser escrita como
 
 $$
 \widehat p
@@ -2439,6 +2561,29 @@ Y
 \sim
 \operatorname{Hiper}(N,M,n).
 $$
+Sua função de massa é
+
+$$
+P(Y=y)
+=
+\frac{
+\binom My
+\binom{N-M}{n-y}
+}{
+\binom Nn
+},
+$$
+
+para
+
+$$
+\max\{0,n-(N-M)\}
+\leq
+y
+\leq
+\min\{n,M\}.
+$$
+
 
 A proporção amostral é
 
@@ -2463,7 +2608,7 @@ $$
 \frac{N-n}{N-1}.
 $$
 
-::: {.callout-note collapse="true" title="Derivação — Distribuição hipergeométrica e momentos de $\widehat p$"}
+::: {.callout-note collapse="true" title="Derivação — Função de massa hipergeométrica e momentos de $\widehat p$"}
 
 Para observar exatamente $y$ unidades com a característica, precisamos escolher
 
@@ -3419,7 +3564,7 @@ E(W)=\nu,
 \operatorname{Var}(W)=2\nu.
 $$
 
-::: {.callout-note collapse="true" title="Derivação da média e da variância da distribuição $\chi^2$"}
+::: {.callout-note collapse="true" title="Derivação — Média e variância da distribuição $\chi^2$"}
 
 Pela definição,
 
@@ -3597,7 +3742,7 @@ $$
 A independência entre a média e a variância amostrais é uma propriedade especial do modelo normal [@casella2011inferencia, teorema 5.3.1; @larsen2012, apêndice 7.A.2; @rice2007mathematical, seção 6.3].
 :::
 
-::: {.callout-note collapse="true" title="Demonstração da independência entre $\overline X$ e $S^2$"}
+::: {.callout-note collapse="true" title="Demonstração — Independência entre $\overline X$ e $S^2$"}
 
 A demonstração utiliza duas etapas:
 
@@ -4260,7 +4405,7 @@ $$
 Esse resultado é exato para qualquer $n\geq2$ sob normalidade.
 :::
 
-::: {.callout-note collapse="true" title="Derivação da estatística $t$ no modelo normal"}
+::: {.callout-note collapse="true" title="Derivação — Estatística $t$ no modelo normal"}
 
 No modelo normal,
 
@@ -4439,13 +4584,228 @@ Esse cálculo descreve uma propriedade da distribuição amostral exata de $T$ [
 Enquanto a distribuição $t$ surge da combinação entre uma variável normal padrão e uma variável qui-quadrado independente, a distribuição $F$ surge da razão entre duas variáveis qui-quadrado independentes depois de cada uma ser dividida por seus respectivos graus de liberdade. Essa construção será utilizada para obter a distribuição da razão entre duas variâncias amostrais sob normalidade.
 
 ::: {.callout-important title="Definição — Distribuição $F$"}
-Se $W_1\sim\chi^2_{\nu_1}$ e $W_2\sim\chi^2_{\nu_2}$ são independentes, então
 
-$$F=\frac{W_1/\nu_1}{W_2/\nu_2}
-\sim F_{\nu_1,\nu_2}.
+Se
+
+$$
+W_1\sim\chi^2_{\nu_1}
+\qquad\text{e}\qquad
+W_2\sim\chi^2_{\nu_2}
+$$
+
+são independentes, então
+
+$$
+F
+=
+\frac{W_1/\nu_1}{W_2/\nu_2}
+\sim
+F_{\nu_1,\nu_2}.
 $$
 
 Essa razão de qui-quadrados independentes define a distribuição $F$ [@casella2011inferencia, definição 5.3.6; @rice2007mathematical, seção 6.2; @larsen2012, seção 9.3; @ramachandran2021r, seção 4.2].
+
+:::
+
+Se
+
+$$
+F\sim F_{\nu_1,\nu_2},
+$$
+
+sua densidade é
+
+$$
+f_F(x)
+=
+\frac{
+\Gamma\left(\dfrac{\nu_1+\nu_2}{2}\right)
+}{
+\Gamma\left(\dfrac{\nu_1}{2}\right)
+\Gamma\left(\dfrac{\nu_2}{2}\right)
+}
+\left(
+\frac{\nu_1}{\nu_2}
+\right)^{\nu_1/2}
+x^{\nu_1/2-1}
+\left(
+1+\frac{\nu_1}{\nu_2}x
+\right)^{-(\nu_1+\nu_2)/2},
+\qquad
+x>0.
+$$
+
+Os parâmetros $\nu_1$ e $\nu_2$ correspondem, respectivamente, aos graus de liberdade associados ao numerador e ao denominador [@rice2007mathematical, seção 6.2; @larsen2012, seção 9.3].
+
+::: {.callout-note collapse="true" title="Derivação — Densidade da distribuição $F$"}
+
+A densidade pode ser obtida por transformação de variáveis a partir das duas variáveis qui-quadrado independentes. Utilizamos o método de transformação multivariada e jacobiano apresentado em @sec-prelim-transformacoes-jacobiano.
+
+Defina
+
+$$
+R
+=
+\frac{W_1/\nu_1}{W_2/\nu_2}
+=
+\frac{\nu_2W_1}{\nu_1W_2}
+$$
+
+e mantenha $W_2$ como segunda variável:
+
+$$
+Q=W_2.
+$$
+
+A transformação inversa é
+
+$$
+W_1
+=
+\frac{\nu_1}{\nu_2}RQ,
+\qquad
+W_2=Q.
+$$
+
+O valor absoluto do jacobiano é
+
+$$
+\left|
+\frac{
+\partial(w_1,w_2)
+}{
+\partial(r,q)
+}
+\right|
+=
+\frac{\nu_1}{\nu_2}q.
+$$
+
+Como $W_1$ e $W_2$ são independentes,
+
+$$
+f_{R,Q}(r,q)
+=
+f_{W_1}
+\left(
+\frac{\nu_1}{\nu_2}rq
+\right)
+f_{W_2}(q)
+\frac{\nu_1}{\nu_2}q,
+\qquad
+r>0,\ q>0.
+$$
+
+Substituindo as densidades qui-quadrado,
+
+$$
+\begin{aligned}
+f_{R,Q}(r,q)
+={}&
+\frac{
+\left(\dfrac{\nu_1}{\nu_2}\right)^{\nu_1/2}
+}{
+2^{(\nu_1+\nu_2)/2}
+\Gamma(\nu_1/2)
+\Gamma(\nu_2/2)
+}
+r^{\nu_1/2-1}
+q^{(\nu_1+\nu_2)/2-1}
+\\
+&\times
+\exp\left[
+-\frac q2
+\left(
+1+\frac{\nu_1}{\nu_2}r
+\right)
+\right].
+\end{aligned}
+$$
+
+A densidade marginal de $R$ é obtida integrando em relação a $q$:
+
+$$
+f_R(r)
+=
+\int_0^\infty
+f_{R,Q}(r,q)\,dq.
+$$
+
+Usando a integral gama,
+
+$$
+\int_0^\infty
+q^{a-1}e^{-bq}\,dq
+=
+\frac{\Gamma(a)}{b^a},
+\qquad
+a>0,\ b>0,
+$$
+
+obtemos
+
+$$
+f_R(r)
+=
+\frac{
+\Gamma\left(\dfrac{\nu_1+\nu_2}{2}\right)
+}{
+\Gamma\left(\dfrac{\nu_1}{2}\right)
+\Gamma\left(\dfrac{\nu_2}{2}\right)
+}
+\left(
+\frac{\nu_1}{\nu_2}
+\right)^{\nu_1/2}
+r^{\nu_1/2-1}
+\left(
+1+\frac{\nu_1}{\nu_2}r
+\right)^{-(\nu_1+\nu_2)/2},
+\qquad
+r>0.
+$$
+
+Portanto,
+
+$$
+R\sim F_{\nu_1,\nu_2}.
+$$
+
+:::
+
+::: {.callout-note title="Probabilidades na distribuição $F$"}
+
+Como o suporte da distribuição $F$ é $(0,\infty)$, para $c>0$,
+
+$$
+P(F\leq c)
+=
+\int_0^c
+f_F(x)\,dx.
+$$
+
+Consequentemente,
+
+$$
+P(F>c)
+=
+1-
+P(F\leq c).
+$$
+
+Em geral, essas probabilidades são obtidas numericamente, por tabelas da distribuição $F$ ou por software. No R,
+
+```r
+pf(c, df1 = nu1, df2 = nu2)
+```
+
+fornece $P(F\leq c)$, enquanto
+
+```r
+pf(c, df1 = nu1, df2 = nu2, lower.tail = FALSE)
+```
+
+fornece diretamente $P(F>c)$.
+
 :::
 
 Se $F\sim F_{\nu_1,\nu_2}$, então
@@ -4468,7 +4828,7 @@ $$
 \nu_2>4.
 $$
 
-::: {.callout-note collapse="true" title="Derivação da média e da variância da distribuição $F$"}
+::: {.callout-note collapse="true" title="Derivação — Média e variância da distribuição $F$"}
 
 Pela definição,
 
@@ -4699,7 +5059,7 @@ $$
 A distribuição $F$ da razão de variâncias amostrais é exata sob normalidade. Procedimentos baseados nessa razão podem ser sensíveis a assimetria, caudas pesadas e valores extremos; a validade deve ser avaliada no contexto da aplicação.
 :::
 
-::: {.callout-note title="Relações úteis"}
+::: {.callout-note title="Relações entre as distribuições $t$ e $F$"}
 Se $T\sim t_\nu$, então
 
 $$
@@ -4959,13 +5319,13 @@ A fórmula resulta da contagem do número de observações que não ultrapassam 
 
 ::: {.callout-note collapse="true" title="Demonstração — Contagem das observações que não ultrapassam $x$"}
 
-Defina
+Utilizando a representação de contagens por funções indicadoras apresentada em @sec-prelim-funcao-indicadora, defina
 
 $$
 N_x
 =
 \sum_{i=1}^n
-\mathbf 1\{X_i\leq x\},
+\mathbf 1_{\{X_i\leq x\}},
 $$
 
 o número de observações da amostra que não ultrapassam $x$.
@@ -5105,7 +5465,47 @@ $$
 
 :::
 
-::: {.callout-note collapse="true" title="Demonstração — Distribuição de $F(X_{(k)})$"}
+A distribuição Beta será utilizada para identificar a distribuição de estatísticas de ordem de amostras uniformes. Se
+
+$$
+U\sim\operatorname{Beta}(\alpha,\beta),
+\qquad
+\alpha>0,\ \beta>0,
+$$
+
+sua densidade é
+
+$$
+f_U(u)
+=
+\frac{1}{B(\alpha,\beta)}
+u^{\alpha-1}
+(1-u)^{\beta-1},
+\qquad
+0<u<1,
+$$
+
+em que
+
+$$
+B(\alpha,\beta)
+=
+\frac{
+\Gamma(\alpha)\Gamma(\beta)
+}{
+\Gamma(\alpha+\beta)
+}.
+$$
+
+Além disso,
+
+$$
+E(U)
+=
+\frac{\alpha}{\alpha+\beta}.
+$$
+
+::: {.callout-note collapse="true" title="Demonstração — Distribuição de $F(X_{(k)})"}
 
 Pelo teorema da transformação integral de probabilidade,
 
@@ -5189,32 +5589,15 @@ f_{X_{(k)}}(x)
 x^{k-1}(1-x)^{n-k}.
 $$
 
-A densidade de uma variável
-
-$$
-U\sim\operatorname{Beta}(\alpha,\beta)
-$$
-
-é
-
-$$
-f_U(u)
-=
-\frac{1}{B(\alpha,\beta)}
-u^{\alpha-1}(1-u)^{\beta-1},
-\qquad
-0<u<1.
-$$
-
-Tomando
+Comparando a densidade obtida com a densidade da distribuição Beta apresentada anteriormente, identificamos
 
 $$
 \alpha=k
 \qquad\text{e}\qquad
-\beta=n-k+1,
+\beta=n-k+1.
 $$
 
-temos
+De fato,
 
 $$
 B(k,n-k+1)
@@ -5222,10 +5605,10 @@ B(k,n-k+1)
 \frac{\Gamma(k)\Gamma(n-k+1)}
 {\Gamma(n+1)}
 =
-\frac{(k-1)!(n-k)!}{n!}.
+\frac{(k-1)!(n-k)!}{n!},
 $$
 
-Portanto,
+de modo que
 
 $$
 \frac{1}{B(k,n-k+1)}
@@ -5233,7 +5616,7 @@ $$
 \frac{n!}{(k-1)!(n-k)!},
 $$
 
-que coincide exatamente com a constante da densidade de $X_{(k)}$ no modelo uniforme.
+que coincide com a constante da densidade de $X_{(k)}$ no modelo uniforme.
 
 Assim,
 
@@ -5264,7 +5647,7 @@ $$
 
 :::
 
-O caso uniforme é uma aplicação direta da densidade geral e identifica uma distribuição beta [@larsen2012, seção 3.10; @hogg1978, seção sobre estatísticas de ordem].
+O caso uniforme é uma aplicação direta da densidade geral e identifica uma distribuição beta [@larsen2012, seção 3.10].
 
 ::: {.callout-tip title="Exemplo — Estatísticas de ordem em uma amostra exponencial"}
 
