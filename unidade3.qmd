@@ -1,6 +1,6 @@
 # Avaliação de Estimadores e Princípios de Redução de Dados {#sec-avaliacao-reducao}
 
-Em @sec-fundamentos-inferencia, um estimador foi definido como uma estatística utilizada para estimar uma função paramétrica $\tau(\theta)$. Em @sec-distribuicoes-amostrais, a distribuição dessas estatísticas permitiu descrever sua variabilidade sob repetição do mecanismo amostral.
+Em @sec-fundamentos-inferencia, um estimador foi definido como uma estatística utilizada para estimar uma função paramétrica $\tau(\theta)$. No @sec-distribuicoes-amostrais, a distribuição dessas estatísticas permitiu descrever sua variabilidade sob repetição do mecanismo amostral.
 
 Conhecida essa variabilidade, surgem duas questões complementares. A primeira é **como avaliar a qualidade de um estimador**: seu erro, sua dispersão, seu comportamento quando o tamanho amostral aumenta e os limites de desempenho impostos pelo modelo. A segunda é **como identificar quais aspectos da amostra concentram a informação relevante sobre o parâmetro**, permitindo reduzir os dados sem perda inferencial.
 
@@ -8,7 +8,7 @@ A primeira questão conduz aos conceitos de risco, viés, erro quadrático médi
 
 ### Objetivos do capítulo {.unnumbered}
 
-Ao final do percurso principal deste capítulo, espera-se que você seja capaz de:
+Ao final do percurso principal deste capítulo, o leitor deverá ser capaz de:
 
 - interpretar risco, erro quadrático médio, viés, variância e erro-padrão como critérios de avaliação de estimadores;
 - comparar estimadores utilizando EQM, variância e eficiência relativa;
@@ -17,7 +17,7 @@ Ao final do percurso principal deste capítulo, espera-se que você seja capaz d
 - utilizar a desigualdade de Cramér--Rao para estabelecer limites de precisão sob condições de regularidade;
 - distinguir eficiência de Cramér--Rao em amostras finitas de eficiência assintótica.
 
-No aprofundamento sobre redução de dados, espera-se também que você seja capaz de:
+No aprofundamento sobre redução de dados, o leitor deverá também ser capaz de:
 
 - identificar estatísticas suficientes e suficientes minimais;
 - reconhecer a estrutura de famílias exponenciais e suas estatísticas canônicas;
@@ -179,7 +179,7 @@ $$
 
 O erro-padrão mede quanto o valor do estimador tende a variar entre diferentes amostras produzidas pelo mesmo mecanismo amostral.
 
-Assim como na Unidade 2, o erro-padrão de uma estatística não deve ser confundido com o desvio-padrão das observações individuais. O primeiro descreve a variabilidade da **distribuição amostral do estimador**.
+Assim como no @sec-distribuicoes-amostrais, o erro-padrão de uma estatística não deve ser confundido com o desvio-padrão das observações individuais. O primeiro descreve a variabilidade da **distribuição amostral do estimador**.
 
 Viés e variância aparecem conjuntamente na decomposição do erro quadrático médio.
 
@@ -337,7 +337,7 @@ $$
 0<X_i<\theta.
 $$
 
-Queremos comparar três estimadores de $\theta$:
+Considere três estimadores de $\theta$:
 
 $$
 T_1=2\overline X,
@@ -371,7 +371,7 @@ $$
 
 explora outra característica do modelo: nenhuma observação pode ultrapassar o limite $\theta$. Assim, valores elevados de $X_{(n)}$ fornecem informação direta sobre esse limite.
 
-Como veremos, $X_{(n)}$ é viesado para $\theta$. O terceiro estimador,
+O máximo amostral $X_{(n)}$ é viesado para $\theta$. O terceiro estimador,
 
 $$
 \frac{n+1}{n}X_{(n)},
@@ -452,7 +452,7 @@ $$
 
 **Estimador $T_2=X_{(n)}$**
 
-Na Unidade 2 vimos que, para o máximo amostral,
+No @sec-distribuicoes-amostrais vimos que, para o máximo amostral,
 
 $$
 F_{X_{(n)}}(x)
@@ -731,9 +731,7 @@ $$
 
 em que $T_n$ é construído a partir de uma amostra de tamanho $n$.
 
-A pergunta passa a ser: **à medida que $n$ aumenta, $T_n$ se concentra cada vez mais próximo de $\tau(\theta)$?**
-
-Essa propriedade é denominada consistência.
+A **consistência** avalia se $T_n$ se concentra progressivamente em torno de $\tau(\theta)$ quando o tamanho amostral aumenta.
 
 ::: {.callout-important title="Definição — Consistência em probabilidade"}
 
@@ -812,7 +810,7 @@ A consistência em EQM implica consistência em probabilidade.
 
 ::: {.callout-note collapse="true" title="Demonstração — Consistência em EQM implica consistência em probabilidade"}
 
-Queremos mostrar que
+Para provar o resultado, basta mostrar que
 
 $$
 \operatorname{EQM}_\theta(T_n)
@@ -1409,11 +1407,9 @@ $$
 
 Como também se encontra na literatura a convenção inversa, a orientação do quociente deve sempre ser explicitada [@rasch2018, sec. 2.4.1].
 
-A eficiência relativa permite comparar dois estimadores previamente escolhidos. Surge, entretanto, uma questão mais ampla: **quão pequena pode ser a variância de um estimador dentro de determinado modelo?**
+A eficiência relativa compara estimadores previamente escolhidos, mas não estabelece a menor variância possível dentro do modelo. Mesmo que $T_1$ tenha menor variância que $T_2$, pode existir um terceiro estimador com variância ainda menor.
 
-Comparar $T_1$ com $T_2$ não responde a essa pergunta. Mesmo que $T_1$ tenha menor variância, pode existir um terceiro estimador com variância ainda menor.
-
-Uma forma de avançar consiste em procurar uma cota determinada pelo próprio modelo. Para estimadores não viesados de um alvo $\tau(\theta)$, gostaríamos de obter uma quantidade $B(\theta)$ tal que
+Uma comparação global requer uma cota determinada pelo próprio modelo. Para estimadores não viesados de um alvo $\tau(\theta)$, considere uma quantidade $B(\theta)$ tal que
 
 $$
 \operatorname{Var}_\theta(T)
@@ -1431,7 +1427,7 @@ Posteriormente, suficiência, completude, Rao--Blackwell e Lehmann--Scheffé for
 
 ### Informação de Fisher {.unnumbered}
 
-Queremos, portanto, obter do próprio modelo uma medida de sua capacidade de distinguir valores próximos do parâmetro.
+O objetivo é obter do próprio modelo uma medida de sua capacidade de distinguir valores próximos do parâmetro.
 
 Se pequenas alterações em $\theta$ quase não modificam a distribuição das observações, os dados fornecem pouca capacidade para distinguir valores próximos desse parâmetro. Se a distribuição se altera mais intensamente, os dados podem carregar mais informação para essa distinção.
 
@@ -1866,7 +1862,7 @@ A desigualdade de Cauchy--Schwarz permitirá transformar essa relação em um li
 
 ### Desigualdade de Cramér--Rao {.unnumbered}
 
-Queremos agora formalizar essa relação.
+A desigualdade de Cramér--Rao formaliza essa relação.
 
 A desigualdade de Cramér--Rao estabelece, sob condições de regularidade, uma cota inferior para a variância de estimadores. A cota depende do alvo $\tau(\theta)$ e da informação de Fisher do modelo, e não de uma comparação entre dois estimadores previamente escolhidos.
 
@@ -2261,15 +2257,13 @@ $$
 
 com $\sigma^2$ conhecida.
 
-Queremos avaliar
+Considere
 
 $$
 T=\overline X
 $$
 
-como estimador de $\mu$ e verificar se sua variância atinge o limite de Cramér--Rao.
-
-Para isso:
+como estimador de $\mu$. Verifique se sua variância atinge o limite de Cramér--Rao:
 
 1. obtenha a função escore;
 2. calcule $I_1(\mu)$ e $I_n(\mu)$;
@@ -2414,7 +2408,7 @@ Logo, $\overline X$ atinge exatamente o limite de Cramér--Rao e é eficiente no
 
 :::
 
-Neste modelo, a cota inferior não é apenas um limite teórico: ela é efetivamente atingida pela média amostral.
+Neste modelo, a média amostral atinge a cota inferior de Cramér--Rao.
 
 ### Exemplo — Parâmetro de uma distribuição de Poisson {.unnumbered}
 
@@ -2428,15 +2422,13 @@ X_1,\ldots,X_n
 \theta>0.
 $$
 
-Queremos avaliar
+Considere
 
 $$
 T=\overline X
 $$
 
-como estimador de $\theta$.
-
-Para isso:
+como estimador de $\theta$. Verifique:
 
 1. obtenha a função escore;
 2. calcule $I_1(\theta)$ e $I_n(\theta)$;
@@ -2633,11 +2625,7 @@ A eficiência de Cramér--Rao estudada anteriormente é uma propriedade de amost
 
 Essa comparação é especialmente informativa quando a distribuição amostral e a variância do estimador podem ser obtidas exatamente. Em muitos problemas, porém, essas quantidades são difíceis de determinar para cada $n$, ou o estimador não atinge exatamente a cota de Cramér--Rao em amostras finitas.
 
-Nessas situações, podemos formular uma pergunta diferente:
-
-**à medida que a quantidade de informação amostral aumenta, o estimador passa a apresentar a melhor precisão permitida pelo modelo, pelo menos em primeira ordem?**
-
-Essa é a questão tratada pela **eficiência assintótica**.
+Em grandes amostras, interessa verificar se o estimador atinge, em primeira ordem, a melhor precisão permitida pelo modelo. Essa propriedade é denominada **eficiência assintótica**.
 
 Consideramos uma sequência de estimadores
 
@@ -2773,11 +2761,9 @@ Essa conclusão exige condições próprias e não se estende automaticamente a 
 
 ## Aprofundamento: Princípios de redução de dados
 
-Até aqui, partimos de estimadores já construídos e estudamos propriedades como viés, variância, erro quadrático médio, consistência e eficiência.
+A avaliação anterior partiu de estimadores já construídos e estudou propriedades como viés, variância, erro quadrático médio, consistência e eficiência.
 
-Uma questão diferente surge quando voltamos à própria amostra:
-
-**é necessário conservar todas as observações para realizar inferência sobre $\theta$, ou parte da informação pode ser concentrada em uma estatística de dimensão menor?**
+A redução de dados parte da própria amostra e procura identificar se sua informação sobre $\theta$ pode ser concentrada em uma estatística de dimensão menor.
 
 Considere uma amostra
 
@@ -2819,7 +2805,7 @@ Na redução de dados, utilizaremos a verossimilhança para identificar **por me
 
 Se toda essa dependência puder ser expressa por meio de uma estatística $T(\mathbf x)$, isso indicará que $T$ pode desempenhar o papel de resumo da informação amostral sobre o parâmetro.
 
-A maximização da verossimilhança possui outra finalidade e será desenvolvida no capítulo de estimação pontual.
+A maximização da verossimilhança possui outra finalidade e será desenvolvida no @sec-estimacao-pontual.
 
 :::
 
@@ -3540,7 +3526,7 @@ X_1,\ldots,X_n
 0<p<1.
 $$
 
-No exemplo anterior, mostramos que
+No modelo Bernoulli,
 
 $$
 T(\mathbf X)
@@ -3548,9 +3534,9 @@ T(\mathbf X)
 \sum_{i=1}^nX_i
 $$
 
-é suficiente para $p$.
+já foi identificada como estatística suficiente para $p$.
 
-Agora queremos verificar uma propriedade mais forte: **o total de sucessos é suficiente minimal?**
+O próximo passo é verificar se o total de sucessos também é suficiente minimal.
 
 Considere dois pontos amostrais
 
@@ -3714,7 +3700,7 @@ $$
 
 No espaço amostral efetivo, considere amostras com valores não negativos.
 
-Queremos verificar se
+Verifique se
 
 $$
 T(\mathbf X)
@@ -4190,7 +4176,7 @@ X\sim\operatorname{Ber}(p),
 0<p<1.
 $$
 
-Queremos identificar a estrutura exponencial do modelo e verificar como ela conduz à mesma estatística suficiente encontrada anteriormente pelo teorema da fatoração.
+A representação exponencial do modelo conduz à mesma estatística suficiente obtida pelo teorema da fatoração.
 
 Identifique:
 
@@ -4333,7 +4319,7 @@ Portanto, a estrutura exponencial recupera exatamente o **número total de suces
 
 :::
 
-Esse é o mesmo resultado obtido anteriormente pelo teorema da fatoração. A diferença está no procedimento: depois que reconhecemos a forma exponencial, a estatística suficiente surge diretamente de
+O teorema da fatoração também conduz a essa estatística suficiente. Na representação exponencial, ela é identificada diretamente a partir de
 
 $$
 t(x)=x.
@@ -4489,7 +4475,7 @@ x=1,2,\ldots,
 0<p<1.
 $$
 
-Queremos escrevê-la na forma exponencial canônica.
+Escreva a função de probabilidade na forma exponencial canônica.
 
 Defina
 
@@ -4925,7 +4911,7 @@ $$
 X_{(n)}
 $$
 
-é suficiente — e, como vimos, suficiente minimal — para $\theta$.
+é suficiente e suficiente minimal para $\theta$.
 
 A vantagem das famílias exponenciais é que sua própria estrutura fornece um procedimento sistemático para identificar estatísticas suficientes.
 
@@ -5143,7 +5129,7 @@ T
 \operatorname{Poisson}(n\lambda).
 $$
 
-Queremos verificar diretamente que $T$ é completa.
+A completude de $T$ pode ser verificada diretamente.
 
 Suponha que uma função $a$ satisfaça
 
@@ -5243,7 +5229,7 @@ A suficiência e a completude desempenham papéis diferentes:
 - **suficiência** está relacionada à preservação da informação da amostra sobre o parâmetro;
 - **completude** está relacionada à unicidade de funções não viesadas de uma estatística.
 
-A combinação das duas propriedades será fundamental para identificar estimadores não viesados de variância uniformemente mínima.
+A combinação das duas propriedades permite identificar estimadores não viesados de variância uniformemente mínima.
 
 ### Estimadores não viesados de variância uniformemente mínima {.unnumbered}
 
@@ -5581,7 +5567,7 @@ X_1,\ldots,X_n
 n\geq2.
 $$
 
-Queremos estimar a probabilidade de uma nova variável com distribuição Poisson$(\theta)$ assumir o valor zero:
+O alvo é a probabilidade de uma nova variável com distribuição Poisson $(\theta)$ assumir o valor zero:
 
 $$
 \tau(\theta)
@@ -5659,7 +5645,7 @@ $$
 
 é suficiente para $\theta$.
 
-Além disso, como vimos na seção de completude,
+Além disso,
 
 $$
 T
@@ -5667,7 +5653,7 @@ T
 \operatorname{Poisson}(n\theta)
 $$
 
-e $T$ também é completa.
+e $T$ é completa.
 
 Para aplicar Rao--Blackwell, calculamos
 
@@ -5917,7 +5903,7 @@ $$
 
 ::::
 
-O ganho conceitual é importante: o estimador inicial
+O estimador inicial
 
 $$
 W=\mathbf 1\{X_1=0\}
@@ -5974,7 +5960,7 @@ $$
 
 seja não viesado para $\tau(\theta)$.
 
-Queremos mostrar que sua variância não pode ser superada por nenhum outro estimador não viesado.
+Para provar o resultado, basta mostrar que sua variância não pode ser superada por nenhum outro estimador não viesado.
 
 **Comparação com um estimador não viesado arbitrário**
 
@@ -6824,7 +6810,7 @@ $$
 
 $\sigma^2$ conhecida e $\mu$ desconhecida.
 
-Queremos utilizar o teorema de Basu para justificar a independência entre
+O teorema de Basu permite justificar a independência entre
 
 $$
 \overline X
@@ -6836,7 +6822,7 @@ $$
 S^2.
 $$
 
-Para isso, precisamos verificar duas propriedades:
+A aplicação requer duas propriedades:
 
 1. $\overline X$ é suficiente e completa para $\mu$;
 2. $S^2$ é ancilar para $\mu$.
@@ -6885,7 +6871,7 @@ S^2
 (X_i-\overline X)^2.
 $$
 
-Na Unidade 2, obtivemos, para uma amostra normal,
+No @sec-distribuicoes-amostrais, para uma amostra normal, foi obtido
 
 $$
 \frac{(n-1)S^2}{\sigma^2}
@@ -6929,7 +6915,7 @@ $$
 
 :::
 
-Na Unidade 2, a independência entre $\overline X$ e $S^2$ foi obtida a partir da estrutura específica da amostra normal. O teorema de Basu fornece outra interpretação para o mesmo resultado: a independência decorre da relação entre **suficiência, completude e ancilaridade**.
+No @sec-distribuicoes-amostrais, a independência entre $\overline X$ e $S^2$ foi obtida a partir da estrutura específica da amostra normal. O teorema de Basu fornece outra interpretação: a independência decorre da relação entre **suficiência, completude e ancilaridade**.
 
 ::: {.callout-warning title="Observação — Ancilaridade depende do parâmetro de interesse"}
 
@@ -7150,7 +7136,7 @@ $$
 
 #### Consistência {.unnumbered}
 
-O fato de $\widehat\beta$ ser ENVVUM é uma propriedade de optimalidade dentro da classe dos estimadores não viesados. A consistência responde a outra questão: o estimador se concentra em $\beta$ quando o tamanho amostral aumenta?
+O fato de $\widehat\beta$ ser ENVVUM é uma propriedade de optimalidade dentro da classe dos estimadores não viesados. A consistência avalia se o estimador se concentra em $\beta$ quando o tamanho amostral aumenta.
 
 ::: {.callout-note collapse="true" title="Resolução — Consistência"}
 
@@ -7408,54 +7394,21 @@ A estrutura do exemplo utiliza resultados de suficiência, completude e eficiên
 
 ## Síntese conceitual
 
-Os conceitos desenvolvidos neste capítulo podem ser organizados em duas linhas principais: **avaliação de estimadores** e **redução de dados**. Essas duas linhas se encontram quando propriedades da estrutura amostral são utilizadas para construir e melhorar estimadores.
-
-| Objetivo inferencial | Conceito ou resultado | Papel |
-|---|---|---|
-| Avaliar um procedimento segundo uma função de perda | Risco | Mede a perda média associada ao procedimento |
-| Avaliar o erro sob perda quadrática | EQM | Mede o afastamento quadrático médio entre estimador e alvo |
-| Separar as fontes do EQM | Viés e variância | Distinguem afastamento sistemático e variabilidade amostral |
-| Avaliar o comportamento quando $n$ aumenta | Consistência | Verifica a concentração de $T_n$ no alvo |
-| Comparar estimadores não viesados | Variância e eficiência relativa | Comparam a dispersão entre candidatos |
-| Quantificar a sensibilidade do modelo ao parâmetro | Informação de Fisher | Mede a informação do modelo sobre o parâmetro |
-| Estabelecer um limite de precisão em modelos regulares | Desigualdade de Cramér--Rao | Fornece uma cota inferior para a variância |
-| Avaliar precisão no regime de grandes amostras | Eficiência assintótica | Compara a variância da distribuição limite com a informação de Fisher |
-| Reduzir a amostra sem perder informação sobre o parâmetro | Suficiência | Concentra a informação inferencial em uma estatística |
-| Eliminar redundâncias de uma estatística suficiente | Suficiência minimal | Caracteriza uma redução suficiente sem informação redundante |
-| Identificar sistematicamente estatísticas suficientes | Famílias exponenciais | Produzem estatísticas canônicas suficientes |
-| Garantir unicidade de funções não viesadas de uma estatística | Completude | Impede funções não triviais com esperança zero para todo o espaço paramétrico |
-| Melhorar um estimador utilizando uma estatística suficiente | Rao--Blackwell | Preserva a esperança e não aumenta o EQM |
-| Identificar o estimador não viesado de variância uniformemente mínima | Lehmann--Scheffé e ENVVUM | Combinam suficiência e completude para obter optimalidade e unicidade |
-| Identificar estatísticas com distribuição livre do parâmetro | Ancilaridade | Caracteriza variação amostral que não depende do parâmetro |
-| Relacionar informação suficiente e variação ancilar | Teorema de Basu | Estabelece independência entre estatística completa e suficiente e estatística ancilar |
-
-Na linha de **avaliação**, a sequência conceitual é
+A avaliação de estimadores reúne critérios de amostra finita e critérios assintóticos. Sob perda quadrática, o risco coincide com o erro quadrático médio, que se decompõe em
 
 $$
-\text{função de perda}
-\longrightarrow
-\text{risco}
-\longrightarrow
-\text{EQM sob perda quadrática}
-\longrightarrow
-\text{viés e variância}.
+\operatorname{EQM}_\theta(T)
+=
+\operatorname{Var}_\theta(T)
++
+B_\theta(T)^2.
 $$
 
-Para uma sequência de estimadores, acrescentamos a perspectiva assintótica:
+O não viés e a variância descrevem propriedades para um tamanho amostral fixado. A consistência estuda a concentração de uma sequência de estimadores no alvo quando $n$ aumenta. A eficiência assintótica compara a precisão das distribuições limite.
+
+A informação de Fisher relaciona a sensibilidade do modelo ao parâmetro com limites de precisão:
 
 $$
-T_n
-\longrightarrow
-\text{consistência}
-\longrightarrow
-\text{eficiência assintótica}.
-$$
-
-A informação de Fisher e a desigualdade de Cramér--Rao fornecem uma perspectiva complementar:
-
-$$
-\text{modelo}
-\longrightarrow
 \text{escore}
 \longrightarrow
 \text{informação de Fisher}
@@ -7463,27 +7416,9 @@ $$
 \text{limite de Cramér--Rao}.
 $$
 
-Na linha de **redução de dados**,
+Na redução de dados, a suficiência concentra a informação da amostra sobre o parâmetro, enquanto a suficiência minimal elimina redundâncias. As famílias exponenciais fornecem uma estrutura sistemática para identificar estatísticas suficientes e, sob condições adicionais, completas.
 
-$$
-\text{amostra}
-\longrightarrow
-\text{suficiência}
-\longrightarrow
-\text{suficiência minimal},
-$$
-
-enquanto, para famílias exponenciais,
-
-$$
-\text{forma exponencial}
-\longrightarrow
-\text{estatística canônica suficiente}
-\longrightarrow
-\text{completude, sob condições adicionais}.
-$$
-
-A suficiência pode ser utilizada diretamente para melhorar um estimador:
+A suficiência permite melhorar um estimador por Rao--Blackwell:
 
 $$
 W
@@ -7493,25 +7428,9 @@ W^*(T)
 E_\theta(W\mid T).
 $$
 
-Quando $T$ também é completa,
+Quando $T$ é suficiente e completa, Lehmann--Scheffé caracteriza a função não viesada de $T$ como ENVVUM. O teorema de Basu relaciona completude e suficiência à ancilaridade por meio da independência.
 
-$$
-\text{suficiência + completude}
-\overset{\text{Lehmann--Scheffé}}{\longrightarrow}
-\text{ENVVUM único, a menos de equivalência quase certa}.
-$$
-
-Por fim,
-
-$$
-\text{estatística suficiente e completa}
-+
-\text{estatística ancilar}
-\overset{\text{Basu}}{\longrightarrow}
-\text{independência}.
-$$
-
-O capítulo estabelece, assim, uma conexão entre **avaliar estimadores**, **reduzir os dados** e **construir procedimentos com propriedades de optimalidade**.
+Esses resultados fornecem os critérios que serão utilizados na construção e na avaliação de estimadores nos capítulos seguintes.
 
 ## Exercícios
 
@@ -7616,38 +7535,38 @@ $$
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exp}\left(\frac1\theta\right),
+\operatorname{Exp}\left(\frac1\mu\right),
 \qquad
-\theta>0,
+\mu>0,
 $$
 
-em que a notação exponencial utiliza o parâmetro de **taxa**. Assim,
+em que $\mu$ representa a média e a taxa é $1/\mu$. Assim,
 
 $$
-E_\theta(X_i)=\theta.
+E_\mu(X_i)=\mu.
 $$
 
 Equivalentemente,
 
 $$
-f(x\mid\theta)
+f(x\mid\mu)
 =
-\frac1\theta
+\frac1\mu
 \exp\left(
--\frac{x}{\theta}
+-\frac{x}{\mu}
 \right)
 \mathbf 1\{x>0\}.
 $$
 
 a. Obtenha a função escore de uma observação.
 
-b. Calcule $I_1(\theta)$ e $I_n(\theta)$.
+b. Calcule $I_1(\mu)$ e $I_n(\mu)$.
 
-c. Determine o limite de Cramér--Rao para estimadores não viesados de $\theta$.
+c. Determine o limite de Cramér--Rao para estimadores não viesados de $\mu$.
 
-d. Mostre que $\overline X$ é não viesado para $\theta$.
+d. Mostre que $\overline X$ é não viesado para $\mu$.
 
-e. Compare $\operatorname{Var}_\theta(\overline X)$ com o limite de Cramér--Rao e conclua se $\overline X$ é eficiente no sentido de Cramér--Rao.
+e. Compare $\operatorname{Var}_\mu(\overline X)$ com o limite de Cramér--Rao e conclua se $\overline X$ é eficiente no sentido de Cramér--Rao.
 
 ### Exercícios — Aprofundamento {.unnumbered}
 
@@ -8029,21 +7948,21 @@ f. Compare a variância do ENVVUM com o limite e explique por que, neste exemplo
 $$
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
-\operatorname{Exp}\left(\frac1\theta\right),
+\operatorname{Exp}\left(\frac1\mu\right),
 \qquad
-\theta>0,
+\mu>0,
 $$
 
-em que a notação exponencial utiliza a parametrização por **taxa**. Portanto, a taxa é
+em que $\mu$ representa a média e a taxa é
 
 $$
-\frac1\theta
+\frac1\mu.
 $$
 
-e
+Assim,
 
 $$
-E_\theta(X_i)=\theta.
+E_\mu(X_i)=\mu.
 $$
 
 Defina
@@ -8058,7 +7977,7 @@ $$
 
 a. Determine a distribuição de $Y$.
 
-b. Encontre uma função de $Y$ que seja não viesada para $\theta$.
+b. Encontre uma função de $Y$ que seja não viesada para $\mu$.
 
 c. Calcule a variância desse estimador.
 
@@ -8066,7 +7985,7 @@ d. Calcule a variância de $\overline X$ e compare os dois estimadores.
 
 e. Mostre que $\overline X$ possui menor variância.
 
-f. Identifique uma estatística suficiente para $\theta$ e relacione a redução de variância observada ao princípio de Rao--Blackwell.
+f. Identifique uma estatística suficiente para $\mu$ e relacione a redução de variância observada ao princípio de Rao--Blackwell.
 
 *Adaptado de @casella2011inferencia, cap. 7.*
 
@@ -8243,5 +8162,7 @@ $$
 não depende de $a$ nem de $b$ e conclua que $R/S$ é ancilar para os parâmetros de locação e escala.
 
 *Adaptado de @casella2011inferencia, cap. 6.*
+
+No próximo capítulo, os critérios desenvolvidos neste capítulo serão utilizados para estudar estimadores construídos pelo método dos momentos, pela máxima verossimilhança e por mínimos quadrados.
 
 ## Referências {.unnumbered}
