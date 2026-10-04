@@ -6,6 +6,25 @@ Conhecida essa variabilidade, surgem duas questões complementares. A primeira �
 
 A primeira questão conduz aos conceitos de risco, viés, erro quadrático médio, consistência e eficiência e integra o percurso comum do capítulo. A segunda, apresentada como aprofundamento, conduz à suficiência, à suficiência minimal, às famílias exponenciais, à completude, ao ENVVUM, aos teoremas de Rao--Blackwell e Lehmann--Scheffé e à relação entre ancilaridade e o teorema de Basu. As duas linhas voltam a se encontrar quando a redução dos dados é utilizada para melhorar e caracterizar estimadores [@rice2007mathematical, chap. 8; @lauritzen2023fundamentals, chaps. 4--5; @cox2006principles, secs. 2.2 and 4.3].
 
+### Objetivos do capítulo {.unnumbered}
+
+Ao final do percurso principal deste capítulo, espera-se que você seja capaz de:
+
+- interpretar risco, erro quadrático médio, viés, variância e erro-padrão como critérios de avaliação de estimadores;
+- comparar estimadores utilizando EQM, variância e eficiência relativa;
+- distinguir propriedades de amostra finita, como não viés, de propriedades assintóticas, como consistência;
+- interpretar a função escore e a informação de Fisher como medidas da sensibilidade do modelo a alterações no parâmetro;
+- utilizar a desigualdade de Cramér--Rao para estabelecer limites de precisão sob condições de regularidade;
+- distinguir eficiência de Cramér--Rao em amostras finitas de eficiência assintótica.
+
+No aprofundamento sobre redução de dados, espera-se também que você seja capaz de:
+
+- identificar estatísticas suficientes e suficientes minimais;
+- reconhecer a estrutura de famílias exponenciais e suas estatísticas canônicas;
+- compreender o papel da completude na unicidade de funções não viesadas;
+- utilizar os teoremas de Rao--Blackwell e Lehmann--Scheffé na construção e caracterização de estimadores;
+- interpretar ancilaridade e sua relação com suficiência e completude por meio do teorema de Basu.
+
 ## Avaliação de estimadores
 
 ### Função de perda, risco e erro quadrático médio {.unnumbered}
@@ -480,7 +499,7 @@ $$
 {(n+1)^2(n+2)}.
 $$
 
-::: {.callout-note collapse="true" title="Derivação — Momentos de $X_{(n)}$"}
+**Derivação — Momentos de $X_{(n)}$**
 
 Derivando a função de distribuição,
 
@@ -552,8 +571,6 @@ E_\theta(X_{(n)}^2)
 {(n+1)^2(n+2)}.
 \end{aligned}
 $$
-
-:::
 
 O viés de $T_2$ é
 
@@ -1125,7 +1142,7 @@ $$
 
 Além disso, sua distribuição se concentra progressivamente próximo do limite superior $\theta$.
 
-::: {.callout-note collapse="true" title="Verificação — Consistência de $X_{(n)}$"}
+**Verificação — Consistência de $X_{(n)}$**
 
 Como
 
@@ -1217,8 +1234,6 @@ X_{(n)}
 $$
 
 Portanto, $X_{(n)}$ é viesado para cada $n$ finito, mas é consistente para $\theta$.
-
-:::
 
 **Estimador $\dfrac{X_1}{2}$**
 
@@ -1396,13 +1411,31 @@ Como também se encontra na literatura a convenção inversa, a orientação do 
 
 A eficiência relativa permite comparar dois estimadores previamente escolhidos. Surge, entretanto, uma questão mais ampla: **quão pequena pode ser a variância de um estimador dentro de determinado modelo?**
 
-Responder a essa pergunta exige obter um limite de desempenho que dependa do próprio modelo, e não apenas dos dois estimadores selecionados. Esse é um dos papéis da informação de Fisher e da desigualdade de Cramér--Rao.
+Comparar $T_1$ com $T_2$ não responde a essa pergunta. Mesmo que $T_1$ tenha menor variância, pode existir um terceiro estimador com variância ainda menor.
+
+Uma forma de avançar consiste em procurar uma cota determinada pelo próprio modelo. Para estimadores não viesados de um alvo $\tau(\theta)$, gostaríamos de obter uma quantidade $B(\theta)$ tal que
+
+$$
+\operatorname{Var}_\theta(T)
+\geq
+B(\theta)
+$$
+
+para todos os estimadores de uma classe considerada.
+
+Se um estimador atingir essa cota, teremos uma referência objetiva para avaliar sua precisão sem precisar compará-lo, um a um, com todos os demais candidatos.
+
+Para construir uma cota desse tipo, é necessário quantificar **quanto o modelo probabilístico muda quando o parâmetro varia**. Essa ideia conduz à função escore, à informação de Fisher e, em seguida, à desigualdade de Cramér--Rao.
 
 Posteriormente, suficiência, completude, Rao--Blackwell e Lehmann--Scheffé fornecerão outra perspectiva para identificar estimadores de variância mínima.
 
 ### Informação de Fisher {.unnumbered}
 
-A eficiência relativa permite comparar estimadores específicos. Para estabelecer um limite de desempenho que dependa do próprio modelo, precisamos medir **quanto a distribuição das observações se altera quando o parâmetro $\theta$ varia**.
+Queremos, portanto, obter do próprio modelo uma medida de sua capacidade de distinguir valores próximos do parâmetro.
+
+Se pequenas alterações em $\theta$ quase não modificam a distribuição das observações, os dados fornecem pouca capacidade para distinguir valores próximos desse parâmetro. Se a distribuição se altera mais intensamente, os dados podem carregar mais informação para essa distinção.
+
+A função escore formaliza essa sensibilidade local.
 
 Considere um modelo dominado com densidade ou função de probabilidade
 
@@ -1410,13 +1443,36 @@ $$
 f(x\mid\theta).
 $$
 
-Para uma observação $X$, a log-verossimilhança correspondente é
+Para entender como o modelo reage a uma pequena alteração no parâmetro, fixe um valor observado $x$ e considere a log-verossimilhança
 
 $$
-\log f(X\mid\theta).
+\ell_x(\theta)
+=
+\log f(x\mid\theta).
 $$
 
-Sua derivada em relação ao parâmetro é denominada **função escore**:
+Se substituímos $\theta$ por um valor próximo $\theta+h$, uma aproximação de primeira ordem fornece
+
+$$
+\ell_x(\theta+h)
+-
+\ell_x(\theta)
+\approx
+h\ell_x'(\theta).
+$$
+
+Assim, a derivada
+
+$$
+\ell_x'(\theta)
+=
+\frac{\partial}{\partial\theta}
+\log f(x\mid\theta)
+$$
+
+mede a **variação local da log-verossimilhança** quando o parâmetro é ligeiramente modificado.
+
+Essa derivada é denominada **função escore**. Para a variável aleatória $X$,
 
 $$
 U_\theta(X)
@@ -1425,9 +1481,49 @@ U_\theta(X)
 \log f(X\mid\theta).
 $$
 
-O escore mede a sensibilidade local da log-verossimilhança a pequenas alterações em $\theta$. Valores de grande magnitude indicam que, para a observação considerada, a log-verossimilhança está variando rapidamente em relação ao parâmetro.
+Para um valor observado $x$:
 
-Sob condições de regularidade,
+- $U_\theta(x)>0$ indica que, localmente, aumentar $\theta$ aumenta a log-verossimilhança;
+- $U_\theta(x)<0$ indica que, localmente, aumentar $\theta$ diminui a log-verossimilhança;
+- valores de maior magnitude indicam maior sensibilidade local da log-verossimilhança a alterações no parâmetro.
+
+O uso do **logaritmo** é particularmente conveniente para amostras independentes. Como
+
+$$
+f(\mathbf X\mid\theta)
+=
+\prod_{i=1}^n
+f(X_i\mid\theta),
+$$
+
+temos
+
+$$
+\log f(\mathbf X\mid\theta)
+=
+\sum_{i=1}^n
+\log f(X_i\mid\theta).
+$$
+
+Consequentemente, o escore da amostra será a soma dos escores individuais. Essa propriedade permitirá que a informação fornecida por observações independentes também se acumule de forma aditiva.
+
+::: {.callout-warning title="Observação — Condições de regularidade"}
+
+As identidades utilizadas a seguir não são válidas automaticamente para qualquer modelo.
+
+Em particular, precisamos de condições que permitam diferenciar em relação a $\theta$ e intercambiar diferenciação com integração ou soma. Uma condição importante na forma regular utilizada nesta seção é que o suporte da distribuição não dependa de $\theta$.
+
+Por isso, modelos como
+
+$$
+\operatorname{Unif}(0,\theta),
+$$
+
+nos quais o suporte varia com o parâmetro, exigem tratamento separado. As condições utilizadas na desigualdade de Cramér--Rao serão explicitadas na próxima subseção.
+
+:::
+
+Sob essas condições de regularidade,
 
 $$
 E_\theta\bigl[U_\theta(X)\bigr]
@@ -1435,7 +1531,11 @@ E_\theta\bigl[U_\theta(X)\bigr]
 0.
 $$
 
-Assim, a informação contida no escore não é medida por sua média, mas por sua variabilidade.
+Portanto, a média do escore não distingue modelos com maior ou menor sensibilidade ao parâmetro.
+
+O que pode variar é a **magnitude do escore de uma observação para outra**. Se os valores do escore tendem a ficar próximos de zero, pequenas alterações em $\theta$ modificam pouco a log-verossimilhança. Se apresentam maior magnitude, a distribuição reage mais intensamente a essas alterações.
+
+Essa ideia conduz à informação de Fisher.
 
 ::: {.callout-important title="Definição — Informação de Fisher"}
 
@@ -1449,13 +1549,13 @@ U_\theta(X)^2
 \right].
 $$
 
-Como
+Como, sob as condições de regularidade,
 
 $$
 E_\theta[U_\theta(X)]=0,
 $$
 
-podemos escrever também
+podemos escrever
 
 $$
 I_1(\theta)
@@ -1464,7 +1564,9 @@ I_1(\theta)
 \bigl(U_\theta(X)\bigr).
 $$
 
-Sob condições de regularidade, uma forma equivalente é
+Assim, a informação de Fisher mede a magnitude quadrática média da sensibilidade local da log-verossimilhança ao parâmetro.
+
+Sob condições adicionais de regularidade, uma forma equivalente é
 
 $$
 I_1(\theta)
@@ -1484,7 +1586,7 @@ I_n(\theta)
 nI_1(\theta).
 $$
 
-Essas identidades pressupõem as condições de regularidade indicadas nesta seção [@lauritzen2023fundamentals, sec. 1.2.2; @rasch2018, sec. 1.4].
+Portanto, nesse contexto, a informação cresce linearmente com o número de observações independentes [@lauritzen2023fundamentals, sec. 1.2.2; @rasch2018, sec. 1.4].
 
 :::
 
@@ -1716,11 +1818,57 @@ Assim, para observações i.i.d., a informação de Fisher cresce linearmente co
 
 A informação de Fisher quantifica quão sensível é a distribuição dos dados a mudanças no parâmetro. Quanto maior $I_n(\theta)$, maior é, nesse sentido, a capacidade do modelo amostral de distinguir valores próximos de $\theta$.
 
-Essa quantidade será utilizada a seguir para estabelecer um limite inferior para a variância de estimadores sob condições de regularidade: a desigualdade de Cramér--Rao [@cox2006principles, sec. 2.1; @lauritzen2023fundamentals, sec. 1.2.2].
+Sua utilidade para avaliar estimadores surge de uma relação fundamental entre o estimador e o escore da amostra.
+
+Se
+
+$$
+E_\theta(T)
+=
+g(\theta),
+$$
+
+então, sob condições de regularidade,
+
+$$
+\operatorname{Cov}_\theta
+\left(
+T,U_n(\theta)
+\right)
+=
+g'(\theta).
+$$
+
+No caso de um estimador não viesado para $\tau(\theta)$,
+
+$$
+g(\theta)=\tau(\theta),
+$$
+
+e portanto
+
+$$
+\operatorname{Cov}_\theta
+\left(
+T,U_n(\theta)
+\right)
+=
+\tau'(\theta).
+$$
+
+Essa identidade liga três elementos:
+
+- o alvo que se pretende estimar, por meio de $\tau'(\theta)$;
+- a variabilidade do estimador $T$;
+- a variabilidade do escore, que é precisamente $I_n(\theta)$.
+
+A desigualdade de Cauchy--Schwarz permitirá transformar essa relação em um limite inferior para $\operatorname{Var}_\theta(T)$. É nesse sentido que a informação de Fisher fornece uma referência de precisão para estimadores [@cox2006principles, sec. 2.1; @lauritzen2023fundamentals, sec. 1.2.2].
 
 ### Desigualdade de Cramér--Rao {.unnumbered}
 
-A informação de Fisher permite estabelecer um limite para a variância que um estimador pode alcançar dentro de um modelo regular. Esse resultado é conhecido como **desigualdade de Cramér--Rao**.
+Queremos agora formalizar essa relação.
+
+A desigualdade de Cramér--Rao estabelece, sob condições de regularidade, uma cota inferior para a variância de estimadores. A cota depende do alvo $\tau(\theta)$ e da informação de Fisher do modelo, e não de uma comparação entre dois estimadores previamente escolhidos.
 
 A forma utilizada nesta seção exige condições de regularidade. Entre as condições usuais que sustentam o argumento apresentado estão:
 
@@ -2012,11 +2160,20 @@ $$
 Pela desigualdade de Cramér--Rao,
 
 $$
-0<
+0
+\leq
 \operatorname{ef}_\theta(T)
 \leq
 1.
 $$
+
+Quando
+
+$$
+\tau'(\theta)\neq0
+$$
+
+e a variância de $T$ é positiva e finita, a eficiência é positiva.
 
 Quando
 
@@ -2474,7 +2631,15 @@ então o estimador atinge o limite e é eficiente no sentido de Cramér--Rao.
 
 A eficiência de Cramér--Rao estudada anteriormente é uma propriedade de amostra finita: para cada tamanho amostral $n$, compara-se a variância do estimador com o limite inferior correspondente.
 
-Em problemas assintóticos, a questão é diferente. Consideramos uma sequência de estimadores
+Essa comparação é especialmente informativa quando a distribuição amostral e a variância do estimador podem ser obtidas exatamente. Em muitos problemas, porém, essas quantidades são difíceis de determinar para cada $n$, ou o estimador não atinge exatamente a cota de Cramér--Rao em amostras finitas.
+
+Nessas situações, podemos formular uma pergunta diferente:
+
+**à medida que a quantidade de informação amostral aumenta, o estimador passa a apresentar a melhor precisão permitida pelo modelo, pelo menos em primeira ordem?**
+
+Essa é a questão tratada pela **eficiência assintótica**.
+
+Consideramos uma sequência de estimadores
 
 $$
 T_1,T_2,\ldots
@@ -2504,6 +2669,8 @@ V(\theta)
 $$
 
 é a variância da distribuição normal limite na escala $\sqrt n$ e é usualmente denominada **variância assintótica na escala $\sqrt n$**.
+
+Ela permite comparar, em grandes amostras, a precisão de estimadores que possuem a mesma taxa de convergência. Quanto menor $V(\theta)$, mais concentrada é a distribuição limite em torno do alvo.
 
 Sob condições adicionais que permitam transferir esse comportamento para os segundos momentos, a variância de $T_n$ possui, em primeira ordem, a escala
 
@@ -2535,7 +2702,7 @@ nI_1(\theta)
 }.
 $$
 
-Assim, na escala $\sqrt n$, a quantidade correspondente ao limite de Cramér--Rao é
+Assim, na escala $\sqrt n$, a quantidade correspondente ao limite de informação do modelo é
 
 $$
 \frac{
@@ -2577,17 +2744,17 @@ V(\theta)
 \frac{1}{I_1(\theta)}.
 $$
 
-A eficiência exata e a eficiência assintótica respondem, portanto, a perguntas diferentes.
+A eficiência de Cramér--Rao em amostras finitas e a eficiência assintótica respondem, portanto, a perguntas diferentes.
 
-Na eficiência de Cramér--Rao de amostra finita, verifica-se se
+Na primeira, verifica-se se
 
 $$
 \operatorname{Var}_\theta(T_n)
 $$
 
-atinge exatamente a cota para determinado $n$.
+atinge exatamente a cota de Cramér--Rao para determinado tamanho amostral.
 
-Na eficiência assintótica, verifica-se se a distribuição limite de
+Na segunda, verifica-se se a distribuição limite de
 
 $$
 \sqrt n
@@ -2596,11 +2763,13 @@ T_n-\tau(\theta)
 \right]
 $$
 
-possui a menor variância assintótica associada ao limite de informação do modelo regular.
+atinge, em primeira ordem, a precisão associada ao limite de informação do modelo regular.
 
 Assim, um estimador pode não atingir a cota de Cramér--Rao para cada tamanho amostral e ainda ser assintoticamente eficiente.
 
-Sob condições de regularidade apropriadas, estimadores de máxima verossimilhança frequentemente apresentam essa propriedade. A conclusão, entretanto, depende dessas condições e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações em que a taxa de convergência difere de $\sqrt n$ [@casella2011inferencia, def. 10.1.11; @lauritzen2023fundamentals, thm. 5.11].
+Essa distinção será particularmente útil no estudo dos métodos de estimação pontual. Sob condições de regularidade apropriadas, estimadores de máxima verossimilhança frequentemente apresentam distribuição assintótica cuja variância coincide com o limite determinado pela informação de Fisher.
+
+Essa conclusão exige condições próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações em que a taxa de convergência difere de $\sqrt n$ [@casella2011inferencia, def. 10.1.11; @lauritzen2023fundamentals, thm. 5.11].
 
 ## Aprofundamento: Princípios de redução de dados
 
@@ -4674,7 +4843,7 @@ $$
 
 Portanto, as duas representações determinam uma à outra e contêm a mesma informação sobre $(\mu,\sigma^2)$.
 
-::: {.callout-note collapse="true" title="Verificação — Identificação da forma exponencial"}
+**Verificação — Identificação da forma exponencial**
 
 O logaritmo da densidade é
 
@@ -4737,8 +4906,6 @@ $$
 $$
 
 Os demais termos dependem dos parâmetros, mas não de $x$, e são incorporados à função de normalização $A(\eta)$.
-
-:::
 
 ::::
 
@@ -5086,12 +5253,15 @@ Essa ideia conduz ao estimador não viesado de variância uniformemente mínima.
 
 ::: {.callout-important title="Definição — ENVVUM"}
 
-Um estimador não viesado $U^*$ de $\tau(\theta)$, com variância finita para todo $\theta\in\Theta$, é denominado **estimador não viesado de variância uniformemente mínima** (ENVVUM; em inglês, UMVU) quando
+Um estimador não viesado $W_{\mathrm{ENVVUM}}$ de $\tau(\theta)$, com variância finita para todo $\theta\in\Theta$, é denominado **estimador não viesado de variância uniformemente mínima** (ENVVUM; em inglês, UMVU) quando
 
 $$
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta
+\left(
+W_{\mathrm{ENVVUM}}
+\right)
 \leq
-\operatorname{Var}_\theta(U)
+\operatorname{Var}_\theta(W)
 $$
 
 para todo
@@ -5100,7 +5270,7 @@ $$
 \theta\in\Theta
 $$
 
-e para todo estimador não viesado $U$ de $\tau(\theta)$ com variância finita [@casella2011inferencia, def. 7.3.7; @bickel2016volume2, sec. 8.2.3; @rasch2018, sec. 2.4].
+e para todo estimador não viesado $W$ de $\tau(\theta)$ com variância finita [@casella2011inferencia, def. 7.3.7; @bickel2016volume2, sec. 8.2.3; @rasch2018, sec. 2.4].
 
 :::
 
@@ -5123,23 +5293,23 @@ $$
 para $\theta$ e um estimador inicial
 
 $$
-U=U(\mathbf X)
+W=W(\mathbf X)
 $$
 
 de $\tau(\theta)$.
 
-A ideia de Rao--Blackwell é substituir $U$ por sua esperança condicional dado $T$.
+A ideia de Rao--Blackwell é substituir $W$ por sua esperança condicional dado $T$.
 
 ::: {.callout-important title="Teorema — Rao--Blackwell"}
 
-Seja $T$ uma estatística suficiente para $\theta$ e seja $U(\mathbf X)$ um estimador de $\tau(\theta)$ com segundo momento finito.
+Seja $T$ uma estatística suficiente para $\theta$ e seja $W(\mathbf X)$ um estimador de $\tau(\theta)$ com segundo momento finito.
 
 Defina
 
 $$
-U^*(T)
+W^*(T)
 =
-E_\theta[U(\mathbf X)\mid T].
+E_\theta[W(\mathbf X)\mid T].
 $$
 
 A suficiência garante que se pode escolher uma versão dessa esperança condicional que seja função apenas de $T$, sem depender do valor desconhecido de $\theta$.
@@ -5147,23 +5317,23 @@ A suficiência garante que se pode escolher uma versão dessa esperança condici
 Então,
 
 $$
-E_\theta[U^*(T)]
+E_\theta[W^*(T)]
 =
-E_\theta[U]
+E_\theta(W)
 $$
 
 e
 
 $$
-\operatorname{EQM}_\theta(U^*)
+\operatorname{EQM}_\theta(W^*)
 \leq
-\operatorname{EQM}_\theta(U).
+\operatorname{EQM}_\theta(W).
 $$
 
 Para cada $\theta$, a igualdade ocorre se, e somente se,
 
 $$
-\operatorname{Var}_\theta(U\mid T)=0
+\operatorname{Var}_\theta(W\mid T)=0
 $$
 
 $P_\theta$-quase certamente.
@@ -5171,31 +5341,31 @@ $P_\theta$-quase certamente.
 Equivalentemente,
 
 $$
-U
+W
 =
-E_\theta(U\mid T)
+E_\theta(W\mid T)
 $$
 
 $P_\theta$-quase certamente.
 
-Assim, não existe melhoria estrita quando $U$ já é, a menos de equivalência quase certa, uma função de $T$ [@rice2007mathematical, sec. 8.8.2; @bickel2016volume2, thm. 8.2.6].
+Assim, não existe melhoria estrita quando $W$ já é, a menos de equivalência quase certa, uma função de $T$ [@rice2007mathematical, sec. 8.8.2; @bickel2016volume2, thm. 8.2.6].
 
 :::
 
 O resultado possui duas consequências principais.
 
-Primeiro, $U$ e $U^*$ têm a mesma esperança. Portanto, Rao--Blackwell não altera o viés do estimador.
+Primeiro, $W$ e $W^*$ têm a mesma esperança. Portanto, Rao--Blackwell não altera o viés do estimador.
 
 Segundo, o condicionamento em $T$ não aumenta sua variabilidade. A diferença entre os dois EQMs pode ser escrita como
 
 $$
-\operatorname{EQM}_\theta(U)
+\operatorname{EQM}_\theta(W)
 =
-\operatorname{EQM}_\theta(U^*)
+\operatorname{EQM}_\theta(W^*)
 +
 E_\theta
 \left[
-\operatorname{Var}_\theta(U\mid T)
+\operatorname{Var}_\theta(W\mid T)
 \right].
 $$
 
@@ -5204,7 +5374,7 @@ Como
 $$
 E_\theta
 \left[
-\operatorname{Var}_\theta(U\mid T)
+\operatorname{Var}_\theta(W\mid T)
 \right]
 \geq0,
 $$
@@ -5212,9 +5382,9 @@ $$
 temos
 
 $$
-\operatorname{EQM}_\theta(U^*)
+\operatorname{EQM}_\theta(W^*)
 \leq
-\operatorname{EQM}_\theta(U).
+\operatorname{EQM}_\theta(W).
 $$
 
 ::: {.callout-note collapse="true" title="Demonstração — Redução do EQM por condicionamento"}
@@ -5222,9 +5392,9 @@ $$
 Defina
 
 $$
-U^*(T)
+W^*(T)
 =
-E_\theta(U\mid T).
+E_\theta(W\mid T).
 $$
 
 **Preservação da esperança**
@@ -5233,25 +5403,25 @@ Pela propriedade da esperança iterada,
 
 $$
 \begin{aligned}
-E_\theta[U^*(T)]
+E_\theta[W^*(T)]
 &=
 E_\theta
 \left[
-E_\theta(U\mid T)
+E_\theta(W\mid T)
 \right]\\
 &=
-E_\theta(U).
+E_\theta(W).
 \end{aligned}
 $$
 
-Portanto, $U$ e $U^*$ possuem a mesma esperança.
+Portanto, $W$ e $W^*$ possuem a mesma esperança.
 
 Como ambos estimam o mesmo alvo $\tau(\theta)$, seus vieses também são iguais:
 
 $$
-B_\theta(U^*)
+B_\theta(W^*)
 =
-B_\theta(U).
+B_\theta(W).
 $$
 
 **Redução da variância**
@@ -5259,50 +5429,50 @@ $$
 Pela decomposição da variância total,
 
 $$
-\operatorname{Var}_\theta(U)
+\operatorname{Var}_\theta(W)
 =
 \operatorname{Var}_\theta
 \left[
-E_\theta(U\mid T)
+E_\theta(W\mid T)
 \right]
 +
 E_\theta
 \left[
-\operatorname{Var}_\theta(U\mid T)
+\operatorname{Var}_\theta(W\mid T)
 \right].
 $$
 
 Como
 
 $$
-E_\theta(U\mid T)
+E_\theta(W\mid T)
 =
-U^*(T),
+W^*(T),
 $$
 
 segue que
 
 $$
-\operatorname{Var}_\theta(U)
+\operatorname{Var}_\theta(W)
 =
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta(W^*)
 +
 E_\theta
 \left[
-\operatorname{Var}_\theta(U\mid T)
+\operatorname{Var}_\theta(W\mid T)
 \right].
 $$
 
 Portanto,
 
 $$
-\operatorname{Var}_\theta(U)
+\operatorname{Var}_\theta(W)
 -
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta(W^*)
 =
 E_\theta
 \left[
-\operatorname{Var}_\theta(U\mid T)
+\operatorname{Var}_\theta(W\mid T)
 \right]
 \geq0.
 $$
@@ -5310,9 +5480,9 @@ $$
 Logo,
 
 $$
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta(W^*)
 \leq
-\operatorname{Var}_\theta(U).
+\operatorname{Var}_\theta(W).
 $$
 
 **Redução do EQM**
@@ -5320,44 +5490,44 @@ $$
 Pela decomposição viés--variância,
 
 $$
-\operatorname{EQM}_\theta(U)
+\operatorname{EQM}_\theta(W)
 =
-\operatorname{Var}_\theta(U)
+\operatorname{Var}_\theta(W)
 +
-B_\theta(U)^2
+B_\theta(W)^2
 $$
 
 e
 
 $$
-\operatorname{EQM}_\theta(U^*)
+\operatorname{EQM}_\theta(W^*)
 =
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta(W^*)
 +
-B_\theta(U^*)^2.
+B_\theta(W^*)^2.
 $$
 
 Como
 
 $$
-B_\theta(U^*)=B_\theta(U),
+B_\theta(W^*)=B_\theta(W),
 $$
 
 a diferença entre os EQMs é exatamente a diferença entre as variâncias:
 
 $$
 \begin{aligned}
-\operatorname{EQM}_\theta(U)
+\operatorname{EQM}_\theta(W)
 -
-\operatorname{EQM}_\theta(U^*)
+\operatorname{EQM}_\theta(W^*)
 &=
-\operatorname{Var}_\theta(U)
+\operatorname{Var}_\theta(W)
 -
-\operatorname{Var}_\theta(U^*)\\
+\operatorname{Var}_\theta(W^*)\\
 &=
 E_\theta
 \left[
-\operatorname{Var}_\theta(U\mid T)
+\operatorname{Var}_\theta(W\mid T)
 \right]\\
 &\geq0.
 \end{aligned}
@@ -5366,36 +5536,36 @@ $$
 Portanto,
 
 $$
-\operatorname{EQM}_\theta(U^*)
+\operatorname{EQM}_\theta(W^*)
 \leq
-\operatorname{EQM}_\theta(U).
+\operatorname{EQM}_\theta(W).
 $$
 
 A igualdade ocorre quando
 
 $$
-\operatorname{Var}_\theta(U\mid T)=0
+\operatorname{Var}_\theta(W\mid T)=0
 $$
 
-quase certamente, isto é, quando não resta variabilidade em $U$ depois que $T$ é conhecido.
+quase certamente, isto é, quando não resta variabilidade em $W$ depois que $T$ é conhecido.
 
 :::
 
-Se $U$ é não viesado para $\tau(\theta)$, então
+Se $W$ é não viesado para $\tau(\theta)$, então
 
 $$
-E_\theta(U)=\tau(\theta).
+E_\theta(W)=\tau(\theta).
 $$
 
 Como Rao--Blackwell preserva a esperança,
 
 $$
-E_\theta[U^*(T)]
+E_\theta[W^*(T)]
 =
 \tau(\theta).
 $$
 
-Assim, $U^*$ também é não viesado e possui variância não superior à de $U$.
+Assim, $W^*$ também é não viesado e possui variância não superior à de $W$.
 
 O condicionamento em uma estatística suficiente pode, portanto, remover variabilidade associada a aspectos dos dados que não acrescentam informação sobre o parâmetro [@rice2007mathematical, sec. 8.8.2; @bickel2016volume2, thm. 8.2.6].
 
@@ -5424,7 +5594,7 @@ $$
 Um estimador simples pode ser construído utilizando somente a primeira observação:
 
 $$
-U
+W
 =
 \mathbf 1\{X_1=0\}.
 $$
@@ -5440,9 +5610,9 @@ $$
 e obtenha
 
 $$
-U^*(T)
+W^*(T)
 =
-E_\theta(U\mid T).
+E_\theta(W\mid T).
 $$
 
 :::: {.callout-note collapse="true" title="Resolução — Rao--Blackwell no modelo Poisson"}
@@ -5452,7 +5622,7 @@ $$
 Como
 
 $$
-U
+W
 =
 \mathbf 1\{X_1=0\},
 $$
@@ -5461,7 +5631,7 @@ temos
 
 $$
 \begin{aligned}
-E_\theta(U)
+E_\theta(W)
 &=
 P_\theta(X_1=0)\\
 &=
@@ -5469,13 +5639,13 @@ e^{-\theta}.
 \end{aligned}
 $$
 
-Portanto, $U$ é não viesado para
+Portanto, $W$ é não viesado para
 
 $$
 \tau(\theta)=e^{-\theta}.
 $$
 
-Entretanto, $U$ utiliza apenas $X_1$ e ignora as demais observações da amostra.
+Entretanto, $W$ utiliza apenas $X_1$ e ignora as demais observações da amostra.
 
 **Estatística suficiente**
 
@@ -5502,16 +5672,16 @@ e $T$ também é completa.
 Para aplicar Rao--Blackwell, calculamos
 
 $$
-U^*(T)
+W^*(T)
 =
-E_\theta(U\mid T).
+E_\theta(W\mid T).
 $$
 
-Como $U$ é um indicador,
+Como $W$ é um indicador,
 
 $$
 \begin{aligned}
-U^*(T)
+W^*(T)
 &=
 E_\theta
 \left[
@@ -5565,7 +5735,7 @@ $$
 Substituindo $t$ pela variável aleatória $T$,
 
 $$
-U^*(T)
+W^*(T)
 =
 \left(
 1-\frac1n
@@ -5583,14 +5753,14 @@ $$
 também podemos escrever
 
 $$
-U^*(T)
+W^*(T)
 =
 \left(
 1-\frac1n
 \right)^{\sum_{i=1}^nX_i}.
 $$
 
-::: {.callout-note collapse="true" title="Derivação — Distribuição condicional dado $T=t$"}
+**Derivação — Distribuição condicional dado $T=t$**
 
 Considere valores
 
@@ -5713,32 +5883,30 @@ P_\theta(X_1=0\mid T=t)
 \end{aligned}
 $$
 
-:::
-
 Pelo teorema de Rao--Blackwell,
 
 $$
-E_\theta[U^*(T)]
+E_\theta[W^*(T)]
 =
-E_\theta(U)
+E_\theta(W)
 =
 e^{-\theta},
 $$
 
-de modo que $U^*$ continua sendo não viesado.
+de modo que $W^*$ continua sendo não viesado.
 
 Além disso,
 
 $$
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta(W^*)
 \leq
-\operatorname{Var}_\theta(U).
+\operatorname{Var}_\theta(W).
 $$
 
 Portanto,
 
 $$
-U^*(T)
+W^*(T)
 =
 \left(
 1-\frac1n
@@ -5752,20 +5920,20 @@ $$
 O ganho conceitual é importante: o estimador inicial
 
 $$
-U=\mathbf 1\{X_1=0\}
+W=\mathbf 1\{X_1=0\}
 $$
 
 utiliza apenas uma observação, enquanto
 
 $$
-U^*(T)
+W^*(T)
 $$
 
 depende da amostra por meio de uma estatística suficiente.
 
 Rao--Blackwell garante que essa substituição preserva o não viés e não aumenta a variância.
 
-Para concluir que $U^*(T)$ possui variância mínima entre **todos** os estimadores não viesados de $e^{-\theta}$, precisamos utilizar uma propriedade adicional de $T$: sua completude. Essa é precisamente a função do teorema de Lehmann--Scheffé.
+Para concluir que $W^*(T)$ possui variância mínima entre **todos** os estimadores não viesados de $e^{-\theta}$, precisamos utilizar uma propriedade adicional de $T$: sua completude. Essa é precisamente a função do teorema de Lehmann--Scheffé.
 
 ### Teorema de Lehmann--Scheffé {.unnumbered}
 
@@ -5813,7 +5981,7 @@ Queremos mostrar que sua variância não pode ser superada por nenhum outro esti
 Seja
 
 $$
-U=U(\mathbf X)
+W=W(\mathbf X)
 $$
 
 qualquer estimador não viesado de $\tau(\theta)$, com variância finita.
@@ -5821,17 +5989,17 @@ qualquer estimador não viesado de $\tau(\theta)$, com variância finita.
 Como $T$ é suficiente, o teorema de Rao--Blackwell permite construir
 
 $$
-U^*(T)
+W^*(T)
 =
-E_\theta(U\mid T).
+E_\theta(W\mid T).
 $$
 
 Esse novo estimador é função de $T$, continua sendo não viesado e satisfaz
 
 $$
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta(W^*)
 \leq
-\operatorname{Var}_\theta(U).
+\operatorname{Var}_\theta(W).
 $$
 
 **Uso da completude**
@@ -5845,7 +6013,7 @@ $$
 quanto
 
 $$
-U^*(T)
+W^*(T)
 $$
 
 são funções de $T$ e são não viesadas para o mesmo alvo $\tau(\theta)$.
@@ -5861,7 +6029,7 @@ $$
 e
 
 $$
-E_\theta[U^*(T)]
+E_\theta[W^*(T)]
 =
 \tau(\theta).
 $$
@@ -5871,7 +6039,7 @@ Subtraindo,
 $$
 E_\theta
 \left[
-\phi(T)-U^*(T)
+\phi(T)-W^*(T)
 \right]
 =
 0
@@ -5882,7 +6050,7 @@ para todo $\theta$.
 Como $T$ é completa, a única função de $T$ cuja esperança é zero para todos os valores de $\theta$ é a função nula. Assim,
 
 $$
-\phi(T)-U^*(T)
+\phi(T)-W^*(T)
 =
 0
 $$
@@ -5894,7 +6062,7 @@ Logo,
 $$
 \phi(T)
 =
-U^*(T)
+W^*(T)
 $$
 
 $P_\theta$-quase certamente.
@@ -5904,12 +6072,12 @@ Consequentemente,
 $$
 \operatorname{Var}_\theta[\phi(T)]
 =
-\operatorname{Var}_\theta(U^*)
+\operatorname{Var}_\theta(W^*)
 \leq
-\operatorname{Var}_\theta(U).
+\operatorname{Var}_\theta(W).
 $$
 
-Como $U$ foi escolhido arbitrariamente entre os estimadores não viesados de $\tau(\theta)$, concluímos que
+Como $W$ foi escolhido arbitrariamente entre os estimadores não viesados de $\tau(\theta)$, concluímos que
 
 $$
 \phi(T)
@@ -5934,7 +6102,7 @@ $$
 é suficiente e completa para $\theta$, e
 
 $$
-U^*(T)
+W^*(T)
 =
 \left(
 1-\frac1n
@@ -5950,7 +6118,7 @@ $$
 Portanto, pelo teorema de Lehmann--Scheffé,
 
 $$
-U^*(T)
+W^*(T)
 =
 \left(
 1-\frac1n
@@ -5971,12 +6139,12 @@ Para aplicar o teorema, podemos seguir dois caminhos:
    \tau(\theta);
    $$
 
-2. partir de qualquer estimador não viesado $U$ e utilizar Rao--Blackwell para obter
+2. partir de qualquer estimador não viesado $W$ e utilizar Rao--Blackwell para obter
 
    $$
-   U^*(T)
+   W^*(T)
    =
-   E_\theta(U\mid T).
+   E_\theta(W\mid T).
    $$
 
 Nos dois casos, se a estatística $T$ é suficiente e completa, a função não viesada obtida é o ENVVUM do alvo.
@@ -6206,7 +6374,7 @@ E_\theta(T^{-1})^2
 \end{aligned}
 $$
 
-::: {.callout-note collapse="true" title="Derivação — Momentos negativos de $T$"}
+**Derivação — Momentos negativos de $T$**
 
 Como
 
@@ -6340,8 +6508,6 @@ E_\theta(T^{-2})
 $$
 
 Esses dois momentos produzem diretamente a variância do ENVVUM.
-
-:::
 
 **Comparação com o limite de Cramér--Rao**
 
@@ -7320,11 +7486,11 @@ $$
 A suficiência pode ser utilizada diretamente para melhorar um estimador:
 
 $$
-U
+W
 \overset{\text{Rao--Blackwell}}{\longrightarrow}
-U^*(T)
+W^*(T)
 =
-E_\theta(U\mid T).
+E_\theta(W\mid T).
 $$
 
 Quando $T$ também é completa,
@@ -7570,7 +7736,7 @@ $$
 e o estimador
 
 $$
-U
+W
 =
 \mathbf 1\{X_1=1\}
 $$
@@ -7583,7 +7749,7 @@ $$
 \theta e^{-\theta}.
 $$
 
-a. Verifique que $U$ é não viesado para $\tau(\theta)$.
+a. Verifique que $W$ é não viesado para $\tau(\theta)$.
 
 b. Mostre que
 
@@ -7598,12 +7764,12 @@ $$
 c. Calcule
 
 $$
-U^*(T)
+W^*(T)
 =
-E_\theta(U\mid T).
+E_\theta(W\mid T).
 $$
 
-d. Explique, utilizando o teorema de Rao--Blackwell, a relação entre os EQMs de $U$ e $U^*(T)$.
+d. Explique, utilizando o teorema de Rao--Blackwell, a relação entre os EQMs de $W$ e $W^*(T)$.
 
 9.  **Lehmann--Scheffé no modelo binomial.** Considere
 
