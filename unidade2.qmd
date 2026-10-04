@@ -103,13 +103,7 @@ X_1,\ldots,X_n
 \operatorname{Exp}(\mu),
 $$
 
-na parametrização pela média, de modo que
-
-$$
-E(X_i)=\mu.
-$$
-
-Na parametrização pela média utilizada neste exemplo, a densidade é
+na parametrização pela média, ou seja, a densidade é
 
 $$
 f(x\mid\mu)
@@ -119,6 +113,13 @@ e^{-x/\mu}
 \mathbf 1_{(0,\infty)}(x),
 \qquad
 \mu>0.
+$$
+
+
+Neste caso,
+
+$$
+E(X_i)=\mu.
 $$
 
 A distribuição exponencial também pode ser parametrizada pela **taxa** $\lambda$, caso em que
@@ -159,8 +160,12 @@ $$
 \begin{aligned}
 f_{\mathbf X}(\mathbf x\mid\mu)
 &=
-\prod_{i=1}^n
-f(x_i\mid\mu)\\
+\prod_{i=1}^n 
+f(x_i\mid\mu) = 
+\prod_{i=1}^n \frac1\mu
+e^{-x_i/\mu}
+\mathbf 1_{(0,\infty)}(x_i)
+\\
 &=
 \mu^{-n}
 \exp\left(
@@ -172,7 +177,52 @@ f(x_i\mid\mu)\\
 \end{aligned}
 $$
 
-Além disso,
+Para calcular a probabilidade do segundo item, primeiro obtemos a probabilidade de cauda de uma observação. Para $x>0$,
+
+$$
+\begin{aligned}
+P(X_i>x)
+&=
+\int_x^\infty
+\frac{1}{\mu}e^{-t/\mu}\,dt\\
+&=
+\left[
+-e^{-t/\mu}
+\right]_{x}^{\infty}\\
+&=
+e^{-x/\mu}.
+\end{aligned}
+$$
+
+Consequentemente, a função de distribuição da exponencial parametrizada pela média é
+
+$$
+F_X(x)
+=
+P(X_i\leq x)
+=
+1-e^{-x/\mu},
+\qquad
+x>0,
+$$
+
+com
+
+$$
+F_X(x)=0,
+\qquad
+x\leq0.
+$$
+
+Em particular,
+
+$$
+P(X_i>2)
+=
+e^{-2/\mu}.
+$$
+
+Como as observações são independentes,
 
 $$
 \begin{aligned}
@@ -399,7 +449,9 @@ $$
 Assim,
 
 $$
-E(X_i)=\mu_N,
+E(X_i)=\mu_N
+\qquad
+\text{e}
 \qquad
 \operatorname{Var}(X_i)=\sigma_N^2.
 $$
@@ -838,62 +890,169 @@ Portanto, a distribuição amostral de uma estatística depende não apenas da e
 
 Quando a população e o tamanho amostral são pequenos, a distribuição amostral pode ser obtida enumerando todas as amostras possíveis e calculando a estatística em cada uma delas [@ramachandran2021r, seção 4.1, pp. 148--151; @chihara2022, seção 4.2, pp. 82--85].
 
-::: {.callout-tip title="Exemplo — Média de uma população finita"}
+::: {.callout-tip title="Exemplo — Qualidade da água em uma população finita"}
 
-Considere a população
+Uma equipe de monitoramento ambiental acompanha quatro reservatórios de uma determinada região. Em cada reservatório, foi registrada a concentração média de oxigênio dissolvido na água, em mg/L. Os valores que compõem essa população finita são
 
 $$
 \mathcal U
 =
-\{3{,}8;3{,}9;4{,}0;4{,}1\}
+\{3{,}8;3{,}9;4{,}0;4{,}1\}.
 $$
 
-em km/L e amostras de tamanho
+Considere a seleção de amostras de tamanho
 
 $$
-n=2.
+n=2
 $$
+
+a partir desses quatro reservatórios.
+
+Para comparar dois mecanismos de amostragem, considere inicialmente a seleção **com reposição**, na qual um reservatório selecionado volta a ficar disponível para a segunda seleção. Em seguida, considere a seleção **sem reposição**, na qual um mesmo reservatório não pode aparecer duas vezes na amostra.
 
 Determine:
 
-1. a distribuição amostral de $\overline X$ com reposição;
-2. $E(\overline X)$ e $\operatorname{Var}(\overline X)$;
-3. a distribuição amostral de $\overline X$ sem reposição;
-4. como a ausência de reposição altera a variância da média.
+1. a distribuição amostral de $\overline X$ no mecanismo com reposição;
+2. $E(\overline X)$ e $\operatorname{Var}(\overline X)$ nesse mecanismo;
+3. a distribuição amostral de $\overline X$ no mecanismo sem reposição;
+4. $E(\overline X)$ e $\operatorname{Var}(\overline X)$ no mecanismo sem reposição;
+5. o efeito da ausência de reposição sobre a variabilidade da média amostral.
 
 :::
 
 ::: {.callout-note collapse="true" title="Resolução — Distribuição de $\overline X$ com e sem reposição"}
 
-Com reposição, existem $4^2=16$ amostras ordenadas equiprováveis. A distribuição de $\overline{X}$ é
+A população é
 
-| $\overline{x}$ | $3{,}80$ | $3{,}85$ | $3{,}90$ | $3{,}95$ | $4{,}00$ | $4{,}05$ | $4{,}10$ |
-|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|
-|  Probabilidade |   $1/16$ |   $2/16$ |   $3/16$ |   $4/16$ |   $3/16$ |   $2/16$ |   $1/16$ |
+$$
+\mathcal U
+=
+\{3{,}8;3{,}9;4{,}0;4{,}1\},
+$$
+
+com
+
+$$
+N=4
+\qquad\text{e}\qquad
+n=2.
+$$
 
 A média e a variância populacionais são
 
-$$\mu_N=3{,}95
-\quad\text{e}\quad
-\sigma_N^2=0{,}0125.
+$$
+\mu_N
+=
+\frac{3{,}8+3{,}9+4{,}0+4{,}1}{4}
+=
+3{,}95
 $$
 
-Consequentemente,
+e
 
-$$E(\overline{X})=3{,}95
-\quad\text{e}\quad
-\operatorname{Var}(\overline{X})=\frac{0{,}0125}{2}=0{,}00625.
+$$
+\begin{aligned}
+\sigma_N^2
+&=
+\frac{1}{4}
+\sum_{r=1}^4
+(a_r-\mu_N)^2\\
+&=
+0{,}0125.
+\end{aligned}
 $$
 
-Sem reposição, como a média amostral não depende da ordem em que as duas unidades são selecionadas, podemos enumerar os
+### Com reposição
+
+Com reposição, cada uma das duas seleções pode resultar em qualquer um dos quatro reservatórios. Como a ordem das seleções é considerada, existem
+
+$$
+4^2=16
+$$
+
+amostras ordenadas equiprováveis.
+
+As amostras possíveis e as respectivas médias são:
+
+| Primeira seleção | Segunda seleção | $\overline{x}$ |
+|:---:|:---:|---:|
+| $3{,}8$ | $3{,}8$ | $3{,}80$ |
+| $3{,}8$ | $3{,}9$ | $3{,}85$ |
+| $3{,}8$ | $4{,}0$ | $3{,}90$ |
+| $3{,}8$ | $4{,}1$ | $3{,}95$ |
+| $3{,}9$ | $3{,}8$ | $3{,}85$ |
+| $3{,}9$ | $3{,}9$ | $3{,}90$ |
+| $3{,}9$ | $4{,}0$ | $3{,}95$ |
+| $3{,}9$ | $4{,}1$ | $4{,}00$ |
+| $4{,}0$ | $3{,}8$ | $3{,}90$ |
+| $4{,}0$ | $3{,}9$ | $3{,}95$ |
+| $4{,}0$ | $4{,}0$ | $4{,}00$ |
+| $4{,}0$ | $4{,}1$ | $4{,}05$ |
+| $4{,}1$ | $3{,}8$ | $3{,}95$ |
+| $4{,}1$ | $3{,}9$ | $4{,}00$ |
+| $4{,}1$ | $4{,}0$ | $4{,}05$ |
+| $4{,}1$ | $4{,}1$ | $4{,}10$ |
+
+Como cada amostra ordenada possui probabilidade $1/16$, basta contar quantas delas produzem cada valor de $\overline X$.
+
+| $\overline{x}$ | $3{,}80$ | $3{,}85$ | $3{,}90$ | $3{,}95$ | $4{,}00$ | $4{,}05$ | $4{,}10$ |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| Número de amostras | $1$ | $2$ | $3$ | $4$ | $3$ | $2$ | $1$ |
+| Probabilidade | $1/16$ | $2/16$ | $3/16$ | $4/16$ | $3/16$ | $2/16$ | $1/16$ |
+
+Essa tabela constitui a distribuição amostral de $\overline X$ no mecanismo com reposição.
+
+Sua esperança é
+
+$$
+E(\overline X)
+=
+\mu_N
+=
+3{,}95,
+$$
+
+e, como as duas seleções são independentes,
+
+$$
+\operatorname{Var}(\overline X)
+=
+\frac{\sigma_N^2}{n}
+=
+\frac{0{,}0125}{2}
+=
+0{,}00625.
+$$
+
+### Sem reposição
+
+Sem reposição, um reservatório selecionado na primeira retirada não pode aparecer novamente na segunda.
+
+Se considerássemos a ordem das seleções, haveria
+
+$$
+4(3)=12
+$$
+
+amostras ordenadas equiprováveis.
+
+Entretanto, a média amostral não depende da ordem. Por exemplo,
+
+$$
+\frac{3{,}8+3{,}9}{2}
+=
+\frac{3{,}9+3{,}8}{2}.
+$$
+
+Assim, cada par de sequências que difere apenas pela ordem produz o mesmo valor de $\overline X$. Podemos, portanto, enumerar diretamente os
 
 $$
 \binom{4}{2}=6
 $$
 
-subconjuntos equiprováveis. Se a amostra fosse representada de forma ordenada, haveria $4(3)=12$ sequências equiprováveis; cada subconjunto apareceria em duas ordens e produziria o mesmo valor de $\overline X$. Portanto, as duas formas de enumeração induzem a mesma distribuição amostral da média.
+subconjuntos equiprováveis.
 
-Os seis subconjuntos e suas médias são
+Os seis subconjuntos e suas médias são:
 
 | Amostra | $\overline{x}$ |
 |:---:|---:|
@@ -904,34 +1063,56 @@ Os seis subconjuntos e suas médias são
 | $(3{,}9;4{,}1)$ | $4{,}00$ |
 | $(4{,}0;4{,}1)$ | $4{,}05$ |
 
-Como cada amostra possui probabilidade $1/6$, a distribuição amostral de $\overline X$ é
+Como cada subconjunto possui probabilidade $1/6$, agrupando os valores iguais de $\overline X$ obtemos:
 
 | $\overline{x}$ | $3{,}85$ | $3{,}90$ | $3{,}95$ | $4{,}00$ | $4{,}05$ |
 |---:|---:|---:|---:|---:|---:|
+| Número de amostras | $1$ | $1$ | $2$ | $1$ | $1$ |
 | Probabilidade | $1/6$ | $1/6$ | $2/6$ | $1/6$ | $1/6$ |
 
-A esperança continua sendo
+A esperança permanece
+
+$$
+E(\overline X)
+=
+\mu_N
+=
+3{,}95.
+$$
+
+Para a variância, utiliza-se a correção de população finita:
+
+$$
+\begin{aligned}
+\operatorname{Var}(\overline X)
+&=
+\frac{\sigma_N^2}{n}
+\frac{N-n}{N-1}\\
+&=
+\frac{0{,}0125}{2}
+\frac{4-2}{4-1}\\
+&=
+0{,}004166\ldots.
+\end{aligned}
+$$
+
+### Comparação dos mecanismos
+
+Nos dois mecanismos,
 
 $$
 E(\overline X)=3{,}95.
 $$
 
-e
+A diferença aparece na variabilidade:
 
 $$
-\operatorname{Var}(\overline{X})
+\operatorname{Var}(\overline X)
 =
-\frac{0{,}0125}{2}\frac{4-2}{4-1}
-=
-0{,}004166\ldots.
-$$
-
-Observe que a esperança de $\overline X$ permaneceu igual a $3{,}95$ nos dois mecanismos de amostragem. O que mudou foi sua variância:
-
-$$
-0{,}00625
-\qquad\longrightarrow\qquad
-0{,}004166\ldots
+\begin{cases}
+0{,}00625, & \text{com reposição},\\[4pt]
+0{,}004166\ldots, & \text{sem reposição}.
+\end{cases}
 $$
 
 A razão entre essas variâncias é
@@ -939,12 +1120,12 @@ A razão entre essas variâncias é
 $$
 \frac{0{,}004166\ldots}{0{,}00625}
 =
-\frac{2}{3}
+\frac23
 =
 \frac{N-n}{N-1}.
 $$
 
-Nesse exemplo, portanto, a enumeração permite visualizar diretamente a correção de população finita: a ausência de reposição preserva a média da distribuição amostral, mas reduz sua variabilidade.
+Portanto, a ausência de reposição mantém a média da distribuição amostral, mas reduz sua variância. Nesse exemplo, a enumeração permite observar diretamente o efeito da correção de população finita.
 
 :::
 
@@ -1696,10 +1877,14 @@ $$
 \frac{\sigma^2}{n}.
 $$
 
-Consequentemente,
+Consequentemente, o erro-padrão é
 
 $$
 \operatorname{EP}(\overline X)
+=
+\sqrt{
+\operatorname{Var}(\overline X)
+}
 =
 \frac{\sigma}{\sqrt n}.
 $$
@@ -1808,88 +1993,408 @@ $$
 O erro-padrão decresce à taxa $n^{-1/2}$. Para reduzir o erro-padrão pela metade, é necessário multiplicar o tamanho da amostra por quatro. O aumento de $n$ reduz a variabilidade da média, mas não corrige viés de seleção, dependência não modelada ou erros sistemáticos de mensuração [@rice2007mathematical, seção 7.3.1, pp. 206--207].
 :::
 
-::: {.callout-tip title="Exemplo — Níveis de colesterol"}
+::: {.callout-tip title="Exemplo — Variabilidade individual e média amostral dos níveis de colesterol"}
 
-Suponha que os níveis de colesterol sejam distribuídos como
-
-$$
-X\sim N(210,37^2)\ \text{mg/dL}.
-$$
-
-Para amostras de tamanho
+Um programa de acompanhamento em saúde registra os níveis de colesterol total de adultos de determinada população. Admita que o nível de colesterol de um indivíduo selecionado ao acaso possa ser modelado por
 
 $$
-n=10,
+X\sim N(210,36^2)\ \text{mg/dL}.
 $$
 
-determine:
+A equipe pretende selecionar amostras aleatórias de
 
-1. a distribuição de $\overline X$;
+$$
+n=16
+$$
+
+indivíduos e utilizar a média amostral $\overline X$ para representar o nível médio de colesterol em cada amostra.
+
+O objetivo é comparar a variabilidade observada entre os níveis de colesterol de **indivíduos** com a variabilidade esperada entre as **médias de diferentes amostras de 16 indivíduos**.
+
+Determine:
+
+1. a distribuição amostral de $\overline X$;
 2. o erro-padrão de $\overline X$;
-3. uma região contendo os $95\%$ centrais da distribuição individual;
-4. uma região contendo os $95\%$ centrais da distribuição de $\overline X$.
-
-Compare as amplitudes das duas regiões.
+3. uma região que contenha os $95\%$ centrais da distribuição dos níveis de colesterol individuais;
+4. uma região que contenha os $95\%$ centrais da distribuição das médias de amostras de 16 indivíduos;
+5. compare as amplitudes das duas regiões e interprete a diferença.
 
 :::
 
 ::: {.callout-note collapse="true" title="Resolução — Distribuição e erro-padrão da média no modelo normal"}
 
-Como a população é normal,
+Como a população possui distribuição normal,
+
+$$
+X\sim N(210,36^2),
+$$
+
+a distribuição amostral de $\overline X$ também é normal, independentemente do tamanho da amostra. Neste caso, portanto, a normalidade de $\overline X$ é um **resultado exato** e não uma aproximação obtida pelo Teorema Central do Limite.
+
+Para uma amostra aleatória de tamanho $n$ proveniente de uma população
+
+$$
+X\sim N(\mu,\sigma^2),
+$$
+
+temos
 
 $$
 \overline X
 \sim
 N\left(
-210,\frac{37^2}{10}
+\mu,
+\frac{\sigma^2}{n}
 \right).
 $$
 
-O erro-padrão é
+Neste exemplo,
 
 $$
+\mu=210,
+\qquad
+\sigma=36
+\qquad\text{e}\qquad
+n=16.
+$$
+
+Assim,
+
+$$
+\operatorname{Var}(\overline X)
+=
+\frac{\sigma^2}{n}
+=
+\frac{36^2}{16}
+=
+81.
+$$
+
+Portanto,
+$$
+\overline X
+\sim
+N(210,9^2).
+$$
+
+O erro-padrão da média corresponde ao desvio-padrão de sua distribuição amostral:
+
+$$
+\begin{aligned}
 \operatorname{EP}(\overline X)
-=
-\frac{37}{\sqrt{10}}
-\approx
-11{,}70.
+&=
+\sqrt{\operatorname{Var}(\overline X)}\\
+&=
+\frac{\sigma}{\sqrt n}\\
+&=
+\frac{36}{\sqrt{16}}\\
+&=
+\frac{36}{4}\\
+&=
+9\ \text{mg/dL}.
+\end{aligned}
 $$
 
-Os $95\%$ centrais da distribuição individual estão aproximadamente em
+Observe, portanto, a diferença entre as duas distribuições:
 
 $$
-210\pm1{,}96(37)
-=
-(137{,}48;282{,}52).
+\operatorname{DP}(X)=36\ \text{mg/dL},
 $$
 
-Para a média amostral,
-
-$$
-210
-\pm
-1{,}96
-\frac{37}{\sqrt{10}}
-\approx
-(187{,}07;232{,}93).
-$$
-
-A região correspondente à média amostral é consideravelmente mais estreita porque
+enquanto
 
 $$
 \operatorname{DP}(\overline X)
 =
-\frac{\sigma}{\sqrt n}
-<
-\sigma.
+\operatorname{EP}(\overline X)
+=
+9\ \text{mg/dL}.
 $$
 
-Assim, as médias de amostras de tamanho $10$ apresentam menor variabilidade do que as observações individuais.
+As duas distribuições possuem o mesmo centro, $210$ mg/dL, mas a distribuição das médias amostrais apresenta menor dispersão.
+
+### Região central de 95% de uma distribuição normal
+
+Tanto $X$ quanto $\overline X$ possuem distribuição normal e, portanto, são simétricas em torno de suas respectivas médias.
+
+Para construir uma região central que contenha $95\%$ da probabilidade, os $5\%$ restantes ficam fora dessa região. Pela simetria da distribuição normal, essa probabilidade é dividida igualmente entre as duas caudas:
+
+$$
+\frac{0{,}05}{2}
+=
+0{,}025.
+$$
+
+Assim, buscamos na distribuição normal padrão o valor que deixa probabilidade $0{,}025$ à sua direita, ou, equivalentemente,
+
+$$
+1-0{,}025
+=
+0{,}975
+$$
+
+à sua esquerda.
+
+Se
+
+$$
+Z\sim N(0,1),
+$$
+
+o quantil correspondente é
+
+$$
+z_{0{,}975}
+\approx
+1{,}96.
+$$
+
+Portanto,
+
+$$
+P(-1{,}96<Z<1{,}96)
+\approx
+0{,}95.
+$$
+
+Isso significa que aproximadamente $95\%$ dos valores de uma variável normal encontram-se a até $1{,}96$ desvios-padrão de sua média.
+
+Para uma variável
+
+$$
+Y\sim N(\mu_Y,\sigma_Y^2),
+$$
+
+a região central de $95\%$ é, portanto,
+
+$$
+\mu_Y
+\pm
+1{,}96\sigma_Y.
+$$
+
+### Região central dos níveis individuais
+
+Para um indivíduo,
+
+$$
+X\sim N(210,36^2).
+$$
+
+A média é
+
+$$
+\mu=210
+$$
+
+e o desvio-padrão é
+
+$$
+\sigma=36.
+$$
+
+Logo, os $95\%$ centrais da distribuição dos níveis individuais estão na região
+
+$$
+210\pm1{,}96(36).
+$$
+
+Como
+
+$$
+1{,}96(36)
+=
+70{,}56,
+$$
+
+temos
+
+$$
+210-70{,}56
+=
+139{,}44
+$$
+
+e
+
+$$
+210+70{,}56
+=
+280{,}56.
+$$
+
+Portanto,
+
+$$
+139{,}44<X<280{,}56
+$$
+
+corresponde aproximadamente aos $95\%$ centrais da distribuição dos níveis individuais de colesterol.
+
+A amplitude dessa região é
+
+$$
+280{,}56-139{,}44
+=
+141{,}12\ \text{mg/dL}.
+$$
+
+### Região central das médias amostrais
+
+Para amostras de tamanho $16$, vimos que
+
+$$
+\overline X
+\sim
+N(210,9^2).
+$$
+
+A distribuição de $\overline X$ também é simétrica em torno de $210$, mas seu desvio-padrão é agora o erro-padrão
+
+$$
+\operatorname{EP}(\overline X)=9.
+$$
+
+Para obter os $95\%$ centrais dessa distribuição, utilizamos novamente
+
+$$
+z_{0{,}975}\approx1{,}96,
+$$
+
+pois o percentual central desejado continua sendo $95\%$.
+
+Assim,
+
+$$
+210\pm1{,}96(9).
+$$
+
+Como
+
+$$
+1{,}96(9)
+=
+17{,}64,
+$$
+
+temos
+
+$$
+210-17{,}64
+=
+192{,}36
+$$
+
+e
+
+$$
+210+17{,}64
+=
+227{,}64.
+$$
+
+Portanto,
+
+$$
+192{,}36<\overline X<227{,}64
+$$
+
+corresponde aproximadamente aos $95\%$ centrais da distribuição das médias de amostras de 16 indivíduos.
+
+A amplitude dessa região é
+
+$$
+227{,}64-192{,}36
+=
+35{,}28\ \text{mg/dL}.
+$$
+
+### Comparação
+
+As duas distribuições possuem a mesma média:
+
+$$
+E(X)
+=
+E(\overline X)
+=
+210.
+$$
+
+A diferença está na variabilidade. Para os valores individuais,
+
+$$
+\operatorname{DP}(X)=36,
+$$
+
+enquanto, para as médias amostrais,
+
+$$
+\operatorname{DP}(\overline X)
+=
+\operatorname{EP}(\overline X)
+=
+9.
+$$
+
+Como
+
+$$
+9
+=
+\frac{36}{4},
+$$
+
+o desvio-padrão da distribuição das médias é quatro vezes menor que o desvio-padrão da distribuição dos valores individuais.
+
+A mesma relação aparece nas amplitudes das regiões centrais:
+
+$$
+141{,}12
+\qquad\text{e}\qquad
+35{,}28,
+$$
+
+pois
+
+$$
+\frac{35{,}28}{141{,}12}
+=
+\frac14.
+$$
+
+Isso ocorre porque
+
+$$
+\operatorname{EP}(\overline X)
+=
+\frac{\sigma}{\sqrt n}
+=
+\frac{36}{\sqrt{16}}
+=
+\frac{36}{4}.
+$$
+
+Portanto, os níveis de colesterol de indivíduos podem apresentar uma dispersão relativamente grande em torno de $210$ mg/dL. Já as médias calculadas a partir de amostras de 16 indivíduos tendem a ficar muito mais concentradas em torno desse mesmo valor.
+
+Este exemplo evidencia duas propriedades importantes da média amostral: ela preserva o centro da distribuição populacional,
+
+$$
+E(\overline X)=\mu,
+$$
+
+e apresenta menor variabilidade,
+
+$$
+\operatorname{Var}(\overline X)
+=
+\frac{\sigma^2}{n}.
+$$
 
 :::
 
 ::: {.callout-note title="Intervalo de probabilidade e intervalo de confiança"}
-Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança, pois $\mu$ e $\sigma$ foram tratados como conhecidos. Um intervalo de confiança é um procedimento inferencial aleatório cuja probabilidade de cobertura é definida sob repetição amostral e, portanto, não se confunde com uma região central calculada para uma distribuição com parâmetros conhecidos.
+Os intervalos apresentados neste exemplo descrevem regiões centrais de distribuições conhecidas. Eles não são intervalos de confiança. Um intervalo de confiança é um procedimento inferencial aleatório cuja probabilidade de cobertura é definida sob repetição amostral e, portanto, não se confunde com uma região central calculada para uma distribuição com parâmetros conhecidos.
 :::
 
 ### Diferença de médias de duas amostras independentes
