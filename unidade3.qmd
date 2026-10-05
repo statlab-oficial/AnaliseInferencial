@@ -1,6 +1,6 @@
 # Avaliação de Estimadores e Princípios de Redução de Dados {#sec-avaliacao-reducao}
 
-Em @sec-fundamentos-inferencia, um estimador foi definido como uma estatística utilizada para estimar uma função paramétrica $\tau(\theta)$. No @sec-distribuicoes-amostrais, a distribuição dessas estatísticas permitiu descrever sua variabilidade sob repetição do mecanismo amostral.
+No @sec-fundamentos-inferencia, um estimador foi definido como uma estatística utilizada para estimar uma função paramétrica $\tau(\theta)$. No @sec-distribuicoes-amostrais, a distribuição dessas estatísticas permitiu descrever sua variabilidade sob repetição do mecanismo amostral.
 
 Conhecida essa variabilidade, surgem duas questões complementares. A primeira é **como avaliar a qualidade de um estimador**: seu erro, sua dispersão, seu comportamento quando o tamanho amostral aumenta e os limites de desempenho impostos pelo modelo. A segunda é **como identificar quais aspectos da amostra concentram a informação relevante sobre o parâmetro**, permitindo reduzir os dados sem perda inferencial.
 
@@ -27,7 +27,7 @@ No aprofundamento sobre redução de dados, o leitor deverá também ser capaz d
 
 ## Avaliação de estimadores
 
-### Função de perda, risco e erro quadrático médio {.unnumbered}
+### Função de perda, risco e erro quadrático médio
 
 Um estimador pode apresentar diferentes tipos de erro. Por isso, antes de comparar dois estimadores, é necessário estabelecer **qual critério será utilizado para avaliar seu desempenho**.
 
@@ -43,7 +43,7 @@ $$
 \tau(\theta).
 $$
 
-Uma forma geral de avaliar as consequências de utilizar determinado valor como estimativa consiste em definir uma **função de perda**
+Uma forma geral de avaliar as consequências de utilizar determinado valor como estimativa consiste em definir uma **função de perda** (_Loss_)
 
 $$
 \mathcal L\bigl(\tau(\theta),a\bigr),
@@ -65,7 +65,7 @@ A esperança é calculada em relação à distribuição amostral de $T$, para u
 
 Essa formulação pertence ao quadro da teoria da decisão estatística [@rasch2018, secs. 1.5 and 2.4; @bickel2016volume2, chap. 1].
 
-Um caso especialmente importante é a **perda quadrática**,
+Um caso importante é a **perda quadrática**,
 
 $$
 \mathcal L\bigl(\tau(\theta),a\bigr)
@@ -105,13 +105,13 @@ Por isso, o EQM permite comparar estimadores viesados e não viesados utilizando
 
 :::
 
-A perda quadrática é particularmente conveniente por permitir resultados analíticos simples e por penalizar mais intensamente erros de maior magnitude. Entretanto, sua escolha depende do problema. Quando erros positivos e negativos possuem consequências diferentes, ou quando grandes erros devem receber outro tipo de penalização, outras funções de perda podem ser mais adequadas [@rasch2018, secs. 1.5 and 2.4; @lauritzen2023fundamentals, sec. 4.1].
+A perda quadrática é conveniente por permitir resultados analíticos simples e por penalizar mais intensamente erros de maior magnitude. Entretanto, sua escolha depende do problema. Quando erros positivos e negativos possuem consequências diferentes, ou quando grandes erros devem receber outro tipo de penalização, outras funções de perda podem ser mais adequadas [@rasch2018, secs. 1.5 and 2.4; @lauritzen2023fundamentals, sec. 4.1].
 
-### Viés, variância e erro-padrão {.unnumbered}
+### Viés, variância e erro-padrão
 
 O EQM pode ser compreendido a partir de duas características da distribuição amostral do estimador: sua posição em relação ao alvo e sua dispersão.
 
-A primeira é descrita pelo **viés**.
+A primeira é descrita pelo **viés** (_Bias_).
 
 ::: {.callout-important title="Definição — Viés"}
 
@@ -139,7 +139,7 @@ $$
 
 :::
 
-O viés compara o centro da distribuição amostral do estimador com o valor que se deseja estimar.
+O viés compara a média da distribuição amostral do estimador com o valor que se deseja estimar.
 
 Se
 
@@ -155,7 +155,7 @@ $$
 
 ele tende a **subestimá-lo em média**.
 
-Essa interpretação refere-se ao comportamento do estimador ao longo de amostras repetidas. Um viés positivo, por exemplo, não significa que o estimador produzirá uma superestimação em toda amostra particular.
+Essa interpretação refere-se ao comportamento do estimador ao longo de amostras replicadas. Um viés positivo, por exemplo, não significa que o estimador produzirá uma superestimação em toda amostra particular.
 
 A segunda característica é a dispersão da distribuição amostral. A variância de $T$ é
 
@@ -178,8 +178,6 @@ $$
 $$
 
 O erro-padrão mede quanto o valor do estimador tende a variar entre diferentes amostras produzidas pelo mesmo mecanismo amostral.
-
-Assim como no @sec-distribuicoes-amostrais, o erro-padrão de uma estatística não deve ser confundido com o desvio-padrão das observações individuais. O primeiro descreve a variabilidade da **distribuição amostral do estimador**.
 
 Viés e variância aparecem conjuntamente na decomposição do erro quadrático médio.
 
@@ -433,6 +431,8 @@ $$
 \operatorname{Var}_\theta(T_1)
 &=
 4\operatorname{Var}_\theta(\overline X)\\
+&=
+4\sum_{i=1}^n\frac{1}{n^2}\operatorname{Var}_\theta(X_i)\\
 &=
 4\frac{\theta^2/12}{n}\\
 &=
@@ -703,7 +703,7 @@ $$
 \operatorname{EQM}_\theta(T_1).
 $$
 
-Um aspecto importante é que $T_2$ é viesado, enquanto $T_1$ é não viesado. Mesmo assim, para $n>2$,
+Note que $T_2$ é viesado, enquanto $T_1$ é não viesado. Mesmo assim, para $n>2$,
 
 $$
 \operatorname{EQM}_\theta(T_2)
@@ -711,7 +711,7 @@ $$
 \operatorname{EQM}_\theta(T_1).
 $$
 
-Esse resultado mostra concretamente por que o não viés, isoladamente, não é suficiente para ordenar estimadores segundo sua qualidade quando o critério adotado é o erro quadrático médio.
+Esse resultado mostra uma situação em que o não viés, isoladamente, não é suficiente para ordenar estimadores segundo sua qualidade quando o critério adotado é o erro quadrático médio.
 
 ::::
 
@@ -719,9 +719,9 @@ O exemplo também mostra como a estrutura do modelo pode orientar a construção
 
 Esses mesmos estimadores serão utilizados a seguir para distinguir propriedades de amostra finita de propriedades assintóticas. A construção e a comparação foram adaptadas de @lauritzen2023fundamentals [ex. 4.2]; a interpretação em termos de não viés e EQM também é discutida por @chihara2022 [secs. 6.3.1--6.3.3].
 
-### Consistência {.unnumbered}
+### Consistência 
 
-Viés, variância e EQM podem ser avaliados para um tamanho amostral fixado. Entretanto, muitos procedimentos estatísticos também são avaliados pelo que acontece quando a quantidade de informação aumenta.
+Viés, variância e EQM podem ser avaliados para um tamanho amostral fixado. Entretanto, muitos procedimentos estatísticos também são avaliados pelo que acontece quando o tamanho amostral aumenta.
 
 Para isso, consideramos uma sequência de estimadores
 
@@ -731,19 +731,19 @@ $$
 
 em que $T_n$ é construído a partir de uma amostra de tamanho $n$.
 
-A **consistência** avalia se $T_n$ se concentra progressivamente em torno de $\tau(\theta)$ quando o tamanho amostral aumenta.
+A **consistência** avalia se $T_n=T(X_1,X_2,\ldots,X_n)$ se concentra progressivamente em torno de $\tau(\theta)$ quando o tamanho amostral aumenta.
 
 ::: {.callout-important title="Definição — Consistência em probabilidade"}
 
-Uma sequência de estimadores $\{T_n\}$ é **consistente em probabilidade** para $\tau(\theta)$ se, para todo $\varepsilon>0$ e todo $\theta\in\Theta$,
+Uma sequência de estimadores $\{T_n\}_{n\geq1}$ é **consistente em probabilidade** para $\tau(\theta)$ se, para todo $\varepsilon>0$ e todo $\theta\in\Theta$,
 
 $$
-P_\theta\left(
+P\left(
 \left|
 T_n-\tau(\theta)
 \right|
 >
-\varepsilon
+\varepsilon \mid \theta
 \right)
 \longrightarrow
 0
@@ -768,12 +768,12 @@ $$
 A quantidade
 
 $$
-P_\theta\left(
+P\left(
 \left|
 T_n-\tau(\theta)
 \right|
 >
-\varepsilon
+\varepsilon  \mid \theta
 \right)
 $$
 
@@ -784,13 +784,11 @@ A consistência exige que essa probabilidade se torne arbitrariamente pequena qu
 Portanto, consistência e não viés descrevem propriedades diferentes:
 
 - o **não viés** compara a esperança de $T_n$ com o alvo para um tamanho amostral determinado;
-- a **consistência** descreve o comportamento de toda a sequência $\{T_n\}$ quando $n\to\infty$.
-
-Um estimador pode ser viesado para todo $n$ e ainda assim ser consistente, desde que esse viés e sua variabilidade desapareçam adequadamente quando a amostra cresce.
+- a **consistência** descreve o comportamento de toda a sequência $\{T_n\}_{n\geq1}$ quando $n\to\infty$.
 
 ::: {.callout-important title="Definição — Consistência em erro quadrático médio"}
 
-Uma sequência de estimadores $\{T_n\}$ é **consistente em erro quadrático médio** para $\tau(\theta)$ se
+Uma sequência de estimadores $\{T_n\}_{n\geq1}$ é **consistente em erro quadrático médio** para $\tau(\theta)$ se
 
 $$
 \operatorname{EQM}_\theta(T_n)
@@ -820,8 +818,8 @@ $$
 implica
 
 $$
-P_\theta\left(
-|T_n-\tau(\theta)|>\varepsilon
+P\left(
+|T_n-\tau(\theta)|>\varepsilon \mid \theta
 \right)
 \longrightarrow0.
 $$
@@ -842,12 +840,12 @@ temos
 
 $$
 \begin{aligned}
-P_\theta\left(
-|T_n-\tau(\theta)|>\varepsilon
+P\left(
+|T_n-\tau(\theta)|>\varepsilon  \mid \theta
 \right)
 &=
-P_\theta\left(
-[T_n-\tau(\theta)]^2>\varepsilon^2
+P\left(
+[T_n-\tau(\theta)]^2>\varepsilon^2  \mid \theta
 \right).
 \end{aligned}
 $$
@@ -862,8 +860,8 @@ $$
 
 $$
 \begin{aligned}
-P_\theta\left(
-[T_n-\tau(\theta)]^2>\varepsilon^2
+P\left(
+[T_n-\tau(\theta)]^2>\varepsilon^2  \mid \theta
 \right)
 &\leq
 \frac{
@@ -903,8 +901,8 @@ $$
 Consequentemente,
 
 $$
-P_\theta\left(
-|T_n-\tau(\theta)|>\varepsilon
+P\left(
+|T_n-\tau(\theta)|>\varepsilon  \mid \theta
 \right)
 \longrightarrow0.
 $$
@@ -975,7 +973,7 @@ B_\theta(T_n)
 \longrightarrow0.
 $$
 
-#### Retomando o modelo uniforme {.unnumbered}
+#### Retomando ao Exemplo-guia {.unnumbered}
 
 Retome os seguintes estimadores de $\theta$ no modelo
 
@@ -1000,7 +998,7 @@ Classifique cada estimador quanto a:
 1. não viés;
 2. consistência.
 
-A comparação é útil porque as duas propriedades respondem a perguntas diferentes. O não viés é avaliado para cada tamanho amostral, enquanto a consistência exige estudar o comportamento do estimador quando $n$ aumenta.
+A comparação dessas propriedades respondem a perguntas diferentes. O não viés é avaliado para cada tamanho amostral, enquanto a consistência exige estudar o comportamento do estimador quando $n$ aumenta.
 
 :::: {.callout-note collapse="true" title="Resolução — Não viés e consistência no modelo uniforme"}
 
@@ -1086,8 +1084,8 @@ $$
 a probabilidade de $2X_1$ estar a uma distância de no máximo $\varepsilon$ de $\theta$ é
 
 $$
-P_\theta\left(
-|2X_1-\theta|\leq\varepsilon
+P\left(
+|2X_1-\theta|\leq\varepsilon \mid \theta
 \right)
 =
 \frac{2\varepsilon}{2\theta}
@@ -1098,8 +1096,8 @@ $$
 Consequentemente,
 
 $$
-P_\theta\left(
-|2X_1-\theta|>\varepsilon
+P\left(
+|2X_1-\theta|>\varepsilon \mid \theta
 \right)
 =
 1-\frac{\varepsilon}{\theta}.
@@ -1166,12 +1164,12 @@ Assim,
 
 $$
 \begin{aligned}
-P_\theta\left(
-|X_{(n)}-\theta|>\varepsilon
+P\left(
+|X_{(n)}-\theta|>\varepsilon  \mid \theta
 \right)
 &=
-P_\theta\left(
-X_{(n)}<\theta-\varepsilon
+P\left(
+X_{(n)}<\theta-\varepsilon \mid \theta
 \right).
 \end{aligned}
 $$
@@ -1179,7 +1177,7 @@ $$
 No modelo uniforme,
 
 $$
-P_\theta(X_{(n)}\leq x)
+P(X_{(n)}\leq x \mid \theta)
 =
 \left(
 \frac{x}{\theta}
@@ -1192,8 +1190,8 @@ Portanto,
 
 $$
 \begin{aligned}
-P_\theta\left(
-|X_{(n)}-\theta|>\varepsilon
+P\left(
+|X_{(n)}-\theta|>\varepsilon \mid \theta
 \right)
 &=
 \left(
@@ -1285,12 +1283,12 @@ $$
 Logo,
 
 $$
-P_\theta\left(
+P\left(
 \left|
-\frac{X_1}{2}-\theta
+\frac{X_1}{2}-\theta 
 \right|
 >
-\varepsilon
+\varepsilon  \mid \theta
 \right)
 =
 1
@@ -1311,7 +1309,7 @@ Os quatro estimadores mostram que não viés e consistência são propriedades d
 - $X_{(n)}$ é viesado para todo $n$, mas é consistente;
 - $X_1/2$ é viesado e não é consistente.
 
-O não viés descreve a posição da distribuição amostral para um tamanho amostral fixado. A consistência descreve o comportamento de uma sequência de estimadores à medida que a quantidade de informação amostral aumenta.
+O não viés descreve a posição da distribuição amostral para um tamanho amostral fixado. A consistência descreve o comportamento de uma sequência de estimadores à medida que o tamanho amostral aumenta.
 
 Em geral, nenhuma dessas propriedades implica a outra.
 
@@ -1321,7 +1319,7 @@ A distinção entre não viés e consistência, assim como os critérios anterio
 
 ::: {.callout-note title="Recordação — Operações com convergência em probabilidade"}
 
-As propriedades de convergência estudadas em @sec-prelim-matematica-assintotica podem ser aplicadas diretamente à verificação de consistência.
+As propriedades de convergência estudadas no @sec-prelim-matematica-assintotica podem ser aplicadas diretamente à verificação de consistência.
 
 Se
 
@@ -1359,7 +1357,7 @@ Essas propriedades permitem transferir a consistência para estimadores constru�
 
 :::
 
-### Comparação por variância entre estimadores não viesados {.unnumbered}
+### Comparação por variância entre estimadores não viesados
 
 Quando dois estimadores são não viesados para o mesmo alvo $\tau(\theta)$, seus vieses são nulos. Pela decomposição viés--variância,
 
@@ -1399,22 +1397,16 @@ Com essa convenção:
 - se $e_\theta(T_1;T_2)=1$, os dois estimadores possuem a mesma variância;
 - se $e_\theta(T_1;T_2)<1$, então $T_2$ possui menor variância.
 
-Portanto, valores maiores que $1$ favorecem o estimador que aparece na primeira posição do quociente,
-
-$$
-T_1.
-$$
-
 Como também se encontra na literatura a convenção inversa, a orientação do quociente deve sempre ser explicitada [@rasch2018, sec. 2.4.1].
 
 A eficiência relativa compara estimadores previamente escolhidos, mas não estabelece a menor variância possível dentro do modelo. Mesmo que $T_1$ tenha menor variância que $T_2$, pode existir um terceiro estimador com variância ainda menor.
 
-Uma comparação global requer uma cota determinada pelo próprio modelo. Para estimadores não viesados de um alvo $\tau(\theta)$, considere uma quantidade $B(\theta)$ tal que
+Uma comparação global requer uma cota determinada pelo próprio modelo. Para estimadores não viesados de um alvo $\tau(\theta)$, considere uma quantidade $Co(\theta)$ tal que
 
 $$
 \operatorname{Var}_\theta(T)
 \geq
-B(\theta)
+Co(\theta)
 $$
 
 para todos os estimadores de uma classe considerada.
@@ -1425,7 +1417,7 @@ Para construir uma cota desse tipo, é necessário quantificar **quanto o modelo
 
 Posteriormente, suficiência, completude, Rao--Blackwell e Lehmann--Scheffé fornecerão outra perspectiva para identificar estimadores de variância mínima.
 
-### Informação de Fisher {.unnumbered}
+### Informação de Fisher 
 
 O objetivo é obter do próprio modelo uma medida de sua capacidade de distinguir valores próximos do parâmetro.
 
@@ -1442,7 +1434,9 @@ $$
 Para entender como o modelo reage a uma pequena alteração no parâmetro, fixe um valor observado $x$ e considere a log-verossimilhança
 
 $$
-\ell_x(\theta)
+\ell(\theta; x)
+=
+\log L(\theta; x)
 =
 \log f(x\mid\theta).
 $$
@@ -1450,17 +1444,17 @@ $$
 Se substituímos $\theta$ por um valor próximo $\theta+h$, uma aproximação de primeira ordem fornece
 
 $$
-\ell_x(\theta+h)
+\ell(\theta+h; x)
 -
-\ell_x(\theta)
+\ell(\theta; x)
 \approx
-h\ell_x'(\theta).
+h\ell'(\theta; x).
 $$
 
 Assim, a derivada
 
 $$
-\ell_x'(\theta)
+\ell'(\theta; x)
 =
 \frac{\partial}{\partial\theta}
 \log f(x\mid\theta)
@@ -1486,7 +1480,7 @@ Para um valor observado $x$:
 O uso do **logaritmo** é particularmente conveniente para amostras independentes. Como
 
 $$
-f(\mathbf X\mid\theta)
+f_{\mathbf X}(\mathbf X\mid\theta)
 =
 \prod_{i=1}^n
 f(X_i\mid\theta),
@@ -1495,7 +1489,7 @@ $$
 temos
 
 $$
-\log f(\mathbf X\mid\theta)
+\log f_{\mathbf X}(\mathbf X\mid\theta)
 =
 \sum_{i=1}^n
 \log f(X_i\mid\theta).
@@ -1752,7 +1746,7 @@ $$
 A densidade ou função de probabilidade conjunta é
 
 $$
-f(\mathbf X\mid\theta)
+f_{\mathbf X}(\mathbf X\mid\theta)
 =
 \prod_{i=1}^n
 f(X_i\mid\theta).
@@ -1761,7 +1755,7 @@ $$
 Logo,
 
 $$
-\log f(\mathbf X\mid\theta)
+\log f_{\mathbf X}(\mathbf X\mid\theta)
 =
 \sum_{i=1}^n
 \log f(X_i\mid\theta),
@@ -1774,7 +1768,7 @@ $$
 U_n(\theta)
 &=
 \frac{\partial}{\partial\theta}
-\log f(\mathbf X\mid\theta)\\
+\log f_{\mathbf X}(\mathbf X\mid\theta)\\
 &=
 \sum_{i=1}^n
 U_\theta(X_i).
@@ -1960,7 +1954,7 @@ $$
 U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
-\log f(\mathbf X\mid\theta).
+\log f_{\mathbf X}(\mathbf X\mid\theta).
 $$
 
 Sob as condições de regularidade,
@@ -1996,7 +1990,7 @@ g(\theta)
 =
 \int
 T(\mathbf x)
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 \,d\mathbf x
 $$
 
@@ -2010,7 +2004,7 @@ g'(\theta)
 \int
 T(\mathbf x)
 \frac{\partial}{\partial\theta}
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 \,d\mathbf x.
 $$
 
@@ -2018,9 +2012,9 @@ Como
 
 $$
 \frac{\partial}{\partial\theta}
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 \frac{\partial}{\partial\theta}
 \log f(\mathbf x\mid\theta),
 $$
@@ -2033,9 +2027,9 @@ g'(\theta)
 &=
 \int
 T(\mathbf x)
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 \frac{\partial}{\partial\theta}
-\log f(\mathbf x\mid\theta)
+\log f_{\mathbf X}(\mathbf x\mid\theta)
 \,d\mathbf x\\
 &=
 E_\theta
@@ -2796,7 +2790,7 @@ a função de verossimilhança foi definida por
 $$
 L(\theta;\mathbf x)
 =
-f(\mathbf x\mid\theta),
+f_{\mathbf X}(\mathbf x\mid\theta),
 \qquad
 \theta\in\Theta.
 $$
@@ -2876,13 +2870,13 @@ A definição de suficiência é conceitualmente simples, mas verificar diretame
 Considere uma família dominada por uma medida comum, com densidade ou função de probabilidade conjunta
 
 $$
-f(\mathbf x\mid\theta).
+f_{\mathbf X}(\mathbf x\mid\theta).
 $$
 
 A estatística $T(\mathbf X)$ é suficiente para $\theta$ se, e somente se, existem funções não negativas $g$ e $h$ tais que
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 g\bigl(T(\mathbf x)\mid\theta\bigr)
 h(\mathbf x),
@@ -2925,7 +2919,7 @@ A ideia central pode ser apresentada diretamente no caso discreto.
 Suponha que
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 g\bigl(T(\mathbf x)\mid\theta\bigr)
 h(\mathbf x).
@@ -2958,7 +2952,7 @@ $$
 Pela fatoração, o numerador é
 
 $$
-P_\theta(\mathbf X=\mathbf x)
+P(\mathbf X=\mathbf x \mid \theta)
 =
 g(t\mid\theta)h(\mathbf x).
 $$
@@ -3024,22 +3018,22 @@ Defina
 $$
 q(t\mid\theta)
 =
-P_\theta(T=t).
+P(T=t \mid \theta).
 $$
 
 Pela regra do produto,
 
 $$
 \begin{aligned}
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 &=
-P_\theta(\mathbf X=\mathbf x)\\
+P(\mathbf X=\mathbf x \mid \theta)\\
 &=
-P_\theta\bigl(T=T(\mathbf x)\bigr)
-P_\theta\bigl(
+P\bigl(T=T(\mathbf x) \mid \theta\bigr)
+P\bigl(
 \mathbf X=\mathbf x
 \mid
-T=T(\mathbf x)
+T=T(\mathbf x), \theta
 \bigr).
 \end{aligned}
 $$
@@ -3063,10 +3057,10 @@ e
 $$
 h(\mathbf x)
 =
-P_\theta\bigl(
+P\bigl(
 \mathbf X=\mathbf x
 \mid
-T=T(\mathbf x)
+T=T(\mathbf x), \theta
 \bigr).
 $$
 
@@ -3130,7 +3124,7 @@ Utilize o teorema da fatoração para verificar se $T$ é suficiente para $p$.
 Como as observações são independentes,
 
 $$
-f(\mathbf x\mid p)
+f_{\mathbf X}(\mathbf x\mid p)
 =
 \prod_{i=1}^n
 f(x_i\mid p).
@@ -3148,7 +3142,7 @@ Portanto,
 
 $$
 \begin{aligned}
-f(\mathbf x\mid p)
+f_{\mathbf X}(\mathbf x\mid p)
 &=
 \prod_{i=1}^n
 p^{x_i}(1-p)^{1-x_i}\\
@@ -3177,7 +3171,7 @@ $$
 Assim, a função de probabilidade conjunta pode ser escrita como
 
 $$
-f(\mathbf x\mid p)
+f_{\mathbf X}(\mathbf x\mid p)
 =
 g\bigl(T(\mathbf x)\mid p\bigr)
 h(\mathbf x),
@@ -3232,7 +3226,7 @@ $$
 Para qualquer sequência $\mathbf x$ com exatamente $t$ sucessos,
 
 $$
-P_p(\mathbf X=\mathbf x)
+P(\mathbf X=\mathbf x \mid p)
 =
 p^t(1-p)^{n-t}.
 $$
@@ -3248,7 +3242,7 @@ $$
 de modo que
 
 $$
-P_p(T=t)
+P(T=t \mid p)
 =
 \binom nt
 p^t(1-p)^{n-t}.
@@ -3258,12 +3252,12 @@ Portanto,
 
 $$
 \begin{aligned}
-P_p(\mathbf X=\mathbf x\mid T=t)
+P(\mathbf X=\mathbf x\mid T=t, p)
 &=
 \frac{
-P_p(\mathbf X=\mathbf x)
+P(\mathbf X=\mathbf x \mid p)
 }{
-P_p(T=t)
+P(T=t \mid p)
 }\\
 &=
 \frac{
@@ -3342,7 +3336,7 @@ A palavra *minimal* refere-se, portanto, à informação preservada, e não simp
 Considere uma família dominada com densidade ou função de probabilidade
 
 $$
-f(\mathbf x\mid\theta).
+f_{\mathbf X}(\mathbf x\mid\theta).
 $$
 
 Para pontos $\mathbf x$ e $\mathbf y$ do espaço amostral efetivo, uma condição suficiente para que $T$ seja suficiente minimal é que
@@ -3360,10 +3354,10 @@ $$
 independente de $\theta$, tal que
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 c(\mathbf x,\mathbf y)
-f(\mathbf y\mid\theta)
+f_{\mathbf X}(\mathbf y\mid\theta)
 $$
 
 para todo $\theta$.
@@ -3372,9 +3366,9 @@ Quando o quociente
 
 $$
 \frac{
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 }{
-f(\mathbf y\mid\theta)
+f_{\mathbf X}(\mathbf y\mid\theta)
 }
 $$
 
@@ -3382,9 +3376,9 @@ está bem definido, o critério pode ser expresso de forma equivalente:
 
 $$
 \frac{
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 }{
-f(\mathbf y\mid\theta)
+f_{\mathbf X}(\mathbf y\mid\theta)
 }
 $$
 
@@ -3443,10 +3437,10 @@ $$
 que não depende de $\theta$, tal que
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 c(\mathbf x,\mathbf x_t)
-f(\mathbf x_t\mid\theta).
+f_{\mathbf X}(\mathbf x_t\mid\theta).
 $$
 
 Defina
@@ -3462,13 +3456,13 @@ e
 $$
 g(t\mid\theta)
 =
-f(\mathbf x_t\mid\theta).
+f_{\mathbf X}(\mathbf x_t\mid\theta).
 $$
 
 Então,
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 g\bigl(T(\mathbf x)\mid\theta\bigr)
 h(\mathbf x).
@@ -3557,7 +3551,7 @@ Utilize o critério da razão de verossimilhanças.
 Para o modelo Bernoulli,
 
 $$
-f(\mathbf x\mid p)
+f_{\mathbf X}(\mathbf x\mid p)
 =
 p^{\sum_i x_i}
 (1-p)^{n-\sum_i x_i}.
@@ -3566,7 +3560,7 @@ $$
 Da mesma forma,
 
 $$
-f(\mathbf y\mid p)
+f_{\mathbf X}(\mathbf y\mid p)
 =
 p^{\sum_i y_i}
 (1-p)^{n-\sum_i y_i}.
@@ -3583,9 +3577,9 @@ essas probabilidades são positivas para todos os pontos do espaço amostral, e 
 $$
 \begin{aligned}
 \frac{
-f(\mathbf x\mid p)
+f_{\mathbf X}(\mathbf x\mid p)
 }{
-f(\mathbf y\mid p)
+f_{\mathbf X}(\mathbf y\mid p)
 }
 &=
 \frac{
@@ -3616,9 +3610,9 @@ o expoente é zero e
 
 $$
 \frac{
-f(\mathbf x\mid p)
+f_{\mathbf X}(\mathbf x\mid p)
 }{
-f(\mathbf y\mid p)
+f_{\mathbf X}(\mathbf y\mid p)
 }
 =
 1,
@@ -3650,9 +3644,9 @@ Portanto,
 
 $$
 \frac{
-f(\mathbf x\mid p)
+f_{\mathbf X}(\mathbf x\mid p)
 }{
-f(\mathbf y\mid p)
+f_{\mathbf X}(\mathbf y\mid p)
 }
 $$
 
@@ -3717,7 +3711,7 @@ Este exemplo exige um cuidado adicional: dependendo do valor de $\theta$, a vero
 Para uma amostra $\mathbf x$ com valores não negativos,
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 \theta^{-n}
 \mathbf 1
@@ -3763,9 +3757,9 @@ para todo $\theta$.
 Consequentemente,
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
-f(\mathbf y\mid\theta)
+f_{\mathbf X}(\mathbf y\mid\theta)
 $$
 
 para todo $\theta$.
@@ -3807,7 +3801,7 @@ $$
 e portanto
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 \theta^{-n}
 >
@@ -3823,7 +3817,7 @@ $$
 de modo que
 
 $$
-f(\mathbf y\mid\theta)
+f_{\mathbf X}(\mathbf y\mid\theta)
 =
 0.
 $$
@@ -3837,10 +3831,10 @@ $$
 independente de $\theta$ que satisfaça
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 c(\mathbf x,\mathbf y)
-f(\mathbf y\mid\theta)
+f_{\mathbf X}(\mathbf y\mid\theta)
 $$
 
 para todo $\theta$.
@@ -4017,7 +4011,7 @@ $$
 Como as observações são independentes, a densidade ou função de probabilidade conjunta é
 
 $$
-f(\mathbf x\mid\eta)
+f_{\mathbf X}(\mathbf x\mid\eta)
 =
 \prod_{i=1}^n
 f(x_i\mid\eta).
@@ -4027,7 +4021,7 @@ Substituindo a forma exponencial,
 
 $$
 \begin{aligned}
-f(\mathbf x\mid\eta)
+f_{\mathbf X}(\mathbf x\mid\eta)
 &=
 \prod_{i=1}^n
 h(x_i)
@@ -4071,7 +4065,7 @@ $$
 Portanto,
 
 $$
-f(\mathbf x\mid\eta)
+f_{\mathbf X}(\mathbf x\mid\eta)
 =
 \left[
 \prod_{i=1}^n
@@ -4098,7 +4092,7 @@ $$
 Então podemos escrever
 
 $$
-f(\mathbf x\mid\eta)
+f_{\mathbf X}(\mathbf x\mid\eta)
 =
 g\bigl(T(\mathbf x)\mid\eta\bigr)
 h_n(\mathbf x),
@@ -4983,7 +4977,9 @@ Essa propriedade de unicidade é denominada **completude**.
 Uma estatística $T$ é **completa** para a família
 
 $$
-\{P_\theta:\theta\in\Theta\}
+\mathcal F
+=
+\{F(\cdot \mid \theta):\theta\in\Theta\},
 $$
 
 se, para toda função mensurável $a$ tal que
@@ -5005,7 +5001,7 @@ $$
 implica
 
 $$
-P_\theta\bigl(a(T)=0\bigr)
+P\bigl(a(T)=0 \mid \theta\bigr)
 =
 1
 \qquad
@@ -5201,7 +5197,7 @@ $$
 Logo,
 
 $$
-P_\lambda(a(T)=0)=1
+P(a(T)=0 \mid \lambda)=1
 $$
 
 para todo $\lambda>0$.
@@ -5572,7 +5568,7 @@ O alvo é a probabilidade de uma nova variável com distribuição Poisson $(\th
 $$
 \tau(\theta)
 =
-P_\theta(X=0)
+P(X=0 \mid \theta)
 =
 e^{-\theta}.
 $$
@@ -5619,7 +5615,7 @@ $$
 \begin{aligned}
 E_\theta(W)
 &=
-P_\theta(X_1=0)\\
+P(X_1=0 \mid \theta)\\
 &=
 e^{-\theta}.
 \end{aligned}
@@ -5675,7 +5671,7 @@ E_\theta
 \mid T
 \right]\\
 &=
-P_\theta(X_1=0\mid T).
+P(X_1=0\mid T,\theta).
 \end{aligned}
 $$
 
@@ -5711,7 +5707,7 @@ $$
 Logo,
 
 $$
-P_\theta(X_1=0\mid T=t)
+P(X_1=0\mid T=t, \theta)
 =
 \left(
 1-\frac1n
@@ -5764,8 +5760,8 @@ Pela independência das observações,
 
 $$
 \begin{aligned}
-&P_\theta(
-X_1=x_1,\ldots,X_n=x_n
+&P(
+X_1=x_1,\ldots,X_n=x_n \mid \theta
 )\\
 &\qquad=
 \prod_{i=1}^n
@@ -5793,7 +5789,7 @@ $$
 Portanto,
 
 $$
-P_\theta(T=t)
+P(T=t \mid \theta)
 =
 e^{-n\theta}
 \frac{(n\theta)^t}{t!}.
@@ -5803,9 +5799,9 @@ A probabilidade condicional é
 
 $$
 \begin{aligned}
-&P_\theta(
+&P(
 X_1=x_1,\ldots,X_n=x_n
-\mid T=t
+\mid T=t, \theta
 )\\
 &\qquad=
 \frac{
@@ -5853,7 +5849,7 @@ Assim,
 
 $$
 \begin{aligned}
-P_\theta(X_1=0\mid T=t)
+P(X_1=0\mid T=t, \theta)
 &=
 \binom t0
 \left(
@@ -6376,7 +6372,7 @@ $$
 sua densidade é
 
 $$
-f_T(t)
+f_T(t \mid \theta)
 =
 \frac{\theta^n}{\Gamma(n)}
 t^{n-1}e^{-\theta t},
@@ -6398,7 +6394,7 @@ E_\theta(T^{-1})
 &=
 \int_0^\infty
 \frac1t
-f_T(t)
+f_T(t \mid \theta)
 \,dt\\
 &=
 \frac{\theta^n}{\Gamma(n)}
@@ -6651,7 +6647,7 @@ Considere o caso discreto e fixe um valor possível $a$ da estatística ancilar 
 Como $A$ é ancilar,
 
 $$
-P_\theta(A=a)
+P(A=a \mid \theta)
 $$
 
 não depende de $\theta$.
@@ -6661,7 +6657,7 @@ Podemos, portanto, escrever
 $$
 c_a
 =
-P_\theta(A=a),
+P(A=a \mid \theta),
 $$
 
 em que $c_a$ é constante em relação a $\theta$.
@@ -6673,7 +6669,7 @@ Como $T$ é suficiente, a distribuição condicional da amostra dado $T=t$ não 
 Como $A$ é uma função da amostra, segue que
 
 $$
-P_\theta(A=a\mid T=t)
+P(A=a\mid T=t, \theta)
 $$
 
 também não depende de $\theta$.
@@ -6683,7 +6679,7 @@ Defina
 $$
 g_a(t)
 =
-P_\theta(A=a\mid T=t)-c_a.
+P(A=a\mid T=t, \theta)-c_a.
 $$
 
 A função $g_a$ depende de $t$, mas não de $\theta$.
@@ -6693,17 +6689,17 @@ A função $g_a$ depende de $t$, mas não de $\theta$.
 Pela fórmula da probabilidade total,
 
 $$
-P_\theta(A=a)
+P(A=a \mid \theta)
 =
 \sum_t
-P_\theta(A=a\mid T=t)
-P_\theta(T=t).
+P(A=a\mid T=t, \theta)
+P(T=t \mid \theta).
 $$
 
 Como
 
 $$
-P_\theta(A=a)=c_a,
+P(A=a \mid \theta)=c_a,
 $$
 
 também temos
@@ -6712,7 +6708,7 @@ $$
 c_a
 =
 \sum_t
-c_a P_\theta(T=t).
+c_a P(T=t \mid \theta).
 $$
 
 Subtraindo as duas expressões,
@@ -6720,9 +6716,9 @@ Subtraindo as duas expressões,
 $$
 \sum_t
 \left[
-P_\theta(A=a\mid T=t)-c_a
+P(A=a\mid T=t, \theta)-c_a
 \right]
-P_\theta(T=t)
+P(T=t \mid \theta)
 =
 0.
 $$
@@ -6731,7 +6727,7 @@ Pela definição de $g_a$,
 
 $$
 \sum_t
-g_a(t)P_\theta(T=t)
+g_a(t)P(T=t \mid \theta)
 =
 0.
 $$
@@ -6762,16 +6758,16 @@ $$
 g_a(T)=0
 $$
 
-$P_\theta$-quase certamente.
+$P$-quase certamente.
 
 Portanto,
 
 $$
-P_\theta(A=a\mid T=t)
+P(A=a\mid T=t, \theta)
 =
 c_a
 =
-P_\theta(A=a)
+P(A=a \mid \theta)
 $$
 
 para os valores relevantes de $t$.
@@ -7001,7 +6997,7 @@ Analise o modelo em quatro etapas:
 Como as observações são independentes,
 
 $$
-f(\mathbf x\mid\beta)
+f_{\mathbf X}(\mathbf x\mid\beta)
 =
 \prod_{i=1}^n
 f(x_i\mid\beta).
@@ -7011,7 +7007,7 @@ Portanto,
 
 $$
 \begin{aligned}
-f(\mathbf x\mid\beta)
+f_{\mathbf X}(\mathbf x\mid\beta)
 &=
 \prod_{i=1}^n
 \frac{
