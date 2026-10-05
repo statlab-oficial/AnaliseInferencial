@@ -452,7 +452,7 @@ $$
 
 **Estimador $T_2=X_{(n)}$**
 
-No @sec-distribuicoes-amostrais vimos que, para o máximo amostral,
+No @sec-distribuicoes-amostrais, para o máximo amostral, foi obtido
 
 $$
 F_{X_{(n)}}(x)
@@ -473,7 +473,7 @@ $$
 Portanto,
 
 $$
-P_\theta(X_{(n)}\leq x)
+P(X_{(n)}\leq x\mid\theta)
 =
 \left(
 \frac{x}{\theta}
@@ -703,7 +703,7 @@ $$
 \operatorname{EQM}_\theta(T_1).
 $$
 
-Note que $T_2$ é viesado, enquanto $T_1$ é não viesado. Mesmo assim, para $n>2$,
+$T_2$ é viesado, enquanto $T_1$ é não viesado. Mesmo assim, para $n>2$,
 
 $$
 \operatorname{EQM}_\theta(T_2)
@@ -966,7 +966,7 @@ $$
 
 Assim, se a variância e o viés tendem a zero, o EQM também tende a zero.
 
-Observe que **não é necessário que $T_n$ seja não viesado para todo $n$**. Para esse critério, basta que
+**Não é necessário que $T_n$ seja não viesado para todo $n$**. Para esse critério, basta que
 
 $$
 B_\theta(T_n)
@@ -1002,7 +1002,7 @@ A comparação dessas propriedades respondem a perguntas diferentes. O não vié
 
 :::: {.callout-note collapse="true" title="Resolução — Não viés e consistência no modelo uniforme"}
 
-| Estimador | Não viesado? | Consistente? |
+| Estimador | Não viesado | Consistente |
 |---|:---:|:---:|
 | $2\overline X$ | Sim | Sim |
 | $2X_1$ | Sim | Não |
@@ -1417,227 +1417,315 @@ Para construir uma cota desse tipo, é necessário quantificar **quanto o modelo
 
 Posteriormente, suficiência, completude, Rao--Blackwell e Lehmann--Scheffé fornecerão outra perspectiva para identificar estimadores de variância mínima.
 
-### Informação de Fisher 
+### Função escore e informação de Fisher {.unnumbered}
 
-O objetivo é obter do próprio modelo uma medida de sua capacidade de distinguir valores próximos do parâmetro.
-
-Se pequenas alterações em $\theta$ quase não modificam a distribuição das observações, os dados fornecem pouca capacidade para distinguir valores próximos desse parâmetro. Se a distribuição se altera mais intensamente, os dados podem carregar mais informação para essa distinção.
-
-A função escore formaliza essa sensibilidade local.
-
-Considere um modelo dominado com densidade ou função de probabilidade
+Em @sec-fundamentos-inferencia, para uma amostra observada
 
 $$
-f(x\mid\theta).
+\mathbf x=(x_1,\ldots,x_n),
 $$
 
-Para entender como o modelo reage a uma pequena alteração no parâmetro, fixe um valor observado $x$ e considere a log-verossimilhança
+foram definidas a função de verossimilhança
 
 $$
-\ell(\theta; x)
+L(\theta;\mathbf x)
 =
-\log L(\theta; x)
+f_{\mathbf X}(\mathbf x\mid\theta)
+$$
+
+e a função de log-verossimilhança
+
+$$
+\ell(\theta;\mathbf x)
 =
-\log f(x\mid\theta).
+\log L(\theta;\mathbf x).
 $$
 
-Se substituímos $\theta$ por um valor próximo $\theta+h$, uma aproximação de primeira ordem fornece
+Naquele contexto, essas funções permitiram comparar valores do parâmetro em relação aos dados observados. A partir daqui, a log-verossimilhança será utilizada com outra finalidade: medir como essa compatibilidade varia localmente quando o parâmetro é alterado.
+
+#### Da log-verossimilhança ao escore {.unnumbered}
+
+Considere inicialmente a amostra observada $\mathbf x$. Para um parâmetro escalar, a derivada
 
 $$
-\ell(\theta+h; x)
--
-\ell(\theta; x)
-\approx
-h\ell'(\theta; x).
-$$
-
-Assim, a derivada
-
-$$
-\ell'(\theta; x)
+u_n(\theta;\mathbf x)
 =
 \frac{\partial}{\partial\theta}
-\log f(x\mid\theta)
+\ell(\theta;\mathbf x)
 $$
 
-mede a **variação local da log-verossimilhança** quando o parâmetro é ligeiramente modificado.
+é denominada **escore observado**.
 
-Essa derivada é denominada **função escore**. Para a variável aleatória $X$,
+Geometricamente, $u_n(\theta;\mathbf x)$ é a inclinação da curva de log-verossimilhança no ponto $\theta$. Assim,
+
+- $u_n(\theta;\mathbf x)>0$ indica crescimento local da log-verossimilhança;
+- $u_n(\theta;\mathbf x)<0$ indica decrescimento local;
+- $u_n(\theta;\mathbf x)=0$ identifica um ponto estacionário da curva.
+
+A condição
 
 $$
-U_\theta(X)
+u_n(\theta;\mathbf x)=0
+$$
+
+não garante, por si só, que o ponto seja um máximo. A utilização das equações de escore para construir estimadores será desenvolvida em @sec-estimacao-pontual.
+
+Antes da observação dos dados, $\mathbf X$ é aleatória. Substituindo a realização $\mathbf x$ pela amostra aleatória $\mathbf X$, obtemos a **função escore da amostra**
+
+$$
+U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
-\log f(X\mid\theta).
+\ell(\theta;\mathbf X).
 $$
 
-Para um valor observado $x$:
+Para cada valor fixado de $\theta$, $U_n(\theta)$ é uma variável aleatória porque depende da amostra $\mathbf X$.
 
-- $U_\theta(x)>0$ indica que, localmente, aumentar $\theta$ aumenta a log-verossimilhança;
-- $U_\theta(x)<0$ indica que, localmente, aumentar $\theta$ diminui a log-verossimilhança;
-- valores de maior magnitude indicam maior sensibilidade local da log-verossimilhança a alterações no parâmetro.
-
-O uso do **logaritmo** é particularmente conveniente para amostras independentes. Como
+Essa distinção acompanha a mesma mudança de perspectiva utilizada em @sec-fundamentos-inferencia:
 
 $$
-f_{\mathbf X}(\mathbf X\mid\theta)
-=
-\prod_{i=1}^n
-f(X_i\mid\theta),
+\mathbf x
+\longrightarrow
+u_n(\theta;\mathbf x)
 $$
 
-temos
+corresponde ao valor observado do escore, enquanto
 
 $$
-\log f_{\mathbf X}(\mathbf X\mid\theta)
+\mathbf X
+\longrightarrow
+U_n(\theta)
+$$
+
+descreve seu comportamento amostral.
+
+Para uma amostra i.i.d., a propriedade aditiva da log-verossimilhança fornece
+
+$$
+\ell(\theta;\mathbf X)
 =
 \sum_{i=1}^n
 \log f(X_i\mid\theta).
 $$
 
-Consequentemente, o escore da amostra será a soma dos escores individuais. Essa propriedade permitirá que a informação fornecida por observações independentes também se acumule de forma aditiva.
-
-::: {.callout-warning title="Observação — Condições de regularidade"}
-
-As identidades utilizadas a seguir não são válidas automaticamente para qualquer modelo.
-
-Em particular, precisamos de condições que permitam diferenciar em relação a $\theta$ e intercambiar diferenciação com integração ou soma. Uma condição importante na forma regular utilizada nesta seção é que o suporte da distribuição não dependa de $\theta$.
-
-Por isso, modelos como
+Consequentemente,
 
 $$
-\operatorname{Unif}(0,\theta),
+\begin{aligned}
+U_n(\theta)
+&=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X)\\
+&=
+\sum_{i=1}^n
+\frac{\partial}{\partial\theta}
+\log f(X_i\mid\theta).
+\end{aligned}
 $$
 
-nos quais o suporte varia com o parâmetro, exigem tratamento separado. As condições utilizadas na desigualdade de Cramér--Rao serão explicitadas na próxima subseção.
-
-:::
-
-Sob essas condições de regularidade,
+Definindo o escore da $i$-ésima observação por
 
 $$
-E_\theta\bigl[U_\theta(X)\bigr]
-=
-0.
-$$
-
-Portanto, a média do escore não distingue modelos com maior ou menor sensibilidade ao parâmetro.
-
-O que pode variar é a **magnitude do escore de uma observação para outra**. Se os valores do escore tendem a ficar próximos de zero, pequenas alterações em $\theta$ modificam pouco a log-verossimilhança. Se apresentam maior magnitude, a distribuição reage mais intensamente a essas alterações.
-
-Essa ideia conduz à informação de Fisher.
-
-::: {.callout-important title="Definição — Informação de Fisher"}
-
-A **informação de Fisher** de uma observação sobre o parâmetro $\theta$ é
-
-$$
-I_1(\theta)
-=
-E_\theta\left[
-U_\theta(X)^2
-\right].
-$$
-
-Como, sob as condições de regularidade,
-
-$$
-E_\theta[U_\theta(X)]=0,
-$$
-
-podemos escrever
-
-$$
-I_1(\theta)
-=
-\operatorname{Var}_\theta
-\bigl(U_\theta(X)\bigr).
-$$
-
-Assim, a informação de Fisher mede a magnitude quadrática média da sensibilidade local da log-verossimilhança ao parâmetro.
-
-Sob condições adicionais de regularidade, uma forma equivalente é
-
-$$
-I_1(\theta)
-=
--
-E_\theta\left[
-\frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta)
-\right].
-$$
-
-Para uma amostra i.i.d. de tamanho $n$,
-
-$$
-I_n(\theta)
-=
-nI_1(\theta).
-$$
-
-Portanto, nesse contexto, a informação cresce linearmente com o número de observações independentes [@lauritzen2023fundamentals, sec. 1.2.2; @rasch2018, sec. 1.4].
-
-:::
-
-::: {.callout-note collapse="true" title="Derivação — Identidades da informação de Fisher"}
-
-Considere primeiro uma única observação.
-
-Pela definição,
-
-$$
-U_\theta(X)
+U_i(\theta)
 =
 \frac{\partial}{\partial\theta}
-\log f(X\mid\theta).
-$$
-
-Utilizando
-
-$$
-\frac{\partial}{\partial\theta}
-\log f(x\mid\theta)
-=
-\frac{
-\dfrac{\partial}{\partial\theta}f(x\mid\theta)
-}{
-f(x\mid\theta)
-},
+\log f(X_i\mid\theta),
 $$
 
 temos
 
 $$
+U_n(\theta)
+=
+\sum_{i=1}^nU_i(\theta).
+$$
+
+Assim, a derivada da log-verossimilhança preserva a estrutura aditiva já estabelecida para amostras independentes.
+
+::: {.callout-warning title="Observação — Condições de regularidade"}
+
+As propriedades desenvolvidas a seguir exigem condições de regularidade.
+
+Em particular, será necessário diferenciar em relação a $\theta$ e intercambiar diferenciação com integração ou soma. Na forma regular utilizada nesta seção, o suporte da distribuição também não deve depender de $\theta$.
+
+Por isso,
+
+$$
+\operatorname{Unif}(0,\theta)
+$$
+
+não satisfaz as condições utilizadas nesta parte do capítulo. As hipóteses necessárias para a desigualdade de Cramér--Rao serão explicitadas na próxima subseção.
+
+:::
+
+Sob essas condições,
+
+$$
+E_\theta[U_n(\theta)]
+=
+0.
+$$
+
+A esperança nula mostra que o escore não mede informação por sua média. O que importa é sua variabilidade de uma amostra para outra.
+
+#### Informação de Fisher {.unnumbered}
+
+::: {.callout-important title="Definição — Informação de Fisher"}
+
+A **informação de Fisher da amostra** sobre o parâmetro $\theta$ é
+
+$$
+I_n(\theta)
+=
+E_\theta
+\left[
+U_n(\theta)^2
+\right].
+$$
+
+Como
+
+$$
+E_\theta[U_n(\theta)]
+=
+0,
+$$
+
+também podemos escrever
+
+$$
+I_n(\theta)
+=
+\operatorname{Var}_\theta
+\left[
+U_n(\theta)
+\right].
+$$
+
+:::
+
+A definição mede a magnitude típica das variações locais da log-verossimilhança produzidas pela amostra. Valores maiores de $I_n(\theta)$ indicam maior sensibilidade da distribuição amostral a alterações em $\theta$.
+
+Sob condições adicionais de regularidade,
+
+$$
+I_n(\theta)
+=
+-
+E_\theta
+\left[
+\frac{\partial^2}{\partial\theta^2}
+\ell(\theta;\mathbf X)
+\right].
+$$
+
+Essa expressão fornece uma segunda interpretação.
+
+A primeira derivada da log-verossimilhança mede sua **inclinação**. A segunda derivada mede sua **curvatura**. Assim, a informação de Fisher pode ser interpretada, sob regularidade, como a curvatura negativa média da log-verossimilhança.
+
+Uma log-verossimilhança mais curvada permite distinguir com maior precisão valores próximos do parâmetro. Uma log-verossimilhança relativamente plana fornece menor capacidade de distinção local.
+
+Para uma amostra i.i.d.,
+
+$$
+U_n(\theta)
+=
+\sum_{i=1}^nU_i(\theta).
+$$
+
+Como os escores individuais são independentes e possuem esperança zero,
+
+$$
 \begin{aligned}
-E_\theta[U_\theta(X)]
+I_n(\theta)
 &=
-\int
-\frac{
-\dfrac{\partial}{\partial\theta}f(x\mid\theta)
-}{
-f(x\mid\theta)
-}
-f(x\mid\theta)
-\,dx\\
+\operatorname{Var}_\theta
+\left[
+\sum_{i=1}^nU_i(\theta)
+\right]\\
 &=
-\int
-\frac{\partial}{\partial\theta}
-f(x\mid\theta)
-\,dx.
+\sum_{i=1}^n
+\operatorname{Var}_\theta
+\left[
+U_i(\theta)
+\right].
 \end{aligned}
 $$
 
-Sob as condições que permitem trocar diferenciação e integração,
+Se as observações são identicamente distribuídas,
+
+$$
+I_n(\theta)
+=
+nI_1(\theta),
+$$
+
+em que
+
+$$
+I_1(\theta)
+=
+E_\theta[U_1(\theta)^2]
+$$
+
+é a informação de Fisher fornecida por uma observação.
+
+Portanto, em uma amostra i.i.d., a informação cresce linearmente com o tamanho amostral.
+
+::: {.callout-note collapse="true" title="Derivação — Esperança do escore e curvatura média"}
+
+Considere a função escore da amostra
+
+$$
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X)
+=
+\frac{\partial}{\partial\theta}
+\log f_{\mathbf X}(\mathbf X\mid\theta).
+$$
+
+No caso contínuo,
 
 $$
 \begin{aligned}
-E_\theta[U_\theta(X)]
+E_\theta[U_n(\theta)]
+&=
+\int
+\frac{\partial}{\partial\theta}
+\log f_{\mathbf X}(\mathbf x\mid\theta)
+\,
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x\\
+&=
+\int
+\frac{
+\dfrac{\partial}{\partial\theta}
+f_{\mathbf X}(\mathbf x\mid\theta)
+}{
+f_{\mathbf X}(\mathbf x\mid\theta)
+}
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x\\
+&=
+\int
+\frac{\partial}{\partial\theta}
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x.
+\end{aligned}
+$$
+
+Sob as condições que permitem intercambiar diferenciação e integração,
+
+$$
+\begin{aligned}
+E_\theta[U_n(\theta)]
 &=
 \frac{\partial}{\partial\theta}
 \int
-f(x\mid\theta)
-\,dx\\
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x\\
 &=
 \frac{\partial}{\partial\theta}(1)\\
 &=
@@ -1645,172 +1733,259 @@ f(x\mid\theta)
 \end{aligned}
 $$
 
-No caso discreto, o mesmo argumento é obtido substituindo a integral pela soma.
+No caso discreto, a integral é substituída pela soma correspondente.
 
-Portanto,
-
-$$
-E_\theta[U_\theta(X)]
-=
-0.
-$$
-
-Como consequência,
+Para obter a relação com a segunda derivada, diferenciamos
 
 $$
-I_1(\theta)
-=
-E_\theta[U_\theta(X)^2]
-=
-\operatorname{Var}_\theta(U_\theta(X)).
-$$
-
-Para obter a segunda expressão da informação de Fisher, diferenciamos a identidade
-
-$$
-E_\theta[U_\theta(X)]
+E_\theta[U_n(\theta)]
 =
 0
 $$
 
 em relação a $\theta$.
 
-Sob as condições de regularidade,
+Sob as mesmas condições de regularidade,
 
 $$
 0
 =
 \frac{d}{d\theta}
-E_\theta[U_\theta(X)].
+E_\theta[U_n(\theta)].
 $$
 
-Ao derivar uma esperança cuja distribuição também depende de $\theta$, surgem dois termos:
+Ao derivar a esperança, surgem dois termos:
 
 $$
-\begin{aligned}
 0
-&=
-E_\theta\left[
+=
+E_\theta
+\left[
 \frac{\partial}{\partial\theta}
-U_\theta(X)
+U_n(\theta)
 \right]
 +
-E_\theta\left[
-U_\theta(X)^2
+E_\theta
+\left[
+U_n(\theta)^2
 \right].
-\end{aligned}
 $$
 
 Como
 
 $$
 \frac{\partial}{\partial\theta}
-U_\theta(X)
+U_n(\theta)
 =
 \frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta),
+\ell(\theta;\mathbf X),
 $$
 
-obtemos
+segue que
 
 $$
-E_\theta\left[
-U_\theta(X)^2
+E_\theta
+\left[
+U_n(\theta)^2
 \right]
 =
 -
-E_\theta\left[
+E_\theta
+\left[
 \frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta)
+\ell(\theta;\mathbf X)
 \right].
 $$
 
 Portanto,
 
 $$
-I_1(\theta)
+I_n(\theta)
 =
 -
-E_\theta\left[
+E_\theta
+\left[
 \frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta)
+\ell(\theta;\mathbf X)
 \right].
 $$
 
-Considere agora uma amostra i.i.d.
+:::
+
+#### Retomando o modelo Bernoulli {.unnumbered}
+
+O modelo Bernoulli permite integrar diretamente os resultados dos capítulos anteriores.
+
+Em @sec-fundamentos-inferencia, para
 
 $$
-X_1,\ldots,X_n.
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Ber}(p),
 $$
 
-A densidade ou função de probabilidade conjunta é
+a log-verossimilhança da amostra observada foi escrita como
 
 $$
-f_{\mathbf X}(\mathbf X\mid\theta)
+\ell(p;\mathbf x)
 =
-\prod_{i=1}^n
-f(X_i\mid\theta).
+y\log p
++
+(n-y)\log(1-p),
+$$
+
+em que
+
+$$
+y
+=
+\sum_{i=1}^n x_i.
+$$
+
+A derivada em relação a $p$ fornece o escore observado:
+
+$$
+\begin{aligned}
+u_n(p;\mathbf x)
+&=
+\frac{\partial}{\partial p}
+\ell(p;\mathbf x)\\
+&=
+\frac{y}{p}
+-
+\frac{n-y}{1-p}\\
+&=
+\frac{y-np}
+{p(1-p)}.
+\end{aligned}
+$$
+
+Substituindo o valor observado $y$ pela variável aleatória
+
+$$
+Y
+=
+\sum_{i=1}^nX_i,
+$$
+
+obtemos a função escore da amostra:
+
+$$
+U_n(p)
+=
+\frac{Y-np}
+{p(1-p)}.
+$$
+
+Em @sec-distribuicoes-amostrais, a soma das variáveis Bernoulli foi identificada como
+
+$$
+Y
+\sim
+\operatorname{Bin}(n,p),
+$$
+
+com
+
+$$
+E_p(Y)=np
+$$
+
+e
+
+$$
+\operatorname{Var}_p(Y)
+=
+np(1-p).
 $$
 
 Logo,
 
 $$
-\log f_{\mathbf X}(\mathbf X\mid\theta)
+\begin{aligned}
+E_p[U_n(p)]
+&=
+\frac{
+E_p(Y)-np
+}{
+p(1-p)
+}\\
+&=
+0.
+\end{aligned}
+$$
+
+A informação de Fisher da amostra é
+
+$$
+\begin{aligned}
+I_n(p)
+&=
+\operatorname{Var}_p[U_n(p)]\\
+&=
+\frac{
+\operatorname{Var}_p(Y)
+}{
+p^2(1-p)^2
+}\\
+&=
+\frac{
+np(1-p)
+}{
+p^2(1-p)^2
+}\\
+&=
+\frac{n}
+{p(1-p)}.
+\end{aligned}
+$$
+
+O mesmo resultado pode ser obtido pela curvatura média da log-verossimilhança. Como
+
+$$
+\frac{\partial^2}{\partial p^2}
+\ell(p;\mathbf X)
 =
-\sum_{i=1}^n
-\log f(X_i\mid\theta),
+-
+\frac{Y}{p^2}
+-
+\frac{n-Y}{(1-p)^2},
 $$
 
-e o escore da amostra é
-
-$$
-\begin{aligned}
-U_n(\theta)
-&=
-\frac{\partial}{\partial\theta}
-\log f_{\mathbf X}(\mathbf X\mid\theta)\\
-&=
-\sum_{i=1}^n
-U_\theta(X_i).
-\end{aligned}
-$$
-
-Os escores individuais são independentes e possuem esperança zero. Portanto,
+temos
 
 $$
 \begin{aligned}
-I_n(\theta)
-&=
-\operatorname{Var}_\theta
+-
+E_p
 \left[
-U_n(\theta)
-\right]\\
+\frac{\partial^2}{\partial p^2}
+\ell(p;\mathbf X)
+\right]
 &=
-\operatorname{Var}_\theta
-\left[
-\sum_{i=1}^n
-U_\theta(X_i)
-\right]\\
+\frac{np}{p^2}
++
+\frac{n(1-p)}{(1-p)^2}\\
 &=
-\sum_{i=1}^n
-\operatorname{Var}_\theta
-\left[
-U_\theta(X_i)
-\right]\\
+\frac{n}{p}
++
+\frac{n}{1-p}\\
 &=
-nI_1(\theta).
+\frac{n}{p(1-p)}.
 \end{aligned}
 $$
 
-Assim, para observações i.i.d., a informação de Fisher cresce linearmente com o tamanho da amostra.
+Assim,
 
-:::
+$$
+I_n(p)
+=
+\frac{n}{p(1-p)}.
+$$
 
-A informação de Fisher quantifica quão sensível é a distribuição dos dados a mudanças no parâmetro. Quanto maior $I_n(\theta)$, maior é, nesse sentido, a capacidade do modelo amostral de distinguir valores próximos de $\theta$.
+Esse exemplo reúne três etapas do percurso do livro: a log-verossimilhança introduzida em @sec-fundamentos-inferencia, a distribuição amostral de $Y$ estudada em @sec-distribuicoes-amostrais e, neste capítulo, a função escore e a informação de Fisher.
 
-Sua utilidade para avaliar estimadores surge de uma relação fundamental entre o estimador e o escore da amostra.
-
-Se
+A utilidade da informação de Fisher aparece ao relacioná-la à precisão dos estimadores. Se
 
 $$
 E_\theta(T)
@@ -1829,10 +2004,12 @@ T,U_n(\theta)
 g'(\theta).
 $$
 
-No caso de um estimador não viesado para $\tau(\theta)$,
+Se $T$ é não viesado para $\tau(\theta)$,
 
 $$
-g(\theta)=\tau(\theta),
+g(\theta)
+=
+\tau(\theta),
 $$
 
 e portanto
@@ -1846,29 +2023,52 @@ T,U_n(\theta)
 \tau'(\theta).
 $$
 
-Essa identidade liga três elementos:
+A desigualdade de Cauchy--Schwarz relaciona essa covariância às variâncias de $T$ e do escore. Como
 
-- o alvo que se pretende estimar, por meio de $\tau'(\theta)$;
-- a variabilidade do estimador $T$;
-- a variabilidade do escore, que é precisamente $I_n(\theta)$.
+$$
+\operatorname{Var}_\theta[U_n(\theta)]
+=
+I_n(\theta),
+$$
 
-A desigualdade de Cauchy--Schwarz permitirá transformar essa relação em um limite inferior para $\operatorname{Var}_\theta(T)$. É nesse sentido que a informação de Fisher fornece uma referência de precisão para estimadores [@cox2006principles, sec. 2.1; @lauritzen2023fundamentals, sec. 1.2.2].
+a informação de Fisher passa a determinar uma cota inferior para a variância de estimadores.
+
+É nesse sentido que a quantidade recebe o nome de **informação**: sob as condições de regularidade, maior informação de Fisher corresponde a um limite inferior menor para a variância. Essa relação será formalizada pela desigualdade de Cramér--Rao [@casella2011inferencia, teorema 7.3.9 e lema 7.3.11; @cox2006principles, sec. 2.1; @lauritzen2023fundamentals, sec. 1.2.2].
 
 ### Desigualdade de Cramér--Rao {.unnumbered}
 
-A desigualdade de Cramér--Rao formaliza essa relação.
+A informação de Fisher permite transformar a sensibilidade do modelo ao parâmetro em uma referência para a precisão dos estimadores.
 
-A desigualdade de Cramér--Rao estabelece, sob condições de regularidade, uma cota inferior para a variância de estimadores. A cota depende do alvo $\tau(\theta)$ e da informação de Fisher do modelo, e não de uma comparação entre dois estimadores previamente escolhidos.
+Sob condições de regularidade, a relação
 
-A forma utilizada nesta seção exige condições de regularidade. Entre as condições usuais que sustentam o argumento apresentado estão:
+$$
+\operatorname{Cov}_\theta
+\left(
+T,U_n(\theta)
+\right)
+=
+g'(\theta),
+\qquad
+g(\theta)=E_\theta(T),
+$$
+
+liga a variação da esperança do estimador ao escore da amostra. A desigualdade de Cauchy--Schwarz converte essa relação em uma cota inferior para $\operatorname{Var}_\theta(T)$.
+
+A forma apresentada nesta seção utiliza as seguintes condições usuais:
 
 - o suporte da distribuição não depende de $\theta$;
-- $f(x\mid\theta)$ é diferenciável em relação a $\theta$;
+- a densidade ou função de probabilidade conjunta $f_{\mathbf X}(\mathbf x\mid\theta)$ é diferenciável em relação a $\theta$;
 - a diferenciação pode ser intercambiada com a integração ou soma, tanto na normalização da distribuição quanto no cálculo de $E_\theta(T)$;
 - $\operatorname{Var}_\theta(T)<\infty$;
 - $0<I_n(\theta)<\infty$.
 
-Essas condições permitem, em particular, que o escore tenha esperança zero e que a derivada de $E_\theta(T)$ seja relacionada à covariância entre o estimador e o escore.
+Essas condições garantem, em particular,
+
+$$
+E_\theta[U_n(\theta)]=0
+$$
+
+e permitem diferenciar $E_\theta(T)$ em relação a $\theta$.
 
 ::: {.callout-important title="Teorema — Desigualdade de Cramér--Rao"}
 
@@ -1892,13 +2092,15 @@ I_n(\theta)
 }.
 $$
 
-Em particular, se $T$ é não viesado para $\tau(\theta)$, então
+Se $T$ é não viesado para $\tau(\theta)$,
 
 $$
-E_\theta(T)=\tau(\theta)
+E_\theta(T)
+=
+\tau(\theta),
 $$
 
-e, portanto,
+e portanto
 
 $$
 \operatorname{Var}_\theta(T)
@@ -1910,7 +2112,7 @@ I_n(\theta)
 }.
 $$
 
-No caso especial em que o alvo é o próprio parâmetro,
+Para o alvo
 
 $$
 \tau(\theta)=\theta,
@@ -1922,7 +2124,7 @@ $$
 \tau'(\theta)=1,
 $$
 
-e o limite assume a forma
+de modo que
 
 $$
 \operatorname{Var}_\theta(T)
@@ -1932,7 +2134,7 @@ $$
 
 :::
 
-O termo
+A quantidade
 
 $$
 \frac{
@@ -1942,22 +2144,30 @@ I_n(\theta)
 }
 $$
 
-é denominado **limite inferior de Cramér--Rao** para a variância de estimadores não viesados de $\tau(\theta)$, sob as condições de regularidade consideradas.
+é o **limite inferior de Cramér--Rao** para a variância de estimadores não viesados de $\tau(\theta)$, dentro das condições consideradas.
 
-Quanto maior a informação de Fisher, menor pode ser esse limite. Assim, a relação entre informação e precisão aparece diretamente na desigualdade.
+A interpretação acompanha diretamente a informação de Fisher:
+
+$$
+I_n(\theta)\ \text{maior}
+\quad\Longrightarrow\quad
+\text{limite inferior menor}.
+$$
+
+Assim, um modelo que fornece maior informação sobre $\theta$ admite, em princípio, estimadores mais precisos.
 
 ::: {.callout-note collapse="true" title="Demonstração — Desigualdade de Cramér--Rao"}
 
-Considere o escore da amostra,
+A função escore da amostra é
 
 $$
 U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
-\log f_{\mathbf X}(\mathbf X\mid\theta).
+\ell(\theta;\mathbf X).
 $$
 
-Sob as condições de regularidade,
+Pelas condições de regularidade,
 
 $$
 E_\theta[U_n(\theta)]
@@ -1970,20 +2180,18 @@ e
 $$
 \operatorname{Var}_\theta[U_n(\theta)]
 =
-E_\theta[U_n(\theta)^2]
-=
 I_n(\theta).
 $$
 
-Se
+Considere um estimador $T=T(\mathbf X)$ tal que
 
 $$
 E_\theta(T)
 =
-g(\theta),
+g(\theta).
 $$
 
-então
+No caso contínuo,
 
 $$
 g(\theta)
@@ -1991,12 +2199,10 @@ g(\theta)
 \int
 T(\mathbf x)
 f_{\mathbf X}(\mathbf x\mid\theta)
-\,d\mathbf x
+\,d\mathbf x.
 $$
 
-no caso contínuo.
-
-Derivando em relação a $\theta$ e utilizando a condição que permite trocar diferenciação e integração,
+Derivando em relação a $\theta$,
 
 $$
 g'(\theta)
@@ -2011,15 +2217,23 @@ $$
 Como
 
 $$
+\ell(\theta;\mathbf x)
+=
+\log f_{\mathbf X}(\mathbf x\mid\theta),
+$$
+
+temos
+
+$$
 \frac{\partial}{\partial\theta}
 f_{\mathbf X}(\mathbf x\mid\theta)
 =
 f_{\mathbf X}(\mathbf x\mid\theta)
 \frac{\partial}{\partial\theta}
-\log f(\mathbf x\mid\theta),
+\ell(\theta;\mathbf x).
 $$
 
-segue que
+Logo,
 
 $$
 \begin{aligned}
@@ -2029,7 +2243,7 @@ g'(\theta)
 T(\mathbf x)
 f_{\mathbf X}(\mathbf x\mid\theta)
 \frac{\partial}{\partial\theta}
-\log f_{\mathbf X}(\mathbf x\mid\theta)
+\ell(\theta;\mathbf x)
 \,d\mathbf x\\
 &=
 E_\theta
@@ -2039,15 +2253,17 @@ T\,U_n(\theta)
 \end{aligned}
 $$
 
-No caso discreto, o mesmo argumento é obtido substituindo a integral por uma soma.
+No caso discreto, a integral é substituída pela soma correspondente.
 
 Como
 
 $$
-E_\theta[U_n(\theta)]=0,
+E_\theta[U_n(\theta)]
+=
+0,
 $$
 
-temos
+segue que
 
 $$
 \begin{aligned}
@@ -2056,9 +2272,13 @@ $$
 T,U_n(\theta)
 \right)
 &=
-E_\theta[TU_n(\theta)]
+E_\theta
+\left[
+T\,U_n(\theta)
+\right]
 -
-E_\theta(T)E_\theta[U_n(\theta)]\\
+E_\theta(T)
+E_\theta[U_n(\theta)]\\
 &=
 g'(\theta).
 \end{aligned}
@@ -2074,9 +2294,9 @@ T,U_n(\theta)
 \leq
 \operatorname{Var}_\theta(T)
 \operatorname{Var}_\theta
-\left(
+\left[
 U_n(\theta)
-\right).
+\right].
 $$
 
 Substituindo
@@ -2094,9 +2314,9 @@ e
 
 $$
 \operatorname{Var}_\theta
-\left(
+\left[
 U_n(\theta)
-\right)
+\right]
 =
 I_n(\theta),
 $$
@@ -2116,7 +2336,7 @@ $$
 I_n(\theta)>0,
 $$
 
-podemos dividir os dois lados por $I_n(\theta)$:
+segue que
 
 $$
 \operatorname{Var}_\theta(T)
@@ -2128,13 +2348,84 @@ I_n(\theta)
 }.
 $$
 
-Essa é a desigualdade de Cramér--Rao.
+:::
+
+::: {.callout-note collapse="true" title="Condição de igualdade no limite de Cramér--Rao"}
+
+A desigualdade de Cramér--Rao resulta da desigualdade de Cauchy--Schwarz. Portanto, a igualdade ocorre quando as variáveis aleatórias centradas envolvidas são linearmente dependentes.
+
+No caso de um estimador não viesado de $\tau(\theta)$,
+
+$$
+E_\theta(T)=\tau(\theta),
+$$
+
+a igualdade exige que exista uma quantidade $a(\theta)$ tal que
+
+$$
+T-\tau(\theta)
+=
+a(\theta)U_n(\theta)
+$$
+
+quase certamente.
+
+Como
+
+$$
+\operatorname{Cov}_\theta
+\left(
+T,U_n(\theta)
+\right)
+=
+\tau'(\theta)
+$$
+
+e
+
+$$
+\operatorname{Var}_\theta
+\left[
+U_n(\theta)
+\right]
+=
+I_n(\theta),
+$$
+
+a constante de proporcionalidade deve satisfazer
+
+$$
+a(\theta)
+=
+\frac{
+\tau'(\theta)
+}{
+I_n(\theta)
+}.
+$$
+
+Portanto, quando a cota é atingida,
+
+$$
+T-\tau(\theta)
+=
+\frac{
+\tau'(\theta)
+}{
+I_n(\theta)
+}
+U_n(\theta)
+$$
+
+quase certamente.
+
+Essa condição mostra que atingir o limite de Cramér--Rao exige uma relação específica entre o estimador e o escore da amostra.
 
 :::
 
 Um estimador não viesado que atinge o limite de Cramér--Rao para todo $\theta$ é denominado **eficiente no sentido de Cramér--Rao**.
 
-Para um estimador não viesado de $\tau(\theta)$, definimos sua eficiência por
+Para um estimador não viesado de $\tau(\theta)$, define-se
 
 $$
 \operatorname{ef}_\theta(T)
@@ -2163,23 +2454,21 @@ $$
 \tau'(\theta)\neq0
 $$
 
-e a variância de $T$ é positiva e finita, a eficiência é positiva.
+e $\operatorname{Var}_\theta(T)$ é positiva e finita, a eficiência também é positiva.
 
-Quando
+A condição
 
 $$
-\operatorname{ef}_\theta(T)=1,
+\operatorname{ef}_\theta(T)=1
 $$
 
-o estimador atinge o limite de Cramér--Rao.
+indica que $T$ atinge o limite de Cramér--Rao.
 
 ::: {.callout-warning title="Observações — Alcance do limite de Cramér--Rao"}
 
-1. O limite estabelece uma restrição inferior para a variância, mas não garante a existência de um estimador que o atinja.
+1. O limite fornece uma cota inferior para a variância, mas não garante a existência de um estimador que a atinja.
 
-2. Um ENVVUM pode não atingir o limite de Cramér--Rao. Portanto, variância uniformemente mínima entre estimadores não viesados e eficiência de Cramér--Rao são conceitos relacionados, mas não equivalentes.
-
-3. A forma do resultado apresentada nesta seção não deve ser aplicada quando o suporte depende do parâmetro. Em particular,
+2. A forma apresentada nesta seção não deve ser aplicada quando o suporte depende do parâmetro. Em particular,
 
 $$
 X\sim\operatorname{Unif}(0,\theta)
@@ -2187,13 +2476,15 @@ $$
 
 não satisfaz a condição de suporte comum.
 
-4. Se $T$ é viesado e
+3. Para um estimador viesado, com
 
 $$
-E_\theta(T)=g(\theta),
+E_\theta(T)
+=
+g(\theta)
 $$
 
-com viés
+e viés
 
 $$
 b(\theta)
@@ -2227,13 +2518,13 @@ I_n(\theta)
 b(\theta)^2.
 $$
 
-Portanto, não é correto utilizar automaticamente
+Portanto,
 
 $$
 \frac{1}{I_n(\theta)}
 $$
 
-como limite inferior para o EQM de um estimador viesado.
+não deve ser utilizado automaticamente como limite inferior para o EQM de um estimador viesado.
 
 :::
 
@@ -2251,160 +2542,194 @@ $$
 
 com $\sigma^2$ conhecida.
 
-Considere
+Avalie
 
 $$
 T=\overline X
 $$
 
-como estimador de $\mu$. Verifique se sua variância atinge o limite de Cramér--Rao:
+como estimador de $\mu$:
 
-1. obtenha a função escore;
-2. calcule $I_1(\mu)$ e $I_n(\mu)$;
-3. determine o limite de Cramér--Rao;
-4. compare esse limite com $\operatorname{Var}_\mu(\overline X)$.
+1. obtenha a log-verossimilhança da amostra;
+2. determine o escore $U_n(\mu)$;
+3. calcule $I_n(\mu)$;
+4. obtenha o limite de Cramér--Rao;
+5. compare o limite com $\operatorname{Var}_\mu(\overline X)$.
 
 ::: {.callout-note collapse="true" title="Resolução — Eficiência da média no modelo normal"}
 
-Para uma observação,
+Para a amostra observada
 
 $$
-f(x\mid\mu)
+\mathbf x=(x_1,\ldots,x_n),
+$$
+
+a log-verossimilhança é
+
+$$
+\ell(\mu;\mathbf x)
 =
-\frac{1}{\sqrt{2\pi\sigma^2}}
-\exp\left[
--\frac{(x-\mu)^2}{2\sigma^2}
-\right].
-$$
-
-Portanto,
-
-$$
-\log f(X\mid\mu)
-=
--\frac12\log(2\pi\sigma^2)
+-\frac{n}{2}\log(2\pi\sigma^2)
 -
-\frac{(X-\mu)^2}{2\sigma^2}.
+\frac{1}{2\sigma^2}
+\sum_{i=1}^n
+(x_i-\mu)^2.
 $$
 
 Derivando em relação a $\mu$,
 
 $$
 \begin{aligned}
-U_\mu(X)
+u_n(\mu;\mathbf x)
 &=
 \frac{\partial}{\partial\mu}
-\log f(X\mid\mu)\\
+\ell(\mu;\mathbf x)\\
 &=
-\frac{X-\mu}{\sigma^2}.
+\frac{1}{\sigma^2}
+\sum_{i=1}^n
+(x_i-\mu)\\
+&=
+\frac{n(\overline x-\mu)}
+{\sigma^2}.
 \end{aligned}
+$$
+
+Substituindo a amostra observada pela amostra aleatória,
+
+$$
+U_n(\mu)
+=
+\frac{n(\overline X-\mu)}
+{\sigma^2}.
 $$
 
 Como
 
 $$
-E_\mu(X)=\mu,
+E_\mu(\overline X)=\mu,
 $$
 
 temos
 
 $$
-E_\mu[U_\mu(X)]
+E_\mu[U_n(\mu)]
 =
 0.
 $$
 
-A informação de Fisher de uma observação é
+A informação de Fisher da amostra é
 
 $$
 \begin{aligned}
-I_1(\mu)
+I_n(\mu)
 &=
-E_\mu\left[
-U_\mu(X)^2
+\operatorname{Var}_\mu
+\left[
+U_n(\mu)
 \right]\\
 &=
-E_\mu\left[
-\frac{(X-\mu)^2}{\sigma^4}
-\right]\\
-&=
-\frac{
-\operatorname{Var}_\mu(X)
-}{
-\sigma^4
-}\\
-&=
-\frac{1}{\sigma^2}.
+\frac{n^2}{\sigma^4}
+\operatorname{Var}_\mu(\overline X).
 \end{aligned}
 $$
 
-Como as observações são i.i.d.,
+Em @sec-distribuicoes-amostrais,
 
 $$
+\operatorname{Var}_\mu(\overline X)
+=
+\frac{\sigma^2}{n}.
+$$
+
+Portanto,
+
+$$
+\begin{aligned}
 I_n(\mu)
-=
-nI_1(\mu)
-=
+&=
+\frac{n^2}{\sigma^4}
+\frac{\sigma^2}{n}\\
+&=
 \frac{n}{\sigma^2}.
+\end{aligned}
 $$
 
-O alvo é
+Como o alvo é
 
 $$
 \tau(\mu)=\mu,
 $$
 
-de modo que
+temos
 
 $$
 \tau'(\mu)=1.
 $$
 
-Portanto, o limite de Cramér--Rao para qualquer estimador não viesado regular de $\mu$ é
+A desigualdade de Cramér--Rao fornece
 
 $$
-\frac{
-[\tau'(\mu)]^2
-}{
-I_n(\mu)
-}
-=
+\operatorname{Var}_\mu(T)
+\geq
 \frac{1}{I_n(\mu)}
 =
-\frac{\sigma^2}{n}.
+\frac{\sigma^2}{n}
 $$
 
-A média amostral é não viesada, pois
+para qualquer estimador não viesado de $\mu$ que satisfaça as condições do resultado.
 
-$$
-E_\mu(\overline X)
-=
-\mu.
-$$
-
-Além disso,
+A média amostral é não viesada e possui variância
 
 $$
 \operatorname{Var}_\mu(\overline X)
 =
 \frac{\sigma^2}{n}.
 $$
+
+Logo,
+
+$$
+\operatorname{Var}_\mu(\overline X)
+=
+\frac{1}{I_n(\mu)},
+$$
+
+e $\overline X$ atinge o limite de Cramér--Rao.
+
+A condição de igualdade também pode ser verificada diretamente. Como
+
+$$
+U_n(\mu)
+=
+\frac{n(\overline X-\mu)}
+{\sigma^2},
+$$
+
+temos
+
+$$
+\overline X-\mu
+=
+\frac{\sigma^2}{n}
+U_n(\mu)
+=
+\frac{1}{I_n(\mu)}
+U_n(\mu).
+$$
+
+Portanto, a média amostral possui exatamente a relação com o escore exigida para a igualdade na desigualdade de Cramér--Rao.
+
+:::
 
 Assim,
 
 $$
-\operatorname{Var}_\mu(\overline X)
-=
-\frac{1}{I_n(\mu)}.
+\overline X
 $$
 
-Logo, $\overline X$ atinge exatamente o limite de Cramér--Rao e é eficiente no sentido de Cramér--Rao para $\mu$.
+é eficiente no sentido de Cramér--Rao para $\mu$.
 
-:::
-
-Neste modelo, a média amostral atinge a cota inferior de Cramér--Rao.
-
-### Exemplo — Parâmetro de uma distribuição de Poisson {.unnumbered}
+::: {.callout-note collapse="true" title="Verificação adicional — Modelo Poisson"}
 
 Considere
 
@@ -2413,137 +2738,99 @@ X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
 \operatorname{Poisson}(\theta),
 \qquad
-\theta>0.
+\theta>0,
 $$
 
-Considere
+e
 
 $$
 T=\overline X
 $$
 
-como estimador de $\theta$. Verifique:
+como estimador de $\theta$.
 
-1. obtenha a função escore;
-2. calcule $I_1(\theta)$ e $I_n(\theta)$;
-3. determine o limite de Cramér--Rao;
-4. verifique se $\overline X$ atinge esse limite.
-
-::: {.callout-note collapse="true" title="Resolução — Eficiência da média no modelo Poisson"}
-
-Para uma observação,
+Para a amostra observada,
 
 $$
-f(x\mid\theta)
+\ell(\theta;\mathbf x)
 =
-e^{-\theta}
-\frac{\theta^x}{x!},
-\qquad
-x=0,1,2,\ldots
+-n\theta
++
+\left(
+\sum_{i=1}^n x_i
+\right)
+\log\theta
+-
+\sum_{i=1}^n
+\log(x_i!).
 $$
 
 Logo,
 
 $$
-\log f(X\mid\theta)
-=
--\theta
-+
-X\log\theta
--
-\log(X!).
-$$
-
-Derivando em relação a $\theta$,
-
-$$
 \begin{aligned}
-U_\theta(X)
+u_n(\theta;\mathbf x)
 &=
 \frac{\partial}{\partial\theta}
-\log f(X\mid\theta)\\
+\ell(\theta;\mathbf x)\\
 &=
--1+\frac{X}{\theta}.
+-n
++
+\frac{1}{\theta}
+\sum_{i=1}^n x_i.
 \end{aligned}
+$$
+
+Para a amostra aleatória,
+
+$$
+U_n(\theta)
+=
+-n
++
+\frac{1}{\theta}
+\sum_{i=1}^n X_i
+=
+\frac{n(\overline X-\theta)}
+{\theta}.
 $$
 
 Como
 
 $$
-E_\theta(X)=\theta,
+\operatorname{Var}_\theta
+\left(
+\sum_{i=1}^nX_i
+\right)
+=
+n\theta,
 $$
 
 temos
 
 $$
 \begin{aligned}
-E_\theta[U_\theta(X)]
+I_n(\theta)
 &=
--1+
-\frac{E_\theta(X)}{\theta}\\
+\operatorname{Var}_\theta[U_n(\theta)]\\
 &=
-0.
-\end{aligned}
-$$
-
-A informação de Fisher de uma observação pode ser obtida pela variância do escore:
-
-$$
-\begin{aligned}
-I_1(\theta)
-&=
+\frac{1}{\theta^2}
 \operatorname{Var}_\theta
 \left(
--1+\frac{X}{\theta}
+\sum_{i=1}^nX_i
 \right)\\
 &=
-\frac{
-\operatorname{Var}_\theta(X)
-}{
-\theta^2
-}.
+\frac{n}{\theta}.
 \end{aligned}
 $$
 
-Como, no modelo Poisson,
-
-$$
-\operatorname{Var}_\theta(X)
-=
-\theta,
-$$
-
-segue que
-
-$$
-I_1(\theta)
-=
-\frac1\theta.
-$$
-
-Para uma amostra i.i.d.,
-
-$$
-I_n(\theta)
-=
-nI_1(\theta)
-=
-\frac{n}{\theta}.
-$$
-
-Como o alvo é
+Para o alvo
 
 $$
 \tau(\theta)=\theta,
 $$
 
-temos
-
-$$
-\tau'(\theta)=1.
-$$
-
-Portanto, o limite de Cramér--Rao é
+o limite de Cramér--Rao é
 
 $$
 \frac{1}{I_n(\theta)}
@@ -2551,51 +2838,82 @@ $$
 \frac{\theta}{n}.
 $$
 
-A média amostral é não viesada:
+A média amostral satisfaz
 
 $$
-E_\theta(\overline X)
-=
-\theta.
+E_\theta(\overline X)=\theta
 $$
 
-Sua variância é
+e
 
 $$
 \operatorname{Var}_\theta(\overline X)
-=
-\frac{
-\operatorname{Var}_\theta(X)
-}{
-n
-}
 =
 \frac{\theta}{n}.
 $$
 
-Logo,
+Portanto,
 
 $$
 \operatorname{Var}_\theta(\overline X)
 =
-\frac1{I_n(\theta)}.
+\frac{1}{I_n(\theta)},
 $$
 
-Portanto, $\overline X$ também atinge exatamente o limite de Cramér--Rao e é eficiente no sentido de Cramér--Rao para $\theta$ [@rice2007mathematical, sec. 8.7; @lauritzen2023fundamentals, thm. 4.4].
+e $\overline X$ é eficiente no sentido de Cramér--Rao.
+
+Também neste caso,
+
+$$
+\overline X-\theta
+=
+\frac{\theta}{n}
+U_n(\theta)
+=
+\frac{1}{I_n(\theta)}
+U_n(\theta),
+$$
+
+confirmando a condição de igualdade [@rice2007mathematical, sec. 8.7; @lauritzen2023fundamentals, thm. 4.4].
 
 :::
 
 ::: {.callout-tip title="Procedimento — Verificação da eficiência de Cramér--Rao"}
 
-Nos dois exemplos anteriores, a análise seguiu a mesma sequência:
+Para verificar a eficiência de um estimador não viesado em um modelo regular:
 
-1. obter a função escore;
-2. calcular a informação de Fisher;
-3. identificar o alvo $\tau(\theta)$ e calcular $\tau'(\theta)$;
-4. obter o limite de Cramér--Rao;
-5. verificar se o estimador é não viesado;
-6. calcular sua variância;
-7. comparar a variância com o limite.
+1. escreva a log-verossimilhança da amostra,
+   $$
+   \ell(\theta;\mathbf x);
+   $$
+
+2. obtenha o escore da amostra,
+   $$
+   U_n(\theta)
+   =
+   \frac{\partial}{\partial\theta}
+   \ell(\theta;\mathbf X);
+   $$
+
+3. calcule a informação de Fisher,
+   $$
+   I_n(\theta)
+   =
+   \operatorname{Var}_\theta[U_n(\theta)];
+   $$
+
+4. identifique o alvo $\tau(\theta)$ e calcule $\tau'(\theta)$;
+
+5. obtenha o limite
+   $$
+   \frac{
+   [\tau'(\theta)]^2
+   }{
+   I_n(\theta)
+   };
+   $$
+
+6. compare esse limite com $\operatorname{Var}_\theta(T)$.
 
 Se
 
@@ -2609,31 +2927,23 @@ I_n(\theta)
 },
 $$
 
-então o estimador atinge o limite e é eficiente no sentido de Cramér--Rao.
+o estimador atinge o limite e é eficiente no sentido de Cramér--Rao.
 
 :::
 
 ### Eficiência assintótica {.unnumbered}
 
-A eficiência de Cramér--Rao estudada anteriormente é uma propriedade de amostra finita: para cada tamanho amostral $n$, compara-se a variância do estimador com o limite inferior correspondente.
+A eficiência de Cramér--Rao estudada anteriormente compara, para um tamanho amostral fixado, a variância de um estimador não viesado com uma cota determinada pela informação de Fisher.
 
-Essa comparação é especialmente informativa quando a distribuição amostral e a variância do estimador podem ser obtidas exatamente. Em muitos problemas, porém, essas quantidades são difíceis de determinar para cada $n$, ou o estimador não atinge exatamente a cota de Cramér--Rao em amostras finitas.
+Em grandes amostras, a avaliação pode ser feita por outra perspectiva. Em @sec-u2-tcl, a convergência em distribuição foi utilizada para descrever a forma das flutuações de estatísticas em torno de seus valores de referência. Aqui, a distribuição limite será utilizada para comparar a precisão de sequências de estimadores.
 
-Em grandes amostras, interessa verificar se o estimador atinge, em primeira ordem, a melhor precisão permitida pelo modelo. Essa propriedade é denominada **eficiência assintótica**.
-
-Consideramos uma sequência de estimadores
+Considere uma sequência
 
 $$
 T_1,T_2,\ldots
 $$
 
-e estudamos sua distribuição quando
-
-$$
-n\to\infty.
-$$
-
-Suponha que $T_n$ estime $\tau(\theta)$ e que
+para estimar $\tau(\theta)$. Suponha que
 
 $$
 \sqrt n
@@ -2650,17 +2960,49 @@ $$
 V(\theta)
 $$
 
-é a variância da distribuição normal limite na escala $\sqrt n$ e é usualmente denominada **variância assintótica na escala $\sqrt n$**.
+é a variância da distribuição limite na escala $\sqrt n$. Nessa escala, valores menores de $V(\theta)$ correspondem a maior concentração da distribuição assintótica em torno do alvo.
 
-Ela permite comparar, em grandes amostras, a precisão de estimadores que possuem a mesma taxa de convergência. Quanto menor $V(\theta)$, mais concentrada é a distribuição limite em torno do alvo.
-
-Sob condições adicionais que permitam transferir esse comportamento para os segundos momentos, a variância de $T_n$ possui, em primeira ordem, a escala
+Por exemplo, em @sec-u2-tcl, para uma média amostral sob as condições usuais do Teorema Central do Limite,
 
 $$
-\frac{V(\theta)}{n}.
+\sqrt n
+\left(
+\overline X-\mu
+\right)
+\xrightarrow{d}
+N(0,\sigma^2).
 $$
 
-Em um modelo regular com observações i.i.d.,
+Nesse caso, $\sigma^2$ descreve a variabilidade das flutuações de $\overline X$ na escala $\sqrt n$. A eficiência assintótica utiliza a mesma lógica para comparar estimadores.
+
+::: {.callout-note title="Observação — Distribuição limite e variância"}
+
+A convergência
+
+$$
+\sqrt n
+\left[
+T_n-\tau(\theta)
+\right]
+\xrightarrow{d}
+N\bigl(0,V(\theta)\bigr)
+$$
+
+não implica, por si só,
+
+$$
+n\operatorname{Var}_\theta(T_n)
+\longrightarrow
+V(\theta).
+$$
+
+Essa conclusão exige condições adicionais sobre os momentos da sequência.
+
+Por isso, neste capítulo, $V(\theta)$ será interpretada diretamente como a variância da distribuição limite na escala $\sqrt n$.
+
+:::
+
+Em modelos regulares, a informação de Fisher fornece também uma referência para essa variabilidade assintótica. Para uma amostra i.i.d.,
 
 $$
 I_n(\theta)
@@ -2668,23 +3010,7 @@ I_n(\theta)
 nI_1(\theta).
 $$
 
-Para um estimador não viesado de $\tau(\theta)$, a cota de Cramér--Rao é
-
-$$
-\frac{
-[\tau'(\theta)]^2
-}{
-I_n(\theta)
-}
-=
-\frac{
-[\tau'(\theta)]^2
-}{
-nI_1(\theta)
-}.
-$$
-
-Assim, na escala $\sqrt n$, a quantidade correspondente ao limite de informação do modelo é
+Para estimadores regulares e assintoticamente normais de $\tau(\theta)$, a referência determinada pela informação de uma observação é
 
 $$
 \frac{
@@ -2694,7 +3020,20 @@ I_1(\theta)
 }.
 $$
 
-Nesse contexto, a sequência $\{T_n\}$ é denominada **assintoticamente eficiente** quando sua distribuição limite satisfaz
+::: {.callout-important title="Definição — Eficiência assintótica"}
+
+Suponha que
+
+$$
+\sqrt n
+\left[
+T_n-\tau(\theta)
+\right]
+\xrightarrow{d}
+N\bigl(0,V(\theta)\bigr).
+$$
+
+Dentro do contexto regular considerado, a sequência $\{T_n\}$ é denominada **assintoticamente eficiente** quando
 
 $$
 V(\theta)
@@ -2712,13 +3051,7 @@ $$
 \tau(\theta)=\theta,
 $$
 
-temos
-
-$$
-\tau'(\theta)=1,
-$$
-
-e a condição se reduz a
+a condição se reduz a
 
 $$
 V(\theta)
@@ -2726,32 +3059,44 @@ V(\theta)
 \frac{1}{I_1(\theta)}.
 $$
 
-A eficiência de Cramér--Rao em amostras finitas e a eficiência assintótica respondem, portanto, a perguntas diferentes.
+:::
 
-Na primeira, verifica-se se
+A definição não exige que
 
 $$
-\operatorname{Var}_\theta(T_n)
+E_\theta(T_n)
+=
+\tau(\theta)
 $$
 
-atinge exatamente a cota de Cramér--Rao para determinado tamanho amostral.
+para todo tamanho amostral. Um estimador pode apresentar viés em amostras finitas e ainda possuir uma distribuição assintótica centrada em $\tau(\theta)$ com a variância de referência determinada pela informação de Fisher.
 
-Na segunda, verifica-se se a distribuição limite de
+Essa diferença separa duas noções.
+
+Na **eficiência de Cramér--Rao em amostras finitas**, um estimador não viesado atinge exatamente, para determinado $n$, a cota
+
+$$
+\frac{
+[\tau'(\theta)]^2
+}{
+I_n(\theta)
+}.
+$$
+
+Na **eficiência assintótica**, a comparação é feita com a distribuição limite de
 
 $$
 \sqrt n
 \left[
 T_n-\tau(\theta)
-\right]
+\right].
 $$
 
-atinge, em primeira ordem, a precisão associada ao limite de informação do modelo regular.
+Portanto, um estimador pode não atingir a cota de Cramér--Rao para cada $n$ e ainda ser assintoticamente eficiente.
 
-Assim, um estimador pode não atingir a cota de Cramér--Rao para cada tamanho amostral e ainda ser assintoticamente eficiente.
+Essa distinção será retomada em @sec-estimacao-pontual. Sob condições de regularidade apropriadas, estimadores de máxima verossimilhança frequentemente apresentam distribuição assintótica cuja variância coincide com a referência determinada pela informação de Fisher.
 
-Essa distinção será particularmente útil no estudo dos métodos de estimação pontual. Sob condições de regularidade apropriadas, estimadores de máxima verossimilhança frequentemente apresentam distribuição assintótica cuja variância coincide com o limite determinado pela informação de Fisher.
-
-Essa conclusão exige condições próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações em que a taxa de convergência difere de $\sqrt n$ [@casella2011inferencia, def. 10.1.11; @lauritzen2023fundamentals, thm. 5.11].
+A propriedade depende das condições do modelo e não se estende automaticamente a situações irregulares, parâmetros na fronteira do espaço paramétrico ou problemas em que a taxa de convergência difere de $\sqrt n$ [@casella2011inferencia, def. 10.1.11; @lauritzen2023fundamentals, thm. 5.11].
 
 ## Aprofundamento: Princípios de redução de dados
 
@@ -2777,29 +3122,21 @@ Essa ideia fornece uma ligação direta com a avaliação de estimadores. Se um 
 
 A noção que formaliza essa redução é a **suficiência** [@cox2006principles, secs. 2.2 and 4.3.1; @casella2011inferencia, chap. 6].
 
-::: {.callout-note title="Recordação — Função de verossimilhança"}
+::: {.callout-note title="Conexão — Verossimilhança e redução de dados"}
 
-Em @sec-fundamentos-inferencia, para dados observados
+A função de verossimilhança introduzida em @sec-fundamentos-inferencia será utilizada aqui com uma finalidade diferente da estudada na função escore.
 
-$$
-\mathbf x=(x_1,\ldots,x_n),
-$$
+Na redução de dados, interessa identificar **por meio de quais características da amostra observada $\mathbf x$ ocorre a dependência da verossimilhança em $\theta$**.
 
-a função de verossimilhança foi definida por
+Se essa dependência puder ser expressa por meio de uma estatística
 
 $$
-L(\theta;\mathbf x)
-=
-f_{\mathbf X}(\mathbf x\mid\theta),
-\qquad
-\theta\in\Theta.
+T(\mathbf x),
 $$
 
-Na redução de dados, utilizaremos a verossimilhança para identificar **por meio de quais características de $\mathbf x$ ocorre sua dependência em $\theta$**.
+essa estatística pode concentrar a informação amostral relevante para o parâmetro.
 
-Se toda essa dependência puder ser expressa por meio de uma estatística $T(\mathbf x)$, isso indicará que $T$ pode desempenhar o papel de resumo da informação amostral sobre o parâmetro.
-
-A maximização da verossimilhança possui outra finalidade e será desenvolvida no @sec-estimacao-pontual.
+Essa ideia conduz ao conceito de suficiência.
 
 :::
 
@@ -2940,19 +3277,19 @@ $$
 a probabilidade condicional é
 
 $$
-P_\theta(\mathbf X=\mathbf x\mid T=t)
+P(\mathbf X=\mathbf x\mid T=t,\theta)
 =
 \frac{
-P_\theta(\mathbf X=\mathbf x)
+P(\mathbf X=\mathbf x\mid\theta)
 }{
-P_\theta(T=t)
+P(T=t\mid\theta)
 }.
 $$
 
 Pela fatoração, o numerador é
 
 $$
-P(\mathbf X=\mathbf x \mid \theta)
+P(\mathbf X=\mathbf x\mid\theta)
 =
 g(t\mid\theta)h(\mathbf x).
 $$
@@ -2964,7 +3301,7 @@ T(\mathbf y)=t:
 $$
 
 $$
-P_\theta(T=t)
+P(T=t\mid\theta)
 =
 \sum_{\mathbf y:T(\mathbf y)=t}
 g(t\mid\theta)h(\mathbf y).
@@ -2973,7 +3310,7 @@ $$
 Como $g(t\mid\theta)$ não depende de $\mathbf y$,
 
 $$
-P_\theta(T=t)
+P(T=t\mid\theta)
 =
 g(t\mid\theta)
 \sum_{\mathbf y:T(\mathbf y)=t}
@@ -2984,7 +3321,7 @@ Portanto,
 
 $$
 \begin{aligned}
-P_\theta(\mathbf X=\mathbf x\mid T=t)
+P(\mathbf X=\mathbf x\mid T=t,\theta)
 &=
 \frac{
 g(t\mid\theta)h(\mathbf x)
@@ -3064,12 +3401,12 @@ T=T(\mathbf x), \theta
 \bigr).
 $$
 
-Embora a última expressão seja escrita com $P_\theta$, pela suficiência seu valor não depende de $\theta$.
+Embora $\theta$ apareça na notação da probabilidade condicional, pela suficiência seu valor não depende de $\theta$.
 
 Assim,
 
 $$
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 g\bigl(T(\mathbf x)\mid\theta\bigr)
 h(\mathbf x).
@@ -3091,7 +3428,7 @@ X_1,\ldots,X_n
 0<p<1.
 $$
 
-A amostra completa registra não só quantos sucessos ocorreram, mas também **em quais posições** eles apareceram.
+A amostra completa registra o número de sucessos e as posições em que eles ocorreram.
 
 Por exemplo, as amostras
 
@@ -3107,7 +3444,7 @@ $$
 
 são diferentes, mas ambas possuem dois sucessos.
 
-A questão é verificar se, para inferir sobre $p$, é necessário conservar também a posição dos sucessos ou se o número total de sucessos já concentra toda a informação relevante.
+Para inferir sobre $p$, interessa determinar se as posições dos sucessos acrescentam informação além do número total de sucessos.
 
 Considere
 
@@ -3285,13 +3622,11 @@ Assim, depois de conhecido $T=t$, a disposição dos sucessos e fracassos na amo
 
 :::
 
-A suficiência estabelece que determinada estatística preserva a informação da amostra sobre o parâmetro. Ainda permanecem, porém, questões mais refinadas.
+A suficiência garante a preservação da informação da amostra sobre o parâmetro, mas uma estatística suficiente ainda pode conter componentes redundantes. A **suficiência minimal** procura eliminar essa redundância.
 
-Uma estatística suficiente pode conter componentes redundantes. Podemos então perguntar se existe uma redução suficiente ainda menor.
+Em determinadas classes de modelos, a estrutura da distribuição também permite identificar estatísticas suficientes de forma sistemática. Esse é o papel das **famílias exponenciais**.
 
-Além disso, determinadas classes de modelos permitem identificar estatísticas suficientes de forma sistemática, e a suficiência pode ser utilizada para construir estimadores com menor variabilidade.
-
-Essas questões conduzem, respectivamente, à **suficiência minimal**, às **famílias exponenciais**, ao **teorema de Rao--Blackwell** e ao **teorema de Lehmann--Scheffé**. Posteriormente, ancilaridade e o teorema de Basu completam essa estrutura.
+Mais adiante, suficiência e completude serão utilizadas para construir e caracterizar estimadores por meio dos teoremas de Rao--Blackwell e Lehmann--Scheffé.
 
 ### Suficiência minimal {.unnumbered}
 
@@ -4162,7 +4497,7 @@ Essa é uma das razões para a importância das famílias exponenciais em infer�
 
 #### Exemplo — Modelo Bernoulli {.unnumbered}
 
-Retomemos
+Considere novamente
 
 $$
 X\sim\operatorname{Ber}(p),
@@ -5229,9 +5564,9 @@ A combinação das duas propriedades permite identificar estimadores não viesad
 
 ### Estimadores não viesados de variância uniformemente mínima {.unnumbered}
 
-A eficiência relativa permite comparar dois estimadores escolhidos previamente. Uma questão mais forte consiste em comparar um estimador com **todos os estimadores não viesados do mesmo alvo**.
+A completude fornece uma propriedade de unicidade para funções não viesadas de uma estatística. O próximo objetivo é identificar, entre **todos os estimadores não viesados de um mesmo alvo**, aquele que possui a menor variância para cada valor do parâmetro.
 
-Essa ideia conduz ao estimador não viesado de variância uniformemente mínima.
+Essa propriedade conduz ao estimador não viesado de variância uniformemente mínima.
 
 ::: {.callout-important title="Definição — ENVVUM"}
 
@@ -5256,13 +5591,13 @@ e para todo estimador não viesado $W$ de $\tau(\theta)$ com variância finita [
 
 :::
 
-A palavra **uniformemente** indica que a desigualdade deve valer para todos os valores de $\theta$, e não apenas para um valor particular do parâmetro.
+A palavra **uniformemente** indica que a desigualdade deve valer em todo o espaço paramétrico, e não em um valor isolado de $\theta$.
 
 Assim, um ENVVUM possui, em cada ponto do espaço paramétrico, variância não superior à de qualquer outro estimador não viesado do mesmo alvo.
 
-A definição estabelece o objetivo, mas não mostra diretamente como encontrar tal estimador.
+A definição caracteriza o objetivo, mas ainda não fornece um procedimento para construir um ENVVUM.
 
-A primeira ferramenta para isso é o teorema de Rao--Blackwell: a partir de um estimador inicial, podemos condicioná-lo em uma estatística suficiente e obter um novo estimador que preserva sua esperança e não aumenta seu EQM.
+O teorema de Rao--Blackwell fornece o primeiro passo: condicionar um estimador em uma estatística suficiente preserva sua esperança e não aumenta seu EQM.
 
 ### Teorema de Rao--Blackwell {.unnumbered}
 
@@ -5318,7 +5653,7 @@ $$
 \operatorname{Var}_\theta(W\mid T)=0
 $$
 
-$P_\theta$-quase certamente.
+quase certamente.
 
 Equivalentemente,
 
@@ -5328,7 +5663,7 @@ W
 E_\theta(W\mid T)
 $$
 
-$P_\theta$-quase certamente.
+quase certamente.
 
 Assim, não existe melhoria estrita quando $W$ já é, a menos de equivalência quase certa, uma função de $T$ [@rice2007mathematical, sec. 8.8.2; @bickel2016volume2, thm. 8.2.6].
 
@@ -5820,7 +6155,7 @@ e^{-n\theta}
 \end{aligned}
 $$
 
-Observe que $\theta$ desaparece completamente da expressão.
+O parâmetro $\theta$ desaparece completamente da expressão.
 
 Essa é a função de probabilidade de uma distribuição multinomial:
 
@@ -5919,9 +6254,9 @@ Para concluir que $W^*(T)$ possui variância mínima entre **todos** os estimado
 
 ### Teorema de Lehmann--Scheffé {.unnumbered}
 
-Rao--Blackwell mostra como melhorar um estimador por condicionamento em uma estatística suficiente. A suficiência, entretanto, não garante por si só que a função não viesada resultante seja única.
+Rao--Blackwell reduz ou preserva a variabilidade por condicionamento em uma estatística suficiente. A suficiência, isoladamente, não garante a unicidade da função não viesada resultante.
 
-É nesse ponto que a completude se torna decisiva.
+A completude fornece essa unicidade e, combinada à suficiência, conduz ao teorema de Lehmann--Scheffé.
 
 ::: {.callout-important title="Teorema — Lehmann--Scheffé"}
 
@@ -5935,7 +6270,7 @@ $$
 
 para todo $\theta\in\Theta$, com segundo momento finito, então $\phi(T)$ é o ENVVUM de $\tau(\theta)$.
 
-Além disso, $\phi(T)$ é única, a menos de equivalência $P_\theta$-quase certa, para todo $\theta$ [@casella2011inferencia, thm. 7.3.23; @bickel2016volume2, cor. 8.2.2].
+Além disso, $\phi(T)$ é única, a menos de equivalência quase certa, para todo $\theta$ [@casella2011inferencia, thm. 7.3.23; @bickel2016volume2, cor. 8.2.2].
 
 :::
 
@@ -6037,7 +6372,7 @@ $$
 0
 $$
 
-$P_\theta$-quase certamente.
+quase certamente, para todo $\theta$.
 
 Logo,
 
@@ -6047,7 +6382,7 @@ $$
 W^*(T)
 $$
 
-$P_\theta$-quase certamente.
+quase certamente, para todo $\theta$.
 
 Consequentemente,
 
@@ -6073,7 +6408,7 @@ A completude também mostra que qualquer outra função não viesada de $T$ para
 
 :::
 
-No exemplo de Poisson desenvolvido anteriormente,
+No exemplo de Rao--Blackwell para o modelo Poisson,
 
 $$
 T
@@ -6174,7 +6509,7 @@ Como as observações são independentes, a densidade conjunta é
 
 $$
 \begin{aligned}
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 &=
 \prod_{i=1}^n
 \left[
@@ -6493,49 +6828,53 @@ Esses dois momentos produzem diretamente a variância do ENVVUM.
 
 **Comparação com o limite de Cramér--Rao**
 
-Para uma observação,
+Para a amostra observada,
 
 $$
-\log f(X\mid\theta)
+\ell(\theta;\mathbf x)
 =
-\log\theta-\theta X.
+n\log\theta
+-
+\theta
+\sum_{i=1}^n x_i.
 $$
 
-O escore é
+O escore da amostra é
 
 $$
-U_\theta(X)
-=
+\begin{aligned}
+U_n(\theta)
+&=
 \frac{\partial}{\partial\theta}
-\log f(X\mid\theta)
-=
-\frac1\theta-X.
+\ell(\theta;\mathbf X)\\
+&=
+\frac{n}{\theta}
+-
+\sum_{i=1}^nX_i.
+\end{aligned}
 $$
 
 Como
 
 $$
-\operatorname{Var}_\theta(X)
+\operatorname{Var}_\theta
+\left(
+\sum_{i=1}^nX_i
+\right)
 =
-\frac1{\theta^2},
+\frac{n}{\theta^2},
 $$
 
-a informação de Fisher de uma observação é
+a informação de Fisher da amostra é
 
 $$
-I_1(\theta)
-=
-\operatorname{Var}_\theta[U_\theta(X)]
-=
-\frac1{\theta^2}.
-$$
-
-Para uma amostra i.i.d.,
-
-$$
+\begin{aligned}
 I_n(\theta)
-=
+&=
+\operatorname{Var}_\theta[U_n(\theta)]\\
+&=
 \frac{n}{\theta^2}.
+\end{aligned}
 $$
 
 Como o alvo é
@@ -6636,7 +6975,7 @@ Isto é, $T$ e $A$ são independentes [@bickel2016volume2, thm. 8.2.3; @casella2
 
 :::
 
-O teorema estabelece uma consequência importante: uma estatística que concentra toda a informação sobre $\theta$ e possui a propriedade de completude é independente de qualquer estatística cuja distribuição seja livre de $\theta$.
+Uma estatística suficiente e completa para $\theta$ é independente de qualquer estatística ancilar para esse parâmetro.
 
 ::: {.callout-note collapse="true" title="Demonstração — Ideia do teorema de Basu no caso discreto"}
 
@@ -6758,7 +7097,7 @@ $$
 g_a(T)=0
 $$
 
-$P$-quase certamente.
+quase certamente, para todo $\theta$.
 
 Portanto,
 
@@ -7192,23 +7531,25 @@ e o estimador é consistente.
 
 #### Eficiência de Cramér--Rao {.unnumbered}
 
-Finalmente, podemos comparar a variância de $\widehat\beta$ com o limite inferior permitido pelo modelo para estimadores não viesados regulares.
+A variância de $\widehat\beta$ pode ser comparada com o limite de Cramér--Rao para estimadores não viesados que satisfazem as condições de regularidade.
 
 ::: {.callout-note collapse="true" title="Resolução — Informação de Fisher e eficiência"}
 
-Para uma observação,
+Para a amostra observada, a log-verossimilhança pode ser escrita como
 
 $$
 \begin{aligned}
-\log f(X\mid\beta)
+\ell(\beta;\mathbf x)
 ={}&
-(\alpha-1)\log X
+(\alpha-1)
+\sum_{i=1}^n\log x_i
 -
-\frac{X}{\beta}\\
+\frac1\beta
+\sum_{i=1}^n x_i\\
 &-
-\alpha\log\beta
+n\alpha\log\beta
 -
-\log\Gamma(\alpha).
+n\log\Gamma(\alpha).
 \end{aligned}
 $$
 
@@ -7216,78 +7557,68 @@ Derivando em relação a $\beta$,
 
 $$
 \begin{aligned}
-U_\beta(X)
+U_n(\beta)
 &=
 \frac{\partial}{\partial\beta}
-\log f(X\mid\beta)\\
+\ell(\beta;\mathbf X)\\
 &=
-\frac{X}{\beta^2}
+\frac{1}{\beta^2}
+\sum_{i=1}^nX_i
 -
-\frac{\alpha}{\beta}.
+\frac{n\alpha}{\beta}.
 \end{aligned}
 $$
 
 Como
 
 $$
-E_\beta(X)
+E_\beta
+\left(
+\sum_{i=1}^nX_i
+\right)
 =
-\alpha\beta,
+n\alpha\beta,
 $$
 
 temos
 
 $$
-E_\beta[U_\beta(X)]
+E_\beta[U_n(\beta)]
 =
 0.
 $$
 
-A informação de Fisher de uma observação pode ser obtida pela variância do escore:
+A informação de Fisher da amostra é
 
 $$
 \begin{aligned}
-I_1(\beta)
+I_n(\beta)
 &=
-\operatorname{Var}_\beta[U_\beta(X)]\\
+\operatorname{Var}_\beta[U_n(\beta)]\\
 &=
+\frac{1}{\beta^4}
 \operatorname{Var}_\beta
 \left(
-\frac{X}{\beta^2}
--
-\frac{\alpha}{\beta}
-\right)\\
-&=
-\frac{
-\operatorname{Var}_\beta(X)
-}{
-\beta^4
-}.
+\sum_{i=1}^nX_i
+\right).
 \end{aligned}
 $$
 
 Como
 
 $$
-\operatorname{Var}_\beta(X)
+\operatorname{Var}_\beta
+\left(
+\sum_{i=1}^nX_i
+\right)
 =
-\alpha\beta^2,
+n\alpha\beta^2,
 $$
 
 segue que
 
 $$
-I_1(\beta)
-=
-\frac{\alpha}{\beta^2}.
-$$
-
-Para uma amostra i.i.d.,
-
-$$
 I_n(\beta)
-=
-nI_1(\beta)
 =
 \frac{n\alpha}{\beta^2}.
 $$
@@ -7312,7 +7643,7 @@ $$
 \frac{\beta^2}{n\alpha}.
 $$
 
-Agora calculamos a variância do estimador:
+A variância do estimador é
 
 $$
 \begin{aligned}
@@ -7400,17 +7731,46 @@ $$
 B_\theta(T)^2.
 $$
 
-O não viés e a variância descrevem propriedades para um tamanho amostral fixado. A consistência estuda a concentração de uma sequência de estimadores no alvo quando $n$ aumenta. A eficiência assintótica compara a precisão das distribuições limite.
+O não viés e a variância descrevem propriedades para um tamanho amostral fixado. A consistência estuda a concentração de uma sequência de estimadores no alvo quando $n$ aumenta.
 
-A informação de Fisher relaciona a sensibilidade do modelo ao parâmetro com limites de precisão:
+A log-verossimilhança introduzida em @sec-fundamentos-inferencia fornece, por diferenciação, o escore da amostra:
 
 $$
+\ell(\theta;\mathbf X)
+\longrightarrow
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X).
+$$
+
+Sob condições de regularidade,
+
+$$
+E_\theta[U_n(\theta)]=0
+$$
+
+e
+
+$$
+I_n(\theta)
+=
+\operatorname{Var}_\theta[U_n(\theta)].
+$$
+
+A informação de Fisher conecta a sensibilidade do modelo à precisão dos estimadores:
+
+$$
+\text{log-verossimilhança}
+\longrightarrow
 \text{escore}
 \longrightarrow
 \text{informação de Fisher}
 \longrightarrow
 \text{limite de Cramér--Rao}.
 $$
+
+A eficiência de Cramér--Rao é uma propriedade de amostra finita para estimadores não viesados. A eficiência assintótica utiliza a distribuição limite de uma sequência de estimadores e compara sua variabilidade, na escala $\sqrt n$, com a referência determinada pela informação de Fisher.
 
 Na redução de dados, a suficiência concentra a informação da amostra sobre o parâmetro, enquanto a suficiência minimal elimina redundâncias. As famílias exponenciais fornecem uma estrutura sistemática para identificar estatísticas suficientes e, sob condições adicionais, completas.
 
@@ -7426,13 +7786,30 @@ $$
 
 Quando $T$ é suficiente e completa, Lehmann--Scheffé caracteriza a função não viesada de $T$ como ENVVUM. O teorema de Basu relaciona completude e suficiência à ancilaridade por meio da independência.
 
-Esses resultados fornecem os critérios que serão utilizados na construção e na avaliação de estimadores nos capítulos seguintes.
+Esses resultados fornecem critérios para avaliar estimadores e serão utilizados na construção de procedimentos de estimação nos capítulos seguintes.
 
 ## Exercícios
 
 ::: {.callout-note title="Orientação"}
 
-Quando pertinente, explicite o modelo, o parâmetro de interesse, o estimador e o critério utilizado para avaliá-lo. Ao aplicar a desigualdade de Cramér--Rao, verifique as condições de regularidade e identifique o alvo $\tau(\theta)$ antes de calcular o limite.
+Quando pertinente, explicite o modelo, o parâmetro de interesse, o estimador e o critério utilizado para avaliá-lo.
+
+Nos exercícios sobre informação de Fisher e Cramér--Rao, parta da log-verossimilhança da amostra,
+
+$$
+\ell(\theta;\mathbf x),
+$$
+
+obtenha o escore
+
+$$
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X),
+$$
+
+e verifique as condições de regularidade antes de aplicar a desigualdade. Identifique também o alvo $\tau(\theta)$ e sua derivada.
 
 :::
 
@@ -7526,7 +7903,7 @@ $$
 T_n\xrightarrow{P}\theta.
 $$
 
-4.  **Cramér--Rao no modelo exponencial.** Considere
+4.  **Informação, Cramér--Rao e eficiência assintótica no modelo exponencial.** Considere
 
 $$
 X_1,\ldots,X_n
@@ -7539,7 +7916,13 @@ $$
 em que $\mu$ representa a média e a taxa é $1/\mu$. Assim,
 
 $$
-E_\mu(X_i)=\mu.
+E_\mu(X_i)=\mu
+$$
+
+e
+
+$$
+\operatorname{Var}_\mu(X_i)=\mu^2.
 $$
 
 Equivalentemente,
@@ -7554,15 +7937,73 @@ f(x\mid\mu)
 \mathbf 1\{x>0\}.
 $$
 
-a. Obtenha a função escore de uma observação.
+a. Escreva a log-verossimilhança da amostra,
 
-b. Calcule $I_1(\mu)$ e $I_n(\mu)$.
+$$
+\ell(\mu;\mathbf x).
+$$
 
-c. Determine o limite de Cramér--Rao para estimadores não viesados de $\mu$.
+b. Obtenha o escore da amostra
 
-d. Mostre que $\overline X$ é não viesado para $\mu$.
+$$
+U_n(\mu)
+=
+\frac{\partial}{\partial\mu}
+\ell(\mu;\mathbf X)
+$$
 
-e. Compare $\operatorname{Var}_\mu(\overline X)$ com o limite de Cramér--Rao e conclua se $\overline X$ é eficiente no sentido de Cramér--Rao.
+e verifique que
+
+$$
+E_\mu[U_n(\mu)]=0.
+$$
+
+c. Calcule a informação de Fisher da amostra,
+
+$$
+I_n(\mu),
+$$
+
+e obtenha $I_1(\mu)$ a partir da relação
+
+$$
+I_n(\mu)=nI_1(\mu).
+$$
+
+d. Determine o limite de Cramér--Rao para estimadores não viesados de $\mu$.
+
+e. Mostre que $\overline X$ é não viesado para $\mu$ e compare
+
+$$
+\operatorname{Var}_\mu(\overline X)
+$$
+
+com o limite de Cramér--Rao. Conclua se $\overline X$ é eficiente no sentido de Cramér--Rao.
+
+f. Utilizando o Teorema Central do Limite de @sec-u2-tcl, mostre que
+
+$$
+\sqrt n
+\left(
+\overline X-\mu
+\right)
+\xrightarrow{d}
+N(0,\mu^2).
+$$
+
+g. Compare a variância da distribuição limite,
+
+$$
+V(\mu)=\mu^2,
+$$
+
+com
+
+$$
+\frac{1}{I_1(\mu)}
+$$
+
+e conclua se a sequência $\{\overline X_n\}$ é assintoticamente eficiente.
 
 ### Exercícios — Aprofundamento {.unnumbered}
 
@@ -7718,7 +8159,7 @@ $$
 
 c. Utilize o teorema de Lehmann--Scheffé para concluir que $\widehat p$ é o ENVVUM de $p$.
 
-d. Calcule a informação de Fisher e verifique se $\widehat p$ atinge o limite de Cramér--Rao.
+d. Escreva a log-verossimilhança da amostra, obtenha o escore $U_n(p)$ e calcule $I_n(p)$. Em seguida, verifique se $\widehat p$ atinge o limite de Cramér--Rao.
 
 10.  **ENVVUM da taxa exponencial.** Considere
 
@@ -7756,7 +8197,7 @@ c. Utilize Lehmann--Scheffé para concluir que $\widehat\theta$ é o ENVVUM de $
 
 d. Calcule sua variância.
 
-e. Obtenha o limite de Cramér--Rao e explique por que o ENVVUM não o atinge.
+e. Escreva a log-verossimilhança da amostra, obtenha $U_n(\theta)$ e $I_n(\theta)$ e determine o limite de Cramér--Rao. Compare-o com a variância do ENVVUM e explique por que esse estimador não atinge a cota.
 
 11. **Ancilaridade e Basu.** Considere uma amostra
 
@@ -7866,7 +8307,13 @@ $$
 
 b. Calcule $\operatorname{Var}_p(\widehat p)$.
 
-c. Obtenha a informação de Fisher de uma observação e da amostra.
+c. Partindo da log-verossimilhança da amostra, obtenha o escore $U_n(p)$ e calcule $I_n(p)$. Utilize
+
+$$
+I_n(p)=nI_1(p)
+$$
+
+para identificar também a informação de uma observação.
 
 d. Determine o limite de Cramér--Rao para estimadores não viesados de $p$ e verifique se $\widehat p$ atinge esse limite.
 
@@ -7883,12 +8330,12 @@ $$
 f. Para $n\geq4$, considere
 
 $$
-U
+W
 =
 X_1X_2X_3X_4.
 $$
 
-Mostre que $U$ é não viesado para $p^4$ e utilize Rao--Blackwell e Lehmann--Scheffé para obter o ENVVUM de $p^4$.
+Mostre que $W$ é não viesado para $p^4$ e utilize Rao--Blackwell e Lehmann--Scheffé para obter o ENVVUM de $p^4$.
 
 *Adaptado de @casella2011inferencia, cap. 7.*
 
@@ -7929,11 +8376,19 @@ $$
 \right).
 $$
 
-e. Obtenha o limite de Cramér--Rao para estimadores não viesados de
+e. Obtenha $I_n(\theta)$ e determine o limite de Cramér--Rao para estimadores não viesados de
 
 $$
 \tau(\theta)=\theta^2.
 $$
+
+Explicite o papel de
+
+$$
+\tau'(\theta)
+$$
+
+no cálculo da cota.
 
 f. Compare a variância do ENVVUM com o limite e explique por que, neste exemplo, ser ENVVUM não implica atingir a cota de Cramér--Rao.
 

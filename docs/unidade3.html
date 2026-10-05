@@ -423,10 +423,9 @@ window.Quarto = {
   <li><a href="#exemplo-guia-estimação-do-limite-de-uma-distribuição-uniforme" id="toc-exemplo-guia-estimação-do-limite-de-uma-distribuição-uniforme" class="nav-link" data-scroll-target="#exemplo-guia-estimação-do-limite-de-uma-distribuição-uniforme">Exemplo-guia — Estimação do limite de uma distribuição uniforme</a></li>
   <li><a href="#consistência" id="toc-consistência" class="nav-link" data-scroll-target="#consistência"><span class="header-section-number">5.1.3</span> Consistência</a></li>
   <li><a href="#comparação-por-variância-entre-estimadores-não-viesados" id="toc-comparação-por-variância-entre-estimadores-não-viesados" class="nav-link" data-scroll-target="#comparação-por-variância-entre-estimadores-não-viesados"><span class="header-section-number">5.1.4</span> Comparação por variância entre estimadores não viesados</a></li>
-  <li><a href="#informação-de-fisher" id="toc-informação-de-fisher" class="nav-link" data-scroll-target="#informação-de-fisher"><span class="header-section-number">5.1.5</span> Informação de Fisher</a></li>
+  <li><a href="#função-escore-e-informação-de-fisher" id="toc-função-escore-e-informação-de-fisher" class="nav-link" data-scroll-target="#função-escore-e-informação-de-fisher">Função escore e informação de Fisher</a></li>
   <li><a href="#desigualdade-de-cramérrao" id="toc-desigualdade-de-cramérrao" class="nav-link" data-scroll-target="#desigualdade-de-cramérrao">Desigualdade de Cramér–Rao</a></li>
   <li><a href="#exemplo-média-de-uma-distribuição-normal-com-variância-conhecida" id="toc-exemplo-média-de-uma-distribuição-normal-com-variância-conhecida" class="nav-link" data-scroll-target="#exemplo-média-de-uma-distribuição-normal-com-variância-conhecida">Exemplo — Média de uma distribuição normal com variância conhecida</a></li>
-  <li><a href="#exemplo-parâmetro-de-uma-distribuição-de-poisson" id="toc-exemplo-parâmetro-de-uma-distribuição-de-poisson" class="nav-link" data-scroll-target="#exemplo-parâmetro-de-uma-distribuição-de-poisson">Exemplo — Parâmetro de uma distribuição de Poisson</a></li>
   <li><a href="#eficiência-assintótica" id="toc-eficiência-assintótica" class="nav-link" data-scroll-target="#eficiência-assintótica">Eficiência assintótica</a></li>
   </ul></li>
   <li><a href="#aprofundamento-princípios-de-redução-de-dados" id="toc-aprofundamento-princípios-de-redução-de-dados" class="nav-link" data-scroll-target="#aprofundamento-princípios-de-redução-de-dados"><span class="header-section-number">5.2</span> Aprofundamento: Princípios de redução de dados</a>
@@ -883,7 +882,7 @@ B_\theta(T_1)=0,
 \frac{\theta^2}{3n}.
 \]</span></p>
 <p><strong>Estimador <span class="math inline">\(T_2=X_{(n)}\)</span></strong></p>
-<p>No <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a> vimos que, para o máximo amostral,</p>
+<p>No <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>, para o máximo amostral, foi obtido</p>
 <p><span class="math display">\[
 F_{X_{(n)}}(x)
 =
@@ -899,7 +898,7 @@ F(x\mid\theta)
 \]</span></p>
 <p>Portanto,</p>
 <p><span class="math display">\[
-P_\theta(X_{(n)}\leq x)
+P(X_{(n)}\leq x\mid\theta)
 =
 \left(
 \frac{x}{\theta}
@@ -1117,7 +1116,7 @@ B_\theta(T_3)=0.
 &lt;
 \operatorname{EQM}_\theta(T_1).
 \]</span></p>
-<p>Note que <span class="math inline">\(T_2\)</span> é viesado, enquanto <span class="math inline">\(T_1\)</span> é não viesado. Mesmo assim, para <span class="math inline">\(n&gt;2\)</span>,</p>
+<p><span class="math inline">\(T_2\)</span> é viesado, enquanto <span class="math inline">\(T_1\)</span> é não viesado. Mesmo assim, para <span class="math inline">\(n&gt;2\)</span>,</p>
 <p><span class="math display">\[
 \operatorname{EQM}_\theta(T_2)
 &lt;
@@ -1357,7 +1356,7 @@ T_n
 B_\theta(T_n)^2.
 \]</span></p>
 <p>Assim, se a variância e o viés tendem a zero, o EQM também tende a zero.</p>
-<p>Observe que <strong>não é necessário que <span class="math inline">\(T_n\)</span> seja não viesado para todo <span class="math inline">\(n\)</span></strong>. Para esse critério, basta que</p>
+<p><strong>Não é necessário que <span class="math inline">\(T_n\)</span> seja não viesado para todo <span class="math inline">\(n\)</span></strong>. Para esse critério, basta que</p>
 <p><span class="math display">\[
 B_\theta(T_n)
 \longrightarrow0.
@@ -1401,8 +1400,8 @@ X_{(n)},
 <thead>
 <tr class="header">
 <th>Estimador</th>
-<th style="text-align: center;">Não viesado?</th>
-<th style="text-align: center;">Consistente?</th>
+<th style="text-align: center;">Não viesado</th>
+<th style="text-align: center;">Consistente</th>
 </tr>
 </thead>
 <tbody>
@@ -1754,67 +1753,101 @@ Co(\theta)
 <p>Para construir uma cota desse tipo, é necessário quantificar <strong>quanto o modelo probabilístico muda quando o parâmetro varia</strong>. Essa ideia conduz à função escore, à informação de Fisher e, em seguida, à desigualdade de Cramér–Rao.</p>
 <p>Posteriormente, suficiência, completude, Rao–Blackwell e Lehmann–Scheffé fornecerão outra perspectiva para identificar estimadores de variância mínima.</p>
 </section>
-<section id="informação-de-fisher" class="level3" data-number="5.1.5">
-<h3 data-number="5.1.5" class="anchored" data-anchor-id="informação-de-fisher"><span class="header-section-number">5.1.5</span> Informação de Fisher</h3>
-<p>O objetivo é obter do próprio modelo uma medida de sua capacidade de distinguir valores próximos do parâmetro.</p>
-<p>Se pequenas alterações em <span class="math inline">\(\theta\)</span> quase não modificam a distribuição das observações, os dados fornecem pouca capacidade para distinguir valores próximos desse parâmetro. Se a distribuição se altera mais intensamente, os dados podem carregar mais informação para essa distinção.</p>
-<p>A função escore formaliza essa sensibilidade local.</p>
-<p>Considere um modelo dominado com densidade ou função de probabilidade</p>
+<section id="função-escore-e-informação-de-fisher" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="função-escore-e-informação-de-fisher">Função escore e informação de Fisher</h3>
+<p>Em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a>, para uma amostra observada</p>
 <p><span class="math display">\[
-f(x\mid\theta).
+\mathbf x=(x_1,\ldots,x_n),
 \]</span></p>
-<p>Para entender como o modelo reage a uma pequena alteração no parâmetro, fixe um valor observado <span class="math inline">\(x\)</span> e considere a log-verossimilhança</p>
+<p>foram definidas a função de verossimilhança</p>
 <p><span class="math display">\[
-\ell(\theta; x)
+L(\theta;\mathbf x)
 =
-\log L(\theta; x)
+f_{\mathbf X}(\mathbf x\mid\theta)
+\]</span></p>
+<p>e a função de log-verossimilhança</p>
+<p><span class="math display">\[
+\ell(\theta;\mathbf x)
 =
-\log f(x\mid\theta).
+\log L(\theta;\mathbf x).
 \]</span></p>
-<p>Se substituímos <span class="math inline">\(\theta\)</span> por um valor próximo <span class="math inline">\(\theta+h\)</span>, uma aproximação de primeira ordem fornece</p>
+<p>Naquele contexto, essas funções permitiram comparar valores do parâmetro em relação aos dados observados. A partir daqui, a log-verossimilhança será utilizada com outra finalidade: medir como essa compatibilidade varia localmente quando o parâmetro é alterado.</p>
+<section id="da-log-verossimilhança-ao-escore" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="da-log-verossimilhança-ao-escore">Da log-verossimilhança ao escore</h4>
+<p>Considere inicialmente a amostra observada <span class="math inline">\(\mathbf x\)</span>. Para um parâmetro escalar, a derivada</p>
 <p><span class="math display">\[
-\ell(\theta+h; x)
--
-\ell(\theta; x)
-\approx
-h\ell'(\theta; x).
-\]</span></p>
-<p>Assim, a derivada</p>
-<p><span class="math display">\[
-\ell'(\theta; x)
+u_n(\theta;\mathbf x)
 =
 \frac{\partial}{\partial\theta}
-\log f(x\mid\theta)
+\ell(\theta;\mathbf x)
 \]</span></p>
-<p>mede a <strong>variação local da log-verossimilhança</strong> quando o parâmetro é ligeiramente modificado.</p>
-<p>Essa derivada é denominada <strong>função escore</strong>. Para a variável aleatória <span class="math inline">\(X\)</span>,</p>
-<p><span class="math display">\[
-U_\theta(X)
-=
-\frac{\partial}{\partial\theta}
-\log f(X\mid\theta).
-\]</span></p>
-<p>Para um valor observado <span class="math inline">\(x\)</span>:</p>
+<p>é denominada <strong>escore observado</strong>.</p>
+<p>Geometricamente, <span class="math inline">\(u_n(\theta;\mathbf x)\)</span> é a inclinação da curva de log-verossimilhança no ponto <span class="math inline">\(\theta\)</span>. Assim,</p>
 <ul>
-<li><span class="math inline">\(U_\theta(x)&gt;0\)</span> indica que, localmente, aumentar <span class="math inline">\(\theta\)</span> aumenta a log-verossimilhança;</li>
-<li><span class="math inline">\(U_\theta(x)&lt;0\)</span> indica que, localmente, aumentar <span class="math inline">\(\theta\)</span> diminui a log-verossimilhança;</li>
-<li>valores de maior magnitude indicam maior sensibilidade local da log-verossimilhança a alterações no parâmetro.</li>
+<li><span class="math inline">\(u_n(\theta;\mathbf x)&gt;0\)</span> indica crescimento local da log-verossimilhança;</li>
+<li><span class="math inline">\(u_n(\theta;\mathbf x)&lt;0\)</span> indica decrescimento local;</li>
+<li><span class="math inline">\(u_n(\theta;\mathbf x)=0\)</span> identifica um ponto estacionário da curva.</li>
 </ul>
-<p>O uso do <strong>logaritmo</strong> é particularmente conveniente para amostras independentes. Como</p>
+<p>A condição</p>
 <p><span class="math display">\[
-f_{\mathbf X}(\mathbf X\mid\theta)
-=
-\prod_{i=1}^n
-f(X_i\mid\theta),
+u_n(\theta;\mathbf x)=0
 \]</span></p>
-<p>temos</p>
+<p>não garante, por si só, que o ponto seja um máximo. A utilização das equações de escore para construir estimadores será desenvolvida em <a href="unidade4.html" class="quarto-xref"><span>Capítulo 6</span></a>.</p>
+<p>Antes da observação dos dados, <span class="math inline">\(\mathbf X\)</span> é aleatória. Substituindo a realização <span class="math inline">\(\mathbf x\)</span> pela amostra aleatória <span class="math inline">\(\mathbf X\)</span>, obtemos a <strong>função escore da amostra</strong></p>
 <p><span class="math display">\[
-\log f_{\mathbf X}(\mathbf X\mid\theta)
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X).
+\]</span></p>
+<p>Para cada valor fixado de <span class="math inline">\(\theta\)</span>, <span class="math inline">\(U_n(\theta)\)</span> é uma variável aleatória porque depende da amostra <span class="math inline">\(\mathbf X\)</span>.</p>
+<p>Essa distinção acompanha a mesma mudança de perspectiva utilizada em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a>:</p>
+<p><span class="math display">\[
+\mathbf x
+\longrightarrow
+u_n(\theta;\mathbf x)
+\]</span></p>
+<p>corresponde ao valor observado do escore, enquanto</p>
+<p><span class="math display">\[
+\mathbf X
+\longrightarrow
+U_n(\theta)
+\]</span></p>
+<p>descreve seu comportamento amostral.</p>
+<p>Para uma amostra i.i.d., a propriedade aditiva da log-verossimilhança fornece</p>
+<p><span class="math display">\[
+\ell(\theta;\mathbf X)
 =
 \sum_{i=1}^n
 \log f(X_i\mid\theta).
 \]</span></p>
-<p>Consequentemente, o escore da amostra será a soma dos escores individuais. Essa propriedade permitirá que a informação fornecida por observações independentes também se acumule de forma aditiva.</p>
+<p>Consequentemente,</p>
+<p><span class="math display">\[
+\begin{aligned}
+U_n(\theta)
+&amp;=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X)\\
+&amp;=
+\sum_{i=1}^n
+\frac{\partial}{\partial\theta}
+\log f(X_i\mid\theta).
+\end{aligned}
+\]</span></p>
+<p>Definindo o escore da <span class="math inline">\(i\)</span>-ésima observação por</p>
+<p><span class="math display">\[
+U_i(\theta)
+=
+\frac{\partial}{\partial\theta}
+\log f(X_i\mid\theta),
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+U_n(\theta)
+=
+\sum_{i=1}^nU_i(\theta).
+\]</span></p>
+<p>Assim, a derivada da log-verossimilhança preserva a estrutura aditiva já estabelecida para amostras independentes.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Observação — Condições de regularidade">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1825,24 +1858,25 @@ f(X_i\mid\theta),
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As identidades utilizadas a seguir não são válidas automaticamente para qualquer modelo.</p>
-<p>Em particular, precisamos de condições que permitam diferenciar em relação a <span class="math inline">\(\theta\)</span> e intercambiar diferenciação com integração ou soma. Uma condição importante na forma regular utilizada nesta seção é que o suporte da distribuição não dependa de <span class="math inline">\(\theta\)</span>.</p>
-<p>Por isso, modelos como</p>
+<p>As propriedades desenvolvidas a seguir exigem condições de regularidade.</p>
+<p>Em particular, será necessário diferenciar em relação a <span class="math inline">\(\theta\)</span> e intercambiar diferenciação com integração ou soma. Na forma regular utilizada nesta seção, o suporte da distribuição também não deve depender de <span class="math inline">\(\theta\)</span>.</p>
+<p>Por isso,</p>
 <p><span class="math display">\[
-\operatorname{Unif}(0,\theta),
+\operatorname{Unif}(0,\theta)
 \]</span></p>
-<p>nos quais o suporte varia com o parâmetro, exigem tratamento separado. As condições utilizadas na desigualdade de Cramér–Rao serão explicitadas na próxima subseção.</p>
+<p>não satisfaz as condições utilizadas nesta parte do capítulo. As hipóteses necessárias para a desigualdade de Cramér–Rao serão explicitadas na próxima subseção.</p>
 </div>
 </div>
-<p>Sob essas condições de regularidade,</p>
+<p>Sob essas condições,</p>
 <p><span class="math display">\[
-E_\theta\bigl[U_\theta(X)\bigr]
+E_\theta[U_n(\theta)]
 =
 0.
 \]</span></p>
-<p>Portanto, a média do escore não distingue modelos com maior ou menor sensibilidade ao parâmetro.</p>
-<p>O que pode variar é a <strong>magnitude do escore de uma observação para outra</strong>. Se os valores do escore tendem a ficar próximos de zero, pequenas alterações em <span class="math inline">\(\theta\)</span> modificam pouco a log-verossimilhança. Se apresentam maior magnitude, a distribuição reage mais intensamente a essas alterações.</p>
-<p>Essa ideia conduz à informação de Fisher.</p>
+<p>A esperança nula mostra que o escore não mede informação por sua média. O que importa é sua variabilidade de uma amostra para outra.</p>
+</section>
+<section id="informação-de-fisher" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="informação-de-fisher">Informação de Fisher</h4>
 <div class="callout callout-style-default callout-important callout-titled" title="Definição — Informação de Fisher">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1853,247 +1887,360 @@ E_\theta\bigl[U_\theta(X)\bigr]
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A <strong>informação de Fisher</strong> de uma observação sobre o parâmetro <span class="math inline">\(\theta\)</span> é</p>
-<p><span class="math display">\[
-I_1(\theta)
-=
-E_\theta\left[
-U_\theta(X)^2
-\right].
-\]</span></p>
-<p>Como, sob as condições de regularidade,</p>
-<p><span class="math display">\[
-E_\theta[U_\theta(X)]=0,
-\]</span></p>
-<p>podemos escrever</p>
-<p><span class="math display">\[
-I_1(\theta)
-=
-\operatorname{Var}_\theta
-\bigl(U_\theta(X)\bigr).
-\]</span></p>
-<p>Assim, a informação de Fisher mede a magnitude quadrática média da sensibilidade local da log-verossimilhança ao parâmetro.</p>
-<p>Sob condições adicionais de regularidade, uma forma equivalente é</p>
-<p><span class="math display">\[
-I_1(\theta)
-=
--
-E_\theta\left[
-\frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta)
-\right].
-\]</span></p>
-<p>Para uma amostra i.i.d. de tamanho <span class="math inline">\(n\)</span>,</p>
+<p>A <strong>informação de Fisher da amostra</strong> sobre o parâmetro <span class="math inline">\(\theta\)</span> é</p>
 <p><span class="math display">\[
 I_n(\theta)
 =
-nI_1(\theta).
+E_\theta
+\left[
+U_n(\theta)^2
+\right].
 \]</span></p>
-<p>Portanto, nesse contexto, a informação cresce linearmente com o número de observações independentes <span class="citation" data-cites="lauritzen2023fundamentals rasch2018">(<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;1.2.2; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;1.4)</span>.</p>
+<p>Como</p>
+<p><span class="math display">\[
+E_\theta[U_n(\theta)]
+=
+0,
+\]</span></p>
+<p>também podemos escrever</p>
+<p><span class="math display">\[
+I_n(\theta)
+=
+\operatorname{Var}_\theta
+\left[
+U_n(\theta)
+\right].
+\]</span></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Identidades da informação de Fisher">
+<p>A definição mede a magnitude típica das variações locais da log-verossimilhança produzidas pela amostra. Valores maiores de <span class="math inline">\(I_n(\theta)\)</span> indicam maior sensibilidade da distribuição amostral a alterações em <span class="math inline">\(\theta\)</span>.</p>
+<p>Sob condições adicionais de regularidade,</p>
+<p><span class="math display">\[
+I_n(\theta)
+=
+-
+E_\theta
+\left[
+\frac{\partial^2}{\partial\theta^2}
+\ell(\theta;\mathbf X)
+\right].
+\]</span></p>
+<p>Essa expressão fornece uma segunda interpretação.</p>
+<p>A primeira derivada da log-verossimilhança mede sua <strong>inclinação</strong>. A segunda derivada mede sua <strong>curvatura</strong>. Assim, a informação de Fisher pode ser interpretada, sob regularidade, como a curvatura negativa média da log-verossimilhança.</p>
+<p>Uma log-verossimilhança mais curvada permite distinguir com maior precisão valores próximos do parâmetro. Uma log-verossimilhança relativamente plana fornece menor capacidade de distinção local.</p>
+<p>Para uma amostra i.i.d.,</p>
+<p><span class="math display">\[
+U_n(\theta)
+=
+\sum_{i=1}^nU_i(\theta).
+\]</span></p>
+<p>Como os escores individuais são independentes e possuem esperança zero,</p>
+<p><span class="math display">\[
+\begin{aligned}
+I_n(\theta)
+&amp;=
+\operatorname{Var}_\theta
+\left[
+\sum_{i=1}^nU_i(\theta)
+\right]\\
+&amp;=
+\sum_{i=1}^n
+\operatorname{Var}_\theta
+\left[
+U_i(\theta)
+\right].
+\end{aligned}
+\]</span></p>
+<p>Se as observações são identicamente distribuídas,</p>
+<p><span class="math display">\[
+I_n(\theta)
+=
+nI_1(\theta),
+\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+I_1(\theta)
+=
+E_\theta[U_1(\theta)^2]
+\]</span></p>
+<p>é a informação de Fisher fornecida por uma observação.</p>
+<p>Portanto, em uma amostra i.i.d., a informação cresce linearmente com o tamanho amostral.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Derivação — Esperança do escore e curvatura média">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Derivação — Identidades da informação de Fisher
+<span class="screen-reader-only">Nota</span>Derivação — Esperança do escore e curvatura média
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Considere primeiro uma única observação.</p>
-<p>Pela definição,</p>
+<p>Considere a função escore da amostra</p>
 <p><span class="math display">\[
-U_\theta(X)
+U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
-\log f(X\mid\theta).
-\]</span></p>
-<p>Utilizando</p>
-<p><span class="math display">\[
-\frac{\partial}{\partial\theta}
-\log f(x\mid\theta)
+\ell(\theta;\mathbf X)
 =
-\frac{
-\dfrac{\partial}{\partial\theta}f(x\mid\theta)
-}{
-f(x\mid\theta)
-},
+\frac{\partial}{\partial\theta}
+\log f_{\mathbf X}(\mathbf X\mid\theta).
 \]</span></p>
-<p>temos</p>
+<p>No caso contínuo,</p>
 <p><span class="math display">\[
 \begin{aligned}
-E_\theta[U_\theta(X)]
-&amp;=
-\int
-\frac{
-\dfrac{\partial}{\partial\theta}f(x\mid\theta)
-}{
-f(x\mid\theta)
-}
-f(x\mid\theta)
-\,dx\\
+E_\theta[U_n(\theta)]
 &amp;=
 \int
 \frac{\partial}{\partial\theta}
-f(x\mid\theta)
-\,dx.
+\log f_{\mathbf X}(\mathbf x\mid\theta)
+\,
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x\\
+&amp;=
+\int
+\frac{
+\dfrac{\partial}{\partial\theta}
+f_{\mathbf X}(\mathbf x\mid\theta)
+}{
+f_{\mathbf X}(\mathbf x\mid\theta)
+}
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x\\
+&amp;=
+\int
+\frac{\partial}{\partial\theta}
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x.
 \end{aligned}
 \]</span></p>
-<p>Sob as condições que permitem trocar diferenciação e integração,</p>
+<p>Sob as condições que permitem intercambiar diferenciação e integração,</p>
 <p><span class="math display">\[
 \begin{aligned}
-E_\theta[U_\theta(X)]
+E_\theta[U_n(\theta)]
 &amp;=
 \frac{\partial}{\partial\theta}
 \int
-f(x\mid\theta)
-\,dx\\
+f_{\mathbf X}(\mathbf x\mid\theta)
+\,d\mathbf x\\
 &amp;=
 \frac{\partial}{\partial\theta}(1)\\
 &amp;=
 0.
 \end{aligned}
 \]</span></p>
-<p>No caso discreto, o mesmo argumento é obtido substituindo a integral pela soma.</p>
-<p>Portanto,</p>
+<p>No caso discreto, a integral é substituída pela soma correspondente.</p>
+<p>Para obter a relação com a segunda derivada, diferenciamos</p>
 <p><span class="math display">\[
-E_\theta[U_\theta(X)]
-=
-0.
-\]</span></p>
-<p>Como consequência,</p>
-<p><span class="math display">\[
-I_1(\theta)
-=
-E_\theta[U_\theta(X)^2]
-=
-\operatorname{Var}_\theta(U_\theta(X)).
-\]</span></p>
-<p>Para obter a segunda expressão da informação de Fisher, diferenciamos a identidade</p>
-<p><span class="math display">\[
-E_\theta[U_\theta(X)]
+E_\theta[U_n(\theta)]
 =
 0
 \]</span></p>
 <p>em relação a <span class="math inline">\(\theta\)</span>.</p>
-<p>Sob as condições de regularidade,</p>
+<p>Sob as mesmas condições de regularidade,</p>
 <p><span class="math display">\[
 0
 =
 \frac{d}{d\theta}
-E_\theta[U_\theta(X)].
+E_\theta[U_n(\theta)].
 \]</span></p>
-<p>Ao derivar uma esperança cuja distribuição também depende de <span class="math inline">\(\theta\)</span>, surgem dois termos:</p>
+<p>Ao derivar a esperança, surgem dois termos:</p>
 <p><span class="math display">\[
-\begin{aligned}
 0
-&amp;=
-E_\theta\left[
+=
+E_\theta
+\left[
 \frac{\partial}{\partial\theta}
-U_\theta(X)
+U_n(\theta)
 \right]
 +
-E_\theta\left[
-U_\theta(X)^2
+E_\theta
+\left[
+U_n(\theta)^2
 \right].
-\end{aligned}
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
 \frac{\partial}{\partial\theta}
-U_\theta(X)
+U_n(\theta)
 =
 \frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta),
+\ell(\theta;\mathbf X),
 \]</span></p>
-<p>obtemos</p>
+<p>segue que</p>
 <p><span class="math display">\[
-E_\theta\left[
-U_\theta(X)^2
+E_\theta
+\left[
+U_n(\theta)^2
 \right]
 =
 -
-E_\theta\left[
+E_\theta
+\left[
 \frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta)
+\ell(\theta;\mathbf X)
 \right].
 \]</span></p>
 <p>Portanto,</p>
 <p><span class="math display">\[
-I_1(\theta)
+I_n(\theta)
 =
 -
-E_\theta\left[
+E_\theta
+\left[
 \frac{\partial^2}{\partial\theta^2}
-\log f(X\mid\theta)
+\ell(\theta;\mathbf X)
 \right].
 \]</span></p>
-<p>Considere agora uma amostra i.i.d.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="retomando-o-modelo-bernoulli" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="retomando-o-modelo-bernoulli">Retomando o modelo Bernoulli</h4>
+<p>O modelo Bernoulli permite integrar diretamente os resultados dos capítulos anteriores.</p>
+<p>Em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a>, para</p>
 <p><span class="math display">\[
-X_1,\ldots,X_n.
+X_1,\ldots,X_n
+\overset{\mathrm{iid}}{\sim}
+\operatorname{Ber}(p),
 \]</span></p>
-<p>A densidade ou função de probabilidade conjunta é</p>
+<p>a log-verossimilhança da amostra observada foi escrita como</p>
 <p><span class="math display">\[
-f_{\mathbf X}(\mathbf X\mid\theta)
+\ell(p;\mathbf x)
 =
-\prod_{i=1}^n
-f(X_i\mid\theta).
+y\log p
++
+(n-y)\log(1-p),
+\]</span></p>
+<p>em que</p>
+<p><span class="math display">\[
+y
+=
+\sum_{i=1}^n x_i.
+\]</span></p>
+<p>A derivada em relação a <span class="math inline">\(p\)</span> fornece o escore observado:</p>
+<p><span class="math display">\[
+\begin{aligned}
+u_n(p;\mathbf x)
+&amp;=
+\frac{\partial}{\partial p}
+\ell(p;\mathbf x)\\
+&amp;=
+\frac{y}{p}
+-
+\frac{n-y}{1-p}\\
+&amp;=
+\frac{y-np}
+{p(1-p)}.
+\end{aligned}
+\]</span></p>
+<p>Substituindo o valor observado <span class="math inline">\(y\)</span> pela variável aleatória</p>
+<p><span class="math display">\[
+Y
+=
+\sum_{i=1}^nX_i,
+\]</span></p>
+<p>obtemos a função escore da amostra:</p>
+<p><span class="math display">\[
+U_n(p)
+=
+\frac{Y-np}
+{p(1-p)}.
+\]</span></p>
+<p>Em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>, a soma das variáveis Bernoulli foi identificada como</p>
+<p><span class="math display">\[
+Y
+\sim
+\operatorname{Bin}(n,p),
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+E_p(Y)=np
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}_p(Y)
+=
+np(1-p).
 \]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[
-\log f_{\mathbf X}(\mathbf X\mid\theta)
+\begin{aligned}
+E_p[U_n(p)]
+&amp;=
+\frac{
+E_p(Y)-np
+}{
+p(1-p)
+}\\
+&amp;=
+0.
+\end{aligned}
+\]</span></p>
+<p>A informação de Fisher da amostra é</p>
+<p><span class="math display">\[
+\begin{aligned}
+I_n(p)
+&amp;=
+\operatorname{Var}_p[U_n(p)]\\
+&amp;=
+\frac{
+\operatorname{Var}_p(Y)
+}{
+p^2(1-p)^2
+}\\
+&amp;=
+\frac{
+np(1-p)
+}{
+p^2(1-p)^2
+}\\
+&amp;=
+\frac{n}
+{p(1-p)}.
+\end{aligned}
+\]</span></p>
+<p>O mesmo resultado pode ser obtido pela curvatura média da log-verossimilhança. Como</p>
+<p><span class="math display">\[
+\frac{\partial^2}{\partial p^2}
+\ell(p;\mathbf X)
 =
-\sum_{i=1}^n
-\log f(X_i\mid\theta),
+-
+\frac{Y}{p^2}
+-
+\frac{n-Y}{(1-p)^2},
 \]</span></p>
-<p>e o escore da amostra é</p>
+<p>temos</p>
 <p><span class="math display">\[
 \begin{aligned}
-U_n(\theta)
+-
+E_p
+\left[
+\frac{\partial^2}{\partial p^2}
+\ell(p;\mathbf X)
+\right]
 &amp;=
-\frac{\partial}{\partial\theta}
-\log f_{\mathbf X}(\mathbf X\mid\theta)\\
+\frac{np}{p^2}
++
+\frac{n(1-p)}{(1-p)^2}\\
 &amp;=
-\sum_{i=1}^n
-U_\theta(X_i).
+\frac{n}{p}
++
+\frac{n}{1-p}\\
+&amp;=
+\frac{n}{p(1-p)}.
 \end{aligned}
 \]</span></p>
-<p>Os escores individuais são independentes e possuem esperança zero. Portanto,</p>
+<p>Assim,</p>
 <p><span class="math display">\[
-\begin{aligned}
-I_n(\theta)
-&amp;=
-\operatorname{Var}_\theta
-\left[
-U_n(\theta)
-\right]\\
-&amp;=
-\operatorname{Var}_\theta
-\left[
-\sum_{i=1}^n
-U_\theta(X_i)
-\right]\\
-&amp;=
-\sum_{i=1}^n
-\operatorname{Var}_\theta
-\left[
-U_\theta(X_i)
-\right]\\
-&amp;=
-nI_1(\theta).
-\end{aligned}
+I_n(p)
+=
+\frac{n}{p(1-p)}.
 \]</span></p>
-<p>Assim, para observações i.i.d., a informação de Fisher cresce linearmente com o tamanho da amostra.</p>
-</div>
-</div>
-</div>
-<p>A informação de Fisher quantifica quão sensível é a distribuição dos dados a mudanças no parâmetro. Quanto maior <span class="math inline">\(I_n(\theta)\)</span>, maior é, nesse sentido, a capacidade do modelo amostral de distinguir valores próximos de <span class="math inline">\(\theta\)</span>.</p>
-<p>Sua utilidade para avaliar estimadores surge de uma relação fundamental entre o estimador e o escore da amostra.</p>
-<p>Se</p>
+<p>Esse exemplo reúne três etapas do percurso do livro: a log-verossimilhança introduzida em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a>, a distribuição amostral de <span class="math inline">\(Y\)</span> estudada em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a> e, neste capítulo, a função escore e a informação de Fisher.</p>
+<p>A utilidade da informação de Fisher aparece ao relacioná-la à precisão dos estimadores. Se</p>
 <p><span class="math display">\[
 E_\theta(T)
 =
@@ -2108,9 +2255,11 @@ T,U_n(\theta)
 =
 g'(\theta).
 \]</span></p>
-<p>No caso de um estimador não viesado para <span class="math inline">\(\tau(\theta)\)</span>,</p>
+<p>Se <span class="math inline">\(T\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>,</p>
 <p><span class="math display">\[
-g(\theta)=\tau(\theta),
+g(\theta)
+=
+\tau(\theta),
 \]</span></p>
 <p>e portanto</p>
 <p><span class="math display">\[
@@ -2121,27 +2270,44 @@ T,U_n(\theta)
 =
 \tau'(\theta).
 \]</span></p>
-<p>Essa identidade liga três elementos:</p>
-<ul>
-<li>o alvo que se pretende estimar, por meio de <span class="math inline">\(\tau'(\theta)\)</span>;</li>
-<li>a variabilidade do estimador <span class="math inline">\(T\)</span>;</li>
-<li>a variabilidade do escore, que é precisamente <span class="math inline">\(I_n(\theta)\)</span>.</li>
-</ul>
-<p>A desigualdade de Cauchy–Schwarz permitirá transformar essa relação em um limite inferior para <span class="math inline">\(\operatorname{Var}_\theta(T)\)</span>. É nesse sentido que a informação de Fisher fornece uma referência de precisão para estimadores <span class="citation" data-cites="cox2006principles lauritzen2023fundamentals">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;2.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;1.2.2)</span>.</p>
+<p>A desigualdade de Cauchy–Schwarz relaciona essa covariância às variâncias de <span class="math inline">\(T\)</span> e do escore. Como</p>
+<p><span class="math display">\[
+\operatorname{Var}_\theta[U_n(\theta)]
+=
+I_n(\theta),
+\]</span></p>
+<p>a informação de Fisher passa a determinar uma cota inferior para a variância de estimadores.</p>
+<p>É nesse sentido que a quantidade recebe o nome de <strong>informação</strong>: sob as condições de regularidade, maior informação de Fisher corresponde a um limite inferior menor para a variância. Essa relação será formalizada pela desigualdade de Cramér–Rao <span class="citation" data-cites="casella2011inferencia cox2006principles lauritzen2023fundamentals">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, teorema 7.3.9 e lema 7.3.11; <a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, sec.&nbsp;2.1; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, sec.&nbsp;1.2.2)</span>.</p>
+</section>
 </section>
 <section id="desigualdade-de-cramérrao" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="desigualdade-de-cramérrao">Desigualdade de Cramér–Rao</h3>
-<p>A desigualdade de Cramér–Rao formaliza essa relação.</p>
-<p>A desigualdade de Cramér–Rao estabelece, sob condições de regularidade, uma cota inferior para a variância de estimadores. A cota depende do alvo <span class="math inline">\(\tau(\theta)\)</span> e da informação de Fisher do modelo, e não de uma comparação entre dois estimadores previamente escolhidos.</p>
-<p>A forma utilizada nesta seção exige condições de regularidade. Entre as condições usuais que sustentam o argumento apresentado estão:</p>
+<p>A informação de Fisher permite transformar a sensibilidade do modelo ao parâmetro em uma referência para a precisão dos estimadores.</p>
+<p>Sob condições de regularidade, a relação</p>
+<p><span class="math display">\[
+\operatorname{Cov}_\theta
+\left(
+T,U_n(\theta)
+\right)
+=
+g'(\theta),
+\qquad
+g(\theta)=E_\theta(T),
+\]</span></p>
+<p>liga a variação da esperança do estimador ao escore da amostra. A desigualdade de Cauchy–Schwarz converte essa relação em uma cota inferior para <span class="math inline">\(\operatorname{Var}_\theta(T)\)</span>.</p>
+<p>A forma apresentada nesta seção utiliza as seguintes condições usuais:</p>
 <ul>
 <li>o suporte da distribuição não depende de <span class="math inline">\(\theta\)</span>;</li>
-<li><span class="math inline">\(f(x\mid\theta)\)</span> é diferenciável em relação a <span class="math inline">\(\theta\)</span>;</li>
+<li>a densidade ou função de probabilidade conjunta <span class="math inline">\(f_{\mathbf X}(\mathbf x\mid\theta)\)</span> é diferenciável em relação a <span class="math inline">\(\theta\)</span>;</li>
 <li>a diferenciação pode ser intercambiada com a integração ou soma, tanto na normalização da distribuição quanto no cálculo de <span class="math inline">\(E_\theta(T)\)</span>;</li>
 <li><span class="math inline">\(\operatorname{Var}_\theta(T)&lt;\infty\)</span>;</li>
 <li><span class="math inline">\(0&lt;I_n(\theta)&lt;\infty\)</span>.</li>
 </ul>
-<p>Essas condições permitem, em particular, que o escore tenha esperança zero e que a derivada de <span class="math inline">\(E_\theta(T)\)</span> seja relacionada à covariância entre o estimador e o escore.</p>
+<p>Essas condições garantem, em particular,</p>
+<p><span class="math display">\[
+E_\theta[U_n(\theta)]=0
+\]</span></p>
+<p>e permitem diferenciar <span class="math inline">\(E_\theta(T)\)</span> em relação a <span class="math inline">\(\theta\)</span>.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Teorema — Desigualdade de Cramér--Rao">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2168,11 +2334,13 @@ g(\theta),
 I_n(\theta)
 }.
 \]</span></p>
-<p>Em particular, se <span class="math inline">\(T\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>, então</p>
+<p>Se <span class="math inline">\(T\)</span> é não viesado para <span class="math inline">\(\tau(\theta)\)</span>,</p>
 <p><span class="math display">\[
-E_\theta(T)=\tau(\theta)
+E_\theta(T)
+=
+\tau(\theta),
 \]</span></p>
-<p>e, portanto,</p>
+<p>e portanto</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta(T)
 \geq
@@ -2182,7 +2350,7 @@ E_\theta(T)=\tau(\theta)
 I_n(\theta)
 }.
 \]</span></p>
-<p>No caso especial em que o alvo é o próprio parâmetro,</p>
+<p>Para o alvo</p>
 <p><span class="math display">\[
 \tau(\theta)=\theta,
 \]</span></p>
@@ -2190,7 +2358,7 @@ I_n(\theta)
 <p><span class="math display">\[
 \tau'(\theta)=1,
 \]</span></p>
-<p>e o limite assume a forma</p>
+<p>de modo que</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta(T)
 \geq
@@ -2198,7 +2366,7 @@ I_n(\theta)
 \]</span></p>
 </div>
 </div>
-<p>O termo</p>
+<p>A quantidade</p>
 <p><span class="math display">\[
 \frac{
 [\tau'(\theta)]^2
@@ -2206,8 +2374,14 @@ I_n(\theta)
 I_n(\theta)
 }
 \]</span></p>
-<p>é denominado <strong>limite inferior de Cramér–Rao</strong> para a variância de estimadores não viesados de <span class="math inline">\(\tau(\theta)\)</span>, sob as condições de regularidade consideradas.</p>
-<p>Quanto maior a informação de Fisher, menor pode ser esse limite. Assim, a relação entre informação e precisão aparece diretamente na desigualdade.</p>
+<p>é o <strong>limite inferior de Cramér–Rao</strong> para a variância de estimadores não viesados de <span class="math inline">\(\tau(\theta)\)</span>, dentro das condições consideradas.</p>
+<p>A interpretação acompanha diretamente a informação de Fisher:</p>
+<p><span class="math display">\[
+I_n(\theta)\ \text{maior}
+\quad\Longrightarrow\quad
+\text{limite inferior menor}.
+\]</span></p>
+<p>Assim, um modelo que fornece maior informação sobre <span class="math inline">\(\theta\)</span> admite, em princípio, estimadores mais precisos.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Desigualdade de Cramér--Rao">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2220,14 +2394,14 @@ I_n(\theta)
 </div>
 <div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Considere o escore da amostra,</p>
+<p>A função escore da amostra é</p>
 <p><span class="math display">\[
 U_n(\theta)
 =
 \frac{\partial}{\partial\theta}
-\log f_{\mathbf X}(\mathbf X\mid\theta).
+\ell(\theta;\mathbf X).
 \]</span></p>
-<p>Sob as condições de regularidade,</p>
+<p>Pelas condições de regularidade,</p>
 <p><span class="math display">\[
 E_\theta[U_n(\theta)]
 =
@@ -2237,27 +2411,24 @@ E_\theta[U_n(\theta)]
 <p><span class="math display">\[
 \operatorname{Var}_\theta[U_n(\theta)]
 =
-E_\theta[U_n(\theta)^2]
-=
 I_n(\theta).
 \]</span></p>
-<p>Se</p>
+<p>Considere um estimador <span class="math inline">\(T=T(\mathbf X)\)</span> tal que</p>
 <p><span class="math display">\[
 E_\theta(T)
 =
-g(\theta),
+g(\theta).
 \]</span></p>
-<p>então</p>
+<p>No caso contínuo,</p>
 <p><span class="math display">\[
 g(\theta)
 =
 \int
 T(\mathbf x)
 f_{\mathbf X}(\mathbf x\mid\theta)
-\,d\mathbf x
+\,d\mathbf x.
 \]</span></p>
-<p>no caso contínuo.</p>
-<p>Derivando em relação a <span class="math inline">\(\theta\)</span> e utilizando a condição que permite trocar diferenciação e integração,</p>
+<p>Derivando em relação a <span class="math inline">\(\theta\)</span>,</p>
 <p><span class="math display">\[
 g'(\theta)
 =
@@ -2269,14 +2440,20 @@ f_{\mathbf X}(\mathbf x\mid\theta)
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
+\ell(\theta;\mathbf x)
+=
+\log f_{\mathbf X}(\mathbf x\mid\theta),
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
 \frac{\partial}{\partial\theta}
 f_{\mathbf X}(\mathbf x\mid\theta)
 =
 f_{\mathbf X}(\mathbf x\mid\theta)
 \frac{\partial}{\partial\theta}
-\log f(\mathbf x\mid\theta),
+\ell(\theta;\mathbf x).
 \]</span></p>
-<p>segue que</p>
+<p>Logo,</p>
 <p><span class="math display">\[
 \begin{aligned}
 g'(\theta)
@@ -2285,7 +2462,7 @@ g'(\theta)
 T(\mathbf x)
 f_{\mathbf X}(\mathbf x\mid\theta)
 \frac{\partial}{\partial\theta}
-\log f_{\mathbf X}(\mathbf x\mid\theta)
+\ell(\theta;\mathbf x)
 \,d\mathbf x\\
 &amp;=
 E_\theta
@@ -2294,12 +2471,14 @@ T\,U_n(\theta)
 \right].
 \end{aligned}
 \]</span></p>
-<p>No caso discreto, o mesmo argumento é obtido substituindo a integral por uma soma.</p>
+<p>No caso discreto, a integral é substituída pela soma correspondente.</p>
 <p>Como</p>
 <p><span class="math display">\[
-E_\theta[U_n(\theta)]=0,
+E_\theta[U_n(\theta)]
+=
+0,
 \]</span></p>
-<p>temos</p>
+<p>segue que</p>
 <p><span class="math display">\[
 \begin{aligned}
 \operatorname{Cov}_\theta
@@ -2307,9 +2486,13 @@ E_\theta[U_n(\theta)]=0,
 T,U_n(\theta)
 \right)
 &amp;=
-E_\theta[TU_n(\theta)]
+E_\theta
+\left[
+T\,U_n(\theta)
+\right]
 -
-E_\theta(T)E_\theta[U_n(\theta)]\\
+E_\theta(T)
+E_\theta[U_n(\theta)]\\
 &amp;=
 g'(\theta).
 \end{aligned}
@@ -2323,9 +2506,9 @@ T,U_n(\theta)
 \leq
 \operatorname{Var}_\theta(T)
 \operatorname{Var}_\theta
-\left(
+\left[
 U_n(\theta)
-\right).
+\right].
 \]</span></p>
 <p>Substituindo</p>
 <p><span class="math display">\[
@@ -2339,9 +2522,9 @@ g'(\theta)
 <p>e</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta
-\left(
+\left[
 U_n(\theta)
-\right)
+\right]
 =
 I_n(\theta),
 \]</span></p>
@@ -2356,7 +2539,7 @@ I_n(\theta).
 <p><span class="math display">\[
 I_n(\theta)&gt;0,
 \]</span></p>
-<p>podemos dividir os dois lados por <span class="math inline">\(I_n(\theta)\)</span>:</p>
+<p>segue que</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta(T)
 \geq
@@ -2366,12 +2549,79 @@ I_n(\theta)&gt;0,
 I_n(\theta)
 }.
 \]</span></p>
-<p>Essa é a desigualdade de Cramér–Rao.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Condição de igualdade no limite de Cramér--Rao">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Condição de igualdade no limite de Cramér–Rao
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>A desigualdade de Cramér–Rao resulta da desigualdade de Cauchy–Schwarz. Portanto, a igualdade ocorre quando as variáveis aleatórias centradas envolvidas são linearmente dependentes.</p>
+<p>No caso de um estimador não viesado de <span class="math inline">\(\tau(\theta)\)</span>,</p>
+<p><span class="math display">\[
+E_\theta(T)=\tau(\theta),
+\]</span></p>
+<p>a igualdade exige que exista uma quantidade <span class="math inline">\(a(\theta)\)</span> tal que</p>
+<p><span class="math display">\[
+T-\tau(\theta)
+=
+a(\theta)U_n(\theta)
+\]</span></p>
+<p>quase certamente.</p>
+<p>Como</p>
+<p><span class="math display">\[
+\operatorname{Cov}_\theta
+\left(
+T,U_n(\theta)
+\right)
+=
+\tau'(\theta)
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}_\theta
+\left[
+U_n(\theta)
+\right]
+=
+I_n(\theta),
+\]</span></p>
+<p>a constante de proporcionalidade deve satisfazer</p>
+<p><span class="math display">\[
+a(\theta)
+=
+\frac{
+\tau'(\theta)
+}{
+I_n(\theta)
+}.
+\]</span></p>
+<p>Portanto, quando a cota é atingida,</p>
+<p><span class="math display">\[
+T-\tau(\theta)
+=
+\frac{
+\tau'(\theta)
+}{
+I_n(\theta)
+}
+U_n(\theta)
+\]</span></p>
+<p>quase certamente.</p>
+<p>Essa condição mostra que atingir o limite de Cramér–Rao exige uma relação específica entre o estimador e o escore da amostra.</p>
 </div>
 </div>
 </div>
 <p>Um estimador não viesado que atinge o limite de Cramér–Rao para todo <span class="math inline">\(\theta\)</span> é denominado <strong>eficiente no sentido de Cramér–Rao</strong>.</p>
-<p>Para um estimador não viesado de <span class="math inline">\(\tau(\theta)\)</span>, definimos sua eficiência por</p>
+<p>Para um estimador não viesado de <span class="math inline">\(\tau(\theta)\)</span>, define-se</p>
 <p><span class="math display">\[
 \operatorname{ef}_\theta(T)
 =
@@ -2394,12 +2644,12 @@ I_n(\theta)
 <p><span class="math display">\[
 \tau'(\theta)\neq0
 \]</span></p>
-<p>e a variância de <span class="math inline">\(T\)</span> é positiva e finita, a eficiência é positiva.</p>
-<p>Quando</p>
+<p>e <span class="math inline">\(\operatorname{Var}_\theta(T)\)</span> é positiva e finita, a eficiência também é positiva.</p>
+<p>A condição</p>
 <p><span class="math display">\[
-\operatorname{ef}_\theta(T)=1,
+\operatorname{ef}_\theta(T)=1
 \]</span></p>
-<p>o estimador atinge o limite de Cramér–Rao.</p>
+<p>indica que <span class="math inline">\(T\)</span> atinge o limite de Cramér–Rao.</p>
 <div class="callout callout-style-default callout-warning callout-titled" title="Observações — Alcance do limite de Cramér--Rao">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2411,21 +2661,22 @@ I_n(\theta)
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><p>O limite estabelece uma restrição inferior para a variância, mas não garante a existência de um estimador que o atinja.</p></li>
-<li><p>Um ENVVUM pode não atingir o limite de Cramér–Rao. Portanto, variância uniformemente mínima entre estimadores não viesados e eficiência de Cramér–Rao são conceitos relacionados, mas não equivalentes.</p></li>
-<li><p>A forma do resultado apresentada nesta seção não deve ser aplicada quando o suporte depende do parâmetro. Em particular,</p></li>
+<li><p>O limite fornece uma cota inferior para a variância, mas não garante a existência de um estimador que a atinja.</p></li>
+<li><p>A forma apresentada nesta seção não deve ser aplicada quando o suporte depende do parâmetro. Em particular,</p></li>
 </ol>
 <p><span class="math display">\[
 X\sim\operatorname{Unif}(0,\theta)
 \]</span></p>
 <p>não satisfaz a condição de suporte comum.</p>
-<ol start="4" type="1">
-<li>Se <span class="math inline">\(T\)</span> é viesado e</li>
+<ol start="3" type="1">
+<li>Para um estimador viesado, com</li>
 </ol>
 <p><span class="math display">\[
-E_\theta(T)=g(\theta),
+E_\theta(T)
+=
+g(\theta)
 \]</span></p>
-<p>com viés</p>
+<p>e viés</p>
 <p><span class="math display">\[
 b(\theta)
 =
@@ -2453,11 +2704,11 @@ I_n(\theta)
 +
 b(\theta)^2.
 \]</span></p>
-<p>Portanto, não é correto utilizar automaticamente</p>
+<p>Portanto,</p>
 <p><span class="math display">\[
 \frac{1}{I_n(\theta)}
 \]</span></p>
-<p>como limite inferior para o EQM de um estimador viesado.</p>
+<p>não deve ser utilizado automaticamente como limite inferior para o EQM de um estimador viesado.</p>
 </div>
 </div>
 <p>A formulação geral, a demonstração e as condições do resultado podem ser encontradas em <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>, teorema 7.3.9)</span>, <span class="citation" data-cites="lauritzen2023fundamentals">Lauritzen (<a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">2023</a>, thm. 4.4)</span>, <span class="citation" data-cites="rice2007mathematical">Rice (<a href="#ref-rice2007mathematical" role="doc-biblioref">2007</a>, sec.&nbsp;8.7)</span> e <span class="citation" data-cites="rasch2018">Rasch; Schott (<a href="#ref-rasch2018" role="doc-biblioref">2018</a>, secs. 1.4 and 2.4.1)</span>.</p>
@@ -2471,19 +2722,20 @@ X_1,\ldots,X_n
 N(\mu,\sigma^2),
 \]</span></p>
 <p>com <span class="math inline">\(\sigma^2\)</span> conhecida.</p>
-<p>Considere</p>
+<p>Avalie</p>
 <p><span class="math display">\[
 T=\overline X
 \]</span></p>
-<p>como estimador de <span class="math inline">\(\mu\)</span>. Verifique se sua variância atinge o limite de Cramér–Rao:</p>
+<p>como estimador de <span class="math inline">\(\mu\)</span>:</p>
 <ol type="1">
-<li>obtenha a função escore;</li>
-<li>calcule <span class="math inline">\(I_1(\mu)\)</span> e <span class="math inline">\(I_n(\mu)\)</span>;</li>
-<li>determine o limite de Cramér–Rao;</li>
-<li>compare esse limite com <span class="math inline">\(\operatorname{Var}_\mu(\overline X)\)</span>.</li>
+<li>obtenha a log-verossimilhança da amostra;</li>
+<li>determine o escore <span class="math inline">\(U_n(\mu)\)</span>;</li>
+<li>calcule <span class="math inline">\(I_n(\mu)\)</span>;</li>
+<li>obtenha o limite de Cramér–Rao;</li>
+<li>compare o limite com <span class="math inline">\(\operatorname{Var}_\mu(\overline X)\)</span>.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Eficiência da média no modelo normal">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -2492,274 +2744,270 @@ T=\overline X
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Para uma observação,</p>
+<p>Para a amostra observada</p>
 <p><span class="math display">\[
-f(x\mid\mu)
-=
-\frac{1}{\sqrt{2\pi\sigma^2}}
-\exp\left[
--\frac{(x-\mu)^2}{2\sigma^2}
-\right].
+\mathbf x=(x_1,\ldots,x_n),
 \]</span></p>
-<p>Portanto,</p>
+<p>a log-verossimilhança é</p>
 <p><span class="math display">\[
-\log f(X\mid\mu)
+\ell(\mu;\mathbf x)
 =
--\frac12\log(2\pi\sigma^2)
+-\frac{n}{2}\log(2\pi\sigma^2)
 -
-\frac{(X-\mu)^2}{2\sigma^2}.
+\frac{1}{2\sigma^2}
+\sum_{i=1}^n
+(x_i-\mu)^2.
 \]</span></p>
 <p>Derivando em relação a <span class="math inline">\(\mu\)</span>,</p>
 <p><span class="math display">\[
 \begin{aligned}
-U_\mu(X)
+u_n(\mu;\mathbf x)
 &amp;=
 \frac{\partial}{\partial\mu}
-\log f(X\mid\mu)\\
+\ell(\mu;\mathbf x)\\
 &amp;=
-\frac{X-\mu}{\sigma^2}.
+\frac{1}{\sigma^2}
+\sum_{i=1}^n
+(x_i-\mu)\\
+&amp;=
+\frac{n(\overline x-\mu)}
+{\sigma^2}.
 \end{aligned}
+\]</span></p>
+<p>Substituindo a amostra observada pela amostra aleatória,</p>
+<p><span class="math display">\[
+U_n(\mu)
+=
+\frac{n(\overline X-\mu)}
+{\sigma^2}.
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
-E_\mu(X)=\mu,
+E_\mu(\overline X)=\mu,
 \]</span></p>
 <p>temos</p>
 <p><span class="math display">\[
-E_\mu[U_\mu(X)]
+E_\mu[U_n(\mu)]
 =
 0.
 \]</span></p>
-<p>A informação de Fisher de uma observação é</p>
+<p>A informação de Fisher da amostra é</p>
 <p><span class="math display">\[
 \begin{aligned}
-I_1(\mu)
+I_n(\mu)
 &amp;=
-E_\mu\left[
-U_\mu(X)^2
+\operatorname{Var}_\mu
+\left[
+U_n(\mu)
 \right]\\
 &amp;=
-E_\mu\left[
-\frac{(X-\mu)^2}{\sigma^4}
-\right]\\
-&amp;=
-\frac{
-\operatorname{Var}_\mu(X)
-}{
-\sigma^4
-}\\
-&amp;=
-\frac{1}{\sigma^2}.
+\frac{n^2}{\sigma^4}
+\operatorname{Var}_\mu(\overline X).
 \end{aligned}
 \]</span></p>
-<p>Como as observações são i.i.d.,</p>
+<p>Em <a href="unidade2.html" class="quarto-xref"><span>Capítulo 4</span></a>,</p>
 <p><span class="math display">\[
-I_n(\mu)
+\operatorname{Var}_\mu(\overline X)
 =
-nI_1(\mu)
-=
-\frac{n}{\sigma^2}.
+\frac{\sigma^2}{n}.
 \]</span></p>
-<p>O alvo é</p>
+<p>Portanto,</p>
+<p><span class="math display">\[
+\begin{aligned}
+I_n(\mu)
+&amp;=
+\frac{n^2}{\sigma^4}
+\frac{\sigma^2}{n}\\
+&amp;=
+\frac{n}{\sigma^2}.
+\end{aligned}
+\]</span></p>
+<p>Como o alvo é</p>
 <p><span class="math display">\[
 \tau(\mu)=\mu,
 \]</span></p>
-<p>de modo que</p>
+<p>temos</p>
 <p><span class="math display">\[
 \tau'(\mu)=1.
 \]</span></p>
-<p>Portanto, o limite de Cramér–Rao para qualquer estimador não viesado regular de <span class="math inline">\(\mu\)</span> é</p>
+<p>A desigualdade de Cramér–Rao fornece</p>
 <p><span class="math display">\[
-\frac{
-[\tau'(\mu)]^2
-}{
-I_n(\mu)
-}
-=
+\operatorname{Var}_\mu(T)
+\geq
 \frac{1}{I_n(\mu)}
 =
-\frac{\sigma^2}{n}.
+\frac{\sigma^2}{n}
 \]</span></p>
-<p>A média amostral é não viesada, pois</p>
-<p><span class="math display">\[
-E_\mu(\overline X)
-=
-\mu.
-\]</span></p>
-<p>Além disso,</p>
+<p>para qualquer estimador não viesado de <span class="math inline">\(\mu\)</span> que satisfaça as condições do resultado.</p>
+<p>A média amostral é não viesada e possui variância</p>
 <p><span class="math display">\[
 \operatorname{Var}_\mu(\overline X)
 =
 \frac{\sigma^2}{n}.
 \]</span></p>
+<p>Logo,</p>
+<p><span class="math display">\[
+\operatorname{Var}_\mu(\overline X)
+=
+\frac{1}{I_n(\mu)},
+\]</span></p>
+<p>e <span class="math inline">\(\overline X\)</span> atinge o limite de Cramér–Rao.</p>
+<p>A condição de igualdade também pode ser verificada diretamente. Como</p>
+<p><span class="math display">\[
+U_n(\mu)
+=
+\frac{n(\overline X-\mu)}
+{\sigma^2},
+\]</span></p>
+<p>temos</p>
+<p><span class="math display">\[
+\overline X-\mu
+=
+\frac{\sigma^2}{n}
+U_n(\mu)
+=
+\frac{1}{I_n(\mu)}
+U_n(\mu).
+\]</span></p>
+<p>Portanto, a média amostral possui exatamente a relação com o escore exigida para a igualdade na desigualdade de Cramér–Rao.</p>
+</div>
+</div>
+</div>
 <p>Assim,</p>
 <p><span class="math display">\[
-\operatorname{Var}_\mu(\overline X)
-=
-\frac{1}{I_n(\mu)}.
+\overline X
 \]</span></p>
-<p>Logo, <span class="math inline">\(\overline X\)</span> atinge exatamente o limite de Cramér–Rao e é eficiente no sentido de Cramér–Rao para <span class="math inline">\(\mu\)</span>.</p>
+<p>é eficiente no sentido de Cramér–Rao para <span class="math inline">\(\mu\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Verificação adicional — Modelo Poisson">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Verificação adicional — Modelo Poisson
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<p>Neste modelo, a média amostral atinge a cota inferior de Cramér–Rao.</p>
-</section>
-<section id="exemplo-parâmetro-de-uma-distribuição-de-poisson" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exemplo-parâmetro-de-uma-distribuição-de-poisson">Exemplo — Parâmetro de uma distribuição de Poisson</h3>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <p>Considere</p>
 <p><span class="math display">\[
 X_1,\ldots,X_n
 \overset{\mathrm{iid}}{\sim}
 \operatorname{Poisson}(\theta),
 \qquad
-\theta&gt;0.
+\theta&gt;0,
 \]</span></p>
-<p>Considere</p>
+<p>e</p>
 <p><span class="math display">\[
 T=\overline X
 \]</span></p>
-<p>como estimador de <span class="math inline">\(\theta\)</span>. Verifique:</p>
-<ol type="1">
-<li>obtenha a função escore;</li>
-<li>calcule <span class="math inline">\(I_1(\theta)\)</span> e <span class="math inline">\(I_n(\theta)\)</span>;</li>
-<li>determine o limite de Cramér–Rao;</li>
-<li>verifique se <span class="math inline">\(\overline X\)</span> atinge esse limite.</li>
-</ol>
-<div class="callout callout-style-default callout-note callout-titled" title="Resolução — Eficiência da média no modelo Poisson">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Resolução — Eficiência da média no modelo Poisson
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Para uma observação,</p>
+<p>como estimador de <span class="math inline">\(\theta\)</span>.</p>
+<p>Para a amostra observada,</p>
 <p><span class="math display">\[
-f(x\mid\theta)
+\ell(\theta;\mathbf x)
 =
-e^{-\theta}
-\frac{\theta^x}{x!},
-\qquad
-x=0,1,2,\ldots
+-n\theta
++
+\left(
+\sum_{i=1}^n x_i
+\right)
+\log\theta
+-
+\sum_{i=1}^n
+\log(x_i!).
 \]</span></p>
 <p>Logo,</p>
 <p><span class="math display">\[
-\log f(X\mid\theta)
-=
--\theta
-+
-X\log\theta
--
-\log(X!).
-\]</span></p>
-<p>Derivando em relação a <span class="math inline">\(\theta\)</span>,</p>
-<p><span class="math display">\[
 \begin{aligned}
-U_\theta(X)
+u_n(\theta;\mathbf x)
 &amp;=
 \frac{\partial}{\partial\theta}
-\log f(X\mid\theta)\\
+\ell(\theta;\mathbf x)\\
 &amp;=
--1+\frac{X}{\theta}.
+-n
++
+\frac{1}{\theta}
+\sum_{i=1}^n x_i.
 \end{aligned}
+\]</span></p>
+<p>Para a amostra aleatória,</p>
+<p><span class="math display">\[
+U_n(\theta)
+=
+-n
++
+\frac{1}{\theta}
+\sum_{i=1}^n X_i
+=
+\frac{n(\overline X-\theta)}
+{\theta}.
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
-E_\theta(X)=\theta,
+\operatorname{Var}_\theta
+\left(
+\sum_{i=1}^nX_i
+\right)
+=
+n\theta,
 \]</span></p>
 <p>temos</p>
 <p><span class="math display">\[
 \begin{aligned}
-E_\theta[U_\theta(X)]
+I_n(\theta)
 &amp;=
--1+
-\frac{E_\theta(X)}{\theta}\\
+\operatorname{Var}_\theta[U_n(\theta)]\\
 &amp;=
-0.
-\end{aligned}
-\]</span></p>
-<p>A informação de Fisher de uma observação pode ser obtida pela variância do escore:</p>
-<p><span class="math display">\[
-\begin{aligned}
-I_1(\theta)
-&amp;=
+\frac{1}{\theta^2}
 \operatorname{Var}_\theta
 \left(
--1+\frac{X}{\theta}
+\sum_{i=1}^nX_i
 \right)\\
 &amp;=
-\frac{
-\operatorname{Var}_\theta(X)
-}{
-\theta^2
-}.
+\frac{n}{\theta}.
 \end{aligned}
 \]</span></p>
-<p>Como, no modelo Poisson,</p>
-<p><span class="math display">\[
-\operatorname{Var}_\theta(X)
-=
-\theta,
-\]</span></p>
-<p>segue que</p>
-<p><span class="math display">\[
-I_1(\theta)
-=
-\frac1\theta.
-\]</span></p>
-<p>Para uma amostra i.i.d.,</p>
-<p><span class="math display">\[
-I_n(\theta)
-=
-nI_1(\theta)
-=
-\frac{n}{\theta}.
-\]</span></p>
-<p>Como o alvo é</p>
+<p>Para o alvo</p>
 <p><span class="math display">\[
 \tau(\theta)=\theta,
 \]</span></p>
-<p>temos</p>
-<p><span class="math display">\[
-\tau'(\theta)=1.
-\]</span></p>
-<p>Portanto, o limite de Cramér–Rao é</p>
+<p>o limite de Cramér–Rao é</p>
 <p><span class="math display">\[
 \frac{1}{I_n(\theta)}
 =
 \frac{\theta}{n}.
 \]</span></p>
-<p>A média amostral é não viesada:</p>
+<p>A média amostral satisfaz</p>
 <p><span class="math display">\[
-E_\theta(\overline X)
-=
-\theta.
+E_\theta(\overline X)=\theta
 \]</span></p>
-<p>Sua variância é</p>
+<p>e</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta(\overline X)
-=
-\frac{
-\operatorname{Var}_\theta(X)
-}{
-n
-}
 =
 \frac{\theta}{n}.
 \]</span></p>
-<p>Logo,</p>
+<p>Portanto,</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta(\overline X)
 =
-\frac1{I_n(\theta)}.
+\frac{1}{I_n(\theta)},
 \]</span></p>
-<p>Portanto, <span class="math inline">\(\overline X\)</span> também atinge exatamente o limite de Cramér–Rao e é eficiente no sentido de Cramér–Rao para <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.7; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 4.4)</span>.</p>
+<p>e <span class="math inline">\(\overline X\)</span> é eficiente no sentido de Cramér–Rao.</p>
+<p>Também neste caso,</p>
+<p><span class="math display">\[
+\overline X-\theta
+=
+\frac{\theta}{n}
+U_n(\theta)
+=
+\frac{1}{I_n(\theta)}
+U_n(\theta),
+\]</span></p>
+<p>confirmando a condição de igualdade <span class="citation" data-cites="rice2007mathematical lauritzen2023fundamentals">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.7; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 4.4)</span>.</p>
 </div>
 </div>
 </div>
@@ -2773,15 +3021,31 @@ n
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nos dois exemplos anteriores, a análise seguiu a mesma sequência:</p>
+<p>Para verificar a eficiência de um estimador não viesado em um modelo regular:</p>
 <ol type="1">
-<li>obter a função escore;</li>
-<li>calcular a informação de Fisher;</li>
-<li>identificar o alvo <span class="math inline">\(\tau(\theta)\)</span> e calcular <span class="math inline">\(\tau'(\theta)\)</span>;</li>
-<li>obter o limite de Cramér–Rao;</li>
-<li>verificar se o estimador é não viesado;</li>
-<li>calcular sua variância;</li>
-<li>comparar a variância com o limite.</li>
+<li><p>escreva a log-verossimilhança da amostra, <span class="math display">\[
+\ell(\theta;\mathbf x);
+\]</span></p></li>
+<li><p>obtenha o escore da amostra, <span class="math display">\[
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X);
+\]</span></p></li>
+<li><p>calcule a informação de Fisher, <span class="math display">\[
+I_n(\theta)
+=
+\operatorname{Var}_\theta[U_n(\theta)];
+\]</span></p></li>
+<li><p>identifique o alvo <span class="math inline">\(\tau(\theta)\)</span> e calcule <span class="math inline">\(\tau'(\theta)\)</span>;</p></li>
+<li><p>obtenha o limite <span class="math display">\[
+\frac{
+[\tau'(\theta)]^2
+}{
+I_n(\theta)
+};
+\]</span></p></li>
+<li><p>compare esse limite com <span class="math inline">\(\operatorname{Var}_\theta(T)\)</span>.</p></li>
 </ol>
 <p>Se</p>
 <p><span class="math display">\[
@@ -2793,24 +3057,19 @@ n
 I_n(\theta)
 },
 \]</span></p>
-<p>então o estimador atinge o limite e é eficiente no sentido de Cramér–Rao.</p>
+<p>o estimador atinge o limite e é eficiente no sentido de Cramér–Rao.</p>
 </div>
 </div>
 </section>
 <section id="eficiência-assintótica" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="eficiência-assintótica">Eficiência assintótica</h3>
-<p>A eficiência de Cramér–Rao estudada anteriormente é uma propriedade de amostra finita: para cada tamanho amostral <span class="math inline">\(n\)</span>, compara-se a variância do estimador com o limite inferior correspondente.</p>
-<p>Essa comparação é especialmente informativa quando a distribuição amostral e a variância do estimador podem ser obtidas exatamente. Em muitos problemas, porém, essas quantidades são difíceis de determinar para cada <span class="math inline">\(n\)</span>, ou o estimador não atinge exatamente a cota de Cramér–Rao em amostras finitas.</p>
-<p>Em grandes amostras, interessa verificar se o estimador atinge, em primeira ordem, a melhor precisão permitida pelo modelo. Essa propriedade é denominada <strong>eficiência assintótica</strong>.</p>
-<p>Consideramos uma sequência de estimadores</p>
+<p>A eficiência de Cramér–Rao estudada anteriormente compara, para um tamanho amostral fixado, a variância de um estimador não viesado com uma cota determinada pela informação de Fisher.</p>
+<p>Em grandes amostras, a avaliação pode ser feita por outra perspectiva. Em <a href="unidade2.html#sec-u2-tcl" class="quarto-xref"><span>Seção 4.8</span></a>, a convergência em distribuição foi utilizada para descrever a forma das flutuações de estatísticas em torno de seus valores de referência. Aqui, a distribuição limite será utilizada para comparar a precisão de sequências de estimadores.</p>
+<p>Considere uma sequência</p>
 <p><span class="math display">\[
 T_1,T_2,\ldots
 \]</span></p>
-<p>e estudamos sua distribuição quando</p>
-<p><span class="math display">\[
-n\to\infty.
-\]</span></p>
-<p>Suponha que <span class="math inline">\(T_n\)</span> estime <span class="math inline">\(\tau(\theta)\)</span> e que</p>
+<p>para estimar <span class="math inline">\(\tau(\theta)\)</span>. Suponha que</p>
 <p><span class="math display">\[
 \sqrt n
 \left[
@@ -2823,33 +3082,53 @@ N\bigl(0,V(\theta)\bigr).
 <p><span class="math display">\[
 V(\theta)
 \]</span></p>
-<p>é a variância da distribuição normal limite na escala <span class="math inline">\(\sqrt n\)</span> e é usualmente denominada <strong>variância assintótica na escala <span class="math inline">\(\sqrt n\)</span></strong>.</p>
-<p>Ela permite comparar, em grandes amostras, a precisão de estimadores que possuem a mesma taxa de convergência. Quanto menor <span class="math inline">\(V(\theta)\)</span>, mais concentrada é a distribuição limite em torno do alvo.</p>
-<p>Sob condições adicionais que permitam transferir esse comportamento para os segundos momentos, a variância de <span class="math inline">\(T_n\)</span> possui, em primeira ordem, a escala</p>
+<p>é a variância da distribuição limite na escala <span class="math inline">\(\sqrt n\)</span>. Nessa escala, valores menores de <span class="math inline">\(V(\theta)\)</span> correspondem a maior concentração da distribuição assintótica em torno do alvo.</p>
+<p>Por exemplo, em <a href="unidade2.html#sec-u2-tcl" class="quarto-xref"><span>Seção 4.8</span></a>, para uma média amostral sob as condições usuais do Teorema Central do Limite,</p>
 <p><span class="math display">\[
-\frac{V(\theta)}{n}.
+\sqrt n
+\left(
+\overline X-\mu
+\right)
+\xrightarrow{d}
+N(0,\sigma^2).
 \]</span></p>
-<p>Em um modelo regular com observações i.i.d.,</p>
+<p>Nesse caso, <span class="math inline">\(\sigma^2\)</span> descreve a variabilidade das flutuações de <span class="math inline">\(\overline X\)</span> na escala <span class="math inline">\(\sqrt n\)</span>. A eficiência assintótica utiliza a mesma lógica para comparar estimadores.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Observação — Distribuição limite e variância">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Observação — Distribuição limite e variância
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A convergência</p>
+<p><span class="math display">\[
+\sqrt n
+\left[
+T_n-\tau(\theta)
+\right]
+\xrightarrow{d}
+N\bigl(0,V(\theta)\bigr)
+\]</span></p>
+<p>não implica, por si só,</p>
+<p><span class="math display">\[
+n\operatorname{Var}_\theta(T_n)
+\longrightarrow
+V(\theta).
+\]</span></p>
+<p>Essa conclusão exige condições adicionais sobre os momentos da sequência.</p>
+<p>Por isso, neste capítulo, <span class="math inline">\(V(\theta)\)</span> será interpretada diretamente como a variância da distribuição limite na escala <span class="math inline">\(\sqrt n\)</span>.</p>
+</div>
+</div>
+<p>Em modelos regulares, a informação de Fisher fornece também uma referência para essa variabilidade assintótica. Para uma amostra i.i.d.,</p>
 <p><span class="math display">\[
 I_n(\theta)
 =
 nI_1(\theta).
 \]</span></p>
-<p>Para um estimador não viesado de <span class="math inline">\(\tau(\theta)\)</span>, a cota de Cramér–Rao é</p>
-<p><span class="math display">\[
-\frac{
-[\tau'(\theta)]^2
-}{
-I_n(\theta)
-}
-=
-\frac{
-[\tau'(\theta)]^2
-}{
-nI_1(\theta)
-}.
-\]</span></p>
-<p>Assim, na escala <span class="math inline">\(\sqrt n\)</span>, a quantidade correspondente ao limite de informação do modelo é</p>
+<p>Para estimadores regulares e assintoticamente normais de <span class="math inline">\(\tau(\theta)\)</span>, a referência determinada pela informação de uma observação é</p>
 <p><span class="math display">\[
 \frac{
 [\tau'(\theta)]^2
@@ -2857,7 +3136,26 @@ nI_1(\theta)
 I_1(\theta)
 }.
 \]</span></p>
-<p>Nesse contexto, a sequência <span class="math inline">\(\{T_n\}\)</span> é denominada <strong>assintoticamente eficiente</strong> quando sua distribuição limite satisfaz</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definição — Eficiência assintótica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definição — Eficiência assintótica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que</p>
+<p><span class="math display">\[
+\sqrt n
+\left[
+T_n-\tau(\theta)
+\right]
+\xrightarrow{d}
+N\bigl(0,V(\theta)\bigr).
+\]</span></p>
+<p>Dentro do contexto regular considerado, a sequência <span class="math inline">\(\{T_n\}\)</span> é denominada <strong>assintoticamente eficiente</strong> quando</p>
 <p><span class="math display">\[
 V(\theta)
 =
@@ -2871,33 +3169,40 @@ I_1(\theta)
 <p><span class="math display">\[
 \tau(\theta)=\theta,
 \]</span></p>
-<p>temos</p>
-<p><span class="math display">\[
-\tau'(\theta)=1,
-\]</span></p>
-<p>e a condição se reduz a</p>
+<p>a condição se reduz a</p>
 <p><span class="math display">\[
 V(\theta)
 =
 \frac{1}{I_1(\theta)}.
 \]</span></p>
-<p>A eficiência de Cramér–Rao em amostras finitas e a eficiência assintótica respondem, portanto, a perguntas diferentes.</p>
-<p>Na primeira, verifica-se se</p>
+</div>
+</div>
+<p>A definição não exige que</p>
 <p><span class="math display">\[
-\operatorname{Var}_\theta(T_n)
+E_\theta(T_n)
+=
+\tau(\theta)
 \]</span></p>
-<p>atinge exatamente a cota de Cramér–Rao para determinado tamanho amostral.</p>
-<p>Na segunda, verifica-se se a distribuição limite de</p>
+<p>para todo tamanho amostral. Um estimador pode apresentar viés em amostras finitas e ainda possuir uma distribuição assintótica centrada em <span class="math inline">\(\tau(\theta)\)</span> com a variância de referência determinada pela informação de Fisher.</p>
+<p>Essa diferença separa duas noções.</p>
+<p>Na <strong>eficiência de Cramér–Rao em amostras finitas</strong>, um estimador não viesado atinge exatamente, para determinado <span class="math inline">\(n\)</span>, a cota</p>
+<p><span class="math display">\[
+\frac{
+[\tau'(\theta)]^2
+}{
+I_n(\theta)
+}.
+\]</span></p>
+<p>Na <strong>eficiência assintótica</strong>, a comparação é feita com a distribuição limite de</p>
 <p><span class="math display">\[
 \sqrt n
 \left[
 T_n-\tau(\theta)
-\right]
+\right].
 \]</span></p>
-<p>atinge, em primeira ordem, a precisão associada ao limite de informação do modelo regular.</p>
-<p>Assim, um estimador pode não atingir a cota de Cramér–Rao para cada tamanho amostral e ainda ser assintoticamente eficiente.</p>
-<p>Essa distinção será particularmente útil no estudo dos métodos de estimação pontual. Sob condições de regularidade apropriadas, estimadores de máxima verossimilhança frequentemente apresentam distribuição assintótica cuja variância coincide com o limite determinado pela informação de Fisher.</p>
-<p>Essa conclusão exige condições próprias e não se estende automaticamente a modelos irregulares, parâmetros na fronteira do espaço paramétrico ou situações em que a taxa de convergência difere de <span class="math inline">\(\sqrt n\)</span> <span class="citation" data-cites="casella2011inferencia lauritzen2023fundamentals">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, def. 10.1.11; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 5.11)</span>.</p>
+<p>Portanto, um estimador pode não atingir a cota de Cramér–Rao para cada <span class="math inline">\(n\)</span> e ainda ser assintoticamente eficiente.</p>
+<p>Essa distinção será retomada em <a href="unidade4.html" class="quarto-xref"><span>Capítulo 6</span></a>. Sob condições de regularidade apropriadas, estimadores de máxima verossimilhança frequentemente apresentam distribuição assintótica cuja variância coincide com a referência determinada pela informação de Fisher.</p>
+<p>A propriedade depende das condições do modelo e não se estende automaticamente a situações irregulares, parâmetros na fronteira do espaço paramétrico ou problemas em que a taxa de convergência difere de <span class="math inline">\(\sqrt n\)</span> <span class="citation" data-cites="casella2011inferencia lauritzen2023fundamentals">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, def. 10.1.11; <a href="#ref-lauritzen2023fundamentals" role="doc-biblioref">Lauritzen, 2023</a>, thm. 5.11)</span>.</p>
 </section>
 </section>
 <section id="aprofundamento-princípios-de-redução-de-dados" class="level2" data-number="5.2">
@@ -2915,31 +3220,24 @@ T=T(\mathbf X)
 <p>é uma função dos dados. Em alguns modelos, conhecer <span class="math inline">\(T\)</span> é suficiente para preservar toda a informação da amostra sobre o parâmetro, de modo que os demais aspectos dos dados não acrescentam informação sobre <span class="math inline">\(\theta\)</span>.</p>
 <p>Essa ideia fornece uma ligação direta com a avaliação de estimadores. Se um estimador utiliza aspectos da amostra que não acrescentam informação sobre o parâmetro, pode ser possível substituí-lo por uma função de uma estatística suficiente e reduzir sua variabilidade.</p>
 <p>A noção que formaliza essa redução é a <strong>suficiência</strong> <span class="citation" data-cites="cox2006principles casella2011inferencia">(<a href="#ref-cox2006principles" role="doc-biblioref">Cox, 2006</a>, secs. 2.2 and 4.3.1; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, chap.&nbsp;6)</span>.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Recordação — Função de verossimilhança">
+<div class="callout callout-style-default callout-note callout-titled" title="Conexão — Verossimilhança e redução de dados">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Recordação — Função de verossimilhança
+<span class="screen-reader-only">Nota</span>Conexão — Verossimilhança e redução de dados
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a>, para dados observados</p>
+<p>A função de verossimilhança introduzida em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a> será utilizada aqui com uma finalidade diferente da estudada na função escore.</p>
+<p>Na redução de dados, interessa identificar <strong>por meio de quais características da amostra observada <span class="math inline">\(\mathbf x\)</span> ocorre a dependência da verossimilhança em <span class="math inline">\(\theta\)</span></strong>.</p>
+<p>Se essa dependência puder ser expressa por meio de uma estatística</p>
 <p><span class="math display">\[
-\mathbf x=(x_1,\ldots,x_n),
+T(\mathbf x),
 \]</span></p>
-<p>a função de verossimilhança foi definida por</p>
-<p><span class="math display">\[
-L(\theta;\mathbf x)
-=
-f_{\mathbf X}(\mathbf x\mid\theta),
-\qquad
-\theta\in\Theta.
-\]</span></p>
-<p>Na redução de dados, utilizaremos a verossimilhança para identificar <strong>por meio de quais características de <span class="math inline">\(\mathbf x\)</span> ocorre sua dependência em <span class="math inline">\(\theta\)</span></strong>.</p>
-<p>Se toda essa dependência puder ser expressa por meio de uma estatística <span class="math inline">\(T(\mathbf x)\)</span>, isso indicará que <span class="math inline">\(T\)</span> pode desempenhar o papel de resumo da informação amostral sobre o parâmetro.</p>
-<p>A maximização da verossimilhança possui outra finalidade e será desenvolvida no <a href="unidade4.html" class="quarto-xref"><span>Capítulo 6</span></a>.</p>
+<p>essa estatística pode concentrar a informação amostral relevante para o parâmetro.</p>
+<p>Essa ideia conduz ao conceito de suficiência.</p>
 </div>
 </div>
 <section id="estatística-suficiente" class="level3 unnumbered">
@@ -3050,7 +3348,7 @@ T(\mathbf x),
 <p>então <span class="math inline">\(T\)</span> é suficiente.</p>
 <p>Esse é o procedimento mais utilizado para identificar estatísticas suficientes em modelos dominados <span class="citation" data-cites="rice2007mathematical ramachandran2021r casella2011inferencia">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8.1; <a href="#ref-ramachandran2021r" role="doc-biblioref">Ramachandran; Tsokos, 2021</a>, sec.&nbsp;5.3.2; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, sec.&nbsp;6.2.1)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Ideia do teorema da fatoração">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3059,7 +3357,7 @@ T(\mathbf x),
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A ideia central pode ser apresentada diretamente no caso discreto.</p>
 <p><strong>Da fatoração para a suficiência</strong></p>
@@ -3080,17 +3378,17 @@ T(\mathbf x)=t,
 \]</span></p>
 <p>a probabilidade condicional é</p>
 <p><span class="math display">\[
-P_\theta(\mathbf X=\mathbf x\mid T=t)
+P(\mathbf X=\mathbf x\mid T=t,\theta)
 =
 \frac{
-P_\theta(\mathbf X=\mathbf x)
+P(\mathbf X=\mathbf x\mid\theta)
 }{
-P_\theta(T=t)
+P(T=t\mid\theta)
 }.
 \]</span></p>
 <p>Pela fatoração, o numerador é</p>
 <p><span class="math display">\[
-P(\mathbf X=\mathbf x \mid \theta)
+P(\mathbf X=\mathbf x\mid\theta)
 =
 g(t\mid\theta)h(\mathbf x).
 \]</span></p>
@@ -3099,14 +3397,14 @@ g(t\mid\theta)h(\mathbf x).
 T(\mathbf y)=t:
 \]</span></p>
 <p><span class="math display">\[
-P_\theta(T=t)
+P(T=t\mid\theta)
 =
 \sum_{\mathbf y:T(\mathbf y)=t}
 g(t\mid\theta)h(\mathbf y).
 \]</span></p>
 <p>Como <span class="math inline">\(g(t\mid\theta)\)</span> não depende de <span class="math inline">\(\mathbf y\)</span>,</p>
 <p><span class="math display">\[
-P_\theta(T=t)
+P(T=t\mid\theta)
 =
 g(t\mid\theta)
 \sum_{\mathbf y:T(\mathbf y)=t}
@@ -3115,7 +3413,7 @@ h(\mathbf y).
 <p>Portanto,</p>
 <p><span class="math display">\[
 \begin{aligned}
-P_\theta(\mathbf X=\mathbf x\mid T=t)
+P(\mathbf X=\mathbf x\mid T=t,\theta)
 &amp;=
 \frac{
 g(t\mid\theta)h(\mathbf x)
@@ -3180,10 +3478,10 @@ P\bigl(
 T=T(\mathbf x), \theta
 \bigr).
 \]</span></p>
-<p>Embora a última expressão seja escrita com <span class="math inline">\(P_\theta\)</span>, pela suficiência seu valor não depende de <span class="math inline">\(\theta\)</span>.</p>
+<p>Embora <span class="math inline">\(\theta\)</span> apareça na notação da probabilidade condicional, pela suficiência seu valor não depende de <span class="math inline">\(\theta\)</span>.</p>
 <p>Assim,</p>
 <p><span class="math display">\[
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 =
 g\bigl(T(\mathbf x)\mid\theta\bigr)
 h(\mathbf x).
@@ -3203,7 +3501,7 @@ X_1,\ldots,X_n
 \qquad
 0&lt;p&lt;1.
 \]</span></p>
-<p>A amostra completa registra não só quantos sucessos ocorreram, mas também <strong>em quais posições</strong> eles apareceram.</p>
+<p>A amostra completa registra o número de sucessos e as posições em que eles ocorreram.</p>
 <p>Por exemplo, as amostras</p>
 <p><span class="math display">\[
 (1,0,1,0,0)
@@ -3213,7 +3511,7 @@ X_1,\ldots,X_n
 (0,1,0,0,1)
 \]</span></p>
 <p>são diferentes, mas ambas possuem dois sucessos.</p>
-<p>A questão é verificar se, para inferir sobre <span class="math inline">\(p\)</span>, é necessário conservar também a posição dos sucessos ou se o número total de sucessos já concentra toda a informação relevante.</p>
+<p>Para inferir sobre <span class="math inline">\(p\)</span>, interessa determinar se as posições dos sucessos acrescentam informação além do número total de sucessos.</p>
 <p>Considere</p>
 <p><span class="math display">\[
 T(\mathbf X)
@@ -3222,7 +3520,7 @@ T(\mathbf X)
 \]</span></p>
 <p>Utilize o teorema da fatoração para verificar se <span class="math inline">\(T\)</span> é suficiente para <span class="math inline">\(p\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Aplicação do teorema da fatoração">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3231,7 +3529,7 @@ T(\mathbf X)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Como as observações são independentes,</p>
 <p><span class="math display">\[
@@ -3306,7 +3604,7 @@ T(\mathbf X)
 <p>A interpretação é direta: uma vez conhecido o número total de sucessos, saber <strong>em quais posições</strong> eles ocorreram não acrescenta informação sobre <span class="math inline">\(p\)</span>.</p>
 <p>Podemos verificar essa conclusão diretamente pela definição de suficiência.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Verificação — Distribuição condicional dado o total de sucessos">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3315,7 +3613,7 @@ T(\mathbf X)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Suponha que</p>
 <p><span class="math display">\[
@@ -3371,10 +3669,9 @@ p^t(1-p)^{n-t}
 </div>
 </div>
 </div>
-<p>A suficiência estabelece que determinada estatística preserva a informação da amostra sobre o parâmetro. Ainda permanecem, porém, questões mais refinadas.</p>
-<p>Uma estatística suficiente pode conter componentes redundantes. Podemos então perguntar se existe uma redução suficiente ainda menor.</p>
-<p>Além disso, determinadas classes de modelos permitem identificar estatísticas suficientes de forma sistemática, e a suficiência pode ser utilizada para construir estimadores com menor variabilidade.</p>
-<p>Essas questões conduzem, respectivamente, à <strong>suficiência minimal</strong>, às <strong>famílias exponenciais</strong>, ao <strong>teorema de Rao–Blackwell</strong> e ao <strong>teorema de Lehmann–Scheffé</strong>. Posteriormente, ancilaridade e o teorema de Basu completam essa estrutura.</p>
+<p>A suficiência garante a preservação da informação da amostra sobre o parâmetro, mas uma estatística suficiente ainda pode conter componentes redundantes. A <strong>suficiência minimal</strong> procura eliminar essa redundância.</p>
+<p>Em determinadas classes de modelos, a estrutura da distribuição também permite identificar estatísticas suficientes de forma sistemática. Esse é o papel das <strong>famílias exponenciais</strong>.</p>
+<p>Mais adiante, suficiência e completude serão utilizadas para construir e caracterizar estimadores por meio dos teoremas de Rao–Blackwell e Lehmann–Scheffé.</p>
 </section>
 <section id="suficiência-minimal" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="suficiência-minimal">Suficiência minimal</h3>
@@ -3465,7 +3762,7 @@ T(\mathbf x)=T(\mathbf y).
 <p>O critério compara dois pontos amostrais e pergunta se suas verossimilhanças possuem <strong>a mesma dependência em <span class="math inline">\(\theta\)</span></strong>.</p>
 <p>Se isso acontece exatamente quando os dois pontos produzem o mesmo valor de <span class="math inline">\(T\)</span>, então <span class="math inline">\(T\)</span> reúne em uma mesma classe precisamente as amostras que são indistinguíveis quanto à forma como informam sobre <span class="math inline">\(\theta\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Ideia do critério de suficiência minimal">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-36-contents" aria-controls="callout-36" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3474,7 +3771,7 @@ T(\mathbf x)=T(\mathbf y).
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div id="callout-36" class="callout-36-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A demonstração possui duas partes: primeiro verificamos que o critério produz uma estatística suficiente; depois mostramos por que essa estatística é minimal.</p>
 <p><strong>Suficiência</strong></p>
@@ -3580,7 +3877,7 @@ T(\mathbf X)
 \]</span></p>
 <p>Utilize o critério da razão de verossimilhanças.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Suficiência minimal no modelo Bernoulli">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3589,7 +3886,7 @@ T(\mathbf X)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div id="callout-37" class="callout-37-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Para o modelo Bernoulli,</p>
 <p><span class="math display">\[
@@ -3717,7 +4014,7 @@ X_{(n)}
 <p>é suficiente minimal para <span class="math inline">\(\theta\)</span>.</p>
 <p>Este exemplo exige um cuidado adicional: dependendo do valor de <span class="math inline">\(\theta\)</span>, a verossimilhança de uma das amostras pode ser zero. Por isso, utilizaremos a forma do critério baseada em <strong>proporcionalidade</strong>, em vez de dividir diretamente duas verossimilhanças.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Suficiência minimal no modelo uniforme">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3726,7 +4023,7 @@ X_{(n)}
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div id="callout-38" class="callout-38-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Para uma amostra <span class="math inline">\(\mathbf x\)</span> com valores não negativos,</p>
 <p><span class="math display">\[
@@ -3973,7 +4270,7 @@ t(X_i)
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Suficiência pela forma exponencial">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -3982,7 +4279,7 @@ t(X_i)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-38" class="callout-38-contents callout-collapse collapse">
+<div id="callout-41" class="callout-41-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Como as observações são independentes, a densidade ou função de probabilidade conjunta é</p>
 <p><span class="math display">\[
@@ -4117,7 +4414,7 @@ T(\mathbf X)
 </div>
 <section id="exemplo-modelo-bernoulli" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="exemplo-modelo-bernoulli">Exemplo — Modelo Bernoulli</h4>
-<p>Retomemos</p>
+<p>Considere novamente</p>
 <p><span class="math display">\[
 X\sim\operatorname{Ber}(p),
 \qquad
@@ -4131,7 +4428,7 @@ X\sim\operatorname{Ber}(p),
 <li>a estatística suficiente resultante para uma amostra.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Forma exponencial do modelo Bernoulli">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4140,7 +4437,7 @@ X\sim\operatorname{Ber}(p),
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-40" class="callout-40-contents callout-collapse collapse">
+<div id="callout-43" class="callout-43-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A função de probabilidade de uma observação é</p>
 <p><span class="math display">\[
@@ -4269,7 +4566,7 @@ X\sim\operatorname{Poisson}(\lambda),
 <li>a estatística suficiente correspondente a uma amostra.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Forma exponencial do modelo Poisson">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-44-contents" aria-controls="callout-44" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4278,7 +4575,7 @@ X\sim\operatorname{Poisson}(\lambda),
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-41" class="callout-41-contents callout-collapse collapse">
+<div id="callout-44" class="callout-44-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A função de probabilidade é</p>
 <p><span class="math display">\[
@@ -4370,7 +4667,7 @@ t(x)=x.
 \]</span></p>
 <p>Por isso, nos dois casos, a estatística canônica suficiente para uma amostra é a soma das observações.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Verificação — Modelo geométrico como família exponencial">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4379,7 +4676,7 @@ t(x)=x.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-42" class="callout-42-contents callout-collapse collapse">
+<div id="callout-45" class="callout-45-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Considere a parametrização geométrica</p>
 <p><span class="math display">\[
@@ -4506,7 +4803,7 @@ N(\mu,\sigma^2),
 <li>uma representação equivalente em termos de <span class="math inline">\(\overline X\)</span> e <span class="math inline">\(S^2\)</span>.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Forma exponencial do modelo normal">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4515,7 +4812,7 @@ N(\mu,\sigma^2),
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div id="callout-46" class="callout-46-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A densidade de uma observação é</p>
 <p><span class="math display">\[
@@ -4867,7 +5164,7 @@ T(\mathbf X)
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Ideia da demonstração — Completude em famílias exponenciais">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-46-contents" aria-controls="callout-46" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-49-contents" aria-controls="callout-49" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4876,7 +5173,7 @@ T(\mathbf X)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-46" class="callout-46-contents callout-collapse collapse">
+<div id="callout-49" class="callout-49-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A demonstração geral utiliza um resultado de unicidade para transformadas de Laplace e não será desenvolvida integralmente aqui. Essa é também a estratégia utilizada por Casella e Berger na apresentação do resultado <span class="citation" data-cites="casella2011inferencia">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, teorema 6.2.25)</span>.</p>
 <p>Considere uma função <span class="math inline">\(a\)</span> da estatística canônica</p>
@@ -4909,7 +5206,7 @@ a(T)=0
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração direta — Completude no modelo Poisson">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-47-contents" aria-controls="callout-47" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-50-contents" aria-controls="callout-50" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -4918,7 +5215,7 @@ a(T)=0
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-47" class="callout-47-contents callout-collapse collapse">
+<div id="callout-50" class="callout-50-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Considere uma amostra</p>
 <p><span class="math display">\[
@@ -5021,8 +5318,8 @@ P(a(T)=0 \mid \lambda)=1
 </section>
 <section id="estimadores-não-viesados-de-variância-uniformemente-mínima" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="estimadores-não-viesados-de-variância-uniformemente-mínima">Estimadores não viesados de variância uniformemente mínima</h3>
-<p>A eficiência relativa permite comparar dois estimadores escolhidos previamente. Uma questão mais forte consiste em comparar um estimador com <strong>todos os estimadores não viesados do mesmo alvo</strong>.</p>
-<p>Essa ideia conduz ao estimador não viesado de variância uniformemente mínima.</p>
+<p>A completude fornece uma propriedade de unicidade para funções não viesadas de uma estatística. O próximo objetivo é identificar, entre <strong>todos os estimadores não viesados de um mesmo alvo</strong>, aquele que possui a menor variância para cada valor do parâmetro.</p>
+<p>Essa propriedade conduz ao estimador não viesado de variância uniformemente mínima.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Definição — ENVVUM">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5049,10 +5346,10 @@ W_{\mathrm{ENVVUM}}
 <p>e para todo estimador não viesado <span class="math inline">\(W\)</span> de <span class="math inline">\(\tau(\theta)\)</span> com variância finita <span class="citation" data-cites="casella2011inferencia bickel2016volume2 rasch2018">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, def. 7.3.7; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, sec.&nbsp;8.2.3; <a href="#ref-rasch2018" role="doc-biblioref">Rasch; Schott, 2018</a>, sec.&nbsp;2.4)</span>.</p>
 </div>
 </div>
-<p>A palavra <strong>uniformemente</strong> indica que a desigualdade deve valer para todos os valores de <span class="math inline">\(\theta\)</span>, e não apenas para um valor particular do parâmetro.</p>
+<p>A palavra <strong>uniformemente</strong> indica que a desigualdade deve valer em todo o espaço paramétrico, e não em um valor isolado de <span class="math inline">\(\theta\)</span>.</p>
 <p>Assim, um ENVVUM possui, em cada ponto do espaço paramétrico, variância não superior à de qualquer outro estimador não viesado do mesmo alvo.</p>
-<p>A definição estabelece o objetivo, mas não mostra diretamente como encontrar tal estimador.</p>
-<p>A primeira ferramenta para isso é o teorema de Rao–Blackwell: a partir de um estimador inicial, podemos condicioná-lo em uma estatística suficiente e obter um novo estimador que preserva sua esperança e não aumenta seu EQM.</p>
+<p>A definição caracteriza o objetivo, mas ainda não fornece um procedimento para construir um ENVVUM.</p>
+<p>O teorema de Rao–Blackwell fornece o primeiro passo: condicionar um estimador em uma estatística suficiente preserva sua esperança e não aumenta seu EQM.</p>
 </section>
 <section id="teorema-de-raoblackwell" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="teorema-de-raoblackwell">Teorema de Rao–Blackwell</h3>
@@ -5100,14 +5397,14 @@ E_\theta(W)
 <p><span class="math display">\[
 \operatorname{Var}_\theta(W\mid T)=0
 \]</span></p>
-<p><span class="math inline">\(P_\theta\)</span>-quase certamente.</p>
+<p>quase certamente.</p>
 <p>Equivalentemente,</p>
 <p><span class="math display">\[
 W
 =
 E_\theta(W\mid T)
 \]</span></p>
-<p><span class="math inline">\(P_\theta\)</span>-quase certamente.</p>
+<p>quase certamente.</p>
 <p>Assim, não existe melhoria estrita quando <span class="math inline">\(W\)</span> já é, a menos de equivalência quase certa, uma função de <span class="math inline">\(T\)</span> <span class="citation" data-cites="rice2007mathematical bickel2016volume2">(<a href="#ref-rice2007mathematical" role="doc-biblioref">Rice, 2007</a>, sec.&nbsp;8.8.2; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.6)</span>.</p>
 </div>
 </div>
@@ -5139,7 +5436,7 @@ E_\theta
 \operatorname{EQM}_\theta(W).
 \]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Redução do EQM por condicionamento">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-51-contents" aria-controls="callout-51" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5148,7 +5445,7 @@ E_\theta
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-51" class="callout-51-contents callout-collapse collapse">
+<div id="callout-54" class="callout-54-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Defina</p>
 <p><span class="math display">\[
@@ -5330,7 +5627,7 @@ W^*(T)
 E_\theta(W\mid T).
 \]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Rao--Blackwell no modelo Poisson">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-52-contents" aria-controls="callout-52" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-55-contents" aria-controls="callout-55" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5339,7 +5636,7 @@ E_\theta(W\mid T).
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-52" class="callout-52-contents callout-collapse collapse">
+<div id="callout-55" class="callout-55-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Verificação do não viés do estimador inicial</strong></p>
 <p>Como</p>
@@ -5516,7 +5813,7 @@ e^{-n\theta}
 \right)^t.
 \end{aligned}
 \]</span></p>
-<p>Observe que <span class="math inline">\(\theta\)</span> desaparece completamente da expressão.</p>
+<p>O parâmetro <span class="math inline">\(\theta\)</span> desaparece completamente da expressão.</p>
 <p>Essa é a função de probabilidade de uma distribuição multinomial:</p>
 <p><span class="math display">\[
 (X_1,\ldots,X_n)\mid T=t
@@ -5595,8 +5892,8 @@ W^*(T)
 </section>
 <section id="teorema-de-lehmannscheffé" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="teorema-de-lehmannscheffé">Teorema de Lehmann–Scheffé</h3>
-<p>Rao–Blackwell mostra como melhorar um estimador por condicionamento em uma estatística suficiente. A suficiência, entretanto, não garante por si só que a função não viesada resultante seja única.</p>
-<p>É nesse ponto que a completude se torna decisiva.</p>
+<p>Rao–Blackwell reduz ou preserva a variabilidade por condicionamento em uma estatística suficiente. A suficiência, isoladamente, não garante a unicidade da função não viesada resultante.</p>
+<p>A completude fornece essa unicidade e, combinada à suficiência, conduz ao teorema de Lehmann–Scheffé.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Teorema — Lehmann--Scheffé">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -5614,7 +5911,7 @@ E_\theta[\phi(T)]
 \tau(\theta)
 \]</span></p>
 <p>para todo <span class="math inline">\(\theta\in\Theta\)</span>, com segundo momento finito, então <span class="math inline">\(\phi(T)\)</span> é o ENVVUM de <span class="math inline">\(\tau(\theta)\)</span>.</p>
-<p>Além disso, <span class="math inline">\(\phi(T)\)</span> é única, a menos de equivalência <span class="math inline">\(P_\theta\)</span>-quase certa, para todo <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="casella2011inferencia bickel2016volume2">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, thm. 7.3.23; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, cor. 8.2.2)</span>.</p>
+<p>Além disso, <span class="math inline">\(\phi(T)\)</span> é única, a menos de equivalência quase certa, para todo <span class="math inline">\(\theta\)</span> <span class="citation" data-cites="casella2011inferencia bickel2016volume2">(<a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, thm. 7.3.23; <a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, cor. 8.2.2)</span>.</p>
 </div>
 </div>
 <p>O resultado combina diretamente as duas propriedades estudadas anteriormente:</p>
@@ -5624,7 +5921,7 @@ E_\theta[\phi(T)]
 </ul>
 <p>Essa combinação transforma uma propriedade de melhoria em uma propriedade de optimalidade e unicidade.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Teorema de Lehmann--Scheffé">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-54-contents" aria-controls="callout-54" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-57-contents" aria-controls="callout-57" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5633,7 +5930,7 @@ E_\theta[\phi(T)]
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-54" class="callout-54-contents callout-collapse collapse">
+<div id="callout-57" class="callout-57-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Suponha que</p>
 <p><span class="math display">\[
@@ -5697,14 +5994,14 @@ E_\theta
 =
 0
 \]</span></p>
-<p><span class="math inline">\(P_\theta\)</span>-quase certamente.</p>
+<p>quase certamente, para todo <span class="math inline">\(\theta\)</span>.</p>
 <p>Logo,</p>
 <p><span class="math display">\[
 \phi(T)
 =
 W^*(T)
 \]</span></p>
-<p><span class="math inline">\(P_\theta\)</span>-quase certamente.</p>
+<p>quase certamente, para todo <span class="math inline">\(\theta\)</span>.</p>
 <p>Consequentemente,</p>
 <p><span class="math display">\[
 \operatorname{Var}_\theta[\phi(T)]
@@ -5723,7 +6020,7 @@ W^*(T)
 </div>
 </div>
 </div>
-<p>No exemplo de Poisson desenvolvido anteriormente,</p>
+<p>No exemplo de Rao–Blackwell para o modelo Poisson,</p>
 <p><span class="math display">\[
 T
 =
@@ -5807,7 +6104,7 @@ f(x\mid\theta)
 <li>se esse estimador atinge o limite de Cramér–Rao.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — ENVVUM da taxa exponencial">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-56-contents" aria-controls="callout-56" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -5816,13 +6113,13 @@ f(x\mid\theta)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-56" class="callout-56-contents callout-collapse collapse">
+<div id="callout-59" class="callout-59-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Suficiência</strong></p>
 <p>Como as observações são independentes, a densidade conjunta é</p>
 <p><span class="math display">\[
 \begin{aligned}
-f(\mathbf x\mid\theta)
+f_{\mathbf X}(\mathbf x\mid\theta)
 &amp;=
 \prod_{i=1}^n
 \left[
@@ -6076,40 +6373,46 @@ E_\theta(T^{-2})
 \]</span></p>
 <p>Esses dois momentos produzem diretamente a variância do ENVVUM.</p>
 <p><strong>Comparação com o limite de Cramér–Rao</strong></p>
-<p>Para uma observação,</p>
+<p>Para a amostra observada,</p>
 <p><span class="math display">\[
-\log f(X\mid\theta)
+\ell(\theta;\mathbf x)
 =
-\log\theta-\theta X.
+n\log\theta
+-
+\theta
+\sum_{i=1}^n x_i.
 \]</span></p>
-<p>O escore é</p>
+<p>O escore da amostra é</p>
 <p><span class="math display">\[
-U_\theta(X)
-=
+\begin{aligned}
+U_n(\theta)
+&amp;=
 \frac{\partial}{\partial\theta}
-\log f(X\mid\theta)
-=
-\frac1\theta-X.
+\ell(\theta;\mathbf X)\\
+&amp;=
+\frac{n}{\theta}
+-
+\sum_{i=1}^nX_i.
+\end{aligned}
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
-\operatorname{Var}_\theta(X)
+\operatorname{Var}_\theta
+\left(
+\sum_{i=1}^nX_i
+\right)
 =
-\frac1{\theta^2},
+\frac{n}{\theta^2},
 \]</span></p>
-<p>a informação de Fisher de uma observação é</p>
+<p>a informação de Fisher da amostra é</p>
 <p><span class="math display">\[
-I_1(\theta)
-=
-\operatorname{Var}_\theta[U_\theta(X)]
-=
-\frac1{\theta^2}.
-\]</span></p>
-<p>Para uma amostra i.i.d.,</p>
-<p><span class="math display">\[
+\begin{aligned}
 I_n(\theta)
-=
+&amp;=
+\operatorname{Var}_\theta[U_n(\theta)]\\
+&amp;=
 \frac{n}{\theta^2}.
+\end{aligned}
 \]</span></p>
 <p>Como o alvo é</p>
 <p><span class="math display">\[
@@ -6199,9 +6502,9 @@ T\perp A.
 <p>Isto é, <span class="math inline">\(T\)</span> e <span class="math inline">\(A\)</span> são independentes <span class="citation" data-cites="bickel2016volume2 casella2011inferencia">(<a href="#ref-bickel2016volume2" role="doc-biblioref">Bickel; Doksum, 2016</a>, thm. 8.2.3; <a href="#ref-casella2011inferencia" role="doc-biblioref">Casella; Berger, 2011</a>, teoremas 6.2.24 e 6.2.28)</span>.</p>
 </div>
 </div>
-<p>O teorema estabelece uma consequência importante: uma estatística que concentra toda a informação sobre <span class="math inline">\(\theta\)</span> e possui a propriedade de completude é independente de qualquer estatística cuja distribuição seja livre de <span class="math inline">\(\theta\)</span>.</p>
+<p>Uma estatística suficiente e completa para <span class="math inline">\(\theta\)</span> é independente de qualquer estatística ancilar para esse parâmetro.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Demonstração — Ideia do teorema de Basu no caso discreto">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-59-contents" aria-controls="callout-59" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-62-contents" aria-controls="callout-62" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6210,7 +6513,7 @@ T\perp A.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-59" class="callout-59-contents callout-collapse collapse">
+<div id="callout-62" class="callout-62-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Considere o caso discreto e fixe um valor possível <span class="math inline">\(a\)</span> da estatística ancilar <span class="math inline">\(A\)</span>.</p>
 <p><strong>Ancilaridade</strong></p>
@@ -6295,7 +6598,7 @@ E_\theta[g_a(T)]
 <p><span class="math display">\[
 g_a(T)=0
 \]</span></p>
-<p><span class="math inline">\(P\)</span>-quase certamente.</p>
+<p>quase certamente, para todo <span class="math inline">\(\theta\)</span>.</p>
 <p>Portanto,</p>
 <p><span class="math display">\[
 P(A=a\mid T=t, \theta)
@@ -6346,7 +6649,7 @@ S^2.
 <li><span class="math inline">\(S^2\)</span> é ancilar para <span class="math inline">\(\mu\)</span>.</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Aplicação do teorema de Basu">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-60-contents" aria-controls="callout-60" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-63-contents" aria-controls="callout-63" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6355,7 +6658,7 @@ S^2.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-60" class="callout-60-contents callout-collapse collapse">
+<div id="callout-63" class="callout-63-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Suficiência e completude de <span class="math inline">\(\overline X\)</span></strong></p>
 <p>Para <span class="math inline">\(\sigma^2\)</span> conhecida, a densidade conjunta da amostra pode ser escrita de modo que toda a dependência nos dados e em <span class="math inline">\(\mu\)</span> ocorra por meio de</p>
@@ -6491,7 +6794,7 @@ x&gt;0.
 <section id="redução-por-suficiência-e-completude" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="redução-por-suficiência-e-completude">Redução por suficiência e completude</h4>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Suficiência, completude e ENVVUM">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-62-contents" aria-controls="callout-62" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-65-contents" aria-controls="callout-65" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6500,7 +6803,7 @@ x&gt;0.
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-62" class="callout-62-contents callout-collapse collapse">
+<div id="callout-65" class="callout-65-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>Suficiência</strong></p>
 <p>Como as observações são independentes,</p>
@@ -6612,7 +6915,7 @@ E_\beta
 <h4 class="unnumbered anchored" data-anchor-id="consistência-1">Consistência</h4>
 <p>O fato de <span class="math inline">\(\widehat\beta\)</span> ser ENVVUM é uma propriedade de optimalidade dentro da classe dos estimadores não viesados. A consistência avalia se o estimador se concentra em <span class="math inline">\(\beta\)</span> quando o tamanho amostral aumenta.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Consistência">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-63-contents" aria-controls="callout-63" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-66-contents" aria-controls="callout-66" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6621,7 +6924,7 @@ E_\beta
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-63" class="callout-63-contents callout-collapse collapse">
+<div id="callout-66" class="callout-66-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Como</p>
 <p><span class="math display">\[
@@ -6667,9 +6970,9 @@ g(\alpha\beta).
 </section>
 <section id="eficiência-de-cramérrao" class="level4 unnumbered">
 <h4 class="unnumbered anchored" data-anchor-id="eficiência-de-cramérrao">Eficiência de Cramér–Rao</h4>
-<p>Finalmente, podemos comparar a variância de <span class="math inline">\(\widehat\beta\)</span> com o limite inferior permitido pelo modelo para estimadores não viesados regulares.</p>
+<p>A variância de <span class="math inline">\(\widehat\beta\)</span> pode ser comparada com o limite de Cramér–Rao para estimadores não viesados que satisfazem as condições de regularidade.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Resolução — Informação de Fisher e eficiência">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-64-contents" aria-controls="callout-64" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-67-contents" aria-controls="callout-67" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -6678,85 +6981,79 @@ g(\alpha\beta).
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-64" class="callout-64-contents callout-collapse collapse">
+<div id="callout-67" class="callout-67-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Para uma observação,</p>
+<p>Para a amostra observada, a log-verossimilhança pode ser escrita como</p>
 <p><span class="math display">\[
 \begin{aligned}
-\log f(X\mid\beta)
+\ell(\beta;\mathbf x)
 ={}&amp;
-(\alpha-1)\log X
+(\alpha-1)
+\sum_{i=1}^n\log x_i
 -
-\frac{X}{\beta}\\
+\frac1\beta
+\sum_{i=1}^n x_i\\
 &amp;-
-\alpha\log\beta
+n\alpha\log\beta
 -
-\log\Gamma(\alpha).
+n\log\Gamma(\alpha).
 \end{aligned}
 \]</span></p>
 <p>Derivando em relação a <span class="math inline">\(\beta\)</span>,</p>
 <p><span class="math display">\[
 \begin{aligned}
-U_\beta(X)
+U_n(\beta)
 &amp;=
 \frac{\partial}{\partial\beta}
-\log f(X\mid\beta)\\
+\ell(\beta;\mathbf X)\\
 &amp;=
-\frac{X}{\beta^2}
+\frac{1}{\beta^2}
+\sum_{i=1}^nX_i
 -
-\frac{\alpha}{\beta}.
+\frac{n\alpha}{\beta}.
 \end{aligned}
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
-E_\beta(X)
+E_\beta
+\left(
+\sum_{i=1}^nX_i
+\right)
 =
-\alpha\beta,
+n\alpha\beta,
 \]</span></p>
 <p>temos</p>
 <p><span class="math display">\[
-E_\beta[U_\beta(X)]
+E_\beta[U_n(\beta)]
 =
 0.
 \]</span></p>
-<p>A informação de Fisher de uma observação pode ser obtida pela variância do escore:</p>
+<p>A informação de Fisher da amostra é</p>
 <p><span class="math display">\[
 \begin{aligned}
-I_1(\beta)
+I_n(\beta)
 &amp;=
-\operatorname{Var}_\beta[U_\beta(X)]\\
+\operatorname{Var}_\beta[U_n(\beta)]\\
 &amp;=
+\frac{1}{\beta^4}
 \operatorname{Var}_\beta
 \left(
-\frac{X}{\beta^2}
--
-\frac{\alpha}{\beta}
-\right)\\
-&amp;=
-\frac{
-\operatorname{Var}_\beta(X)
-}{
-\beta^4
-}.
+\sum_{i=1}^nX_i
+\right).
 \end{aligned}
 \]</span></p>
 <p>Como</p>
 <p><span class="math display">\[
-\operatorname{Var}_\beta(X)
+\operatorname{Var}_\beta
+\left(
+\sum_{i=1}^nX_i
+\right)
 =
-\alpha\beta^2,
+n\alpha\beta^2,
 \]</span></p>
 <p>segue que</p>
 <p><span class="math display">\[
-I_1(\beta)
-=
-\frac{\alpha}{\beta^2}.
-\]</span></p>
-<p>Para uma amostra i.i.d.,</p>
-<p><span class="math display">\[
 I_n(\beta)
-=
-nI_1(\beta)
 =
 \frac{n\alpha}{\beta^2}.
 \]</span></p>
@@ -6774,7 +7071,7 @@ nI_1(\beta)
 =
 \frac{\beta^2}{n\alpha}.
 \]</span></p>
-<p>Agora calculamos a variância do estimador:</p>
+<p>A variância do estimador é</p>
 <p><span class="math display">\[
 \begin{aligned}
 \operatorname{Var}_\beta(\widehat\beta)
@@ -6860,15 +7157,37 @@ nI_1(\beta)
 +
 B_\theta(T)^2.
 \]</span></p>
-<p>O não viés e a variância descrevem propriedades para um tamanho amostral fixado. A consistência estuda a concentração de uma sequência de estimadores no alvo quando <span class="math inline">\(n\)</span> aumenta. A eficiência assintótica compara a precisão das distribuições limite.</p>
-<p>A informação de Fisher relaciona a sensibilidade do modelo ao parâmetro com limites de precisão:</p>
+<p>O não viés e a variância descrevem propriedades para um tamanho amostral fixado. A consistência estuda a concentração de uma sequência de estimadores no alvo quando <span class="math inline">\(n\)</span> aumenta.</p>
+<p>A log-verossimilhança introduzida em <a href="unidade1.html" class="quarto-xref"><span>Capítulo 3</span></a> fornece, por diferenciação, o escore da amostra:</p>
 <p><span class="math display">\[
+\ell(\theta;\mathbf X)
+\longrightarrow
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X).
+\]</span></p>
+<p>Sob condições de regularidade,</p>
+<p><span class="math display">\[
+E_\theta[U_n(\theta)]=0
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+I_n(\theta)
+=
+\operatorname{Var}_\theta[U_n(\theta)].
+\]</span></p>
+<p>A informação de Fisher conecta a sensibilidade do modelo à precisão dos estimadores:</p>
+<p><span class="math display">\[
+\text{log-verossimilhança}
+\longrightarrow
 \text{escore}
 \longrightarrow
 \text{informação de Fisher}
 \longrightarrow
 \text{limite de Cramér--Rao}.
 \]</span></p>
+<p>A eficiência de Cramér–Rao é uma propriedade de amostra finita para estimadores não viesados. A eficiência assintótica utiliza a distribuição limite de uma sequência de estimadores e compara sua variabilidade, na escala <span class="math inline">\(\sqrt n\)</span>, com a referência determinada pela informação de Fisher.</p>
 <p>Na redução de dados, a suficiência concentra a informação da amostra sobre o parâmetro, enquanto a suficiência minimal elimina redundâncias. As famílias exponenciais fornecem uma estrutura sistemática para identificar estatísticas suficientes e, sob condições adicionais, completas.</p>
 <p>A suficiência permite melhorar um estimador por Rao–Blackwell:</p>
 <p><span class="math display">\[
@@ -6879,7 +7198,7 @@ W^*(T)
 E_\theta(W\mid T).
 \]</span></p>
 <p>Quando <span class="math inline">\(T\)</span> é suficiente e completa, Lehmann–Scheffé caracteriza a função não viesada de <span class="math inline">\(T\)</span> como ENVVUM. O teorema de Basu relaciona completude e suficiência à ancilaridade por meio da independência.</p>
-<p>Esses resultados fornecem os critérios que serão utilizados na construção e na avaliação de estimadores nos capítulos seguintes.</p>
+<p>Esses resultados fornecem critérios para avaliar estimadores e serão utilizados na construção de procedimentos de estimação nos capítulos seguintes.</p>
 </section>
 <section id="exercícios" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">5.4</span> Exercícios</h2>
@@ -6893,7 +7212,19 @@ E_\theta(W\mid T).
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Quando pertinente, explicite o modelo, o parâmetro de interesse, o estimador e o critério utilizado para avaliá-lo. Ao aplicar a desigualdade de Cramér–Rao, verifique as condições de regularidade e identifique o alvo <span class="math inline">\(\tau(\theta)\)</span> antes de calcular o limite.</p>
+<p>Quando pertinente, explicite o modelo, o parâmetro de interesse, o estimador e o critério utilizado para avaliá-lo.</p>
+<p>Nos exercícios sobre informação de Fisher e Cramér–Rao, parta da log-verossimilhança da amostra,</p>
+<p><span class="math display">\[
+\ell(\theta;\mathbf x),
+\]</span></p>
+<p>obtenha o escore</p>
+<p><span class="math display">\[
+U_n(\theta)
+=
+\frac{\partial}{\partial\theta}
+\ell(\theta;\mathbf X),
+\]</span></p>
+<p>e verifique as condições de regularidade antes de aplicar a desigualdade. Identifique também o alvo <span class="math inline">\(\tau(\theta)\)</span> e sua derivada.</p>
 </div>
 </div>
 <ol type="1">
@@ -6970,7 +7301,7 @@ E_\theta(T_n)
 T_n\xrightarrow{P}\theta.
 \]</span></p>
 <ol start="4" type="1">
-<li><strong>Cramér–Rao no modelo exponencial.</strong> Considere</li>
+<li><strong>Informação, Cramér–Rao e eficiência assintótica no modelo exponencial.</strong> Considere</li>
 </ol>
 <p><span class="math display">\[
 X_1,\ldots,X_n
@@ -6981,7 +7312,11 @@ X_1,\ldots,X_n
 \]</span></p>
 <p>em que <span class="math inline">\(\mu\)</span> representa a média e a taxa é <span class="math inline">\(1/\mu\)</span>. Assim,</p>
 <p><span class="math display">\[
-E_\mu(X_i)=\mu.
+E_\mu(X_i)=\mu
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+\operatorname{Var}_\mu(X_i)=\mu^2.
 \]</span></p>
 <p>Equivalentemente,</p>
 <p><span class="math display">\[
@@ -6994,12 +7329,64 @@ f(x\mid\mu)
 \mathbf 1\{x&gt;0\}.
 \]</span></p>
 <ol type="a">
-<li><p>Obtenha a função escore de uma observação.</p></li>
-<li><p>Calcule <span class="math inline">\(I_1(\mu)\)</span> e <span class="math inline">\(I_n(\mu)\)</span>.</p></li>
-<li><p>Determine o limite de Cramér–Rao para estimadores não viesados de <span class="math inline">\(\mu\)</span>.</p></li>
-<li><p>Mostre que <span class="math inline">\(\overline X\)</span> é não viesado para <span class="math inline">\(\mu\)</span>.</p></li>
-<li><p>Compare <span class="math inline">\(\operatorname{Var}_\mu(\overline X)\)</span> com o limite de Cramér–Rao e conclua se <span class="math inline">\(\overline X\)</span> é eficiente no sentido de Cramér–Rao.</p></li>
+<li>Escreva a log-verossimilhança da amostra,</li>
 </ol>
+<p><span class="math display">\[
+\ell(\mu;\mathbf x).
+\]</span></p>
+<ol start="2" type="a">
+<li>Obtenha o escore da amostra</li>
+</ol>
+<p><span class="math display">\[
+U_n(\mu)
+=
+\frac{\partial}{\partial\mu}
+\ell(\mu;\mathbf X)
+\]</span></p>
+<p>e verifique que</p>
+<p><span class="math display">\[
+E_\mu[U_n(\mu)]=0.
+\]</span></p>
+<ol start="3" type="a">
+<li>Calcule a informação de Fisher da amostra,</li>
+</ol>
+<p><span class="math display">\[
+I_n(\mu),
+\]</span></p>
+<p>e obtenha <span class="math inline">\(I_1(\mu)\)</span> a partir da relação</p>
+<p><span class="math display">\[
+I_n(\mu)=nI_1(\mu).
+\]</span></p>
+<ol start="4" type="a">
+<li><p>Determine o limite de Cramér–Rao para estimadores não viesados de <span class="math inline">\(\mu\)</span>.</p></li>
+<li><p>Mostre que <span class="math inline">\(\overline X\)</span> é não viesado para <span class="math inline">\(\mu\)</span> e compare</p></li>
+</ol>
+<p><span class="math display">\[
+\operatorname{Var}_\mu(\overline X)
+\]</span></p>
+<p>com o limite de Cramér–Rao. Conclua se <span class="math inline">\(\overline X\)</span> é eficiente no sentido de Cramér–Rao.</p>
+<ol start="6" type="a">
+<li>Utilizando o Teorema Central do Limite de <a href="unidade2.html#sec-u2-tcl" class="quarto-xref"><span>Seção 4.8</span></a>, mostre que</li>
+</ol>
+<p><span class="math display">\[
+\sqrt n
+\left(
+\overline X-\mu
+\right)
+\xrightarrow{d}
+N(0,\mu^2).
+\]</span></p>
+<ol start="7" type="a">
+<li>Compare a variância da distribuição limite,</li>
+</ol>
+<p><span class="math display">\[
+V(\mu)=\mu^2,
+\]</span></p>
+<p>com</p>
+<p><span class="math display">\[
+\frac{1}{I_1(\mu)}
+\]</span></p>
+<p>e conclua se a sequência <span class="math inline">\(\{\overline X_n\}\)</span> é assintoticamente eficiente.</p>
 <section id="exercícios-aprofundamento" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercícios-aprofundamento">Exercícios — Aprofundamento</h3>
 <ol start="5" type="1">
@@ -7136,7 +7523,7 @@ T
 <p>é não viesado para <span class="math inline">\(p\)</span>.</p>
 <ol start="3" type="a">
 <li><p>Utilize o teorema de Lehmann–Scheffé para concluir que <span class="math inline">\(\widehat p\)</span> é o ENVVUM de <span class="math inline">\(p\)</span>.</p></li>
-<li><p>Calcule a informação de Fisher e verifique se <span class="math inline">\(\widehat p\)</span> atinge o limite de Cramér–Rao.</p></li>
+<li><p>Escreva a log-verossimilhança da amostra, obtenha o escore <span class="math inline">\(U_n(p)\)</span> e calcule <span class="math inline">\(I_n(p)\)</span>. Em seguida, verifique se <span class="math inline">\(\widehat p\)</span> atinge o limite de Cramér–Rao.</p></li>
 </ol>
 <ol start="10" type="1">
 <li><strong>ENVVUM da taxa exponencial.</strong> Considere</li>
@@ -7170,7 +7557,7 @@ T
 <ol start="3" type="a">
 <li><p>Utilize Lehmann–Scheffé para concluir que <span class="math inline">\(\widehat\theta\)</span> é o ENVVUM de <span class="math inline">\(\theta\)</span>.</p></li>
 <li><p>Calcule sua variância.</p></li>
-<li><p>Obtenha o limite de Cramér–Rao e explique por que o ENVVUM não o atinge.</p></li>
+<li><p>Escreva a log-verossimilhança da amostra, obtenha <span class="math inline">\(U_n(\theta)\)</span> e <span class="math inline">\(I_n(\theta)\)</span> e determine o limite de Cramér–Rao. Compare-o com a variância do ENVVUM e explique por que esse estimador não atinge a cota.</p></li>
 </ol>
 <ol start="11" type="1">
 <li><strong>Ancilaridade e Basu.</strong> Considere uma amostra</li>
@@ -7271,7 +7658,13 @@ X_1,\ldots,X_n
 <p>é não viesado para <span class="math inline">\(p\)</span>.</p>
 <ol start="2" type="a">
 <li><p>Calcule <span class="math inline">\(\operatorname{Var}_p(\widehat p)\)</span>.</p></li>
-<li><p>Obtenha a informação de Fisher de uma observação e da amostra.</p></li>
+<li><p>Partindo da log-verossimilhança da amostra, obtenha o escore <span class="math inline">\(U_n(p)\)</span> e calcule <span class="math inline">\(I_n(p)\)</span>. Utilize</p></li>
+</ol>
+<p><span class="math display">\[
+I_n(p)=nI_1(p)
+\]</span></p>
+<p>para identificar também a informação de uma observação.</p>
+<ol start="4" type="a">
 <li><p>Determine o limite de Cramér–Rao para estimadores não viesados de <span class="math inline">\(p\)</span> e verifique se <span class="math inline">\(\widehat p\)</span> atinge esse limite.</p></li>
 <li><p>Mostre que</p></li>
 </ol>
@@ -7285,11 +7678,11 @@ T
 <li>Para <span class="math inline">\(n\geq4\)</span>, considere</li>
 </ol>
 <p><span class="math display">\[
-U
+W
 =
 X_1X_2X_3X_4.
 \]</span></p>
-<p>Mostre que <span class="math inline">\(U\)</span> é não viesado para <span class="math inline">\(p^4\)</span> e utilize Rao–Blackwell e Lehmann–Scheffé para obter o ENVVUM de <span class="math inline">\(p^4\)</span>.</p>
+<p>Mostre que <span class="math inline">\(W\)</span> é não viesado para <span class="math inline">\(p^4\)</span> e utilize Rao–Blackwell e Lehmann–Scheffé para obter o ENVVUM de <span class="math inline">\(p^4\)</span>.</p>
 <p><em>Adaptado de <span class="citation" data-cites="casella2011inferencia">Casella; Berger (<a href="#ref-casella2011inferencia" role="doc-biblioref">2011</a>)</span>, cap. 7.</em></p>
 <ol start="15" type="1">
 <li><strong>ENVVUM sem atingir Cramér–Rao.</strong> Considere</li>
@@ -7326,11 +7719,16 @@ T=\overline X
 \right).
 \]</span></p>
 <ol start="5" type="a">
-<li>Obtenha o limite de Cramér–Rao para estimadores não viesados de</li>
+<li>Obtenha <span class="math inline">\(I_n(\theta)\)</span> e determine o limite de Cramér–Rao para estimadores não viesados de</li>
 </ol>
 <p><span class="math display">\[
 \tau(\theta)=\theta^2.
 \]</span></p>
+<p>Explicite o papel de</p>
+<p><span class="math display">\[
+\tau'(\theta)
+\]</span></p>
+<p>no cálculo da cota.</p>
 <ol start="6" type="a">
 <li>Compare a variância do ENVVUM com o limite e explique por que, neste exemplo, ser ENVVUM não implica atingir a cota de Cramér–Rao.</li>
 </ol>
